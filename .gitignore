@@ -1,0 +1,12 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Static file folders
+/media/
+/static/
+
+# CSS
+.sass-cache/
+node_modules/
