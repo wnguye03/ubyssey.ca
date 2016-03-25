@@ -86,7 +86,7 @@ class UbysseyTheme(DefaultTheme):
     def article(self, request, section=None, slug=None):
 
         try:
-            article = self.find_article(request, section, slug)
+            article = self.find_article(request, slug, section)
         except:
             raise Http404("Article could not be found.")
 
