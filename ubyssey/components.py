@@ -25,18 +25,35 @@ class PrintIssueDefault(BaseComponent):
         ('url', 'Issue link', TextField()),
         ('cover_url', 'Cover Image Link', TextField()),
     )
-    
+
 class ScoreBoard(BaseComponent):
     NAME = 'Live Scoreboard'
     SLUG = 'live_scoreboard'
-    
+
     compatible_spots = ('multi_zone',)
-    
+
     fields = (
         ('home_team_score', 'Home Team Score', TextField()),
         ('away_team_score', 'Away Team Score', TextField()),
     )
 
+class Elections(BaseComponent):
+    NAME = 'elections'
+    SLUG = 'elections'
+    
+    compatible_spots = ('multi_zone',)
+
+    fields = (
+        ('president', 'President', TextField()),
+        ('vp_admin', 'VP Admin', TextField()),
+        ('vp_academic', 'VP Academic', TextField()),
+        ('vp_finance', 'VP Finance', TextField()),
+        ('vp_external', 'VP External', TextField()),
+        ('bog', 'Board', TextField()),
+        ('senate', 'Senate', TextField()),
+
+    )
 theme_components.register(ReadingList)
 theme_components.register(PrintIssueDefault)
 theme_components.register(ScoreBoard)
+theme_components.register(Elections)
