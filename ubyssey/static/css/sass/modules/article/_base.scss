@@ -88,8 +88,9 @@ h1.headline {
 }
 
 div.article-content p, div.article-content div.caption, div.article-content h1, div.article-content h2, div.article-content h3 {
-  padding: 0 10px;
+  padding: 0 15px;
   @media($bp-larger-than-tablet){
+    padding: 0;
     max-width: 585px;
   }
 }
