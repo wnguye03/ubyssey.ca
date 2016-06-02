@@ -2,5 +2,7 @@ language: node_js
 node_js:
   - 0.12
 before_script:
+  - cd ubyssey
   - npm install -g gulp
-script: cd ubyssey && gulp
+  - npm install
+script: gulp
