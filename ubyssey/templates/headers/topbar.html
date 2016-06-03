@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <header class="topbar header-site">
     <div class="container">
-        <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'img/ubyssey-logo-small.svg' %}" /></a>
+        <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small.svg' %}" /></a>
         <nav>
             <ul>
                 <li {% if section == 'news' %}class="current"{% endif %}>

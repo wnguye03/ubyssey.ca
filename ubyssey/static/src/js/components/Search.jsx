@@ -1,4 +1,3 @@
-var key = require('keymaster');
 var LRU = require('lru-cache');
 
 var Search = React.createClass({
