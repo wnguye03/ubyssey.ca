@@ -35,4 +35,4 @@ gulp.task('copy-fonts', function() {
 
 gulp.task('static', ['webpack', 'sass', 'copy-images', 'copy-fonts'], shell.task(collectstatic));
 
-gulp.task('default', ['webpack', 'sass', 'copy-images', 'copy-fonts', 'static']);
+gulp.task('default', ['webpack', 'sass', 'copy-images', 'copy-font']);
