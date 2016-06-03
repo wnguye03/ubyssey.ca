@@ -1,7 +1,7 @@
 var LinkedList = require('../modules/LinkedList.js');
 var GallerySlide = require('./GallerySlide.jsx');
 var Hammer = require('hammerjs');
-var Key = require('keymaster');
+var key = require('keymaster');
 
 var Gallery = React.createClass({
     getInitialState: function(){

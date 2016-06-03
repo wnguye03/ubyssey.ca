@@ -6,9 +6,8 @@ __pycache__/
 # Static file folders
 /media/
 /static/
+/ubyssey/static/dist/
 
-# CSS
-.sass-cache/
 node_modules/
 
 settings.py
