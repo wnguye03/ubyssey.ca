@@ -1,0 +1,5 @@
+version: 0.0
+os: linux
+files:
+  - source: ubyssey/
+    destination: /var/webapps/staging.ubyssey.ca/app
