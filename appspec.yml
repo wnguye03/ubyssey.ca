@@ -4,6 +4,6 @@ files:
   - source: ubyssey/
     destination: /var/webapps/staging.ubyssey.ca/app
   - source: manage.py
-    destination: /var/webapps/staging.ubyssey.ca/manage.py
+    destination: /var/webapps/staging.ubyssey.ca/
   - source: requirements.txt
-    destination: /var/webapps/staging.ubyssey.ca/requirements.txt
+    destination: /var/webapps/staging.ubyssey.ca/
