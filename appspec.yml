@@ -1,9 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source: ubyssey/
-    destination: /var/webapps/staging.ubyssey.ca/app
-  - source: manage.py
-    destination: /var/webapps/staging.ubyssey.ca/
-  - source: requirements.txt
+  - source: /
     destination: /var/webapps/staging.ubyssey.ca/
