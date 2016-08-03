@@ -1,1 +1,1 @@
-supervisor restart ubyssey
+supervisorctl restart ubyssey
