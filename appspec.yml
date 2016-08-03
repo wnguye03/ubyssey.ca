@@ -8,4 +8,7 @@ files:
   - source: _scripts/
     destination: /var/webapps/staging.ubyssey.ca/_scripts/
   - source: ubyssey/
-    destination: /var/webapps/staging.ubyssey.ca/_scripts/ubyssey/
+    destination: /var/webapps/staging.ubyssey.ca/ubyssey/
+hooks:
+  ApplicationStart:
+    - location: _scripts/ubyssey_restart.sh
