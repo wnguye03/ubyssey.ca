@@ -1,0 +1,28 @@
+#!/bin/bash
+
+NAME="ubyssey"
+SOCKFILE=/var/webapps/staging.ubyssey.ca/run/gunicorn.sock
+USER=ubyssey
+GROUP=webapps
+NUM_WORKERS=3
+DISPATCH_PROJECT_DIR=/var/webapps/staging.ubyssey.ca/ubyssey
+DISPATCH_WSGI_MODULE=ubyssey.wsgi
+
+echo "Starting $NAME as `whoami`"
+
+# Activate the virtual environment
+cd $DISPATCH_PROJECT_DIR
+cd ../
+source bin/activate
+export PYTHONPATH=$DISPATCH_PROJECT_DIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+exec bin/gunicorn ${DISPATCH_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --bind=unix:$SOCKFILE \
+  --log-level=debug \
+  --log-file=-
