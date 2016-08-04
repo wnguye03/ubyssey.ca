@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Start the server
-sudo -u ubyssey -H sh -c "_scripts/gunicorn_start"
+sudo -u ubyssey -H sh -c "${BASH_SOURCE%/*}/gunicorn_start"
