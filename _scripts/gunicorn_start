@@ -2,6 +2,7 @@
 
 NAME="ubyssey"
 SOCKFILE=/var/webapps/staging.ubyssey.ca/run/gunicorn.sock
+PIDFILE=/var/webapps/staging.ubyssey.ca/run/ubyssey.pid
 USER=ubyssey
 GROUP=webapps
 NUM_WORKERS=3
@@ -25,4 +26,6 @@ exec bin/gunicorn ${DISPATCH_WSGI_MODULE}:application \
   --workers $NUM_WORKERS \
   --bind=unix:$SOCKFILE \
   --log-level=debug \
-  --log-file=-
+  --log-file=- \
+  --daemon \
+  --pid $PIDFILE
