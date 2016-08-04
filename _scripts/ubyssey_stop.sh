@@ -1,4 +1,6 @@
 #!/bin/bash
 
 # Stop the server
-sudo kill `cat run/ubyssey.pid`
+if [ -f run/ubyssey.pid ]; then
+  sudo kill `cat run/ubyssey.pid`
+fi
