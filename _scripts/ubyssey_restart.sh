@@ -6,4 +6,5 @@ if [ -f run/ubyssey.pid ]; then
 fi
 
 # Start the server
+sudo chmod u+x ${BASH_SOURCE%/*}/gunicorn_start
 sudo -u ubyssey -H sh -c "_scripts/gunicorn_start"
