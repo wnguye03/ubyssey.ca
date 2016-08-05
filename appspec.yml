@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: manage.py
-    destination: /var/webapps/ubyssey/
+    destination: /var/webapps/ubyssey
   - source: requirements.txt
-    destination: /var/webapps/ubyssey/
+    destination: /var/webapps/ubyssey
   - source: _scripts/
     destination: /var/webapps/ubyssey/_scripts/
   - source: ubyssey/
