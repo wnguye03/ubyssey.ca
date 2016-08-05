@@ -2,13 +2,13 @@ version: 0.0
 os: linux
 files:
   - source: manage.py
-    destination: /var/webapps/staging.ubyssey.ca/manage.py
+    destination: /var/webapps/ubyssey/manage.py
   - source: requirements.txt
-    destination: /var/webapps/staging.ubyssey.ca/requirements.txt
+    destination: /var/webapps/ubyssey/requirements.txt
   - source: _scripts/
-    destination: /var/webapps/staging.ubyssey.ca/_scripts/
+    destination: /var/webapps/ubyssey/_scripts/
   - source: ubyssey/
-    destination: /var/webapps/staging.ubyssey.ca/ubyssey/
+    destination: /var/webapps/ubyssey/ubyssey/
 hooks:
   ApplicationStop:
     - location: _scripts/ubyssey_stop.sh
