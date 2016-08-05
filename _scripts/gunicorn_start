@@ -1,13 +1,13 @@
 #!/bin/bash
 
 NAME="ubyssey"
-SOCKFILE=/var/webapps/staging.ubyssey.ca/run/gunicorn.sock
-PIDFILE=/var/webapps/staging.ubyssey.ca/run/ubyssey.pid
-LOGFILE=/var/webapps/staging.ubyssey.ca/logs/gunicorn-error.log
+SOCKFILE=/var/webapps/ubyssey/run/gunicorn.sock
+PIDFILE=/var/webapps/ubyssey/run/ubyssey.pid
+LOGFILE=/var/webapps/ubyssey/logs/gunicorn-error.log
 USER=ubyssey
 GROUP=webapps
 NUM_WORKERS=3
-DISPATCH_PROJECT_DIR=/var/webapps/staging.ubyssey.ca/ubyssey
+DISPATCH_PROJECT_DIR=/var/webapps/ubyssey/ubyssey
 DISPATCH_WSGI_MODULE=ubyssey.wsgi
 
 echo "Starting $NAME as `whoami`"
