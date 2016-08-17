@@ -1,6 +1,9 @@
 #!/bin/bash
 
+GUNICORN_SCRIPT=/var/webapps/ubyssey/_scripts/gunicorn_start.sh
+
 # Start the server
-sudo chown ubyssey ${BASH_SOURCE%/*}/gunicorn_start
-sudo chmod u+x ${BASH_SOURCE%/*}/gunicorn_start
-sudo -u ubyssey -H sh -c "${BASH_SOURCE%/*}/gunicorn_start"
+sudo chown ubyssey $GUNICORN_SCRIPT
+sudo chmod u+x $GUNICORN_SCRIPT
+
+sudo supervisorctl start ubyssey
