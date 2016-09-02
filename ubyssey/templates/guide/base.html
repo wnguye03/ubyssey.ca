@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guide to UBC{% if title %} - {{title}}{% endif %}</title>
+  <link rel="stylesheet" href="{% static 'css/guide.css' %}" type="text/css"/>
+</head>
+<body>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>

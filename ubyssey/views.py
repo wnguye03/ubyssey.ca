@@ -103,6 +103,8 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
+        print "%s/%s" % (article.section.slug, article.get_template())
+
         t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
         return HttpResponse(t.render(context))
 
@@ -288,3 +290,10 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'section.html', context)
+
+    def guide_index(self, request):
+
+        context = {
+        }
+
+        return render(request, 'guide/index.html', context)

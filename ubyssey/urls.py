@@ -10,5 +10,6 @@ theme_urls = patterns('',
     url(r'^author/(?P<slug>[-\w]+)/$', theme.author, name='author'),
     url(r'^topic/(\d*)/$', theme.topic, name='topic'),
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
+    url(r'^guide/$', theme.guide_index),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
 )
