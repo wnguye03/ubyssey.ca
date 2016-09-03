@@ -14,13 +14,14 @@
     bottom: 0;
     top: 0;
     z-index: 10;
+    pointer-events: none;
 
     background-image: linear-gradient(-180deg, transparent 0%, rgba(0,0,0,0.66) 99%);
   }
 
   &:after {
     content: '';
-    padding-top: 30%;
+    padding-top: 37%;
     display: block;
   }
 }
@@ -30,4 +31,26 @@
   margin: 0 auto;
   padding: 30px;
   text-align: center;
+}
+
+.c-welcome-banner__intro {
+  font-style: italic;
+  font-size: 24px;
+  color: white;
+  letter-spacing: 0.48px;
+  line-height: 28px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
+  margin-bottom: 1em;
+}
+
+.c-welcome-banner__snippet {
+  margin-top: 15px;
+  font-size: 18px;
+  color: white;
+  letter-spacing: 0.36px;
+  line-height: 22px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
+  max-width: 385px;
+  margin-left: auto;
+  margin-right: auto;
 }

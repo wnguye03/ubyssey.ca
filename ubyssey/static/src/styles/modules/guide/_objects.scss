@@ -10,3 +10,27 @@
   letter-spacing: 1.29px;
   text-shadow: 0px 2px 1px rgba(0,0,0,0.23);
 }
+
+.o-welcome-arrow {
+  position: absolute;
+  z-index: 20;
+  left: 15%;
+  bottom: 25px;
+}
+
+.o-welcome-arrow__text {
+  font-family: DKSaffronWalden;
+  font-size: 32px;
+  color: white;
+  letter-spacing: 0.73px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
+  margin-bottom: 10px;
+}
+
+.o-welcome-arrow__icon {
+  margin-left: 65%;
+  background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/arrow.png');
+  background-size: 100%;
+  width: 50px;
+  height: 53px;
+}

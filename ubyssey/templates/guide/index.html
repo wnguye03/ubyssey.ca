@@ -4,13 +4,21 @@
 
 <header class="c-welcome-banner">
   <div class="c-welcome-banner__inner">
-    <h2>The Ubyssey presents...</h2>
+    <h2 class="c-welcome-banner__intro">The Ubyssey presents</h2>
     <div class="o-logo">Guide To UBC</div>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget ullamcorper nibh, sit amet efficitur lacus.</p>
+    <p class="c-welcome-banner__snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget ullamcorper nibh, sit amet efficitur lacus.</p>
+  </div>
+  <div class="o-welcome-arrow">
+    <div class="o-welcome-arrow__text">Start here!</div>
+    <div class="o-welcome-arrow__icon"></div>
   </div>
 </header>
-<main class="c-homepage-tiles">
-
+<main class="c-tiles">
+{% include 'guide/tile.html' with type='4' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/ubc.png' highlight=True %}
+{% include 'guide/tile.html' with type='2' title='Academics' snippet='Study, study, study' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/academics.png' %}
+{% include 'guide/tile.html' with type='3' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/soccer.png' %}
+{% include 'guide/tile.html' with type='3' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/campus.png' %}
+{% include 'guide/tile.html' with type='2' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/adventure.png' %}
 </main>
 
 <footer>
