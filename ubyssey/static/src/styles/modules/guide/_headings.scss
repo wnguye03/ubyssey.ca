@@ -4,11 +4,16 @@
     font-family: $font-default;
     font-size: 64px;
     color: white;
+    margin-bottom: 7px;
   }
 
   &--subheading {
     font-family: $font-secondary;
+    font-weight: 200;
     color: white;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    line-height: 28px;
   }
 
 }
