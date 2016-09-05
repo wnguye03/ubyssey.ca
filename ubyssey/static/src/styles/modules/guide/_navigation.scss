@@ -4,15 +4,49 @@
   line-height: 40px;
 }
 
-.c-nav-top__logo {
-  display: block;
-  height: 40px;
-  width: 166px;
-  background-image: url('../images/guide/guide-logo.png');
-  background-size: 100%;
-}
-
 .c-nav-top__message {
   flex: 1;
   text-align: right;
+  color: white;
+  font-weight: 100;
+  font-style: italic;
+  letter-spacing: 0.72px;
+
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.16);
+
+  strong {
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+.c-nav-footer {
+  display: flex;
+  margin-top: 30px;
+}
+
+.c-nav-footer__column {
+  flex: 1;
+
+  h2 {
+    font-size: 18px;
+    color: white;
+    letter-spacing: 0.45px;
+    line-height: 26px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  li {
+    line-height: 1.2em;
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
