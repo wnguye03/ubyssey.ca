@@ -23,8 +23,21 @@
     <p class="c-article__intro">{{ article.template_fields.intro }}</p>
     <div class="c-article__container">
       <div class="c-article__content">{{ article.get_html|safe }}</div>
-      <div class="c-article__sidebar"></div>
+      <div class="c-article__sidebar">
+        <div class="advertisement box sidebar">
+            <div class="adslot" id="div-gpt-ad-1443288719995-15-{{ article.id }}" data-size="box" data-dfp="News_BoxA_300x250"></div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="c-up-next">
+    <div class="c-up-next__arrow"></div>
+    <div class="c-up-next__text">Pick one</div>
+    <div class="c-up-next__arrow c-up-next__arrow--right"></div>
+  </div>
+  <div class="c-tiles">
+    {% include 'guide/tile.html' with type='3' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/campus.png' %}
+    {% include 'guide/tile.html' with type='3' title='About UBC' snippet='Learn about your campus' image='https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/campus.png' %}
   </div>
 </main>
 {% endblock %}
