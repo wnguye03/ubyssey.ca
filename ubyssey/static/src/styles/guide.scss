@@ -1,6 +1,13 @@
 @import 'modules/reset';
 
+@import 'modules/guide/fonts';
 @import 'modules/guide/base';
-@import 'modules/guide/homepage';
 @import 'modules/guide/objects';
 @import 'modules/guide/tiles';
+@import 'modules/guide/headings';
+@import 'modules/guide/banner';
+@import 'modules/guide/navigation';
+
+// Pages
+@import 'modules/guide/homepage';
+@import 'modules/guide/article';

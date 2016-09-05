@@ -1,0 +1,27 @@
+{% extends 'guide/base.html' %}
+
+{% block content %}
+
+<header class="c-banner c-banner--article">
+  <div class="o-container">
+    <div class="c-banner--article__inner">
+      <div class="c-banner--article__nav">
+        <nav class="c-nav-top">
+          <a class="c-nav-top__logo" href="#"></a>
+          <div class="c-nav-top__message">From your friends at <strong>The Ubyssey</strong></div>
+        </nav>
+      </div>
+      <div class="c-banner--article__headings">
+        <h1 class="c-heading--main">{{ article.headline }}</h1>
+        <h2 class="c-heading--subheading">{{ article.template_fields.subheading }}<h2>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="c-article">
+  <div class="o-container">
+    <p class="c-article__intro">{{ article.template_fields.intro }}</p>
+    <div class="c-article__content">{{ article.get_html|safe }}</div>
+  </div>
+</main>
+{% endblock %}

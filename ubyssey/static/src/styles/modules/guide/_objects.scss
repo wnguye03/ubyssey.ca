@@ -3,12 +3,18 @@
   border: 5px solid white;
   padding: 35px 40px 20px 40px;
 
-  font-family: DKSaffronWalden;
+  font-family: $font-default;
   font-size: 64px;
   text-transform: uppercase;
   color: white;
   letter-spacing: 1.29px;
   text-shadow: 0px 2px 1px rgba(0,0,0,0.23);
+}
+
+.o-container {
+  width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
 }
 
 .o-welcome-arrow {
@@ -19,7 +25,7 @@
 }
 
 .o-welcome-arrow__text {
-  font-family: DKSaffronWalden;
+  font-family: $font-default;
   font-size: 32px;
   color: white;
   letter-spacing: 0.73px;

@@ -1,0 +1,14 @@
+.c-heading {
+
+  &--main {
+    font-family: $font-default;
+    font-size: 64px;
+    color: white;
+  }
+
+  &--subheading {
+    font-family: $font-secondary;
+    color: white;
+  }
+
+}

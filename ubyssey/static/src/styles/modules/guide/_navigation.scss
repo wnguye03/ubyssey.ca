@@ -1,0 +1,18 @@
+.c-nav-top {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+}
+
+.c-nav-top__logo {
+  display: block;
+  height: 40px;
+  width: 166px;
+  background-image: url('../images/guide/guide-logo.png');
+  background-size: 100%;
+}
+
+.c-nav-top__message {
+  flex: 1;
+  text-align: right;
+}

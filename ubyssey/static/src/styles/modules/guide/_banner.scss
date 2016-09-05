@@ -1,0 +1,75 @@
+.c-banner {
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  background: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.png');
+  background-size: cover;
+
+  &:before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    z-index: 10;
+    pointer-events: none;
+
+    background-image: linear-gradient(-180deg, transparent 0%, rgba(0,0,0,0.66) 99%);
+  }
+
+  &:after {
+    content: '';
+    padding-top: 37%;
+    display: block;
+  }
+}
+
+.c-banner--welcome {
+  align-items: center;
+}
+
+.c-banner--welcome__inner {
+  z-index: 20;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.c-banner--welcome__intro {
+  font-style: italic;
+  font-size: 24px;
+  color: white;
+  letter-spacing: 0.48px;
+  line-height: 28px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
+  margin-bottom: 1em;
+}
+
+.c-banner--welcome__snippet {
+  margin-top: 15px;
+  font-size: 18px;
+  color: white;
+  letter-spacing: 0.36px;
+  line-height: 22px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
+  max-width: 385px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c-banner--article__inner {
+  position: relative;
+  height: 100%;
+  z-index: 20;
+}
+
+.c-banner--article__nav {
+  padding: 50px 0;
+}
+
+.c-banner--article__headings {
+  position: absolute;
+  padding-bottom: 15%;
+  bottom: 0;
+}

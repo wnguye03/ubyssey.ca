@@ -75,7 +75,7 @@
       box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.5);
 
       &:hover {
-        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 1);
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.75);
       }
     }
   }
@@ -83,7 +83,10 @@
 
 .c-tile__flex {
   display: flex;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .c-tile__container {
@@ -108,9 +111,40 @@
 }
 
 .c-tile__snippet {
-  /* Learn about your cam: */
   font-family: LFTEtica-Light;
   font-size: 25px;
   letter-spacing: 0.78px;
   line-height: 30px;
+}
+
+.c-tile--quote {
+  &:before, &:after {
+    content: none;
+  }
+
+  .c-tile__flex {
+    align-items: center;
+  }
+
+  .c-tile__container {
+    text-shadow: none;
+  }
+}
+
+.c-tile--quote__text {
+  font-style: italic;;
+  font-size: 36px;
+  color: white;
+  letter-spacing: 1.35px;
+  line-height: 48px;
+}
+
+.c-tile--quote__source {
+  margin-top: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 32px;
+  color: white;
+  letter-spacing: 1.2px;
+  line-height: 48px;
 }

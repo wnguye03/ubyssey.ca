@@ -103,8 +103,6 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        print "%s/%s" % (article.section.slug, article.get_template())
-
         t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
         return HttpResponse(t.render(context))
 
@@ -297,3 +295,21 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'guide/index.html', context)
+
+
+    def guide_article(self, request, slug=None):
+
+        try:
+            article = self.find_article(request, slug, 'guide')
+        except:
+            raise Http404('Article could not be found.')
+
+        article.add_view()
+
+        context = {
+            'title': article.headline,
+            'meta': self.get_article_meta(article),
+            'article': article
+        }
+
+        return render(request, 'guide/article.html', context)
