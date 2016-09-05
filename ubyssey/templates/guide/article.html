@@ -21,7 +21,10 @@
 <main class="c-article">
   <div class="o-container">
     <p class="c-article__intro">{{ article.template_fields.intro }}</p>
-    <div class="c-article__content">{{ article.get_html|safe }}</div>
+    <div class="c-article__container">
+      <div class="c-article__content">{{ article.get_html|safe }}</div>
+      <div class="c-article__sidebar"></div>
+    </div>
   </div>
 </main>
 {% endblock %}

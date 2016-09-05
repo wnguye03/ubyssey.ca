@@ -2,3 +2,44 @@
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
+.c-article__intro {
+  font-size: 24px;
+  color: #313131;
+  letter-spacing: 0.5px;
+  line-height: 31px;
+  margin-bottom: 1.5em;
+}
+
+.c-article__container {
+  display: flex;
+}
+
+.c-article__content {
+  width: 490px;
+
+  > p {
+    font-size: 18px;
+    color: #313131;
+    letter-spacing: 0.37px;
+    line-height: 27px;
+    margin-bottom: 1.5em;
+  }
+
+  .image-attachment {
+    width: 600px;
+    margin-bottom: 1.5em;
+    float: right;
+
+    img {
+      width: 100%;
+    }
+
+    .caption {
+      text-align: right;
+      margin-top: 5px;
+      font-size: 12px;
+      color: gray;
+    }
+  }
+}
