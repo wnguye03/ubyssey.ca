@@ -3,7 +3,6 @@
   position: relative;
   width: 100%;
 
-  background: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.png');
   background-size: cover;
 
   &:before {
@@ -31,6 +30,7 @@
 }
 
 .c-banner--welcome {
+  background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.png');
   align-items: center;
 
   &:after {

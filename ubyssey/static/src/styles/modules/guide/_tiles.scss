@@ -138,7 +138,7 @@
 }
 
 .c-tile__title {
-  font-family: DKSaffronWalden;
+  font-family: $font-default;
   font-size: 2em;
   letter-spacing: 2.25px;
   line-height: 1.5em;
@@ -149,7 +149,7 @@
 }
 
 .c-tile__snippet {
-  font-family: LFTEtica-Light;
+  font-family: $font-secondary;
   font-size: 1em;
   letter-spacing: 0.78px;
   line-height: 30px;
