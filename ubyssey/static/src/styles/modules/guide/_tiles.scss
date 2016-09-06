@@ -112,6 +112,7 @@
 
 .c-tile__flex {
   @media($bp-larger-than-mobile) {
+    position: absolute;
     height: 100%;
     width: 100%;
   }
@@ -169,11 +170,8 @@
     content: none;
   }
 
-  .c-tile__flex {
-    align-items: center;
-  }
-
   .c-tile__container {
+    align-items: center;
     text-shadow: none;
   }
 }
