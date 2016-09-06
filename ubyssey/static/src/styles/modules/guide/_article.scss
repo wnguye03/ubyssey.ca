@@ -54,7 +54,11 @@
   }
 
   .pull-quote {
-    text-align: right;
+    text-align: left;
+
+    @media($bp-larger-than-phablet) {
+      text-align: right;
+    }
 
     .quote {
       /* “Praesent a odio lec: */
@@ -81,12 +85,12 @@
 
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 25px;
+    padding-bottom: 35px;
 
     @media($bp-larger-than-phablet) {
       margin: 0;
       float: right;
-      padding-left: 30px;
+      padding-left: 35px;
     }
 
   }
