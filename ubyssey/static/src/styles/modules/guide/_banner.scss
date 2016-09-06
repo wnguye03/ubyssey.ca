@@ -30,7 +30,8 @@
 }
 
 .c-banner--welcome {
-  background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.png');
+  background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.jpg');
+  background-position: center;
   align-items: center;
 
   &:after {
