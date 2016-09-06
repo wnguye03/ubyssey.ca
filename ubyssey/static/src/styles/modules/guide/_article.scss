@@ -14,9 +14,10 @@
 
   > p {
     font-size: 1em;
+    font-weight: 100;
     color: #313131;
-    letter-spacing: 0.37px;
-    line-height: 27px;
+    letter-spacing: 0.2px;
+    line-height: 1.75em;
     margin-bottom: 1.5em;
 
     width: 100%;
@@ -75,7 +76,7 @@
     @media($bp-larger-than-phablet) {
       margin: 0;
       float: right;
-      padding-left: 25px;
+      padding-left: 30px;
     }
 
   }
