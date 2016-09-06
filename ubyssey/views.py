@@ -288,3 +288,43 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'section.html', context)
+
+    def guide_index(self, request):
+
+        context = {
+        }
+
+        return render(request, 'guide/index.html', context)
+
+
+    def guide_article(self, request, slug=None):
+
+        try:
+            article = self.find_article(request, slug, 'guide-2016')
+        except:
+            raise Http404('Article could not be found.')
+
+        template_fields = article.get_template_fields()
+
+        print template_fields
+
+        try:
+            next_a = self.find_article(request, template_fields['next_a'], 'guide-2016')
+        except:
+            next_a = None
+
+        try:
+            next_b = self.find_article(request, template_fields['next_b'], 'guide-2016')
+        except:
+            next_b = None
+
+        article.add_view()
+
+        context = {
+            'title': article.headline,
+            'meta': self.get_article_meta(article),
+            'article': article,
+            'next': [next_a, next_b]
+        }
+
+        return render(request, 'guide/article.html', context)

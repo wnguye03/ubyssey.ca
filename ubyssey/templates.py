@@ -38,5 +38,18 @@ class FullWidth(BaseTemplate):
         ('header_layout', 'Header Layout', SelectField(options=HEADER_LAYOUT_OPTIONS))
     )
 
+class Guide(BaseTemplate):
+
+    NAME = 'Guide to UBC'
+    SLUG = 'guide-to-ubc'
+
+    fields = (
+        ('subheading', 'Sub-heading', TextField()),
+        ('intro', 'Intro text', TextField()),
+        ('next_a', 'Up next A', TextField()),
+        ('next_b', 'Up next B', TextField())
+    )
+
 templates.register(Default)
 templates.register(FullWidth)
+templates.register(Guide)
