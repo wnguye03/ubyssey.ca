@@ -18,6 +18,7 @@
 
 .c-article__content {
   flex: 1;
+  position: relative;
 
   > p {
     font-size: 1em;
@@ -41,6 +42,34 @@
       margin-top: 5px;
       font-size: 0.65em;
       color: gray;
+    }
+  }
+
+  .pull-quote {
+    position: absolute;
+    right: -340px;
+    margin-left: 170px;
+    width: 300px;
+
+    text-align: right;
+
+    .quote {
+      /* “Praesent a odio lec: */
+      font-size: 1em;
+      color: #313131;
+      letter-spacing: 0.34px;
+      line-height: 1.5em;
+      font-style: italic;
+      font-weight: 100;
+      margin-bottom: 5px;
+    }
+
+    .source {
+      font-weight: 600;
+      font-size: 0.77em;
+      color: #000000;
+      letter-spacing: 0.27px;
+      line-height: 14px;
     }
   }
 }

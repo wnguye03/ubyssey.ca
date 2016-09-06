@@ -45,7 +45,9 @@ class Guide(BaseTemplate):
 
     fields = (
         ('subheading', 'Sub-heading', TextField()),
-        ('intro', 'Intro text', TextField())
+        ('intro', 'Intro text', TextField()),
+        ('next_a', 'Up next A', TextField()),
+        ('next_b', 'Up next B', TextField())
     )
 
 templates.register(Default)

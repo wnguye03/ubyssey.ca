@@ -304,12 +304,27 @@ class UbysseyTheme(DefaultTheme):
         except:
             raise Http404('Article could not be found.')
 
+        template_fields = article.get_template_fields()
+
+        print template_fields
+
+        try:
+            next_a = self.find_article(request, template_fields['next_a'], 'guide')
+        except:
+            next_a = None
+
+        try:
+            next_b = self.find_article(request, template_fields['next_b'], 'guide')
+        except:
+            next_b = None
+
         article.add_view()
 
         context = {
             'title': article.headline,
             'meta': self.get_article_meta(article),
-            'article': article
+            'article': article,
+            'next': [next_a, next_b]
         }
 
         return render(request, 'guide/article.html', context)
