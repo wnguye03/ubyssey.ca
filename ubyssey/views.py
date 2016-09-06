@@ -300,7 +300,7 @@ class UbysseyTheme(DefaultTheme):
     def guide_article(self, request, slug=None):
 
         try:
-            article = self.find_article(request, slug, 'guide')
+            article = self.find_article(request, slug, 'guide-2016')
         except:
             raise Http404('Article could not be found.')
 
@@ -309,12 +309,12 @@ class UbysseyTheme(DefaultTheme):
         print template_fields
 
         try:
-            next_a = self.find_article(request, template_fields['next_a'], 'guide')
+            next_a = self.find_article(request, template_fields['next_a'], 'guide-2016')
         except:
             next_a = None
 
         try:
-            next_b = self.find_article(request, template_fields['next_b'], 'guide')
+            next_b = self.find_article(request, template_fields['next_b'], 'guide-2016')
         except:
             next_b = None
 
