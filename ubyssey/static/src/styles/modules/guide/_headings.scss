@@ -22,8 +22,8 @@
     font-size: 1.15em;
 
     margin-bottom: 25px;
-    
-    @media($bp-larger-than-tablet) {
+
+    @media($bp-larger-than-phablet) {
       margin-bottom: 0;
     }
 
