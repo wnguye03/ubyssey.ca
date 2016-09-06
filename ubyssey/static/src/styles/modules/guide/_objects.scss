@@ -1,12 +1,12 @@
 .o-logo {
   display: inline-block;
-  border: 5px solid white;
+  border: 5px solid $color-white;
   padding: 35px 40px 20px 40px;
 
   font-family: $font-default;
   font-size: 3em;
   text-transform: uppercase;
-  color: white;
+  color: $color-white;
   letter-spacing: 1.3px;
   text-shadow: 0px 2px 1px rgba(0,0,0,0.23);
 
@@ -58,7 +58,7 @@
 .o-welcome-arrow__text {
   font-family: $font-default;
   font-size: 32px;
-  color: white;
+  color: $color-white;
   letter-spacing: 0.73px;
   text-shadow: 0px 1px 2px rgba(0,0,0,0.50);
   margin-bottom: 10px;
