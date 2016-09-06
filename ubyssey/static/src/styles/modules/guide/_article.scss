@@ -3,7 +3,7 @@
 }
 
 .c-article__intro {
-  font-size: 24px;
+  font-size: 1.33em;
   color: #313131;
   letter-spacing: 0.5px;
   line-height: 31px;
@@ -11,14 +11,16 @@
 }
 
 .c-article__container {
-  display: flex;
+  @media($bp-larger-than-tablet) {
+    display: flex;
+  }
 }
 
 .c-article__content {
   flex: 1;
 
   > p {
-    font-size: 18px;
+    font-size: 1em;
     color: #313131;
     letter-spacing: 0.37px;
     line-height: 27px;
@@ -37,7 +39,7 @@
     .caption {
       text-align: right;
       margin-top: 5px;
-      font-size: 12px;
+      font-size: 0.65em;
       color: gray;
     }
   }

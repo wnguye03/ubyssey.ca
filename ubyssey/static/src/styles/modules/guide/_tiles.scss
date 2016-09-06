@@ -1,7 +1,9 @@
 .c-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+  @media($bp-larger-than-tablet) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
 }
 
 .c-tile {
@@ -11,7 +13,11 @@
   background-position: center;
   background-size: cover;
 
-  min-height: 340px;
+  min-height: 200px;
+
+  @media($bp-larger-than-desktop) {
+    min-height: 340px;
+  }
 
   position: relative;
   text-decoration: none;
@@ -34,39 +40,63 @@
 
   &:after {
     content: '';
-    padding-top: 45%;
+    padding-top: 42%;
     display: block;
-  }
 
-  &--2, &--4, &--6 {
-    .c-tile__flex {
-      align-items: flex-end;
+    @media($bp-larger-than-desktop) {
+      padding-top: 45%;
     }
   }
 
-  &--2 {
-    flex-basis: 33.33%;
+  .c-tile__container {
+    margin: 0 auto;
+    text-align: center;
   }
 
-  &--3 {
-    flex-basis: 50%;
+  .c-tile__flex {
+    align-items: center;
+  }
 
-    .c-tile__flex {
-      align-items: center;
-    }
-
+  @media($bp-larger-than-phablet) {
     .c-tile__container {
-      margin: 0 auto;
-      text-align: center;
+      margin: none;
+      text-align: left;
     }
-  }
 
-  &--4 {
-    flex-basis: 66.66%;
-  }
+    .c-tile__flex {
+      align-items: flex-start;
+    }
 
-  &--6 {
-    flex-basis: 100%;
+    &--2, &--4, &--6 {
+      .c-tile__flex {
+        align-items: flex-end;
+      }
+    }
+
+    &--2 {
+      flex-basis: 33.33%;
+    }
+
+    &--3 {
+      flex-basis: 50%;
+
+      .c-tile__flex {
+        align-items: center;
+      }
+
+      .c-tile__container {
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+
+    &--4 {
+      flex-basis: 66.66%;
+    }
+
+    &--6 {
+      flex-basis: 100%;
+    }
   }
 
   &--highlight {
@@ -100,21 +130,33 @@
 }
 
 .c-tile__inner {
-  padding: 50px;
+  padding: 25px;
+
+  @media($bp-larger-than-desktop) {
+    padding: 50px;
+  }
 }
 
 .c-tile__title {
   font-family: DKSaffronWalden;
-  font-size: 60px;
+  font-size: 2em;
   letter-spacing: 2.25px;
-  line-height: 77px;
+  line-height: 1.5em;
+
+  @media($bp-larger-than-desktop) {
+    font-size: 3.33em;
+  }
 }
 
 .c-tile__snippet {
   font-family: LFTEtica-Light;
-  font-size: 25px;
+  font-size: 1em;
   letter-spacing: 0.78px;
   line-height: 30px;
+
+  @media($bp-larger-than-desktop) {
+    font-size: 1.33em;
+  }
 }
 
 .c-tile--quote {
@@ -133,18 +175,28 @@
 
 .c-tile--quote__text {
   font-style: italic;;
-  font-size: 36px;
   color: white;
   letter-spacing: 1.35px;
-  line-height: 48px;
+  line-height: 1.5em;
+
+  font-size: 1.35em;
+
+  @media(min-width: 1300px) {
+    font-size: 2em;
+  }
 }
 
 .c-tile--quote__source {
   margin-top: 15px;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 32px;
   color: white;
   letter-spacing: 1.2px;
-  line-height: 48px;
+  line-height: 1.5em;
+
+  font-size: 1.15em;
+
+  @media(min-width: 1300px) {
+    font-size: 1.55em;
+  }
 }

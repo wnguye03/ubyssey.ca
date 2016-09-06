@@ -4,11 +4,17 @@
   padding: 35px 40px 20px 40px;
 
   font-family: $font-default;
-  font-size: 64px;
+  font-size: 3em;
   text-transform: uppercase;
   color: white;
-  letter-spacing: 1.29px;
+  letter-spacing: 1.3px;
   text-shadow: 0px 2px 1px rgba(0,0,0,0.23);
+
+  line-height: 1.25em;
+
+  @media($bp-larger-than-mobile) {
+    font-size: 3.5em;
+  }
 }
 
 .o-logo--small {
@@ -26,9 +32,13 @@
 }
 
 .o-container {
-  width: 800px;
-  padding: 0 20px;
+  width: 100%;
+  max-width: 840px;
   margin: 0 auto;
+}
+
+.o-wrapper {
+  padding: 0 25px;
 }
 
 .o-welcome-arrow {
@@ -36,7 +46,14 @@
   z-index: 20;
   left: 15%;
   bottom: 25px;
+
+  display: none;
+
+  @media($bp-larger-than-tablet) {
+    display: block;
+  }
 }
+
 
 .o-welcome-arrow__text {
   font-family: $font-default;
