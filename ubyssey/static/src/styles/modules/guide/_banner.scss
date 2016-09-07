@@ -1,9 +1,9 @@
 .c-banner {
-  display: flex;
   position: relative;
   width: 100%;
 
   background-size: cover;
+  background-position: center;
 
   &:before {
     content: '';
@@ -21,7 +21,9 @@
     content: '';
     display: block;
 
-    padding-top: 37%;
+    @media($bp-larger-than-tablet) {
+      padding-top: 37%;
+    }
   }
 
   .o-wrapper {
@@ -31,8 +33,12 @@
 
 .c-banner--welcome {
   background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.jpg');
-  background-position: center;
   align-items: center;
+
+  .c-banner__container {
+    position: absolute;
+    align-items: center;
+  }
 
   &:after {
     padding-top: 140%;
@@ -45,6 +51,17 @@
       padding-top: 37%;
     }
   }
+}
+
+.c-banner__container {
+
+  @media($bp-larger-than-tablet) {
+    position: absolute;
+  }
+
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 .c-banner--welcome__inner {
@@ -98,7 +115,7 @@
 .c-banner--article__headings {
   padding-bottom: 5%;
 
-  @media($bp-larger-than-phablet) {
+  @media($bp-larger-than-tablet) {
     position: absolute;
     bottom: 0;
   }
