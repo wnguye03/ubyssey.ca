@@ -2,7 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Guide to UBC{% if title %} - {{title}}{% endif %}</title>
+  {% if title %}
+  <title>Guide to UBC - {{title}}</title>
+  {% else %}
+  <title>The Ubyssey presents: Guide to UBC</title>
+  {% endif %}
   <meta name="description" content="{{ meta.description }}" />
 
   <!-- Open Graph data -->

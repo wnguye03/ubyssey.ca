@@ -1,5 +1,4 @@
 .c-banner {
-  display: flex;
   position: relative;
   width: 100%;
 
@@ -34,6 +33,10 @@
   background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.jpg');
   align-items: center;
 
+  .c-banner__container {
+    align-items: center;
+  }
+
   &:after {
     padding-top: 140%;
 
@@ -45,6 +48,13 @@
       padding-top: 37%;
     }
   }
+}
+
+.c-banner__container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 .c-banner--welcome__inner {

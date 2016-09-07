@@ -3,18 +3,20 @@
 {% block content %}
 
 <header class="c-banner c-banner--article" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');">
-  <div class="o-container">
-    <div class="o-wrapper">
-      <div class="c-banner--article__inner">
-        <div class="c-banner--article__nav">
-          <nav class="c-nav-top">
-            <a class="o-logo--small" href="{% url 'guide-index' %}"></a>
-            <div class="c-nav-top__message">From your friends at <a href="{% url 'home' %}">The Ubyssey</a></div>
-          </nav>
-        </div>
-        <div class="c-banner--article__headings">
-          <h1 class="c-heading--main">{{ article.headline }}</h1>
-          {% if article.template_fields.subheading %}<h2 class="c-heading--subheading">{{ article.template_fields.subheading }}<h2>{% endif %}
+  <div class="c-banner__container">
+    <div class="o-container">
+      <div class="o-wrapper">
+        <div class="c-banner--article__inner">
+          <div class="c-banner--article__nav">
+            <nav class="c-nav-top">
+              <a class="o-logo--small" href="{% url 'guide-index' %}"></a>
+              <div class="c-nav-top__message">From your friends at <a href="{% url 'home' %}">The Ubyssey</a></div>
+            </nav>
+          </div>
+          <div class="c-banner--article__headings">
+            <h1 class="c-heading--main">{{ article.headline }}</h1>
+            {% if article.template_fields.subheading %}<h2 class="c-heading--subheading">{{ article.template_fields.subheading }}<h2>{% endif %}
+          </div>
         </div>
       </div>
     </div>
