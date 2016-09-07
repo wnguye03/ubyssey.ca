@@ -63,8 +63,10 @@
   </script>
 </head>
 <body>
+  <div class="o-wrapper">
   {% block content %}
   {% endblock %}
+  </div>
   {% include 'guide/footer.html' %}
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
   <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
