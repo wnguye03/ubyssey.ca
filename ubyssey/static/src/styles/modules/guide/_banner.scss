@@ -21,7 +21,9 @@
     content: '';
     display: block;
 
-    padding-top: 37%;
+    @media($bp-larger-than-tablet) {
+      padding-top: 37%;
+    }
   }
 
   .o-wrapper {
@@ -34,6 +36,7 @@
   align-items: center;
 
   .c-banner__container {
+    position: absolute;
     align-items: center;
   }
 
@@ -51,7 +54,11 @@
 }
 
 .c-banner__container {
-  position: absolute;
+
+  @media($bp-larger-than-tablet) {
+    position: absolute;
+  }
+
   height: 100%;
   width: 100%;
   display: flex;
@@ -108,7 +115,7 @@
 .c-banner--article__headings {
   padding-bottom: 5%;
 
-  @media($bp-larger-than-phablet) {
+  @media($bp-larger-than-tablet) {
     position: absolute;
     bottom: 0;
   }
