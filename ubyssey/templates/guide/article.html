@@ -14,7 +14,7 @@
         </div>
         <div class="c-banner--article__headings">
           <h1 class="c-heading--main">{{ article.headline }}</h1>
-          <h2 class="c-heading--subheading">{{ article.template_fields.subheading }}<h2>
+          {% if article.template_fields.subheading %}<h2 class="c-heading--subheading">{{ article.template_fields.subheading }}<h2>{% endif %}
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
 <main class="c-article">
   <div class="o-container">
     <div class="o-wrapper">
-      <p class="c-article__intro">{{ article.template_fields.intro }}</p>
+      {% if article.template_fields.intro %}<p class="c-article__intro">{{ article.template_fields.intro }}</p>{% endif %}
       <div class="c-article__content">
         <div class="advertisement box sidebar">
             <div class="adslot" id="div-gpt-ad-1443288719995-15-{{ article.id }}" data-size="box" data-dfp="News_BoxA_300x250"></div>
