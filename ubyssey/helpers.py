@@ -64,3 +64,21 @@ class ArticleHelper(object):
         """
 
         return Article.objects.raw(query, context)
+
+    @staticmethod
+    def get_reading_list(article, ref=None, dur=None):
+        if ref is not None:
+            if ref == 'frontpage':
+                articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
+                name = 'Top Stories'
+            elif ref == 'popular':
+                articles = Article.objects.get_popular(dur=dur).exclude(pk=article.id)[:5]
+                name = "Most popular this week"
+        else:
+            articles = article.get_related()
+            name = article.section.name
+
+        return {
+            'ids': ",".join([str(a.parent_id) for a in articles]),
+            'name': name
+        }

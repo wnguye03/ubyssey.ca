@@ -100,7 +100,7 @@ class UbysseyTheme(DefaultTheme):
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
             'meta': self.get_article_meta(article),
             'article': article,
-            'reading_list': article.get_reading_list(ref=ref, dur=dur),
+            'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'base_template': 'base.html'
         }
 
