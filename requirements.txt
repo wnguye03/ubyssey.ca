@@ -1,3 +1,4 @@
 dispatch==0.2.22
 django-storages
 boto
+mysql-python
