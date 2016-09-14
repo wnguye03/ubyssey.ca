@@ -14,6 +14,7 @@ from dispatch.apps.frontend.helpers import templates
 
 # Ubyssey imports
 from ubyssey.pages import Homepage
+from ubyssey.helpers import ArticleHelper
 
 # Python imports
 from datetime import datetime
@@ -41,11 +42,11 @@ class UbysseyTheme(DefaultTheme):
 
     def home(self, request):
 
-        frontpage = Article.objects.get_frontpage(sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'))
+        frontpage = ArticleHelper.get_frontpage(sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'))
 
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
 
-        sections = Article.objects.get_sections(exclude=('blog',),frontpage=frontpage_ids)
+        sections = Article.objects.get_sections(exclude=frontpage_ids)
 
         try:
             articles = {
@@ -55,13 +56,13 @@ class UbysseyTheme(DefaultTheme):
                 'bullets': frontpage[4:6],
              }
         except IndexError:
-            raise Exception("Not enough articles to populate the frontpage!")
+            raise Exception('Not enough articles to populate the frontpage!')
 
         component_set = Homepage()
 
         popular = Article.objects.get_popular()[:5]
 
-        blog = Article.objects.get_frontpage(section='blog', limit=5)
+        blog = ArticleHelper.get_frontpage(section='blog', limit=5)
 
         title = "%s - UBC's official student newspaper" % self.SITE_TITLE
 
@@ -99,7 +100,7 @@ class UbysseyTheme(DefaultTheme):
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
             'meta': self.get_article_meta(article),
             'article': article,
-            'reading_list': article.get_reading_list(ref=ref, dur=dur),
+            'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'base_template': 'base.html'
         }
 
