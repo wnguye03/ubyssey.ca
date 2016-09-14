@@ -1,0 +1,2 @@
+dispatch==0.2.22
+mysql-python
