@@ -48,4 +48,16 @@ gulp
 
 ### Running the server
 
+Before starting the server, run `createsuperuser` to make yourself an account for the admin panel:
+
+```bash
+python manage.py createsuperuser
+```
+
+Now start the server!
+
+```bash
+python manage.py runserver
+```
+
 
