@@ -6,7 +6,6 @@ We recommend working inside a virtualenv, but it's not required.
 
 ```bash
 # Create a new folder for the virtual environment
-mkdir ubyssey-dev
 virtualenv ubyssey-dev
 cd ubyssey-dev
 
@@ -17,7 +16,7 @@ source bin/activate
 Clone the `ubyssey-dispatch-theme` repository:
 
 ```bash
-git clone https://github.com/ubyssey-dispatch-theme
+git clone https://github.com/ubyssey/ubyssey-dispatch-theme
 cd ubyssey-dispatch-theme
 ```
 
