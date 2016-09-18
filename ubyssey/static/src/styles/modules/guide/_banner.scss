@@ -38,6 +38,10 @@
   .c-banner__container {
     position: absolute;
     align-items: center;
+
+    .o-container {
+      height: 100%;
+    }
   }
 
   &:after {
