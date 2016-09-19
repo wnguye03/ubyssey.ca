@@ -1,10 +1,9 @@
 from dispatch.apps.content.models import Article
 
 class ArticleHelper(object):
-
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True):
-
+        
         if is_published:
             is_published = 1
         else:
@@ -54,17 +53,14 @@ class ArticleHelper(object):
         elif section_id is not None:
             query_where += " AND section_id = %(section_id)s "
         elif sections:
-            query += """
-                INNER JOIN content_section on content_article.section_id = content_section.id AND FIND_IN_SET(content_section.slug, %(sections)s)
-            """
+            query_where += "AND section_id in (SELECT id FROM content_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         query += query_where + """
             ORDER BY reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
-
         return Article.objects.raw(query, context)
-
+    
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):
         if ref is not None:
