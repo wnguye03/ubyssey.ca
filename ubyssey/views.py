@@ -93,12 +93,15 @@ class UbysseyTheme(DefaultTheme):
             'day_of_week': datetime.now().weekday(),
         }
 
+        rendered = render(request, 'homepage/base.html', context)
+
         end_total = time.clock()
 
         f.write('%f,'%(1000*(end_total-start_total)))
-    
+
         f.close()
-        return render(request, 'homepage/base.html', context)
+
+        return rendered
 
     def article(self, request, section=None, slug=None):
 
