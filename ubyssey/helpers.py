@@ -3,7 +3,7 @@ from dispatch.apps.content.models import Article
 class ArticleHelper(object):
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True):
-        
+
         if is_published:
             is_published = 1
         else:
@@ -36,7 +36,8 @@ class ArticleHelper(object):
                  WHEN 'midday'  THEN IF( CURTIME() >= %(midday_start)s AND CURTIME() < %(midday_end)s, 1, 0 )
                  WHEN 'evening' THEN IF( CURTIME() >= %(evening_start)s, 1, 0 )
                  ELSE 0.5
-            END as reading
+            END as reading,
+            TIMESTAMPDIFF(DAY, published_at, NOW()) <= 14 as age_deadline
             FROM content_article
         """
 
@@ -56,7 +57,7 @@ class ArticleHelper(object):
             query_where += "AND section_id in (SELECT id FROM content_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         query += query_where + """
-            ORDER BY reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
+            ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
         return Article.objects.raw(query, context)
