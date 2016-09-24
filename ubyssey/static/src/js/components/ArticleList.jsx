@@ -121,10 +121,7 @@ var ArticleList = React.createClass({
 
         this.setState({ active: this.state.active.next }, function() {
           this.updateURL();
-
-          if (this.state.active.prev.prev) {
-            window.resetAds('#article-' + this.state.active.data);
-          }
+          window.resetAds('#article-' + this.state.active.data);
         });
     },
     setPrev: function(){
