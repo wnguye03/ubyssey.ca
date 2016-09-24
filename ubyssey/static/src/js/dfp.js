@@ -51,6 +51,8 @@ function DFP(element) {
       var slotName = $(this).attr('id'),
           slot = googletag.defineSlot('/61222807/'+$(this).data('dfp'), sizes[$(this).data('size')], slotName);
 
+      slot.setCollapseEmptyDiv(true);
+
       self.adslots.push([
         slotName,
         slot.addService(googletag.pubads())
