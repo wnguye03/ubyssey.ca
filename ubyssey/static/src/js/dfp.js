@@ -4,10 +4,8 @@ var sizes = {
     'mobile-leaderboard': [300, 50]
 };
 
-var googletag = googletag || {};
-googletag.cmd = googletag.cmd || [];
-
-window.googletag = googletag;
+// Get reference to googletag from window object
+googletag = window.googletag;
 
 function DFP(element) {
 
@@ -16,18 +14,6 @@ function DFP(element) {
   // Set default values
   self.adslots = [];
   self.element = document;
-
-  // Inject GPT script tag into document
-  (function() {
-    var gads = document.getElementById('gpt-script') || document.createElement('script');
-    gads.id = 'gpt-script';
-    gads.async = true;
-    gads.type = 'text/javascript';
-    var useSSL = 'https:' == document.location.protocol;
-    gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
-    var node = document.getElementsByTagName('script')[0];
-    node.parentNode.insertBefore(gads, node);
-  })();
 
   function setup() {
     // Infinite scroll requires SRA
