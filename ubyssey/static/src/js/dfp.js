@@ -1,4 +1,4 @@
-var sizes = {
+var SIZES = {
     'box': [300, 250],
     'leaderboard': [728, 90],
     'mobile-leaderboard': [300, 50]
@@ -35,7 +35,7 @@ function DFP(element) {
 
     $(dfpslots).each(function(){
       var slotName = $(this).attr('id'),
-          slot = googletag.defineSlot('/61222807/'+$(this).data('dfp'), sizes[$(this).data('size')], slotName);
+          slot = googletag.defineSlot('/61222807/'+$(this).data('dfp'), SIZES[$(this).data('size')], slotName);
 
       slot.setCollapseEmptyDiv(true);
 
