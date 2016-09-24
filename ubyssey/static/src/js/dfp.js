@@ -31,18 +31,18 @@ function DFP(element) {
   function collectAds() {
     var dfpslots = $(self.element).find(".adslot").filter(":visible");
 
-    googletag.destroySlots();
-
     $(dfpslots).each(function(){
-      var slotName = $(this).attr('id'),
-          slot = googletag.defineSlot('/61222807/'+$(this).data('dfp'), SIZES[$(this).data('size')], slotName);
+      var slotName = $(this).attr('id')
 
-      slot.setCollapseEmptyDiv(true);
+      var slot = googletag.defineSlot(
+        '/61222807/' + $(this).data('dfp'),
+        SIZES[$(this).data('size')],
+        slotName
+      )
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
 
-      self.adslots.push([
-        slotName,
-        slot.addService(googletag.pubads())
-      ]);
+      self.adslots.push([slotName, slot]);
     });
   }
 
