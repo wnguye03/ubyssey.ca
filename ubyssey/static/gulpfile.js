@@ -5,12 +5,9 @@ var clean = require('gulp-clean');
 var webpack = require('webpack-stream');
 var sass = require('gulp-sass');
 
-var shell = require('gulp-shell');
 var argv = require('minimist')(process.argv.slice(2));
 
 var dev = typeof argv.d !== 'undefined';
-
-var collectstatic = 'python ../../manage.py collectstatic -i node_modules --noinput';
 
 gulp.task('sass', function () {
   return gulp.src('./src/styles/**/*.scss')
@@ -39,8 +36,6 @@ gulp.task('clean', ['webpack'], function() {
 		.pipe(clean());
 });
 
-gulp.task('static', ['webpack', 'sass', 'copy-images', 'copy-fonts'], shell.task(collectstatic));
-
-gulp.task('default', ['webpack', 'sass', 'copy-images', 'copy-fonts', 'static']);
+gulp.task('default', ['webpack', 'sass', 'copy-images', 'copy-fonts']);
 
 gulp.task('build', ['webpack', 'sass', 'copy-images', 'copy-fonts', 'clean']);
