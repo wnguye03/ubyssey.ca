@@ -82,6 +82,14 @@ div.article-archive {
   border-top: 1px solid #E6E6E6;
   margin-bottom: 20px;
 
+  padding-left: 15px;
+  padding-right: 15px;
+  
+  @media($bp-larger-than-phablet) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   div.filter {
     font-size: $font-size-14px;
     h3 {
@@ -144,7 +152,7 @@ div.article-archive {
     flex: 0 0 33.33%;
     -webkit-flex: 0 0 33.33%;
     //float: left;
-      
+
       // added this v
     @media($bp-larger-than-phablet) {
         min-width: 33.33%
