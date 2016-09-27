@@ -33,7 +33,7 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
 	});
 });
 
-p.task('sass:build', function () {
+gulp.task('sass:build', function () {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/css/'));
