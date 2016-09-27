@@ -33,13 +33,13 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
 	});
 });
 
-gulp.task('sass:build', function () {
+gulp.task('sass:build', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/css/'));
 });
 
-gulp.task('sass:build-dev', function () {
+gulp.task('sass:build-dev', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
@@ -59,6 +59,11 @@ gulp.task('copy:fonts', ['clean:fonts'], function() {
 
 gulp.task('clean:js', function() {
 	return gulp.src('./dist/js/', {read: false})
+		.pipe(clean());
+});
+
+gulp.task('clean:css', function() {
+	return gulp.src('./dist/css/', {read: false})
 		.pipe(clean());
 });
 
