@@ -30,7 +30,7 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
     gutil.log('[webpack:build-dev]', stats.toString({ colors: true }));
 
     callback();
-	});
+  });
 });
 
 gulp.task('sass:build', ['clean:css'], function() {
@@ -58,23 +58,23 @@ gulp.task('copy:fonts', ['clean:fonts'], function() {
 });
 
 gulp.task('clean:js', function() {
-	return gulp.src('./dist/js/', {read: false})
-		.pipe(clean());
+  return gulp.src('./dist/js/', {read: false})
+    .pipe(clean());
 });
 
 gulp.task('clean:css', function() {
-	return gulp.src('./dist/css/', {read: false})
-		.pipe(clean());
+  return gulp.src('./dist/css/', {read: false})
+    .pipe(clean());
 });
 
 gulp.task('clean:images', function() {
-	return gulp.src('./dist/images/', {read: false})
-		.pipe(clean());
+  return gulp.src('./dist/images/', {read: false})
+    .pipe(clean());
 });
 
 gulp.task('clean:fonts', function() {
-	return gulp.src('./dist/fonts/', {read: false})
-		.pipe(clean());
+  return gulp.src('./dist/fonts/', {read: false})
+    .pipe(clean());
 });
 
 gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts']);
