@@ -79,4 +79,11 @@ gulp.task('clean:fonts', function() {
 
 gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts']);
 
+gulp.task('watch', ['default'], function() {
+  gulp.watch(['./src/js/**/*'],     ['webpack:build-dev']);
+  gulp.watch(['./src/styles/**/*'], ['sass:build-dev']);
+  gulp.watch(['./src/images/**/*'], ['copy:images']);
+  gulp.watch(['./src/fonts/**/*'],  ['copy:fonts']);
+});
+
 gulp.task('default', ['webpack:build-dev', 'sass:build-dev', 'copy:images', 'copy:fonts']);
