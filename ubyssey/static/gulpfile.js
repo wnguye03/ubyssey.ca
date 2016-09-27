@@ -3,79 +3,53 @@ var gutil = require('gulp-util');
 var clean = require('gulp-clean');
 
 var webpack = require('webpack');
-//var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.js');
+var webpackProdConfig = require('./webpack.config.js');
+var webpackDevConfig = require('./webpack.dev.config.js');
 
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
-var argv = require('minimist')(process.argv.slice(2));
-
-var dev = typeof argv.d !== 'undefined';
-
-gulp.task('sass', function () {
+gulp.task('sass:build', function () {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/css/'));
 });
 
-gulp.task('webpack', function() {
-  return gulp.src('./src/js/**/*.jsx')
-    .pipe(webpack( require('./webpack.config.js') ))
-    .pipe(gulp.dest('./dist/js/'));
+gulp.task('sass:build-dev', function () {
+  return gulp.src('./src/styles/**/*.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./dist/css/'));
 });
 
-gulp.task('copy-images', function() {
+gulp.task('copy:images', ['clean:images'], function() {
   return gulp.src('./src/images/**/*')
     .pipe(gulp.dest('./dist/images/'));
 });
 
-gulp.task('copy-fonts', function() {
+gulp.task('copy:fonts', ['clean:fonts'], function() {
   return gulp.src('./src/fonts/**/*')
     .pipe(gulp.dest('./dist/fonts/'));
 });
 
-gulp.task('clean', function() {
+gulp.task('clean:js', function() {
 	return gulp.src('./dist/js/', {read: false})
 		.pipe(clean());
 });
 
-gulp.task('default', ['webpack:build-dev', 'sass', 'copy-images', 'copy-fonts']);
-
-gulp.task('build', ['webpack:build', 'sass', 'copy-images', 'copy-fonts']);
-
-gulp.task('prod-env', function() {
-    return process.env.NODE_ENV = 'development';
+gulp.task('clean:images', function() {
+	return gulp.src('./dist/images/', {read: false})
+		.pipe(clean());
 });
 
-gulp.task('dev-env', function() {
-    return process.env.NODE_ENV = 'production';
+gulp.task('clean:fonts', function() {
+	return gulp.src('./dist/fonts/', {read: false})
+		.pipe(clean());
 });
 
-// The development server (the recommended option for development)
-// gulp.task('default', ['webpack-dev-server']);
-
-// Build and watch cycle (another option for development)
-// Advantage: No server required, can run app from filesystem
-// Disadvantage: Requests are not blocked until bundle is available,
-//               can serve an old app on refresh
-// gulp.task('build-dev', ['webpack:build-dev'], function() {
-// 	gulp.watch(["app/**/*"], ["webpack:build-dev"]);
-// });
-
-gulp.task('webpack:build', ['clean'], function(callback) {
-	var prodConfig = Object.create(webpackConfig);
-	prodConfig.plugins = [
-		new webpack.DefinePlugin({
-			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
-			}
-		}),
-		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.UglifyJsPlugin()
-	];
-
-	// run webpack
-	webpack(prodConfig, function(err, stats) {
+gulp.task('webpack:build', ['clean:js'], function(callback) {
+	webpack(webpackProdConfig, function(err, stats) {
 		if (err) {
       throw new gutil.PluginError('webpack:build', err);
     }
@@ -86,24 +60,8 @@ gulp.task('webpack:build', ['clean'], function(callback) {
 	});
 });
 
-// modify some webpack config options
-var devConfig = Object.create(webpackConfig);
-devConfig.devtool = 'sourcemap';
-devConfig.debug = true;
-
-devConfig.plugins = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      'NODE_ENV': JSON.stringify('development')
-    }
-  })
-];
-
-// create a single instance of the compiler to allow caching
-var devCompiler = webpack(devConfig);
-
-gulp.task('webpack:build-dev', ['clean'], function(callback) {
-	devCompiler.run(function(err, stats) {
+gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
+	webpack(webpackDevConfig, function(err, stats) {
 		if (err) {
       throw new gutil.PluginError('webpack:build-dev', err);
     }
@@ -114,20 +72,6 @@ gulp.task('webpack:build-dev', ['clean'], function(callback) {
 	});
 });
 
-// gulp.task('webpack-dev-server', function(callback) {
-// 	// modify some webpack config options
-// 	var devServerConfig = Object.create(webpackConfig);
-// 	myConfig.devtool = 'eval';
-// 	myConfig.debug = true;
-//
-// 	// Start a webpack-dev-server
-// 	new WebpackDevServer(webpack(myConfig), {
-// 		publicPath: '/' + myConfig.output.publicPath,
-// 		stats: { colors: true }
-// 	}).listen(8080, 'localhost', function(err) {
-// 		if (err) {
-//       throw new gutil.PluginError("webpack-dev-server", err);
-//     }
-// 		gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
-// 	});
-// });
+gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts']);
+
+gulp.task('default', ['webpack:build-dev', 'sass:build-dev', 'copy:images', 'copy:fonts']);
