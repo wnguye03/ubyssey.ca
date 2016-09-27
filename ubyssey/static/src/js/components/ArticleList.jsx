@@ -178,8 +178,6 @@ var ArticleList = React.createClass({
             return (<Article articleId={article.id} html={article.html} key={article.id} />);
         });
 
-        console.log('active article', this.state.active.data);
-
         return (
             <div>
                 <ArticleHeader name={this.props.name} headline={this.getArticle(this.state.active.data).headline} />
