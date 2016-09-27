@@ -161,7 +161,6 @@ var ArticleList = React.createClass({
         var articles = this.state.articles;
         articles.push(data);
 
-
         this.setState({ loading: false, articles: articles }, function(){
 
             this.articlesTable[data.id] = articles.length - 1;
@@ -177,7 +176,6 @@ var ArticleList = React.createClass({
         var articles = this.state.articles.map(function(article, i){
             return (<Article articleId={article.id} html={article.html} key={article.id} />);
         });
-
         return (
             <div>
                 <ArticleHeader name={this.props.name} headline={this.getArticle(this.state.active.data).headline} />
