@@ -43,8 +43,6 @@ var ArticleList = React.createClass({
 
     },
     getArticle: function(id){
-      console.log('getting article', id);
-      console.log(this.articlesTable);
         return this.state.articles[this.articlesTable[id]];
     },
     getArticlePoints: function(){
@@ -153,31 +151,24 @@ var ArticleList = React.createClass({
         return this.loaded.indexOf(id) !== -1;
     },
     loadArticle: function(article_id){
-      console.log('Loading article ' + article_id);
         this.setState({ loading: true });
         dispatch.articleRendered(article_id, function(data){
-
-          console.log('loaded 1!', data);
-
             this.loaded.push(parseInt(article_id));
             this.renderArticle(data);
-
-            console.log('loaded 2!', this.loaded);
-
         }.bind(this));
     },
     renderArticle: function(data){
         var articles = this.state.articles;
         articles.push(data);
 
-        this.articlesTable[data.id] = articles.length - 1;
 
         this.setState({ loading: false, articles: articles }, function(){
+
+            this.articlesTable[data.id] = articles.length - 1;
 
             if(!this.afterLoad){
                 return
             }
-
             this.afterLoad();
             this.afterLoad = null;
         });
