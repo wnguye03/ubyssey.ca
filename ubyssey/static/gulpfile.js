@@ -9,7 +9,31 @@ var webpackDevConfig = require('./webpack.dev.config.js');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('sass:build', function () {
+gulp.task('webpack:build', ['clean:js'], function(callback) {
+  webpack(webpackProdConfig, function(err, stats) {
+    if (err) {
+      throw new gutil.PluginError('webpack:build', err);
+    }
+
+    gutil.log('[webpack:build]', stats.toString({ colors: true }));
+
+    callback();
+  });
+});
+
+gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
+  webpack(webpackDevConfig, function(err, stats) {
+    if (err) {
+      throw new gutil.PluginError('webpack:build-dev', err);
+    }
+
+    gutil.log('[webpack:build-dev]', stats.toString({ colors: true }));
+
+    callback();
+	});
+});
+
+p.task('sass:build', function () {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/css/'));
@@ -46,30 +70,6 @@ gulp.task('clean:images', function() {
 gulp.task('clean:fonts', function() {
 	return gulp.src('./dist/fonts/', {read: false})
 		.pipe(clean());
-});
-
-gulp.task('webpack:build', ['clean:js'], function(callback) {
-	webpack(webpackProdConfig, function(err, stats) {
-		if (err) {
-      throw new gutil.PluginError('webpack:build', err);
-    }
-
-		gutil.log('[webpack:build]', stats.toString({ colors: true }));
-
-		callback();
-	});
-});
-
-gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
-	webpack(webpackDevConfig, function(err, stats) {
-		if (err) {
-      throw new gutil.PluginError('webpack:build-dev', err);
-    }
-
-		gutil.log('[webpack:build-dev]', stats.toString({ colors: true }));
-
-		callback();
-	});
 });
 
 gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts']);
