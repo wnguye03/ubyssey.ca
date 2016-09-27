@@ -1,7 +1,4 @@
-from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.conf.urls.static import static
-
 from views import UbysseyTheme
 
 theme = UbysseyTheme()
@@ -16,4 +13,4 @@ theme_urls = patterns('',
     url(r'^guide/(?P<slug>[-\w]+)/$', theme.guide_article, name='guide-article'),
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
