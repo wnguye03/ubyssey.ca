@@ -15,5 +15,14 @@ module.exports = {
       loaders: [
         {test: /\.jsx$/, include: __dirname + '/src/js', loader: 'babel-loader'}
       ]
-    }
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify('production')
+        }
+      }),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ]
 };
