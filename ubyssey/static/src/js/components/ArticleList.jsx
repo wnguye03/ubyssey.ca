@@ -161,9 +161,9 @@ var ArticleList = React.createClass({
         var articles = this.state.articles;
         articles.push(data);
 
-        this.setState({ loading: false, articles: articles }, function(){
+        this.articlesTable[data.id] = articles.length - 1;
 
-            this.articlesTable[data.id] = articles.length - 1;
+        this.setState({ loading: false, articles: articles }, function(){
 
             if(!this.afterLoad){
                 return
