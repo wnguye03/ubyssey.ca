@@ -87,11 +87,32 @@ h1.headline {
   margin: 0;
 }
 
-div.article-content p, div.article-content div.caption, div.article-content h1, div.article-content h2, div.article-content h3 {
-  padding: 0 15px;
-  @media($bp-larger-than-tablet){
-    padding: 0;
-    max-width: 585px;
+div.article-content {
+  p,
+  div.caption,
+  h1,
+  h2,
+  h3,
+  ul {
+    padding-right: $article-content-div-child-padding;
+  }
+  p,
+  div.caption,
+  h1,
+  h2,
+  h3 {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: $article-content-div-child-padding;
+    @media($bp-larger-than-tablet){
+      padding: 0;
+      max-width: 585px;
+    }
+  }
+
+  ul {
+    padding-left: $article-content-ul-padding-left;
+    max-width: 585px - $article-content-ul-padding-left;
   }
 }
 
