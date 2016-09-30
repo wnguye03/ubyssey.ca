@@ -1,4 +1,4 @@
-from dispatch.apps.content.models import Article
+from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
 
@@ -63,7 +63,26 @@ class ArticleHelper(object):
             LIMIT %(limit)s
         """
 
-        return Article.objects.raw(query, context)
+        return list(Article.objects.raw(query, context))
+
+    @staticmethod
+    def get_frontpage_sections(exclude=[]):
+
+        results = {}
+
+        sections = Section.objects.all()
+
+        for section in sections:
+            articles = Article.objects.exclude(id__in=exclude).filter(section=section,is_published=True).order_by('-published_at').select_related()[:5]
+            if len(articles):
+                results[section.slug] = {
+                    'first': articles[0],
+                    'stacked': articles[1:3],
+                    'bullets': articles[3:],
+                    'rest': articles[1:4],
+                }
+
+        return results
 
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):

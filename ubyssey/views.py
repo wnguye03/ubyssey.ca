@@ -46,7 +46,7 @@ class UbysseyTheme(DefaultTheme):
 
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
 
-        sections = Article.objects.get_sections(exclude=frontpage_ids)
+        sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
         try:
             articles = {
@@ -76,7 +76,7 @@ class UbysseyTheme(DefaultTheme):
             'title': "%s - UBC's official student newspaper" % self.SITE_TITLE,
             'articles': articles,
             'sections': sections,
-            'popular':  popular,
+            'popular': popular,
             'blog': blog,
             'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
