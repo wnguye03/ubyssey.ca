@@ -18,7 +18,6 @@ from ubyssey.helpers import ArticleHelper
 
 # Python imports
 from datetime import datetime
-import time
 
 class UbysseyTheme(DefaultTheme):
 
