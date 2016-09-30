@@ -42,16 +42,8 @@ class UbysseyTheme(DefaultTheme):
 
 
     def home(self, request):
-        f = open('querytime.csv','a')
-        f.write('\n')
 
-        start_total = time.clock()
-
-        start = time.clock()
         frontpage = ArticleHelper.get_frontpage(sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'))
-        end = time.clock()
-
-        f.write('%f,'%(1000*(end-start)))
 
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
 
@@ -71,10 +63,7 @@ class UbysseyTheme(DefaultTheme):
 
         popular = Article.objects.get_popular()[:5]
 
-        start = time.clock()
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
-        end = time.clock()
-        f.write('%f,'%(1000*(end-start)))
 
         title = "%s - UBC's official student newspaper" % self.SITE_TITLE
 
@@ -94,15 +83,7 @@ class UbysseyTheme(DefaultTheme):
             'day_of_week': datetime.now().weekday(),
         }
 
-        rendered = render(request, 'homepage/base.html', context)
-
-        end_total = time.clock()
-
-        f.write('%f,'%(1000*(end_total-start_total)))
-
-        f.close()
-
-        return rendered
+        return render(request, 'homepage/base.html', context)
 
     def article(self, request, section=None, slug=None):
 
