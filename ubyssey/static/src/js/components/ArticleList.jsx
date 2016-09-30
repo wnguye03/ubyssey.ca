@@ -36,7 +36,6 @@ var ArticleList = React.createClass({
             window.articleHeader = false;
             $('.header-article').hide();
             // Only display site header if width > $bp-larger-than-tablet
-            console.log($(window).width());
             if($(window).width() > 960) {
               $('.header-site').show();
             }
@@ -81,7 +80,7 @@ var ArticleList = React.createClass({
             if(bottomPos > points.end)
                 this.prepNext();
 
-            if(topPos > points.end + 50 || (points.height < windowHeight && bottomPos > (documentHeight - 50)))
+            if(topPos > points.end - ((windowHeight / 2) - 50) || (points.height < windowHeight && bottomPos > (documentHeight - 50)))
                 this.setNext();
 
             if(bottomPos < points.top - 50)
@@ -92,20 +91,16 @@ var ArticleList = React.createClass({
         $(window).scroll(updateScroll);
 
     },
-    setPrev: function(){
-        if(!this.state.active.prev)
-            return;
-
-        this.setState({ active: this.state.active.prev }, this.updateURL);
-    },
     prepNext: function(){
-        if(!this.state.active.next || !this.state.active.next.next)
-            return
-        if(!this.isLoaded(this.state.active.next.next.data))
-            this.loadNext(this.state.active.next.next.data);
+        if(!this.state.active.next || !this.state.active.next.next) {
+          return;
+        }
+
+        if(!this.isLoaded(this.state.active.next.next.data)) {
+          this.loadNext(this.state.active.next.next.data);
+        }
     },
     setNext: function(){
-
         if(!this.state.active.next)
             return;
 
@@ -123,10 +118,25 @@ var ArticleList = React.createClass({
         // Google analytics pageview
         ga('set', 'dimension1', "Peter Siemens");
         ga('send', 'pageview');
-        // refresh ads
-        googletag.pubads().refresh();
 
-        this.setState({ active: this.state.active.next }, this.updateURL);
+        this.setState({ active: this.state.active.next }, function() {
+          this.updateURL();
+          window.resetAds('#article-' + this.state.active.data);
+        });
+    },
+    setPrev: function(){
+        if(!this.state.active.prev)
+            return;
+
+        this.setState({ active: this.state.active.prev }, function() {
+          this.updateURL();
+
+          if (this.state.active.prev) {
+            window.resetAds('#article-' + this.state.active.data);
+          } else {
+            window.resetAds(document);
+          }
+        });
     },
     updateURL: function(){
         history.pushState(null, null, this.getArticle(this.state.active.data).url);
@@ -151,9 +161,9 @@ var ArticleList = React.createClass({
         var articles = this.state.articles;
         articles.push(data);
 
-        this.setState({ loading: false, articles: articles }, function(){
+        this.articlesTable[data.id] = articles.length - 1;
 
-            this.articlesTable[data.id] = articles.length - 1;
+        this.setState({ loading: false, articles: articles }, function(){
 
             if(!this.afterLoad){
                 return

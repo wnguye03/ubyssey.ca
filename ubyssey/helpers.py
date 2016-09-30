@@ -1,4 +1,4 @@
-from dispatch.apps.content.models import Article
+from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
     @staticmethod
@@ -29,8 +29,7 @@ class ArticleHelper(object):
         context.update(reading_times)
 
         query = """
-        SELECT *,
-            TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
+            SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
             CASE reading_time
                  WHEN 'morning' THEN IF( CURTIME() < %(morning_start)s, 1, 0 )
                  WHEN 'midday'  THEN IF( CURTIME() >= %(midday_start)s AND CURTIME() < %(midday_end)s, 1, 0 )
@@ -60,8 +59,28 @@ class ArticleHelper(object):
             ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
-        return Article.objects.raw(query, context)
-    
+
+        return list(Article.objects.raw(query, context))
+
+    @staticmethod
+    def get_frontpage_sections(exclude=[]):
+
+        results = {}
+
+        sections = Section.objects.all()
+
+        for section in sections:
+            articles = Article.objects.exclude(id__in=exclude).filter(section=section,is_published=True).order_by('-published_at').select_related()[:5]
+            if len(articles):
+                results[section.slug] = {
+                    'first': articles[0],
+                    'stacked': articles[1:3],
+                    'bullets': articles[3:],
+                    'rest': articles[1:4],
+                }
+
+        return results
+
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):
         if ref is not None:

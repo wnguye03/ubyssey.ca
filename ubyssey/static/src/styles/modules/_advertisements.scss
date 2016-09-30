@@ -8,13 +8,25 @@
 
   // Desktop leaderboard ad
   &.leaderboard {
-    &.homepage {
-      padding-bottom: 0;
+    display: none;
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+
+    .adslot {
+      width: 728px;
+      height: 90px;
+      margin-bottom: 15px;
     }
 
-    display: none;
-    padding: 25px 0;
-    text-align: center;
+    &.homepage {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      .adslot {
+        margin-top: 25px;
+      }
+    }
 
     @media($bp-larger-than-mobile){
       display: block;
@@ -27,11 +39,6 @@
       &.homepage {
         display: block;
       }
-    }
-
-    .adslot {
-      width: 728px;
-      height: 90px;
     }
   }
 
@@ -51,28 +58,28 @@
     &.sidebar {
       padding: 0;
     }
-	
+
 		&.inline {
 			display: block;
 			margin-top: 10px;
 			margin-bottom: 10px;
-				
+
 			&.center {
 				margin: 0 auto;
 				@media($bp-larger-than-tablet) {
 					margin: 40px 0;
 					max-width: 585px;
 				}
-				
+
 				&.fw-story {
 					margin: 0 auto;
 				}
 			}
-		
+
 			&.left {
 				float: left;
 			}
-		
+
 			&.right {
 				float: right;
 			}
@@ -97,7 +104,7 @@
       }
       &.top {
         display: none;
-      }  
+      }
     }
 
     @media($bp-larger-than-mobile){
