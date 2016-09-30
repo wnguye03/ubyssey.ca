@@ -63,7 +63,7 @@ class ArticleHelper(object):
             LIMIT %(limit)s
         """
 
-        return Article.objects.raw(query, context)
+        return list(Article.objects.raw(query, context))
 
     @staticmethod
     def get_frontpage_sections(exclude=[]):
