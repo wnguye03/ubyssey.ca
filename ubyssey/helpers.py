@@ -2,7 +2,7 @@ from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
     @staticmethod
-    def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True):
+    def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
             is_published = 1
@@ -23,7 +23,8 @@ class ArticleHelper(object):
             'excluded': ",".join(map(str, exclude)),
             'sections': ",".join(sections),
             'limit': limit,
-            'is_published': is_published
+            'is_published': is_published,
+			'max_days': max_days
         }
 
         context.update(reading_times)
@@ -36,7 +37,7 @@ class ArticleHelper(object):
                  WHEN 'evening' THEN IF( CURTIME() >= %(evening_start)s, 1, 0 )
                  ELSE 0.5
             END as reading,
-            TIMESTAMPDIFF(DAY, published_at, NOW()) <= 14 as age_deadline
+            TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
             FROM content_article
         """
 
