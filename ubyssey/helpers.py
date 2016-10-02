@@ -24,7 +24,7 @@ class ArticleHelper(object):
             'sections': ",".join(sections),
             'limit': limit,
             'is_published': is_published,
-			'max_days': max_days
+            'max_days': max_days
         }
 
         context.update(reading_times)
