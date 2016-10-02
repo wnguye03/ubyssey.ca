@@ -1,9 +1,8 @@
 from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
-
     @staticmethod
-    def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True):
+    def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
             is_published = 1
@@ -24,20 +23,21 @@ class ArticleHelper(object):
             'excluded': ",".join(map(str, exclude)),
             'sections': ",".join(sections),
             'limit': limit,
-            'is_published': is_published
+            'is_published': is_published,
+			'max_days': max_days
         }
 
         context.update(reading_times)
 
         query = """
-        SELECT *,
-            TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
+            SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
             CASE reading_time
                  WHEN 'morning' THEN IF( CURTIME() < %(morning_start)s, 1, 0 )
                  WHEN 'midday'  THEN IF( CURTIME() >= %(midday_start)s AND CURTIME() < %(midday_end)s, 1, 0 )
                  WHEN 'evening' THEN IF( CURTIME() >= %(evening_start)s, 1, 0 )
                  ELSE 0.5
-            END as reading
+            END as reading,
+            TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
             FROM content_article
         """
 
@@ -54,12 +54,10 @@ class ArticleHelper(object):
         elif section_id is not None:
             query_where += " AND section_id = %(section_id)s "
         elif sections:
-            query += """
-                INNER JOIN content_section on content_article.section_id = content_section.id AND FIND_IN_SET(content_section.slug, %(sections)s)
-            """
+            query_where += "AND section_id in (SELECT id FROM content_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         query += query_where + """
-            ORDER BY reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
+            ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
 
