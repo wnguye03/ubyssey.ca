@@ -42,7 +42,10 @@ class UbysseyTheme(DefaultTheme):
 
     def home(self, request):
 
-        frontpage = ArticleHelper.get_frontpage(sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'))
+        frontpage = ArticleHelper.get_frontpage(
+            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'),
+            max_days=7
+        )
 
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
 
