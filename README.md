@@ -43,6 +43,19 @@ Install mysql:
 brew install mysql
 ```
 
+Now run the server and create a fresh database:
+
+```bash
+mysql.server start
+echo "CREATE DATABASE ubyssey" | mysql -u root
+```
+
+Finally, use django's `migrate` command to populate the database schema:
+
+```bash
+python manage.py migrate
+```
+
 ### Static files
 
 Install the required Node packages with npm:
