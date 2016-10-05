@@ -22,6 +22,11 @@ cd ubyssey-dispatch-theme
 
 Install the required Python packages with pip:
 
+_If you dont' have pip installed, run this command:_
+```bash
+sudo easy_install pip
+```
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -32,7 +37,7 @@ Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/set
 
 Dispatch requires a MySQL database to store information. If you're using a Mac, install mysql with Homebrew. 
 
-If you don't have Homebrew installed, run this command:
+_If you don't have Homebrew installed, run this command:_
 
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
