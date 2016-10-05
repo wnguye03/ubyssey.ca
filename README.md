@@ -26,8 +26,22 @@ Install the required Python packages with pip:
 pip install -r requirements.txt
 ```
 
-*INSERT PROJECT SETTINGS & DATABASE INSTRUCTIONS*
+Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
+### Database
+
+Dispatch requires a MySQL database to store information. If you're using a Mac, install mysql with Homebrew. 
+
+If you don't have Homebrew installed, run this command:
+
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+Install mysql:
+
+```bash
+brew install mysql
+```
 
 ### Static files
 
