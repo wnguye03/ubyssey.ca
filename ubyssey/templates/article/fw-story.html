@@ -60,21 +60,9 @@
 {% block banner_ad %}{% endblock %}
 {% endif %}
 
+
 {% block pre-content %}
-    <div class="article-social">
-        <ul class="social left">
-            {% comment %}<li><a href="#" class="open-comments"><i class="fa fa-comment"></i><span>{{ article.comment_count }} comments</span></a></li>{% endcomment %}
-            <li><a href="#" class="facebook" data-url="{{ article.get_absolute_url }}"><i class="fa fa-facebook-square"></i><span>Share</span></a></li>
-            <li><a href="#" class="twitter" data-url="{{ article.get_absolute_url }}" data-title="{{ article.headline }}"><i class="fa fa-twitter"></i><span>Tweet</span></a></li>
-            {% comment %}<li><a href="#"><i class="fa fa-envelope"></i><span>Email</span></a></li>{% endcomment %}
-        </ul>
-    </div>
 {% endblock %}
 
 {% block right-column %}
-									<div class="sidebar">
-                    <div class="advertisement box fw-story top sidebar">
-                        <div class="adslot" id="div-gpt-ad-1443288719995-15-{{ article.id }}" data-size="box" data-dfp="News_BoxA_300x250"></div>
-                    </div>
-									</div>
 {% endblock %}
