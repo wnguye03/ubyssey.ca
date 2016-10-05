@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% extends}
+{% load staticfiles %}
+{% block header %}
+	{% include 'headers/topbar.html' with article=article section=article.section.slug %}
+	{% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+    <main class="archive">
+        <div class="container padded">
+			<h1>Ubyssey Archive</h1>
+			<div class="year-select">
+				<label>Search articles by year</label>
+				<select id="year-dropdown">
+					{% for year in years %}
+					<option value="{{year}}">{{year}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</main>
+{% endblock %}

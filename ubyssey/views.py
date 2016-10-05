@@ -84,7 +84,6 @@ class UbysseyTheme(DefaultTheme):
             'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
-
         return render(request, 'homepage/base.html', context)
 
     def article(self, request, section=None, slug=None):
@@ -217,6 +216,18 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'author/articles.html', context)
 
+    def archive(self, request):
+        current_year = datetime.today().year
+        #All years back to 2010 (or whenever earliest articles are from)
+        years = []
+        while current_year >= 2010:
+            years.append(current_year)
+            current_year -= 1
+        context = {
+            'years': years
+        }
+        return render(request, 'archive.html', context)
+        
     def search(self, request):
 
         query = request.GET.get('q', None)
