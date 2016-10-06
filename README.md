@@ -2,7 +2,7 @@
 
 ## Installation
 
-If you're using a Mac and want to make the setup process easier, make sure you have homebrew installed:
+If you're running OSX and want to make the setup process easier, make sure you have Homebrew installed:
 
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
