@@ -8,9 +8,17 @@ If you're running OSX and want to make the setup process easier, make sure you h
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
+You should also install pip if you haven't already:
+```bash
+sudo easy_install pip
+```
+
 We recommend working inside a virtualenv, but it's not required.
 
 ```bash
+# Install virtualenv if you don't have it
+pip install virtualenv
+
 # Create a new folder for the virtual environment
 virtualenv ubyssey-dev
 cd ubyssey-dev
@@ -28,11 +36,6 @@ cd ubyssey-dispatch-theme
 
 Install the required Python packages with pip:
 
-_If you dont' have pip installed, run this command:_
-```bash
-sudo easy_install pip
-```
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -48,8 +51,6 @@ Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/set
 ### Database
 
 Dispatch requires a MySQL database to store information. If you're using a Mac, install mysql with Homebrew. 
-
-Install mysql:
 
 ```bash
 brew install mysql
