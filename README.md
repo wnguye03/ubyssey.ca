@@ -2,6 +2,12 @@
 
 ## Installation
 
+If you're using a Mac and want to make the setup process easier, make sure you have homebrew installed:
+
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
 We recommend working inside a virtualenv, but it's not required.
 
 ```bash
@@ -31,17 +37,18 @@ sudo easy_install pip
 pip install -r requirements.txt
 ```
 
+_Note: you might get an error saying that `libjpeg` is required. You can install it with Homebrew:_
+
+```bash
+brew install libjpeg zlib
+```
+
 Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
 ### Database
 
 Dispatch requires a MySQL database to store information. If you're using a Mac, install mysql with Homebrew. 
 
-_If you don't have Homebrew installed, run this command:_
-
-```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
 Install mysql:
 
 ```bash
