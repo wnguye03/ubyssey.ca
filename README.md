@@ -19,7 +19,7 @@ We recommend working inside a virtualenv, but it's not required.
 # Install virtualenv if you don't have it
 pip install virtualenv
 
-# Create a new folder for the virtual environment
+# Create a new virtual environment
 virtualenv ubyssey-dev
 cd ubyssey-dev
 
