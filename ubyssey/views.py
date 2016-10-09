@@ -135,7 +135,7 @@ class UbysseyTheme(DefaultTheme):
 
         context = {
             'meta': {
-                'title': section.name
+                'title': section.name,
             },
             'section': section,
             'type': 'section',
@@ -217,15 +217,49 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'author/articles.html', context)
 
     def archive(self, request):
+            
         current_year = datetime.today().year
-        #All years back to 2010 (or whenever earliest articles are from)
         years = []
-        while current_year >= 2010:
+        while current_year >= 2011:
             years.append(current_year)
             current_year -= 1
+            
+        sections = Section.objects.all();
+            
         context = {
+            'sections': sections,
             'years': years
         }
+            
+        query = request.GET.get('q', None)
+        section = request.GET.get('section', None)
+        year = request.GET.get('year', None)
+        if year is None:
+            year = years[0]
+
+        article_list = Article.objects.filter(is_published=True, published_at__icontains=str(year))
+        if query == "":
+            query = None
+        if query is not None:
+            article_list.filter(headline__icontains=query)
+         
+        if section is not None:
+            section_id = Section.objects.get(name=section).id
+            article_list.filter(section=section_id)
+
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+        page = request.GET.get('page')
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+               # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+        context['articles'] = articles
+        context['count'] = paginator.count
+        
         return render(request, 'archive.html', context)
         
     def search(self, request):

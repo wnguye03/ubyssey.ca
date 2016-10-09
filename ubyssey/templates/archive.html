@@ -9,13 +9,51 @@
     <main class="archive">
         <div class="container padded">
 			<h1>Ubyssey Archive</h1>
-			<div class="year-select">
-				<label>Search articles by year</label>
-				<select id="year-dropdown">
-					{% for year in years %}
-					<option value="{{year}}">{{year}}</option>
+			<div class="bars">
+				<div class="bar sidebar">
+					<div class="filters">
+						<ul>
+							<li><h3>Year</h3></li>
+						{% for year in years %}
+							<li><a href="{% url 'archive' %}?year={{ year}}{% if q %}&q={{ q }}{% endif %}{% if section %}&section={{ section }}{% endif %}">{{ year }}</a></li>
+						{% endfor %}
+						</ul>
+					</div>
+					<div class="filters">
+						<ul>
+							<li><h3>Section</h3></li>
+						{% for section in sections %}
+							<li><a href="{% url 'archive' %}?year={{ year}}{% if q %}&q={{ q }}{% endif %}section={{ section }}">{{ section }}</a></li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+				<div class="bar mainbar">
+					<div class="article-search">
+						<form method="get" action="/archive/">
+							<label><i class="fa fa-search"></i></label>
+							<input name="q" id="author-search" type="text"></input>
+						</form>
+					</div>	
+                {% if articles|length > 0 %}
+					<div class="article-archive">
+					{% for article in articles %}
+						<article>
+						{% if article.featured_image %}
+							<a href="{{ article.get_absolute_url }}" class="image">
+								<img src="{{ article.featured_image.image.get_absolute_url }}" />
+							</a>
+						{% endif %}
+							<a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
+							<span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
+							<p class="snippet">{{ article.snippet|safe }}</p>
+						</article>
 					{% endfor %}
-				</select>
+					</div>
+				{% else %}
+					<div class="no-results">No articles found.</div>
+				{% endif %}
+				</div>
 			</div>
 		</div>
 	</main>
