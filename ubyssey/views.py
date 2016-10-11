@@ -224,7 +224,7 @@ class UbysseyTheme(DefaultTheme):
             years.append(current_year)
             current_year -= 1
             
-        sections = Section.objects.all();
+        sections = Section.objects.all()
             
         context = {
             'sections': sections,
@@ -233,10 +233,12 @@ class UbysseyTheme(DefaultTheme):
             
         query = request.GET.get('q', None)
         section = request.GET.get('section', None)
+        
         year = request.GET.get('year', None)
         if year is None:
             year = years[0]
 
+        context['year'] = year
         article_list = Article.objects.filter(is_published=True, published_at__icontains=str(year))
         if query == "":
             query = None
@@ -244,7 +246,6 @@ class UbysseyTheme(DefaultTheme):
             article_list.filter(headline__icontains=query)
          
         if section is not None:
-            section_id = Section.objects.get(name=section).id
             article_list.filter(section=section_id)
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
