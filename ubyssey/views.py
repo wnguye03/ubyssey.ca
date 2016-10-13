@@ -244,6 +244,7 @@ class UbysseyTheme(DefaultTheme):
             query = None
         if query is not None:
             article_list = article_list.filter(headline__icontains=query)
+            context['q'] = query
          
         if section_id is not None:
             article_list = article_list.filter(section = section_id)

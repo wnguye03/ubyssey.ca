@@ -32,7 +32,7 @@
 					<div class="article-search">
 						<form method="get" action="/archive/">
 							<label><i class="fa fa-search"></i></label>
-							<input name="q" id="author-search" type="text"></input>
+							<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
 						</form>
 					</div>	
                 {% if articles|length > 0 %}
