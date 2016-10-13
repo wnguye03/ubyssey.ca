@@ -232,7 +232,7 @@ class UbysseyTheme(DefaultTheme):
         }
             
         query = request.GET.get('q', None)
-        section = request.GET.get('section', None)
+        section_id = request.GET.get('section_id', None)
         
         year = request.GET.get('year', None)
         if year is None:
@@ -243,11 +243,12 @@ class UbysseyTheme(DefaultTheme):
         if query == "":
             query = None
         if query is not None:
-            article_list.filter(headline__icontains=query)
+            article_list = article_list.filter(headline__icontains=query)
          
-        if section is not None:
-            article_list.filter(section=section_id)
-
+        if section_id is not None:
+            article_list = article_list.filter(section = section_id)
+            context['section_id'] = section_id
+            
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
         try:
