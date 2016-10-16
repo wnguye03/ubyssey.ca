@@ -58,6 +58,11 @@ main.article.fw-story, div.container.clearfix.fw-story {
         padding: 0 20px;
       }
 
+      .article-byline {
+        font-size: 15px;
+        line-height: 24px;
+      }
+
       @media($bp-larger-than-mobile){
         .header-container {
           margin-top: 20px;
