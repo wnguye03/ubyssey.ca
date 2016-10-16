@@ -16,9 +16,11 @@
                 <div class="right">
                     <div class="full-width featured-image">
                         <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.get_credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
+                        {% if article.featured_image.caption %}
                         <div class="caption">
                             {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.get_credit }} / The Ubyssey</span>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -47,9 +49,11 @@
                         </div>
                     </div>
                 </div>
+                {% if article.featured_image.caption %}
                 <div class="caption">
                 	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.get_credit }} / The Ubyssey</span>
                 </div>
+                {% endif %}
             </div>
         {% endif %}
     </div>
