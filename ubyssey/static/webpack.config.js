@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var version = require('./package.json').version;
 
 module.exports = {
     entry: {
@@ -9,7 +10,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist/js',
-        filename: '[name].js'
+        filename: '[name]-' + version + '.js'
     },
     module: {
       loaders: [
