@@ -88,20 +88,20 @@ h1.headline {
 }
 
 div.article-content {
-  p,
+  > p,
   div.caption,
-  h1,
-  h2,
-  h3,
-  ul {
+  > h1,
+  > h2,
+  > h3,
+  > ul {
     padding-right: $article-content-div-child-padding;
   }
 
-  p,
+  > p,
   div.caption,
-  h1,
-  h2,
-  h3 {
+  > h1,
+  > h2,
+  > h3 {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: $article-content-div-child-padding;
@@ -111,7 +111,7 @@ div.article-content {
     }
   }
 
-  ul {
+  > ul {
     padding-left: $article-content-ul-padding-left;
     max-width: 585px - $article-content-ul-padding-left;
   }
