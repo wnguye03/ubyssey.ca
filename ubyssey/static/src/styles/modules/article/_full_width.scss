@@ -54,7 +54,7 @@ main.article.fw-story, div.container.clearfix.fw-story {
         max-width: 585px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 30px;
+        margin-top: 20px;
         padding: 0 20px;
       }
 
@@ -141,7 +141,7 @@ main.article.fw-story, div.container.clearfix.fw-story {
       }
     }
   }
-  
+
   div.article-social {
     margin-left: auto;
     margin-right: auto;
@@ -154,11 +154,16 @@ main.article.fw-story, div.container.clearfix.fw-story {
   }
 
   div.article-content {
-    p, h1, h2, h3, div.caption, div.attachment, div.attachment {
-      max-width: 585px;
+    > p,
+    > h1,
+    > h2,
+    > h3,
+    > ul,
+    div.caption,
+    div.attachment,
+    div.attachment {
       margin-left: auto;
       margin-right: auto;
     }
   }
 }
-

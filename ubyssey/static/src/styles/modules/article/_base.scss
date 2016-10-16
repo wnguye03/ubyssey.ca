@@ -114,6 +114,7 @@ div.article-content {
   > ul {
     padding-left: $article-content-ul-padding-left;
     max-width: 585px - $article-content-ul-padding-left;
+    padding-right: 20px;
   }
 }
 
