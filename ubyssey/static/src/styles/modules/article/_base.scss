@@ -132,7 +132,7 @@ div.caption {
 
 div.article-content {
 
-  > p, ul {
+  > p, > ul {
     font-family: $font-body !important;
     font-size: 16px !important;
     color: #333333 !important;
