@@ -84,7 +84,6 @@ class UbysseyTheme(DefaultTheme):
             'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
-
         return render(request, 'homepage/base.html', context)
 
     def article(self, request, section=None, slug=None):
@@ -136,7 +135,7 @@ class UbysseyTheme(DefaultTheme):
 
         context = {
             'meta': {
-                'title': section.name
+                'title': section.name,
             },
             'section': section,
             'type': 'section',
@@ -217,6 +216,55 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'author/articles.html', context)
 
+    def archive(self, request):
+            
+        current_year = datetime.today().year
+        years = []
+        while current_year >= 2011:
+            years.append(current_year)
+            current_year -= 1
+            
+        sections = Section.objects.all()
+            
+        context = {
+            'sections': sections,
+            'years': years
+        }
+            
+        query = request.GET.get('q', None)
+        section_id = request.GET.get('section_id', None)
+        
+        year = request.GET.get('year', None)
+        if year is None:
+            year = years[0]
+
+        context['year'] = year
+        article_list = Article.objects.filter(is_published=True, published_at__icontains=str(year))
+        if query == "":
+            query = None
+        if query is not None:
+            article_list = article_list.filter(headline__icontains=query)
+            context['q'] = query
+         
+        if section_id is not None:
+            article_list = article_list.filter(section = section_id)
+            context['section_id'] = section_id
+            
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+        page = request.GET.get('page')
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+               # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+        context['articles'] = articles
+        context['count'] = paginator.count
+        
+        return render(request, 'archive.html', context)
+        
     def search(self, request):
 
         query = request.GET.get('q', None)
