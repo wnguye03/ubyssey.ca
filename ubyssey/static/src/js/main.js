@@ -55,7 +55,7 @@
         }
     });
 
-    $('a.facebook').click(function(e){
+    $(document).on('click', 'a.facebook', function(e){
         e.preventDefault();
         FB.ui({
           method: 'share_open_graph',
@@ -66,8 +66,9 @@
         }, function(response){});
     });
 
-    $('a.twitter').click(function(e){
+    $(document).on('click', 'a.twitter', function(e){
       e.preventDefault();
       window.open('http://twitter.com/share?url=' + $(this).data('url') + '&text=' + $(this).data('title') + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
     });
-})();
+    
+  })();

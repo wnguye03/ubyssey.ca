@@ -1,11 +1,12 @@
 {
   "name": "ubyssey",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "The Ubyssey's frontend framework.",
-  "author": "Peter Siemens <peterjsiemens@gmail.com>",
+  "author": "Peter Siemens <peter@ubyssey.ca>",
   "homepage": "http://ubyssey.ca",
   "contributors": [
-    "Ben Cook <b@bencook.ca>"
+    "Ben Cook <b@bencook.ca>",
+    "Anny Gakhokidze"
   ],
   "devDependencies": {
     "babel-core": "^6.9.1",
