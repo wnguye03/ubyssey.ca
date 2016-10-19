@@ -104,6 +104,9 @@ div.frontpage {
         h1.headline {
           margin: 12px 0;
         }
+        h1.headline:hover {
+          color: $color-accent-blue;
+        }
         &.fw-story {
           text-align: center;
           h1 {
@@ -495,7 +498,7 @@ span.byline {
 
 p.snippet span.timestamp {
   font-family: $font-default;
-  color: #0071C9;
+  color: $color-accent-blue;
   font-weight: 500;
   font-size: 13px;
   margin-right: 8px;
@@ -530,12 +533,12 @@ div.multi-zone {
 			margin: 0 auto;
 			text-align: center;
 	  }
-		
+
 		img {
 			display: block;
 			margin: 0 auto;
 		}
-	  
+
   }
 }
 
