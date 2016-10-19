@@ -5,7 +5,8 @@
   "author": "Peter Siemens <peterjsiemens@gmail.com>",
   "homepage": "http://ubyssey.ca",
   "contributors": [
-    "Ben Cook <b@bencook.ca>"
+    "Ben Cook <b@bencook.ca>",
+    "Anny Gakhokidze"
   ],
   "devDependencies": {
     "babel-core": "^6.9.1",
