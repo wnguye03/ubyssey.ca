@@ -16,9 +16,10 @@ div.article-slide {
   main.article {
     margin-top: 0;
   }
-  .advertisement.leaderboard {
+  .o-advertisement--leaderboard {
     background: #F5F5F5;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid #DADADA;
   }
   @media($bp-larger-than-tablet){
@@ -35,8 +36,7 @@ div.indicator {
 
 
 // Article
-
-.c-article {
+.c-article__header {
   padding-top: 1rem;
 
   @media($bp-larger-than-phablet) {
