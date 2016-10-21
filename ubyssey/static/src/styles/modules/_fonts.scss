@@ -4,6 +4,13 @@ $font-secondary: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Ar
 $font-headline: 'ub-minion-pro', 'Minion Pro', 'Georgia', serif;
 $font-body: 'Georgia', serif;
 
+$font-size-base: 16;
+
+@function font-size($size) {
+  $scaled-size: ($size / $font-size-base) + em;
+  @return $scaled-size;
+}
+
 // Font sizes
 $font-size-11px:  0.688em;
 $font-size-14px:  0.875em;

@@ -5,7 +5,7 @@
 
 body {
   font-family: $font-default;
-  font-size: 16px;
+  font-size: $font-size-base + px;
   padding: 0;
   margin: 0;
   &.no-scroll {
@@ -60,7 +60,7 @@ main {
   @media($bp-larger-than-tablet){
     top: 49px;
     &.homepage {
-      margin-top: 0;
+      top: 0;
     }
   }
 }
