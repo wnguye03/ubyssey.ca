@@ -2,9 +2,7 @@
 {% load staticfiles %}
 {% load humanize %}
 {% block content %}
-<div class="advertisement homepage leaderboard">
-    <div class="adslot" data-size="leaderboard" data-dfp="Front_leaderboard_728x90" id="div-gpt-ad-1443288719995-12"></div>
-</div>
+{% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 class='homepage' %}
 {% include 'headers/main.html' %}
 {% include 'headers/mobile.html' %}
 <main class="u-container u-container--large homepage">
@@ -65,8 +63,8 @@
             {% include 'homepage/blocks/section_2.html' with section="science" articles=sections.science %}
         </div>
         <div class="sidebar-home">
-            <div class="advertisement box sidebar-block">
-                <div class="adslot" id="div-gpt-ad-1443288719995-10" data-size="box" data-dfp="Front_BoxA_300x250"></div>
+            <div class="sidebar-block">
+              {% include 'objects/advertisement.html' with size='box' name='Front_BoxA_300x250' id=2 %}
             </div>
             <div class="popular sidebar-block">
                 <h2 class="block-title">Most popular this week</h2>
@@ -76,8 +74,8 @@
                     {% endfor %}
                 </ol>
             </div>
-            <div class="advertisement box sidebar-block">
-                <div class="adslot" id="div-gpt-ad-1443288719995-11" data-size="box" data-dfp="Front_BoxB_300x250"></div>
+            <div class="sidebar-block">
+              {% include 'objects/advertisement.html' with size='box' name='Front_BoxB_300x250' id=3 %}
             </div>
             <div class="article-list blog sidebar-block">
                 <h2 class="block-title">From the blog</h2>

@@ -7,9 +7,8 @@
 {% block content %}
 <main id="article-{{ article.parent_id }}" class="article">
   {% block banner_ad %}
-  <div class="advertisement leaderboard">
-    <div class="adslot" data-size="leaderboard" data-dfp="Front_leaderboard_728x90" id="div-gpt-ad-1443288719995-12-{{ article.id }}"></div>
-  </div>
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 %}
+  {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard_300x50' id=2 %}
   {% endblock %}
   <article class="c-article c-article--{{ article.template }}" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-url="{{ article.get_absolute_url }}">
   {% block banner %}
@@ -38,9 +37,7 @@
         <div class="sidebar offset">
         {% else %}
         {% endif %}
-          <div class="advertisement box sidebar">
-            <div class="adslot" id="div-gpt-ad-1443288719995-15-{{ article.id }}" data-size="box" data-dfp="News_BoxA_300x250"></div>
-          </div>
+          {% include 'objects/advertisement.html' with size='box' name='News_BoxA_300x250' id=3 %}
         </div>
       </div>
       {% endblock %}
