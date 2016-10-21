@@ -571,15 +571,18 @@ div.sidebar-home {
     width: 353px;
   }
 
-  div.advertisement {
+  .o-advertisement {
     border-top: 1px solid #E6E6E6;
-    padding: 25px 0;
-    &.box {
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    &--box {
       text-align: center;
     }
+
     &:first-child {
       border-top: none;
-      paddding-top: 0;
+      padding-top: 0;
     }
   }
 }

@@ -1,59 +1,13 @@
-.advertisement {
+$adslots: (
+  leaderboard: (728px, 90px),
+  box: (300px, 250px),
+  mobile-leaderboard: (320px, 50px)
+);
 
-  &.leaderboard, &.box {
-    .adslot {
-      margin: 0 auto;
-    }
-  }
-
-  // Desktop leaderboard ad
-  &.leaderboard {
-    display: none;
-    text-align: center;
-    padding-top: 0.5rem;
-
-    .adslot {
-      width: 728px;
-      height: 90px;
-      margin-top: 1rem;
-    }
-
-    &.homepage {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      .adslot {
-        margin-top: 25px;
-      }
-    }
-
-    @media($bp-larger-than-mobile){
-      display: block;
-      &.homepage {
-        display: none;
-      }
-    }
-
-    @media($bp-larger-than-tablet){
-      &.homepage {
-        display: block;
-      }
-    }
-  }
-
-  // Mobile leaderboard
-  &.mobile-leaderboard {
-    @media(min-width: 768px){
-      display: none;
-    }
-  }
+.o-advertisement {
 
   // Desktop box
   &.box {
-    .adslot {
-      width: 300px;
-      height: 250px;
-    }
     &.sidebar {
       padding: 0;
     }
@@ -111,5 +65,77 @@
         display: block;
       }
     }
+  }
+}
+
+// Desktop leaderboard ad
+.o-advertisement--leaderboard {
+  $width: nth(map-get($adslots, leaderboard), 1);
+  $height: nth(map-get($adslots, leaderboard), 2);
+
+  display: none;
+  padding-top: 0.5rem;
+
+  .adslot {
+    margin-left: auto;
+    margin-right: auto;
+    width: $width;
+    height: $height;
+    margin-top: 1rem;
+  }
+
+  &.o-advertisement--homepage {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .adslot {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media(min-width: $width + 40) {
+    display: block;
+    &.o-advertisement--homepage {
+      display: none;
+    }
+  }
+
+  @media($bp-larger-than-tablet){
+    &.o-advertisement--homepage {
+      display: block;
+    }
+  }
+}
+
+// Mobile leaderboard ad
+.o-advertisement--mobile-leaderboard {
+  $width: nth(map-get($adslots, mobile-leaderboard), 1);
+  $height: nth(map-get($adslots, mobile-leaderboard), 2);
+
+  $desktop-width: nth(map-get($adslots, leaderboard), 1);
+
+  .adslot {
+    width: $width;
+    height: $height;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media(min-width: $desktop-width + 40) {
+    display: none;
+  }
+}
+
+.o-advertisement--box {
+  $width: nth(map-get($adslots, box), 1);
+  $height: nth(map-get($adslots, box), 2);
+
+  .adslot {
+    width: $width;
+    min-height: $height;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
