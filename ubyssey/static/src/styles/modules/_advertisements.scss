@@ -74,23 +74,19 @@ $adslots: (
   $height: nth(map-get($adslots, leaderboard), 2);
 
   display: none;
-  padding-top: 0.5rem;
 
   .adslot {
     margin-left: auto;
     margin-right: auto;
     width: $width;
     height: $height;
-    margin-top: 1rem;
+    padding-top: 1.5rem;
   }
 
   &.o-advertisement--homepage {
-    padding-top: 0;
-    padding-bottom: 0;
-
     .adslot {
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
     }
   }
 
@@ -105,6 +101,13 @@ $adslots: (
     &.o-advertisement--homepage {
       display: block;
     }
+  }
+}
+
+main.article .o-advertisement--leaderboard {
+  padding-top: 0.5rem;
+  .adslot {
+    padding-top: 1rem;
   }
 }
 
