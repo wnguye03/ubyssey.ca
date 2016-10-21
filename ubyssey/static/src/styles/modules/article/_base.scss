@@ -39,10 +39,11 @@ div.indicator {
 .c-article {
   padding-top: 1rem;
 
-  @media($bp-larger-than-mobile) {
-    padding-top: 0;
+  @media($bp-larger-than-phablet) {
+    padding-top: 1.5rem;
   }
 }
+
 .c-article__info {
   margin-bottom: 1.5rem;
 
@@ -63,8 +64,8 @@ div.indicator {
 
   @media($bp-larger-than-tablet) {
     flex: 1 0;
-    height: 30px;
-    line-height: 30px;
+    height: 34px;
+    line-height: 34px;
     margin-bottom: 0;
   }
 }

@@ -55,9 +55,10 @@ body {
 }
 
 main {
-  margin-top: 55px;
+  position: relative;
+  top: 55px;
   @media($bp-larger-than-tablet){
-    margin-top: 49px;
+    top: 49px;
     &.homepage {
       margin-top: 0;
     }
@@ -66,7 +67,7 @@ main {
 
 html.hairlines {
   main {
-    margin-top: 54.5px;
+    top: 54.5px;
   }
 }
 

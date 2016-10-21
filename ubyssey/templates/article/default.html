@@ -5,13 +5,13 @@
     {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main id="article-{{ article.parent_id }}" class="c-article c-article--{{ article.template }}">
+<main id="article-{{ article.parent_id }}" class="article">
   {% block banner_ad %}
   <div class="advertisement leaderboard">
     <div class="adslot" data-size="leaderboard" data-dfp="Front_leaderboard_728x90" id="div-gpt-ad-1443288719995-12-{{ article.id }}"></div>
   </div>
   {% endblock %}
-  <article {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-url="{{ article.get_absolute_url }}">
+  <article class="c-article c-article--{{ article.template }}" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-url="{{ article.get_absolute_url }}">
   {% block banner %}
     <div class="u-container u-container--padded">
       <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>

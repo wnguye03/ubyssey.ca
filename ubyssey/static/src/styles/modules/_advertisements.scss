@@ -9,14 +9,13 @@
   // Desktop leaderboard ad
   &.leaderboard {
     display: none;
-    padding-top: 25px;
-    padding-bottom: 10px;
     text-align: center;
+    padding-top: 0.5rem;
 
     .adslot {
       width: 728px;
       height: 90px;
-      margin-bottom: 15px;
+      margin-top: 1rem;
     }
 
     &.homepage {
