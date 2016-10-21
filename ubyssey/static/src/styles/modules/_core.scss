@@ -55,12 +55,11 @@ body {
 }
 
 main {
-  position: relative;
-  top: 55px;
+  margin-top: 55px;
   @media($bp-larger-than-tablet){
-    top: 49px;
+    margin-top: 49px;
     &.homepage {
-      top: 0;
+      margin-top: 0;
     }
   }
 }
