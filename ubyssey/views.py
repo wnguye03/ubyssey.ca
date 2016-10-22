@@ -120,7 +120,10 @@ class UbysseyTheme(DefaultTheme):
         page.add_view()
 
         context = {
-            'page': page,
+            'meta': {
+                'title': page.title
+            },
+            'page': page
         }
 
         return render(request, 'page/base.html', context)

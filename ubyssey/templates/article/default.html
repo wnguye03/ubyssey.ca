@@ -1,0 +1,78 @@
+{% extends base_template %}
+{% load staticfiles %}
+{% block header %}
+    {% include 'headers/topbar.html' with article=article section=article.section.slug %}
+    {% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+<main id="article-{{ article.parent_id }}" class="article">
+  {% block banner_ad %}
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 article=article.id %}
+  {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard_300x50' id=2 article=article.id %}
+  {% endblock %}
+  <article class="c-article c-article--{{ article.template }}" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-url="{{ article.get_absolute_url }}">
+  {% block banner %}
+    <div class="u-container u-container--content u-container--padded">
+      <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
+      <div class="c-article__info">
+        <div class="c-article__byline">
+          <span class="c-article__author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="c-article__published-at">{{ article.published_at }}</span>
+        </div>
+        {% include 'objects/social-icons.html' with article=article layout='top' %}
+      </div>
+    </div>
+  {% endblock %}
+    <div class="u-container clearfix {% if article.template_fields.header_layout %}{{ article.template }}{% endif %}">
+      {% block right-column %}
+      <div class="right-column">
+        {% if article.featured_image %}
+        <div class="featured-image">
+          <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-credit="{{ article.featured_image.get_credit }}" data-url="{{ article.featured_image.image.get_absolute_url }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
+          {% if article.featured_image.caption or article.featured_image.get_credit %}
+          <div class="caption">
+            {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.get_credit %}<span class="credit">{{ article.featured_image.get_credit }}{% if not article.featured_image.has_custom_credit %} / The Ubyssey{% endif %}</span>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="sidebar offset">
+        {% else %}
+        {% endif %}
+          {% include 'objects/advertisement.html' with size='box' name='News_BoxA_300x250' id=3 article=article.id %}
+        </div>
+      </div>
+      {% endblock %}
+      <div class="article-content">
+      {% block pre-content %}{% endblock %}
+        {{ article.get_html|safe }}
+      </div>
+    </div>
+  </article>
+</main>
+
+<div class="slideshow">
+  <div class="image-container">
+    <div class="image-inner">
+      <div class="slide">
+        <img class="slide-image" />
+        <p class="slide-caption"></p>
+        <div class="navigation">
+          <a class="prev-slide" href="#"><i class="fa fa-chevron-left"></i></a>
+          <span class="curr-slide"></span> &nbsp; of &nbsp; <span class="total-slide"></span>
+          <a class="next-slide" href="#"><i class="fa fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="gallery"></div>
+
+<div id="article-list"></div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+<!-- Article-specific scripts -->
+{% for s in article.scripts.all %}
+<script src="http://localhost:8888/resources/js/{{ s.filename }}"></script>
+{% endfor %}

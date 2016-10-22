@@ -58,7 +58,7 @@ var Search = React.createClass({
         });
 
         return (
-            <div className="container">
+            <div className="u-container">
                 <form method="get" action="/search/">
                     <label for="author-search"><i className="fa fa-search"></i></label>
                     <input ref="search" className={this.state.results.length > 0 ? "open" : ""} name="q" id="search-bar" type="text" autoComplete="off" onChange={this.updateQuery} value={this.state.q} placeholder="Search The Ubyssey..." />
