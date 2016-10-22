@@ -13,15 +13,11 @@
 div.article-slide {
   border-top: 1px solid #DADADA;
   margin-top: 50px;
+
   main.article {
     margin-top: 0;
   }
-  .o-advertisement--leaderboard {
-    background: #F5F5F5;
-    margin-bottom: 1rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #DADADA;
-  }
+  
   @media($bp-larger-than-tablet){
     margin-bottom: 50px;
   }

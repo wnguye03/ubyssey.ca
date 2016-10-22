@@ -86,7 +86,6 @@ $adslots: (
   &.o-advertisement--homepage {
     .adslot {
       padding-top: 1.5rem;
-      padding-bottom: 1.5rem;
     }
   }
 
@@ -105,11 +104,28 @@ $adslots: (
 }
 
 main.article .o-advertisement--leaderboard {
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   .adslot {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 }
+
+.article-slide .o-advertisement--leaderboard,
+.article-slide .o-advertisement--mobile-leaderboard {
+  background: #F5F5F5;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #DADADA;
+}
+
+.article-slide .o-advertisement--leaderboard {
+  margin-bottom: 1rem;
+}
+
+.article-slide .o-advertisement--mobile-leaderboard {
+  margin-bottom: 0.5rem;
+}
+
 
 // Mobile leaderboard ad
 .o-advertisement--mobile-leaderboard {
