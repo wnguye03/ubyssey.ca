@@ -262,6 +262,7 @@ class UbysseyTheme(DefaultTheme):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             articles = paginator.page(paginator.num_pages)
+            
         context['articles'] = articles
         context['count'] = paginator.count
         

@@ -8,10 +8,10 @@
 {% block content %}
     <main class="archive">
         <div class="container padded">
-			<h1>Ubyssey Archive</h1>
-			<div class="bars">
-				<div class="bar sidebar">
-					<div class="filters">
+		<h1>Ubyssey Archive</h1>
+			<div class="Archive bars">
+				<div class="Archive bar sidebar">
+					<div class="Archive filters">
 						<ul>
 							<li><h3>Year</h3></li>
 						{% for year in years %}
@@ -19,7 +19,7 @@
 						{% endfor %}
 						</ul>
 					</div>
-					<div class="filters">
+					<div class="Archive filters">
 						<ul>
 							<li><h3>Section</h3></li>
 						{% for section in sections %}
@@ -28,15 +28,15 @@
 						</ul>
 					</div>
 				</div>
-				<div class="bar mainbar">
-					<div class="article-search">
+				<div class="Archive bar mainbar">
+					<div class="Archive article-search">
 						<form method="get" action="/archive/">
 							<label><i class="fa fa-search"></i></label>
 							<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
 						</form>
 					</div>	
                 {% if articles|length > 0 %}
-					<div class="article-archive">
+					<div class="Archive article-archive">
 						<div class="list">
 						{% for article in articles %}
 							<article>

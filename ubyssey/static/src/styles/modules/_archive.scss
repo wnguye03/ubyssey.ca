@@ -1,27 +1,28 @@
-.bars {
-	margin-top: 30px;
-}
-.bars .bar{
-	float: left;
-	display: inline;
-}
-.sidebar {
-	width: 20%;
-	margin-top: 30px;
-}
-.mainbar {
-	width: 80%;
-	margin-top: 30px;
-}
-.main div{
-	width: 100%;
-}
-.filters {
-	float: top;
-}
-.filters ul{
-	list-style: none;
-}
-.filters li{
-	margin: 5px;
+.archive{
+	.bars {
+		margin-top: 30px;
+		display: inline-flex;
+		flex-direction: row;
+		width: 100%;
+	}
+	.sidebar {
+		width: 20%;
+		margin-top: 30px;
+	}
+	.mainbar {
+		width: 80%;
+		margin-top: 30px;
+	}
+	.main div{
+		width: 100%;
+	}
+	.filters {
+		float: top;
+	}
+	.filters ul{
+		list-style: none;
+	}
+	.filters li{
+		margin: 5px;
+	}
 }
