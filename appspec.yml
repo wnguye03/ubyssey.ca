@@ -10,7 +10,5 @@ files:
   - source: ubyssey/
     destination: /var/webapps/ubyssey/ubyssey/
 hooks:
-  ApplicationStop:
-    - location: _scripts/ubyssey_stop.sh
   ApplicationStart:
-    - location: _scripts/ubyssey_start.sh
+    - location: _scripts/ubyssey_restart.sh
