@@ -567,22 +567,23 @@ div.sidebar-home {
   }
 
   @media($bp-larger-than-desktop){
-
     box-sizing: border-box;
     width: 353px;
-    //width: 29%;
   }
-}
 
-div.advertisement {
-  border-top: 1px solid #E6E6E6;
-  padding: 25px 0;
-  &.box {
-    text-align: center;
-  }
-  &:first-child {
-    border-top: none;
-    paddding-top: 0;
+  .o-advertisement {
+    border-top: 1px solid #E6E6E6;
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    &--box {
+      text-align: center;
+    }
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
   }
 }
 
