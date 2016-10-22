@@ -220,9 +220,11 @@ class UbysseyTheme(DefaultTheme):
             
         current_year = datetime.today().year
         years = []
-        while current_year >= 2011:
-            years.append(current_year)
-            current_year -= 1
+        year_query = """SELECT YEAR(published_at) AS year_published,
+                id FROM content_article GROUP BY YEAR(published_at)"""
+        for year in Article.objects.raw(year_query):
+            if(year.year_published is not None):
+                years.append(year.year_published)
             
         sections = Section.objects.all()
             
@@ -235,13 +237,13 @@ class UbysseyTheme(DefaultTheme):
         section_id = request.GET.get('section_id', None)
         
         year = request.GET.get('year', None)
-        if year is None:
-            year = years[0]
-
-        context['year'] = year
-        article_list = Article.objects.filter(is_published=True, published_at__icontains=str(year))
+        
+        article_list = Article.objects.filter(is_published=True)
         if query == "":
             query = None
+        if year is not None:
+            context['year'] = year
+            article_list = article_list.filter(published_at__icontains=str(year))
         if query is not None:
             article_list = article_list.filter(headline__icontains=query)
             context['q'] = query
