@@ -6,7 +6,8 @@ module.exports = {
         main:    './src/js/main.js',
         dfp:     './src/js/dfp.js',
         article: './src/js/article.jsx',
-        section: './src/js/section.jsx'
+        section: './src/js/section.jsx',
+        vendors: './src/js/vendors.js'
     },
     output: {
         path: __dirname + '/dist/js',
