@@ -15,10 +15,6 @@ cd ../
 source bin/activate
 export PYTHONPATH=$DJANGO_PROJECT_DIR:$PYTHONPATH
 
-# Install dependencies
-pip install -r /var/webapps/ubyssey/requirements.txt
-python manage.py collectstatic --no-input
-
 # Create the run directory if it doesn't exist
 RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
