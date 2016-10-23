@@ -1,6 +1,6 @@
 {
   "name": "ubyssey",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "The Ubyssey's frontend framework.",
   "author": "Peter Siemens <peter@ubyssey.ca>",
   "homepage": "http://ubyssey.ca",
@@ -21,7 +21,7 @@
     "hammerjs": "^2.0.4",
     "keymaster": "^1.6.2",
     "lru-cache": "^2.7.0",
-    "react": "^15.3.2",
+    "react": "^0.13.3",
     "react-textarea-autosize": "^2.5.1",
     "webpack": "^1.13.1"
   },

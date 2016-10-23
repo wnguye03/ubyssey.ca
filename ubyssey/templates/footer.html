@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <footer>
-    <div class="u-container clearfix">
+    <div class="u-container">
         <div class="left">
             <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small-grey.svg' %}" /></a>
             <ul class="sections">
@@ -9,7 +9,6 @@
                 <li><a href="{% url 'page' 'features' %}">Features</a></li>
                 <li><a href="{% url 'page' 'opinion' %}">Opinion</a></li>
                 <li><a href="{% url 'page' 'sports' %}">Sports</a></li>
-                <li><a href="{% url 'page' 'video' %}">Video</a></li>
                 <li><a href="{% url 'page' 'blog' %}">Blog</a></li>
                 <li><a href="{% url 'page' 'science' %}">Science</a></li>
             </ul>
