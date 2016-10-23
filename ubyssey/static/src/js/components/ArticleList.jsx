@@ -139,7 +139,9 @@ var ArticleList = React.createClass({
         });
     },
     updateURL: function(){
-        history.pushState(null, null, this.getArticle(this.state.active.data).url);
+        try {
+            history.pushState(null, null, this.getArticle(this.state.active.data).url);
+        } catch(err) {}
     },
     loadNext: function(article_id){
         if(this.state.loading || this.isLoaded(article_id))
