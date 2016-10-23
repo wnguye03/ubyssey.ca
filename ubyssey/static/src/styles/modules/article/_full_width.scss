@@ -124,7 +124,7 @@
         h1.headline {
           font-family: $font-default;
           font-size: 36px;
-          font-weight: 500;
+          font-weight: $font-weight-semi-bold;
         }
         div.article-byline {
           font-size: 14px;
