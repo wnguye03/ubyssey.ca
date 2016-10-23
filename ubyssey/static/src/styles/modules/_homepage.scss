@@ -472,26 +472,25 @@ article.col {
 
 p.snippet {
   font-family: $font-default;
-  font-size: 14px;
+  font-size: font-size(14);
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.5em;
   color: #6B6B6B;
   @media($bp-larger-than-phablet){
-    font-size: 13.5px;
+    font-size: font-size(13);
   }
 }
 
 span.byline {
   font-family: $font-default;
-  font-weight: 500;
   margin: 10px 0;
+  font-size: font-size(13);
   span.author {
-    font-size: 0.9em;
+    font-weight: $font-weight-semi-bold;
   }
   span.published {
     color: #777;
-    font-size: 0.85em;
   }
   display: none;
 }
@@ -499,10 +498,11 @@ span.byline {
 p.snippet span.timestamp {
   font-family: $font-default;
   color: $color-accent-blue;
-  font-weight: 500;
-  font-size: 13px;
-  margin-right: 8px;
-
+  margin-right: 0.4em;
+  font-weight: $font-weight-semi-bold;
+  @media($bp-larger-than-phablet) {
+    font-weight: $font-weight-normal;
+  }
 }
 
 @media($bp-larger-than-phablet){
