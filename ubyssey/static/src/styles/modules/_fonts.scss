@@ -1,6 +1,6 @@
 // Font families
-$font-default: 'ub-franklin-gothic', 'ITC Franklin Gothic Std', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-$font-secondary: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-secondary: $font-default;
 $font-headline: 'ub-minion-pro', 'Minion Pro', 'Georgia', serif;
 $font-body: 'Georgia', serif;
 
@@ -23,4 +23,6 @@ $font-size-26px:  1.625em;
 $font-size-36px:  2.250em;
 
 // Font weights
-$font-weight-semi-bold: 500;
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 800;
