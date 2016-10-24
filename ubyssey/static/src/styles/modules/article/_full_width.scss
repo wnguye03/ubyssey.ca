@@ -62,6 +62,8 @@
         margin-left: auto;
         margin-right: auto;
         margin-top: 1.5rem;
+        padding-left: 15px;
+        padding-right: 15px;
       }
 
       .article-byline {
@@ -83,7 +85,7 @@
       @media($bp-larger-than-tablet) {
         margin-bottom: 2rem;
       }
-      
+
       div.banner-image {
         position: relative;
         height: 300px;
