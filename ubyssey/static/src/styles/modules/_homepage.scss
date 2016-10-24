@@ -82,7 +82,7 @@ div.frontpage {
     &.secondary {
       h2 {
         margin-top: 0;
-        font-size: 28px;
+        font-size: font-size(26);
         margin-bottom: 10px;
       }
     }
@@ -158,7 +158,7 @@ div.frontpage {
         padding-top: 15px;
         padding-bottom: 15px;
         h2.headline {
-          margin-bottom: 5px;
+          margin-bottom: 0.75rem;
         }
         &:first-child {
           padding-top: 0;
@@ -366,12 +366,16 @@ html.hairlines {
 article.section-top {
   border-bottom: 1px dotted #E0E0E0;
   @media($bp-larger-than-phablet){
+    display: flex;
     padding-bottom: 25px;
     margin-bottom: 25px;
     border-bottom: 1px solid #E0E0E0;
     .left {
-      width: 40%;
+      flex: 4;
       margin-right: 20px;
+    }
+    .right {
+      flex: 6;
     }
   }
 
@@ -486,6 +490,7 @@ span.byline {
   font-family: $font-default;
   margin: 10px 0;
   font-size: font-size(13);
+  line-height: 1.5em;
   span.author {
     font-weight: $font-weight-semi-bold;
   }

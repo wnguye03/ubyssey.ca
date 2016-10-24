@@ -32,12 +32,25 @@ div.indicator {
 
 
 // Article
+.c-article--default {
+  .o-headline--article {
+    @media($bp-larger-than-tablet) {
+      line-height: 1.277em;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      margin: 0;
+      border-top: 2px solid #3E3E3E;
+      border-bottom: 1px solid #D2D2D2;
+    }
+  }
+}
+
 .c-article__info {
   margin-bottom: 1.5rem;
 
   @media($bp-larger-than-tablet) {
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 
     display: flex;
   }
@@ -52,7 +65,7 @@ div.indicator {
 
   @media($bp-larger-than-tablet) {
     flex: 1 0;
-    line-height: 34px;
+    line-height: 2rem;
     margin-bottom: 0;
   }
 }
@@ -60,16 +73,17 @@ div.indicator {
 .c-article__byline__meta {
   color: #777;
   font-weight: $font-weight-normal;
-  @media($bp-larger-than-phablet) {
+  @media($bp-larger-than-tablet) {
     display: inline-block;
     font-size: 0.9em;
     margin-left: 0.75em;
     margin-right: 0.75em;
   }
 }
+
 .c-article__author {
   margin-bottom: 0.8rem;
-  @media($bp-larger-than-phablet) {
+  @media($bp-larger-than-tablet) {
     margin-bottom: 0;
     display: inline-block;
   }
@@ -81,7 +95,8 @@ div.article-content {
   > h1,
   > h2,
   > h3,
-  > ul {
+  > ul,
+  > .attachment.pull-quote {
     padding-right: $article-content-div-child-padding;
   }
 
@@ -89,7 +104,8 @@ div.article-content {
   div.caption,
   > h1,
   > h2,
-  > h3 {
+  > h3,
+  > .attachment.pull-quote {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: $article-content-div-child-padding;
