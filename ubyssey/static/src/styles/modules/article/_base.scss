@@ -63,13 +63,14 @@ div.indicator {
   @media($bp-larger-than-phablet) {
     display: inline-block;
     font-size: 0.9em;
+    margin-left: 0.75em;
+    margin-right: 0.75em;
   }
 }
 .c-article__author {
   margin-bottom: 0.8rem;
   @media($bp-larger-than-phablet) {
     margin-bottom: 0;
-    margin-right: 0.75em;
     display: inline-block;
   }
 }
