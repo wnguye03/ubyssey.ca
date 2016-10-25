@@ -38,8 +38,8 @@
   display: block;
   height: 2rem;
   line-height: 2rem;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 
   border-radius: 3px;
 
@@ -47,7 +47,7 @@
   font-size: font-size(14);
   font-weight: $font-weight-semi-bold;
   color: #fff;
-  
+
   i {
     display: inline-block;
     vertical-align: middle;
