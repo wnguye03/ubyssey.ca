@@ -34,11 +34,11 @@
 }
 
 .o-headline--article {
-  line-height: 1.174em;
+  line-height: 1.15em;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 
-  font-size: font-size(30);
+  font-size: font-size(32);
 
   @media($bp-larger-than-mobile) {
     font-size: font-size(36);

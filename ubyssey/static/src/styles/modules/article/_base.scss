@@ -57,8 +57,7 @@ div.indicator {
 }
 
 .c-article__byline {
-  margin-bottom: 1rem;
-
+  margin-bottom: 0.3rem;
   font-family: $font-default;
   font-size: $font-size-15px;
   font-weight: $font-weight-semi-bold;
@@ -70,22 +69,29 @@ div.indicator {
   }
 }
 
+.c-article__author,
+.c-article__byline__meta {
+  margin-bottom: 0.8rem;
+  display: inline-block;
+  @media($bp-larger-than-tablet) {
+    margin-bottom: 0;
+  }
+}
+
 .c-article__byline__meta {
   color: #777;
   font-weight: $font-weight-normal;
   @media($bp-larger-than-tablet) {
-    display: inline-block;
     font-size: 0.9em;
-    margin-left: 0.75em;
-    margin-right: 0.75em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
   }
 }
 
 .c-article__author {
-  margin-bottom: 0.8rem;
+  margin-right: 0.5em;
   @media($bp-larger-than-tablet) {
-    margin-bottom: 0;
-    display: inline-block;
+    margin-right: 0;
   }
 }
 

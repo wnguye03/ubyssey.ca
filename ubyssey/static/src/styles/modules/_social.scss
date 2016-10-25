@@ -36,8 +36,8 @@
 
 .o-social-icons__icon {
   display: block;
-  height: 2.5em;
-  line-height: 2.5em;
+  height: 2rem;
+  line-height: 2rem;
   padding-left: 1em;
   padding-right: 1em;
 
@@ -45,18 +45,14 @@
 
   font-family: $font-secondary;
   font-size: font-size(14);
-  font-weight: $font-weight-normal;
+  font-weight: $font-weight-semi-bold;
   color: #fff;
-
-  i, span {
-    display: inline;
-    vertical-align: middle;
-  }
-
+  
   i {
+    display: inline-block;
+    vertical-align: middle;
     font-size: font-size(19);
     margin-right: 0.5em;
-    line-height: 1.2em;
   }
 
   &:hover {
@@ -69,6 +65,7 @@
 
   @media($bp-larger-than-phablet) {
     font-size: font-size(13);
+    font-weight: $font-weight-normal;
   }
 }
 
