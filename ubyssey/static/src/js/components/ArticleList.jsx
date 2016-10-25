@@ -121,7 +121,6 @@ var ArticleList = React.createClass({
 
         this.setState({ active: this.state.active.next }, function() {
           this.updateURL();
-          window.resetAds('#article-' + this.state.active.data);
         });
     },
     setPrev: function(){
@@ -130,12 +129,6 @@ var ArticleList = React.createClass({
 
         this.setState({ active: this.state.active.prev }, function() {
           this.updateURL();
-
-          if (this.state.active.prev) {
-            window.resetAds('#article-' + this.state.active.data);
-          } else {
-            window.resetAds(document);
-          }
         });
     },
     updateURL: function(){
@@ -176,14 +169,17 @@ var ArticleList = React.createClass({
     },
     render: function(){
         var articles = this.state.articles.map(function(article, i){
-            return (<Article articleId={article.id} html={article.html} key={article.id} />);
-        });
+            return (
+              <Article isActive={this.state.active.data==article.id} articleId={article.id} html={article.html} key={article.id} />
+            );
+        }.bind(this));
+
         return (
             <div>
                 <ArticleHeader name={this.props.name} headline={this.getArticle(this.state.active.data).headline} />
                 {articles}
             </div>
-            );
+          );
         // <CommentsBar breakpoint={this.props.breakpoint} userId={this.props.userId} articleId={this.state.active.data} />
     }
 })
