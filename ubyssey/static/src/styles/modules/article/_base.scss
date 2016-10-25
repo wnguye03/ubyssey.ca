@@ -46,18 +46,17 @@ div.indicator {
 }
 
 .c-article__info {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   @media($bp-larger-than-tablet) {
     margin-top: 1em;
-    margin-bottom: 1em;
 
     display: flex;
   }
 }
 
 .c-article__byline {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   font-family: $font-default;
   font-size: $font-size-15px;
   font-weight: $font-weight-semi-bold;
@@ -79,10 +78,10 @@ div.indicator {
 }
 
 .c-article__byline__meta {
+  font-size: 0.9em;
   color: #777;
   font-weight: $font-weight-normal;
   @media($bp-larger-than-tablet) {
-    font-size: 0.9em;
     margin-left: 0.5em;
     margin-right: 0.5em;
   }
@@ -139,7 +138,8 @@ div.caption {
   color: #5A5A5A;
   line-height: 19px;
 
-  padding: 0 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   @media($bp-larger-than-phablet){
     padding: 0;
   }
