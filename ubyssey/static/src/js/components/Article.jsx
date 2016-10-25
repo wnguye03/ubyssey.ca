@@ -18,6 +18,8 @@ var Article = React.createClass({
             googletag.cmd.push(function() { refreshAds(); });
         }
         this.executeAJAXLoadedScripts();
+
+        window.fbRefresh();
     },
     executeAJAXLoadedScripts: function() {
         var scripts = $("#article-list").find("script");
@@ -26,7 +28,7 @@ var Article = React.createClass({
             eval(scripts[i].innerHTML);
           }
         }
-    },  
+    },
     setupGalleries: function(){
 
         var gatherImages = function(gallery){
