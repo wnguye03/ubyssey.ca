@@ -170,7 +170,7 @@ var ArticleList = React.createClass({
     render: function(){
         var articles = this.state.articles.map(function(article, i){
             return (
-              <Article isActive={this.state.active.data==article.id} articleId={article.id} html={article.html} key={article.id} />
+              <Article isActive={this.state.active.data==article.id} articleId={article.id} html={article.html} key={article.id} index={i} />
             );
         }.bind(this));
 
