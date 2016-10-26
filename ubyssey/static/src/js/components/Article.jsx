@@ -1,23 +1,31 @@
 var Galleries = require('./Galleries.jsx');
+var mp = require('../modules/Mixpanel');
 
 var Article = React.createClass({
+
     getInitialState: function(){
         return {
             galleries: [],
         }
     },
+
     componentDidMount: function(){
         // Setup galleries after DOM is loaded
         this.setState({ galleries: this.setupGalleries() });
         this.injectInlineAds();
+        this.trackEvents();
+        this.addTrackingEventListeners();
         this.executeAJAXLoadedScripts();
+
+        this.isViewed = false;
     },
 
     componentDidUpdate(prevProps, prevState) {
       if (this.props.isActive && !prevProps.isActive) {
         this.injectInlineAds();
+        this.trackEvents();
 
-        if (this.props.html) {
+        if (this.props.index > 0) {
           window.resetAds('#article-' + this.props.articleId);
         } else {
           window.resetAds(document);
@@ -25,9 +33,31 @@ var Article = React.createClass({
       }
     },
 
+    trackEvents() {
+      if (this.props.index > 0 && !this.isViewed) {
+        mp.pageView(
+          'article',
+          $('#article-' + this.props.articleId + ' > article'),
+          this.props.index + 1
+        );
+        this.isViewed = true;
+      }
+    },
+
+    addTrackingEventListeners() {
+      var $article = $('#article-' + this.props.articleId + ' > article');
+
+      $article.on('click', 'a.facebook', function() {
+        mp.shareArticle('facebook', $article);
+      });
+
+      $article.on('click', 'a.twitter', function() {
+        mp.shareArticle('twitter', $article);
+      });
+    },
 
     injectInlineAds() {
-      // If on mobile, insert box advertisement after second article
+      // If on mobile, insert box advertisement after 2nd and 7th paragraphs
       if ($(window).width() < 960) {
         var paragraphs = $('#article-' + this.props.articleId + ' .article-content > p');
 
@@ -60,6 +90,7 @@ var Article = React.createClass({
           }
         }
     },
+
     setupGalleries: function(){
 
         var gatherImages = function(gallery){
@@ -114,10 +145,12 @@ var Article = React.createClass({
         return galleries;
 
     },
+
     renderHTML: function(){
         var html = {'__html': this.props.html};
         return (<div ref="article"  className="article-html" dangerouslySetInnerHTML={html}></div>);
     },
+
     render: function(){
         var html = {'__html': this.props.html};
         return (
