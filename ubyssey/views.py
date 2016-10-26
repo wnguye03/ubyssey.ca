@@ -18,6 +18,7 @@ from ubyssey.helpers import ArticleHelper
 
 # Python imports
 from datetime import datetime
+import json
 
 class UbysseyTheme(DefaultTheme):
 
@@ -99,16 +100,38 @@ class UbysseyTheme(DefaultTheme):
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
+        authors_json = json.dumps([a.full_name for a in article.authors.all()])
+
         context = {
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
             'meta': self.get_article_meta(article),
             'article': article,
+            'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'base_template': 'base.html'
         }
 
         t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
         return HttpResponse(t.render(context))
+
+    def article_ajax(self, request, pk=None):
+        article = Article.objects.get(parent_id=pk, is_published=True)
+        authors_json = json.dumps([a.full_name for a in article.authors.all()])
+
+        context = {
+            'article': article,
+            'authors_json': authors_json,
+            'base_template': 'blank.html'
+        }
+
+        data = {
+            'id': article.parent_id,
+            'headline': article.headline,
+            'url': article.get_absolute_url(),
+            'html': loader.render_to_string(article.get_template(), context)
+        }
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
 
