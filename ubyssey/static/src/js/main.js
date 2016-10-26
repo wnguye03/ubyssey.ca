@@ -75,7 +75,7 @@ var mp = require('./modules/Mixpanel');
 
   var $article = $('.js-article');
   if ($article.length) {
-    mp.pageView('article', $article)
+    mp.pageView('article', $article, 1)
   } else {
     mp.pageView();
   }

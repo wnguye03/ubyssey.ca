@@ -13,7 +13,6 @@ var Article = React.createClass({
         // Setup galleries after DOM is loaded
         this.setState({ galleries: this.setupGalleries() });
         this.injectInlineAds();
-        this.trackEvents();
         this.addTrackingEventListeners();
         this.executeAJAXLoadedScripts();
 
