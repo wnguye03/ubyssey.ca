@@ -54,7 +54,7 @@
       <div class="article-content">
       {% block pre-content %}{% endblock %}
         {{ article.get_html|safe }}
-      </div>
+        <div class="fb-like" data-href="{{ article.get_absolute_url }}" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="false"></div>
     </div>
   </article>
 </main>
