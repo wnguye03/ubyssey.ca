@@ -16,6 +16,7 @@ theme_urls = patterns('',
     url(r'^guide/(?P<slug>[-\w]+)/$', theme.guide_article, name='guide-article'),
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
+    url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax')
 )
 
 if settings.DEBUG:

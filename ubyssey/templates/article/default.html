@@ -10,7 +10,7 @@
   {% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 article=article.id %}
   {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard_300x50' id=2 article=article.id %}
   {% endblock %}
-  <article class="c-article c-article--{{ article.template }}" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-url="{{ article.get_absolute_url }}">
+  <article class="c-article c-article--{{ article.template }} js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}">
   {% block banner %}
     <div class="u-container u-container--content u-container--padded">
       <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
@@ -36,7 +36,7 @@
       <div class="right-column">
         {% if article.featured_image %}
         <div class="featured-image">
-          <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-credit="{{ article.featured_image.get_credit }}" data-url="{{ article.featured_image.image.get_absolute_url }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
+          <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-credit="{{ article.featured_image.get_credit }}" data-url="{{ article.featured_image.image.get_absolute_url }}" src="{{ article.featured_image.image.get_medium_url }}"/>
           {% if article.featured_image.caption or article.featured_image.get_credit %}
           <div class="caption">
             {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.get_credit %}<span class="credit">{{ article.featured_image.get_credit }}{% if not article.featured_image.has_custom_credit %} / The Ubyssey{% endif %}</span>{% endif %}
