@@ -1,19 +1,28 @@
 var webpack = require('webpack');
+var version = require('./package.json').version;
 
 module.exports = {
     entry: {
         main:    './src/js/main.js',
         dfp:     './src/js/dfp.js',
         article: './src/js/article.jsx',
-        section: './src/js/section.jsx'
+        section: './src/js/section.jsx',
+        vendors: './src/js/vendors.js'
     },
     output: {
         path: __dirname + '/dist/js',
-        filename: '[name].js'
+        filename: '[name]-' + version + '.js'
     },
     module: {
       loaders: [
-        {test: /\.jsx$/, include: __dirname + '/src/js', loader: 'babel-loader'}
+        {
+          test: /\.jsx?$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+          query: {
+            presets: ['react']
+          }
+        }
       ]
     },
     plugins: [

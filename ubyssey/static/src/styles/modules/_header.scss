@@ -23,7 +23,7 @@ div.branding {
 
   .left, .right {
     width: 30%;
-    padding: 0 15px;
+    padding: 0 20px;
     box-sizing: border-box;
   }
 
@@ -56,6 +56,7 @@ div.branding {
   }
   img.top-logo {
     width: 285px;
+    vertical-align: middle;
   }
   img.left-logo {
     width: 150px;
@@ -64,9 +65,15 @@ div.branding {
   }
 }
 
+$header-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+$header-border: 1px solid #D3D3D3;
+
 nav.main {
-  border-top: 2px solid #313131;
-  border-bottom: 1px solid #D3D3D3;
+  border: $header-border;
+  @include box-shadow($header-box-shadow);
+  border-radius: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
 
   .inner {
     //padding: 15px 0px 13px 0;
@@ -102,12 +109,11 @@ nav.main {
 
     &.sections {
       li {
-        font-family: $font-default;//FranklinGothicURW-Med;
-        font-size: $font-size-145px;
-        font-weight: 500;
+        font-family: $font-default;
+        font-size: font-size(14);
+        font-weight: $font-weight-semi-bold;
         color: #2B2B2B;
         margin: 0 10px;
-        letter-spacing: 0.01em;
       }
     }
 
@@ -116,7 +122,7 @@ nav.main {
         font-family: $font-default;//FranklinGothicURW-Boo;
         font-size: 13px;
         color: #33331E;
-        margin: 0 15px;
+        margin: 0 10px;
       }
     }
 
@@ -156,15 +162,18 @@ header.topbar {
   height: 48px;
   line-height: 48px;
   background: rgba(255, 255, 255, 0.99);
-  border-bottom: 1px solid #DADADA;
+
+  border-bottom: $header-border;
+  @include box-shadow($header-box-shadow);
+
   .section-name {
       display: inline-block;
       margin-right: 10px;
       span {
         margin-left: 7px;
         font-family: $font-default;
-        font-weight: 500;
-        font-size: 12.5px;
+        font-weight: $font-weight-semi-bold;
+        font-size: font-size(12.5);
         text-transform: uppercase;
         color: #33331E;
       }
@@ -188,8 +197,8 @@ header.topbar {
     white-space: nowrap;
     vertical-align: top;
     font-family: $font-default;
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: $font-weight-semi-bold;
+    font-size: font-size(13);
     color: #373737;
     margin-left: 20px;
     ul {
@@ -199,7 +208,7 @@ header.topbar {
       margin: 0;
       li {
         display: inline-block;
-        padding: 0 15px;
+        padding: 0 10px;
         height: 45px;
         a {
           display: inline-block;
@@ -217,8 +226,8 @@ header.topbar {
     top: 16px;
     white-space: nowrap;
     font-family: $font-default;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: font-size(13);
+    font-weight: $font-weight-semi-bold;
     color: #373737;
     line-height: 19px;
     margin-top: 0;
@@ -228,6 +237,7 @@ header.topbar {
   a.icon-logo {
     display: inline-block;
     width: 20px;
+    line-height: 100%;
     overflow: hidden;
     vertical-align: middle;
   }

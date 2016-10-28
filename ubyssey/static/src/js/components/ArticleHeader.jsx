@@ -7,7 +7,7 @@ var ArticleHeader = React.createClass({
         function formatHeadline(headline){ return { __html: headline }; };
         return (
             <header className="topbar header-article">
-                <div className="container">
+                <div className="u-container">
                     <div className="section-name">
                         <a href={this.home} className="icon-logo">
                             <img className="logo" src={this.logo} />
@@ -23,4 +23,3 @@ var ArticleHeader = React.createClass({
 });
 
 module.exports = ArticleHeader;
-

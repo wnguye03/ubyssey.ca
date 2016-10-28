@@ -13,13 +13,15 @@ $bp-tablet                : "960px";
 
 $bp-960px                 : "min-width: 960px" !default;
 
-
 // Colors
-
 $color-ub-blue: #3A6BCC;
+$color-accent-blue: #0071c9;
+$color-social-facebook: #3b5998;
+$color-social-facebook-dark: #334d84;
+$color-social-twitter: #55acee;
+$color-social-twitter-dark: #3ca0ec;
 
 // Z-Index Scale
-
 $z-scale-1: 100;
 $z-scale-2: 200;
 $z-scale-3: 300;
@@ -27,5 +29,5 @@ $z-scale-4: 400;
 $z-scale-5: 500;
 
 // Article variables
-$article-content-ul-padding-left: 40px;
+$article-content-ul-padding-left: 20px;
 $article-content-div-child-padding: 15px;

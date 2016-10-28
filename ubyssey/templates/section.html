@@ -5,18 +5,16 @@
 {% include 'headers/topbar.html' with section=section.slug %}
 {% include 'headers/mobile.html' %}
     <main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
-        <div class="advertisement leaderboard">
-            <div class="adslot" data-size="leaderboard" data-dfp="Front_leaderboard_728x90" id="div-gpt-ad-1400538648567-10"></div>
-        </div>
-        <div class="container">
+        {% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 %}
+        <div class="u-container u-container--content">
             <h1 class="section">{{ section.name }}</h1>
             <article class="section-top row padded">
                 {% with articles.first as article %}
                     <div class="left stack-mobile">
                         <a class="image" href="{{ article.get_absolute_url }}"><img class="featured" src="{{ article.featured_image.image.get_medium_url }}" /></a>
                     </div>
-                    <div>
-                        <h1 class="headline"><a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a></h1>
+                    <div class="right">
+                        <h1 class="o-headline o-headline--h1"><a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a></h1>
                         <span class="byline"><span class="author">By {{ article.get_author_string }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span></span>
                         <p class="snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
                     </div>

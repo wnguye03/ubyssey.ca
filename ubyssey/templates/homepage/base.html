@@ -2,12 +2,10 @@
 {% load staticfiles %}
 {% load humanize %}
 {% block content %}
-<div class="advertisement homepage leaderboard">
-    <div class="adslot" data-size="leaderboard" data-dfp="Front_leaderboard_728x90" id="div-gpt-ad-1443288719995-12"></div>
-</div>
+{% include 'objects/advertisement.html' with size='leaderboard' name='Front_leaderboard_728x90' id=1 class='homepage' %}
 {% include 'headers/main.html' %}
 {% include 'headers/mobile.html' %}
-<main class="homepage container large">
+<main class="u-container u-container--large homepage">
     <div class="homepage-section frontpage-container">
         <div class="frontpage">
             <div class="cell left">
@@ -40,7 +38,7 @@
                     <a class="image" href="{{ article.get_absolute_url }}?ref=frontpage"><img src="{{ article.featured_image.image.get_medium_url }}"/></a>
                     <div class="meta">
                         <a href="{{ article.get_absolute_url }}?ref=frontpage"><h1 class="headline">{{ article.headline|safe }}</h1></a>
-                        <span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span></span>
+                        <span class="byline"><span class="author">By {{ article.get_author_string|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span></span>
                         <p class="snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
                     </div>
                 </article>
@@ -65,8 +63,8 @@
             {% include 'homepage/blocks/section_2.html' with section="science" articles=sections.science %}
         </div>
         <div class="sidebar-home">
-            <div class="advertisement box sidebar-block">
-                <div class="adslot" id="div-gpt-ad-1443288719995-10" data-size="box" data-dfp="Front_BoxA_300x250"></div>
+            <div class="sidebar-block">
+              {% include 'objects/advertisement.html' with size='box' name='Front_BoxA_300x250' id=2 %}
             </div>
             <div class="popular sidebar-block">
                 <h2 class="block-title">Most popular this week</h2>
@@ -76,8 +74,8 @@
                     {% endfor %}
                 </ol>
             </div>
-            <div class="advertisement box sidebar-block">
-                <div class="adslot" id="div-gpt-ad-1443288719995-11" data-size="box" data-dfp="Front_BoxB_300x250"></div>
+            <div class="sidebar-block">
+              {% include 'objects/advertisement.html' with size='box' name='Front_BoxB_300x250' id=3 %}
             </div>
             <div class="article-list blog sidebar-block">
                 <h2 class="block-title">From the blog</h2>
