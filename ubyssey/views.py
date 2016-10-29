@@ -251,6 +251,7 @@ class UbysseyTheme(DefaultTheme):
         if section_id is not None:
             article_list = article_list.filter(section = section_id)
             context['section_id'] = section_id
+            context['section_name'] = Section.objects.get(id=section_id)
             
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
