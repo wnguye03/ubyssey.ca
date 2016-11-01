@@ -3,6 +3,10 @@ var GallerySlide = React.createClass({
         var slideStyle = { width: this.props.width };
         var imageStyle = { backgroundImage: "url('" + this.props.src + "')" };
 
+        if (!this.props.caption) {
+            $('.slide-credit').css('padding-top', '20px')
+        }
+
         var caption = (<p className="slide-caption" dangerouslySetInnerHTML={{__html: this.props.caption}}></p>);
 				var credit = (<p className="slide-credit" dangerouslySetInnerHTML={{__html: this.props.credit}}></p>);
         return (
@@ -14,7 +18,7 @@ var GallerySlide = React.createClass({
                         </div>
                     </div>
                     { this.props.caption ? caption : null}
-										{ this.props.credit ? credit : null}
+					{ this.props.credit ? credit : null}
                 </div>
             </li>
         );
