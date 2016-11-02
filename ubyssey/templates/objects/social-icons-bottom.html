@@ -2,6 +2,6 @@
   <li>
     <a class="fb-like" data-href="{{ article.get_absolute_url }}" data-layout="button_count" data-action="recommend" data-size="large" data-show-faces="true" data-share="true"></a>
   </li><li>
-    <a class="twitter-share-button" href="{{ article.get_absolute_url }}" data-size="large">Tweet</a>
+    <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ article.headline }}&url={{ article.get_absolute_url }}" data-size="large">Tweet</a>
   </li>
 </ul>

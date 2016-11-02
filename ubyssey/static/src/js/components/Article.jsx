@@ -17,6 +17,7 @@ var Article = React.createClass({
         this.executeAJAXLoadedScripts();
 
         window.fbRefresh();
+        window.twttrRefresh();
 
         this.isViewed = false;
     },
