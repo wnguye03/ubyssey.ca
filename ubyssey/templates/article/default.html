@@ -55,7 +55,7 @@
       {% block pre-content %}{% endblock %}
         {{ article.get_html|safe }}
       </div>
-    </div>
+      {% include 'objects/social-icons-bottom.html' with article=article %}
   </article>
 </main>
 
