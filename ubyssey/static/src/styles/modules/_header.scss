@@ -13,7 +13,7 @@ header.main, header.topbar {
 div.branding {
   margin: 20px 0;
   height: 50px;
-  overflow: hidden;
+  overflow: visible;
 
   .left, .middle, .right {
     display: inline-block;
@@ -34,13 +34,16 @@ div.branding {
 
   .right {
     text-align: right;
+
     a {
-      margin-right: 20px;
-      font-size: 15px;
-      &:last-child {
-        margin-right: 0;
-      }
+        position: relative;
+        margin-right: 20px;
+        font-size: font-size(16);
+        &:last-child {
+            margin-right: 0;
+        }
     }
+
   }
 
   span.since-line {
