@@ -2,7 +2,6 @@
 <title>{{ meta.title|striptags }}</title>
 <link rel="canonical" href="{{ meta.url }}">
 <meta name="description" content="{{ meta.description }}" />
-
 {% if article %}<meta name="author" content="{{ meta.author }}" />{% endif %}
 
 <!-- Open Graph data -->
@@ -14,7 +13,7 @@
 <meta property="og:site_name" content="The Ubyssey" />
 
 <!-- Twitter Card data -->
-<meta name="twitter:card" content="{{ meta.description }}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@ubyssey">
 <meta name="twitter:title" content="{{ meta.title }}">
 <meta name="twitter:description" content="{{ meta.description }}">

@@ -1,9 +1,9 @@
 {
   "name": "ubyssey",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The Ubyssey's frontend framework.",
   "author": "Peter Siemens <peter@ubyssey.ca>",
-  "homepage": "http://ubyssey.ca",
+  "homepage": "http://www.ubyssey.ca",
   "contributors": [
     "Ben Cook <b@bencook.ca>",
     "Anny Gakhokidze"
