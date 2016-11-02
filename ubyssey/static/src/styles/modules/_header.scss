@@ -35,26 +35,10 @@ div.branding {
   .right {
     text-align: right;
 
-    #header-snapchat:hover .snapchat-code {
-        display: block;
-    }
-
-    span.snapchat-code {
-        display: none;
-        left: -70px;
-        background-image: url('../images/ubyssey-snapchat-code.jpg');
-        background-size: 100%;
-        background-repeat: no-repeat;
-        width: 150px;
-        height: 150px;
-        position: absolute;
-        z-index: 500;
-    }
-
     a {
         position: relative;
         margin-right: 20px;
-        font-size: 15px;
+        font-size: font-size(16);
         &:last-child {
             margin-right: 0;
         }
