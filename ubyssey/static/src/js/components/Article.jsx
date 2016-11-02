@@ -16,6 +16,9 @@ var Article = React.createClass({
         this.addTrackingEventListeners();
         this.executeAJAXLoadedScripts();
 
+        window.fbRefresh();
+        window.twttrRefresh();
+
         this.isViewed = false;
     },
 
