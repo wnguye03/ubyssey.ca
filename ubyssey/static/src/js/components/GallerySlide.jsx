@@ -1,5 +1,5 @@
 var GallerySlide = React.createClass({
-  render: function(){
+  render: function() {
     var slideStyle = { width: this.props.width };
     var imageStyle = { backgroundImage: "url('" + this.props.src + "')" };
 
