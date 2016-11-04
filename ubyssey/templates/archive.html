@@ -6,75 +6,75 @@
 	{% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-    <main class="archive page">
-        <div class="u-container u-container--content u-container--padded">
-					<h1>Ubyssey Archive</h1>
-			<div class="Archive bars">
-				<div class="Archive bar sidebar show-desktop">
-					<div class="Archive filters">
-						<ul>
-							<li><h3>Year</h3></li>
+<main class="archive page">
+  <div class="u-container u-container--content u-container--padded">
+		<h1>Search the archive</h1>
+		<div class="Archive bars">
+			<div class="Archive bar sidebar show-desktop">
+				<div class="Archive filters">
+					<h3>Year</h3>
+					<ul>
+					{% for year in years %}
+						<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ year }}</a></li>
+					{% endfor %}
+					</ul>
+				</div>
+				<div class="Archive filters">
+					<h3>Section</h3>
+					<ul>
+					{% for section in sections %}
+						<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a></li>
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="Archive bar mainbar">
+				<div class="Archive article-search">
+					<form method="get" action="/archive/">
+						<label><i class="fa fa-search"></i></label>
+						<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
+					</form>
+				</div>
+				<div class="Archive show-mobile">
+					<div class="Archive dropdown filters">
+						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if year %}{{ year }}{% else %}Year{% endif %}</p></a>
+						<ul class="dropdown-content filter">
 						{% for year in years %}
 							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ year }}</a></li>
 						{% endfor %}
 						</ul>
 					</div>
-					<div class="Archive filters">
-						<ul>
-							<li><h3>Section</h3></li>
+					<div class="Archive dropdown filters">
+						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if section_name %}{{ section_name }}{% else %}Section{% endif %}</p></a>
+						<ul class="dropdown-content filter">
 						{% for section in sections %}
-							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a></li>
+							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}&section_id={{ section.id }}">{{ section }}</a></li>
 						{% endfor %}
 						</ul>
 					</div>
 				</div>
-				<div class="Archive bar mainbar">
-					<div class="Archive article-search">
-						<form method="get" action="/archive/">
-							<label><i class="fa fa-search"></i></label>
-							<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
-						</form>
+        {% if articles|length > 0 %}
+				<div class="Archive article-archive">
+					<div class="list">
+					{% for article in articles %}
+						<article>
+						{% if article.featured_image %}
+							<a href="{{ article.get_absolute_url }}" class="image">
+								<img src="{{ article.featured_image.image.get_absolute_url }}" />
+							</a>
+						{% endif %}
+							<a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
+							<span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
+							<p class="snippet">{{ article.snippet|safe }}</p>
+						</article>
+					{% endfor %}
 					</div>
-					<div class="Archive show-mobile">
-						<div class="Archive dropdown filters">
-							<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if year %}{{ year }}{% else %}Year{% endif %}</p></a>
-							<ul class="dropdown-content filter">
-							{% for year in years %}
-								<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ year }}</a></li>
-							{% endfor %}
-							</ul>
-						</div>
-						<div class="Archive dropdown filters">
-							<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if section_name %}{{ section_name }}{% else %}Section{% endif %}</p></a>
-							<ul class="dropdown-content filter">
-							{% for section in sections %}
-								<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}&section_id={{ section.id }}">{{ section }}</a></li>
-							{% endfor %}
-							</ul>
-						</div>
-					</div>
-                {% if articles|length > 0 %}
-					<div class="Archive article-archive">
-						<div class="list">
-						{% for article in articles %}
-							<article>
-							{% if article.featured_image %}
-								<a href="{{ article.get_absolute_url }}" class="image">
-									<img src="{{ article.featured_image.image.get_absolute_url }}" />
-								</a>
-							{% endif %}
-								<a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
-								<span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
-								<p class="snippet">{{ article.snippet|safe }}</p>
-							</article>
-						{% endfor %}
-						</div>
-					</div>
-				{% else %}
-					<div class="no-results">No articles found.</div>
-				{% endif %}
 				</div>
+				{% else %}
+				<div class="no-results">No articles found.</div>
+				{% endif %}
 			</div>
 		</div>
-	</main>
+	</div>
+</main>
 {% endblock %}

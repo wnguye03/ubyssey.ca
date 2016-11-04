@@ -26,8 +26,7 @@
 		text-align: center;
 	}
 	.bars{
-		flex-direction: column;
-		margin-top: 0px;
+		margin-top: 1rem;
 	}
 	.sidebar {
 		width: 100%;
@@ -49,15 +48,20 @@
 		margin-bottom: 5px;
 		position: relative;
 	}
-	.filters ul{
+	.filters ul {
 		list-style: none;
+		padding: 0;
+		margin: 0;
 	}
-	.filters li a{
+	.filters li a {
+		font-size: font-size(15);
 		text-align: center;
 	}
 	.filters li{
-		margin: 5px;
+		margin-top: 0.25rem;
+		margin-bottom: 0.25rem;
 	}
+
 	@media($bp-larger-than-phablet){
 		.show-mobile{
 			display: none;
@@ -68,20 +72,29 @@
 		.filters {
 			border: 0px;
 			display: inline;
+
+			h3 {
+				margin-top: 0;
+				margin-bottom: 0.75rem;
+				font-size: font-size(18);
+			}
+
+			ul {
+				margin-bottom: 1.5rem;
+			}
 		}
 		.bars {
-			margin-top: 30px;
 			display: inline-flex;
 			flex-direction: row;
 			width: 100%;
 		}
 		.sidebar {
-			width: 20%;
-			margin-top: 30px;
+			width: auto;
+			padding-right: 4rem;
 		}
 		.mainbar {
-			width: 80%;
-			margin-top: 30px;
+			flex: 1;
 		}
 	}
+
 }

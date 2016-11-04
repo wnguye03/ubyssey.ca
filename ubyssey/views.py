@@ -243,7 +243,7 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'author/articles.html', context)
 
     def archive(self, request):
-            
+
         current_year = datetime.today().year
         years = []
         year_query = """SELECT YEAR(published_at) AS year_published,
@@ -251,19 +251,19 @@ class UbysseyTheme(DefaultTheme):
         for year in Article.objects.raw(year_query):
             if(year.year_published is not None):
                 years.append(year.year_published)
-            
+
         sections = Section.objects.all()
-            
+
         context = {
             'sections': sections,
             'years': years
         }
-            
+
         query = request.GET.get('q', None)
         section_id = request.GET.get('section_id', None)
-        
+
         year = request.GET.get('year', None)
-        
+
         article_list = Article.objects.filter(is_published=True)
         if query == "":
             query = None
@@ -273,12 +273,12 @@ class UbysseyTheme(DefaultTheme):
         if query is not None:
             article_list = article_list.filter(headline__icontains=query)
             context['q'] = query
-         
+
         if section_id is not None:
             article_list = article_list.filter(section = section_id)
             context['section_id'] = section_id
             context['section_name'] = Section.objects.get(id=section_id)
-            
+
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
         try:
@@ -291,15 +291,15 @@ class UbysseyTheme(DefaultTheme):
             articles = paginator.page(paginator.num_pages)
 
         meta = {
-            'title': 'Ubyssey Archive'
+            'title': 'Archive'
         }
-        
+
         context['articles'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
-        
+
         return render(request, 'archive.html', context)
-        
+
     def search(self, request):
 
         query = request.GET.get('q', None)
