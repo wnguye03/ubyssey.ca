@@ -10,7 +10,13 @@ footer {
   ul.sections {
     display: none;
   }
+
   @media($bp-960px){
+
+    .u-container {
+      display: flex;
+    }
+
     padding: 0;
     text-align: left;
     height: 66px;
@@ -18,8 +24,6 @@ footer {
     ul.sections {
       display: inline-block;
       margin-left: 15px;
-      width: 90%; //
-      float: left; //
     }
     a.home-link {
       display: inline-block;
@@ -27,16 +31,9 @@ footer {
     }
     ul.light {
       display: inline-block;
-      float: left; //
-      width: 200px; //
     }
     div.left {
-      float: left;
-      width: 60%; //
-    }
-    div.right {
-      float: right;
-      width: 360px; //
+      flex: 1 0;
     }
     div.copyright {
       display: inline-block;

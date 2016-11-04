@@ -4,13 +4,14 @@
 @import 'modules/font_faces';
 @import 'modules/advertisements';
 @import 'modules/variables';
+@import 'modules/mixins';
 
 // Ubyssey site-specific files
 
 @import 'modules/header';
 @import 'modules/footer';
 
-@import 'modules/headers';
+@import 'modules/headlines';
 @import 'modules/buttons';
 
 @import 'modules/homepage';

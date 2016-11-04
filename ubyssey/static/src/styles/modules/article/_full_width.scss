@@ -1,14 +1,17 @@
 @import 'modules/fonts';
 @import 'modules/variables';
 
-main.article.fw-story, div.container.clearfix.fw-story {
+.c-article--fw-story, div.container.clearfix.fw-story {
   .fw-banner {
     overflow: auto;
     .header-container {
       margin: 40px 0 20px 0;
-      padding-bottom: 40px;
+      padding-bottom: 1rem;
       display: table;
       border-bottom: 1px solid #E4E4E4;
+      @media($bp-larger-than-tablet) {
+        padding-bottom: 1.5rem;
+      }
     }
     .headline-container {
       text-align: center;
@@ -26,9 +29,13 @@ main.article.fw-story, div.container.clearfix.fw-story {
     .right {
       width: 45%;
     }
+    .article-byline {
+      opacity: 0.75;
+    }
+
     p.fw-description {
       font-family: $font-headline;
-      font-size: 15px;
+      font-size: 16px;
       color: #464646;
     }
 
@@ -47,27 +54,38 @@ main.article.fw-story, div.container.clearfix.fw-story {
       .header-container {
         width: 100%;
         margin-top: 0;
-        margin-bottom: 0;
+        margin-bottom: 1.5rem;
       }
 
       .headline-container {
         max-width: 585px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 30px;
-        padding: 0 20px;
+        margin-top: 1.5rem;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .article-byline {
+        font-size: 15px;
+        line-height: 24px;
       }
 
       @media($bp-larger-than-mobile){
         .header-container {
-          margin-top: 20px;
-          margin-bottom: 20px;
+          margin-top: 1.5rem;
+          margin-bottom: 1.5rem;
         }
       }
     }
 
     &.banner-image {
-      margin-bottom: 40px;
+      margin-bottom: 1.5rem;
+
+      @media($bp-larger-than-tablet) {
+        margin-bottom: 2rem;
+      }
+
       div.banner-image {
         position: relative;
         height: 300px;
@@ -111,7 +129,7 @@ main.article.fw-story, div.container.clearfix.fw-story {
       .headline-container {
         position: absolute;
         bottom: 0;
-        padding: 70px 0 20px 0;
+        padding: 70px 0 2rem 0;
         background-image: linear-gradient(-180deg, rgba(0,0,0,0.00) 1%, rgba(0,0,0,0.84) 99%);
         h1.headline, p.fw-description, div.article-byline, span.author, span.published {
           color: #fff;
@@ -119,10 +137,10 @@ main.article.fw-story, div.container.clearfix.fw-story {
         h1.headline {
           font-family: $font-default;
           font-size: 36px;
-          font-weight: 500;
+          font-weight: $font-weight-semi-bold;
         }
         div.article-byline {
-          font-size: 14px;
+          font-size: font-size(15);
         }
         span.author, span.published {
           font-weight: 300;
@@ -141,7 +159,7 @@ main.article.fw-story, div.container.clearfix.fw-story {
       }
     }
   }
-  
+
   div.article-social {
     margin-left: auto;
     margin-right: auto;
@@ -154,11 +172,17 @@ main.article.fw-story, div.container.clearfix.fw-story {
   }
 
   div.article-content {
-    p, h1, h2, h3, div.caption, div.attachment, div.attachment {
-      max-width: 585px;
+    > p,
+    > h1,
+    > h2,
+    > h3,
+    > ul,
+    div.caption,
+    div.attachment,
+    div.attachment,
+    .o-article-embed {
       margin-left: auto;
       margin-right: auto;
     }
   }
 }
-

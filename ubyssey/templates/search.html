@@ -3,7 +3,7 @@
 {% block content %}
     {% include 'headers/topbar.html' %}
     <main class="search">
-        <div class="container padded">
+        <div class="u-container u-container--padded">
             <h1>{% if q %}Search results for “{{ q }}”{% else %}Search{% endif %}</h1>
             <div class="article-search">
                 <form method="get" action="{% url 'search' %}">
@@ -33,7 +33,7 @@
                         </a>
                         {% endif %}
                         <a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
-                        <span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
+                        <span class="byline"><span class="author">By {{ article.get_author_string|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
                         <p class="snippet">{{ article.snippet|safe }}</p>
                     </article>
                 {% endfor %}

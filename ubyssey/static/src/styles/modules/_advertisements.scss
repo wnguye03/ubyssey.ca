@@ -1,116 +1,96 @@
-.advertisement {
+$adslots: (
+  leaderboard: (728px, 90px),
+  box: (300px, 250px),
+  mobile-leaderboard: (300px, 50px)
+);
 
-  &.leaderboard, &.box {
+// Desktop leaderboard ad
+.o-advertisement--leaderboard {
+  $width: nth(map-get($adslots, leaderboard), 1);
+  $height: nth(map-get($adslots, leaderboard), 2);
+
+  display: none;
+
+  .adslot {
+    margin-left: auto;
+    margin-right: auto;
+    width: $width;
+    height: $height;
+    padding-top: 1.5rem;
+  }
+
+  &.o-advertisement--homepage {
     .adslot {
-      margin: 0 auto;
+      padding-top: 1.5rem;
     }
   }
 
-  // Desktop leaderboard ad
-  &.leaderboard {
-    display: none;
-    padding-top: 25px;
-    padding-bottom: 10px;
-    text-align: center;
-
-    .adslot {
-      width: 728px;
-      height: 90px;
-      margin-bottom: 15px;
+  @media(min-width: $width + 40) {
+    display: block;
+    &.o-advertisement--homepage {
+      display: none;
     }
+  }
 
-    &.homepage {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      .adslot {
-        margin-top: 25px;
-      }
-    }
-
-    @media($bp-larger-than-mobile){
+  @media($bp-larger-than-tablet){
+    &.o-advertisement--homepage {
       display: block;
-      &.homepage {
-        display: none;
-      }
-    }
-
-    @media($bp-larger-than-tablet){
-      &.homepage {
-        display: block;
-      }
     }
   }
+}
 
-  // Mobile leaderboard
-  &.mobile-leaderboard {
-    @media(min-width: 768px){
-      display: none;
-    }
+main.article .o-advertisement--leaderboard {
+  padding-top: 1rem;
+  .adslot {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.article-slide .o-advertisement--leaderboard,
+.article-slide .o-advertisement--mobile-leaderboard {
+  background: #F5F5F5;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #DADADA;
+}
+
+.article-slide .o-advertisement--leaderboard {
+  margin-bottom: 1rem;
+}
+
+.article-slide .o-advertisement--mobile-leaderboard {
+  margin-bottom: 0.5rem;
+}
+
+
+// Mobile leaderboard ad
+.o-advertisement--mobile-leaderboard {
+  $width: nth(map-get($adslots, mobile-leaderboard), 1);
+  $height: nth(map-get($adslots, mobile-leaderboard), 2);
+
+  $desktop-width: nth(map-get($adslots, leaderboard), 1);
+
+  .adslot {
+    width: $width;
+    height: $height;
+    padding-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  // Desktop box
-  &.box {
-    .adslot {
-      width: 300px;
-      height: 250px;
-    }
-    &.sidebar {
-      padding: 0;
-    }
-
-		&.inline {
-			display: block;
-			margin-top: 10px;
-			margin-bottom: 10px;
-
-			&.center {
-				margin: 0 auto;
-				@media($bp-larger-than-tablet) {
-					margin: 40px 0;
-					max-width: 585px;
-				}
-
-				&.fw-story {
-					margin: 0 auto;
-				}
-			}
-
-			&.left {
-				float: left;
-			}
-
-			&.right {
-				float: right;
-			}
-		}
+  @media(min-width: $desktop-width + 40) {
+    display: none;
   }
+}
 
-  // Full-width article ads
-  &.fw-story {
-    &.right, &.left, &.top {
-      margin: 0 auto;
-      display: none;
-    }
-    @media($bp-larger-than-phablet) {
-      padding-top: 50px;
-      &.right, &.top {
-        float: right;
-        padding-left: 40px;
-      }
-      &.left {
-        float: left;
-        padding-right: 30px;
-      }
-      &.top {
-        display: none;
-      }
-    }
+.o-advertisement--box {
+  $width: nth(map-get($adslots, box), 1);
+  $height: nth(map-get($adslots, box), 2);
 
-    @media($bp-larger-than-mobile){
-      &.right, &.left, &.top {
-        display: block;
-      }
-    }
+  .adslot {
+    width: $width;
+    min-height: $height;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

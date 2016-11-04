@@ -1,24 +1,89 @@
 var Galleries = require('./Galleries.jsx');
+var mp = require('../modules/Mixpanel');
 
 var Article = React.createClass({
+
     getInitialState: function(){
         return {
             galleries: [],
         }
     },
+
     componentDidMount: function(){
         // Setup galleries after DOM is loaded
         this.setState({ galleries: this.setupGalleries() });
-
-        if (this.props.html && typeof collectAds !== 'undefined') {
-            // Only collect ads for AJAX-loaded stories
-            // Adblock might have prevented this from being defined (in dfp.js)
-            var element = this.refs.article.getDOMNode();
-            googletag.cmd.push(function() { collectAds(element); });
-            googletag.cmd.push(function() { refreshAds(); });
-        }
+        this.injectInlineAds();
+        this.addTrackingEventListeners();
         this.executeAJAXLoadedScripts();
+
+        window.fbRefresh();
+        window.twttrRefresh();
+
+        this.isViewed = false;
     },
+
+    componentDidUpdate(prevProps, prevState) {
+      if (this.props.isActive && !prevProps.isActive) {
+        this.injectInlineAds();
+        this.trackEvents();
+
+        if (this.props.index > 0) {
+          window.resetAds('#article-' + this.props.articleId);
+        } else {
+          window.resetAds(document);
+        }
+      }
+    },
+
+    trackEvents() {
+      if (this.props.index > 0 && !this.isViewed) {
+        mp.pageView(
+          'article',
+          $('#article-' + this.props.articleId + ' > article'),
+          this.props.index + 1
+        );
+        this.isViewed = true;
+      }
+    },
+
+    addTrackingEventListeners() {
+      var $article = $('#article-' + this.props.articleId + ' > article');
+
+      $article.on('click', 'a.facebook', function() {
+        mp.shareArticle('facebook', $article);
+      });
+
+      $article.on('click', 'a.twitter', function() {
+        mp.shareArticle('twitter', $article);
+      });
+    },
+
+    injectInlineAds() {
+      // If on mobile, insert box advertisement after 2nd and 7th paragraphs
+      if ($(window).width() < 960) {
+        var paragraphs = $('#article-' + this.props.articleId + ' .article-content > p');
+
+        var articleId = this.props.articleId;
+
+        function injectAd(version, number, index) {
+          var id = 'div-gpt-ad-1443288719995-' + number + '-' + articleId;
+          var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="News_Box' + version + '_300x250"></div></div></div></div>';
+
+          if (!$('#' + id).length) {
+            $(adString).insertAfter(paragraphs.get(index));
+          }
+        }
+
+        if (paragraphs.length > 2) {
+          injectAd('A', 99, 1);
+        }
+
+        if (paragraphs.length > 8 ) {
+          injectAd('B', 100, 6);
+        }
+      }
+    },
+
     executeAJAXLoadedScripts: function() {
         var scripts = $("#article-list").find("script");
         for (var i=0;i<scripts.length;i++) {
@@ -26,7 +91,8 @@ var Article = React.createClass({
             eval(scripts[i].innerHTML);
           }
         }
-    },  
+    },
+
     setupGalleries: function(){
 
         var gatherImages = function(gallery){
@@ -81,10 +147,12 @@ var Article = React.createClass({
         return galleries;
 
     },
+
     renderHTML: function(){
         var html = {'__html': this.props.html};
         return (<div ref="article"  className="article-html" dangerouslySetInnerHTML={html}></div>);
     },
+
     render: function(){
         var html = {'__html': this.props.html};
         return (

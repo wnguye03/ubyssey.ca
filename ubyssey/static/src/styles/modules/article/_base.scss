@@ -13,14 +13,11 @@
 div.article-slide {
   border-top: 1px solid #DADADA;
   margin-top: 50px;
+
   main.article {
     margin-top: 0;
   }
-  .advertisement.leaderboard {
-    background: #F5F5F5;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #DADADA;
-  }
+
   @media($bp-larger-than-tablet){
     margin-bottom: 50px;
   }
@@ -35,85 +32,102 @@ div.indicator {
 
 
 // Article
-
-main.article.default {
-
-  h1.headline {
-    line-height: 1.185em;
-    margin-bottom: 15px;
-  }
-
-  div.article-info {
-    color: #222222;
-  }
-
-  @media($bp-larger-than-mobile){
-    h1.headline {
-      font-size: 2.5em;
-      margin: 0;
-    }
-    div.article-byline {
-      float: left;
-    }
-    div.article-info {
-      margin: 20px 0;
-    }
-  }
-
-  @media($bp-larger-than-tablet){
-    h1.headline {
-      font-size: $font-size-36px;
+.c-article--default {
+  .o-headline--article {
+    @media($bp-larger-than-tablet) {
       line-height: 1.277em;
-      padding: 25px 0;
+      padding-top: 25px;
+      padding-bottom: 25px;
       margin: 0;
       border-top: 2px solid #3E3E3E;
       border-bottom: 1px solid #D2D2D2;
     }
-    div.article-info {
-      margin: 25px 0;
-    }
   }
-
 }
 
-div.headline-container {
-  padding: 25px 20px 30px 20px;
+.c-article__info {
+  margin-bottom: 1rem;
+
+  @media($bp-larger-than-tablet) {
+    margin-top: 1em;
+
+    display: flex;
+  }
 }
 
-h1.headline {
-  font-family: $font-headline;
-  font-size: 32px;
-  color: #000000;
-  margin: 0;
+.c-article__byline {
+  margin-bottom: 0.2rem;
+  font-family: $font-default;
+  font-size: $font-size-15px;
+  font-weight: $font-weight-semi-bold;
+
+  @media($bp-larger-than-tablet) {
+    flex: 1 0;
+    line-height: 2rem;
+    margin-bottom: 0;
+  }
+}
+
+.c-article__author,
+.c-article__byline__meta {
+  margin-bottom: 0.9rem;
+  display: inline-block;
+  @media($bp-larger-than-tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.c-article__byline__meta {
+  font-size: 0.9em;
+  color: #777;
+  font-weight: $font-weight-normal;
+  @media($bp-larger-than-tablet) {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+}
+
+.c-article__author {
+  margin-right: 0.5em;
+  @media($bp-larger-than-tablet) {
+    margin-right: 0;
+  }
 }
 
 div.article-content {
-  p,
+  > p,
   div.caption,
-  h1,
-  h2,
-  h3,
-  ul {
+  > h1,
+  > h2,
+  > h3,
+  > ul,
+  > .attachment.pull-quote {
     padding-right: $article-content-div-child-padding;
   }
 
-  p,
+  > p,
   div.caption,
-  h1,
-  h2,
-  h3 {
+  > h1,
+  > h2,
+  > h3,
+  > .attachment.pull-quote {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: $article-content-div-child-padding;
-    @media($bp-larger-than-tablet){
+    @media($bp-larger-than-phablet){
       padding: 0;
       max-width: 585px;
     }
   }
 
-  ul {
-    padding-left: $article-content-ul-padding-left;
-    max-width: 585px - $article-content-ul-padding-left;
+  > ul {
+    padding-left: $article-content-ul-padding-left + 15;
+    padding-right: 15px;
+    @media($bp-larger-than-phablet){
+      padding-left: $article-content-ul-padding-left;
+      max-width: 585px - $article-content-ul-padding-left;
+      padding-right: 0;
+    }
   }
 }
 
@@ -124,7 +138,8 @@ div.caption {
   color: #5A5A5A;
   line-height: 19px;
 
-  padding: 0 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   @media($bp-larger-than-phablet){
     padding: 0;
   }
@@ -132,12 +147,12 @@ div.caption {
 
 div.article-content {
 
-  > p, ul {
+  > p, > ul {
     font-family: $font-body !important;
     font-size: 16px !important;
     color: #333333 !important;
     line-height: 26px !important;
-    margin-top: 20px !important;
+    margin-top: 20px;
 
     &:first-child {
         margin-top: 5px;
@@ -152,24 +167,10 @@ div.article-content {
   }
 
   a {
-    color: #0071c9;
+    color: $color-accent-blue;
     text-decoration: underline;
   }
 
-}
-
-div.article-byline {
-  font-size: 14px;
-  line-height: 17px;
-  font-family: $font-default;
-  font-weight: 500;
-  span.author {
-    font-family: $font-default;
-  }
-  span.published {
-    color: #777;
-    font-size: 13px;
-  }
 }
 
 @media($bp-larger-than-mobile){

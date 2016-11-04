@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var clean = require('gulp-clean');
+var rename = require('gulp-rename');
 
 var webpack = require('webpack');
 var webpackProdConfig = require('./webpack.config.js');
@@ -8,6 +9,9 @@ var webpackDevConfig = require('./webpack.dev.config.js');
 
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+
+var fs = require('fs');
+var version = JSON.parse(fs.readFileSync('./package.json')).version;
 
 gulp.task('webpack:build', ['clean:js'], function(callback) {
   webpack(webpackProdConfig, function(err, stats) {
@@ -33,9 +37,14 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
   });
 });
 
+var renameFunc = rename(function (path) {
+  path.basename += '-' + version;
+});
+
 gulp.task('sass:build', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(renameFunc)
     .pipe(gulp.dest('./dist/css/'));
 });
 
@@ -43,6 +52,7 @@ gulp.task('sass:build-dev', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
+    .pipe(renameFunc)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/css/'));
 });

@@ -82,7 +82,7 @@ div.frontpage {
     &.secondary {
       h2 {
         margin-top: 0;
-        font-size: 28px;
+        font-size: font-size(26);
         margin-bottom: 10px;
       }
     }
@@ -103,6 +103,9 @@ div.frontpage {
         border-bottom: none;
         h1.headline {
           margin: 12px 0;
+        }
+        h1.headline:hover {
+          color: $color-accent-blue;
         }
         &.fw-story {
           text-align: center;
@@ -155,7 +158,7 @@ div.frontpage {
         padding-top: 15px;
         padding-bottom: 15px;
         h2.headline {
-          margin-bottom: 5px;
+          margin-bottom: 0.5rem;
         }
         &:first-child {
           padding-top: 0;
@@ -363,12 +366,16 @@ html.hairlines {
 article.section-top {
   border-bottom: 1px dotted #E0E0E0;
   @media($bp-larger-than-phablet){
+    display: flex;
     padding-bottom: 25px;
     margin-bottom: 25px;
     border-bottom: 1px solid #E0E0E0;
     .left {
-      width: 40%;
+      flex: 4;
       margin-right: 20px;
+    }
+    .right {
+      flex: 6;
     }
   }
 
@@ -469,37 +476,38 @@ article.col {
 
 p.snippet {
   font-family: $font-default;
-  font-size: 14px;
+  font-size: font-size(14);
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.5em;
   color: #6B6B6B;
   @media($bp-larger-than-phablet){
-    font-size: 13.5px;
+    font-size: font-size(13);
   }
 }
 
 span.byline {
   font-family: $font-default;
-  font-weight: 500;
   margin: 10px 0;
+  font-size: font-size(13);
+  line-height: 1.5em;
   span.author {
-    font-size: 0.9em;
+    font-weight: $font-weight-semi-bold;
   }
   span.published {
     color: #777;
-    font-size: 0.85em;
   }
   display: none;
 }
 
 p.snippet span.timestamp {
   font-family: $font-default;
-  color: #0071C9;
-  font-weight: 500;
-  font-size: 13px;
-  margin-right: 8px;
-
+  color: $color-accent-blue;
+  margin-right: 0.4em;
+  font-weight: $font-weight-semi-bold;
+  @media($bp-larger-than-phablet) {
+    font-weight: $font-weight-normal;
+  }
 }
 
 @media($bp-larger-than-phablet){
@@ -530,12 +538,12 @@ div.multi-zone {
 			margin: 0 auto;
 			text-align: center;
 	  }
-		
+
 		img {
 			display: block;
 			margin: 0 auto;
 		}
-	  
+
   }
 }
 
@@ -564,22 +572,23 @@ div.sidebar-home {
   }
 
   @media($bp-larger-than-desktop){
-
     box-sizing: border-box;
     width: 353px;
-    //width: 29%;
   }
-}
 
-div.advertisement {
-  border-top: 1px solid #E6E6E6;
-  padding: 25px 0;
-  &.box {
-    text-align: center;
-  }
-  &:first-child {
-    border-top: none;
-    paddding-top: 0;
+  .o-advertisement {
+    border-top: 1px solid #E6E6E6;
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    &--box {
+      text-align: center;
+    }
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
   }
 }
 

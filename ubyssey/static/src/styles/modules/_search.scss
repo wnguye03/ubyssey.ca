@@ -8,7 +8,7 @@ a.search {
   width: 100%;
   z-index: $z-scale-1;
 
-  .container {
+  .u-container {
     padding: 20px;
     box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.2);
     background: rgba(249, 249, 249, 0.99);
@@ -63,7 +63,7 @@ a.search {
   }
 
   @media($bp-larger-than-tablet){
-    .container {
+    .u-container {
       padding: 0;
       max-width: 960px;
       border-radius: 5px;
