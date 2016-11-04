@@ -6,9 +6,9 @@
 	{% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-    <main class="archive">
-        <div class="container padded">
-		<h1>Ubyssey Archive</h1>
+    <main class="archive page">
+        <div class="u-container u-container--content u-container--padded">
+					<h1>Ubyssey Archive</h1>
 			<div class="Archive bars">
 				<div class="Archive bar sidebar show-desktop">
 					<div class="Archive filters">
@@ -34,7 +34,7 @@
 							<label><i class="fa fa-search"></i></label>
 							<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
 						</form>
-					</div>	
+					</div>
 					<div class="Archive show-mobile">
 						<div class="Archive dropdown filters">
 							<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if year %}{{ year }}{% else %}Year{% endif %}</p></a>
