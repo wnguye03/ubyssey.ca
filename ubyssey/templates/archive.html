@@ -33,6 +33,8 @@
 					<form method="get" action="/archive/">
 						<label><i class="fa fa-search"></i></label>
 						<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
+						{% if year %}<input name="year" type="hidden" value="{{ year }}"></input>{% endif %}
+						{% if section_id %}<input name="section" type="hidden" value="{{ section_id }}"></input>{% endif %}
 					</form>
 				</div>
 				<div class="Archive show-mobile">
