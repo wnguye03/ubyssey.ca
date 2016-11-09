@@ -244,6 +244,7 @@ class UbysseyTheme(DefaultTheme):
 
     def archive(self, request):
 
+
         current_year = datetime.today().year
         years = []
         year_query = """SELECT YEAR(published_at) AS year_published,
@@ -253,18 +254,25 @@ class UbysseyTheme(DefaultTheme):
                 years.append(year.year_published)
 
         sections = Section.objects.all()
-
+        
+        order = request.GET.get('order', 'newest')
+        if order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+            
         context = {
             'sections': sections,
-            'years': years
+            'years': years,
+            'order': order
         }
-
+        
         query = request.GET.get('q', None)
         section_id = request.GET.get('section_id', None)
 
         year = request.GET.get('year', None)
 
-        article_list = Article.objects.filter(is_published=True)
+        article_list = Article.objects.filter(is_published=True).order_by(order_by)
         if query == "":
             query = None
         if year is not None:

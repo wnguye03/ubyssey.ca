@@ -50,13 +50,23 @@
 						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if section_name %}{{ section_name }}{% else %}Section{% endif %}</p></a>
 						<ul class="dropdown-content filter">
 						{% for section in sections %}
-							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}&section_id={{ section.id }}">{{ section }}</a></li>
+							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a></li>
 						{% endfor %}
 						</ul>
 					</div>
 				</div>
-        {% if articles|length > 0 %}
 				<div class="Archive article-archive">
+					<div class="filter clearfix">
+						{% if articles|length > 0 %}<h3 class="basic uppercase">{{ articles|length }} RESULTS FOR "{{ q }}"</h3>{% endif %}
+						<div class="dropdown">
+                        <a href="#">{{ order|title }} <i class="fa fa-caret-down"></i></a>
+                        <ul>
+                            <li><a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year }}&{% endif %}order=newest">Newest</a></li>
+                            <li><a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=oldest">Oldest</a></li>
+                        </ul>
+                    </div>
+					</div>
+				{% if articles|length > 0 %}
 					<div class="list">
 					{% for article in articles %}
 						<article>
@@ -71,10 +81,10 @@
 						</article>
 					{% endfor %}
 					</div>
-				</div>
 				{% else %}
-				<div class="no-results">No articles found.</div>
+					<div class="no-results">No articles found.</div>
 				{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>
