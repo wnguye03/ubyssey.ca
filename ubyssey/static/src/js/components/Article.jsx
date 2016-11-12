@@ -67,7 +67,7 @@ var Article = React.createClass({
 
         function injectAd(version, number, index) {
           var id = 'div-gpt-ad-1443288719995-' + number + '-' + articleId;
-          var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="News_Box' + version + '_300x250"></div></div></div></div>';
+          var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
 
           if (!$('#' + id).length) {
             $(adString).insertAfter(paragraphs.get(index));
