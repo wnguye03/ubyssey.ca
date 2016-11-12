@@ -37,14 +37,14 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
   });
 });
 
-var renameFunc = rename(function (path) {
+function renameFunc(path) {
   path.basename += '-' + version;
-});
+}
 
 gulp.task('sass:build', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(renameFunc)
+    .pipe(rename(renameFunc))
     .pipe(gulp.dest('./dist/css/'));
 });
 
@@ -52,7 +52,7 @@ gulp.task('sass:build-dev', ['clean:css'], function() {
   return gulp.src('./src/styles/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(renameFunc)
+    .pipe(rename(renameFunc))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/css/'));
 });

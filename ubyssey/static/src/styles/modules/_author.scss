@@ -194,7 +194,7 @@ div.article-archive {
     text-align: center;
   }
 
-  @media($bp-larger-than-tablet){
+  @media($bp-half-desktop){
     div.list article a.image {
       float: left;
       margin-right: 15px;
