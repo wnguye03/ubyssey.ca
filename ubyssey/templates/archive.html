@@ -14,8 +14,8 @@
 				<div class="Archive filters">
 					<h3>Year</h3>
 					<ul>
-					{% for year in years %}
-						<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ year }}</a></li>
+					{% for y in years %}
+						<li><a href="{% url 'archive' %}?year={{ y }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a></li>
 					{% endfor %}
 					</ul>
 				</div>
@@ -34,26 +34,38 @@
 						<label><i class="fa fa-search"></i></label>
 						<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
 						{% if year %}<input name="year" type="hidden" value="{{ year }}"></input>{% endif %}
-						{% if section_id %}<input name="section" type="hidden" value="{{ section_id }}"></input>{% endif %}
+						{% if section_id %}<input name="section_id" type="hidden" value="{{ section_id }}"></input>{% endif %}
 					</form>
 				</div>
 				<div class="Archive show-mobile">
 					<div class="Archive dropdown filters">
 						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if year %}{{ year }}{% else %}Year{% endif %}</p></a>
 						<ul class="dropdown-content filter">
-						{% for year in years %}
-							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ year }}</a></li>
+							<li><a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}">All</a></li>
+						{% for y in years %}
+							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a></li>
 						{% endfor %}
-						</ul>
+							</ul>
 					</div>
 					<div class="Archive dropdown filters">
 						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if section_name %}{{ section_name }}{% else %}Section{% endif %}</p></a>
 						<ul class="dropdown-content filter">
+							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}">All</a></li>
 						{% for section in sections %}
-							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a></li>
+							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section_id }}">{{ section }}</a></li>
 						{% endfor %}
-						</ul>
+							</ul>
 					</div>
+				</div>
+				<div class="Archive show-desktop">
+					<ul class="filter-remove">
+					{% if year %}
+						<li><a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}"><i class="fa fa-times" aria-hidden="true"></i>{{ year }}</a></li>
+					{% endif %}
+					{% if section_id %}
+						<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}"><i class="fa fa-times" aria-hidden="true"></i>{{ section_name }}</a></li>
+					{% endif %}
+					</ul>
 				</div>
 				<div class="Archive article-archive">
 					<div class="filter clearfix">
@@ -82,7 +94,9 @@
 					{% endfor %}
 					</div>
 				{% else %}
+				{% if not no_search %}
 					<div class="no-results">No articles found.</div>
+				{% endif %}
 				{% endif %}
 				</div>
 			</div>

@@ -244,7 +244,6 @@ class UbysseyTheme(DefaultTheme):
 
     def archive(self, request):
 
-
         current_year = datetime.today().year
         years = []
         year_query = """SELECT YEAR(published_at) AS year_published,
@@ -273,6 +272,7 @@ class UbysseyTheme(DefaultTheme):
         year = request.GET.get('year', None)
 
         article_list = Article.objects.filter(is_published=True).order_by(order_by)
+
         if query == "":
             query = None
         if year is not None:
@@ -302,6 +302,12 @@ class UbysseyTheme(DefaultTheme):
             'title': 'Archive'
         }
 
+        if query is None and year is None and section_id is None:
+            articles = None
+            context['no_search'] = True
+        else:
+            context['no_search'] = False
+            
         context['articles'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
