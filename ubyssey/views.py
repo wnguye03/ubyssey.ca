@@ -250,10 +250,7 @@ class UbysseyTheme(DefaultTheme):
 
         order = request.GET.get('order', 'newest')
 
-        if order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
+        order_by = '-published_at' if order == 'newest' else 'published_at'
 
         context = {
             'sections': sections,
