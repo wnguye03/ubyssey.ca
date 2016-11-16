@@ -41,7 +41,7 @@ div.article-search {
     position: absolute;
     width: 40px;
     text-align: center;
-    line-height: 44px;
+    line-height: 40px;
     font-size: 15px;
     color: #807E7E;
   }
@@ -84,7 +84,7 @@ div.article-archive {
 
   padding-left: 15px;
   padding-right: 15px;
-  
+
   @media($bp-larger-than-phablet) {
     padding-left: 0;
     padding-right: 0;
