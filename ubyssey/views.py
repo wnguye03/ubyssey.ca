@@ -244,19 +244,7 @@ class UbysseyTheme(DefaultTheme):
 
     def archive(self, request):
 
-        current_year = datetime.today().year
-
-        years = []
-
-        year_query = """
-            SELECT YEAR(published_at) AS year_published, id
-            FROM content_article
-            GROUP BY YEAR(published_at)
-        """
-
-        for year in Article.objects.raw(year_query):
-            if year.year_published is not None:
-                years.append(year.year_published)
+        years = ArticleHelper.get_years()
 
         sections = Section.objects.all()
 
