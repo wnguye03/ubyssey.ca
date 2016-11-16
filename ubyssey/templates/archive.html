@@ -69,7 +69,9 @@
 				</div>
 				<div class="Archive article-archive">
 					<div class="filter clearfix">
-						{% if articles|length > 0 %}<h3 class="basic uppercase">{{ articles|length }} RESULTS FOR "{{ q }}"</h3>{% endif %}
+						{% if count %}
+						<h3 class="basic uppercase">{{ count }} RESULTS{% if q %} FOR "{{ q }}"{% endif %}</h3>
+						{% endif %}
 						<div class="dropdown">
                         <a href="#">{{ order|title }} <i class="fa fa-caret-down"></i></a>
                         <ul>
