@@ -245,27 +245,34 @@ class UbysseyTheme(DefaultTheme):
     def archive(self, request):
 
         current_year = datetime.today().year
+
         years = []
-        year_query = """SELECT YEAR(published_at) AS year_published,
-                id FROM content_article GROUP BY YEAR(published_at)"""
+
+        year_query = """
+            SELECT YEAR(published_at) AS year_published, id
+            FROM content_article
+            GROUP BY YEAR(published_at)
+        """
+
         for year in Article.objects.raw(year_query):
-            if(year.year_published is not None):
+            if year.year_published is not None:
                 years.append(year.year_published)
 
         sections = Section.objects.all()
-        
+
         order = request.GET.get('order', 'newest')
+
         if order == 'newest':
             order_by = '-published_at'
         else:
             order_by = 'published_at'
-            
+
         context = {
             'sections': sections,
             'years': years,
             'order': order
         }
-        
+
         query = request.GET.get('q', None)
         section_id = request.GET.get('section_id', None)
 
@@ -275,9 +282,11 @@ class UbysseyTheme(DefaultTheme):
 
         if query == "":
             query = None
+
         if year is not None:
             context['year'] = year
             article_list = article_list.filter(published_at__icontains=str(year))
+
         if query is not None:
             article_list = article_list.filter(headline__icontains=query)
             context['q'] = query
@@ -289,6 +298,7 @@ class UbysseyTheme(DefaultTheme):
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
+
         try:
             articles = paginator.page(page)
         except PageNotAnInteger:
@@ -307,7 +317,7 @@ class UbysseyTheme(DefaultTheme):
             context['no_search'] = True
         else:
             context['no_search'] = False
-            
+
         context['articles'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
