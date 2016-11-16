@@ -268,8 +268,10 @@ class UbysseyTheme(DefaultTheme):
         if query == "":
             query = None
 
+        print query
+
         if year is not None:
-            context['year'] = year
+            context['year'] = int(year)
             article_list = article_list.filter(published_at__icontains=str(year))
 
         if query is not None:
@@ -278,7 +280,7 @@ class UbysseyTheme(DefaultTheme):
 
         if section_id is not None:
             article_list = article_list.filter(section = section_id)
-            context['section_id'] = section_id
+            context['section_id'] = int(section_id)
             context['section_name'] = Section.objects.get(id=section_id)
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
