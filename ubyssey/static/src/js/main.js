@@ -1,12 +1,24 @@
 var mp = require('./modules/Mixpanel');
 
+function disableScroll($document) {
+  $document.on('touchmove', function(e) {
+    e.preventDefault();
+  });
+  $('body').addClass('u-no-scroll');
+}
+
+function enableScroll($document) {
+  $document.off('touchmove');
+  $('body').removeClass('u-no-scroll');
+}
+
 (function() {
   var $searchform = $('#search-form'),
       $document = $(document);
 
   $('.dropdown > a').click(function(e){
     e.preventDefault();
-    var dropdown = $(this).parent().find('ul');
+    var dropdown = $(this).parent().find('.list');
     if(dropdown.is(':visible')){
       dropdown.hide();
     } else {
@@ -15,8 +27,39 @@ var mp = require('./modules/Mixpanel');
     return false;
   });
 
-  $document.on('click', function(){
-    $('.dropdown ul').hide();
+  $document.on('click', function(e){
+    $('.dropdown .list').hide();
+    $('.js-dropdown-list').hide();
+    enableScroll($document);
+  });
+
+  var DROPDOWN_FADE_TIME = 100;
+
+  $('.js-dropdown > a').click(function(e) {
+    e.preventDefault();
+    var dropdown = $(this).parent().find('.js-dropdown-list');
+    if(dropdown.is(':visible')){
+      dropdown.fadeOut(DROPDOWN_FADE_TIME);
+      enableScroll($document);
+    } else {
+      dropdown.fadeIn(DROPDOWN_FADE_TIME);
+      if ($(this).hasClass('js-disable-scroll')) {
+        disableScroll($document);
+      }
+    }
+    return false;
+  });
+
+  $('.js-dropdown-list a').click(function(e) {
+    e.stopPropagation();
+  });
+
+  $('.js-dropdown-container').click(function(e) {
+    e.preventDefault();
+    var dropdown = $(this).parent();
+    dropdown.fadeOut(DROPDOWN_FADE_TIME);
+    enableScroll($document);
+    return false;
   });
 
   $('a.menu').click(function(e){
@@ -57,7 +100,7 @@ var mp = require('./modules/Mixpanel');
     }
   });
 
-  $(document).on('click', 'a.facebook', function(e){
+  $document.on('click', 'a.facebook', function(e){
     e.preventDefault();
     FB.ui({
       method: 'share_open_graph',
@@ -68,12 +111,15 @@ var mp = require('./modules/Mixpanel');
     }, function(response){});
   });
 
-  $(document).on('click', 'a.twitter', function(e){
+  $document.on('click', 'a.twitter', function(e){
     e.preventDefault();
     window.open('http://twitter.com/share?url=' + $(this).data('url') + '&text=' + $(this).data('title') + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
   });
 
+  $document.on('touchstart', function () {});
+
   var $article = $('.js-article');
+
   if ($article.length) {
     mp.pageView('article', $article, 1)
   } else {

@@ -58,25 +58,100 @@
 					</form>
 				</div>
 
-				<div class="Archive show-mobile">
-					<div class="Archive dropdown filters">
-						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if year %}{{ year }}{% else %}Year{% endif %}</p></a>
-						<ul class="dropdown-content filter">
-							<li><a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}">All</a></li>
-						{% for y in years %}
-							<li><a href="{% url 'archive' %}?year={{ year }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a></li>
-						{% endfor %}
-							</ul>
+				<div class="c-archive__dropdown-filters">
+
+					<div class="o-mobile-dropdown js-dropdown">
+
+						<a class="o-mobile-dropdown__button js-disable-scroll" href="#">
+							<span>{% if year %}{{ year }}{% else %}All years{% endif %}</span>
+							<i class="fa fa-sort-desc"></i>
+						</a>
+
+						<div class="o-mobile-dropdown__list js-dropdown-list">
+							<div class="o-mobile-dropdown__list__container js-dropdown-container">
+								<div>
+									<div class="o-mobile-dropdown__header">
+										<h3 class="o-mobile-dropdown__title">Filter by year:</h3>
+										<div class="o-mobile-dropdown__close">
+											<i class="fa fa-close"></i>
+										</div>
+									</div>
+									<ul>
+										<li class="o-mobile-dropdown__item {% if not year %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}">All</a>
+										</li>
+									{% for y in years %}
+										<li class="o-mobile-dropdown__item {% if year == y %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?year={{ y }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="Archive dropdown filters">
-						<a href="#" class="dropbutton"/><i class="Archive fa fa-sort-desc"></i><p>{% if section_name %}{{ section_name }}{% else %}Section{% endif %}</p></a>
-						<ul class="dropdown-content filter">
-							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}">All</a></li>
-						{% for section in sections %}
-							<li><a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section_id }}">{{ section }}</a></li>
-						{% endfor %}
-							</ul>
+
+					<div class="o-mobile-dropdown js-dropdown">
+
+						<a class="o-mobile-dropdown__button js-disable-scroll" href="#">
+							<span>{% if section_name %}{{ section_name }}{% else %}All sections{% endif %}</span>
+							<i class="fa fa-sort-desc"></i>
+						</a>
+
+						<div class="o-mobile-dropdown__list js-dropdown-list">
+							<div class="o-mobile-dropdown__list__container js-dropdown-container">
+								<div>
+									<div class="o-mobile-dropdown__header">
+										<h3 class="o-mobile-dropdown__title">Filter by section:</h3>
+										<div class="o-mobile-dropdown__close">
+											<i class="fa fa-close"></i>
+										</div>
+									</div>									<ul>
+										<li class="o-mobile-dropdown__item {% if not section_id %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}">All</a>
+										</li>
+									{% for section in sections %}
+										<li class="o-mobile-dropdown__item {% if section.id == section_id %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section.name }}</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+
 					</div>
+
+					<div class="o-mobile-dropdown js-dropdown">
+
+						<a class="o-mobile-dropdown__button js-disable-scroll" href="#">
+							<span>{{ order|title }}</span>
+							<i class="fa fa-sort-desc"></i>
+						</a>
+
+						<div class="o-mobile-dropdown__list js-dropdown-list">
+							<div class="o-mobile-dropdown__list__container js-dropdown-container">
+								<div>
+									<div class="o-mobile-dropdown__header">
+										<h3 class="o-mobile-dropdown__title">Order by:</h3>
+										<div class="o-mobile-dropdown__close">
+											<i class="fa fa-close"></i>
+										</div>
+									</div>
+									<ul>
+										<li class="o-mobile-dropdown__item{% if order == 'newest' %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=newest">Newest</a>
+										</li>
+										<li class="o-mobile-dropdown__item{% if order == 'oldest' %} o-mobile-dropdown__item--is-active{% endif %}">
+											<a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=oldest">Oldest</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
 				</div>
 
 				{% if year or section_id %}
@@ -101,52 +176,54 @@
 				{% endif %}
 
 				<div class="Archive article-archive">
-					<div class="filter clearfix">
-						{% if count %}
-						<h3 class="basic uppercase">{{ count }} RESULTS{% if q %} FOR "{{ q }}"{% endif %}</h3>
-						{% endif %}
-						<div class="dropdown">
-                        <a href="#">{{ order|title }} <i class="fa fa-caret-down"></i></a>
-                        <ul>
-                            <li><a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year }}&{% endif %}order=newest">Newest</a></li>
-                            <li><a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=oldest">Oldest</a></li>
-                        </ul>
-                    </div>
-					</div>
-				{% if articles|length > 0 %}
-					<div class="list">
-					{% for article in articles %}
-						<article>
-						{% if article.featured_image %}
-							<a href="{{ article.get_absolute_url }}" class="image">
-								<img src="{{ article.featured_image.image.get_absolute_url }}" />
+					<div class="c-archive__header">
+						<h3 class="c-archive__header__title">
+							{% if count %}{{ count }}{% else %}NO{% endif %} RESULTS{% if q %} FOR "{{ q }}"{% endif %}
+						</h3>
+						<div class="c-archive__header__sort o-dropdown js-dropdown">
+							<a class="o-button o-dropdown__button">
+								<span>{{ order|title }}</span>
+								<i class="fa fa-sort-desc"></i>
 							</a>
-						{% endif %}
-							<a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
-							<span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
-							<p class="snippet">{{ article.snippet|safe }}</p>
-						</article>
+							<ul class="o-dropdown__list js-dropdown-list">
+								<li class="o-dropdown__item{% if order == 'newest' %} o-dropdown__item--is-active{% endif %}">
+									<a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=newest">Newest</a>
+								</li>
+								<li class="o-dropdown__item{% if order == 'oldest' %} o-dropdown__item--is-active{% endif %}">
+									<a href="{% url 'archive' %}?{% if q %}q={{ q }}&{% endif %}{% if section_id %}section_id={{ section_id}}&{% endif %}{% if year %}year={{ year}}&{% endif %}order=oldest">Oldest</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				{% if articles|length > 0 %}
+					<div class="c-archive__main__list">
+					{% for article in articles %}
+
+						{% include 'objects/articles/list.html' with article=article %}
+
 					{% endfor %}
 					</div>
+
+					<div class="c-archive__pagination">
+						{% if articles.has_previous %}
+						<a class="o-button c-archive__pagination__prev" href="{% url 'archive' %}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.previous_page_number }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Previous</a>
+						{% endif %}
+
+						<span class="c-archive__pagination__current" >
+							Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+						</span>
+
+						{% if articles.has_next %}
+							<a class="o-button c-archive__pagination__next" href="{% url 'archive' %}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.next_page_number }}">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+						{% endif %}
+					</div>
+
+				</div>
 				{% else %}
 					<div class="no-results">No articles found.</div>
+				</div>
 				{% endif %}
-				</div>
-
-				<div class="c-archive__pagination">
-					{% if articles.has_previous %}
-					<a class="c-archive__pagination__prev" href="{% url 'archive' %}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.previous_page_number }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Previous</a>
-					{% endif %}
-
-					<span class="c-archive__pagination__current" >
-							Page {{ articles.number }} of {{ articles.paginator.num_pages }}
-					</span>
-
-					{% if articles.has_next %}
-						<a class="c-archive__pagination__next" href="{% url 'archive' %}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.next_page_number }}">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
-					{% endif %}
-				</div>
-
 			</div>
 		</div>
 	</div>

@@ -250,6 +250,11 @@ class UbysseyTheme(DefaultTheme):
 
         order = request.GET.get('order', 'newest')
 
+        filters = []
+
+        if order == 'oldest':
+            filters.append('order=%s' % order)
+
         order_by = '-published_at' if order == 'newest' else 'published_at'
 
         context = {
@@ -264,8 +269,6 @@ class UbysseyTheme(DefaultTheme):
         year = request.GET.get('year', None)
 
         article_list = Article.objects.filter(is_published=True).order_by(order_by)
-
-        filters = []
 
         if query == '':
             query = None
