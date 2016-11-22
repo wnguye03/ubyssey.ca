@@ -6,7 +6,7 @@
         <div class="u-container u-container--padded">
             <h1>{% if q %}Search results for “{{ q }}”{% else %}Search{% endif %}</h1>
             <div class="article-search">
-                <form method="get" action="{% url 'search' %}">
+                <form method="get" action="{% url 'archive' %}">
                 <label for="author-search"><i class="fa fa-search"></i></label>
                 <input name="q" id="author-search" type="text" {% if q %}value="{{ q }}"{% endif %} placeholder="Search author archive" />
                 </form>

@@ -11,11 +11,6 @@ div.profile-image {
   margin-bottom: 30px;
 }
 
-div.profile, div.filter, div.list article {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 @media($bp-larger-than-phablet){
 
 
@@ -41,7 +36,7 @@ div.article-search {
     position: absolute;
     width: 40px;
     text-align: center;
-    line-height: 44px;
+    line-height: 40px;
     font-size: 15px;
     color: #807E7E;
   }
@@ -51,40 +46,40 @@ div.article-search {
   }
 
   input {
-    line-height: 40px;
     border-radius: 3px;
     background: white;
     border: 1px solid #DADADA;
     width: 100%;
     padding: 0 12px 0 36px;
-    line-height: 40px;
+    line-height: 20px;
     font-size: 14px;
     margin-bottom: 20px;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-
-    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
     &:focus {
       border-color: #66afe9;
       outline: 0;
-      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+
+    @media($bp-larger-than-mobile) {
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+      -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+      &:focus {
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      }
     }
   }
 
 }
 
 div.article-archive {
-  padding-top: 20px;
   border-top: 1px solid #E6E6E6;
   margin-bottom: 20px;
 
-  padding-left: 15px;
-  padding-right: 15px;
-  
   @media($bp-larger-than-phablet) {
     padding-left: 0;
     padding-right: 0;

@@ -1,6 +1,9 @@
+from django.db.models.functions import TruncYear
+
 from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
+
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
@@ -99,3 +102,15 @@ class ArticleHelper(object):
             'ids': ",".join([str(a.parent_id) for a in articles]),
             'name': name
         }
+
+    @staticmethod
+    def get_years():
+        years = Article.objects \
+            .annotate(year=TruncYear('published_at')) \
+            .distinct() \
+            .order_by('-year') \
+            .exclude(year=None) \
+            .values_list('year', flat=True)
+
+
+        return [d.year for d in years]

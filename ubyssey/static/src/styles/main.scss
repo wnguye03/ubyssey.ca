@@ -5,6 +5,7 @@
 @import 'modules/advertisements';
 @import 'modules/variables';
 @import 'modules/mixins';
+@import 'modules/utilities';
 
 // Ubyssey site-specific files
 
@@ -23,10 +24,16 @@
 @import 'modules/article/comments_bar';
 @import 'modules/article/gallery';
 @import 'modules/social';
+@import 'modules/archive';
 
 @import 'modules/author';
 
 @import 'modules/search';
+
+@import 'objects/article';
+@import 'objects/inputs';
+
+@import 'components/header-banner';
 
 //////
 
