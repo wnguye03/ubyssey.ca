@@ -168,11 +168,11 @@ var Gallery = React.createClass({
                 break;
 
             case 'swipeleft':
-                this.swipeSlide();
+                this.nextSlide();
                 break;
 
             case 'swiperight':
-                this.swipeSlide();
+                this.prevSlide();
                 break;
 
         }
