@@ -152,16 +152,9 @@ var Gallery = React.createClass({
 
             case 'panend':
             case 'pancancel':
-                // Left & Right
-                // more then 1/3 moved, navigate
-                if(Math.abs(ev.deltaX) > this.pane_width/3) {
-                  if(ev.direction == Hammer.DIRECTION_RIGHT) {
-                    this.prevSlide();
-                  } else {
-                    this.nextSlide();
-                  }
-                }
-                else {
+                //Left & Right
+                //less then 2/3 moved, don't register swipe
+                if(Math.abs(ev.deltaX) < (this.pane_width * 2/3)) {
                   this.showPane(this.current_pane, true);
                 }
 
@@ -177,27 +170,7 @@ var Gallery = React.createClass({
 
         }
     },
-    swipeSlide: function(dir){
-        var pos;
-        var callback = false;
-        if(dir == 'next'){
-            callback = this.next;
-            pos = -($(window).width());
-        } else if(dir == 'previous') {
-            callback = this.previous;
-            pos = $(window).width();
-        } else {
-            pos = 0;
-        }
 
-        $('.slides').animate({ left: pos }, 150, function(){
-            if(callback){
-                callback(function(){
-                    $('.slides').css({ left: 0 });
-                });
-            }
-        });
-    },
     setupEventListeners: function(){
 
         // Keyboard controls
@@ -215,18 +188,6 @@ var Gallery = React.createClass({
             e.preventDefault();
             this.next();
         }.bind(this));
-
-        // Clicking outside container
-//        $(this.getDOMNode()).mouseup(function (e)
-//        {
-//            var container = $(this.getDOMNode()).find(".slide");
-//            if (!container.is(e.target) && container.has(e.target).length === 0)
-//            {
-//                this.close();
-//                $('body').removeClass('no-scroll');
-//            }
-//        }.bind(this));
-
     },
     addSlideTrigger: function(target){
         $(target).on('click', function(e){
