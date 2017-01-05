@@ -1,8 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 
-from dispatch.apps.core.models import Person
-from dispatch.apps.content.models import Section, Article, Author
+from dispatch.apps.content.models import Section, Article
 
 from ubyssey.helpers import ArticleHelper
 
@@ -51,7 +50,7 @@ class FrontpageFeed(Feed):
         self.max_items = max_items
 
     def items(self, section):
-        return ArticleHelper.get_frontpage(limit = self.max_items)
+        return ArticleHelper.get_frontpage(limit=self.max_items)
 
     def item_title(self, item):
         return item.headline
