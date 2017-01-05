@@ -5,6 +5,7 @@ $bp-smaller-than-mobile   : "max-width: 400px" !default;
 $bp-larger-than-phablet   : "min-width: 550px" !default;
 $bp-larger-than-tablet    : "min-width: 960px" !default;
 
+$bp-half-desktop          : "min-width: 800px" !default;
 $bp-larger-than-desktop   : "min-width: 1200px" !default;
 $bp-larger-than-desktophd : "min-width: 1400px" !default;
 
@@ -20,6 +21,8 @@ $color-social-facebook: #4267b2;
 $color-social-facebook-dark: #365899;
 $color-social-twitter: #55acee;
 $color-social-twitter-dark: #3ca0ec;
+
+$color-border-gray: #E6E6E6;
 
 // Z-Index Scale
 $z-scale-1: 100;

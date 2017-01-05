@@ -1,6 +1,9 @@
+from django.db import connection
+
 from dispatch.apps.content.models import Article, Section
 
 class ArticleHelper(object):
+
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
@@ -99,3 +102,17 @@ class ArticleHelper(object):
             'ids': ",".join([str(a.parent_id) for a in articles]),
             'name': name
         }
+
+    @staticmethod
+    def get_years():
+
+        query = 'SELECT DISTINCT YEAR(published_at) FROM content_article ORDER BY published_at DESC'
+
+        cursor = connection.cursor()
+        cursor.execute(query)
+
+        results = cursor.fetchall()
+
+        years = [r[0] for r in results]
+
+        return filter(lambda y: y is not None, years)

@@ -244,28 +244,25 @@ class UbysseyTheme(DefaultTheme):
 
     def archive(self, request):
 
-        current_year = datetime.today().year
-        years = []
-        year_query = """SELECT YEAR(published_at) AS year_published,
-                id FROM content_article GROUP BY YEAR(published_at)"""
-        for year in Article.objects.raw(year_query):
-            if(year.year_published is not None):
-                years.append(year.year_published)
+        years = ArticleHelper.get_years()
 
         sections = Section.objects.all()
-        
+
         order = request.GET.get('order', 'newest')
-        if order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
-            
+
+        filters = []
+
+        if order == 'oldest':
+            filters.append('order=%s' % order)
+
+        order_by = '-published_at' if order == 'newest' else 'published_at'
+
         context = {
             'sections': sections,
             'years': years,
             'order': order
         }
-        
+
         query = request.GET.get('q', None)
         section_id = request.GET.get('section_id', None)
 
@@ -273,99 +270,54 @@ class UbysseyTheme(DefaultTheme):
 
         article_list = Article.objects.filter(is_published=True).order_by(order_by)
 
-        if query == "":
+        if query == '':
             query = None
+
         if year is not None:
-            context['year'] = year
+            context['year'] = int(year)
             article_list = article_list.filter(published_at__icontains=str(year))
+            filters.append('year=%s' % year)
+
         if query is not None:
             article_list = article_list.filter(headline__icontains=query)
             context['q'] = query
+            filters.append('q=%s' % query)
 
         if section_id is not None:
             article_list = article_list.filter(section = section_id)
-            context['section_id'] = section_id
+            context['section_id'] = int(section_id)
             context['section_name'] = Section.objects.get(id=section_id)
+            filters.append('section_id=%s' % section_id)
+
+        if len(filters):
+            query_string = '?' + '&'.join(filters)
+        else:
+            query_string = ''
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
+
         try:
             articles = paginator.page(page)
         except PageNotAnInteger:
-               # If page is not an integer, deliver first page.
             articles = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
             articles = paginator.page(paginator.num_pages)
 
         meta = {
             'title': 'Archive'
         }
 
-        if query is None and year is None and section_id is None:
-            articles = None
-            context['no_search'] = True
-        else:
-            context['no_search'] = False
-            
         context['articles'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
+        context['query_string'] = query_string
 
         return render(request, 'archive.html', context)
 
     def search(self, request):
 
-        query = request.GET.get('q', None)
-
-        if query == "":
-            query = None
-
-        order = request.GET.get('order', 'newest')
-
-        if order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
-
-        context = {
-            'order': order,
-            'q': query
-        }
-
-        if query is not None:
-
-            title = 'Search results for "%s"' % query
-
-            article_list = Article.objects.filter(is_published=True, headline__icontains=query).order_by(order_by)
-
-            paginator = Paginator(article_list, 15) # Show 15 articles per page
-
-            page = request.GET.get('page')
-
-            try:
-                articles = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                articles = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                articles = paginator.page(paginator.num_pages)
-
-            context['articles'] = articles
-            context['count'] = paginator.count
-
-        else:
-            articles = None
-            title = 'Search'
-
-        meta = {
-            'title': title
-        }
-
-        context['meta'] = meta
-
-        return render(request, 'search.html', context)
+        return redirect(self.archive)
 
     def topic(self, request, pk=None):
 
