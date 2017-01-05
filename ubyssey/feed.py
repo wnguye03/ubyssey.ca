@@ -22,10 +22,10 @@ class SectionFeed(Feed):
 
     def link(self, section):
         return '/%s' % section.name
-        
+
     def items(self, section):
         return Article.objects.filter(section=section, is_published=True).order_by('-published_at')[:self.max_items]
-       
+
     def item_title(self, item):
         return item.headline
 
@@ -41,10 +41,10 @@ class SectionFeed(Feed):
 
     def item_link(self, item):
         return reverse('article', args=[item.section_id,item.slug])
-    
+
 class FrontpageFeed(Feed):
 
-    title = 'Ubyssey Front Page'
+    title = 'The Ubyssey'
     link = '/'
     description = 'Daily updates from The Ubyssey'
 
@@ -64,8 +64,7 @@ class FrontpageFeed(Feed):
         return item.snippet
 
     def item_author_name(self, item):
-        auth = Author.objects.get(article_id=item.id)
-        return Person.objects.get(pk=auth.person_id).full_name
+        return item.get_author_string()
 
     def item_link(self, item):
         return reverse('article', args=[item.section_id,item.slug])
