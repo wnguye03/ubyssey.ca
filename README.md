@@ -63,10 +63,10 @@ mysql.server start
 echo "CREATE DATABASE ubyssey" | mysql -u root
 ```
 
-Finally, use django's `migrate` command to populate the database schema:
+Now populate the database with sample data:
 
 ```bash
-python manage.py migrate
+curl https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql | mysql -u root ubyssey
 ```
 
 ### Static files
@@ -99,4 +99,7 @@ Now start the server!
 python manage.py runserver
 ```
 
+You can log in to the admin panel at http://localhost:8000/admin/:
 
+Email: volunteer@ubyssey.ca
+Password: volunteer
