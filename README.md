@@ -46,7 +46,7 @@ _Note: you might get an error saying that `libjpeg` is required. You can install
 brew install libjpeg zlib
 ```
 
-Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
+Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dropbox/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
 ### Database
 
