@@ -101,7 +101,8 @@ Now start the server!
 python manage.py runserver
 ```
 
-You can log in to the admin panel at http://localhost:8000/admin/:
+You can log in to the admin panel at [http://localhost:8000/admin/](http://localhost:8000/admin/):
 
-Email: volunteer@ubyssey.ca
-Password: volunteer
+__Email:__ volunteer@ubyssey.ca
+
+__Password:__ volunteer
