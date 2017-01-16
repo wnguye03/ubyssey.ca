@@ -61,7 +61,7 @@ mysql.server start
 echo "CREATE DATABASE ubyssey" | mysql -u root
 ```
 
-Now populate the database with sample data:
+Next, populate the database with sample data:
 
 ```bash
 curl https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql | mysql -u root ubyssey
@@ -85,15 +85,9 @@ gulp
 
 ### Media Files
 
-Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`. This will make it so the images attached to the sample articles are viewable 
+Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`. This will make it so the images attached to the sample articles are viewable.
 
 ### Running the server
-
-Before starting the server, run `createsuperuser` to make yourself an account for the admin panel:
-
-```bash
-python manage.py createsuperuser
-```
 
 Now start the server!
 
