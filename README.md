@@ -87,7 +87,7 @@ gulp
 
 ### Media Files
 
-Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/ubyssey_sample.zip) to `ubyssey-dispatch-theme/media/`.
+Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`.
 
 ### Running the server
 
