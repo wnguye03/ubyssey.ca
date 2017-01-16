@@ -4,4 +4,4 @@
 
 [Mac Instructions](SETUP-MAC.md)
 
-Window Instructors
+[Windows Instructions](SETUP-MAC.md)
