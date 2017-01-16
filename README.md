@@ -2,5 +2,6 @@
 
 ## Installation
 
-Mac Instructions
+[Mac Instructions](SETUP-MAC.md)
+
 Window Instructors
