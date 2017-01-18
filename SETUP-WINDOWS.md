@@ -27,6 +27,7 @@ Clone the `ubyssey-dispatch-theme` repository:
 ```bash
 git clone https://github.com/ubyssey/ubyssey-dispatch-theme
 cd ubyssey-dispatch-theme
+.\Scipts\activate
 ```
 
 Install the required Python packages with pip:
