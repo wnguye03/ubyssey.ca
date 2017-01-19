@@ -69,14 +69,14 @@ You can set a password for root user, if you do, you will need to change the att
 Now run the MySQL command line client that comes with mysql installation and create a fresh database:
 
 ```bash
-CREATE DATABASE ubyssey
+CREATE DATABASE ubyssey;
 ```
 
 Next, save the sample data from https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql to local drives
 and load the data file to the database.
 
 ```bash
-USE ubyssey
+USE ubyssey;
 source ubyssey.sql
 ```
 
