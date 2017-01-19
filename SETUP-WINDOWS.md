@@ -110,7 +110,7 @@ npm install -g gulp
 gulp
 ```
 
-### Media Files
+### Media files
 
 Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`. This will make it so the images attached to the sample articles are viewable.
 
@@ -122,7 +122,7 @@ Now start the server!
 python manage.py runserver
 ```
 
-### Admin Panel
+### Admin panel
 
 You can log in to the admin panel at [http://localhost:8000/admin/](http://localhost:8000/admin/):
 
