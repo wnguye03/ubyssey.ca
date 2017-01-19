@@ -44,6 +44,8 @@ _Note: you might get an error saying that `libjpeg` is required. You can install
 brew install libjpeg zlib
 ```
 
+### Project settings
+
 Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dropbox/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
 ### Database
@@ -51,7 +53,7 @@ Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dro
 Dispatch requires a MySQL database to store information. Install mysql with Homebrew. 
 
 ```bash
-brew install mysql
+brew install mysql56
 ```
 
 Now run the server and create a fresh database:
