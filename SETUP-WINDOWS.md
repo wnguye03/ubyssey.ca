@@ -44,15 +44,17 @@ Install the required Python packages with pip:
 pip install -r requirements.txt
 ```
 
-_Note: you might get an error saying that `_mysql.c(42) : fatal error C1083: Cannot open include file: 'config-win.h': No such file or directory`. To resolve this issue
+_Note: you might get an error saying that `_mysql.c(42) : fatal error C1083: Cannot open include file: 'config-win.h': No such file or directory`. To resolve this issue:_
 
 ```bash
 pip install wheel
-
-download from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-python
-
-Choose the one that is corresponding to the edition of your Python (32-bit or 64-bit). Occacionally, things get complicated if you install 32-bit python on 64-bit system, if that's the case, you could try both of them.
 ```
+
+Download mysql-python from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-python
+
+Choose the one that is corresponding to the edition of your Python (32-bit or 64-bit). Occasionally, things get complicated if you install 32-bit Python on 64-bit system; if that's the case, you could try both of them.
+
+## Project Settings
 
 Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dropbox/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
