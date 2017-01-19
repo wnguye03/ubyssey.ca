@@ -2,11 +2,11 @@
 
 ### Notes
 
-- The following instructions are written based on using Git Shell (built on Windows Powershell). All the procedures have been tested when the instructions were published. 
+- The following instructions were tested using Git Shell (built on Windows Powershell).
 
 - The Windows Bash shell is still quite unstable and isn't recommended (it _does_ work though, and you can follow the Mac instructions).
 
-- The steps for installing through Command Prompt should be identical, if not all the same. Please report any issues you have so that we would revise the instructions in the future.
+- The steps for installing through Command Prompt should be nearly identical, if not all the same. Please report any issues you have so that we can revise the instructions.
 
 - Note that this is the very first edition of our Windows setup instructions, so expect to see flux and inaccuracies in content.
 
