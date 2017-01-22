@@ -2,19 +2,29 @@
 
 ### Notes
 
-- The following instructions were tested using Git Shell (built on Windows Powershell).
+- The following instructions were tested using Git Shell (based on Windows Powershell).
 
 - The Windows Bash shell is still quite unstable and isn't recommended (it _does_ work though, and you can follow the Mac instructions).
 
-- The steps for installing through Command Prompt should be nearly identical, if not all the same. Please report any issues you have so that we can revise the instructions.
+- The steps for installing through Command Prompt should be the same. Please report any issues you have so that we can revise the instructions.
 
-- Note that this is the very first edition of our Windows setup instructions, so expect to see flux and inaccuracies in content.
+- Note that the Windows setup instructions are still in development, so expect to see flux and inaccuracies in content.
 
 ### Install Python
 
 Install Python if don't have it on your system:
 
 https://www.python.org/downloads/
+
+### Install Visual Studio
+
+Install Visual Studio 2015 if you don't have it.
+
+Visual Studio 2015 only comes with Windows 10 SDK while some of our installation steps might require Windows 8.1 SDK, therefore, it is recommended that you install both of them for a smoother set-up process.
+
+Visual Studio: https://www.visualstudio.com/downloads/
+
+Windows 8.1 SDK: https://developer.microsoft.com/en-us/windows/downloads/windows-8-1-sdk
 
 ### Install pip
 
@@ -53,13 +63,14 @@ pip install -r requirements.txt
 
 _Note: you might get an error saying that `_mysql.c(42) : fatal error C1083: Cannot open include file: 'config-win.h': No such file or directory`. To resolve this issue:_
 
-```bash
-pip install wheel
-```
-
 Download mysql-python from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-python
 
-Choose the one that is corresponding to the edition of your Python (32-bit or 64-bit). Occasionally, things get complicated if you install 32-bit Python on 64-bit system; if that's the case, you could try both of them.
+Choose the one that is corresponding to the edition of your Python (32-bit or 64-bit) and install it using pip. Occasionally, things get complicated if you install 32-bit Python on 64-bit system; if that's the case, you could try both of them.
+
+```bash
+pip install wheel
+pip install theFileYouJustDownloaded
+```
 
 ### Project settings
 
@@ -67,7 +78,7 @@ Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dro
 
 ### Database
 
-Dispatch requires a MySQL database to store information. Install mysql with mysql Installer.
+Dispatch requires a MySQL database to store information. Install MySQL with MySQL installer.
 
 ```bash
 https://dev.mysql.com/downloads/windows/installer/5.6.html
@@ -81,7 +92,7 @@ Now run the MySQL command line client that comes with mysql installation and cre
 CREATE DATABASE ubyssey;
 ```
 
-Next, save the sample data from https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql to your local drive
+Next, save the sample data from https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql to your local drive, which is usually located at  \MySQL Server 5.7\bin
 and load the SQL file to the database.
 
 ```bash
