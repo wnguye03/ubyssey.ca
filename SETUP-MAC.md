@@ -44,6 +44,8 @@ _Note: you might get an error saying that `libjpeg` is required. You can install
 brew install libjpeg zlib
 ```
 
+### Project settings
+
 Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dropbox/settings.py) and save it to `ubyssey-dispatch-theme/ubyssey/settings.py`.
 
 ### Database
@@ -51,7 +53,7 @@ Download the sample [project settings file](https://ubyssey.s3.amazonaws.com/dro
 Dispatch requires a MySQL database to store information. Install mysql with Homebrew. 
 
 ```bash
-brew install mysql
+brew install mysql56
 ```
 
 Now run the server and create a fresh database:
@@ -61,7 +63,7 @@ mysql.server start
 echo "CREATE DATABASE ubyssey" | mysql -u root
 ```
 
-Now populate the database with sample data:
+Next, populate the database with sample data:
 
 ```bash
 curl https://ubyssey.s3.amazonaws.com/dropbox/ubyssey.sql | mysql -u root ubyssey
@@ -85,15 +87,9 @@ gulp
 
 ### Media Files
 
-Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`. This will make it so the images attached to the sample articles are viewable 
+Download and unzip the [sample media folder](https://ubyssey.s3.amazonaws.com/dropbox/media.zip) to `ubyssey-dispatch-theme/media/`. This will make it so the images attached to the sample articles are viewable.
 
 ### Running the server
-
-Before starting the server, run `createsuperuser` to make yourself an account for the admin panel:
-
-```bash
-python manage.py createsuperuser
-```
 
 Now start the server!
 
