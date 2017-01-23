@@ -1,5 +1,9 @@
 ## Troubleshooting for set-up installation on Windows platform.
 
+When you encounter problems during your installation, please read the following FAQ to see if it resolves your issues. Feel free to ask other developers who are on Windows platform if you have any questions.
+
+Note that this is the first edition of troubleshooting FAQ on Windows installation, expect to see inaccuracies in the content.
+
 
 Q: I encountered following warnings when trying to install gulp, what should I do?
 
