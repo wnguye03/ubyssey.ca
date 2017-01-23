@@ -24,7 +24,7 @@ wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"ia32"})
 A: Ignore these warning messages. Fsevents was built for MacOS, this shouldn't have any actual impact on your installation.
 
 
-Q:I encountered following errors:
+Q: I encountered following errors:
 
   C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Platforms\Win32\PlatformToolsets\v140\Toolset.targets(34,5): error MSB8036: The Windows SDK version
 8.1 was not found. Install the required version of Windows SDK or change the SDK version in the project property pages or by right-clicking the solution and
