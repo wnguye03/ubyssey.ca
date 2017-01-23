@@ -80,4 +80,4 @@ npm WARN deprecated graceful-fs@1.2.3: graceful-fs v3.0.0 and before will fail o
 
 A:
 
-You could ignore these warning messages for now as they should not stop you from running the server. Minimatch developers decided to deprecate versions prior to 3.0.2 but all other packages will be kept up-to-date. Solutions to these problems will hopefully be released soon.
+You could ignore these warning messages for now as they should not stop you from running the server. Minimatch developers decided to deprecate versions prior to 3.0.2 but not all other package are kept up-to-date, which resulted in these issues. Solutions to these problems will hopefully be released soon.
