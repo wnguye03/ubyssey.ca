@@ -34,10 +34,11 @@ A: Ignore these warning messages. Fsevents was built for MacOS, this shouldn't h
 
 Q: I encountered following errors:
 
-```bash  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Platforms\Win32\PlatformToolsets\v140\Toolset.targets(34,5): error MSB8036: The Windows SDK version
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Platforms\Win32\PlatformToolsets\v140\Toolset.targets(34,5): error MSB8036: The Windows SDK version
 8.1 was not found. Install the required version of Windows SDK or change the SDK version in the project property pages or by right-clicking the solution and
 selecting "Retarget solution". [C:\Users\Haoyuan\Documents\GitHub\ubyssey-dev\ubyssey-dispatch-theme\ubyssey\static\node_modules\node-sass\build\src\libsass.
-vcxproj] ```
+vcxproj]
+
 
 A: Install windows SDK 8.1.
 
@@ -46,11 +47,11 @@ A: Install windows SDK 8.1.
 
 
 Q: I encountered following errors:
-```bash
+
 Unhandled exception in thread started by <function wrapper at 0x00000000040BA6D8>
 Traceback (most recent call last):
 
-django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1' (10061)")```
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1' (10061)")
 
 A:
 
@@ -66,9 +67,12 @@ You can also try the following command under ubyssey\static\
 
 
 Q: I encountered these warning messages: 
-```bash npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
+
+```bash 
+npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 npm WARN deprecated minimatch@0.2.14: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
-npm WARN deprecated graceful-fs@1.2.3: graceful-fs v3.0.0 and before will fail on node releases >= v7.0. Please update to graceful-fs@^4.0.0 as soon as possible. Use 'npm ls graceful-fs' to find it in the tree.```
+npm WARN deprecated graceful-fs@1.2.3: graceful-fs v3.0.0 and before will fail on node releases >= v7.0. Please update to graceful-fs@^4.0.0 as soon as possible. Use 'npm ls graceful-fs' to find it in the tree.
+```
 
 A:
 
