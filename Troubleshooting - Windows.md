@@ -11,9 +11,14 @@ A: Try run ```bash npm rebuild node-sass```, note that certain steps may take lo
 
 
 
+
+
 Q: I'm trying to download the .sql file into the MySQL Server 5.7\bin\ folder but it syas i need administrator permission, what should I do?
 
 A: Download the .sql file to another folder and copy/cut and paste into the \bin\ folder, this way you'll be asked to given Administrator permission.
+
+
+
 
 
 Q: I encountered following warnings when trying to install gulp, what should I do?
@@ -24,22 +29,28 @@ wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"ia32"})
 A: Ignore these warning messages. Fsevents was built for MacOS, this shouldn't have any actual impact on your installation.
 
 
+
+
+
 Q: I encountered following errors:
 
-  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Platforms\Win32\PlatformToolsets\v140\Toolset.targets(34,5): error MSB8036: The Windows SDK version
+```bash  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Platforms\Win32\PlatformToolsets\v140\Toolset.targets(34,5): error MSB8036: The Windows SDK version
 8.1 was not found. Install the required version of Windows SDK or change the SDK version in the project property pages or by right-clicking the solution and
 selecting "Retarget solution". [C:\Users\Haoyuan\Documents\GitHub\ubyssey-dev\ubyssey-dispatch-theme\ubyssey\static\node_modules\node-sass\build\src\libsass.
-vcxproj]
+vcxproj] ```
 
 A: Install windows SDK 8.1.
 
 
-Q:
 
+
+
+Q: I encountered following errors:
+```bash
 Unhandled exception in thread started by <function wrapper at 0x00000000040BA6D8>
 Traceback (most recent call last):
 
-django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1' (10061)")
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1' (10061)")```
 
 A:
 
@@ -48,6 +59,10 @@ Check if your mySQL is running, if not, open the MySQL commandline and start the
 You can also try the following command under ubyssey\static\
 
 ```bash npm config set msvs_version 2015```
+
+
+
+
 
 
 Q: I encountered these warning messages: 
