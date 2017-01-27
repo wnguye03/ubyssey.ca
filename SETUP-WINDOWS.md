@@ -117,6 +117,11 @@ Install a global verison of gulp (if you don't have it already) and build the st
 
 ```bash
 cd ubyssey\static
+
+# Install node packages
+npm install
+
+# Install and run gulp
 npm install -g gulp
 gulp
 ```
