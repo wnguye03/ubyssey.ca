@@ -1,19 +1,9 @@
-var GallerySlide = React.createClass({
-  render: function() {
-    var slideStyle = { width: this.props.width };
-    var imageStyle = { backgroundImage: "url('" + this.props.src + "')" };
+import React from 'react';
 
-    var caption = (
-      <p
-        className="slide-caption"
-        dangerouslySetInnerHTML={{__html: this.props.caption}}></p>
-    );
-
-    var credit = (
-      <p
-        className="slide-credit"
-        dangerouslySetInnerHTML={{__html: this.props.credit}}></p>
-    );
+const GallerySlide = React.createClass({
+  render() {
+    const slideStyle = { width: this.props.width };
+    const imageStyle = { backgroundImage: `url('${this.props.src}')` };
 
     return (
       <li className="slide" style={slideStyle}>
@@ -24,8 +14,10 @@ var GallerySlide = React.createClass({
             </div>
           </div>
           <div className='slide-meta'>
-            { this.props.caption ? caption : null }
-            { this.props.credit ? credit : null }
+            { this.props.caption &&
+              <p className="slide-caption" dangerouslySetInnerHTML={{__html: this.props.caption}}></p> }
+            { this.props.credit &&
+              <p className="slide-credit" dangerouslySetInnerHTML={{__html: this.props.credit}}></p> }
           </div>
         </div>
       </li>
@@ -33,4 +25,4 @@ var GallerySlide = React.createClass({
   }
 });
 
-module.exports = GallerySlide;
+export default GallerySlide;

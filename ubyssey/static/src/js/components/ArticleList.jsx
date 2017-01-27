@@ -1,24 +1,25 @@
-var Article = require('./Article.jsx');
+import React from 'react';
+import Article from './Article.jsx';
 var CommentsBar = require('./CommentsBar.jsx');
-var ArticleHeader = require('./ArticleHeader.jsx');
-var LinkedList = require('../modules/LinkedList.js');
+import ArticleHeader from './ArticleHeader.jsx';
+import LinkedList from '../modules/LinkedList';
 
-var ArticleList = React.createClass({
-    getInitialState: function(){
+const ArticleList = React.createClass({
+    getInitialState() {
         var articles = this.props.articles;
         articles.unshift(this.props.firstArticle.id);
 
         return {
-            active: LinkedList(articles),
+            active: new LinkedList(articles),
             articles: [this.props.firstArticle],
             loading: false,
         }
     },
-    componentWillMount: function(){
+    componentWillMount() {
         this.articlesTable = {};
         this.articlesTable[this.props.firstArticle.id] = 0;
     },
-    componentDidMount: function(){
+    componentDidMount() {
         this.loaded = [this.props.firstArticle.id];
         this.afterLoad = null;
 
@@ -26,8 +27,7 @@ var ArticleList = React.createClass({
         if(this.state.active.next)
             this.loadNext(this.state.active.next.data);
     },
-    updateHeader: function(topPos){
-
+    updateHeader(topPos) {
         if (topPos > 50 && !window.articleHeader){
             window.articleHeader = true;
             $('.header-site').hide();
@@ -40,34 +40,33 @@ var ArticleList = React.createClass({
               $('.header-site').show();
             }
         }
-
     },
-    getArticle: function(id){
+    getArticle(id) {
         return this.state.articles[this.articlesTable[id]];
     },
-    getArticlePoints: function(){
-        var $article = $('#article-'+this.state.active.data);
-        var height = $article.height();
-        var top = $article.position().top;
-        var end = top + height;
+    getArticlePoints() {
+        const $article = $(`#article-${this.state.active.data}`);
+        const height = $article.height();
+        const top = $article.position().top;
+        const end = top + height;
         return {
-            top: top,
+            top,
             mid: Math.round(end - (height / 2)),
-            end: end,
-            height: height
+            end,
+            height
         }
     },
-    scrollListener: function(){
-        var windowHeight = $(window).height();
-        var documentHeight = $(document).height();
+    scrollListener() {
+        const windowHeight = $(window).height();
+        const documentHeight = $(document).height();
 
         var cachedPoints;
         var points;
 
-        var updateScroll = function(){
+        var updateScroll = () => {
 
-            var topPos = $(document).scrollTop();
-            var bottomPos = topPos + windowHeight;
+            const topPos = $(document).scrollTop();
+            const bottomPos = topPos + windowHeight;
 
             if($(window).width() > 400)
                 this.updateHeader(topPos);
@@ -86,12 +85,12 @@ var ArticleList = React.createClass({
             if(bottomPos < points.top - 50)
                 this.setPrev();
 
-        }.bind(this);
+        };
 
         $(window).scroll(updateScroll);
 
     },
-    prepNext: function(){
+    prepNext() {
         if(!this.state.active.next || !this.state.active.next.next) {
           return;
         }
@@ -100,7 +99,7 @@ var ArticleList = React.createClass({
           this.loadNext(this.state.active.next.next.data);
         }
     },
-    setNext: function(){
+    setNext() {
         if(!this.state.active.next)
             return;
 
@@ -119,60 +118,50 @@ var ArticleList = React.createClass({
         ga('set', 'dimension1', "Peter Siemens");
         ga('send', 'pageview');
 
-        this.setState({ active: this.state.active.next }, function() {
-          this.updateURL();
-        });
+        this.setState({ active: this.state.active.next }, () => this.updateURL());
     },
-    setPrev: function(){
+    setPrev() {
         if(!this.state.active.prev)
             return;
 
-        this.setState({ active: this.state.active.prev }, function() {
-          this.updateURL();
-        });
+        this.setState({ active: this.state.active.prev }, () => this.updateURL());
     },
-    updateURL: function(){
+    updateURL() {
         try {
             history.pushState(null, null, this.getArticle(this.state.active.data).url);
         } catch(err) {}
     },
-    loadNext: function(article_id){
-        if(this.state.loading || this.isLoaded(article_id))
+    loadNext(articleId) {
+        if (this.state.loading || this.isLoaded(articleId))
             return;
-        this.loadArticle(article_id);
+        this.loadArticle(articleId);
     },
-    isLoaded: function(id){
-        var id = parseInt(id);
-        return this.loaded.indexOf(id) !== -1;
+    isLoaded(id) {
+        return this.loaded.indexOf(parseInt(id)) !== -1;
     },
-    loadArticle: function(article_id){
+    loadArticle(articleId) {
         this.setState({ loading: true });
-        dispatch.articleRendered(article_id, function(data){
-            this.loaded.push(parseInt(article_id));
+        dispatch.articleRendered(articleId, data => {
+            this.loaded.push(parseInt(articleId));
             this.renderArticle(data);
-        }.bind(this));
+        });
     },
-    renderArticle: function(data){
-        var articles = this.state.articles;
-        articles.push(data);
+    renderArticle(data) {
+        const articles = [...this.state.articles, data];
 
         this.articlesTable[data.id] = articles.length - 1;
 
-        this.setState({ loading: false, articles: articles }, function(){
-
-            if(!this.afterLoad){
-                return
+        this.setState({ loading: false, articles }, () => {
+            if (this.afterLoad) {
+              this.afterLoad();
             }
-            this.afterLoad();
             this.afterLoad = null;
         });
     },
-    render: function(){
-        var articles = this.state.articles.map(function(article, i){
-            return (
-              <Article isActive={this.state.active.data==article.id} articleId={article.id} html={article.html} key={article.id} index={i} />
-            );
-        }.bind(this));
+    render() {
+        const articles = this.state.articles.map((article, i) => (
+            <Article isActive={this.state.active.data==article.id} articleId={article.id} html={article.html} key={article.id} index={i} />
+        ));
 
         return (
             <div>
@@ -184,4 +173,4 @@ var ArticleList = React.createClass({
     }
 })
 
-module.exports = ArticleList;
+export default ArticleList;

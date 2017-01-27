@@ -1,29 +1,29 @@
-var LinkedList = require('../modules/LinkedList.js');
-var GallerySlide = require('./GallerySlide.jsx');
-var Hammer = require('hammerjs');
-var key = require('keymaster');
+import React from 'react';
+import LinkedList from '../modules/LinkedList';
+import GallerySlide from './GallerySlide.jsx';
+import Hammer from 'hammerjs';
+import key from 'keymaster';
 
-var Gallery = React.createClass({
-    getInitialState: function(){
+const Gallery = React.createClass({
+    getInitialState() {
         return {
             active: null,
             index: false,
             image: false,
             visible: false,
             deltax: 0,
-            slide_width: $(window).width()
+            slideWidth: $(window).width()
         }
     },
-    componentWillMount: function(){
-        this.images = LinkedList(this.props.images);
+    componentWillMount() {
+        this.images = new LinkedList(this.props.images);
     },
-    componentDidMount: function(){
+    componentDidMount() {
         this.setupEventListeners();
         this.addSlideTrigger(this.props.trigger);
         this.initSlider();
-
     },
-    initSlider: function(){
+    initSlider() {
 
         var element = this.refs.gallery.getDOMNode();
 
@@ -33,22 +33,21 @@ var Gallery = React.createClass({
 
         this.panes = $("li.slide", this.element);
 
-        this.pane_width = $(window).width();
-        this.pane_height = 0;
-        this.pane_count = this.props.images.length;
+        this.paneWidth = $(window).width();
+        this.paneCount = this.props.images.length;
 
-        this.current_pane = 0;
+        this.currentPane = 0;
 
         this.slideCallback = this.next;
 
         this.setPaneDimensions();
 
-        $(window).on("load resize orientationchange", function() {
+        $(window).on("load resize orientationchange", () => {
             this.setPaneDimensions();
-            this.setState({ slide_width: $(window).width() });
-        }.bind(this));
+            this.setState({ slideWidth: $(window).width() });
+        });
 
-        if(this.pane_count > 1){
+        if(this.paneCount > 1){
 
             var mc = new Hammer.Manager(element, { drag_lock_to_axis: true } );
 
@@ -83,53 +82,49 @@ var Gallery = React.createClass({
         }
 
     },
-    setPaneDimensions: function(){
-        this.pane_width = $(window).width();
-        this.container.width(this.pane_width*this.pane_count + this.pane_count*15);
+    setPaneDimensions() {
+        this.paneWidth = $(window).width();
+        this.container.width(this.paneWidth*this.paneCount + this.paneCount*15);
     },
-    updatePaneDimensions: function(){
+    updatePaneDimensions() {
         this.container = $("ul.slides", this.element);
 
         this.panes = $("li.slide", this.element);
 
-        this.pane_count = this.props.images.length;
+        this.paneCount = this.props.images.length;
 
         this.setPaneDimensions();
 
         // reset current pane
-        this.showPane(this.current_pane, false);
+        this.showPane(this.currentPane, false);
     },
-    showPane: function(index, animate) {
+    showPane(index, animate) {
         // between the bounds
-        index = Math.max(0, Math.min(index, this.pane_count-1));
+        index = Math.max(0, Math.min(index, this.paneCount-1));
 
-        this.current_pane = index;
+        this.currentPane = index;
 
-        var offset = -((100/this.pane_count)*this.current_pane);
+        var offset = -((100/this.paneCount)*this.currentPane);
 
         this.setContainerOffset(offset, true);
     },
-    setContainerOffset: function(percent, animate){
+    setContainerOffset(percent, animate) {
 
-        this.container.removeClass("animate");
-
-        if(animate) {
-          this.container.addClass("animate");
-        }
-        this.container.css("transform", "translate3d("+ percent +"%,0,0) scale3d(1,1,1)");
+        this.container.toggleClass('animate', animate);
+        this.container.css('transform', `translate3d(${percent}%,0,0) scale3d(1,1,1)`);
 
     },
-    nextSlide: function() {
+    nextSlide() {
         if(this.state.active && this.state.active.next)
             this.setState({ active: this.state.active.next});
-        return this.showPane(this.current_pane+1, true);
+        return this.showPane(this.currentPane + 1, true);
     },
-    prevSlide: function() {
+    prevSlide() {
         if(this.state.active && this.state.active.prev)
             this.setState({ active: this.state.active.prev});
-        return this.showPane(this.current_pane-1, true);
+        return this.showPane(this.currentPane - 1, true);
     },
-    handleHammer: function(ev) {
+    handleHammer(ev) {
 
         // disable browser scrolling
         //ev.preventDefault();
@@ -138,12 +133,12 @@ var Gallery = React.createClass({
             case 'panright':
             case 'panleft':
                 // stick to the finger
-                var pane_offset = -(100/this.pane_count) * this.current_pane;
-                var drag_offset = ((100/this.pane_width) * ev.deltaX) / this.pane_count;
+                var pane_offset = -(100/this.paneCount) * this.currentPane;
+                var drag_offset = ((100/this.paneWidth) * ev.deltaX) / this.paneCount;
 
                 // slow down at the first and last pane
-                if((this.current_pane == 0  && ev.direction == Hammer.DIRECTION_RIGHT) ||
-                   (this.current_pane == this.pane_count-1 && ev.direction == Hammer.DIRECTION_LEFT)) {
+                if((this.currentPane == 0  && ev.direction == Hammer.DIRECTION_RIGHT) ||
+                   (this.currentPane == this.paneCount-1 && ev.direction == Hammer.DIRECTION_LEFT)) {
                   drag_offset *= .4;
                 }
 
@@ -154,8 +149,8 @@ var Gallery = React.createClass({
             case 'pancancel':
                 //Left & Right
                 //less then 2/3 moved, don't register swipe
-                if(Math.abs(ev.deltaX) < (this.pane_width * 2/3)) {
-                  this.showPane(this.current_pane, true);
+                if(Math.abs(ev.deltaX) < (this.paneWidth * 2/3)) {
+                  this.showPane(this.currentPane, true);
                 }
 
                 break;
@@ -171,7 +166,7 @@ var Gallery = React.createClass({
         }
     },
 
-    setupEventListeners: function(){
+    setupEventListeners() {
 
         // Keyboard controls
         key('left', this.prevSlide);
@@ -179,50 +174,42 @@ var Gallery = React.createClass({
         key('esc', this.close);
 
         // Arrow buttons
-        $(document).on('click', '.prev-slide', function(e){
+        $(document).on('click', '.prev-slide', e => {
             e.preventDefault();
             this.previous();
-        }.bind(this));
+        });
 
-        $(document).on('click', '.next-slide', function(e){
+        $(document).on('click', '.next-slide', e => {
             e.preventDefault();
             this.next();
-        }.bind(this));
+        });
     },
-    addSlideTrigger: function(target){
-        $(target).on('click', function(e){
+    addSlideTrigger(target) {
+        $(target).on('click', e => {
             e.preventDefault();
-            var image_id = $(e.target).data("id");
+            const imageId = $(e.target).data('id');
 
             if(this.state.visible){
                 this.close();
             } else {
-                this.open(image_id);
+                this.open(imageId);
             }
-
-        }.bind(this));
+        });
     },
-    setIndex: function(index){
-        var attachment = this.props.images[index];
+    setIndex(index) {
+        const {url, caption} = this.props.images[index];
         this.setState({
-            index: index,
-            image: attachment.url,
-            caption: attachment.caption,
+            index,
+            caption,
+            image: url,
         });
     },
-    preloadImages: function(){
-        var loaded = [];
-        this.props.images.map(function(image, i){
-            loaded[i] = new Image();
-            loaded[i].src = image.url;
-        });
-    },
-    getImage: function(imageId){
-        var index = this.props.imagesTable[imageId];
+    getImage(imageId) {
+        const index = this.props.imagesTable[imageId];
         return this.props.images[index];
     },
-    getActiveImage: function(imageId){
-        var active = this.images;
+    getActiveImage(imageId) {
+        let active = this.images;
         while(active){
             if(active.data.id == imageId)
                 return active;
@@ -230,39 +217,39 @@ var Gallery = React.createClass({
         }
         return null;
     },
-    getIndex: function( imageId, images){
-        for(var i = 0; i < images.length; i++){
-            if(images[i].id == imageId)
+    getIndex(imageId, images) {
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].id == imageId)
                 return i;
         }
         return -1;
     },
-    setCurrentImage: function(imageId){
+    setCurrentImage(imageId) {
         this.showPane(this.getIndex(imageId, this.props.images));
         this.setState({ active: this.getActiveImage(imageId)}, this.updatePaneDimensions);
     },
-    open: function(imageId){
+    open(imageId) {
         this.setCurrentImage(imageId);
         this.setState({ visible: true });
         $('body').addClass('no-scroll');
     },
-    close: function(){
+    close() {
         this.setState({
             visible: false,
         });
         $('body').removeClass('no-scroll');
     },
-    previous: function(callback){
+    previous(callback) {
         if(!this.state.active || !this.state.active.prev)
             return
         this.setState({ active: this.state.active.prev }, callback);
     },
-    next: function(callback){
+    next(callback) {
         if(!this.state.active || !this.state.active.next)
             return
         this.setState({ active: this.state.active.next }, callback);
     },
-    renderImage: function(){
+    renderImage() {
         if(this.state.image){
             var imageStyle = { maxHeight: $(window).height() - 200 };
             return (
@@ -274,7 +261,7 @@ var Gallery = React.createClass({
             );
         }
     },
-    renderControls: function(){
+    renderControls() {
         if(this.props.images.length > 1){
             return (
                 <div className="navigation">
@@ -285,19 +272,15 @@ var Gallery = React.createClass({
             );
         }
     },
-    render: function() {
-        if(this.state.visible){
-            var visible = "visible";
-        } else {
-            var visible = "";
-        }
+    render() {
+        const visible = this.state.visible ? 'visible' : '';
 
-        var slides = this.props.images.map(function(image, i){
-            return (<GallerySlide key={i} index={i} width={this.state.slide_width} src={image.url} caption={image.caption} credit={image.credit} />);
-        }.bind(this));
+        const slides = this.props.images.map((image, i) => (
+            <GallerySlide key={i} index={i} width={this.state.slideWidth} src={image.url} caption={image.caption} credit={image.credit} />
+        ));
 
-        var prev = (<div onClick={this.prevSlide} className="prev"><div><i className="fa fa-chevron-left"></i></div></div>);
-        var next = (<div onClick={this.nextSlide} className="next"><div><i className="fa fa-chevron-right"></i></div></div>);
+        const prev = (<div onClick={this.prevSlide} className="prev"><div><i className="fa fa-chevron-left"></i></div></div>);
+        const next = (<div onClick={this.nextSlide} className="next"><div><i className="fa fa-chevron-right"></i></div></div>);
 
         return (
             <div className={'slideshow ' + visible}>
@@ -314,4 +297,4 @@ var Gallery = React.createClass({
     }
 });
 
-module.exports = Gallery;
+export default Gallery;
