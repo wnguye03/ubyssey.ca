@@ -116,7 +116,7 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
+        t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template_path()), article.get_template_path()])
         return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):
