@@ -385,3 +385,21 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'guide/article.html', context)
+
+
+class UbysseyMagazineTheme(DefaultTheme):
+    """Views for The Ubyssey Magazine microsite."""
+
+    def landing(self, request):
+        """The Ubyssey Magazine landing page view."""
+
+        context = {}
+
+        return render(request, 'magazine/landing.html', context)
+
+    def article(self, request, slug=None):
+        """The Ubyssey Magazine article page view."""
+
+        context = {}
+
+        return render(request, 'magazine/article.html', context)
