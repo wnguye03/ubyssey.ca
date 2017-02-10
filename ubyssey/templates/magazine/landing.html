@@ -1,5 +1,46 @@
 {% extends 'magazine/base.html' %}
 
 {% block content %}
-  This is the magazine landing page
+<html>
+	<head>
+		<style>
+.containerBox {
+    position: relative;
+    display: inline-block;
+	padding-top:100px;
+}
+.text-box {
+    position: absolute;    
+    height: 100%;
+    text-align: center;    
+    width: 100%;
+}
+.text-box:before {
+   content: '';
+   display: inline-block;
+   height: 100%;
+   vertical-align: middle;
+}
+h4 {
+   display: inline-block;
+   font-size: 32px; /*or whatever you want*/
+   color: black;   
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+		</style>
+	</head>
+	<body>
+		<div class="containerBox">
+			<div class="text-box">
+				<h4>Your Text is responsive and centered</h4>
+			</div>
+			<img class="img-responsive" src="http://assets.pokemon.com/assets/cms2/img/watch-pokemon-tv/seasons/season19/season19_ep11_ss01.jpg"/>
+		</div>
+	</body>
+</html>
 {% endblock %}
+
