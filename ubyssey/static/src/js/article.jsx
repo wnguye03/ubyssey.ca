@@ -1,19 +1,22 @@
-var Youtube = require('./modules/Youtube.js');
-var ArticleList = require('./components/ArticleList.jsx');
-var Search = require('./components/Search.jsx');
+import React from 'react';
+import './modules/Youtube';
+import ArticleList from './components/ArticleList.jsx';
+import Search from './components/Search.jsx';
 
 window.articleHeader = false;
 
-if($('main.article').length){
+if ($('main.article').length) {
 
-    var articleId = $('article').data('id');
-    var articleHeadline = $('article').data('headline');
-    var articleURL = $('article').data('url');
+    const $article = $('article');
 
-    var userId = $('article').data('user-id');
+    var articleId = $article.data('id');
+    var articleHeadline = $article.data('headline');
+    var articleURL = $article.data('url');
 
-    var articleIds = $('article').data('list');
-    var listName = $('article').data('list-name');
+    var userId = $article.data('user-id');
+
+    var articleIds = $article.data('list');
+    var listName = $article.data('list-name');
 
     if(articleIds === parseInt(articleIds, 10)){
         articleIds = [articleIds];
