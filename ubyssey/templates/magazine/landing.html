@@ -2,77 +2,42 @@
 
 {% block content %}
 
-<style>
-.flex-container {
-    display: -webkit-flex;
-    display: flex;
-    height: 300px;
-    background-color: lightgrey;
-	align-items: center;
-	padding: 0;
-    margin: auto;
-	justify-content: center;
-	width: 75%;
-	-webkit-justify-content: center;
-}
-
-.flex-item-1 {
-    background-color: cornflowerblue;
-    width: 100%;
-    height: 100%;
-    margin: 10px;
-}
-
-.flex-item-2 {
-    background-color: DarkRed;
-    width: 50%;
-    height: 100%;
-    margin: 10px;
-}
-
-.flex-item-3 {
-    background-color: DarkBlue;
-    width: 30%;
-    height: 80%;
-    margin: 10px;
-}
-
-img {
-	max-width:100%;
-}
-
-</style>
-
-<div class="flex-container">
-  <div class="flex-item-1">
-	<figure>
-		<img src = "https://www.mabonline.net/wp-content/uploads/2015/01/World-Hijab-Day.jpg">
-		<p style="font-family:verdana">Muslim Students' Association celebrates World Hijab Day in the Nest</p>
-	</figure>	
+<div class="magazine-container">
+  <h1 class="headline">DIVERSITY</h1>
+  <div class="cover-article" style="background-image: url('../../static/images/magazine/farsi.png')">
+    <div class="title-overlay">
+      <div class="title"> Farsi at Home </div>
+      <div class="description">Tina Madani Kia</div>
+    </div>
   </div>
-</div>
 
-<div class="flex-container">
-  <div class="flex-item-2">
-	<p style="font-family:verdana">"Coming out here [to the rally]"
-	<figure>
-		<img src = "https://i.cbc.ca/1.3642875.1466385363!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/trump-tower-protest-vancouver-lgbt-muslims.jpg">
-	</figure>
-	</div>
-	
-  <div class="flex-item-2">Title 3</div>
-</div>
+  <div class="sub-article-container">
+    <div class="sub-article">
+      <img src = "https://i.cbc.ca/1.3642875.1466385363!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/trump-tower-protest-vancouver-lgbt-muslims.jpg">
+      <div class="title-overlay">
+        <div class="title"> Coming out here [to the rally], it's about standing up ... </div>
+      </div>
+    </div>
 
-<div class="flex-container">
-  <div class="flex-item-3">Title 4</div>
-  <div class="flex-item-3">Title 5</div>
-  <div class="flex-item-3">Title 6</div>
-</div>
+    <div class="sub-article">
+      <img src="https://www.mabonline.net/wp-content/uploads/2015/01/World-Hijab-Day.jpg">
+      <div class="title-overlay">
+        <div class="title"> Something about life </div>
+      </div>
+    </div>
+  </div>
 
-<div class="flex-container">
-  <div class="flex-item-3">Title 7</div>
-  <div class="flex-item-3">Title 8</div>
-  <div class="flex-item-3">Title 9</div>
+  <div class="article-grid-container">
+    <div class="article-grid-3 static"><span class="tile-category">Recipes:</span></div>
+    <div class="article-grid-3"><span>Title 5</span></div>
+    <div class="article-grid-3"><span>Title 6</span></div>
+  </div>
+
+  <div class="article-grid-container">
+    <div class="article-grid-3 static"><span class="tile-category"> Poetry:</span></div>
+    <div class="article-grid-3"><span>Title 7</span></div>
+    <div class="article-grid-3"><span>Title 8</span></div>
+  </div>
 </div>
 {% endblock %}
 
