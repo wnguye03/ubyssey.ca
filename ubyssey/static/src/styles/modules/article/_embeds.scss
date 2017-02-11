@@ -293,6 +293,27 @@
   }
 }
 
+.o-article-embed--video__tag {
+  // Structure
+  display: none;
+  margin-bottom: 0.25rem;
+
+  // Text
+  font-size: font-size(13);
+  color: $color-white;
+  letter-spacing: 1px;
+  font-weight: $font-weight-semi-bold;
+  text-transform: uppercase;
+
+  // Extra
+  opacity: 0.75;
+
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: block;
+  }
+}
+
 .o-article-embed--video__title {
   // Structure
   margin-top: 0;
