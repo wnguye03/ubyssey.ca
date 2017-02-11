@@ -33,7 +33,7 @@ $font: 'Roboto', sans-serif; // Will change when we get the font files
 		background-size: cover;
 		background-repeat: no-repeat;
 		position: relative;
-		border-bottom: 10px solid $yellow;
+		border-bottom: 20px solid $yellow;
 
 		.title-overlay {
 			position: absolute;
@@ -57,7 +57,19 @@ $font: 'Roboto', sans-serif; // Will change when we get the font files
 		@include flex;
 		@include align-items(center);
 		@include justify-content(center);
+		height: 300px;
 
+		.sub-article {
+			@include flex;
+			@include justify-content(center);
+			@include align-items(center);
+			position: relative;
+			background-repeat: no-repeat;
+			background-size: cover;
+			width: 50%;
+			height: 100%;
+			opacity: 0.8;
+		}
 		.title-overlay {
 			position: absolute;
 			color: $white;
@@ -79,16 +91,6 @@ $font: 'Roboto', sans-serif; // Will change when we get the font files
 		margin: 10px;
 	}
 
-	.sub-article {
-		@include flex;
-		@include justify-content(center);
-		@include align-items(center);
-		position: relative;
-		width: 50%;
-		height: 100%;
-		opacity: 0.8;
-	}
-
 	.article-grid-container {
 		@include flex;
 		@include justify-content(space-between);
@@ -96,14 +98,16 @@ $font: 'Roboto', sans-serif; // Will change when we get the font files
 		.article-grid-3 {
 			@include flex;
 			background-color: $blue;
-			width: 200px;
+			width: 30%;
+			background-repeat: no-repeat;
+			background-size: cover;
 			height: 200px;
 			margin: 10px;
 			position: relative;
 			color: $yellow;
 
 			span {
-				font-size: 34px;
+				font-size: 1.5em;
 				font-weight: bold;
 				margin: auto;
 			}
