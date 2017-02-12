@@ -1,3 +1,4 @@
+import React from 'react';
 var Comment = require('./Comment.jsx');
 var CommentBox = require('./CommentBox.jsx');
 
