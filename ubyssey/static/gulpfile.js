@@ -1,5 +1,8 @@
+require('babel-register'); // Pass require()s through babel (for running jasmine)
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var jasmine = require('gulp-jasmine');
 var clean = require('gulp-clean');
 var rename = require('gulp-rename');
 
@@ -35,6 +38,11 @@ gulp.task('webpack:build-dev', ['clean:js'], function(callback) {
 
     callback();
   });
+});
+
+gulp.task('jasmine', function() {
+  gulp.src('./src/**/*.spec.js')
+    .pipe(jasmine({verbose: true}));
 });
 
 function renameFunc(path) {
