@@ -1,1 +1,13 @@
-footer
+<!--{% load staticfiles %} not sure if we need this-->
+<footer>
+    <div class="u-container{% if homepage %} u-container--large{% endif %}">
+	    <div class="center"><!--not sure what the tag is for center-->
+	        <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small-grey.svg' %}" /></a>
+	        <ul class="sections">
+	        	<li><a href="#">Previous Issue</a></li>
+	            <li><a href="{% url 'home' %}">Back to The Ubyssey</a></li>
+	            <li><a href="#">Next Issue</a></li>
+	        </ul>
+	    </div>
+    </div>
+</footer>
