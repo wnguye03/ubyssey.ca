@@ -1,22 +1,28 @@
-var LinkedList = function(array){
-
-    var Node = function(data){
-        return {
-            data: data,
-            next: null,
-            prev: null
-        }
-    }
-
-    var tail = Node(array[array.length - 1]);
-    for(var i = array.length - 2; i >= 0; i--){
-        var prev = Node(array[i]);
-        tail.prev = prev;
-        prev.next = tail;
-        tail = prev;
-    }
-    return tail;
-
+function Node(data) {
+  return {
+    data,
+    next: null,
+    prev: null
+  };
 }
 
-module.exports = LinkedList;
+export default class LinkedList {
+
+  constructor(array) {
+    if (!array) {
+      return null;
+    }
+
+    let tail = Node(array[array.length - 1]);
+
+    for (let i = array.length - 2; i >= 0; i--) {
+      let prev = Node(array[i]);
+      tail.prev = prev;
+      prev.next = tail;
+      tail = prev;
+    }
+
+    return tail
+  }
+
+}

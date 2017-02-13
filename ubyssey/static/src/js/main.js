@@ -1,4 +1,4 @@
-var mp = require('./modules/Mixpanel');
+import * as mp from './modules/Mixpanel';
 
 function disableScroll($document) {
   $document.on('touchmove', function(e) {

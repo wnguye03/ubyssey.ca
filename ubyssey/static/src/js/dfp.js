@@ -1,21 +1,20 @@
-var SIZES = {
+const SIZES = {
     'box': [300, 250],
     'leaderboard': [728, 90],
     'mobile-leaderboard': [300, 50]
 };
 
 // Get reference to googletag from window object
-googletag = window.googletag;
+const googletag = window.googletag;
 
-function DFP(element) {
+class DFP {
 
-  var self = this;
+  constructor() {
+    this.adslots = [];
+    this.element = document;
+  }
 
-  // Set default values
-  self.adslots = [];
-  self.element = document;
-
-  function setup() {
+  static setup() {
     // Infinite scroll requires SRA
     googletag.pubads().enableSingleRequest();
 
@@ -28,46 +27,46 @@ function DFP(element) {
     googletag.enableServices();
   }
 
-  function collectAds() {
-    var dfpslots = $(self.element).find(".adslot").filter(":visible");
+  collectAds() {
+    const dfpslots = $(this.element).find('.adslot').filter(':visible');
 
-    $(dfpslots).each(function(){
-      var slotName = $(this).attr('id')
+    $(dfpslots).each((_, dfpslot) => {
+      const slotName = $(dfpslot).attr('id')
 
-      var slot = googletag.defineSlot(
-        '/61222807/' + $(this).data('dfp'),
-        SIZES[$(this).data('size')],
+      const slot = googletag.defineSlot(
+        `/61222807/${$(dfpslot).data('dfp')}`,
+        SIZES[$(dfpslot).data('size')],
         slotName
       )
         .setCollapseEmptyDiv(true)
         .addService(googletag.pubads());
 
-      self.adslots.push([slotName, slot]);
+      this.adslots.push([slotName, slot]);
     });
   }
 
-  function refreshAds() {
-    $.each(self.adslots, function(i, slot) {
+  refreshAds() {
+    this.adslots.forEach(slot => {
       googletag.display(slot[0]);
       googletag.pubads().refresh([slot[1]]);
     });
   };
 
-  return {
-    load: function(element) {
-      self.element = element;
-      googletag.cmd.push(setup);
-      googletag.cmd.push(collectAds);
-      googletag.cmd.push(refreshAds);
-    },
-    reset: function() {
-      self.adslots = [];
-      googletag.cmd.push(googletag.destroySlots);
-    }
+  load(element) {
+    this.element = element;
+    googletag.cmd.push(DFP.setup);
+    googletag.cmd.push(this.collectAds.bind(this));
+    googletag.cmd.push(this.refreshAds.bind(this));
   }
+
+  reset() {
+    this.adslots = [];
+    googletag.cmd.push(googletag.destroySlots);
+  }
+
 }
 
-var dfp = DFP();
+const dfp = new DFP();
 
 $(document).ready(function() {
   dfp.load(document);
