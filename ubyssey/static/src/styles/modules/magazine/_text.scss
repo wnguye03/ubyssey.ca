@@ -1,0 +1,25 @@
+$font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-secondary: 'Gobold';
+
+$font-size-base: 16;
+
+@function font-size($size) {
+  $scaled-size: ($size / $font-size-base) + em;
+  @return $scaled-size;
+}
+
+body {
+  font-family: $font-default;
+  font-size: $font-size-base;
+  color: $color-text-black;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h3, h3, h4 {
+  // Structure
+  margin: 0;
+
+  // Text
+  font-family: $font-default;
+}

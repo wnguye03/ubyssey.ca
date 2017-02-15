@@ -1,0 +1,45 @@
+.c-article {
+  // Structure
+  margin-top: 2rem;
+}
+
+.c-article__headline {
+  // Text
+  font-size: font-size(54);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.c-article__byline {
+  color: $color-text-gray;
+}
+
+.c-article__featured-image {
+  // Structure
+  width: 100%;
+  max-width: 890px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  img {
+    // Structure
+    display: block;
+    width: 100%;
+  }
+}
+
+.c-article__body {
+
+  > p {
+    // Structure
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+
+    // Text
+    font-size: font-size(18);
+    line-height: 1.45em;
+  }
+
+}
