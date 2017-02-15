@@ -18,7 +18,7 @@
             <div class="inner row">
                 <div class="left">
                     <ul class="meta">
-                        <li>{% now "F j, Y" %}</li>
+                        <li>{% now "l, F j, Y" %}</li>
                     </ul>
                 </div>
                 <div class="middle">
@@ -39,6 +39,11 @@
                         <li><a href="{% url 'page' 'about' %}">About</a></li>
                         <li><a href="{% url 'page' 'advertise' %}">Advertise</a></li>
                         <li><a href="{% url 'archive' %}">Archive</a></li>
+                        <li class="store">
+                          <a class="store-link" href="https://store.ubyssey.ca/">
+                            <i class="fa fa-shopping-bag"></i><span>Store</span>
+                          </a>
+                        </li>
                     </ul>
                     <ul class="meta small">
                         <li><a href="{% url 'page' 'volunteer' %}">Volunteer</a></li>

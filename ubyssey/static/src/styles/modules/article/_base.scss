@@ -78,7 +78,6 @@ div.indicator {
 }
 
 .c-article__byline__meta {
-  font-size: 0.9em;
   color: #777;
   font-weight: $font-weight-normal;
   @media($bp-larger-than-tablet) {
@@ -149,10 +148,10 @@ div.article-content {
 
   > p, > ul {
     font-family: $font-body !important;
-    font-size: 16px !important;
+    font-size: font-size(17) !important;
     color: #333333 !important;
-    line-height: 26px !important;
-    margin-top: 20px;
+    line-height: 1.625rem !important;
+    margin-top: 1.4rem;
 
     &:first-child {
         margin-top: 5px;

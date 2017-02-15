@@ -1,6 +1,7 @@
+import React from 'react';
 var Textarea = require('react-textarea-autosize');
 
-var CommentBox = React.createClass({
+const CommentBox = React.createClass({
     getInitialState: function(){
         return {
             content: "",
@@ -36,4 +37,4 @@ var CommentBox = React.createClass({
     }
 });
 
-module.exports = CommentBox;
+export default CommentBox;

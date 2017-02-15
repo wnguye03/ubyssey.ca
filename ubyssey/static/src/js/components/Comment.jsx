@@ -1,5 +1,7 @@
-var Comment = React.createClass({
-    render: function(){
+import React from 'react';
+
+const Comment = React.createClass({
+    render() {
         return (
             <div className="comment">
                 <div className="meta">
@@ -14,4 +16,4 @@ var Comment = React.createClass({
     }
 });
 
-module.exports = Comment;
+export default Comment;
