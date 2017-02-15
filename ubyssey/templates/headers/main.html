@@ -2,11 +2,15 @@
 <header class="main">
     <div class="u-container u-container--large">
         <div class="branding row">
-            <div class="left"><span class="since-line">UBC’s student newspaper since 1918</span></div>
+            <div class="left"><span class="since-line">UBC’s student newspaper since 1918 
+                                 <!--    <br> {% now "l, F j, Y" %} --></span></div>
             <div class="middle">
                 <img class="top-logo" src="{% static 'images/ubyssey-logo.svg' %}" />
             </div>
             <div class="right">
+                           <a class="store-link" href="https://store.ubyssey.ca/">
+                            <i class="fa fa-shopping-bag"></i><span>Store</span>
+                          </a>
                 <a class="o-snapchat-icon"><i class="fa fa-snapchat"></i><div class="o-snapchat-icon__code"></div></a>
                 <a href="https://www.facebook.com/ubyssey" target="_blank"><i class="fa fa-facebook-square"></i></a>
                 <a href="https://www.instagram.com/ubyssey/" target="_blank"><i class="fa fa-instagram"></i></a>
@@ -18,7 +22,11 @@
             <div class="inner row">
                 <div class="left">
                     <ul class="meta">
-                        <li>{% now "l, F j, Y" %}</li>
+<!--                         <li>{% now "l, F j, Y" %}</li> -->
+                        <li><a href="{% url 'page' 'about' %}">About</a></li>
+                        <li><a href="{% url 'page' 'advertise' %}">Advertise</a></li>
+                        <li><a href="{% url 'page' 'volunteer' %}">Volunteer</a></li>
+
                     </ul>
                 </div>
                 <div class="middle">
@@ -34,15 +42,15 @@
                 </div>
                 <div class="right">
                     <ul class="meta large">
-                                            <li><a href="{% url 'page' 'volunteer' %}">Advice</a></li>
-                        <li><a href="{% url 'page' 'volunteer' %}">Volunteer</a></li>
-                        <li><a href="{% url 'page' 'about' %}">About</a></li>
-                        <li><a href="{% url 'page' 'advertise' %}">Advertise</a></li>
+                              <!--               <li><a href="{% url 'page' 'volunteer' %}">Advice</a></li> -->
+
                         <li><a href="{% url 'archive' %}">Archive</a></li>
+                        <li><a href="{% url 'page' 'advice' %}">Get Advice</a></li>
+                        <li><a href="{% url 'page' 'submit' %}">Submit Opinion</a></li>
                         <li class="store">
-                          <a class="store-link" href="https://store.ubyssey.ca/">
+           <!--                <a class="store-link" href="https://store.ubyssey.ca/">
                             <i class="fa fa-shopping-bag"></i><span>Store</span>
-                          </a>
+                          </a> -->
                         </li>
                     </ul>
                     <ul class="meta small">
