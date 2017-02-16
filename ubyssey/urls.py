@@ -23,6 +23,7 @@ theme_urls = [
     # Magazine URLs
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),
     url(r'^magazine/poetry/$', magazine.poetry, name='magazine-poetry'),
+    url(r'^magazine/article-1/$', magazine.article_1, name='magazine-article-1'),
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
