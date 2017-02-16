@@ -1,24 +1,44 @@
 .c-header {
   // Structure
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
+
+  // Background
+  background: $color-pink;
+
+  &--pink {
+    // Background
+    background: $color-pink;
+  }
+
+  &--green {
+    // Background
+    background: $color-green;
+  }
+
+  @media($bp-larger-than-mobile) {
+    // Structure
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 0;
+
+    // Background
+    background: none;
+  }
 }
 
 .c-header__logo {
   // Structure
   display: inline-block;
-  padding-bottom: 0.4rem;
-
-  // Border
-  border-bottom: 4px solid $color-pink;
 
   // Text
   font-family: $font-secondary;
   text-transform: uppercase;
-  font-size: font-size(24);
+  font-size: font-size(20);
+  color: #fff;
   font-weight: 400;
   user-select: none;
-  color: $color-text-black;
   text-decoration: none;
 
   transition: color 0.2s;
@@ -27,4 +47,15 @@
     color: $color-pink;
   }
 
+  @media($bp-larger-than-mobile) {
+    // Structure
+    padding-bottom: 0.4rem;
+
+    // Border
+    border-bottom: 4px solid $color-pink;
+
+    // Text
+    font-size: font-size(24);
+    color: $color-text-black;
+  }
 }

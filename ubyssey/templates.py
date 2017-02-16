@@ -50,6 +50,25 @@ class Guide(BaseTemplate):
         ('next_b', 'Up next B', TextField())
     )
 
+class Magazine(BaseTemplate):
+
+    NAME = 'Magazine - Article'
+    SLUG = 'magazine'
+
+    COLOR_OPTIONS = (
+        ('green', 'Green'),
+        ('pink', 'Pink')
+    )
+
+    fields = (
+        ('byline', 'Byline', TextField()),
+        ('byline_2', 'Byline 2', TextField()),
+        ('description', 'Description', TextField()),
+        ('color', 'Accent Color', SelectField(options=COLOR_OPTIONS)),
+    )
+
+
 templates.register(Default)
 templates.register(FullWidth)
 templates.register(Guide)
+templates.register(Magazine)
