@@ -67,8 +67,23 @@ class Magazine(BaseTemplate):
         ('color', 'Accent Color', SelectField(options=COLOR_OPTIONS)),
     )
 
+class MagazinePoem(BaseTemplate):
+
+    NAME = 'Magazine - Poem'
+    SLUG = 'magazine-poem'
+
+    fields = (
+        ('byline', 'Byline', TextField()),
+        ('byline_2', 'Byline 2', TextField()),
+        ('top_color', 'Top Color', TextField()),
+        ('bottom_color', 'Bottom Color', TextField()),
+        ('text_color_a', 'Text Color A', TextField()),
+        ('text_color_b', 'Text Color B', TextField()),
+    )
+
 
 templates.register(Default)
 templates.register(FullWidth)
 templates.register(Guide)
 templates.register(Magazine)
+templates.register(MagazinePoem)

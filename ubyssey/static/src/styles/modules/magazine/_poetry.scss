@@ -1,4 +1,5 @@
 .c-poetry__backdrop {
+  // Structure
   width: 100%;
 
   // Background
@@ -15,6 +16,7 @@
 }
 
 .c-poetry__content {
+  // Structure
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
@@ -23,6 +25,7 @@
   // Text
   font-family: $font-serif;
   font-size: font-size(17);
+  line-height: 1.75em;
 }
 
 .c-poetry__body  {
@@ -33,12 +36,11 @@
 
 .c-poetry__body > p {
   // Structure
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
 
   // Text
   font-family: $font-serif;
   font-size: font-size(17);
-  line-height: 1.75em;
-
+  line-height: 2em;
 }
