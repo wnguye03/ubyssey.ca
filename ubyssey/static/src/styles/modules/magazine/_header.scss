@@ -1,5 +1,6 @@
 .c-header {
   // Structure
+  display: flex;
   padding-top: 1.1rem;
   padding-bottom: 1.1rem;
   margin-bottom: 1.5rem;
@@ -20,7 +21,7 @@
   @media($bp-larger-than-mobile) {
     // Structure
     padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
     margin-bottom: 0;
 
     // Background
@@ -28,7 +29,8 @@
   }
 }
 
-.c-header__logo {
+.c-header__logo,
+.c-header__right {
   // Structure
   display: inline-block;
 
@@ -36,8 +38,12 @@
   font-family: $font-secondary;
   text-transform: uppercase;
   font-size: font-size(20);
-  color: #fff;
   font-weight: 400;
+}
+
+.c-header__logo {
+  // Text
+  color: #fff;
   user-select: none;
   text-decoration: none;
 
@@ -57,5 +63,20 @@
     // Text
     font-size: font-size(24);
     color: $color-text-black;
+  }
+}
+
+.c-header__right {
+  // Structure
+  flex: 1;
+
+  // Text
+  text-align: right;
+
+  @media($bp-larger-than-mobile) {
+    // Text
+    font-size: font-size(18);
+    line-height: font-size(28);
+    color: gray;
   }
 }
