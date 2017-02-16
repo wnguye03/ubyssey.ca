@@ -1,9 +1,13 @@
 // Magazine styles go here
 @import 'modules/mixins';
-@import 'modules/magazine/utilities';
+
 @import 'modules/magazine/colors';
+@import 'modules/magazine/mixins';
+@import 'modules/magazine/utilities';
 @import 'modules/magazine/text';
+@import 'modules/magazine/header';
 @import 'modules/magazine/article';
+@import 'modules/magazine/poetry';
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
 
