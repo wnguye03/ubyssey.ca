@@ -49,10 +49,6 @@
 
   transition: color 0.2s;
 
-  &:hover {
-    color: $color-pink;
-  }
-
   @media($bp-larger-than-mobile) {
     // Structure
     padding-bottom: 0.4rem;
@@ -63,17 +59,25 @@
     // Text
     font-size: font-size(24);
     color: $color-text-black;
+
+    &:hover {
+      color: $color-pink;
+    }
   }
 }
 
 .c-header__right {
   // Structure
+  display: none;
   flex: 1;
 
   // Text
   text-align: right;
 
   @media($bp-larger-than-mobile) {
+    // Structure
+    display: block;
+
     // Text
     font-size: font-size(18);
     line-height: font-size(28);
