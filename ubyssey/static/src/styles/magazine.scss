@@ -1,5 +1,14 @@
 // Magazine styles go here
 @import 'modules/mixins';
+
+@import 'modules/magazine/colors';
+@import 'modules/magazine/mixins';
+@import 'modules/magazine/utilities';
+@import 'modules/magazine/text';
+@import 'modules/magazine/header';
+@import 'modules/magazine/article';
+@import 'modules/magazine/poetry';
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
 
 $turqoise: #21988a;
@@ -13,6 +22,12 @@ $white: #fff;
 $pink: #ed028c;
 
 $font: 'Roboto', sans-serif; // Will change when we get the font files
+
+html, body {
+	// Structure
+	margin: 0;
+	padding: 0;
+}
 
 .magazine-container {
 	margin: 5em 3em;
@@ -122,6 +137,6 @@ $font: 'Roboto', sans-serif; // Will change when we get the font files
 
 	img {
 		width: 100%;
-		height: 340px; // TODO - remove the hardcoded numbers ... 
+		height: 340px; // TODO - remove the hardcoded numbers ...
 	}
 }
