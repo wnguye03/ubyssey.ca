@@ -397,11 +397,11 @@ class UbysseyMagazineTheme(DefaultTheme):
 	picture = random.randint(1,2)
 	if (picture == 1):
 		context = {
-			'pic': 'https://www.what-dog.net/Images/faces2/scroll0015.jpg'
+			'pic': '../../static/images/magazine/cover1.jpg'
 		}
 	elif (picture == 2): 
 		context = {
-			'pic': 'https://img.clipartfox.com/d3bbb2170b7fffe3191e5d24f11fc2bf_happy-face-clipart-smiley-smiley-face-doctor-clipart_1024-1024.jpeg'
+			'pic': '../../static/images/magazine/cover2.jpg'
 		}
 
         return render(request, 'magazine/landing.html', context)
