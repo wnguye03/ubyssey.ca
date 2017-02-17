@@ -79,6 +79,7 @@ class MagazinePoem(BaseTemplate):
         ('bottom_color', 'Bottom Color', TextField()),
         ('text_color_a', 'Text Color A', TextField()),
         ('text_color_b', 'Text Color B', TextField()),
+        ('offset', 'Top Offset', TextField()),
     )
 
 

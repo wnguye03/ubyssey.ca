@@ -10,7 +10,7 @@
 
     <div class="c-poetry__backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}'); background-color: {{ article.template_fields.bottom_color }};">
 
-      <div class="c-poetry__container" style="padding-top: 34%;">
+      <div class="c-poetry__container" style="padding-top: {{ article.template_fields.offset }};">
 
         <div class="c-poetry__content u-container u-container--small">
           <h1 class="c-poetry__headline" style="color: {{ article.template_fields.text_color_a }};">Cosmopolis</h1>
