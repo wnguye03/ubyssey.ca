@@ -1,11 +1,13 @@
 {% extends 'magazine/base.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
 
 <div class="magazine-container">
-  {% include 'magazine/header.html' %}
   <div class="cover-photo-container">
-    <img class="cover-photo" src='../../static/images/magazine/cover-2-cropped.png'>
+    <h1 class="c-cover__logo">The Ubyssey Magazine</h1>
+    <img class="cover-photo" src="{% static 'images/magazine/cover-1.jpg' %}" />
     <div class="title-overlay">
       <div class="title"> DIVERSITY </div>
     </div>
@@ -52,4 +54,3 @@
   </div>
 </div>
 {% endblock %}
-

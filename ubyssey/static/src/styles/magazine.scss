@@ -32,36 +32,40 @@ $bp-larger-than-desktop   : "min-width: 1200px" !default;
 
 $border: 20px solid $turqoise;
 
+$spacing: 1.5rem;
+
 html, body {
 	// Structure
 	margin: 0;
 	padding: 0;
 }
 
+.c-cover__logo {
+	font-family: $font-secondary;
+	font-weight: 400;
+	font-size: font-size(50);
+	position: absolute;
+	margin-top: 3.5rem;
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
 .magazine-container {
 
- 	@media($bp-smaller-than-mobile) {
- 		margin: 1em;
- 	}
-
-	@media($bp-larger-than-mobile) {
-		margin: 3em 2em;
-	}
-
-	@media($bp-larger-than-tablet) {
-		margin: 3em 4em;
-	}
-
-	@media($bp-larger-than-desktop) {
-		margin: 5em 13em;
-	}
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3rem;
 
 	font-family: $font-default;
 
 	// Overriding default header styles
 	.c-header {
 		padding: 0;
-		max-width: none; 
+		max-width: none;
 	}
 
 	.c-header__logo {
@@ -82,14 +86,15 @@ html, body {
 
 	.cover-photo-container {
 		position: relative;
-		padding-bottom: 1.5em;
-		border-bottom: $border;
+
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
 
 		.cover-photo {
 			display: block;
-			width: 80%;
+			width: 100%;
 			margin: auto;
 		}
+
 		.title-overlay {
 			position: absolute;
 			color: $white;
@@ -98,20 +103,24 @@ html, body {
 			transform: translate(-50%, -50%);
 
 			.title {
-				font-weight: bold;
+				font-family: $font-secondary;
+				font-weight: 400;
 				font-size: font-size(80);
-				text-decoration: underline;
 				color: $white;
+				text-transform: uppercase;
+
+				border-bottom: 15px solid $color-pink;
 			}
 		}
 	}
 
 	.sub-article-container {
+		margin-top: $spacing;
+
 		@include flex;
 		@include align-items(center);
 		@include justify-content(center);
-		height: 700px;
-		padding: 20px 0;
+		height: 320px;
 
 		.sub-article {
 			@include flex;
@@ -123,6 +132,14 @@ html, body {
 			background-position: 50%;
 			width: 50%;
 			height: 100%;
+
+			&:first-child {
+				margin-right: $spacing / 2;
+			}
+
+			&:last-child {
+				margin-left: $spacing / 2;
+			}
 
 			&:hover {
 				cursor: pointer;
@@ -145,30 +162,32 @@ html, body {
 			z-index: 20;
 
 			.title {
+				font-family: $font-default;
+				text-transform: uppercase;
 				color: $white;
-				font-weight: bold;
-				font-size: font-size(40);
+				font-weight: 600;
+				font-size: font-size(32);
 			}
 		}
 	}
 
 	.article-grid-container {
-		border-top: $border;
-		padding-top: 20px;
+
+		margin-top: $spacing;
 
 		.article-grid-row {
 			@include flex;
 			@include justify-content(space-between);
 
-
 			.article-grid-3 {
 				@include flex;
+				margin-bottom: $spacing;
+
 				background-color: $blue;
 				width: 30%;
 				background-repeat: no-repeat;
 				background-size: cover;
 				height: 400px;
-				margin: 10px;
 				position: relative;
 				color: $white;
 

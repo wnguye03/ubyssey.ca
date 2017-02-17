@@ -46,7 +46,7 @@ $font-size-base: 16;
 
 body {
   font-family: $font-default;
-  font-size: $font-size-base;
+  font-size: $font-size-base + px;
   color: $color-text-black;
 
   -webkit-font-smoothing: antialiased;
