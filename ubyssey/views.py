@@ -447,9 +447,9 @@ class UbysseyMagazineTheme(DefaultTheme):
 
         return render(request, 'magazine/article-1.html', context)
 
-    def poetry(self, request):
-        """The Ubyssey Magazine poem page view."""
+    def test(self, request):
+        """The Ubyssey Magazine test page view."""
 
         context = {}
 
-        return render(request, 'magazine/poetry.html', context)
+        return render(request, 'magazine/test.html', context)
