@@ -1,1 +1,2 @@
-window.React = require('react');
+import React from 'react';
+window.React = React;
