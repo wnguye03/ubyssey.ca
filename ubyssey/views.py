@@ -19,6 +19,7 @@ from ubyssey.helpers import ArticleHelper
 # Python imports
 from datetime import datetime
 import json
+import random
 
 def parse_int_or_none(maybe_int):
     try:
@@ -392,8 +393,16 @@ class UbysseyMagazineTheme(DefaultTheme):
 
     def landing(self, request):
         """The Ubyssey Magazine landing page view."""
-
-        context = {}
+	
+	picture = random.randint(1,2)
+	if (picture == 1):
+		context = {
+			'pic': 'https://www.what-dog.net/Images/faces2/scroll0015.jpg'
+		}
+	elif (picture == 2): 
+		context = {
+			'pic': 'https://img.clipartfox.com/d3bbb2170b7fffe3191e5d24f11fc2bf_happy-face-clipart-smiley-smiley-face-doctor-clipart_1024-1024.jpeg'
+		}
 
         return render(request, 'magazine/landing.html', context)
 
