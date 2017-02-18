@@ -19,6 +19,7 @@ from ubyssey.helpers import ArticleHelper
 # Python imports
 from datetime import datetime
 import json
+import random
 
 def parse_int_or_none(maybe_int):
     try:
@@ -392,8 +393,16 @@ class UbysseyMagazineTheme(DefaultTheme):
 
     def landing(self, request):
         """The Ubyssey Magazine landing page view."""
-
-        context = {}
+	
+	picture = random.randint(1,2)
+	if (picture == 1):
+		context = {
+			'pic': '../../static/images/magazine/cover1.jpg'
+		}
+	elif (picture == 2): 
+		context = {
+			'pic': '../../static/images/magazine/cover2.jpg'
+		}
 
         return render(request, 'magazine/landing.html', context)
 
@@ -447,9 +456,9 @@ class UbysseyMagazineTheme(DefaultTheme):
 
         return render(request, 'magazine/article-1.html', context)
 
-    def poetry(self, request):
-        """The Ubyssey Magazine poem page view."""
+    def test(self, request):
+        """The Ubyssey Magazine test page view."""
 
         context = {}
 
-        return render(request, 'magazine/poetry.html', context)
+        return render(request, 'magazine/test.html', context)

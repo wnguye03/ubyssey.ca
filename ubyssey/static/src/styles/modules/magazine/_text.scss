@@ -59,3 +59,14 @@ h1, h3, h3, h4 {
   // Text
   font-family: $font-default;
 }
+
+
+.o-link {
+	// Text
+	text-decoration: none;
+	color: inherit;
+
+	&:hover {
+		color: $color-pink;
+	}
+}
