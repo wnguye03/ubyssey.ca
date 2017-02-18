@@ -9,8 +9,7 @@
 @import 'modules/magazine/footer';
 @import 'modules/magazine/article';
 @import 'modules/magazine/poetry';
-
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+@import 'modules/magazine/objects';
 
 $turqoise: #21988a;
 $yellow: #f5cd3a;
@@ -25,7 +24,7 @@ $pink: #ed028c;
 
 $border: 15px solid $color-pink;
 
-$spacing: 1.2rem;
+$spacing: 1.5rem;
 
 html, body {
 	// Structure
@@ -110,24 +109,18 @@ html, body {
 
 	.sub-article-container {
 		margin: $spacing 0;
-		border-top: $border;
-		border-bottom: $border;
+		//border-top: $border;
+		//border-bottom: $border;
 
-		@include flex;
-		@include align-items(center);
-		@include justify-content(center);
-		height: 320px;
+		display: flex;
 
 		.sub-article {
-			@include flex;
-			@include justify-content(center);
-			@include align-items(center);
+			flex: 1;
+			height: 15rem;
 			position: relative;
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: 50%;
-			width: 50%;
-			height: 100%;
 
 			&:hover {
 				cursor: pointer;
@@ -162,6 +155,36 @@ html, body {
 	.article-grid-container {
 
 		margin-top: $spacing;
+
+		display: flex;
+		display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+		.article-grid {
+			flex-basis: 33%;
+			margin-bottom: $spacing;
+
+			&:nth-child(3n+1) {
+				.o-article-box {
+					margin-right: 1rem;
+				}
+			}
+
+			&:nth-child(3n+2) {
+				.o-article-box {
+					margin-left: 0.5rem;
+					margin-right: 0.5rem;
+				}
+			}
+
+			&:nth-child(3n+3) {
+				.o-article-box {
+					margin-left: 1rem;
+				}
+			}
+		}
+
 
 		.article-grid-row {
 			@include flex;

@@ -431,16 +431,16 @@ class UbysseyMagazineTheme(UbysseyTheme):
     def landing(self, request):
         """The Ubyssey Magazine landing page view."""
 
-    	picture = randint(1,2)
+        # Get all magazine articles
+        queryset = Article.objects.filter(is_published=True, section__slug='magazine')
 
-    	if (picture == 1):
-    		context = {
-    			'pic': '../../static/images/magazine/cover1.jpg'
-    		}
-    	elif (picture == 2):
-    		context = {
-    			'pic': '../../static/images/magazine/cover2.jpg'
-    		}
+        context = {
+            'cover': 'images/magazine/cover-%d.jpg' % randint(1, 2),
+            'articles': {
+                'featured': queryset[:2],
+                'rest': Article.objects.filter(is_published=True)
+            }
+        }
 
         return render(request, 'magazine/landing.html', context)
 
