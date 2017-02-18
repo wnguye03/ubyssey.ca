@@ -5,6 +5,7 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models.aggregates import Count
 
 # Dispatch imports
 from dispatch.apps.content.models import Article, Page, Section, Topic
@@ -19,7 +20,7 @@ from ubyssey.helpers import ArticleHelper
 # Python imports
 from datetime import datetime
 import json
-import random
+from random import randint
 
 def parse_int_or_none(maybe_int):
     try:
@@ -388,77 +389,77 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'guide/article.html', context)
 
 
-class UbysseyMagazineTheme(DefaultTheme):
+class UbysseyMagazineTheme(UbysseyTheme):
     """Views for The Ubyssey Magazine microsite."""
+
+    def get_random_articles(self, n, exclude=None):
+        """Returns `n` random articles from the Magazine section."""
+
+        # Get all magazine articles
+        queryset = Article.objects.filter(is_published=True, section__slug='magazine')
+
+        # Exclude article (optional)
+        if exclude:
+            queryset = queryset.exclude(id=exclude)
+
+        # Get article count
+        count = queryset.aggregate(count=Count('id'))['count']
+
+        # Get all articles
+        articles = queryset.all()
+
+        # Force a query (to optimize later calls to articles[index])
+        list(articles)
+
+        results = []
+        indices = set()
+
+        # n is bounded by number of articles in database
+        n = min(count, n)
+
+        while len(indices) < n:
+            index = randint(0, count - 1)
+
+            # Prevent duplicate articles
+            if index not in indices:
+                indices.add(index)
+                results.append(articles[index])
+
+        return results
+
 
     def landing(self, request):
         """The Ubyssey Magazine landing page view."""
-	
-	picture = random.randint(1,2)
-	if (picture == 1):
-		context = {
-			'pic': '../../static/images/magazine/cover1.jpg'
-		}
-	elif (picture == 2): 
-		context = {
-			'pic': '../../static/images/magazine/cover2.jpg'
-		}
+
+    	picture = randint(1,2)
+
+    	if (picture == 1):
+    		context = {
+    			'pic': '../../static/images/magazine/cover1.jpg'
+    		}
+    	elif (picture == 2):
+    		context = {
+    			'pic': '../../static/images/magazine/cover2.jpg'
+    		}
 
         return render(request, 'magazine/landing.html', context)
 
     def article(self, request, slug=None):
-        """The Ubyssey Magazine article page view."""
 
-        ARTICLES = {
-            'farsi-at-home': {
-                'title': 'Farsi at home',
-                'byline': 'By Tina Madani Kia',
-                'color': 'green'
-            },
-            'one-in-twenty': {
-                'title': 'One in Twenty',
-                'byline': 'Written by Marissa Birnie, illustrations by Jerry Yin',
-                'color': 'pink',
-                'snippet': 'How students with disabilities navigate campus life'
-            }
-        }
+        try:
+            article = self.find_article(request, slug, 'magazine')
+        except:
+            raise Http404("Article could not be found.")
+
+        article.add_view()
 
         context = {
-            'slug': slug,
-            'image_url': 'images/magazine/%s.jpg' % slug,
-            'article': ARTICLES[slug]
+            'title': "%s - %s" % (article.headline, self.SITE_TITLE),
+            'meta': self.get_article_meta(article),
+            'article': article,
+            'suggested': self.get_random_articles(2, exclude=article.id)
         }
 
-        return render(request, 'magazine/article.html', context)
+        t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
 
-    def article_1(self, request, slug=None):
-        """The Ubyssey Magazine article page view."""
-
-        ARTICLES = {
-            'farsi-at-home': {
-                'title': 'Farsi at home',
-                'byline': 'By Tina Madani Kia',
-                'color': 'green'
-            },
-            'one-in-twenty': {
-                'title': 'One in Twenty',
-                'byline': 'Written by Marissa Birnie, illustrations by Jerry Yin',
-                'color': 'pink',
-                'snippet': 'How students with disabilities navigate campus life'
-            }
-        }
-
-        context = {
-            'slug': slug,
-            'image_url': 'images/magazine/%s.jpg' % slug,
-            'article': ARTICLES['farsi-at-home']
-        }
-
-        return render(request, 'magazine/article-1.html', context)
-
-    def test(self, request):
-        """The Ubyssey Magazine test page view."""
-
-        context = {}
-
-        return render(request, 'magazine/test.html', context)
+        return HttpResponse(t.render(context))

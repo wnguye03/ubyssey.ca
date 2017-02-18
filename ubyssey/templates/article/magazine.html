@@ -23,6 +23,14 @@
       <div class="c-article__body">{{ article.get_html|safe }}</div>
     </div>
 
+    <div class="c-article__suggested u-container u-container--large">
+      {% for a in suggested %}
+      <a class="c-article__suggested__article c-article__suggested__article--{{ a.template_fields.color }}" href="{{ a.get_absolute_url }}" style="background-image: url('{{ a.featured_image.image.get_medium_url }}');">
+        <h2>{{ a.headline }}</h2>
+      </a>
+      {% endfor %}
+    </div>
+
   </article>
 
   {% include 'magazine/footer.html' with color=article.template_fields.color %}

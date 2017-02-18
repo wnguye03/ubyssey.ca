@@ -78,6 +78,13 @@
 }
 
 .c-article__body {
+  // Structure
+  margin-bottom: 2rem;
+
+  @media($bp-larger-than-mobile) {
+    // Structure
+    margin-bottom: 4rem;
+  }
 
   > p {
     // Structure
@@ -106,6 +113,77 @@
 
 .c-article--green .c-article__body {
   h1, h2, h3 { color: $color-green; }
+}
+
+
+.c-article__suggested {
+  // Structure
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  @media($bp-larger-than-mobile) {
+    // Structure
+    display: flex;
+  }
+}
+
+.c-article__suggested__article {
+  // Structure
+  flex: 1;
+  height: 15rem;
+  position: relative;
+  display: block;
+  margin-bottom: 1.5rem;
+
+  // Background
+  background-size: cover;
+
+  // Extra
+  transition: opacity 0.3s;
+
+  &:hover {
+    // Extra
+    opacity: 0.75;
+  }
+
+  @media($bp-larger-than-mobile) {
+    // Structure
+    margin-bottom: 0;
+    height: 20rem;
+
+    &:first-child {
+      // Structre
+      margin-right: 1.5rem;
+    }
+
+    &:last-child {
+      // Structre
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.c-article__suggested__article > h2 {
+  // Structure
+  position: absolute;
+  padding: 1rem;
+  bottom: 2rem;
+  margin: 0;
+
+  // Background
+  background: $color-pink;
+
+  // Text
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.c-article__suggested__article--green > h2 {
+  background: $color-green;
+}
+
+.c-article__suggested__article--pink > h2 {
+  background: $color-pink;
 }
 
 // Embeds
