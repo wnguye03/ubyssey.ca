@@ -7,6 +7,9 @@
   // Background
   background: $color-pink;
 
+  // Text
+  color: #fff;
+
   &--pink {
     // Background
     background: $color-pink;
@@ -18,30 +21,27 @@
   }
 
   &--poetry {
+    // Background
     background: none;
-    margin-bottom: 0;
 
-    .c-footer__logo {
-      // Structure
-      padding-bottom: 0.4rem;
-
-      // Border
-      border-bottom: 4px solid $color-pink;
-    }
+    // Text
+    color: $color-text-dark-gray;
   }
 
   @media($bp-larger-than-mobile) {
     // Structure
-    padding-top: 2rem;
+    padding-top: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 0;
 
     // Background
     background: none;
+
+    // Text
+    color: $color-text-dark-gray;
   }
 }
 
-.c-footer__logo,
 .c-footer__right,
 .c-footer__left, {
   // Structure
@@ -64,7 +64,6 @@
   text-align: right;
   font-size: font-size(18);
   line-height: font-size(28);
-  color: $color-text-gray;
 
   @media($bp-larger-than-mobile) {
     // Structure
@@ -80,17 +79,8 @@
   text-align: center;
   font-size: font-size(16);
   line-height: font-size(28);
-  color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-
-  @media($bp-larger-than-mobile) {
-    // Structure
-    display: block;
-
-    // Text
-    color: $color-text-gray;
-  }
 }
 
 .c-footer__left {
@@ -102,7 +92,6 @@
   text-align: left;
   font-size: font-size(18);
   line-height: font-size(28);
-  color: $color-text-gray;
 
   @media($bp-larger-than-mobile) {
     // Structure
