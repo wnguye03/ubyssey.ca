@@ -1,13 +1,88 @@
-<!--{% load staticfiles %} not sure if we need this-->
-<footer>
-    <div class="u-container{% if homepage %} u-container--large{% endif %}">
-	    <div class="center"><!--not sure what the tag is for center-->
-	        <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small-grey.svg' %}" /></a>
-	        <ul class="sections">
-	        	<li><a href="#">Previous Issue</a></li>
-	            <li><a href="{% url 'home' %}">Back to The Ubyssey</a></li>
-	            <li><a href="#">Next Issue</a></li>
-	        </ul>
-	    </div>
-    </div>
+<footer class="c-footer c-footer--{{ color }} u-container u-container--extra-large">
+  <a class="c-footer__left" href="{% url 'magazine-landing' %}">Back to the Ubyssey Magazine</a>
+  <div class="c-footer__center">&copy; {% now "Y" %} The Ubyssey</div>
+  <a class="c-footer__right" href="{% url 'home' %}">Back to ubyssey.ca</div>
+
 </footer>
+<!--
+
+.c-footer {
+  display: flex;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
+  background: #ff0063; }
+  .c-footer--pink {
+    background: #ff0063; }
+  .c-footer--green {
+    background: #009c8c; }
+  .c-footer--poetry {
+    background: none;
+    margin-bottom: 0; }
+    .c-footer--poetry .c-footer__logo {
+      padding-bottom: 0.4rem;
+      border-bottom: 4px solid #ff0063; }
+  @media (min-width: 600px) {
+    .c-footer {
+      padding-top: 2rem;
+      padding-bottom: 3rem;
+      margin-bottom: 0;
+      background: none; } }
+
+.c-footer__logo,
+.c-footer__right,
+.c-footer__left,
+.c-footer__center {
+  display: inline-block;
+  font-family: "ub-gobold", "Gobold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.25em;
+  font-weight: 400; }
+
+.c-footer__logo {
+  color: #fff;
+  user-select: none;
+  text-decoration: none;
+  transition: color 0.2s; }
+  @media (min-width: 600px) {
+    .c-footer__logo {
+      padding-bottom: 0.4rem;
+      border-bottom: 4px solid #ff0063;
+      font-size: 1.5em;
+      color: #171717; }
+      .c-footer__logo:hover {
+        color: #ff0063; } }
+
+.c-footer__right {
+  display: none;
+  flex: 1;
+  text-align: right;
+  font-size: 1.125em;
+  line-height: 1.75em;
+  color: #8c8c8c; }
+  @media (min-width: 600px) {
+    .c-footer__right {
+      display: block; } }
+
+.c-footer__center {
+  display: none;
+  flex: 1;
+  text-align: center;
+  font-size: 1.125em;
+  line-height: 1.75em;
+  color: #8c8c8c; }
+  @media (min-width: 600px) {
+    .c-footer__center {
+      display: block; } }
+
+.c-footer__left {
+  display: none;
+  flex: 1;
+  text-align: left;
+  font-size: 1.125em;
+  line-height: 1.75em;
+  color: #8c8c8c; }
+  @media (min-width: 600px) {
+    .c-footer__left {
+      display: block; } }
+in case the magazine-1.1.0.css footer part gets deleted again-->  
