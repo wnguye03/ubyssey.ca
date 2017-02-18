@@ -435,10 +435,13 @@ class UbysseyMagazineTheme(UbysseyTheme):
         queryset = Article.objects.filter(is_published=True, section__slug='magazine')
 
         context = {
+            'meta': {
+                'title': 'The Ubyssey Magazine'
+            },
             'cover': 'images/magazine/cover-%d.jpg' % randint(1, 2),
             'articles': {
                 'featured': queryset[:2],
-                'rest': Article.objects.filter(is_published=True)
+                'rest': queryset[2:]
             }
         }
 
