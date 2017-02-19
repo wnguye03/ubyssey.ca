@@ -57,7 +57,8 @@ class Magazine(BaseTemplate):
 
     COLOR_OPTIONS = (
         ('green', 'Green'),
-        ('pink', 'Pink')
+        ('pink', 'Pink'),
+        ('blue', 'Blue')
     )
 
     fields = (

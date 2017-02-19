@@ -162,26 +162,23 @@ html, body {
     align-items: stretch;
 
 		.article-grid {
-			flex-basis: 33%;
+			flex-basis: 50%;
 			margin-bottom: $spacing;
 
 			&:nth-child(3n+1) {
 				.o-article-box {
-					margin-right: 1rem;
+					margin-right: 0.75rem;
 				}
 			}
 
 			&:nth-child(3n+2) {
 				.o-article-box {
-					margin-left: 0.5rem;
-					margin-right: 0.5rem;
+					margin-left: 0.75rem;
 				}
 			}
 
 			&:nth-child(3n+3) {
-				.o-article-box {
-					margin-left: 1rem;
-				}
+				flex-basis: 50%;
 			}
 		}
 
