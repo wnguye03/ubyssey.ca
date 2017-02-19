@@ -432,17 +432,14 @@ class UbysseyMagazineTheme(UbysseyTheme):
         """The Ubyssey Magazine landing page view."""
 
         # Get all magazine articles
-        queryset = Article.objects.filter(is_published=True, section__slug='magazine')
+        articles = Article.objects.filter(is_published=True, section__slug='magazine').order_by('-importance')
 
         context = {
             'meta': {
                 'title': 'The Ubyssey Magazine'
             },
             'cover': 'images/magazine/cover-%d.jpg' % randint(1, 2),
-            'articles': {
-                'featured': queryset[:2],
-                'rest': queryset[2:]
-            }
+            'articles': articles
         }
 
         return render(request, 'magazine/landing.html', context)

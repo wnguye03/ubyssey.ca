@@ -12,16 +12,9 @@
       <div class="title">DIVERSITY</div>
     </div>
   </div>
-  <div class="sub-article-container">
-    {% for a in articles.featured %}
-    <a class="o-article-box o-article-box--featured o-article-box--{{ a.template_fields.color }}" href="{{ a.get_absolute_url }}" style="background-image: url('{{ a.featured_image.image.get_medium_url }}')">
-      <h2>{{ a.headline }}</h2>
-    </a>
-    {% endfor %}
-  </div>
 
   <div class="article-grid-container">
-    {% for a in articles.rest %}
+    {% for a in articles %}
     <div class="article-grid">
       <a class="o-article-box o-article-box--grid o-article-box--{{ a.template_fields.color }}" href="{{ a.get_absolute_url }}" style="background-image: url('{{ a.featured_image.image.get_medium_url }}')">
         <h2>{{ a.headline }}</h2>
@@ -29,6 +22,6 @@
     </div>
     {% endfor %}
   </div>
-  
+
 </div>
 {% endblock %}
