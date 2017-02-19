@@ -17,3 +17,7 @@
 .arrow--pink {
   @include arrow($color-pink);
 }
+
+.arrow--blue {
+  @include arrow($color-blue);
+}

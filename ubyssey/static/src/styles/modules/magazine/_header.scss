@@ -18,6 +18,11 @@
     background: $color-green;
   }
 
+  &--blue {
+    // Background
+    background: $color-blue;
+  }
+
   &--poetry {
     background: none;
     margin-bottom: 0;
@@ -25,7 +30,7 @@
     .c-header__logo {
       // Structure
       padding-bottom: 0.4rem;
-      
+
       // Border
       border-bottom: 4px solid $color-pink;
     }
