@@ -460,7 +460,8 @@ class UbysseyMagazineTheme(UbysseyTheme):
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
             'meta': self.get_article_meta(article),
             'article': article,
-            'suggested': self.get_random_articles(2, exclude=article.id)
+            'suggested': self.get_random_articles(2, exclude=article.id),
+            'base_template': 'magazine/base.html'
         }
 
         t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
