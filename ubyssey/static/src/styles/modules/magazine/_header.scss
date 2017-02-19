@@ -84,6 +84,33 @@
   }
 }
 
+.c-header--pink .c-header__logo {
+  border-color: $color-pink;
+  @media($bp-larger-than-mobile) {
+    &:hover {
+      color: $color-pink;
+    }
+  }
+}
+
+.c-header--green .c-header__logo {
+  border-color: $color-green;
+  @media($bp-larger-than-mobile) {
+    &:hover {
+      color: $color-green;
+    }
+  }
+}
+
+.c-header--blue .c-header__logo {
+  border-color: $color-blue;
+  @media($bp-larger-than-mobile) {
+    &:hover {
+      color: $color-blue;
+    }
+  }
+}
+
 .c-header__right {
   // Structure
   display: none;

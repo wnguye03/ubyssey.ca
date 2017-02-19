@@ -87,7 +87,7 @@
     margin-bottom: 4rem;
   }
 
-  > p {
+  > p, > ul {
     // Structure
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -96,6 +96,12 @@
     font-family: $font-serif;
     font-size: font-size(19);
     line-height: 1.6em;
+  }
+
+  >ul li {
+    // Structure
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   h1, h2, h3 {
@@ -146,4 +152,14 @@
   // Structure
   display: block;
   width: 100%;
+}
+
+.image-attachment .caption {
+  // Structure
+  margin-top: 0.75rem;
+
+  // Text
+  text-transform: uppercase;
+  font-size: font-size(13);
+  color: $color-text-gray;
 }
