@@ -15,9 +15,11 @@
       {% endif %}
     </div>
 
+    {% if article.featured_image %}
     <div class="c-article__featured-image u-container u-container--large u-container--no-padding">
       <img src="{{ article.featured_image.image.get_medium_url }}" />
     </div>
+    {% endif %}
 
     <div class="u-container u-container--small">
       <div class="c-article__body">{{ article.get_html|safe }}</div>

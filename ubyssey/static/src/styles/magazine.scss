@@ -35,14 +35,19 @@ html, body {
 .c-cover__logo {
 	font-family: $font-secondary;
 	font-weight: 400;
-	font-size: font-size(50);
+	font-size: font-size(40);
 	position: absolute;
-	margin-top: 3.5rem;
+	margin-top: 2rem;
 	width: 100%;
 	text-align: center;
 	color: #fff;
 	text-transform: uppercase;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+
+	@media($bp-larger-than-mobile) {
+		font-size: font-size(50);
+		margin-top: 3.5rem;
+	}
 }
 
 .magazine-container {
@@ -67,13 +72,6 @@ html, body {
 		max-width: none;
 	}
 
-	.c-header__logo {
-		display: block;
-		font-size: font-size(60);
-		text-align: center;
-		border-bottom: 0;
-		border-top: $border;
-	}
 
 	.headline {
 		font-size: 70px;
@@ -98,20 +96,30 @@ html, body {
 		.title-overlay {
 			position: absolute;
 			color: $white;
-			bottom: 5%;
+			bottom: 0;
 			left: 50%;
 			transform: translate(-50%, -50%);
 
 			.title {
 				font-family: $font-secondary;
 				font-weight: 400;
-				font-size: font-size(80);
+				font-size: font-size(48);
 				color: $white;
 				text-transform: uppercase;
 
 				border-bottom: 15px solid $color-pink;
 			}
+
+			@media($bp-larger-than-mobile) {
+				bottom: 4%;
+				.title {
+					font-size: font-size(80);
+				}
+			}
+
 		}
+
+
 	}
 
 	.sub-article-container {
