@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models.aggregates import Count
+from django.core.urlresolvers import reverse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 # Dispatch imports
 from dispatch.apps.content.models import Article, Page, Section, Topic
@@ -33,12 +35,12 @@ class UbysseyTheme(DefaultTheme):
     SITE_TITLE = 'The Ubyssey'
     SITE_URL = settings.BASE_URL
 
-    def get_article_meta(self, article):
+    def get_article_meta(self, article, default_image=None):
 
         try:
             image = article.featured_image.image.get_medium_url()
         except:
-            image = None
+            image = default_image
 
         return {
             'title': article.headline,
@@ -436,7 +438,10 @@ class UbysseyMagazineTheme(UbysseyTheme):
 
         context = {
             'meta': {
-                'title': 'The Ubyssey Magazine'
+                'title': 'The Ubyssey Magazine',
+                'description': 'The Ubyssey\'s first magazine.',
+                'url': reverse('magazine-landing'),
+                'image': static('images/magazine/cover-social.png')
             },
             'cover': 'images/magazine/cover-%d.jpg' % randint(1, 2),
             'articles': articles
@@ -455,7 +460,7 @@ class UbysseyMagazineTheme(UbysseyTheme):
 
         context = {
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
-            'meta': self.get_article_meta(article),
+            'meta': self.get_article_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'suggested': self.get_random_articles(2, exclude=article.id),
             'base_template': 'magazine/base.html'
