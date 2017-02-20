@@ -33,6 +33,10 @@
       {% endfor %}
     </div>
 
+    <div class="c-article__explore u-container u-container--small">
+      <a href="{% url 'magazine-landing' %}">Explore the magazine</a>
+    </div>
+
   </article>
 
   {% include 'magazine/footer.html' with color=article.template_fields.color %}

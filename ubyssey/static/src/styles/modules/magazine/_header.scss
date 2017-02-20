@@ -1,12 +1,21 @@
 .c-header {
   // Structure
-  display: flex;
-  padding-top: 1.1rem;
-  padding-bottom: 1.1rem;
-  margin-bottom: 1.5rem;
+  position: fixed;
+  top: 0;
+  height: 65px;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
 
   // Background
   background: $color-pink;
+
+  // Text
+  text-align: center;
+  line-height: 65px;
+
+  // Extra
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
 
   &--pink {
     // Background
@@ -24,8 +33,17 @@
   }
 
   &--poetry {
-    background: none;
+    // Structure
+    position: static;
+    height: auto;
+    width: auto;
+    line-height: normal;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
     margin-bottom: 0;
+
+    // Background
+    background: none;
 
     .c-header__logo {
       // Structure
@@ -38,12 +56,25 @@
 
   @media($bp-larger-than-mobile) {
     // Structure
+    position: static;
+    display: flex;
+    height: auto;
+    width: auto;
     padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     margin-bottom: 0;
 
     // Background
     background: none;
+
+    // Text
+    text-align: left;
+    line-height: normal;
+
+    // Extra
+    box-shadow: none;
 
     &--poetry {
       // Structure

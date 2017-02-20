@@ -4,34 +4,8 @@
   padding-top: 1.1rem;
   padding-bottom: 1.1rem;
 
-  // Background
-  background: $color-pink;
-
   // Text
-  color: #fff;
-
-  &--pink {
-    // Background
-    background: $color-pink;
-  }
-
-  &--green {
-    // Background
-    background: $color-green;
-  }
-
-  &--blue {
-    // Background
-    background: $color-blue;
-  }
-
-  &--poetry {
-    // Background
-    background: none;
-
-    // Text
-    color: $color-text-dark-gray;
-  }
+  color: $color-text-dark-gray;
 
   @media($bp-larger-than-mobile) {
     // Structure
