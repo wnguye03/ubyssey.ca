@@ -1,4 +1,5 @@
-var Section = require('./components/Section.jsx');
+import React from 'react';
+import Section from './components/Section.jsx';
 
 var sectionId = $('main.section').data('id');
 var type = $('main.section').data('type');
