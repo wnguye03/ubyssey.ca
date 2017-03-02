@@ -54,31 +54,32 @@
 
   // Border
   border-bottom: thin dotted $color-border-gray-dark;
-}
 
-.o-article--list .o-article__left {
-  // Structure
-  width: 6rem;
-  padding-right: 1rem;
+  .o-article__left {
+    // Structure
+    width: 6rem;
+    padding-right: 1rem;
 
-  @media($bp-larger-than-mobile) {
-    width: 8rem;
-    padding-right: 2rem;
+    @media($bp-larger-than-mobile) {
+      width: 8rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .o-article__right {
+    flex: 1;
+  }
+
+  .o-article__snippet {
+    // Structure
+    display: none;
+
+    @media($bp-larger-than-mobile) {
+      display: block;
+    }
   }
 }
 
-.o-article--list .o-article__right {
-  flex: 1;
-}
-
-.o-article--list .o-article__snippet {
-  // Structure
-  display: none;
-
-  @media($bp-larger-than-mobile) {
-    display: block;
-  }
-}
 
 // Article Sidebar Item
 
@@ -104,40 +105,41 @@
     // Structure
     margin-bottom: 0;
   }
-}
 
-.o-article--sidebar .o-article__meta {
-  // Structure
-  margin-bottom: 0;
-}
-
-.o-article--sidebar .o-article__headline {
-  // Structure
-  margin-bottom: 0;
-
-  // Text
-  font-size: font-size(18);
-}
-
-.o-article--sidebar .o-article__left {
-  // Structure
-  display: none;
-  width: 6rem;
-  padding-right: 0.5rem;
-
-  @media($bp-larger-than-mobile) {
-    padding-right: 0.75rem;
+  .o-article__meta {
+    // Structure
+    margin-bottom: 0;
   }
-}
 
-.o-article--sidebar:first-child .o-article__left,
-.o-article--sidebar:nth-child(2) .o-article__left {
-  // Structure
-  display: block;
-}
+  .o-article__headline {
+    // Structure
+    margin-bottom: 0;
 
-.o-article--sidebar .o-article__right {
-  flex: 1;
+    // Text
+    font-size: font-size(18);
+  }
+
+  .o-article__left {
+    // Structure
+    display: none;
+    width: 6rem;
+    padding-right: 0.5rem;
+
+    @media($bp-larger-than-mobile) {
+      padding-right: 0.75rem;
+    }
+  }
+
+  &:first-child .o-article__left,
+  &:nth-child(2) .o-article__left {
+    // Structure
+    display: block;
+  }
+
+  .o-article__right {
+    flex: 1;
+  }
+
 }
 
 // Article Secondary
