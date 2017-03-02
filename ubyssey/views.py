@@ -58,6 +58,8 @@ class UbysseyTheme(DefaultTheme):
             max_days=7
         )
 
+        elections = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
+
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
@@ -68,6 +70,10 @@ class UbysseyTheme(DefaultTheme):
                 'secondary': frontpage[1],
                 'thumbs': frontpage[2:4],
                 'bullets': frontpage[4:6],
+                'elections': {
+                    'first': elections[0],
+                    'rest': elections[1:5]
+                }
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
