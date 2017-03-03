@@ -166,6 +166,30 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'page/base.html', context)
 
+    def elections(self, request):
+
+        articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
+
+        topic = Topic.objects.get(name='AMS Elections')
+
+        context = {
+            'meta': {
+                'title': '2017 AMS Elections',
+            },
+            'section': {
+                'name': '2017 AMS Elections',
+                'slug': 'elections',
+                'id': topic.id
+            },
+            'type': 'topic',
+            'articles': {
+                'first': articles[0],
+                'rest': articles[1:9]
+            }
+        }
+
+        return render(request, 'section.html', context)
+
     def section(self, request, slug=None):
 
         try:

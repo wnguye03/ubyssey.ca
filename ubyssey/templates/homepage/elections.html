@@ -1,7 +1,7 @@
 {% load humanize %}
 
 <div class="c-elections-sidebar">
-  <h2 class="c-elections-sidebar__header"><u>2017 AMS Elections</u></h2>
+  <h2 class="c-elections-sidebar__header"><a href="{% url 'page' 'elections' %}"><u>2017 AMS Elections</u></a></h2>
   {% with articles.first as article %}
     <article class="o-article o-article--secondary">
       <div class="o-article__meta">
