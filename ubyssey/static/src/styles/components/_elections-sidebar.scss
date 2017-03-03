@@ -1,0 +1,46 @@
+.c-elections-sidebar__header {
+  // Structure
+  margin-top: 0;
+  padding-top: 0.65rem;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+
+  // Border
+  border-bottom: thin dotted $color-border-gray-dark;
+
+  // Text
+  font-size: font-size(16);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+
+  u {
+    text-decoration: none;
+    border-bottom: 2px solid black;
+  }
+
+  @media($bp-larger-than-mobile) {
+    // Border
+    border-top: thin dotted $color-border-gray-dark;
+  }
+
+}
+
+.c-elections-sidebar__list {
+  // Border
+  border-top: thin dotted $color-border-gray-dark;
+}
+
+.c-elections-sidebar__tag {
+  // Structure
+  display: block;
+  margin-bottom: 0.15rem;
+
+  // Text
+  font-family: $font-default;
+  font-size: font-size(10);
+  letter-spacing: 0.05em;
+  font-weight: $font-weight-semi-bold;
+  color: red;
+  text-transform: uppercase;
+}
