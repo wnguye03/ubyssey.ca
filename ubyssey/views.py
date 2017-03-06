@@ -164,7 +164,13 @@ class UbysseyTheme(DefaultTheme):
             'page': page
         }
 
-        return render(request, 'page/base.html', context)
+        if page.get_template() != 'article/default.html':
+            templates = [page.get_template(), 'page/base.html']
+        else:
+            templates = ['page/base.html']
+
+        t = loader.select_template(templates)
+        return HttpResponse(t.render(context))
 
     def elections(self, request):
 
