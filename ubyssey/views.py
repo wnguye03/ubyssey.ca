@@ -50,7 +50,6 @@ class UbysseyTheme(DefaultTheme):
             'author': article.get_author_string()
         }
 
-
     def home(self, request):
 
         frontpage = ArticleHelper.get_frontpage(
@@ -157,9 +156,17 @@ class UbysseyTheme(DefaultTheme):
 
         page.add_view()
 
+        try:
+            image = page.featured_image.image.get_medium_url()
+        except:
+            image = None
+
         context = {
             'meta': {
-                'title': page.title
+                'title': page.title,
+                'image': image,
+                'url': settings.BASE_URL[:-1] + reverse('page', args=[page.slug]),
+                'description': page.snippet if page.snippet else ''
             },
             'page': page
         }
@@ -176,11 +183,11 @@ class UbysseyTheme(DefaultTheme):
 
         articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
 
-        topic = Topic.objects.get(name='AMS Elections')
+        topic = Topic.objects.filter(name='AMS Elections')[0]
 
         context = {
             'meta': {
-                'title': '2017 AMS Elections',
+                'title': '2017 AMS Elections'
             },
             'section': {
                 'name': '2017 AMS Elections',
