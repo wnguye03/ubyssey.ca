@@ -176,7 +176,7 @@ class UbysseyTheme(DefaultTheme):
 
         articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
 
-        topic = Topic.objects.get(name='AMS Elections')
+        topic = Topic.objects.filter(name='AMS Elections')[0]
 
         context = {
             'meta': {
