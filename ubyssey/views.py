@@ -71,7 +71,7 @@ class UbysseyTheme(DefaultTheme):
                 'bullets': frontpage[4:6],
                 'elections': {
                     'first': elections[0],
-                    'rest': elections[1:5]
+                    'rest': elections[1:3]
                 }
              }
         except IndexError:
