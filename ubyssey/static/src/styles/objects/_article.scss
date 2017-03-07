@@ -95,7 +95,7 @@
   // Border
   border-bottom: thin dotted $color-border-gray-dark;
 
-  @media($bp-larger-than-mobile) {
+  @media($bp-larger-than-phablet) {
     // Structure
     padding-left: 0;
     padding-right: 0;
@@ -150,7 +150,7 @@
   padding-left: 15px;
   padding-right: 15px;
 
-  @media($bp-larger-than-mobile) {
+  @media($bp-larger-than-phablet) {
     // Structure
     padding-left: 0;
     padding-right: 0;

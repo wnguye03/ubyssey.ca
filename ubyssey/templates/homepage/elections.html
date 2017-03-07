@@ -2,6 +2,10 @@
 
 <div class="c-elections-sidebar">
   <h2 class="c-elections-sidebar__header"><a href="{% url 'page' 'elections' %}"><u>2017 AMS Elections</u></a></h2>
+  <div class="c-elections-sidebar__compass">
+    <p class="c-elections-sidebar__compass__text">Not sure who to vote for? Try our vote compass!</p>
+    <a class="c-elections-sidebar__compass__button" href="{% url 'page' 'compass' %}">Vote Compass</a>
+  </div>
   {% with articles.first as article %}
     <article class="o-article o-article--secondary">
       <div class="o-article__meta">
