@@ -3,9 +3,10 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 
 from feed import FrontpageFeed, SectionFeed
-from views import UbysseyTheme
+from views import UbysseyTheme, UbysseyMagazineTheme
 
 theme = UbysseyTheme()
+magazine = UbysseyMagazineTheme()
 
 theme_urls = [
     url(r'^$', theme.home, name='home'),
