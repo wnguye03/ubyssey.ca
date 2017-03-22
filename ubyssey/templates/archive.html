@@ -6,57 +6,78 @@
 	{% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main class="archive page">
-	<div class="c-header-banner">
-		<div class="c-header-banner__container u-container">
-			<h1>Search the archive</h1>
+<main class="c-page c-page--archive">
+  <div class="u-container u-container--padded">
+
+		<div class="c-page__header">
+			<h1 class="c-page__heading">Search the archive</h1>
 		</div>
-		<div class="c-header-banner__mask"></div>
-	</div>
-  <div class="u-container u-container--content u-container--padded">
+
+		<div class="c-article-list__search">
+			<form method="get" action="/archive/">
+				<label class="c-article-list__search__label" for="c-article-list__searchbar"><i class="fa fa-search"></i></label>
+				<input class="c-article-list__search__input" name="q" id="c-article-list__searchbar" type="text" {% if q %}value="{{ q }}"{% endif %} placeholder="Search" />
+				{% if year %}<input name="year" type="hidden" value="{{ year }}"></input>{% endif %}
+				{% if section_id %}<input name="section_id" type="hidden" value="{{ section_id }}"></input>{% endif %}
+			</form>
+		</div>
+
+		{% if year or section_id %}
+		<ul class="c-archive__main__filters show-desktop">
+		{% if year %}
+			<li>
+				<span>{{ year }}</span>
+				<a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}" title="Remove filter">
+					<i class="fa fa-close" aria-hidden="true"></i>
+				</a>
+			</li>
+		{% endif %}
+		{% if section_id %}
+			<li>
+				<span>{{ section_name }}</span>
+				<a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}" title="Remove filter">
+					<i class="fa fa-close" aria-hidden="true"></i>
+				</a>
+			</li>
+		{% endif %}
+		</ul>
+		{% endif %}
+
 		<div class="c-archive">
-			<div class="c-archive__sidebar show-desktop">
 
-				<div class="c-archive__sidebar__filters">
-					<h3>Year</h3>
-					<ul>
-						<li class="c-archive__sidebar__filter{% if not year %} c-archive__sidebar__filter--is-active{% endif %}">
-							<a href="{% url 'archive' %}{% if q and section_id %}?q={{ q }}&section_id={{ section_id }}{% elif q %}?q={{ q }}{% elif section_id %}?section_id={{ section_id }}{% endif %}">All years</a>
-						</li>
-					{% for y in years %}
-						<li class="c-archive__sidebar__filter{% if y == year %} c-archive__sidebar__filter--is-active{% endif %}">
-							<a href="{% url 'archive' %}?year={{ y }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a>
-						</li>
-					{% endfor %}
-					</ul>
+				<div class="c-archive__sidebar show-desktop">
+
+					<div class="c-archive__sidebar__filters">
+						<h3>Year</h3>
+						<ul>
+							<li class="c-archive__sidebar__filter{% if not year %} c-archive__sidebar__filter--is-active{% endif %}">
+								<a href="{% url 'archive' %}{% if q and section_id %}?q={{ q }}&section_id={{ section_id }}{% elif q %}?q={{ q }}{% elif section_id %}?section_id={{ section_id }}{% endif %}">All years</a>
+							</li>
+						{% for y in years %}
+							<li class="c-archive__sidebar__filter{% if y == year %} c-archive__sidebar__filter--is-active{% endif %}">
+								<a href="{% url 'archive' %}?year={{ y }}{% if q %}&q={{ q }}{% endif %}{% if section_id %}&section_id={{ section_id }}{% endif %}">{{ y }}</a>
+							</li>
+						{% endfor %}
+						</ul>
+					</div>
+
+					<div class="c-archive__sidebar__filters">
+						<h3>Section</h3>
+						<ul>
+							<li class="c-archive__sidebar__filter{% if not section_id %} c-archive__sidebar__filter--is-active{% endif %}">
+								<a href="{% url 'archive' %}{% if q and year %}?q={{ q }}&year={{ year }}{% elif q %}?q={{ q }}{% elif year %}?year={{ year }}{% endif %}">All sections</a>
+							</li>
+						{% for section in sections %}
+							<li class="c-archive__sidebar__filter{% if section.id == section_id %} c-archive__sidebar__filter--is-active{% endif %}">
+								<a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a>
+							</li>
+						{% endfor %}
+						</ul>
+					</div>
+
 				</div>
 
-				<div class="c-archive__sidebar__filters">
-					<h3>Section</h3>
-					<ul>
-						<li class="c-archive__sidebar__filter{% if not section_id %} c-archive__sidebar__filter--is-active{% endif %}">
-							<a href="{% url 'archive' %}{% if q and year %}?q={{ q }}&year={{ year }}{% elif q %}?q={{ q }}{% elif year %}?year={{ year }}{% endif %}">All sections</a>
-						</li>
-					{% for section in sections %}
-						<li class="c-archive__sidebar__filter{% if section.id == section_id %} c-archive__sidebar__filter--is-active{% endif %}">
-							<a href="{% url 'archive' %}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a>
-						</li>
-					{% endfor %}
-					</ul>
-				</div>
-
-			</div>
-
-			<div class="c-archive__main">
-
-				<div class="c-archive__search article-search">
-					<form method="get" action="/archive/">
-						<label><i class="fa fa-search"></i></label>
-						<input name="q" id="author-search" type="text" value="{% if q %}{{ q }}{% endif %}"></input>
-						{% if year %}<input name="year" type="hidden" value="{{ year }}"></input>{% endif %}
-						{% if section_id %}<input name="section_id" type="hidden" value="{{ section_id }}"></input>{% endif %}
-					</form>
-				</div>
+				<div class="c-archive__main">
 
 				<div class="c-archive__dropdown-filters">
 
@@ -153,27 +174,6 @@
 					</div>
 
 				</div>
-
-				{% if year or section_id %}
-				<ul class="c-archive__main__filters show-desktop">
-				{% if year %}
-					<li>
-						<span>{{ year }}</span>
-						<a href="{% url 'archive' %}?{% if q %}q={{ q }}{% endif %}{% if q and section_id %}&{% endif %}{% if section_id %}section_id={{ section_id}}{% endif %}" title="Remove filter">
-							<i class="fa fa-close" aria-hidden="true"></i>
-						</a>
-					</li>
-				{% endif %}
-				{% if section_id %}
-					<li>
-						<span>{{ section_name }}</span>
-						<a href="{% url 'archive' %}?{% if year %}year={{ year }}{% endif %}{% if q and year %}&{% endif %}{% if q %}q={{ q }}{% endif %}" title="Remove filter">
-							<i class="fa fa-close" aria-hidden="true"></i>
-						</a>
-					</li>
-				{% endif %}
-				</ul>
-				{% endif %}
 
 				<div class="Archive article-archive">
 					<div class="c-archive__header">

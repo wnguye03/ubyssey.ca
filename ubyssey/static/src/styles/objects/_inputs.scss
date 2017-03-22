@@ -7,15 +7,16 @@
   padding-right: 0.8rem;
 
   // Background
-  background: #3a3a3a;
+  background: #fff;
 
   // Border
+  border: thin solid $color-border-gray-light;
   border-radius: 4px;
 
   // Text
   font-size: font-size(13);
   font-weight: 600;
-  color: #fff;
+  color: $color-text-gray;
   line-height: 2rem;
 
   // Extras
@@ -26,14 +27,13 @@
   }
 
   i {
-    margin-top: -0.15em;
-    margin-left: 0.2em;
+    margin-top: -0.4em;
+    margin-left: 0.3em;
   }
 
   &:hover {
-    background: #505050;
-    color: #fff;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    background: whitesmoke;
+    color: $color-text-gray;
   }
 }
 
@@ -54,14 +54,15 @@
   min-width: 160px;
 
   // Background
-  background: #505050;
+  background: #fff;
 
   // Border
-  border-radius: 3px;
+  border: thin solid $color-border-gray-light;
+  border-radius: 4px;
 
   // Extras
   list-style-type: none;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -76,7 +77,7 @@
 
     // Text
     line-height: 2rem;
-    color: #fff;
+    color: $color-text-gray;
     font-size: font-size(13);
     font-weight: 600;
   }
@@ -96,8 +97,8 @@
   a:hover,
   &--is-active a,
   &--is-active a:hover {
-    background: #3a3a3a;
-		color: #fff;
+    background: whitesmoke;
+		color: $color-text-gray;
   }
 
   a:hover {
