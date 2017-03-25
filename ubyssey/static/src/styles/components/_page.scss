@@ -17,6 +17,7 @@
 
   // Text
   font-size: font-size(32);
+  color: $color-text-black;
 }
 
 .c-page__sub-heading {
@@ -25,7 +26,8 @@
   margin-bottom: 0.75rem;
 
   // Text
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
+  color: $color-text-black;
 }
 
 .c-page__description {
