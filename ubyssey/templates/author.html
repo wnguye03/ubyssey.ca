@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+{% include 'headers/topbar.html' %}
+{% include 'headers/mobile.html' %}
+<main class="c-page c-page--author">
+  <div class="u-container u-container--padded">
+
+    <div class="c-page__header">
+      <h1 class="c-page__heading">{{ person.full_name }}</h1>
+      <h3 class="c-page__sub-heading">Science Editor</h3>
+      <p class="c-page__description">{{ person.description }}</p>
+    </div>
+
+    {% include 'objects/archive.html' %}
+
+  </div>
+</main>
+{% endblock %}

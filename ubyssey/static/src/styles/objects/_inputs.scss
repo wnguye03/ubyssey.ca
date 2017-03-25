@@ -23,16 +23,21 @@
   cursor: pointer;
 
   span, i {
+    // Text
     vertical-align: middle;
   }
 
   i {
-    margin-top: -0.4em;
+    // Structure
+    margin-top: -0.12em;
     margin-left: 0.3em;
   }
 
   &:hover {
+    // Background
     background: whitesmoke;
+
+    // Text
     color: $color-text-gray;
   }
 }
@@ -40,6 +45,11 @@
 .o-dropdown {
   // Structure
   position: relative;
+
+  .o-button i {
+    // Structure
+    margin-top: -0.4em;
+  }
 }
 
 .o-dropdown__list {
@@ -117,6 +127,11 @@
 	&:last-child {
 		padding-left: 0.5rem;
 	}
+
+  &:only-child {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .o-mobile-dropdown__button {
