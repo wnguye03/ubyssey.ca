@@ -84,6 +84,14 @@ function enableScroll($document) {
     }
   });
 
+  $(document).click(function() {
+    $searchform.hide();
+  });
+
+  $(document).on('click', '#search-form > .u-container', function(e){
+    e.stopPropagation();
+  });
+
   $('a.search').click(function(e){
     e.preventDefault();
     if($searchform.is(':visible')){
@@ -98,6 +106,7 @@ function enableScroll($document) {
       $('#search-bar').focus();
       $(this).addClass('active');
     }
+    e.stopPropagation();
   });
 
   $document.on('click', 'a.facebook', function(e){
