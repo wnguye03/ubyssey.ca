@@ -17,7 +17,7 @@ const ArticleHeader = React.createClass({
                     </div>
                     |
                     <h1 className="nav-headline" dangerouslySetInnerHTML={{__html: this.props.headline}}></h1>
-                    <a className="search" href='/search'> <i className="fa fa-search"></i></a>
+                    <a className="search" href='/search'><i className="fa fa-search"></i></a>
                 </div>
             </header>
         );
