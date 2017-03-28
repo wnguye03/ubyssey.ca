@@ -92,7 +92,7 @@ function enableScroll($document) {
     e.stopPropagation();
   });
 
-  $('a.search').click(function(e){
+  $(document).on('click', 'a.search', function(e){
     e.preventDefault();
     if($searchform.is(':visible')){
       $searchform.hide();
