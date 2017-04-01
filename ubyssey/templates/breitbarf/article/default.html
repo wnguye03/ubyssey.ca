@@ -42,7 +42,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://use.typekit.net/cbr3nmy.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
-  <link rel="stylesheet" href="{% static 'css/breitbarf-1.1.9.css' %}" type="text/css"/>
+  <link rel="stylesheet" href="{% static 'css/breitbarf-1.1.8.css' %}" type="text/css"/>
   <script>
     // Initialize DFP
     var googletag = googletag || {};
@@ -68,7 +68,7 @@
       <div class="c-content__left">
         <article class="c-article">
           <h1 class="c-article__headline">{{ article.headline }}</h1>
-          <img class="c-article__image" src="http://media.breitbart.com/media/2017/03/wi/afp/31/7hjuv7-640x427.jpg"></img>
+          <img class="c-article__image" src="{{ article.featured_image.image.get_medium_url }}"></img>
           <div class="c-article__byline">By {{ article.get_author_string }} | {{ article.published_at|date:'N j, Y' }}</div>
           <div class="c-article__content">{{ article.get_html|safe }}</div>
         </article>
@@ -78,7 +78,7 @@
         <h2>More fake news</h2>
         {% for a in reading_list %}
         <article class="o-article">
-          <a href="{{ article.get_absolute_url }}"><img class="o-article__image" src="http://media.breitbart.com/media/2017/03/wi/afp/31/7hjuv7-640x427.jpg"></img></a>
+          <a href="{{ article.get_absolute_url }}"><img class="o-article__image" src="{{ article.featured_image.image.get_medium_url }}"></img></a>
           <h3 class="o-article__headline"><a href="{{ article.get_absolute_url }}">{{ article.headline }}</a></h3>
           <div class="o-article__byline">By {{ article.get_author_string }} | {{ article.published_at|date:'N j, Y' }}</div>
         </article>
