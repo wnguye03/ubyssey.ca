@@ -69,10 +69,7 @@ class UbysseyTheme(DefaultTheme):
                 'secondary': frontpage[1],
                 'thumbs': frontpage[2:4],
                 'bullets': frontpage[4:6],
-                'elections': {
-                    'first': elections[0],
-                    'rest': elections[1:3]
-                }
+
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
