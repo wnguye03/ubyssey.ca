@@ -122,10 +122,6 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        print 'test'
-
-        print ["%s/%s" % (article.section.slug, article.get_template()), article.get_template()]
-
         t = loader.select_template(["%s/%s" % (article.section.slug, article.get_template()), article.get_template()])
         return HttpResponse(t.render(context))
 
