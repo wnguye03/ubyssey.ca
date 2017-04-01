@@ -154,7 +154,7 @@ class UbysseyTheme(DefaultTheme):
             'article': article,
             'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            'suggested': get_random_articles(2, 'breitbarf', exclude=article.id),
+            'suggested': lambda: get_random_articles(2, 'breitbarf', exclude=article.id),
             'base_template': 'base.html'
         }
 
