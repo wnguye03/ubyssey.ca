@@ -30,6 +30,41 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
+def get_random_articles(n, section, exclude=None):
+    """Returns `n` random articles from the Magazine section."""
+
+    # Get all magazine articles
+    queryset = Article.objects.filter(is_published=True, section__slug=section)
+
+    # Exclude article (optional)
+    if exclude:
+        queryset = queryset.exclude(id=exclude)
+
+    # Get article count
+    count = queryset.aggregate(count=Count('id'))['count']
+
+    # Get all articles
+    articles = queryset.all()
+
+    # Force a query (to optimize later calls to articles[index])
+    list(articles)
+
+    results = []
+    indices = set()
+
+    # n is bounded by number of articles in database
+    n = min(count, n)
+
+    while len(indices) < n:
+        index = randint(0, count - 1)
+
+        # Prevent duplicate articles
+        if index not in indices:
+            indices.add(index)
+            results.append(articles[index])
+
+    return results
+
 class UbysseyTheme(DefaultTheme):
 
     SITE_TITLE = 'The Ubyssey'
@@ -119,6 +154,7 @@ class UbysseyTheme(DefaultTheme):
             'article': article,
             'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
+            'suggested': get_random_articles(2, 'breitbarf', exclude=article.id),
             'base_template': 'base.html'
         }
 
@@ -434,42 +470,6 @@ class UbysseyTheme(DefaultTheme):
 class UbysseyMagazineTheme(UbysseyTheme):
     """Views for The Ubyssey Magazine microsite."""
 
-    def get_random_articles(self, n, exclude=None):
-        """Returns `n` random articles from the Magazine section."""
-
-        # Get all magazine articles
-        queryset = Article.objects.filter(is_published=True, section__slug='magazine')
-
-        # Exclude article (optional)
-        if exclude:
-            queryset = queryset.exclude(id=exclude)
-
-        # Get article count
-        count = queryset.aggregate(count=Count('id'))['count']
-
-        # Get all articles
-        articles = queryset.all()
-
-        # Force a query (to optimize later calls to articles[index])
-        list(articles)
-
-        results = []
-        indices = set()
-
-        # n is bounded by number of articles in database
-        n = min(count, n)
-
-        while len(indices) < n:
-            index = randint(0, count - 1)
-
-            # Prevent duplicate articles
-            if index not in indices:
-                indices.add(index)
-                results.append(articles[index])
-
-        return results
-
-
     def landing(self, request):
         """The Ubyssey Magazine landing page view."""
 
@@ -502,7 +502,7 @@ class UbysseyMagazineTheme(UbysseyTheme):
             'title': "%s - %s" % (article.headline, self.SITE_TITLE),
             'meta': self.get_article_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
-            'suggested': self.get_random_articles(2, exclude=article.id),
+            'suggested': get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html'
         }
 
