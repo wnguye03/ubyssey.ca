@@ -76,11 +76,11 @@
       <div class="c-content__right">
         <div class="adslot" id="div-gpt-ad-1443288719995-3-44107" data-size="box" data-dfp="Box_A" data-google-query-id="CN_kqI3KgtMCFY12YgodGscIbQ"></div>
         <h2>More fake news</h2>
-        {% for article in reading_list %}
+        {% for a in reading_list %}
         <article class="o-article">
-          <a href="{{ article.get_absolute_url }}"><img class="o-article__image" src="{{ article.featured_image.image.get_medium_url }}"></img></a>
-          <h3 class="o-article__headline"><a href="{{ article.get_absolute_url }}">{{ article.headline }}</a></h3>
-          <div class="o-article__byline">By {{ article.get_author_string }} | {{ article.published_at|date:'N j, Y' }}</div>
+          <a href="{{ a.get_absolute_url }}"><img class="o-article__image" src="{{ a.featured_image.image.get_medium_url }}"></img></a>
+          <h3 class="o-article__headline"><a href="{{ a.get_absolute_url }}">{{ a.headline }}</a></h3>
+          <div class="o-article__byline">By {{ a.get_author_string }} | {{ a.published_at|date:'N j, Y' }}</div>
         </article>
         {% endfor %}
       </div>
