@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{title}} - Breitbarf News Network</title>
+  <title>{{ meta.title }} - Breitbarf News Network</title>
 
   <meta name="description" content="{{ meta.description }}" />
 
@@ -15,10 +15,10 @@
   <meta property="og:site_name" content="Breitbarf" />
 
   <!-- Twitter Card data -->
-  <meta name="twitter:card" content="Your no-nonsense guide to life at UBC">
+  <meta name="twitter:card" content="{{ meta.description }}">
   <meta name="twitter:site" content="@ubyssey">
   <meta name="twitter:title" content="{{ meta.title }}">
-  <meta name="twitter:description" content="Your no-nonsense guide to life at UBC">
+  <meta name="twitter:description" content="{{ meta.description }}">
   <meta name="twitter:image" content="{% if meta.image %}{{ meta.image }}{% else %}https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/cover.jpg{% endif %}">
 
   <!-- Favicons -->
