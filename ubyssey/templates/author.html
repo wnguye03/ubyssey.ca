@@ -14,8 +14,8 @@
       {% endif %}
       <div class="c-page__header__meta">
         <h1 class="c-page__heading">{{ person.full_name }}</h1>
-        <h3 class="c-page__sub-heading">{{ person.title }}</h3>
-        <p class="c-page__description">{{ person.description|safe }}</p>
+        {% if person.title %}<h3 class="c-page__sub-heading">{{ person.title }}</h3>{% endif %}
+        {% if person.description %}<p class="c-page__description">{{ person.description|safe }}</p>{% endif %}
       </div>
     </div>
 

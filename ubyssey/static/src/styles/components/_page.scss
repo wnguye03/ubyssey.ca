@@ -38,7 +38,7 @@
 .c-page__heading {
   // Structure
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 
   // Text
   font-size: font-size(32);
@@ -47,8 +47,8 @@
 
 .c-page__sub-heading {
   // Structure
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
 
   // Text
   font-weight: $font-weight-semi-bold;
