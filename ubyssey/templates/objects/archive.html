@@ -148,7 +148,7 @@
 
       <div class="o-archive__header">
         <h3 class="o-archive__header__title">
-          {% if articles %} {{ articles|length }} RESULTS {% else %}NO RESULTS{% endif %}
+          {% if articles %} {{ articles.paginator.count }} RESULTS {% else %}NO RESULTS{% endif %}
           {% if q %} FOR "{{ q }}"{% endif %}
         </h3>
         <div class="o-archive__header__sort o-dropdown js-dropdown">
