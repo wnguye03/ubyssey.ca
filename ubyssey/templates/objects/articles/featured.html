@@ -1,8 +1,8 @@
-<article class="o-article o-article--list">
+<article class="o-article o-article--featured">
   {% if article.featured_image %}
   <div class="o-article__left">
     <a href="{{ article.get_absolute_url }}">
-      <img class="o-article__image" src="{{ article.featured_image.image.get_thumbnail_url }}"/>
+      <img class="o-article__image" src="{{ article.featured_image.image.get_medium_url }}"/>
     </a>
   </div>
   {% endif %}

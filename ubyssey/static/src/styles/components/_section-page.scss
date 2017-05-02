@@ -1,0 +1,30 @@
+.c-section__featured__list {
+
+  .o-article {
+    // Structure
+    margin-bottom: 1rem;
+  }
+
+  @media($bp-larger-than-tablet) {
+    display: flex;
+
+    .o-article {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    .o-article:first-child {
+      // Structure
+      margin-left: 0;
+      margin-right: 1rem;
+    }
+
+    .o-article:last-child {
+      // Structure
+      margin-left: 1rem;
+      margin-right: 0;
+    }
+  }
+
+}
