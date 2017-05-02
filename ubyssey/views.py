@@ -210,7 +210,34 @@ class UbysseyTheme(DefaultTheme):
         except:
             return self.page(request, slug)
 
-        articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
+        order = request.GET.get('order', 'newest')
+
+        if order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+
+        query = request.GET.get('q', False)
+
+        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
+
+        article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
+
+        if query:
+            article_list = article_list.filter(headline__icontains=query)
+
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+
+        page = request.GET.get('page')
+
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
 
         context = {
             'meta': {
@@ -218,10 +245,13 @@ class UbysseyTheme(DefaultTheme):
             },
             'section': section,
             'type': 'section',
-            'articles': {
-                'first': articles[0],
-                'rest': articles[1:9]
-            }
+            'featured_articles': {
+                'first': featured_articles[0],
+                'rest': featured_articles[1:4]
+            },
+            'articles': articles,
+            'order': order,
+            'q': query
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
