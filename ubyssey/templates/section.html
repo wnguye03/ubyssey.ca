@@ -4,43 +4,25 @@
 {% block content %}
 {% include 'headers/topbar.html' with section=section.slug %}
 {% include 'headers/mobile.html' %}
-    <main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
-        {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
-        <div class="u-container u-container--content">
-            <h1 class="section">{{ section.name }}</h1>
-            <article class="section-top row padded">
-                {% with articles.first as article %}
-                    <div class="left stack-mobile">
-                        <a class="image" href="{{ article.get_absolute_url }}"><img class="featured" src="{{ article.featured_image.image.get_medium_url }}" /></a>
-                    </div>
-                    <div class="right">
-                        <h1 class="o-headline o-headline--h1"><a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a></h1>
-                        <span class="byline"><span class="author">By {{ article.get_author_string }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span></span>
-                        <p class="snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
-                    </div>
-                {% endwith %}
-            </article>
-            <div class="article-archive">
-                <h3 class="section-subheading basic uppercase">Recent Articles</h2>
-                <div class="blocks">
-                {% for article in articles.rest|slice:":6" %}
-                    <article>
-                        {% if article.featured_image %}
-                        <a href="{{ article.get_absolute_url }}" class="image image-aspect-4-3">
-                            <div style="background-image: url('{{ article.featured_image.image.get_medium_url }}')"></div>
-                        </a>
-                        {% endif %}
-                        <a href="{{ article.get_absolute_url }}"><h2 class="headline">{{ article.headline|safe }}</h2></a>
-                        <span class="byline"><span class="author">By {{ article.get_author_string }}</span> &nbsp;·&nbsp; <span class="published">{{ article.published_at }}</span></span>
-                        <p class="snippet">{{ article.snippet|safe }}</p>
-                    </article>
-                {% endfor %}
-                </div>
-                <div id="article-loader"></div>
-            </div>
-        </div>
-    </main>
-{% endblock %}
-{% block scripts %}
-    <script src="{% static 'js/section-1.1.10.js' %}" type="text/javascript"></script>
+<main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
+  <div class="u-container u-container--padded">
+    <div class="c-page__header">
+      <h1 class="c-page__heading">{{ section.name }}</h1>
+    </div>
+
+    <div class="c-section__featured">
+      {% include 'objects/articles/featured.html' with article=featured_articles.first %}
+      <div class="c-section__featured__list">
+      {% for article in featured_articles.rest %}
+        {% include 'objects/articles/column.html' with article=article %}
+      {% endfor %}
+      </div>
+    </div>
+
+    <h3 class="c-page__section">Archive</h3>
+    {% include 'objects/archive.html' %}
+
+  </div>
+</main>
 {% endblock %}

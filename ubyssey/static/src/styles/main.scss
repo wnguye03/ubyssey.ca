@@ -17,24 +17,21 @@
 
 @import 'modules/homepage';
 
-@import 'modules/section';
-
 @import 'modules/article/base';
 @import 'modules/article/embeds';
 @import 'modules/article/comments_bar';
 @import 'modules/article/gallery';
 @import 'modules/social';
-@import 'modules/archive';
-
-@import 'modules/author';
-
 @import 'modules/search';
 
 @import 'objects/article';
 @import 'objects/inputs';
+@import 'objects/archive';
 
 @import 'components/header-banner';
 @import 'components/elections-sidebar';
+@import 'components/page';
+@import 'components/section-page';
 
 //////
 

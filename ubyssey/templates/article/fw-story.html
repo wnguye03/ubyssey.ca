@@ -10,7 +10,7 @@
                     <h1 class="headline">{{ article.headline }}</h1>
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     <div class="c-article__byline">
-                      <div class="c-article__author">By {{ article.get_author_string|safe }}</div>
+                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
                         {% with article.calc_est_reading_time as reading_time %}
@@ -42,7 +42,7 @@
                     <h1 class="o-headline o-headline--article">{{ article.headline }}</h1>
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     <div class="c-article__byline">
-                      <div class="c-article__author">By {{ article.get_author_string|safe }}</div>
+                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
                         {% with article.calc_est_reading_time as reading_time %}
@@ -63,7 +63,7 @@
                         <h1 class="headline">{{ article.headline }}</h1>
                         <p class="fw-description">{{ article.template_fields.description }}</p>
                         <div class="article-byline">
-                            <span class="author">By {{ article.get_author_string }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
+                            <span class="author">By {{ article.get_author_url }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
                         </div>
                     </div>
                 </div>
