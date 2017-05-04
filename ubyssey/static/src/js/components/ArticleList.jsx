@@ -68,7 +68,7 @@ const ArticleList = React.createClass({
             const topPos = $(document).scrollTop();
             const bottomPos = topPos + windowHeight;
 
-            if($(window).width() > 400)
+            if($(window).width() > 960)
                 this.updateHeader(topPos);
 
             if(cachedPoints != this.state.active.data){

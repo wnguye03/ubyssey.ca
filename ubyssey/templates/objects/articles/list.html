@@ -1,8 +1,8 @@
 <article class="o-article o-article--list">
-  {% if article.featured_image %}
+  {% if not hide_image and article.featured_image %}
   <div class="o-article__left">
-    <a href="{{ article.get_absolute_url }}">
-      <img class="o-article__image" src="{{ article.featured_image.image.get_thumbnail_url }}"/>
+    <a class="o-article__image" href="{{ article.get_absolute_url }}">
+      <img src="{{ article.featured_image.image.get_thumbnail_url }}"/>
     </a>
   </div>
   {% endif %}
@@ -17,6 +17,8 @@
         <span class="o-article__published">{{ article.published_at }}</span>
       </div>
     </div>
+    {% if not hide_snippet %}
     <p class="o-article__snippet">{{ article.snippet|safe }}</p>
+    {% endif %}
   </div>
 </article>

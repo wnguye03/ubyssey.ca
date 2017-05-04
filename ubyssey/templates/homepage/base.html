@@ -12,7 +12,7 @@
             {% with articles.secondary as article %}
                 <article class="secondary padded">
                     <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
-                    <p class="snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
+                    <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
                 </article>
             {% endwith %}
             {% include 'objects/advertisement.html' with size='box' name='Box_A' class='mobile-frontpage-box' id=2 %}
@@ -23,15 +23,15 @@
                     </div>
                     <div>
                         <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
-                        <p class="snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span></p>
+                        <p class="o-article__snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span></p>
                     </div>
                 </article>
             {% endfor %}
-               <ul class="article-headlines">
-            {% for article in articles.bullets %}
-                <li><a href="{{ article.get_absolute_url }}?ref=frontpage"><h2 class="headline">{{ article.headline|safe }}</h2></a></li>
-            {% endfor %}
-                </ul>
+              <ul class="c-homepage__bullets">
+                {% for article in articles.bullets %}
+                <li>{% include 'objects/articles/bullet.html' with article=article %}</li>
+                {% endfor %}
+              </ul>
             </div>
             <div class="cell middle">
                 {% with articles.primary as article %}
@@ -39,8 +39,12 @@
                     <a class="image" href="{{ article.get_absolute_url }}?ref=frontpage"><img src="{{ article.featured_image.image.get_medium_url }}"/></a>
                     <div class="meta">
                         <a href="{{ article.get_absolute_url }}?ref=frontpage"><h1 class="headline">{{ article.headline|safe }}</h1></a>
-                        <span class="byline"><span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span></span>
-                        <p class="snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
+                        <div class="o-article__byline">
+                          <span class="o-article___author">By {{ article.get_author_url|safe }}</span>
+                          <span> &nbsp;·&nbsp; </span>
+                          <span class="o-article__published">{{ article.published_at }}</span>
+                        </div>
+                        <p class="o-article__snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
                     </div>
                 </article>
                 {% endwith %}
@@ -66,7 +70,7 @@
             <div class="popular sidebar-block">
                 <h2 class="block-title">Most popular this week</h2>
                 <ol class="article-list">
-                    {% for article in popular %}
+                    {% for article in blog %}
                     <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
                     {% endfor %}
                 </ol>
@@ -79,12 +83,7 @@
                 <ul class="article-list">
                     {% for article in blog %}
                     <li>
-												<a class="clearfix" href="{{ article.get_absolute_url }}">
-	                          <div class="featured-image-container">
-														    <div class="featured" style="background-image: url('{{ article.featured_image.image.get_medium_url }}');"></div>
-	                          </div>
-                            <h4 class="headline">{{ article.headline|safe }}</h4>
-                        </a>
+                      {% include 'objects/articles/column.html' with article=article padded=True hide_image=True hide_snippet=True hide_byline=True %}
                     </li>
                     {% endfor %}
                 </ul>
