@@ -70,7 +70,7 @@
             <div class="popular sidebar-block">
                 <h2 class="block-title">Most popular this week</h2>
                 <ol class="article-list">
-                    {% for article in blog %}
+                    {% for article in popular %}
                     <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
                     {% endfor %}
                 </ol>
