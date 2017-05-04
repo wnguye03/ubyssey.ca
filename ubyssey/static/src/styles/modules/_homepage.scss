@@ -129,7 +129,6 @@ div.frontpage {
   }
 }
 
-
 article.primary {
   // Structure
   padding-top: 15px;
@@ -137,12 +136,20 @@ article.primary {
   padding-left: 15px;
   padding-right: 15px;
 
+  .o-article__byline {
+    display: none;
+  }
+
   @media($bp-larger-than-phablet) {
     // Structure
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
+
+    .o-article__byline {
+      display: block;
+    }
   }
 }
 
@@ -258,14 +265,6 @@ article.thumb {
   }
 
 }
-
-//
-// article.padded, article div.meta {
-//   padding: 20px 15px;
-//   @media($bp-larger-than-phablet){
-//     padding: 0;
-//   }
-// }
 
 // Homepage sections
 

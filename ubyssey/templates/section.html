@@ -13,7 +13,7 @@
 
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
-      <div class="u-flex--tablet">
+      <div class="c-section__featured__articles u-flex--tablet">
       {% for article in featured_articles.rest %}
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
