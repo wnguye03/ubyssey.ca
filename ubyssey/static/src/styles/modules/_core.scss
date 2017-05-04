@@ -25,7 +25,8 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
   box-sizing: border-box;
 
   @media($bp-larger-than-phablet) {

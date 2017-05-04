@@ -1,4 +1,4 @@
-.o-article__image {
+.o-article__image > img {
   // Structure
   width: 100%;
   height: auto;
@@ -57,6 +57,57 @@
   line-height: 1.5em;
   color: $color-text-gray;
   font-size: font-size(14);
+}
+
+.o-article--padded {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media($bp-larger-than-phablet) {
+    // Structure
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// Default article
+
+.o-article--default {
+
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: flex;
+  }
+
+  @media($bp-larger-than-desktop) {
+    // Structure
+    display: block;
+  }
+
+  .o-article__left {
+    // Structure
+    margin-bottom: 0.5rem;
+
+    @media($bp-larger-than-phablet) {
+      // Structure
+      width: 15rem;
+      margin-right: 1rem;
+      margin-bottom: 0;
+    }
+
+    @media($bp-larger-than-desktop) {
+      // Structure
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .o-article__right {
+    @media($bp-larger-than-phablet) {
+      // Structure
+      flex: 1;
+    }
+  }
 }
 
 // Featured Article
@@ -158,7 +209,6 @@
   .o-article__headline {
     // Text
     font-size: font-size(22);
-
   }
 
 }
@@ -263,24 +313,47 @@
 // Article column
 
 .o-article--column {
-  // Structure
-  padding-bottom: 1rem;
 
-  // Border
-  border-bottom: thin dotted $color-border-gray-dark;
+  .o-article__image {
+    // Structure
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 0.65rem;
 
-  &:last-child {
-    // Border
-    border-bottom: none;
-  }
-
-  @media($bp-larger-than-phablet) {
-    // Border
-    border-bottom: none;
+    // Background
+    background-position: center;
+    background-size: cover;
   }
 
   .o-article__headline {
+    // Structure
+    flex: 1;
+
     // Text
-    font-size: font-size(20);
+    font-size: font-size(22);
+  }
+
+  .o-article__meta__image {
+    // Structure
+    display: flex;
+    margin-bottom: 0.65rem;
+  }
+
+  .o-article__meta__image .o-article__headline {
+    // Structure
+    margin-bottom: 0;
+
+    // Text
+    font-size: font-size(18);
+    line-height: 1.2em;
+  }
+
+}
+
+
+// Article bullet point
+.o-article--bullet {
+  .o-article__headline {
+    font-size: font-size(17);
   }
 }
