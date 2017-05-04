@@ -1,8 +1,8 @@
-<article class="o-article o-article--featured{% if padded %} o-article--padded{% endif %}">
-  {% if article.featured_image %}
+<article class="o-article o-article--default{% if padded %} o-article--padded{% endif %}">
+  {% if not hide_image and article.featured_image %}
   <div class="o-article__left">
     <a class="o-article__image" href="{{ article.get_absolute_url }}">
-      <img src="{{ article.featured_image.image.get_medium_url }}" />
+      <img src="{{ article.featured_image.image.get_medium_url }}"/>
     </a>
   </div>
   {% endif %}
