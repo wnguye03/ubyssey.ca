@@ -11,7 +11,7 @@ $z-index-1: 100;
 $z-index-2: 200;
 $z-index-3: 300;
 
-$rotation: 3.5deg;
+$rotation: 3deg;
 
 // Functions
 
@@ -71,8 +71,8 @@ html, body {
     position: absolute;
     content: "";
     left: -10%;
-    bottom: -5rem;
-    height: 10rem;
+    bottom: -16%;
+    height: 22%;
     width: 150%;
 
     // Background
@@ -177,7 +177,7 @@ html, body {
   // Structure
   position: absolute;
   width: 100%;
-  bottom: 5rem;
+  bottom: 6%;
 
   // Text
   text-align: right;
@@ -189,13 +189,20 @@ html, body {
   margin-left: 2rem;
 }
 
+.c-header__vector--phone {
+  // Structure
+  width: 13%;
+}
+
 .c-header__vector--newspaper {
   // Structure
   z-index: $z-index-3;
-  top: 2rem;
+  margin-bottom: -2%;
+  width: 25%;
 }
 
 .c-header__vector--desktop {
   // Structure
-  top: 3rem;
+  width: 32%;
+  margin-bottom: -4%;
 }
