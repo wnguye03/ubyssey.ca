@@ -441,6 +441,9 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'objects/newsletter.html', {})
 
+    def advertise(self, request):
+        return render(request, 'advertise.html')
+
 class UbysseyMagazineTheme(UbysseyTheme):
     '''Views for The Ubyssey Magazine microsite.'''
 

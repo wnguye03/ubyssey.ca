@@ -23,6 +23,9 @@ theme_urls = [
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
+    # Advertising microsite
+    url(r'^advertise/$', theme.advertise, name='advertise'),
+
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
