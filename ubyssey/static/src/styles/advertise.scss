@@ -2,6 +2,9 @@
 
 $color-white: #fff;
 $color-accent-red: #E91F3B;
+$color-accent-blue: #4F68D9;
+$color-accent-blue-light: #C9D1F4;
+$color-text-gray: #4E4E4E;
 
 $font-size-base: 16;
 $font-weight-light: 300;
@@ -27,6 +30,7 @@ html, body {
 
   // Text
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 // Utilities
@@ -142,6 +146,15 @@ html, body {
     color: $color-white;
     text-decoration: none;
     font-weight: $font-weight-light;
+
+    // Extra
+    transition: opacity 0.2s;
+
+    &:hover {
+      // Extra
+      opacity: 0.5;
+    }
+
   }
 }
 
@@ -205,4 +218,116 @@ html, body {
   // Structure
   width: 32%;
   margin-bottom: -4%;
+}
+
+// Sections
+
+.c-section {
+  // Structure
+  padding-bottom: 2rem;
+}
+
+.c-section--inset {
+  // Structure
+  position: relative;
+  overflow: hidden;
+  padding-top: 6rem;
+
+  &:before {
+    // Structure
+    position: absolute;
+    content: "";
+    left: -10%;
+    top: -4rem;
+    height: 8rem;
+    width: 150%;
+
+    // Background
+    background: $color-white;
+
+    // Extra
+    transform: rotate($rotation);
+    box-shadow: 0 -1px 5px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.c-section--web {
+  // Background
+  background-image: linear-gradient(-178deg, #ED210C 0%, #E53E17 83%);
+}
+
+// Headings
+
+.o-heading {
+  // Structure
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  // Text
+  font-size: font-size(32);
+  line-height: font-size(32);
+  letter-spacing: 1.3px;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.18);
+  text-transform: uppercase;
+
+  &:before {
+    // Structure
+    position: relative;
+    top: 0.15em;
+    display: inline-block;
+    content: "";
+    width: 0.6em;
+    height: 0.6em;
+    margin-right: 0.5em;
+
+    // Border
+    border-radius: 1em;
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: $color-accent-blue-light;
+
+    // Background
+    background: $color-accent-blue;
+  }
+}
+
+.o-heading--blue {
+  // Text
+  color: $color-accent-blue;
+
+  &:before {
+    // Border
+    border-color: $color-accent-blue-light;
+
+    // Background
+    background: $color-accent-blue;
+  }
+}
+
+.o-heading--white {
+  // Text
+  color: $color-white;
+
+  &:before {
+    // Border
+    border-color: #dcdcdc;
+
+    // Background
+    background: $color-white;
+  }
+}
+
+// Paragraphs
+
+.o-paragraph {
+  // Structure
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+
+  // Text
+  color: $color-text-gray;
+  font-size: font-size(20);
+  line-height: font-size(32);
+  font-weight: $font-weight-light;
 }
