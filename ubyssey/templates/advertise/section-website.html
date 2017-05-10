@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<div class="c-section c-section--inset c-section--web">
+<div id="web" class="c-section c-section--inset c-section--web">
   <div class="u-container">
     <h2 class="o-heading o-heading--white">Our website</h2>
     <div class="c-section--web__container">
@@ -11,23 +11,48 @@
         </div>
         <div class="c-section--web__icon">
           <img src="{% static 'images/advertise/vector-eye.svg' %}" />
-          <h2>Award winning</h2>
-          <p>Named Best Campus Website by the Canadian University Press</p>
+          <h2>668,000</h2>
+          <p>impressions each month</p>
         </div>
         <div class="c-section--web__icon">
           <img src="{% static 'images/advertise/vector-computer.svg' %}" />
-          <h2>Award winning</h2>
-          <p>Named Best Campus Website by the Canadian University Press</p>
+          <h2>115,000</h2>
+          <p>unique web readers each month</p>
         </div>
         <div class="c-section--web__icon">
           <img src="{% static 'images/advertise/vector-calendar.svg' %}" />
-          <h2>Award winning</h2>
-          <p>Named Best Campus Website by the Canadian University Press</p>
+          <h2>450,000</h2>
+          <p>unique web readers each year</p>
         </div>
       </div>
       <div class="c-section--web__vectors">
         <img class="c-section--web__vector c-section--web__vector--phone" src="{% static 'images/advertise/vector-phone-demo.svg' %}" />
         <img class="c-section--web__vector c-section--web__vector--tablet" src="{% static 'images/advertise/vector-tablet-demo.svg' %}" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="c-section">
+  <div class="u-container">
+    <h2 class="o-heading o-heading--orange">Web advertising</h2>
+    <div class="o-placements">
+      <div class="o-placements__list">
+        <h3 class="o-placements__label">Placements</h3>
+        <ul>
+          <li class="o-placements__placement o-placements__placement--active" data-demo="leaderboard">
+            <h4>Leaderboard</h4>
+            <p>728 x 90 pixels</p>
+            <p>320 x 50 pixels (mobile)</p>
+          </li>
+          <li class="o-placements__placement" data-demo="box">
+            <h4>Box</h4>
+            <p>300 x 250 pixels</p>
+          </li>
+        </ul>
+      </div>
+      <div class="o-placements__demo" data-demo="leaderboard">
+        <div class="o-placements__demo__inner"></div>
       </div>
     </div>
   </div>
