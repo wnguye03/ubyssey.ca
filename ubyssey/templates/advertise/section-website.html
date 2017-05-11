@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<div id="web" class="c-section c-section--inset c-section--web">
+<div id="web" class="c-section c-section--inset c-section--web c-section--orange">
   <div class="u-container">
     <h2 class="o-heading o-heading--white">Our website</h2>
     <div class="c-section--web__container">
@@ -36,23 +36,25 @@
 <div class="c-section">
   <div class="u-container">
     <h2 class="o-heading o-heading--orange">Web advertising</h2>
-    <div class="o-placements">
+    <div class="o-placements o-placements--web">
       <div class="o-placements__list">
         <h3 class="o-placements__label">Placements</h3>
         <ul>
-          <li class="o-placements__placement o-placements__placement--active" data-demo="leaderboard">
+          <li class="o-placements__placement o-placements__placement--active" data-offset="0%">
             <h4>Leaderboard</h4>
             <p>728 x 90 pixels</p>
             <p>320 x 50 pixels (mobile)</p>
           </li>
-          <li class="o-placements__placement" data-demo="box">
+          <li class="o-placements__placement" data-offset="-80%">
             <h4>Box</h4>
             <p>300 x 250 pixels</p>
           </li>
         </ul>
       </div>
-      <div class="o-placements__demo" data-demo="leaderboard">
-        <div class="o-placements__demo__inner"></div>
+      <div class="o-placements__demo">
+        <div class="o-placements__demo__inner">
+          <img src="{% static 'images/advertise/demo-homepage.png' %}" />
+        </div>
       </div>
     </div>
   </div>
