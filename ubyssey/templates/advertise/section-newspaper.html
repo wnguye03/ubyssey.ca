@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<div id="web" class="c-section c-section--inset c-section--web c-section--green">
+<div id="print" class="c-section c-section--inset c-section--web c-section--green">
   <div class="u-container">
     <h2 class="o-heading o-heading--white">Our newspaper</h2>
     <div class="c-section--web__container">
@@ -37,7 +37,7 @@
     <h2 class="o-heading o-heading--green">Print advertising</h2>
     <div class="o-placements o-placements--print">
       <div class="o-placements__list">
-        <h3 class="o-placements__label">Placements</h3>
+        <h3 class="o-heading o-heading--small">Placements</h3>
         <ul>
           <li class="o-placements__placement o-placements__placement--demo o-placements__placement--active" data-demo="full-page">
             <div>
@@ -83,7 +83,7 @@
           </li>
         </ul>
 
-        <h3 class="o-placements__label">Premium Advertisements</h3>
+        <h3 class="o-heading o-heading--small">Premium Advertisements</h3>
 
         <ul>
           <li class="o-placements__placement">
@@ -105,6 +105,41 @@
       </div>
       <div class="o-placements__demo" data-demo="full-page">
         <div class="o-placements__demo__inner"></div>
+      </div>
+    </div>
+
+    <div class="o-row">
+      <div class="o-row">
+        <div>
+          <h3 class="o-heading o-heading--small">Ad Requirements</h3>
+
+          <ul class="o-list">
+            <li>full colour, <em>free of charge</em></li>
+            <li>300 ppi</li>
+            <li>CMYK</li>
+            <li>accepted formats: JPEG, PDF, PNG</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="o-heading o-heading--small">Mechanical Specifications</h3>
+          <ul class="o-list">
+            <li>tabloid format (10.26" x 13.75")</li>
+            <li>120 lpi halftone screens</li>
+            <li>all issues are printed in full colour</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="c-production-schedule">
+          <button class="c-production-schedule__view o-button">View production schedule</button>
+          <img src="{% static 'images/advertise/production-schedule-preview.png' %}" />
+          <div class="c-production-schedule__modal">
+            <div class="c-production-schedule__modal__inner">
+              <div class="c-production-schedule__modal__close"></div>
+              <img src="{% static 'images/advertise/production-schedule.png' %}" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
