@@ -741,9 +741,80 @@ html, body {
 }
 
 .c-production-schedule__modal__inner img {
+  // Structure
   height: 100%;
   width: auto;
-  border: 5px solid #fff;
+
+  // Border
+  border: 5px solid $color-white;
+}
+
+// Bundles
+
+.c-bundles {
+  // Structure
+  margin-bottom: 2rem;
+
+  // Text
+  color: $color-text-gray;
+}
+
+.c-bundles__bundle {
+  // Structure
+  display: flex;
+  margin-bottom: 2rem;
+
+  h3 {
+    // Structure
+    margin-top: 0;
+
+    // Text
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+.c-bundles__bundle__image {
+  padding-right: 1.75rem;
+}
+
+.c-bundles__bundle__items {
+  // Structure
+  display: flex;
+  align-items: center;
+
+  // Text
+  font-size: font-size(16);
+  text-align: center;
+  line-height: 1.35em;
+
+  span {
+    // Structure
+    display: block;
+  }
+
+  strong {
+    // Text
+    text-transform: uppercase;
+  }
+}
+
+.c-bundles__bundle__items__symbol {
+  // Structure
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+
+  // Text
+  font-size: font-size(50);
+}
+
+.c-bundles__bundle__items__total {
+  // Structure
+  margin-bottom: 0.5rem;
+
+  // Text
+  font-size: font-size(28);
+  font-weight: $font-weight-bold;
 }
 
 // Web slider
@@ -1064,6 +1135,10 @@ html, body {
     flex: 1;
     padding-right: 2rem;
 
+    &.o-row__grow {
+      flex: none;
+    }
+
     &:last-child {
       // Structure
       padding-right: 0;
@@ -1119,4 +1194,24 @@ html, body {
 
   // Extra
   box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.15);
+}
+
+
+// Special offer
+.o-special-offer {
+  // Structure
+  margin-top: 2rem;
+  padding: 1.5rem;
+
+  // Background
+  background: #e92c10;
+
+  // Border
+  border-radius: 0.75rem;
+
+  // Text
+  color: $color-white;
+  font-weight: $font-weight-bold;
+  font-size: font-size(22);
+  text-align: center;
 }
