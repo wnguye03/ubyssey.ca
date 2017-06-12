@@ -1,0 +1,256 @@
+{% load staticfiles %}
+<div id="print" class="c-section c-section--inset c-section--web c-section--green">
+  <div class="u-container">
+    <h2 class="o-heading o-heading--white">Our newspaper</h2>
+    <div class="c-section--web__container">
+      <div class="c-section--web__icons">
+        <div class="c-section--web__icon">
+          <img src="{% static 'images/advertise/vector-news.svg' %}" />
+          <h2>8,000</h2>
+          <p>copy distribution</p>
+        </div>
+        <div class="c-section--web__icon">
+          <img src="{% static 'images/advertise/vector-school.svg' %}" />
+          <h2>85+</h2>
+          <p>campus locations</p>
+        </div>
+        <div class="c-section--web__icon">
+          <img src="{% static 'images/advertise/vector-colors.svg' %}" />
+          <h2>Full colour</h2>
+          <p>all issues are printed in full colour</p>
+        </div>
+        <div class="c-section--web__icon">
+          <img src="{% static 'images/advertise/vector-tabloid.svg' %}" />
+          <h2>Tabloid format</h2>
+          <p>120 lpi halftone screens</p>
+        </div>
+      </div>
+      <div class="c-section--web__vectors">
+        <img class="c-section--web__vector c-section--web__vector--newspaper" src="{% static 'images/advertise/newspaper.png' %}" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="c-section">
+  <div class="u-container">
+    <h2 class="o-heading o-heading--green">Print advertising</h2>
+    <div class="o-placements o-placements--print">
+      <div class="o-placements__list">
+        <h3 class="o-heading o-heading--small">Placements</h3>
+        <ul>
+          <li class="o-placements__placement o-placements__placement--demo o-placements__placement--active" data-demo="full-page">
+            <div>
+              <h4>Full-page</h4>
+              <p>10" x 13.25"</p>
+              <p>$1,450.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-demo="half-page-hor">
+            <div>
+              <h4>Half-Page Horizontal</h4>
+              <p>10" x 7"</p>
+              <p>$950.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-demo="half-page-vert">
+            <div>
+              <h4>Half-Page Vertical</h4>
+              <p>4" x 13.25"</p>
+              <p>$950.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-demo="quarter-page">
+            <div>
+              <h4>Quarter-Page Vertical</h4>
+              <p>6" x 6"</p>
+              <p>$595.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-demo="1-8-page-banner">
+            <div>
+              <h4>1/8 Page Banner</h4>
+              <p>10" x 2"</p>
+              <p>$295.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-demo="1-8-page-vert">
+            <div>
+              <h4>1/8 Page Vertical</h4>
+              <p>4" x 5"</p>
+              <p>$295.00</p>
+            </div>
+          </li>
+        </ul>
+
+        <h3 class="o-heading o-heading--small">Premium Advertisements</h3>
+
+        <ul>
+          <li class="o-placements__placement">
+            <div>
+              <h4>Full-page centre spread</h4>
+              <p>21" x 13.25"</p>
+              <p>$4,500.00</p>
+            </div>
+          </li>
+          <li class="o-placements__placement">
+            <div>
+              <h4>Full-page back cover</h4>
+              <p>10" x 13.25"</p>
+              <p>$1,750.00</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="o-placements__demo" data-demo="full-page">
+        <div class="o-placements__demo__inner"></div>
+      </div>
+    </div>
+
+    <div class="o-row">
+      <div class="o-row">
+        <div>
+          <h3 class="o-heading o-heading--small">Ad Requirements</h3>
+
+          <ul class="o-list">
+            <li>full colour, <em>free of charge</em></li>
+            <li>300 ppi</li>
+            <li>CMYK</li>
+            <li>accepted formats: JPEG, PDF, PNG</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="o-heading o-heading--small">Mechanical Specifications</h3>
+          <ul class="o-list">
+            <li>tabloid format (10.26" x 13.75")</li>
+            <li>120 lpi halftone screens</li>
+            <li>all issues are printed in full colour</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="c-production-schedule">
+          <button class="c-production-schedule__view o-button">View production schedule</button>
+          <img src="{% static 'images/advertise/production-schedule-preview.png' %}" />
+          <div class="c-production-schedule__modal">
+            <div class="c-production-schedule__modal__inner">
+              <div class="c-production-schedule__modal__close"></div>
+              <img src="{% static 'images/advertise/production-schedule.png' %}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="o-heading o-heading--green" style="margin-top:2rem;">Print & Web Bundles</h2>
+
+    <div class="o-row" style="margin-top:3rem;">
+      <div class="c-bundles o-row__grow">
+        <div class="c-bundles__bundle">
+          <div class="c-bundles__bundle__image"><img src="{% static 'images/advertise/bundle-premium.png' %}" /></div>
+          <div class="c-bundles__bundle__info">
+            <h3>Premium Bundle</h3>
+            <div class="c-bundles__bundle__items">
+              <div>
+                <span><strong>Print</strong></span>
+                <span>Size: 10" x 13.25"</span>
+                <span>Value: $1,4500.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">+</div>
+              <div>
+                <span><strong>Web</strong></span>
+                <span>30,000 impressions</span>
+                <span>Value: $900.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">=</div>
+              <div>
+                <span class="c-bundles__bundle__items__total">$2,000.00</span>
+                <span>Value: $2,350.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-bundles__bundle">
+          <div class="c-bundles__bundle__image"><img src="{% static 'images/advertise/bundle-plus.png' %}" /></div>
+          <div class="c-bundles__bundle__info">
+            <h3>Plus Bundle</h3>
+            <div class="c-bundles__bundle__items">
+              <div>
+                <span><strong>Print</strong></span>
+                <span>Size: 10" x 7"</span>
+                <span>Value: $950.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">+</div>
+              <div>
+                <span><strong>Web</strong></span>
+                <span>20,000 impressions</span>
+                <span>Value: $600.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">=</div>
+              <div>
+                <span class="c-bundles__bundle__items__total">$1,250.00</span>
+                <span>Value: $1,550.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-bundles__bundle">
+          <div class="c-bundles__bundle__image"><img src="{% static 'images/advertise/bundle-extra.png' %}" /></div>
+          <div class="c-bundles__bundle__info">
+            <h3>Extra Bundle</h3>
+            <div class="c-bundles__bundle__items">
+              <div>
+                <span><strong>Print</strong></span>
+                <span>Size: 6" x 6"</span>
+                <span>Value: $595.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">+</div>
+              <div>
+                <span><strong>Web</strong></span>
+                <span>10,000 impressions</span>
+                <span>Value: $300.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">=</div>
+              <div>
+                <span class="c-bundles__bundle__items__total">$750.00</span>
+                <span>Value: $895.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-bundles__bundle">
+          <div class="c-bundles__bundle__image"><img src="{% static 'images/advertise/bundle-mini.png' %}" /></div>
+          <div class="c-bundles__bundle__info">
+            <h3>Mini Bundle</h3>
+            <div class="c-bundles__bundle__items">
+              <div>
+                <span><strong>Print</strong></span>
+                <span>Size: 4" x 5"</span>
+                <span>Value: $295.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">+</div>
+              <div>
+                <span><strong>Web</strong></span>
+                <span>5,000 impressions</span>
+                <span>Value: $150.00</span>
+              </div>
+              <div class="c-bundles__bundle__items__symbol">=</div>
+              <div>
+                <span class="c-bundles__bundle__items__total">$375.00</span>
+                <span>Value: $445.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div>
+        <div class="o-special-offer">Buy 4 print ads, get one free!</div>
+      </div>
+    </div>
+
+  </div>
+</div>
