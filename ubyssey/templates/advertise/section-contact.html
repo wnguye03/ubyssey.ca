@@ -1,6 +1,7 @@
 <div id="contact" class="c-section c-section--contact c-section--inset c-section--orange">
   <div class="u-container">
-    <form class="c-form">
+    <form class="c-form" method="post">
+      {% csrf_token %}
       <h2 class="o-heading o-heading--white">Contact us</h2>
       <input id="name" type="text" placeholder="Name" />
 

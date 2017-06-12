@@ -107,9 +107,13 @@ html, body {
 .c-header__nav {
   // Structure
   position: relative;
-  display: flex;
   padding-top: 2rem;
   z-index: $z-index-2;
+
+  @media(min-width: 600px) {
+    // Structure
+    display: flex;
+  }
 }
 
 .c-header__nav__logo {
@@ -137,20 +141,22 @@ html, body {
 
 .c-header__nav__list {
   // Structure
+  display: none;
   flex: 1;
   margin: 0;
   padding: 0;
-
-  // Text
-  text-align: right;
+  margin-top: 1rem;
 
   // Extra
   list-style-type: none;
 
+  // Text
+  text-align: right;
+
   li {
     // Structure
     display: inline-block;
-    margin-left: 2rem;
+    margin-right: 1rem;
   }
 
   li > a {
@@ -171,6 +177,11 @@ html, body {
       opacity: 0.5;
     }
 
+  }
+
+  @media(min-width: 600px) {
+    // Structure
+    display: block;
   }
 }
 
@@ -211,7 +222,7 @@ html, body {
   // Text
   text-align: right;
 
-  @media($bp-larger-than-mobile) {
+  @media(min-width: 600px) {
     bottom: 6%;
   }
 }
@@ -227,7 +238,7 @@ html, body {
   width: 30%;
   margin-left: 0;
 
-  @media($bp-larger-than-mobile) {
+  @media(min-width: 600px) {
     // Structure
     width: 13%;
     margin-left: 2rem;
@@ -241,7 +252,7 @@ html, body {
   width: 60%;
   margin-left: 20px;
 
-  @media($bp-larger-than-mobile) {
+  @media(min-width: 600px) {
     // Structure
     width: 25%;
     margin-left: 2rem;
@@ -256,7 +267,7 @@ html, body {
   width: 32%;
   margin-bottom: -4%;
 
-  @media($bp-larger-than-mobile) {
+  @media(min-width: 600px) {
     // Structure
     display: inline-block;
   }

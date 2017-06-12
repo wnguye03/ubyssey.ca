@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.core.mail import send_mail
 
 # Dispatch imports
 from dispatch.apps.content.models import Article, Page, Section, Topic
@@ -442,6 +443,15 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'objects/newsletter.html', {})
 
     def advertise(self, request):
+        # if request.method == 'POST':
+        #     send_mail(
+        #         'Subject here',
+        #         'Here is the message.',
+        #         'advertising@ubyssey.ca',
+        #         ['peterjsiemens@gmail.com'],
+        #         fail_silently=False,
+        #     )
+
         return render(request, 'advertise/index.html')
 
 class UbysseyMagazineTheme(UbysseyTheme):
