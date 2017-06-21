@@ -52,7 +52,7 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
   // structure
   width: calc(100% - 15px);
   padding: 0 0 5px 15px;
-  margin: 25px 0 10px 0;
+  margin: 25px 0 0 0;
 
   // display
   font-size: 32px;
@@ -76,8 +76,7 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 
 .calendar-day-row {
   // structure
-  padding-top: 10px;
-  margin: 0 40px;
+  margin: 15px 40px 0 40px;
 
   // display
   border-bottom: 1px dotted #C8C8C8;
@@ -144,7 +143,6 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 .calendar-event-image {
   max-width: 100%;
   max-height: 170px;
-
 
   // centering
   position: relative;
