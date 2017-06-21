@@ -1,0 +1,274 @@
+$calendar-event-time-label-color: #DC8119;
+
+$small-view-width: 1130;
+$large-view-query: "only screen and (min-width: #{$small-view-width}px)";
+$small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
+
+#calendar {
+  max-width: 1600px;
+}
+
+.calendar-container {
+  // structure
+  display: inline-block;
+  margin-right: 15px;
+  width: calc(100% - 275px);
+}
+
+.calendar-category-sidebar {
+  // structure
+  display: inline-block;
+  float: right;
+  width: 250px;
+
+  li {
+    font-size: 14px;
+  }
+}
+
+.calendar-categories-label {
+  // structure
+  width: calc(100% - 75px);
+
+  // display
+  border-bottom: 1px dotted #C8C8C8;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+}
+
+.calendar-year-label {
+  // structure
+  width: 160px;
+
+  // display
+  font-size: 42px;
+  text-align: left;
+  border-bottom: 1px dotted #C8C8C8;
+}
+
+.calendar-month-label {
+  // structure
+  width: calc(100% - 15px);
+  padding: 0 0 5px 15px;
+  margin: 25px 0 10px 0;
+
+  // display
+  font-size: 32px;
+  text-align: left;
+  border-bottom: 1px dotted #C8C8C8;
+}
+
+.calendar-day-label {
+  // structure
+  display: inline-block;
+  padding-right: 5px;
+  width: 120px;
+  margin-top: 36px;
+
+  // display
+  color: $calendar-event-time-label-color;
+  text-align: right;
+  font-size: 28px;
+  vertical-align: top;
+}
+
+.calendar-day-row {
+  // structure
+  padding-top: 10px;
+  margin: 0 40px;
+
+  // display
+  border-bottom: 1px dotted #C8C8C8;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.calendar-event-list-wrapper {
+  // structure
+  display: inline-block;
+  width: calc(100% - 200px);
+  padding-left: 10px;
+}
+
+.calendar-event-list-container {
+  // structure
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.calendar-event-container {
+  // display
+  border: 1px dotted #C8C8C8;
+  box-shadow: 2px 2px 5px 0px rgba(122,122,122,0.1);
+
+  @media #{$large-view-query} {
+    // structure
+    flex: 0 1 225px;
+    display: block;
+    width: auto;
+    min-width: 225px;
+    margin: 0 15px 15px 0;
+    height: 310px;
+  }
+
+  @media #{$small-view-query} {
+    // structure
+    display: block;
+    width: 100%;
+    min-width: 315px;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+}
+
+@media #{$large-view-query} {
+  .calender-event-image-wrapper {
+    height: 170px;
+    padding: 2px;
+
+    a {
+      display: block;
+      height: 100%;
+    }
+  }
+}
+
+.calendar-event-image {
+  max-width: 100%;
+  max-height: 170px;
+
+
+  // centering
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media #{$small-view-query} {
+    display: none;
+  }
+}
+
+.calendar-event-info {
+  // structure
+  padding: 10px;
+  height: calc(100% - 195px);
+  position: relative;
+
+  @media #{$small-view-query} {
+    padding: 0 5px;
+  }
+}
+
+.calendar-lr-row {
+  height: 39px;
+}
+
+.calendar-event-title {
+  // structure
+  overflow: hidden;
+
+  @media #{$large-view-query} {
+    margin-bottom: 10px;
+    height: 38px;
+  }
+
+  @media #{$small-view-query} {
+    margin-bottom: 5px;
+    height: auto;
+  }
+
+  & > h3 {
+    // structure
+    margin: 0;
+
+    // display
+    font-size: 14px;
+  }
+}
+
+.calendar-event-host {
+  // structure
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 30px);
+  padding: 0 10px 5px 10px;
+  overflow: hidden;
+
+  @media #{$small-view-query} {
+     position: static;
+     width: 100%;
+     margin-top: 5px;
+     padding: 0 0;
+     text-align: left;
+  }
+
+  // display
+  font-size: 12px;
+}
+
+.calendar-event-host-label {
+  // display
+  font-size: 10px;
+}
+
+.calendar-event-left {
+  // structure
+  width: 40%;
+  display: inline-block;
+
+  @media #{$small-view-query} {
+    padding-top: 10px;
+  }
+
+  // display
+  color: $calendar-event-time-label-color;
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+}
+
+.calendar-event-time-separator {
+  // structure
+  font-size: 8px;
+  line-height: 8px;
+}
+
+.calendar-event-right {
+  // structure
+  display: inline-block;
+  width: 48%;
+  float: right;
+}
+
+.calendar-event-more-info {
+  // structure
+  height: 27px;
+  width: 75%;
+  margin: auto auto;
+  padding: 10px 5px 0px 5px;
+
+  // display
+  background-color: #3c7dd7;
+  color: #FFF;
+  text-align: center;
+  border-radius: 2px;
+  border: 1px solid #2b65b4;
+}
+
+@media #{$small-view-query} {
+  .calendar-event-start,
+  .calendar-event-time-separator,
+  .calendar-event-end {
+    display: inline-block;
+  }
+}

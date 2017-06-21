@@ -5,6 +5,9 @@ from django.conf.urls.static import static
 from feed import FrontpageFeed, SectionFeed
 from views import UbysseyTheme, UbysseyMagazineTheme
 
+from zones import *
+from widgets import *
+
 theme = UbysseyTheme()
 magazine = UbysseyMagazineTheme()
 
@@ -25,6 +28,9 @@ theme_urls = [
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
+
+    url(r'^calendar/$', theme.events_calendar, name='calendar'),
+    url(r'^event/(?P<event_id>[0-9]+)/$', theme.event_detail, name='event'),
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),

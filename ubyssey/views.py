@@ -1,8 +1,13 @@
+import calendar
+from pytz import timezone
+from collections import OrderedDict
+from datetime import date
+
 # Django imports
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -13,6 +18,8 @@ from dispatch.apps.content.models import Article, Page, Section, Topic
 from dispatch.apps.core.models import Person
 from dispatch.apps.frontend.themes.default import DefaultTheme
 from dispatch.apps.frontend.helpers import templates
+
+from dispatch.apps.events.models import Event
 
 # Ubyssey imports
 from ubyssey.pages import Homepage
@@ -93,7 +100,7 @@ class UbysseyTheme(DefaultTheme):
             'sections': sections,
             'popular': popular,
             'blog': blog,
-            'components': component_set.components(),
+            #'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
         return render(request, 'homepage/base.html', context)
@@ -122,7 +129,8 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
+        # t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
+        t = loader.select_template(['article/default.html'])
         return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):
@@ -440,6 +448,65 @@ class UbysseyTheme(DefaultTheme):
     def newsletter(self, request):
 
         return render(request, 'objects/newsletter.html', {})
+
+    def events_calendar(self, request):
+        today = date.today()
+        category = request.GET.get('category')
+        events = Event.objects.all().filter(is_submission=False).order_by('start_time')
+        events = events.filter(start_time__gt=today)
+
+        # TODO configuration of start and end period
+        month_add = 12
+        until_month = today.month + month_add
+        until_year = today.year
+        while until_month > 12:
+            until_month -= 12
+            until_year += 1
+        dt_until = today.replace(year=until_year, month=until_month)
+        events = events.filter(end_time__lte=dt_until)
+
+        if category is not None and category != 'all':
+            events = events.filter(category__exact=category)
+
+        events_by_date = OrderedDict()
+
+        for event in events:
+            start = event.start_time # Zulu
+            start = start.astimezone(timezone('America/Vancouver'))
+            year = start.year
+            month = start.month
+            month = calendar.month_name[month]
+            day = '%s. %d' % (start.strftime('%a'), start.day)
+            if year not in events_by_date:
+                events_by_date[year] = OrderedDict()
+            if month not in events_by_date[year]:
+                events_by_date[year][month] = OrderedDict()
+            if day not in events_by_date[year][month]:
+                events_by_date[year][month][day] = []
+
+            events_by_date[year][month][day].append(event)
+
+        context = {
+            'meta': {
+                'title': 'Calendar'
+            },
+            'events_by_date': events_by_date,
+            'this_year': today.year
+        }
+
+        return render(request, 'calendar.html', context)
+
+    def event_detail(self, request, event_id):
+        event = get_object_or_404(Event, pk=event_id)
+
+        context = {
+            'meta': {
+                'title': event.title
+            },
+            'event': event
+        }
+
+        return render(request, 'event.html', context)
 
 class UbysseyMagazineTheme(UbysseyTheme):
     '''Views for The Ubyssey Magazine microsite.'''

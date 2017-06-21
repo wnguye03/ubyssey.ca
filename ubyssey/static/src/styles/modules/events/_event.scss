@@ -1,0 +1,68 @@
+.event-container {
+  // structure
+  margin-bottom: 25px;
+}
+
+.event-image {
+  // structure
+  padding: 15px;
+  float: right;
+  max-width: calc(50% - 30px);
+  display: inline-block;
+}
+
+.event-info {
+  // structure
+  width: 50%;
+  display: inline-block;
+
+  // display
+  line-height: 2em;
+}
+
+.event-title {
+ border-bottom: 1px dotted #ccc;
+}
+
+.event-description {
+  // structure
+  padding: 15px;
+
+  // display
+  font-family: Georgia, serif;
+  line-height: 1.5em;
+  border-bottom: 1px dotted #ccc;
+}
+
+.event-start {
+  // structure
+  display: inline-block;
+
+  // display
+  font-weight: 600;
+}
+
+.event-time-separator {
+  display: inline-block;
+}
+
+.event-end {
+  // structure
+  display: inline-block;
+
+  // display
+  font-weight: 600;
+}
+
+.event-category {
+  font-weight: 600;
+}
+
+.event-fb-link > button {
+  // structure
+  margin-top: 25px;
+
+  // display
+  color: #3b5998;
+  border-color: #32508a;
+}
