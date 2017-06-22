@@ -30,9 +30,32 @@ $calendar-event-time-label-color  : #DC8119;
   @media($bp-smaller-than-phablet) {
     display: block;
     float: left;
-    width: auto;
+    width: calc(100% - 20px);
     margin: 10px;
     clear: both;
+  }
+
+  @media($bp-smaller-than-phablet) {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    li {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 10px 2px;
+      min-width: 50px;
+
+      border: 1px solid $color-border-gray;
+      border-radius: 2px;
+      background-color: #EEE;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 1px 1px 3px 0px rgba(122, 122, 122, 0.1);
+    }
   }
 
   li {
@@ -41,11 +64,10 @@ $calendar-event-time-label-color  : #DC8119;
 }
 
 .calendar-categories-label {
-  width: calc(100% - 75px);
-
   border-bottom: $border;
 
   h2 {
+    margin-top: 0;
     margin-bottom: 10px;
   }
 }
@@ -128,7 +150,7 @@ $calendar-event-time-label-color  : #DC8119;
 
 .calendar-event-container {
   border: $border;
-  box-shadow: 2px 2px 5px 0px rgba(122,122,122,0.1);
+  box-shadow: 2px 2px 5px 0px rgba(122, 122, 122, 0.1);
 
   @media($bp-larger-than-tablet) {
     flex: 0 1 225px;
@@ -142,9 +164,12 @@ $calendar-event-time-label-color  : #DC8119;
   @media($bp-smaller-than-tablet) {
     display: block;
     width: 100%;
-    min-width: 315px;
     margin-bottom: 15px;
     padding: 10px;
+  }
+
+  @media($bp-smaller-than-mobile) {
+    height: 215px;
   }
 }
 
@@ -168,6 +193,7 @@ $calendar-event-time-label-color  : #DC8119;
   @media($bp-smaller-than-mobile) {
     display: block;
     height: 100px;
+    margin-bottom: 10px;
   }
 
   a {
@@ -212,7 +238,7 @@ $calendar-event-time-label-color  : #DC8119;
   }
 
   @media($bp-smaller-than-mobile) {
-    height: calc(100% - 95px);
+    height: calc(100% - 105px);
   }
 }
 
@@ -230,7 +256,8 @@ $calendar-event-time-label-color  : #DC8119;
 
   @media($bp-smaller-than-tablet) {
     margin-bottom: 5px;
-    height: 3em;
+    min-height: 2em;
+    max-height: 3em;
   }
 
   & > h3 {
@@ -295,11 +322,9 @@ $calendar-event-time-label-color  : #DC8119;
 }
 
 .calendar-event-more-info {
-  height: 27px;
   width: 75%;
   margin: auto auto;
-  padding: 10px 5px 0px 5px;
-  min-width: 80px;
+  padding: 10px 5px 10px 5px;
 
   background-color: #3c7dd7;
   color: #FFF;
