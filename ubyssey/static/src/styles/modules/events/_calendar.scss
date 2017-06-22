@@ -1,25 +1,39 @@
-$calendar-event-time-label-color: #DC8119;
-
-$small-view-width: 1130;
-$large-view-query: "only screen and (min-width: #{$small-view-width}px)";
-$small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
+$border                           : 1px dotted #C8C8C8;
+$calendar-event-time-label-color  : #DC8119;
 
 #calendar {
   max-width: 1600px;
 }
 
 .calendar-container {
-  // structure
   display: inline-block;
   margin-right: 15px;
-  width: calc(100% - 275px);
+
+  @media($bp-larger-than-phablet) {
+    width: calc(100% - 275px);
+  }
+
+  @media($bp-smaller-than-phablet) {
+    display: block;
+    width: 100%;
+    clear: both;
+  }
 }
 
 .calendar-category-sidebar {
-  // structure
-  display: inline-block;
-  float: right;
-  width: 250px;
+  @media($bp-larger-than-phablet) {
+    display: inline-block;
+    float: right;
+    width: 250px;
+  }
+
+  @media($bp-smaller-than-phablet) {
+    display: block;
+    float: left;
+    width: auto;
+    margin: 10px;
+    clear: both;
+  }
 
   li {
     font-size: 14px;
@@ -27,11 +41,9 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 }
 
 .calendar-categories-label {
-  // structure
   width: calc(100% - 75px);
 
-  // display
-  border-bottom: 1px dotted #C8C8C8;
+  border-bottom: $border;
 
   h2 {
     margin-bottom: 10px;
@@ -39,62 +51,73 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 }
 
 .calendar-year-label {
-  // structure
   width: 160px;
 
-  // display
   font-size: 42px;
   text-align: left;
-  border-bottom: 1px dotted #C8C8C8;
+  border-bottom: $border;
 }
 
 .calendar-month-label {
-  // structure
   width: calc(100% - 15px);
   padding: 0 0 5px 15px;
   margin: 25px 0 0 0;
 
-  // display
   font-size: 32px;
   text-align: left;
-  border-bottom: 1px dotted #C8C8C8;
+  border-bottom: $border;
 }
 
 .calendar-day-label {
-  // structure
-  display: inline-block;
   padding-right: 5px;
-  width: 120px;
+  width: 90px;
   margin-top: 36px;
 
-  // display
   color: $calendar-event-time-label-color;
+  font-weight: 600;
   text-align: right;
   font-size: 28px;
   vertical-align: top;
+
+  @media($bp-larger-than-tablet) {
+    display: inline-block;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    display: block;
+  }
 }
 
 .calendar-day-row {
-  // structure
-  margin: 15px 40px 0 40px;
-
-  // display
-  border-bottom: 1px dotted #C8C8C8;
+  border-bottom: $border;
 
   &:last-child {
     border-bottom: 0;
   }
+
+  @media($bp-larger-than-tablet) {
+    margin: 15px 0 0 30px;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    margin: 15px 5px 0 5px;
+  }
 }
 
 .calendar-event-list-wrapper {
-  // structure
   display: inline-block;
-  width: calc(100% - 200px);
   padding-left: 10px;
+
+  @media($bp-larger-than-tablet) {
+    width: calc(100% - 110px);
+  }
+
+  @media($bp-smaller-than-tablet) {
+    width: calc(100% - 20px);
+  }
 }
 
 .calendar-event-list-container {
-  // structure
   margin: 0;
   padding: 0;
   display: flex;
@@ -104,12 +127,10 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 }
 
 .calendar-event-container {
-  // display
-  border: 1px dotted #C8C8C8;
+  border: $border;
   box-shadow: 2px 2px 5px 0px rgba(122,122,122,0.1);
 
-  @media #{$large-view-query} {
-    // structure
+  @media($bp-larger-than-tablet) {
     flex: 0 1 225px;
     display: block;
     width: auto;
@@ -118,8 +139,7 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
     height: 310px;
   }
 
-  @media #{$small-view-query} {
-    // structure
+  @media($bp-smaller-than-tablet) {
     display: block;
     width: 100%;
     min-width: 315px;
@@ -128,21 +148,36 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
   }
 }
 
-@media #{$large-view-query} {
-  .calender-event-image-wrapper {
+.calender-event-image-wrapper {
+  @media($bp-larger-than-tablet) {
     height: 170px;
     padding: 2px;
+  }
 
-    a {
-      display: block;
-      height: 100%;
+  @media($bp-larger-than-mobile) {
+    @media($bp-smaller-than-tablet) {
+      height: 100px;
+      padding: 2px;
+      margin-bottom: 10px;
+      display: inline-block;
+      width: calc(50% - 4px);
+      float: right;
     }
+  }
+
+  @media($bp-smaller-than-mobile) {
+    display: block;
+    height: 100px;
+  }
+
+  a {
+    display: block;
+    height: 100%;
   }
 }
 
 .calendar-event-image {
   max-width: 100%;
-  max-height: 170px;
 
   // centering
   position: relative;
@@ -150,19 +185,34 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
   left: 50%;
   transform: translate(-50%, -50%);
 
-  @media #{$small-view-query} {
-    display: none;
+  @media($bp-larger-than-tablet) {
+    max-height: 170px;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    max-height: 100px;
   }
 }
 
 .calendar-event-info {
-  // structure
-  padding: 10px;
-  height: calc(100% - 195px);
   position: relative;
 
-  @media #{$small-view-query} {
-    padding: 0 5px;
+  @media($bp-larger-than-tablet) {
+    padding: 10px;
+    height: calc(100% - 195px);
+  }
+
+  @media($bp-larger-than-mobile) {
+    @media($bp-smaller-than-tablet) {
+      padding: 0 5px;
+      display: inline-block;
+      width: calc(50% - 10px);
+      height: 100%;
+    }
+  }
+
+  @media($bp-smaller-than-mobile) {
+    height: calc(100% - 95px);
   }
 }
 
@@ -171,91 +221,86 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
 }
 
 .calendar-event-title {
-  // structure
   overflow: hidden;
 
-  @media #{$large-view-query} {
+  @media($bp-larger-than-tablet) {
     margin-bottom: 10px;
-    height: 38px;
+    height: 2em;
   }
 
-  @media #{$small-view-query} {
+  @media($bp-smaller-than-tablet) {
     margin-bottom: 5px;
-    height: auto;
+    height: 3em;
   }
 
   & > h3 {
-    // structure
     margin: 0;
 
-    // display
     font-size: 14px;
   }
 }
 
 .calendar-event-host {
-  // structure
   position: absolute;
   bottom: 0;
   left: 0;
-  width: calc(100% - 30px);
-  padding: 0 10px 5px 10px;
   overflow: hidden;
 
-  @media #{$small-view-query} {
-     position: static;
+  @media($bp-larger-than-tablet) {
+    width: calc(100% - 30px);
+    padding: 0 10px 5px 10px;
+  }
+
+  @media($bp-smaller-than-tablet) {
      width: 100%;
      margin-top: 5px;
      padding: 0 0;
      text-align: left;
   }
 
-  // display
   font-size: 12px;
 }
 
 .calendar-event-host-label {
-  // display
   font-size: 10px;
 }
 
 .calendar-event-left {
-  // structure
-  width: 40%;
   display: inline-block;
 
-  @media #{$small-view-query} {
-    padding-top: 10px;
-  }
-
-  // display
   color: $calendar-event-time-label-color;
   font-weight: 600;
   text-align: center;
   font-size: 15px;
+
+  @media($bp-larger-than-tablet) {
+    width: 40%;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    padding-top: 10px;
+    width: 50%;
+  }
 }
 
 .calendar-event-time-separator {
-  // structure
   font-size: 8px;
   line-height: 8px;
 }
 
 .calendar-event-right {
-  // structure
   display: inline-block;
   width: 48%;
   float: right;
 }
 
 .calendar-event-more-info {
-  // structure
   height: 27px;
   width: 75%;
   margin: auto auto;
   padding: 10px 5px 0px 5px;
+  min-width: 80px;
 
-  // display
   background-color: #3c7dd7;
   color: #FFF;
   text-align: center;
@@ -263,10 +308,13 @@ $small-view-query: "only screen and (max-width: #{$small-view-width - 1}px)";
   border: 1px solid #2b65b4;
 }
 
-@media #{$small-view-query} {
-  .calendar-event-start,
-  .calendar-event-time-separator,
-  .calendar-event-end {
+.calendar-event-start,
+.calendar-event-time-separator,
+.calendar-event-end {
+  @media($bp-larger-than-tablet) {
+    display: block;
+  }
+  @media($bp-smaller-than-tablet) {
     display: inline-block;
   }
 }

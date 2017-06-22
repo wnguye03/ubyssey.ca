@@ -5,7 +5,8 @@
 
 .event-image {
   // structure
-  padding: 15px;
+  margin: 0 50px;
+  padding: 15px 0;
   float: right;
   max-width: calc(50% - 30px);
   display: inline-block;
@@ -63,6 +64,25 @@
   margin-top: 25px;
 
   // display
-  color: #3b5998;
-  border-color: #32508a;
+  background-color: $color-social-facebook-dark;
+  color: $color-white;
+  border-color: $color-social-facebook-dark;
+  background-image: initial;
+}
+
+.event-location-info {
+  text-align: right;
+  line-height: 1.25em;
+}
+
+.event-location span {
+  color: $color-accent-blue;
+  font-weight: 600;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.event-address {
+  font-style: italic;
+  font-size: 14px;
 }

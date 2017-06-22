@@ -494,7 +494,7 @@ class UbysseyTheme(DefaultTheme):
             'this_year': today.year
         }
 
-        return render(request, 'calendar.html', context)
+        return render(request, 'events/calendar.html', context)
 
     def event_detail(self, request, event_id):
         event = get_object_or_404(Event, pk=event_id)
@@ -506,7 +506,7 @@ class UbysseyTheme(DefaultTheme):
             'event': event
         }
 
-        return render(request, 'event.html', context)
+        return render(request, 'events/event.html', context)
 
 class UbysseyMagazineTheme(UbysseyTheme):
     '''Views for The Ubyssey Magazine microsite.'''

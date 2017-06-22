@@ -13,6 +13,24 @@
 
 <main id="calendar" class="u-container">
   <h1>Events</h1>
+
+  <div class="calendar-category-sidebar">
+    <div class="calendar-categories-label">
+      <h2>Categories</h2>
+    </div>
+    <ul>
+      <li><a href="?category=all">All</a></li>
+      <li><a href="?category=sports">Sports</a></li>
+      <li><a href="?category=music">Music</a></li>
+      <li><a href="?category=academic">Academic</a></li>
+      <li><a href="?category=party">Party</a></li>
+      <li><a href="?category=business">Business</a></li>
+      <li><a href="?category=ceremony">Ceremony</a></li>
+      <li><a href="?category=workshop">Workshop</a></li>
+      <li><a href="?category=other">Other</a></li>
+    </ul>
+  </div>
+
   <div class="calendar-container">
     {% for year, months in events_by_date.items %}
     {% ifnotequal year this_year %}
@@ -66,22 +84,6 @@
     </div>
     {% endfor %}{# month #}
     {% endfor %}{# year #}
-  </div>
-  <div class="calendar-category-sidebar">
-    <div class="calendar-categories-label">
-      <h2>Categories</h2>
-    </div>
-    <ul>
-      <li><a href="?category=all">All</a></li>
-      <li><a href="?category=sports">Sports</a></li>
-      <li><a href="?category=music">Music</a></li>
-      <li><a href="?category=academic">Academic</a></li>
-      <li><a href="?category=party">Party</a></li>
-      <li><a href="?category=business">Business</a></li>
-      <li><a href="?category=ceremony">Ceremony</a></li>
-      <li><a href="?category=workshop">Workshop</a></li>
-      <li><a href="?category=other">Other</a></li>
-    </ul>
   </div>
 </main>
 

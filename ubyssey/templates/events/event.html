@@ -20,10 +20,16 @@
       <div class="event-time-separator">-</div>
       <div class='event-end'>{{ event.end_time }}</div>
       <div class='event-host'>Hosted by {{ event.host }}</div>
-      <div class='event-location'> {{ event.location }}</div>
-      {% if event.address %}
-      <div class='event-address'>{{ event.address }}</div>
-      {% endif %}
+      <div class='event-location-info'>
+        <div class='event-location'><span>@</span>{{ event.location }}</div>
+        {% if event.address %}
+        <div class='event-address'>
+          <a href="https://maps.google.com/?q={{ event.address|urlencode }}" target="_blank">
+          {{ event.address }}
+          </a>
+        </div>
+        {% endif %}
+      </div>
       {% if event.facebook_url %}
       <a class='event-fb-link' href="{{ event.facebook_url }}" target="_blank">
         <button>
