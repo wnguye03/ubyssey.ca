@@ -450,16 +450,13 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'objects/newsletter.html', {})
 
-    def events_calendar(self, request):
+    def get_calendar_events(self, category=None, months=12):
         today = date.today()
-        category = request.GET.get('category')
         events = Event.objects.all().filter(is_submission=False).order_by('start_time')
         #TODO: filter unpublished
         events = events.filter(start_time__gt=today)
 
-        # TODO configuration of start and end period
-        month_add = 12
-        until_month = today.month + month_add
+        until_month = today.month + months
         until_year = today.year
         while until_month > 12:
             until_month -= 12
@@ -470,6 +467,9 @@ class UbysseyTheme(DefaultTheme):
         if category is not None and category != 'all':
             events = events.filter(category__exact=category)
 
+        return events
+
+    def organize_events_by_date(self, events):
         events_by_date = OrderedDict()
 
         for event in events:
@@ -488,15 +488,38 @@ class UbysseyTheme(DefaultTheme):
 
             events_by_date[year][month][day].append(event)
 
+        return events_by_date
+
+    def events_calendar(self, request):
+        category = request.GET.get('category')
+
+        events = self.get_calendar_events(category)
+        events_by_date = self.organize_events_by_date(events)
+
         context = {
             'meta': {
-                'title': 'Calendar'
+                'title': 'Calendar',
+                'description': 'Ubyssey calendar of events',
+                'url': "%s%s" % (settings.BASE_URL, reverse('calendar'))
             },
             'events_by_date': events_by_date,
-            'this_year': today.year
+            'this_year': date.today().year,
+            'category': category
         }
 
         return render(request, 'events/calendar.html', context)
+
+    def get_event_meta(self, event):
+        meta_image = None
+        if event.image:
+            meta_image = event.image.url
+
+        return {
+            'title': event.title,
+            'description': event.description,
+            'image': "%s%s" %(settings.BASE_URL, meta_image),
+            'url': "%sevent/%s/" % (settings.BASE_URL, event.id)
+        }
 
     def event_detail(self, request, event_id):
         # TODO: find a way to select without putting event_id in url
@@ -508,9 +531,7 @@ class UbysseyTheme(DefaultTheme):
             raise Http404('Event could not be found.')
 
         context = {
-            'meta': {
-                'title': event.title
-            },
+            'meta': self.get_event_meta(event),
             'event': event
         }
 

@@ -3,6 +3,7 @@ $calendar-event-time-label-color  : #E06100;
 
 #calendar {
   max-width: 1600px;
+  min-height: 500px;
 
   @media($bp-smaller-than-phablet) {
     padding-left: 2px;
@@ -76,6 +77,10 @@ $calendar-event-time-label-color  : #E06100;
   li {
     font-size: 14px;
     list-style-type: none;
+
+    &.active {
+      font-weight: 600;
+    }
   }
 }
 
@@ -182,6 +187,7 @@ $calendar-event-time-label-color  : #E06100;
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
+    height: 120px;
   }
 
   @media($bp-smaller-than-mobile) {
