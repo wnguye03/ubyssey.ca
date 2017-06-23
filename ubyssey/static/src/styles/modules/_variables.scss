@@ -5,24 +5,21 @@ $bp-tablet-size             : 960;
 $bp-desktop-size            : 1200;
 $bp-desktophd-size          : 1400;
 
-$bp-half-desktop            : 800;
-
 $bp-larger-than-mobile      : "min-width: #{$bp-mobile-size}px" !default;
 $bp-smaller-than-mobile     : "max-width: #{$bp-mobile-size - 1}px" !default;
 $bp-larger-than-phablet     : "min-width: #{$bp-phablet-size}px" !default;
 $bp-smaller-than-phablet    : "max-width: #{$bp-phablet-size - 1}px" !default;
 $bp-larger-than-tablet      : "min-width: #{$bp-tablet-size}px" !default;
 $bp-smaller-than-tablet     : "max-width: #{$bp-tablet-size - 1}px" !default;
-$bp-half-desktop            : "min-width: #{$bp-half-desktop}px" !default; // inconsistent
 $bp-larger-than-desktop     : "min-width: #{$bp-desktop-size}px" !default;
 $bp-smaller-than-desktop    : "max-width: #{$bp-desktop-size - 1}px" !default;
 $bp-larger-than-desktophd   : "min-width: #{$bp-desktophd-size}px" !default;
 $bp-smaller-than-desktophd  : "min-width: #{$bp-desktophd-size - 1}px" !default;
 
-$bp-phablet               : "550px"; // This contradicts phablet above
+$bp-phablet               : "550px";
 $bp-tablet                : "960px";
 
-$bp-960px                 : "min-width: 960px" !default; // duplicate?
+$bp-960px                 : "min-width: 960px" !default;
 
 // Colors
 $color-white: #fff;

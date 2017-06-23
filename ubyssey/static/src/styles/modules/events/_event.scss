@@ -1,19 +1,28 @@
 .event-container {
   // structure
   margin-bottom: 25px;
+  min-height: 600px;
+}
+
+.event-image-container {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 50px 15px;
+  float: right;
+  width: 50%;
 }
 
 .event-image {
   // structure
-  margin: 0 50px;
-  padding: 15px 0;
-  float: right;
-  max-width: calc(50% - 30px);
-  display: inline-block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 600px;
 }
 
 .event-info {
   // structure
+  box-sizing: border-box;
+  padding: 0 5px;
   width: 50%;
   display: inline-block;
 

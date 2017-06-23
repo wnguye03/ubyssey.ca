@@ -39,7 +39,9 @@
       {% endif %}
     </div>
     {% if event.image %}
-    <img class='event-image' src="{{ event.image.url }}" alt="{{ event.title }}">
+    <div class="event-image-container">
+      <img class='event-image' src="{{ event.image.url }}" alt="{{ event.title }}">
+    </div>
     {% endif %}
   </div>
 </main>

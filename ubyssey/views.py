@@ -129,6 +129,7 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
+        # TODO: why is this broken?
         # t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
         t = loader.select_template(['article/default.html'])
         return HttpResponse(t.render(context))
@@ -453,6 +454,7 @@ class UbysseyTheme(DefaultTheme):
         today = date.today()
         category = request.GET.get('category')
         events = Event.objects.all().filter(is_submission=False).order_by('start_time')
+        #TODO: filter unpublished
         events = events.filter(start_time__gt=today)
 
         # TODO configuration of start and end period
@@ -497,7 +499,13 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'events/calendar.html', context)
 
     def event_detail(self, request, event_id):
+        # TODO: find a way to select without putting event_id in url
+        # eg. slug generated from date & name to avoid collision
         event = get_object_or_404(Event, pk=event_id)
+
+        # TODO: also 404 on unpublished
+        if event.is_submission:
+            raise Http404('Event could not be found.')
 
         context = {
             'meta': {

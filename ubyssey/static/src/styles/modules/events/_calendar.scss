@@ -97,7 +97,8 @@ $calendar-event-time-label-color  : #E06100;
 }
 
 .calendar-month-label {
-  width: calc(100% - 15px);
+  box-sizing: border-box;
+  width: 100%;
   padding: 0 0 5px 15px;
   margin: 25px 0 0 0;
 
@@ -198,9 +199,10 @@ $calendar-event-time-label-color  : #E06100;
     @media($bp-smaller-than-tablet) {
       height: 100px;
       padding: 2px;
+      box-sizing: border-box;
       margin-bottom: 10px;
       display: inline-block;
-      width: calc(50% - 4px);
+      width: 50%;
       float: right;
     }
   }
@@ -246,8 +248,9 @@ $calendar-event-time-label-color  : #E06100;
   @media($bp-larger-than-mobile) {
     @media($bp-smaller-than-tablet) {
       padding: 0 5px;
+      box-sizing: border-box;
       display: inline-block;
-      width: calc(50% - 10px);
+      width: 50%;
       height: 100%;
     }
   }
