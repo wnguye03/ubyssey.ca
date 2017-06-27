@@ -450,22 +450,36 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'objects/newsletter.html', {})
 
-    def get_calendar_events(self, category=None, months=12):
-        today = date.today()
-        events = Event.objects.all().filter(is_submission=False).order_by('start_time')
-        #TODO: filter unpublished
-        events = events.filter(start_time__gt=today)
+    def get_calendar_events(self, category=None, months=None, start=None, end=None):
 
-        until_month = today.month + months
-        until_year = today.year
-        while until_month > 12:
-            until_month -= 12
-            until_year += 1
-        dt_until = today.replace(year=until_year, month=until_month)
-        events = events.filter(end_time__lte=dt_until)
+        events = Event.objects.all().order_by('start_time')
+        events = events.filter(is_submission=False)
+        events = events.filter(is_published=True)
+
+        today = date.today()
+        # filter start
+        if start is not None:
+            events = events.filter(start_time__gt=start)
+        else:
+            events = events.filter(start_time__gt=today)
+
+        # filter end
+        if end is not None:
+            events = events.filter(end_time__lte=end)
+        else:
+            until_month = today.month + (months if months is not None else 12)
+            until_year = today.year
+            while until_month > 12:
+                until_month -= 12
+                until_year += 1
+            dt_until = today.replace(year=until_year, month=until_month)
+            events = events.filter(end_time__lte=dt_until)
 
         if category is not None and category != 'all':
             events = events.filter(category__exact=category)
+
+        HARD_MAX = 100
+        events = events[:HARD_MAX]
 
         return events
 
@@ -492,8 +506,11 @@ class UbysseyTheme(DefaultTheme):
 
     def events_calendar(self, request):
         category = request.GET.get('category')
+        months = request.GET.get('months')
+        start = request.GET.get('start')
+        end = request.GET.get('end')
 
-        events = self.get_calendar_events(category)
+        events = self.get_calendar_events(category=category, months=months, start=start, end=end)
         events_by_date = self.organize_events_by_date(events)
 
         context = {
