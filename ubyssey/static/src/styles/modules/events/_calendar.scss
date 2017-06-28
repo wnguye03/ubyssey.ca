@@ -1,5 +1,5 @@
 $border                           : 1px dotted $color-border-gray-dark;
-$calendar-event-time-label-color  : #E06100;
+$calendar-event-time-label-color  : #006fcc;
 
 #calendar {
   max-width: 1600px;
@@ -170,7 +170,7 @@ $calendar-event-time-label-color  : #E06100;
 }
 
 .calendar-event-container {
-  border: $border;
+  border: 1px solid $color-border-gray;
   box-shadow: 2px 2px 5px 0px rgba(122, 122, 122, 0.1);
 
   @media($bp-larger-than-tablet) {
@@ -179,7 +179,6 @@ $calendar-event-time-label-color  : #E06100;
     width: auto;
     min-width: 225px;
     margin: 0 15px 15px 0;
-    height: 310px;
   }
 
   @media($bp-smaller-than-tablet) {
@@ -271,35 +270,29 @@ $calendar-event-time-label-color  : #E06100;
 }
 
 .calendar-event-title {
-  overflow: hidden;
+  position: relative;
+  font-size: 15px;
+  font-weight: 600;
 
   @media($bp-larger-than-tablet) {
     margin-bottom: 10px;
-    height: 2em;
+    height: calc(100% - 52px);
   }
 
   @media($bp-smaller-than-tablet) {
+    overflow: hidden;
     margin-bottom: 5px;
     min-height: 2em;
     max-height: 3em;
   }
-
-  & > h3 {
-    margin: 0;
-
-    font-size: 14px;
-  }
 }
 
 .calendar-event-host {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
+  color: $color-text-gray;
 
   @media($bp-larger-than-tablet) {
     width: calc(100% - 30px);
-    padding: 0 10px 5px 10px;
+    padding: 0;
   }
 
   @media($bp-smaller-than-tablet) {
@@ -307,22 +300,21 @@ $calendar-event-time-label-color  : #E06100;
      margin-top: 5px;
      padding: 0 0;
      text-align: left;
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     overflow: hidden;
   }
 
   font-size: 12px;
 }
 
 .calendar-event-host-label {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .calendar-event-left {
   display: inline-block;
-
-  color: $calendar-event-time-label-color;
-  font-weight: 600;
-  text-align: center;
-  font-size: 15px;
 
   @media($bp-larger-than-tablet) {
     width: 40%;
@@ -356,10 +348,21 @@ $calendar-event-time-label-color  : #E06100;
   border: 1px solid darken($color-accent-blue, 15%);
 }
 
+.calendar-event-time {
+  color: $calendar-event-time-label-color;
+  font-weight: 600;
+  // text-align: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.calendar-event-time-separator {
+  font-size: 26px;
+  vertical-align: sub;
+}
+
 .calendar-event-start,
 .calendar-event-time-separator,
 .calendar-event-end {
-  @media($bp-larger-than-tablet) {
-    display: block;
-  }
+  display: inline-block;
 }

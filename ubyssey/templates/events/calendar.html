@@ -60,18 +60,13 @@
                 {% endif %}
               </div>
               <div class="calendar-event-info">
-                <div class="calendar-event-title"><h3><a href="/event/{{ event.pk }}/">{{ event.title }}</a></h3></div>
-                <div class="calendar-lr-row">
-                  <div class="calendar-event-left">
-                    <div class="calendar-event-start">{{ event.start_time|date:"fA" }}</div>
-                    <div class="calendar-event-time-separator">-</div>
-                    <div class="calendar-event-end">{{ event.end_time|date:"fA" }}</div>
-                  </div>
-                  <div class="calendar-event-right">
-                    <a href="/event/{{ event.pk }}/">
-                      <div class="calendar-event-more-info">More Info</div>
-                    </a>
-                  </div>
+                <div class="calendar-event-title">
+                  <a href="/event/{{ event.pk }}/">{{ event.title }}</a>
+                </div>
+                <div class="calendar-event-time">
+                  <div class="calendar-event-start">{{ event.start_time|date:"fA" }}</div>
+                  <div class="calendar-event-time-separator">-</div>
+                  <div class="calendar-event-end">{{ event.end_time|date:"fA" }}</div>
                 </div>
                 <div class="calendar-event-host"><span class="calendar-event-host-label">Hosted by</span> {{ event.host }}</div>
               </div>
