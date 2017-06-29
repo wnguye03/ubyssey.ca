@@ -14,22 +14,7 @@
 <main id="calendar" class="u-container">
   <h1>Events</h1>
 
-  <div class="calendar-category-sidebar">
-    <div class="calendar-categories-label">
-      <h2>Categories</h2>
-    </div>
-    <ul>
-      <li {% if category == 'all' or not category %}class="active"{% endif %}><a href="?category=all">All</a></li>
-      <li {% if category == 'sports' %}class="active"{% endif %}><a href="?category=sports">Sports</a></li>
-      <li {% if category == 'music' %}class="active"{% endif %}><a href="?category=music">Music</a></li>
-      <li {% if category == 'academic' %}class="active"{% endif %}><a href="?category=academic">Academic</a></li>
-      <li {% if category == 'party' %}class="active"{% endif %}><a href="?category=party">Party</a></li>
-      <li {% if category == 'business' %}class="active"{% endif %}><a href="?category=business">Business</a></li>
-      <li {% if category == 'ceremony' %}class="active"{% endif %}><a href="?category=ceremony">Ceremony</a></li>
-      <li {% if category == 'workshop' %}class="active"{% endif %}><a href="?category=workshop">Workshop</a></li>
-      <li {% if category == 'other' %}class="active"{% endif %}><a href="?category=other">Other</a></li>
-    </ul>
-  </div>
+  {% include './calendar_sidebar.html' %}
 
   <div class="calendar-container">
     {% for year, months in events_by_date.items %}
@@ -51,26 +36,7 @@
         <div class="calendar-event-list-wrapper">
           <ul class="calendar-event-list-container">
           {% for event in events %}
-            <li class="calendar-event-container">
-              <div class="calender-event-image-wrapper">
-                {% if event.image %}
-                <a href="/event/{{ event.pk }}/">
-                  <img class="calendar-event-image" src="{{ event.image.url }}" alt="{{ event.title }}">
-                </a>
-                {% endif %}
-              </div>
-              <div class="calendar-event-info">
-                <div class="calendar-event-title">
-                  <a href="/event/{{ event.pk }}/">{{ event.title }}</a>
-                </div>
-                <div class="calendar-event-time">
-                  <div class="calendar-event-start">{{ event.start_time|date:"fA" }}</div>
-                  <div class="calendar-event-time-separator">-</div>
-                  <div class="calendar-event-end">{{ event.end_time|date:"fA" }}</div>
-                </div>
-                <div class="calendar-event-host"><span class="calendar-event-host-label">Hosted by</span> {{ event.host }}</div>
-              </div>
-            </li>
+            {% include './event_tile.html' %}
           {% endfor %}{# event #}
           </ul>
         </div>
