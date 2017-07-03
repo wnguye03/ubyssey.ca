@@ -3,11 +3,11 @@
     <form class="c-form" method="post">
       {% csrf_token %}
       <h2 class="o-heading o-heading--white">Contact us</h2>
-      <input id="name" type="text" placeholder="Name" />
+      <input id="name" name="name" type="text" placeholder="Name" />
 
-      <input id="email" type="email" placeholder="Email address" />
+      <input id="email" name="email" type="email" placeholder="Email address" />
 
-      <textarea id="message" rows="5" placeholder="How can we help you?"></textarea>
+      <textarea id="message" name="message" rows="5" placeholder="How can we help you?"></textarea>
 
       <input type="submit" value="Submit" />
     </form>

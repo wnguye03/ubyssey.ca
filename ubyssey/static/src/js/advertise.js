@@ -13,12 +13,20 @@ $(function() {
     $('.o-placements--web .o-placements__demo__inner img').css('top', $(this).data('offset'));
   });
 
-  $('.o-placements--print .o-placements__placement').click(function() {
+  $('.o-placements--print .o-placements__placement--demo').click(function() {
     $('.o-placements--print .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
 
     $('.o-placements--print .o-placements__demo').attr('data-demo', $(this).data('demo'));
   });
+
+  $('.o-placements--guide .o-placements__placement--demo').click(function() {
+    $('.o-placements--guide .o-placements__placement').removeClass('o-placements__placement--active');
+    $(this).addClass('o-placements__placement--active');
+
+    $('.o-placements--guide .o-placements__demo').attr('data-demo', $(this).data('demo'));
+  });
+
 
   // Open modal
   $('.c-production-schedule__view').click(function() {
