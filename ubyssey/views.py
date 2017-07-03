@@ -443,14 +443,21 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'objects/newsletter.html', {})
 
     def advertise(self, request):
-        # if request.method == 'POST':
-        #     send_mail(
-        #         'Subject here',
-        #         'Here is the message.',
-        #         'advertising@ubyssey.ca',
-        #         ['peterjsiemens@gmail.com'],
-        #         fail_silently=False,
-        #     )
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            message = request.POST.get('message')
+
+            template = 'Name: %s\nEmail: %s\nMessage:\n%s'
+
+            if name and email:
+                send_mail(
+                    'Advertising inquiry from %s' % name,
+                    template % (name, email, message),
+                    email,
+                    [settings.UBYSSEY_ADVERTISING_EMAIL],
+                    fail_silently=True,
+                )
 
         return render(request, 'advertise/index.html')
 
