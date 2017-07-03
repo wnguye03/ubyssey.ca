@@ -10,7 +10,7 @@ $color-gray-light: #EFEFEF;
 $font-size-base: 16;
 $font-weight-light: 300;
 $font-weight-semi-bold: 400;
-$font-weight-bold: 600;
+$font-weight-bold: 800;
 
 $z-index-1: 100;
 $z-index-2: 200;
@@ -960,6 +960,10 @@ html, body {
   // Border
   border: 1px solid #d2d2d2;
   border-radius: 5px;
+
+  // Text
+  font-size: font-size(16);
+  color: $color-text-gray;
 
   // Extra
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
