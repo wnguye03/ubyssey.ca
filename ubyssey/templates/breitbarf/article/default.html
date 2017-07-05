@@ -70,7 +70,7 @@
           <h1 class="c-article__headline">{{ article.headline }}</h1>
           <img class="c-article__image" src="{{ article.featured_image.image.get_medium_url }}"></img>
           <div class="c-article__byline">By {{ article.get_author_string }} | {{ article.published_at|date:'N j, Y' }}</div>
-          <div class="c-article__content">{{ article.get_html|safe }}</div>
+          <div class="c-article__content">{{ article.html|safe }}</div>
         </article>
       </div>
       <div class="c-content__right">
