@@ -1,10 +1,11 @@
-var ArticleHeader = React.createClass({
-    componentWillMount: function(){
+import React from 'react';
+
+const ArticleHeader = React.createClass({
+    componentWillMount() {
         this.logo = $('img.logo').attr('src');
         this.home = $('a.home-link').attr('href');
     },
-    render: function(){
-        function formatHeadline(headline){ return { __html: headline }; };
+    render() {
         return (
             <header className="topbar header-article">
                 <div className="u-container">
@@ -15,11 +16,12 @@ var ArticleHeader = React.createClass({
                         <span>{this.props.name}</span>
                     </div>
                     |
-                    <h1 className="nav-headline" dangerouslySetInnerHTML={formatHeadline(this.props.headline)}></h1>
+                    <h1 className="nav-headline" dangerouslySetInnerHTML={{__html: this.props.headline}}></h1>
+                    <a className="search" href='/search'><i className="fa fa-search"></i></a>
                 </div>
             </header>
         );
     }
 });
 
-module.exports = ArticleHeader;
+export default ArticleHeader;

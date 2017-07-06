@@ -79,7 +79,7 @@ nav.main {
   padding-right: 10px;
 
   .inner {
-    //padding: 15px 0px 13px 0;
+	   overflow: hidden;
   }
 
   .left, .middle, .right {
@@ -116,16 +116,25 @@ nav.main {
         font-size: font-size(14);
         font-weight: $font-weight-semi-bold;
         color: #2B2B2B;
-        margin: 0 10px;
+        margin: 0 6px;
+
+        &.elections a {
+          color: $color-red;
+        }
       }
     }
 
     &.meta {
       li {
-        font-family: $font-default;//FranklinGothicURW-Boo;
+        font-family: $font-default;
         font-size: 13px;
         color: #33331E;
-        margin: 0 10px;
+        margin: 0 6px;
+
+        &.store {
+          margin: 0 3px;
+        }
+
       }
     }
 
@@ -218,6 +227,16 @@ header.topbar {
         }
         &.current, &:hover {
           border-bottom: 3px solid rgba(52, 144, 214, 1);
+        }
+
+        &.elections {
+          a {
+            color: $color-red;
+          }
+
+          &.current, &:hover {
+            border-bottom: 3px solid $color-red;
+          }
         }
       }
     }
@@ -344,5 +363,31 @@ html.hairlines {
   }
   nav.mobile, #search-form {
     margin-top: -0.5px;
+  }
+}
+
+a.store-link {
+  font-size: 12px;
+  padding: 5px 7px 5px 10px;
+  border-radius: 3px;
+  color: $color-accent-blue;
+  background: rgba(0, 113, 201, 0.1);
+  font-weight: $font-weight-semi-bold;
+
+  transition: background 0.2s;
+
+  i {
+    font-size: 12px;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-right: 4px;
+  }
+
+  span {
+    font-size: 13px;
+  }
+
+  &:hover {
+    background: rgba(0, 113, 201, 0.2)
   }
 }
