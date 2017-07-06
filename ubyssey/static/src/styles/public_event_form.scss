@@ -18,6 +18,11 @@ h2 {
   color: black;
 }
 
+hr {
+  width: 75%;
+  margin-left: 0;
+}
+
 .fieldWrapper {
   padding: 15px 0 15px 0;
 }
@@ -29,10 +34,11 @@ input[type=text], input[type=email], input[type=tel], textarea {
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.10);
   border: 2px solid rgba(0,0,0,0.075);
   border-radius: 4px;
-  font-size: font-size(16);
+  resize: none;
+  font-size: font-size(14);
 }
 
-input[type=submit] {
+input[type="submit"], input[type=reset] {
   margin: 0 0 15px 0;
   background-color: #374037; /* Green */
   border: none;
@@ -42,22 +48,49 @@ input[type=submit] {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: font-size(16);
+  font-size: font-size(14);
 }
 
 #id_category {
-  width: 75%;
-  padding: 16px;
+  -webkit-appearance:none;
+  width: 100%;
+  padding: 10px 6px;
   display: inline-block;
-  background-color: #595959;
-  font-size: font-size(16);
+  background-color: rgb(205, 205, 205); // #595959
+  font-size: font-size(14);
   color: black;
-  border: none;
-  cursor: pointer;
-
+  border: 2px solid rgba(0,0,0,0.075);
+  border-radius: 4px;
 }
 
-// TODO: Fix gradient on category box, make default not "--------"
+// Style for inputs that are beside eachother
+
+#id_host, #id_start_time, #id_end_time {
+  width: 100%;
+}
+
+.two-col {
+  overflow: hidden;
+  width: 75%;
+}
+
+div[type="right"], div[type="left"] {
+  width: 49%;
+}
+
+.two-col label {
+  display: block;
+}
+
+div[type="right"] {
+  float: right;
+}
+
+div[type="left"] {
+  float: left;
+}
+
+// TODO: make default not "--------"
 
 option {
   display: inline-block;
@@ -69,6 +102,27 @@ option {
   z-index: 1;
 }
 
+label[for=id_image] {
+  padding: 10px 0 20px 0;
+}
+
+#previewImage {
+  padding: 0;
+  margin: 20px 0 20px 0;
+  max-width: 75%;
+  height: auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#info {
+  font-size: font-size(12);
+  color: rgb(105, 105, 105);
+}
+
 .errorlist {
   color: rgba(255,0,0,1.0);
+}
+
+img[src=""] {
+   display: none;
 }
