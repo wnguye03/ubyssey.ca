@@ -14,7 +14,8 @@ devConfig.plugins = [
 ];
 
 devConfig.watchOptions = {
-  poll: 1000
+  poll: 1000,
+  // ignored: /node_modules/
 }
 
 module.exports = devConfig;

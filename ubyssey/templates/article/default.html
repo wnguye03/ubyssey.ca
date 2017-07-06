@@ -53,7 +53,7 @@
       {% endblock %}
       <div class="article-content">
       {% block pre-content %}{% endblock %}
-        {{ article.get_html|safe }}
+        {{ article.html|safe }}
       </div>
       {% include 'objects/social-icons-bottom.html' with article=article %}
   </article>

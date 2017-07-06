@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<header class="c-header">
+  <div class="u-container">
+    <nav class="c-header__nav">
+      <div class="c-header__nav__logo">
+        <img class="c-header__nav__logo__image" src="{% static 'images/advertise/ubyssey-logo.svg' %}"/>
+        <span class="c-header__nav__logo__text">Advertise</span>
+      </div>
+      <ul class="c-header__nav__list">
+        <li><a href="#web">Web</a></li>
+        <li><a href="#print">Print</a></li>
+        <li><a href="#guide">Guide to UBC</a></li>
+        <li><a class="c-header__nav__button" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <h2 class="c-header__hook">The best way to reach UBC students.</h2>
+  </div>
+  <div class="c-header__vectors">
+    <div class="u-container">
+      <img class="c-header__vector c-header__vector--phone" src="{% static 'images/advertise/vector-phone.svg' %}" />
+      <img class="c-header__vector c-header__vector--newspaper" src="{% static 'images/advertise/vector-newspaper.svg' %}" />
+      <img class="c-header__vector c-header__vector--desktop" src="{% static 'images/advertise/vector-desktop.svg' %}" />
+    </div>
+  </div>
+</header>

@@ -12,6 +12,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.core.mail import send_mail
 
 # Dispatch imports
 from dispatch.apps.content.models import Article, Page, Section, Topic
@@ -24,6 +25,7 @@ from dispatch.apps.events.models import Event
 # Ubyssey imports
 from ubyssey.pages import Homepage
 from ubyssey.helpers import ArticleHelper
+from ubyssey.widgets import EventWidget
 
 # Python imports
 from datetime import datetime
@@ -80,8 +82,6 @@ class UbysseyTheme(DefaultTheme):
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
 
-        component_set = Homepage()
-
         popular = Article.objects.get_popular()[:5]
 
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
@@ -100,7 +100,6 @@ class UbysseyTheme(DefaultTheme):
             'sections': sections,
             'popular': popular,
             'blog': blog,
-            #'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
         return render(request, 'homepage/base.html', context)
@@ -129,9 +128,8 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        # TODO: why is this broken?
-        # t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
-        t = loader.select_template(['article/default.html'])
+        template = article.get_template_path()
+        t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
         return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):
@@ -553,6 +551,26 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'events/event.html', context)
+
+    def advertise(self, request):
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            message = request.POST.get('message')
+
+            template = 'Name: %s\nEmail: %s\nMessage:\n%s'
+
+            if name and email:
+                send_mail(
+                    'Advertising inquiry from %s' % name,
+                    template % (name, email, message),
+                    email,
+                    [settings.UBYSSEY_ADVERTISING_EMAIL],
+                    fail_silently=True,
+                )
+
+        return render(request, 'advertise/index.html')
+
 
 class UbysseyMagazineTheme(UbysseyTheme):
     '''Views for The Ubyssey Magazine microsite.'''

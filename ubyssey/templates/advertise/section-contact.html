@@ -1,0 +1,15 @@
+<div id="contact" class="c-section c-section--contact c-section--inset c-section--orange">
+  <div class="u-container">
+    <form class="c-form" method="post">
+      {% csrf_token %}
+      <h2 class="o-heading o-heading--white">Contact us</h2>
+      <input id="name" name="name" type="text" placeholder="Name" />
+
+      <input id="email" name="email" type="email" placeholder="Email address" />
+
+      <textarea id="message" name="message" rows="5" placeholder="How can we help you?"></textarea>
+
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</div>
