@@ -34,11 +34,13 @@
           {{ day }}
         </div>
         <div class="calendar-event-list-wrapper">
-          <ul class="calendar-event-list-container">
+          <div class="calendar-event-list-container">
           {% for event in events %}
-            {% include './event_tile.html' %}
+            <div class="calendar-event-container">
+            {% include './event_box.html' with event=event hide_datebox=False only %}
+            </div>
           {% endfor %}{# event #}
-          </ul>
+        </div>
         </div>
       </div>
       {% endfor %}{# day #}

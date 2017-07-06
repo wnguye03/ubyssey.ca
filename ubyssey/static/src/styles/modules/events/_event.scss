@@ -10,6 +10,11 @@
   padding: 50px 15px;
   float: right;
   width: 50%;
+
+  @media($bp-smaller-than-phablet) {
+    display: block;
+    width: 100%;
+  }
 }
 
 .event-image {
@@ -31,7 +36,7 @@
 }
 
 .event-title {
- border-bottom: 1px dotted #ccc;
+ border-bottom: 1px solid #ccc;
 }
 
 .event-description {
