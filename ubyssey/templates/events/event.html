@@ -13,17 +13,17 @@
 <main class="u-container u-container--padded">
   <div class="event-container">
     <div class="event-title"><h1>{{ event.title }}</h1></div>
-    {% if event.image %}
-    <div class="event-image-container">
-      <img class="event-image" src="{{ event.image.url }}" alt="{{ event.title }}">
-    </div>
-    {% endif %}
     <div class="event-info">
+      {% if event.image %}
+      <div class="event-image-container">
+        <img class="event-image" src="{{ event.image.url }}" alt="{{ event.title }}">
+      </div>
+      {% endif %}
       <div class="event-category">{{ event.category|capfirst }}</div>
-      <div class="event-description">{{ event.description }}</div>
       <div class="event-start">{{ event.start_time|date:"l, F j \a\t g A" }}</div>
       <div class="event-time-separator">-</div>
       <div class="event-end">{{ event.end_time|date:"l, F j \a\t g A" }}</div>
+      <div class="event-description">{{ event.description|linebreaks }}</div>
       <div class="event-host">Hosted by {{ event.host }}</div>
       <div class="event-location-info">
         <div class="event-location"><span>@</span>{{ event.location }}</div>
