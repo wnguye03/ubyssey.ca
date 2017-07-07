@@ -35,10 +35,17 @@
 
   // Text
   line-height: 1.4em;
+
+  h3, p {
+    // Structure
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .c-event__title {
   // Text
+  font-size: 16px;
   font-weight: $font-weight-semi-bold;
 }
 
