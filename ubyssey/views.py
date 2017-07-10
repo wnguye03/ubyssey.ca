@@ -16,7 +16,6 @@ from dispatch.apps.frontend.themes.default import DefaultTheme
 from dispatch.apps.frontend.helpers import templates
 
 # Ubyssey imports
-from ubyssey.pages import Homepage
 from ubyssey.helpers import ArticleHelper
 from ubyssey.widgets import EventWidget
 
