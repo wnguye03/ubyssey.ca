@@ -7,8 +7,11 @@ $calendar-event-time-label-color  : #006fcc;
   margin-bottom: 40px;
 
   @media($bp-smaller-than-phablet) {
-    padding-left: 2px;
-    padding-right: 2px;
+    padding: 0 2px;
+  }
+
+  h1 {
+    padding: 0 5px;
   }
 }
 
@@ -181,7 +184,7 @@ $calendar-event-time-label-color  : #006fcc;
 
 .calendar-event-container {
   @media($bp-larger-than-tablet) {
-    flex: 0 1 300px;
+    flex: 1 1 300px;
     margin-right: 15px;
   }
 
