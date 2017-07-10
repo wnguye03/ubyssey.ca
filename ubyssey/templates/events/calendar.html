@@ -12,7 +12,7 @@
 {% timezone 'America/Vancouver' %}
 
 <main id="calendar" class="u-container">
-  <h1>Events</h1>
+  <h1>Calendar of Events</h1>
 
   {% include './calendar_sidebar.html' %}
 
@@ -52,5 +52,25 @@
 
 {% endtimezone %}
 {% endlocaltime %}
+{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+$(function() {
+  var classname = 'calendar-event-container--wrapped';
+  function fixrows() {
+    $(".calendar-event-container").each(function() {
+      var parent_y = $(this).parent().position().top;
+      var y = $(this).position().top;
+      if (y > parent_y) {
+        $(this).addClass(classname);
+      } else {
+        $(this).removeClass(classname);
+      }
+    });
+  }
+  fixrows();
+  $(window).resize(fixrows);
+});
+</script>
 {% endblock %}
