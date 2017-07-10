@@ -71,6 +71,13 @@ $(function() {
   }
   fixrows();
   $(window).resize(fixrows);
+
+  $(".c-event__image").each(function() {
+    var h = $(this).outerHeight();
+    if (h > 600) {
+      $(this).css('padding-top', '25%');
+    }
+  });
 });
 </script>
 {% endblock %}
