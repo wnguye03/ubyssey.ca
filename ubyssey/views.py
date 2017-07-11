@@ -541,8 +541,7 @@ class UbysseyTheme(DefaultTheme):
         # eg. slug generated from date & name to avoid collision
         event = get_object_or_404(Event, pk=event_id)
 
-        # TODO: also 404 on unpublished
-        if event.is_submission:
+        if event.is_submission or not event.is_published:
             raise Http404('Event could not be found.')
 
         context = {
