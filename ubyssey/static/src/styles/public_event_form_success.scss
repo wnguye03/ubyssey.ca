@@ -8,10 +8,14 @@
 
 @import 'objects/inputs';
 
-.u-container--padded {
-  flex: auto;
-  padding-top: 17rem;
-  padding-bottom: 15rem;
+.u-container {
+  // Structure
+  padding-top: 1rem;
+
+  // Text
   text-align: center;
-  position: relative;
+}
+
+.c-success--message {
+  text-color: #4e4e4e;
 }
