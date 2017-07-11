@@ -10,11 +10,21 @@
     {% endif %}
     <div class="c-event__info">
       <h3 class="c-event__title"><a href="/event/{{ event.pk }}/">{{ event.title|wordwrap:30|linebreaksbr }}</a></h3>
-      {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
+
+  {% if not hide_day_label %}
+    {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
       <p class="c-event__time">{{ event.start_time|date:"l \a\t g A" }} - {{ event.end_time|date:"g A"}}</p>
-      {% else %}
+    {% else %}
       <p class="c-event__time">{{ event.start_time|date:"l \a\t g A" }} - {{ event.end_time|date:"l \a\t g A" }}</p>
-      {% endif %}
+    {% endif %}
+  {% else %}
+    {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
+      <p class="c-event__time">{{ event.start_time|date:"g A" }} - {{ event.end_time|date:"g A"}}</p>
+    {% else %}
+      <p class="c-event__time">{{ event.start_time|date:"g A" }} - {{ event.end_time|date:"l \a\t g A"}}</p>
+    {% endif %}
+  {% endif %}
+
       <p class="c-event__location">{{ event.location|wordwrap:40|linebreaksbr }}</p>
     </div>
   </div>

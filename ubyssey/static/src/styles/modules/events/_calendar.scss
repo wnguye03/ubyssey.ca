@@ -4,55 +4,34 @@ $calendar-event-time-label-color  : #006fcc;
 $tiles-margin                     : 35px;
 
 #calendar {
-  max-width: 1600px;
+  // max-width: 1600px;
   min-height: 500px;
   margin-bottom: 40px;
 
   @media($bp-smaller-than-phablet) {
     padding: 0 2px;
-  }
 
-  h1 {
-    padding: 0 5px;
+    h1 {
+       padding: 0 5px;
+    }
   }
 }
 
 .calendar-container {
-  display: inline-block;
-  margin-right: 15px;
-
-  @media($bp-larger-than-phablet) {
-    width: calc(100% - 275px);
-  }
-
-  @media($bp-smaller-than-phablet) {
-    display: block;
-    width: 100%;
-    clear: both;
-  }
+  width: 100%;
 }
 
 .calendar-category-sidebar {
+  text-align: right;
+
+  @media($bp-smaller-than-phablet) {
+    padding: 0 5px;
+  }
+
   @media($bp-larger-than-phablet) {
-    display: inline-block;
-    float: right;
-    width: 175px;
-
-    ul {
-      line-height: 1.25em;
-      padding-left: 15px;
-    }
+    padding: 0 30px;
   }
 
-  @media($bp-smaller-than-phablet) {
-    display: block;
-    float: left;
-    width: calc(100% - 20px);
-    margin: 10px;
-    clear: both;
-  }
-
-  @media($bp-smaller-than-phablet) {
     ul {
       list-style-type: none;
       padding: 0;
@@ -73,7 +52,6 @@ $tiles-margin                     : 35px;
       cursor: pointer;
       box-shadow: 1px 1px 3px 0px rgba(122, 122, 122, 0.1);
     }
-  }
 
   li {
     font-size: 14px;
@@ -83,6 +61,7 @@ $tiles-margin                     : 35px;
       font-weight: 600;
     }
   }
+
 }
 
 .calendar-categories-label {
@@ -141,7 +120,7 @@ $tiles-margin                     : 35px;
   }
 
   @media($bp-larger-than-tablet) {
-    margin: $tiles-margin 0 0 30px;
+    margin-top: $tiles-margin;
   }
 
   @media($bp-smaller-than-tablet) {
@@ -153,7 +132,7 @@ $tiles-margin                     : 35px;
   display: inline-block;
 
   @media($bp-larger-than-tablet) {
-    width: calc(100% - 110px);
+    width: calc(100% - 110px - #{$tiles-margin});
     padding-left: 10px;
   }
 
@@ -184,7 +163,7 @@ $tiles-margin                     : 35px;
 
 .calendar-event-container {
   @media($bp-larger-than-tablet) {
-    flex: 1 0 250px;
+    flex: 1 0 210px;
     margin-right: $tiles-margin;
   }
 
