@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from dispatch.theme.fields import CharField, TextField, ArticleField, ImageField, EventField, InvalidField
 from dispatch.theme import register
 from dispatch.theme.widgets import Zone, Widget
@@ -31,3 +32,14 @@ class SingleEventWidget(Widget):
             'image': event.image,
             'location': event.loction
         })
+
+@register.widget
+class EventWidget(Widget):
+  id = 'custom'
+  name = 'Event Widget'
+  template = 'widgets/event.html'
+  zones = (EventSidebar,)
+
+  title = CharField('title')
+
+  event = EventField('event')

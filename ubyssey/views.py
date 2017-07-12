@@ -16,8 +16,8 @@ from dispatch.apps.frontend.themes.default import DefaultTheme
 from dispatch.apps.frontend.helpers import templates
 
 # Ubyssey imports
-from ubyssey.pages import Homepage
 from ubyssey.helpers import ArticleHelper
+from ubyssey.widgets import EventWidget
 
 # Python imports
 from datetime import datetime
@@ -74,8 +74,6 @@ class UbysseyTheme(DefaultTheme):
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
 
-        component_set = Homepage()
-
         popular = Article.objects.get_popular()[:5]
 
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
@@ -94,7 +92,6 @@ class UbysseyTheme(DefaultTheme):
             'sections': sections,
             'popular': popular,
             'blog': blog,
-            'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
         return render(request, 'homepage/base.html', context)
@@ -123,7 +120,8 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
+        template = article.get_template_path()
+        t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
         return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):
