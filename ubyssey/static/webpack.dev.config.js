@@ -3,7 +3,7 @@ var prodConfig = require('./webpack.config.js');
 
 var devConfig = Object.create(prodConfig);
 
-devConfig.devtool = 'cheap-module-eval-source-map';
+devConfig.devtool = 'source-map';
 devConfig.debug = true;
 devConfig.plugins = [
   new webpack.DefinePlugin({
@@ -12,9 +12,5 @@ devConfig.plugins = [
     }
   })
 ];
-
-devConfig.watchOptions = {
-  poll: 1000
-}
 
 module.exports = devConfig;
