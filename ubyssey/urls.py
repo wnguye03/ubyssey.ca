@@ -32,7 +32,7 @@ theme_urls = [
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
-    url(r'^calendar/$', theme.events_calendar, name='calendar'),
+    url(r'^events/$', theme.events_calendar, name='events'),
     url(r'^event/(?P<event_id>[0-9]+)/$', theme.event_detail, name='event'),
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),

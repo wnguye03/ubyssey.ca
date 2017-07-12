@@ -515,7 +515,7 @@ class UbysseyTheme(DefaultTheme):
             'meta': {
                 'title': 'Calendar',
                 'description': 'Ubyssey calendar of events',
-                'url': "%s%s" % (settings.BASE_URL, reverse('calendar'))
+                'url': "%s%s" % (settings.BASE_URL, reverse('events'))
             },
             'events_by_date': events_by_date,
             'this_year': date.today().year,
