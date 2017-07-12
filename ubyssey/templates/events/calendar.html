@@ -11,32 +11,32 @@
 {% localtime on %}
 {% timezone 'America/Vancouver' %}
 
-<main id="calendar" class="u-container">
+<main class="u-container c-calendar">
   <h1>Calendar of Events</h1>
 
-  {% include './calendar_sidebar.html' %}
+  {% include './calendar_categories.html' %}
 
-  <div class="calendar-container">
+  <div class="c-event-calendar__container">
     {% for year, months in events_by_date.items %}
     {% ifnotequal year this_year %}
-    <div class="calendar-year-label">
+    <div class="c-event-calendar__year-label">
       {{ year }}
     </div>
     {% endifnotequal %}
     {% for month, days in months.items %}
-    <div class="calendar-month">
-      <div class="calendar-month-label">
+    <div class="c-event-calendar__month">
+      <div class="c-event-calendar__month-label">
         {{ month }}
       </div>
       {% for day, events in days.items %}
-      <div class="calendar-day-row">
-        <div class="calendar-day-label">
+      <div class="c-event-calendar__day-row">
+        <div class="c-event-calendar__day-label">
           {{ day }}
         </div>
-        <div class="calendar-event-list-wrapper">
-          <div class="calendar-event-list-container">
+        <div class="c-event-calendar__event-list-wrapper">
+          <div class="c-event-calendar__event-list-container">
           {% for event in events %}
-            <div class="calendar-event-container">
+            <div class="c-event-calendar__event-box-container">
             {% include './event_box.html' with event=event hide_datebox=False hide_day_label=True only %}
             </div>
           {% endfor %}{# event #}
@@ -57,15 +57,16 @@
 {% block scripts %}
 <script type="text/javascript">
 $(function() {
-  var classname = 'calendar-event-container--wrapped';
+  var baseClass = 'c-event-calendar__event-box-container';
+  var wrappedClass = baseClass + '--wrapped';
   function fixrows() {
-    $(".calendar-event-container").each(function() {
+    $('.' + baseClass).each(function() {
       var parent_y = $(this).parent().position().top;
       var y = $(this).position().top;
       if (y > parent_y) {
-        $(this).addClass(classname);
+        $(this).addClass(wrappedClass);
       } else {
-        $(this).removeClass(classname);
+        $(this).removeClass(wrappedClass);
       }
     });
   }

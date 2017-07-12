@@ -1,32 +1,18 @@
-.event-container {
+.c-event-detail__container {
   // structure
   margin-bottom: 25px;
   min-height: 600px;
 }
 
-.event-image-container {
-  display: block;
-  position: relative;
-  box-sizing: border-box;
-  padding: 0 0 40px 40px;
-  float: right;
-  width: 50%;
+.c-event-detail__title {
+  border-bottom: 1px solid #ccc;
 
   @media($bp-smaller-than-tablet) {
-    display: block;
-    width: 100%;
-    padding: 0;
+    border-bottom: 0;
   }
 }
 
-.event-image {
-  // structure
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 600px;
-}
-
-.event-info {
+.c-event-detail__info {
   // structure
   box-sizing: border-box;
   margin: 16px 0;
@@ -36,15 +22,52 @@
 
 }
 
-.event-title {
-  border-bottom: 1px solid #ccc;
+.c-event-detail__image-container {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 0 40px 40px;
+  float: right;
+  width: 50%;
+
+  background-color: #FFF;
 
   @media($bp-smaller-than-tablet) {
-    border-bottom: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 15px;
   }
 }
 
-.event-description {
+.c-event-detail__image {
+  // structure
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 600px;
+}
+
+.c-event-detail__category {
+  display: inline-block;
+  margin-right: 0.5em;
+
+  font-weight: 600;
+}
+
+.c-event-detail__start, .c-event-detail__end {
+  // structure
+  display: inline-block;
+
+  // display
+  color: $color-text-gray;
+  font-weight: 400;
+}
+
+.c-event-detail__time-separator {
+  display: inline-block;
+}
+
+.c-event-detail__description {
   // structure
   padding: 15px 0;
   margin-bottom: 15px;
@@ -58,27 +81,24 @@
   line-height: 1.625rem;
 }
 
-.event-start, .event-end {
-  // structure
-  display: inline-block;
-
-  // display
-  color: $color-text-gray;
-  font-weight: 400;
+.c-event-detail__location-info {
+  text-align: right;
+  line-height: 1.25em;
 }
 
-.event-time-separator {
-  display: inline-block;
-}
-
-.event-category {
-  display: inline-block;
-  margin-right: 0.5em;
-
+.c-event-detail__location span {
+  color: $color-accent-blue;
   font-weight: 600;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
-.event-fb-link > button {
+.c-event-detail__address {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.c-event-detail__fb-link > button {
   // structure
   margin-top: 25px;
 
@@ -87,21 +107,4 @@
   color: $color-white;
   border-color: $color-social-facebook-dark;
   background-image: initial;
-}
-
-.event-location-info {
-  text-align: right;
-  line-height: 1.25em;
-}
-
-.event-location span {
-  color: $color-accent-blue;
-  font-weight: 600;
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-.event-address {
-  font-style: italic;
-  font-size: 14px;
 }
