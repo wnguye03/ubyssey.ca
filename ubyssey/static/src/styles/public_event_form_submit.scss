@@ -8,8 +8,17 @@
 
 @import 'objects/inputs';
 
-.c-submit-event__title {
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
+main {
+  flex: 1;
+}
+
+.c-submit-event__title {
   // Structure
   width: 100%;
   height: 100%;
@@ -23,7 +32,6 @@
 }
 
 .c-submit-event__description {
-
   // Structure
   width: 100%;
   height: 100%;
@@ -36,11 +44,11 @@
 }
 
 .c-two-col {
-
   // Structure
   width: 80%;
   display: flex;
   margin: auto;
+  justify-content: center;
   padding-right: 1rem;
   padding-left: 1rem;
   align-items: center;
@@ -57,7 +65,6 @@
 }
 
 .c-fb-import {
-
   // Structure
   height: auto;
   width: 48%;
@@ -67,7 +74,6 @@
 }
 
 .c-manual-submit {
-
   // Structure
   float: right;
   height: auto;
@@ -86,7 +92,6 @@
 }
 
 .line {
-
   // Structure
   width: 0px;
   height: 210px;
@@ -102,9 +107,8 @@
 }
 
 .c-input--button {
-
   // Structure
-  height: 33px;
+  height: 32px;
   margin: 0;
   padding: 5px 12px;
 
@@ -127,13 +131,11 @@
 }
 
 .c-input--button--left {
-  
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
 
 .c-input--text {
-
   // Structure
   height: 29px;
   margin: 0;
@@ -151,6 +153,10 @@
   text-align: left;
   vertical-align: middle;
   font: $font-default;
+
+    &:focus {
+    outline: none;
+  }
 }
 
 .c-input::placeholder {

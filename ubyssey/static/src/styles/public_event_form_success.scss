@@ -8,9 +8,19 @@
 
 @import 'objects/inputs';
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 .u-container {
   // Structure
-  padding-top: 1rem;
+  padding-top: 0rem;
 
   // Text
   text-align: center;
