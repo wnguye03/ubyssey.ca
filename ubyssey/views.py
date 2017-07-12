@@ -24,7 +24,7 @@ from dispatch.apps.events.models import Event
 
 # Ubyssey imports
 from ubyssey.pages import Homepage
-from ubyssey.helpers import ArticleHelper
+from ubyssey.helpers import ArticleHelper, EventsHelper
 from ubyssey.widgets import EventWidget
 
 # Python imports
@@ -448,68 +448,14 @@ class UbysseyTheme(DefaultTheme):
 
         return render(request, 'objects/newsletter.html', {})
 
-    def get_calendar_events(self, category=None, months=None, start=None, end=None):
-
-        events = Event.objects.all().order_by('start_time')
-        events = events.filter(is_submission=False)
-        events = events.filter(is_published=True)
-
-        today = date.today()
-        # filter start
-        if start is not None:
-            events = events.filter(start_time__gt=start)
-        else:
-            events = events.filter(start_time__gt=today)
-
-        # filter end
-        if end is not None:
-            events = events.filter(end_time__lte=end)
-        else:
-            until_month = today.month + (months if months is not None else 12)
-            until_year = today.year
-            while until_month > 12:
-                until_month -= 12
-                until_year += 1
-            dt_until = today.replace(year=until_year, month=until_month)
-            events = events.filter(end_time__lte=dt_until)
-
-        if category is not None and category != 'all':
-            events = events.filter(category__exact=category)
-
-        HARD_MAX = 100
-        events = events[:HARD_MAX]
-
-        return events
-
-    def organize_events_by_date(self, events):
-        events_by_date = OrderedDict()
-
-        for event in events:
-            start = event.start_time # Zulu
-            start = start.astimezone(timezone('America/Vancouver'))
-            year = start.year
-            month = start.month
-            month = calendar.month_name[month]
-            day = '%s. %d' % (start.strftime('%a'), start.day)
-            if year not in events_by_date:
-                events_by_date[year] = OrderedDict()
-            if month not in events_by_date[year]:
-                events_by_date[year][month] = OrderedDict()
-            if day not in events_by_date[year][month]:
-                events_by_date[year][month][day] = []
-
-            events_by_date[year][month][day].append(event)
-
-        return events_by_date
-
     def events_calendar(self, request):
         category = request.GET.get('category')
         months = request.GET.get('months')
         start = request.GET.get('start')
         end = request.GET.get('end')
 
-        events = self.get_calendar_events(category=category, months=months, start=start, end=end)
-        events_by_date = self.organize_events_by_date(events)
+        events = EventsHelper.get_calendar_events(category=category, months=months, start=start, end=end)
+        events_by_date = EventsHelper.organize_events_by_date(events)
 
         context = {
             'meta': {
@@ -537,11 +483,9 @@ class UbysseyTheme(DefaultTheme):
         }
 
     def event_detail(self, request, event_id):
-        # TODO: find a way to select without putting event_id in url
-        # eg. slug generated from date & name to avoid collision
-        event = get_object_or_404(Event, pk=event_id)
-
-        if event.is_submission or not event.is_published:
+        try:
+            event = EventsHelper.get_event(event_id)
+        except:
             raise Http404('Event could not be found.')
 
         context = {
