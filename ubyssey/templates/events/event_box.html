@@ -1,6 +1,6 @@
 <div class="c-event">
   {% if event.image and not hide_image %}
-  <a href="/event/{{ event.pk }}/">
+  <a href="{% url 'event' event.pk %}">
     <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
   </a>
   {% endif %}
@@ -9,7 +9,7 @@
     {% include './date_box.html' with month=event.start_time|date:"F"|slice:":3" day=event.start_time|date:"j" only %}
     {% endif %}
     <div class="c-event__info">
-      <h3 class="c-event__title"><a href="/event/{{ event.pk }}/">{{ event.title|wordwrap:30|linebreaksbr }}</a></h3>
+      <h3 class="c-event__title"><a href="{% url 'event' event.pk %}">{{ event.title|wordwrap:30|linebreaksbr }}</a></h3>
 
   {% if not hide_day_label %}
     {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
