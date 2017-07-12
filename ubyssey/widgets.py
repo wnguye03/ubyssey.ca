@@ -2,12 +2,9 @@ from dispatch.theme.fields import CharField, TextField, ArticleField, ImageField
 from dispatch.theme import register
 from dispatch.theme.widgets import Zone, Widget
 from dispatch.apps.events.models import Event
+from zones import EventSidebar
 
-class Sidebar(Zone):
-
-    id = 'sidebar'
-    name = 'Sidebar'
-
+@register.widget
 class SingleEventWidget(Widget):
 
     id = 'single-event'

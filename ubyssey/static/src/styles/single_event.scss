@@ -1,0 +1,64 @@
+@import 'modules/core';
+@import 'modules/fonts';
+@import 'modules/font_faces';
+@import 'modules/variables';
+@import 'modules/mixins';
+@import 'modules/header';
+@import 'modules/footer';
+
+@import 'objects/inputs';
+
+.c-event {
+  // Background
+  background: #fff;
+
+  // Border
+  border: solid 0.5px #e6e6e6;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+
+  // Text
+  font-family: 'ub-lft-etica';
+}
+
+.c-event__image {
+  position: relative;
+  padding-top: 60%;
+  background-position: center;
+  background-size: cover;
+}
+
+.c-event__meta {
+  // Structure
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.c-event__info {
+  // Structure
+  flex: 1;
+  padding-left: 0.5rem;
+
+  // Text
+  line-height: 1.4em;
+}
+
+.c-event__title {
+  // Text
+  font-weight: $font-weight-semi-bold;
+}
+
+.c-event__time,
+.c-event__location {
+  // Text
+  font-size: 13px;
+  color: $color-text-gray;
+}
+
+.c-event__time {
+  // Text
+  font-weight: $font-weight-semi-bold;
+}
