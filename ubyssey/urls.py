@@ -4,10 +4,12 @@ from django.conf.urls.static import static
 
 from ubyssey.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
+from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
 from ubyssey.views.advertise import AdvertiseTheme
 
 theme = UbysseyTheme()
+guide = GuideTheme()
 magazine = MagazineTheme()
 advertise = AdvertiseTheme()
 
@@ -19,8 +21,10 @@ theme_urls = [
     url(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     url(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
     url(r'^topic/(\d*)/$', theme.topic, name='topic'),
-    url(r'^guide/$', theme.guide_index, name='guide-index'),
-    url(r'^guide/(?P<slug>[-\w]+)/$', theme.guide_article, name='guide-article'),
+
+    # Guide to UBC
+    url(r'^guide/$', guide.landing, name='guide-landing'),
+    url(r'^guide/(?P<slug>[-\w]+)/$', guide.article, name='guide-article'),
 
     # Magazine
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),

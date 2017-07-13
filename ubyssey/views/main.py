@@ -29,7 +29,6 @@ class UbysseyTheme(DefaultTheme):
     SITE_URL = settings.BASE_URL
 
     def get_article_meta(self, article, default_image=None):
-
         try:
             image = article.featured_image.image.get_medium_url()
         except:
@@ -44,7 +43,6 @@ class UbysseyTheme(DefaultTheme):
         }
 
     def home(self, request):
-
         frontpage = ArticleHelper.get_frontpage(
             sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'),
             max_days=7
@@ -93,7 +91,6 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'homepage/base.html', context)
 
     def article(self, request, section=None, slug=None):
-
         try:
             article = self.find_article(request, slug, section)
         except:
@@ -139,7 +136,6 @@ class UbysseyTheme(DefaultTheme):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
-
         try:
             page = self.find_page(request, slug)
         except:
@@ -171,7 +167,6 @@ class UbysseyTheme(DefaultTheme):
         return HttpResponse(t.render(context))
 
     def elections(self, request):
-
         articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
 
         topic = Topic.objects.filter(name='AMS Elections')[0]
@@ -195,7 +190,6 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'section.html', context)
 
     def section(self, request, slug=None):
-
         try:
             section = Section.objects.get(slug=slug)
         except:
@@ -249,7 +243,6 @@ class UbysseyTheme(DefaultTheme):
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):
-
         try:
             person = Person.objects.get(slug=slug)
         except:
@@ -296,7 +289,6 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'author.html', context)
 
     def archive(self, request):
-
         years = ArticleHelper.get_years()
 
         sections = Section.objects.all()
@@ -368,11 +360,9 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'archive.html', context)
 
     def search(self, request):
-
         return redirect(self.archive)
 
     def topic(self, request, pk=None):
-
         try:
             topic = Topic.objects.get(id=pk)
         except Topic.DoesNotExist:
@@ -393,43 +383,6 @@ class UbysseyTheme(DefaultTheme):
         }
 
         return render(request, 'section.html', context)
-
-    def guide_index(self, request):
-
-        context = {}
-
-        return render(request, 'guide/index.html', context)
-
-
-    def guide_article(self, request, slug=None):
-
-        try:
-            article = self.find_article(request, slug, 'guide')
-        except:
-            raise Http404('Article could not be found.')
-
-        template_fields = article.get_template_fields()
-
-        try:
-            next_a = self.find_article(request, template_fields['next_a'], 'guide')
-        except:
-            next_a = None
-
-        try:
-            next_b = self.find_article(request, template_fields['next_b'], 'guide')
-        except:
-            next_b = None
-
-        article.add_view()
-
-        context = {
-            'title': article.headline,
-            'meta': self.get_article_meta(article),
-            'article': article,
-            'next': [next_a, next_b]
-        }
-
-        return render(request, 'guide/article.html', context)
 
     def newsletter(self, request):
         return render(request, 'objects/newsletter.html', {})
