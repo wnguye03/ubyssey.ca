@@ -1,32 +1,13 @@
-@import 'modules/core';
-@import 'modules/fonts';
-@import 'modules/font_faces';
-@import 'modules/variables';
-@import 'modules/mixins';
-@import 'modules/header';
-@import 'modules/footer';
-
-@import 'objects/inputs';
-
 .c-form-input {
   // Structure
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-form {
-  // Structure
-  display: inline-block;
-  padding-left: 120px;
-  padding-right: 120px;
-}
-
-.c-form-input__title, .c-form-input__description {
+.c-form-input__title,
+.c-form-input__description {
   // Structure
   padding-bottom: 1rem;
-
-  // Text
-  text-align: center;
 }
 
 input[type=text], input[type=email], input[type=tel], textarea {

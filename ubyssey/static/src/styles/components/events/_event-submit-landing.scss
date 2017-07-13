@@ -1,51 +1,5 @@
-@import 'modules/core';
-@import 'modules/fonts';
-@import 'modules/font_faces';
-@import 'modules/variables';
-@import 'modules/mixins';
-@import 'modules/header';
-@import 'modules/footer';
-
-@import 'objects/inputs';
-
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
-}
-
-.c-submit-event__title {
+.c-event-submit-landing {
   // Structure
-  width: 100%;
-  height: 100%;
-
-  // Text
-  font-family: $font-default;
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-  color: #1d1d1d;
-}
-
-.c-submit-event__description {
-  // Structure
-  width: 100%;
-  height: 100%;
-
-  // Text
-  font-family: $font-default;
-  font-size: 16px;
-  text-align: center;
-  color: #4e4e4e;
-}
-
-.c-two-col {
-  // Structure
-  width: 80%;
   display: flex;
   margin: auto;
   justify-content: center;
@@ -58,10 +12,18 @@ main {
   background-color: #ffffff;
 
   // Border
-  border: #e7e7e7;
-  border-radius: 1px;
-  border-width: 0.5px;
-  border-style: solid;
+  border: 1px solid #e7e7e7;
+}
+
+.c-event-submit-landing__column {
+  // Structure
+  flex: 1;
+  padding: 2rem;
+
+  &:first-child {
+    // Border
+    border-right: 1px solid #e7e7e7;
+  }
 }
 
 .c-fb-import {
