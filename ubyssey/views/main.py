@@ -1,4 +1,6 @@
-# Django imports
+from datetime import datetime
+import json
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -7,22 +9,13 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.core.mail import send_mail
 
-# Dispatch imports
 from dispatch.apps.content.models import Article, Page, Section, Topic
 from dispatch.apps.core.models import Person
 from dispatch.apps.frontend.themes.default import DefaultTheme
 from dispatch.apps.frontend.helpers import templates
 
-# Ubyssey imports
-from ubyssey.pages import Homepage
 from ubyssey.helpers import ArticleHelper
-
-# Python imports
-from datetime import datetime
-import json
-from random import randint
 
 def parse_int_or_none(maybe_int):
     try:
@@ -439,67 +432,4 @@ class UbysseyTheme(DefaultTheme):
         return render(request, 'guide/article.html', context)
 
     def newsletter(self, request):
-
         return render(request, 'objects/newsletter.html', {})
-
-    def advertise(self, request):
-        if request.method == 'POST':
-            name = request.POST.get('name')
-            email = request.POST.get('email')
-            message = request.POST.get('message')
-
-            template = 'Name: %s\nEmail: %s\nMessage:\n%s'
-
-            if name and email:
-                send_mail(
-                    'Advertising inquiry from %s' % name,
-                    template % (name, email, message),
-                    email,
-                    [settings.UBYSSEY_ADVERTISING_EMAIL],
-                    fail_silently=True,
-                )
-
-        return render(request, 'advertise/index.html')
-
-class UbysseyMagazineTheme(UbysseyTheme):
-    '''Views for The Ubyssey Magazine microsite.'''
-
-    def landing(self, request):
-        '''The Ubyssey Magazine landing page view.'''
-
-        # Get all magazine articles
-        articles = Article.objects.filter(is_published=True, section__slug='magazine').order_by('-importance')
-
-        context = {
-            'meta': {
-                'title': 'The Ubyssey Magazine',
-                'description': 'The Ubyssey\'s first magazine.',
-                'url': reverse('magazine-landing'),
-                'image': static('images/magazine/cover-social.png')
-            },
-            'cover': 'images/magazine/cover-%d.jpg' % randint(1, 2),
-            'articles': articles
-        }
-
-        return render(request, 'magazine/landing.html', context)
-
-    def article(self, request, slug=None):
-
-        try:
-            article = self.find_article(request, slug, 'magazine')
-        except:
-            raise Http404('Article could not be found.')
-
-        article.add_view()
-
-        context = {
-            'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': self.get_article_meta(article, default_image=static('images/magazine/cover-social.png')),
-            'article': article,
-            'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
-            'base_template': 'magazine/base.html'
-        }
-
-        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
-
-        return HttpResponse(t.render(context))

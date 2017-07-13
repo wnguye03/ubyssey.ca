@@ -2,11 +2,14 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 
-from feed import FrontpageFeed, SectionFeed
-from views import UbysseyTheme, UbysseyMagazineTheme
+from ubyssey.feed import FrontpageFeed, SectionFeed
+from ubyssey.views.main import UbysseyTheme
+from ubyssey.views.magazine import MagazineTheme
+from ubyssey.views.advertise import AdvertiseTheme
 
 theme = UbysseyTheme()
-magazine = UbysseyMagazineTheme()
+magazine = MagazineTheme()
+advertise = AdvertiseTheme()
 
 theme_urls = [
     url(r'^$', theme.home, name='home'),
@@ -19,12 +22,12 @@ theme_urls = [
     url(r'^guide/$', theme.guide_index, name='guide-index'),
     url(r'^guide/(?P<slug>[-\w]+)/$', theme.guide_article, name='guide-article'),
 
-    # Magazine URLs
+    # Magazine
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
-    # Advertising microsite
-    url(r'^advertise/$', theme.advertise, name='advertise'),
+    # Advertising
+    url(r'^advertise/$', advertise.landing, name='advertise-landing'),
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
