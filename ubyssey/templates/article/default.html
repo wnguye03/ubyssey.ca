@@ -1,5 +1,6 @@
 {% extends base_template %}
 {% load staticfiles %}
+{% load widgets %}
 {% block header %}
     {% include 'headers/topbar.html' with article=article section=article.section.slug %}
     {% include 'headers/mobile.html' %}
@@ -48,6 +49,7 @@
         <div class="sidebar">
         {% endif %}
           {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+          {% zone 'event-sidebar' %}
         </div>
       </div>
       {% endblock %}
