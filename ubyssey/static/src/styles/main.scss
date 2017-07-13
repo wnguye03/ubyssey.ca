@@ -34,7 +34,9 @@
 @import 'components/section-page';
 @import 'components/homepage';
 
-//////
+@import 'components/events/event-submit-form';
+@import 'components/events/event-submit-landing';
+@import 'components/events/event-submit-success';
 
 div.image-container {
     height: 100%;

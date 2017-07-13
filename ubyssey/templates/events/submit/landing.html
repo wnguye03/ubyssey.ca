@@ -7,51 +7,49 @@
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/public_event_form_submit-1.2.4.css' %}" type="text/css"/>
 
-<main class="u-container u-container--padded">
+<main>
+  <div class="u-container u-container--padded">
 
-  <h1 class="c-submit-event__title">Submit an Event</h1>
-  <p class="c-submit-event__description">Hosting an event on or off campus? Submit it to us and we’ll feature it on our website!</p>
+    {% include 'events/submit/header.html' %}
 
-  <div class="c-two-col">
-    {{ form.non_field_errors }}
+    <div class="c-event-submit-landing">
+      {{ form.non_field_errors }}
 
-    <form class="c-fb-import" method="post" action="{% url 'events-submit-form' %}?facebook=1">
-      {% csrf_token %}
+      <div class="c-event-submit-landing__column">
+        <form method="post" action="{% url 'events-submit-form' %}?facebook=1">
+          {% csrf_token %}
 
-      <div class="c-two_col__title">
-        <h3>Import from Facebook</h3>
+          <div class="c-two_col__title">
+            <h3>Import from Facebook</h3>
+          </div>
+
+          <div class="c-two_col__description">
+            <p>Just paste the Facebook event URL below and we’ll handle the rest. Don’t worry, you’ll have a chance to double-check the information before we save it.</p>
+          </div>
+
+          <div class="c-input">
+            {{ form.facebook_url.errors }}
+            <input class="c-input c-input--text" placeholder="Event URL" id="facebook_url" type="text" name="facebook_url" />
+            <input type="hidden" name="facebook_import" value="1" />
+            <input class="c-input c-input--button c-input--button--left" type="submit" value="Import" />
+          </div>
+        </form>
       </div>
+      <div class="c-event-submit-landing__column">
+          <div class="c-two_col__title">
+            <h3>Submit manually</h3>
+          </div>
 
-      <div class="c-two_col__description">
-        <p>Just paste the Facebook event URL below and we’ll handle the rest. Don’t worry, you’ll have a chance to double-check the information before we save it.</p>
+          <div class="c-two_col__description">
+            <p>If you don’t have a Facebook event, you can use the manual submission form.</p>
+          </div>
+
+          <div class="c-input">
+            <a href="{% url 'events-submit-form' %}">Submit manually</a>
+          </div>
       </div>
-
-      <div class="c-input">
-        {{ form.facebook_url.errors }}
-        <input class="c-input c-input--text" placeholder="Event URL" id="facebook_url" type="text" name="facebook_url" />
-        <input type="hidden" name="facebook_import" value="1" />
-        <input class="c-input c-input--button c-input--button--left" type="submit" value="Import" />
-      </div>
-    </form>
-
-    <div class="line">&nbsp;</div>
-
-    <form class="c-manual-submit">
-      <div class="c-two_col__title">
-        <h3>Submit manually</h3>
-      </div>
-
-      <div class="c-two_col__description">
-        <p>If you don’t have a Facebook event, you can use the manual submission form.</p>
-      </div>
-
-      <div class="c-input">
-        <a href="{% url 'events-submit-form' %}">Submit manually</a>
-      </div>
-    </form>
-
+    </div>
   </div>
 </main>
 

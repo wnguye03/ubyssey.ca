@@ -7,130 +7,128 @@
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/public_event_form-1.2.4.css' %}" type="text/css"/>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/ubyssey/static/css/jquery.datetimepicker.min.css" />
 <script type="text/javascript" src="https://s3-us-west-1.amazonaws.com/ubyssey/static/js/jquery.datetimepicker.full.min.js"></script>
 
-<main class="u-container">
+<main>
+  <div class="u-container u-container--padded">
+    {% include 'events/submit/header.html' %}
 
-  <h1 class="c-form-input__title">Submit an Event</h1>
-  <p class="c-form-input__description">Hosting an event on or off campus? Submit it to us and we’ll feature it on our website!</p>
-
-  {% if facebook_error %}
-  Sorry, we weren't able to import an event from the Facebook URL you provided. Please try again or use the form below.
-  {% endif %}
-
-  {{ form.non_field_errors }}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div class="c-form-input c-form-input--text">
-      {{ form.title.errors }}
-      <label for="{{ form.title.id_for_label }}">Title of Event<br></label>
-      {{ form.title }}
-    </div>
-
-    <div class="c-form-input c-form-input--text">
-      {{ form.description.errors }}
-      <label for="{{ form.description.id_for_label }}">Description<br></label>
-      {{ form.description }}
-    </div>
-
-    <div class="c-two-col">
-      <div class="c-form-input c-form-input--text" type="left">
-        {{ form.host.errors }}
-        <label for="{{ form.host.id_for_label }}">Host<br></label>
-        {{ form.host }}
-      </div>
-
-      <div class="c-form-input c-form-input--text" type="right">
-        {{ form.category.errors }}
-        <label for="{{ form.category.id_for_label }}">Category of Event<br></label>
-        {{ form.category }}
-      </div>
-    </div>
-
-    <div class="c-two-col">
-      <div class="c-form-input c-form-input--text" type="left">
-        {{ form.start_time.errors }}
-        <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time<br></label>
-        {{ form.start_time }}
-      </div>
-
-      <div class="c-form-input c-form-input--text" type="right">
-        {{ form.end_time.errors }}
-        <label for="{{ form.end_time.id_for_label }}">End Time<br></label>
-        {{ form.end_time }}
-      </div>
-    </div>
-
-    {% if form.facebook_image_url.value %}
-    <div class="c-form-input c-form-input--text">
-
-      {{ form.facebook_image_url.errors }}
-
-      <label for="{{ form.facebook_image_url.id_for_label }}">Image for the Event<br></label>
-
-      <img id="previewImage" src="{{ form.facebook_image_url.value }}" >
-
-      {{ form.image.errors }}
-      <label for="{{ form.image.id_for_label }}"><br>Or choose your own image<br></label>
-      <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
-
-      <input id="reset" type="reset"
-      value="Or stick with the facebook image" onclick="
-        document.getElementById('previewImage').src='{{ form.facebook_image_url.value }}';
-        document.getElementById('reset').style.display = 'none';" />
-
-    </div>
-
-    {% else %}
-    <div class="c-form-input c-form-input--text">
-      {{ form.image.errors }}
-      <label for="{{ form.image.id_for_label }}">Image for the Event<br></label>
-      <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
-      <img id="previewImage"/>
-    </div>
+    {% if facebook_error %}
+    Sorry, we weren't able to import an event from the Facebook URL you provided. Please try again or use the form below.
     {% endif %}
 
-    <div class="c-form-input c-form-input--text">
-      {{ form.location.errors }}
-      <label for="{{ form.location.id_for_label }}">Location<br></label>
-      {{ form.location }}
-    </div>
+    {{ form.non_field_errors }}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
 
-    <div class="c-form-input c-form-input--text">
-      {{ form.address.errors }}
-      <label for="{{ form.address.id_for_label }}">Address<br></label>
-      {{ form.address }}
-    </div>
+      <div class="c-form-input c-form-input--text">
+        {{ form.title.errors }}
+        <label for="{{ form.title.id_for_label }}">Title of Event<br></label>
+        {{ form.title }}
+      </div>
 
-    <div class="c-form-input c-form-input--text">
-      <i>Please add in your email and phone number! It will allow us to contact you in case we need to confirm any information.</i>
-    </div>
+      <div class="c-form-input c-form-input--text">
+        {{ form.description.errors }}
+        <label for="{{ form.description.id_for_label }}">Description<br></label>
+        {{ form.description }}
+      </div>
 
-    <div class="c-form-input c-form-input--email">
-      {{ form.submitter_email.errors }}
-      <label for="{{ form.submitter_email.id_for_label }}">Email <br></label>
-      {{ form.submitter_email }}
-    </div>
+      <div class="c-two-col">
+        <div class="c-form-input c-form-input--text" type="left">
+          {{ form.host.errors }}
+          <label for="{{ form.host.id_for_label }}">Host<br></label>
+          {{ form.host }}
+        </div>
 
-    <div class="c-form-input c-form-input--phone">
-      {{ form.submitter_phone.errors }}
-      <label for="{{ form.submitter_phone.id_for_label }}">Phone Number <br></label>
-      {{ form.submitter_phone }}
-    </div>
+        <div class="c-form-input c-form-input--text" type="right">
+          {{ form.category.errors }}
+          <label for="{{ form.category.id_for_label }}">Category of Event<br></label>
+          {{ form.category }}
+        </div>
+      </div>
 
-    <p hidden>{{ form.facebook_url }}</p>
-    <p hidden>{{ form.facebook_image_url }}</p>
+      <div class="c-two-col">
+        <div class="c-form-input c-form-input--text" type="left">
+          {{ form.start_time.errors }}
+          <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time<br></label>
+          {{ form.start_time }}
+        </div>
 
-    <div class="c-input">
-      <input method="post" class="c-input c-input--button" type="submit" name="submit_event" value="Submit Event" />
-    </div>
+        <div class="c-form-input c-form-input--text" type="right">
+          {{ form.end_time.errors }}
+          <label for="{{ form.end_time.id_for_label }}">End Time<br></label>
+          {{ form.end_time }}
+        </div>
+      </div>
 
-  </form>
+      {% if form.facebook_image_url.value %}
+      <div class="c-form-input c-form-input--text">
 
+        {{ form.facebook_image_url.errors }}
+
+        <label for="{{ form.facebook_image_url.id_for_label }}">Image for the Event<br></label>
+
+        <img id="previewImage" src="{{ form.facebook_image_url.value }}" >
+
+        {{ form.image.errors }}
+        <label for="{{ form.image.id_for_label }}"><br>Or choose your own image<br></label>
+        <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
+
+        <input id="reset" type="reset"
+        value="Or stick with the facebook image" onclick="
+          document.getElementById('previewImage').src='{{ form.facebook_image_url.value }}';
+          document.getElementById('reset').style.display = 'none';" />
+
+      </div>
+
+      {% else %}
+      <div class="c-form-input c-form-input--text">
+        {{ form.image.errors }}
+        <label for="{{ form.image.id_for_label }}">Image for the Event<br></label>
+        <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
+        <img id="previewImage"/>
+      </div>
+      {% endif %}
+
+      <div class="c-form-input c-form-input--text">
+        {{ form.location.errors }}
+        <label for="{{ form.location.id_for_label }}">Location<br></label>
+        {{ form.location }}
+      </div>
+
+      <div class="c-form-input c-form-input--text">
+        {{ form.address.errors }}
+        <label for="{{ form.address.id_for_label }}">Address<br></label>
+        {{ form.address }}
+      </div>
+
+      <div class="c-form-input c-form-input--text">
+        <i>Please add in your email and phone number! It will allow us to contact you in case we need to confirm any information.</i>
+      </div>
+
+      <div class="c-form-input c-form-input--email">
+        {{ form.submitter_email.errors }}
+        <label for="{{ form.submitter_email.id_for_label }}">Email <br></label>
+        {{ form.submitter_email }}
+      </div>
+
+      <div class="c-form-input c-form-input--phone">
+        {{ form.submitter_phone.errors }}
+        <label for="{{ form.submitter_phone.id_for_label }}">Phone Number <br></label>
+        {{ form.submitter_phone }}
+      </div>
+
+      <p hidden>{{ form.facebook_url }}</p>
+      <p hidden>{{ form.facebook_image_url }}</p>
+
+      <div class="c-input">
+        <input method="post" class="c-input c-input--button" type="submit" name="submit_event" value="Submit Event" />
+      </div>
+
+    </form>
+  </div>
 </main>
 
 <script type="text/javascript">
