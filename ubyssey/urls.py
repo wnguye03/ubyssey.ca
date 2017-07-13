@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 
-from ubyssey.feed import FrontpageFeed, SectionFeed
+from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
 from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
@@ -18,6 +18,7 @@ theme_urls = [
     url(r'^search/$', theme.search, name='search'),
     url(r'^archive/$', theme.archive, name='archive'),
     url(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
+
     url(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     url(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
     url(r'^topic/(\d*)/$', theme.topic, name='topic'),
