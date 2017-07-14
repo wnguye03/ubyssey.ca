@@ -70,7 +70,7 @@
 
 .c-input--button {
   // Structure
-  height: 32px;
+  height: 41px;
   margin: 0;
   padding: 5px 12px;
 
@@ -92,33 +92,18 @@
   font: $font-default;
 }
 
-.c-input--button--left {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.c-input--text {
+.c-input .c-input--text {
   // Structure
-  height: 29px;
   margin: 0;
 
-  // Border
-  border: solid;
-  border-right: 0;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-color: #d3d3d3;
-  border-width: 0.5px;
-
   // Text
-  font-size: 12px;
-  text-align: left;
-  vertical-align: middle;
-  font: $font-default;
+  font-size: 16px;
+}
 
-    &:focus {
-    outline: none;
-  }
+.c-input--button--left {
+  // Border
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 .c-input::placeholder {

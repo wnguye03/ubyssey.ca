@@ -1,0 +1,75 @@
+.c-form-input {
+  // Structure
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.c-form-input__title,
+.c-form-input__description {
+  // Structure
+  padding-bottom: 1rem;
+}
+
+.c-form-input--text > input,
+.c-form-input--email > input,
+.c-form-input--tel > input,
+textarea > input {
+  // Structure
+  display: block;
+  padding: 10px 6px;
+  max-width: 1000px;
+  width: 97%;
+  margin-bottom: 1rem;
+
+  // Border
+  border: 1px solid $color-border-gray-light;
+  border-radius: 2px;
+
+  // Text
+  font-family: 'ub-lft-etica';
+  font-size: 16px;
+  color: $color-text-black;
+
+  // Extra
+  transition: border-color 0.4s;
+
+  &:focus {
+    // Border
+    border-color: #86c5f9;
+
+    // Extra
+    box-shadow: 0 0 2px 0px rgba(134, 197, 249, 0.15);
+    outline: none;
+  }
+}
+
+.c-form-input--text > select {
+  // Structure
+  -webkit-appearance: none;
+  display: block;
+  padding: 10px 6px;
+  width: 98%;
+  margin-bottom: 1rem;
+
+  // Border
+  border: 1px solid $color-border-gray-light;
+  border-radius: 2px;
+
+  // Text
+  font-family: 'ub-lft-etica';
+  font-size: 16px;
+  color: $color-text-black;
+
+  // Background
+  background-color: #dfdfdf;
+}
+
+.c-form-input > label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.c-form-input--image > label {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}

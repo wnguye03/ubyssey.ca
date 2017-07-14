@@ -16,7 +16,19 @@
     {% include 'events/submit/header.html' %}
 
     {% if facebook_error %}
-    Sorry, we weren't able to import an event from the Facebook URL you provided. Please try again or use the form below.
+    <div class="c-fb-err-message">
+      Sorry, we weren't able to import an event from the Facebook URL you provided. Please try again or use the form below.
+    </div>
+
+    <form method="post" class="c-input-fb c-input-fb--borders" action="{% url 'events-submit-form' %}?facebook=1">
+      {% csrf_token %}
+      <div class="c-input c-input-fb">
+        {{ form.facebook_url.errors }}
+        <input class="c-input c-input-fb c-input--text" placeholder="Event URL" id="facebook_url" type="text" name="facebook_url" />
+        <input type="hidden" name="facebook_import" value="1" />
+        <input class="c-input c-input--button--left c-input--button" type="submit" value="Import" />
+      </div>
+    </form>
     {% endif %}
 
     {{ form.non_field_errors }}
@@ -25,7 +37,7 @@
 
       <div class="c-form-input c-form-input--text">
         {{ form.title.errors }}
-        <label for="{{ form.title.id_for_label }}">Title of Event<br></label>
+        <label class="c-form-input--text" for="{{ form.title.id_for_label }}">Title of Event<br></label>
         {{ form.title }}
       </div>
 
@@ -36,13 +48,13 @@
       </div>
 
       <div class="c-two-col">
-        <div class="c-form-input c-form-input--text" type="left">
+        <div class="c-form-input c-form-input--text c-two-col--left">
           {{ form.host.errors }}
           <label for="{{ form.host.id_for_label }}">Host<br></label>
           {{ form.host }}
         </div>
 
-        <div class="c-form-input c-form-input--text" type="right">
+        <div class="c-form-input c-form-input--text c-two-col--right">
           {{ form.category.errors }}
           <label for="{{ form.category.id_for_label }}">Category of Event<br></label>
           {{ form.category }}
@@ -50,13 +62,13 @@
       </div>
 
       <div class="c-two-col">
-        <div class="c-form-input c-form-input--text" type="left">
+        <div class="c-form-input c-form-input--text c-two-col--left">
           {{ form.start_time.errors }}
           <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time<br></label>
           {{ form.start_time }}
         </div>
 
-        <div class="c-form-input c-form-input--text" type="right">
+        <div class="c-form-input c-form-input--text c-two-col--right">
           {{ form.end_time.errors }}
           <label for="{{ form.end_time.id_for_label }}">End Time<br></label>
           {{ form.end_time }}
@@ -64,7 +76,7 @@
       </div>
 
       {% if form.facebook_image_url.value %}
-      <div class="c-form-input c-form-input--text">
+      <div class="c-form-input c-form-input--image">
 
         {{ form.facebook_image_url.errors }}
 
@@ -84,7 +96,7 @@
       </div>
 
       {% else %}
-      <div class="c-form-input c-form-input--text">
+      <div class="c-form-input c-form-input--image">
         {{ form.image.errors }}
         <label for="{{ form.image.id_for_label }}">Image for the Event<br></label>
         <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
@@ -114,7 +126,7 @@
         {{ form.submitter_email }}
       </div>
 
-      <div class="c-form-input c-form-input--phone">
+      <div class="c-form-input c-form-input--tel">
         {{ form.submitter_phone.errors }}
         <label for="{{ form.submitter_phone.id_for_label }}">Phone Number <br></label>
         {{ form.submitter_phone }}
@@ -124,7 +136,7 @@
       <p hidden>{{ form.facebook_image_url }}</p>
 
       <div class="c-input">
-        <input method="post" class="c-input c-input--button" type="submit" name="submit_event" value="Submit Event" />
+        <input method="post" class="c-input c-input--button--saved" type="submit" name="submit_event" value="Submit Event" />
       </div>
 
     </form>
