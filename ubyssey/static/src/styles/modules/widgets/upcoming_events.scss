@@ -1,0 +1,24 @@
+.c-widget-upcoming-events__featured {
+  margin-bottom: 10px;
+}
+
+.c-widget-upcoming-events__events {
+  .c-event {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.c-widget-upcoming-events__featured-event__label,
+.c-widget-upcoming-events__events_label {
+  margin-bottom: 3px;
+  padding-right: 5px;
+
+  font-size: 0.8em;
+  font-weight: 600;
+  color: $color-text-gray-light;
+  text-align: right;
+}

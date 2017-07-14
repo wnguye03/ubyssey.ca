@@ -1,9 +1,11 @@
 <div class="c-widget-upcoming-events">
+  {% if featured_event %}
   <div class="c-widget-upcoming-events__featured">
-  {% for event in featured_events %}
-    {% include '../events/event_box.html' with event=event only %}
-  {% endfor %}
+  <div class="c-widget-upcoming-events__featured-event__label">Featured Event</div>
+    {% include '../events/event_box.html' with event=featured_event only %}
   </div>
+  {% endif %}
+  <div class="c-widget-upcoming-events__events_label">Upcoming Events</div>
   <div class="c-widget-upcoming-events__events">
   {% for event in upcoming %}
     {% include '../events/event_box.html' with event=event hide_image=True only %}
