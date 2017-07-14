@@ -1,12 +1,12 @@
 <div class="c-widget-upcoming-events">
-  <div class="c-widget-upcoming-events__featured" style="opacity:0.5;">
+  <div class="c-widget-upcoming-events__featured">
   {% for event in featured_events %}
-    {% include '../events/event_box.html' with event=event hide_datebox=False hide_day_label=False only %}
+    {% include '../events/event_box.html' with event=event only %}
   {% endfor %}
   </div>
   <div class="c-widget-upcoming-events__events">
   {% for event in upcoming %}
-    {% include '../events/event_box.html' with event=event hide_datebox=False hide_day_label=False only %}
+    {% include '../events/event_box.html' with event=event hide_image=True only %}
   {% endfor %}
   </div>
 </div>
