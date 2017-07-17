@@ -24,9 +24,9 @@ class UpcomingEvents(Widget):
 
     result = super(UpcomingEvents, self).prepare_data()
 
-    N = result['number_of_events']
-    if N is None:
-        N = 5
+    num_events = result['number_of_events']
+    if num_events is None:
+        num_events = 5
 
     if result['featured_event_until']:
         today = datetime.today()
@@ -44,7 +44,7 @@ class UpcomingEvents(Widget):
         .filter(is_published=True) \
         .filter(start_time__gt=datetime.today()) \
         .exclude(pk=featured_id) \
-        .order_by('start_time')[:N]
+        .order_by('start_time')[:num_events]
 
     result['upcoming'] = events
 
