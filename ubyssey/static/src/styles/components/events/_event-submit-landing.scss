@@ -3,8 +3,8 @@
   display: flex;
   margin: auto;
   justify-content: center;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 1em;
+  padding-left: 1em;
   align-items: center;
   text-align: center;
 
@@ -18,7 +18,7 @@
 .c-event-submit-landing__column {
   // Structure
   flex: 1;
-  padding: 2rem;
+  padding: 2em;
 
   &:first-child {
     // Border

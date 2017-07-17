@@ -36,36 +36,36 @@
       {% csrf_token %}
 
       <div class="c-form-input c-form-input--text">
-        {{ form.title.errors }}
         <label class="c-form-input--text" for="{{ form.title.id_for_label }}">Title of Event<br></label>
         {{ form.title }}
+        {{ form.title.errors }}
       </div>
 
       <div class="c-form-input c-form-input--text">
-        {{ form.description.errors }}
         <label for="{{ form.description.id_for_label }}">Description<br></label>
         {{ form.description }}
+        {{ form.description.errors }}
       </div>
 
       <div class="c-two-col">
         <div class="c-form-input c-form-input--text c-two-col--left">
-          {{ form.host.errors }}
           <label for="{{ form.host.id_for_label }}">Host<br></label>
           {{ form.host }}
+          {{ form.description.errors }}
         </div>
 
         <div class="c-form-input c-form-input--text c-two-col--right">
-          {{ form.category.errors }}
           <label for="{{ form.category.id_for_label }}">Category of Event<br></label>
           {{ form.category }}
+          {{ form.category.errors }}
         </div>
       </div>
 
       <div class="c-two-col">
         <div class="c-form-input c-form-input--text c-two-col--left">
-          {{ form.start_time.errors }}
           <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time<br></label>
           {{ form.start_time }}
+          {{ form.start_time.errors }}
         </div>
 
         <div class="c-form-input c-form-input--text c-two-col--right">
@@ -105,15 +105,15 @@
       {% endif %}
 
       <div class="c-form-input c-form-input--text">
-        {{ form.location.errors }}
         <label for="{{ form.location.id_for_label }}">Location<br></label>
         {{ form.location }}
+        {{ form.location.errors }}
       </div>
 
       <div class="c-form-input c-form-input--text">
-        {{ form.address.errors }}
         <label for="{{ form.address.id_for_label }}">Address<br></label>
         {{ form.address }}
+        {{ form.address.errors }}
       </div>
 
       <div class="c-form-input c-form-input--text">
@@ -121,15 +121,15 @@
       </div>
 
       <div class="c-form-input c-form-input--email">
-        {{ form.submitter_email.errors }}
         <label for="{{ form.submitter_email.id_for_label }}">Email <br></label>
         {{ form.submitter_email }}
+        {{ form.submitter_email.errors }}
       </div>
 
       <div class="c-form-input c-form-input--tel">
-        {{ form.submitter_phone.errors }}
         <label for="{{ form.submitter_phone.id_for_label }}">Phone Number <br></label>
         {{ form.submitter_phone }}
+        {{ form.submitter_phone.errors }}
       </div>
 
       <p hidden>{{ form.facebook_url }}</p>

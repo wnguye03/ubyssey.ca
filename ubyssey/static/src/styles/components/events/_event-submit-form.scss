@@ -12,7 +12,7 @@
 .c-input--button--saved {
   // Structure
   height: 33px;
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
   padding: 5px 12px;
 
   // Border
@@ -36,7 +36,7 @@
   // Structure
   max-width: 1000px;
   width: 97%;
-  margin: 1rem 1rem;
+  margin: 1em 1em;
 }
 
 .c-input .c-input-fb {
@@ -71,7 +71,7 @@
 
 .c-input-fb--borders {
   // Structure
-  padding: 1rem 0.5rem;
+  padding: 1em 0.5em;
   margin-left: 0;
   margin-top: 0;
 
@@ -150,7 +150,7 @@
 .c-two-col--right {
   float: right;
   padding-right: 0;
-  margin-right: 0.5rem;
+  margin-right: 0.5em;
 }
 
 .c-two-col--left {
@@ -185,7 +185,37 @@
 }
 
 .errorlist {
-  color: rgba(255,0,0,1.0);
+	position: relative;
+  list-style: none;
+  width: 200px;
+  margin-right: 0;
+  padding: 0.5em;
+
+  // Background
+  background-color: #dd2c2c;
+
+  // Border
+  border: solid;
+  border-color: #dd2c2c;
+  border-radius: 4px;
+
+  // Text
+  color: white;
+  text-align: center;
+}
+.errorlist:after {
+	bottom: 100%;
+	left: 20px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(221, 44, 44, 0);
+	border-bottom-color: #dd2c2c;
+	border-width: 12px;
+	margin-left: -12px;
 }
 
 img[src=""] {
