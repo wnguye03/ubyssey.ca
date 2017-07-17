@@ -1,24 +1,24 @@
 .c-widget-upcoming-events__featured {
-  margin-bottom: 10px;
+  margin-bottom: 0.625em;
 }
 
 .c-widget-upcoming-events__events {
   .c-event {
-    margin-bottom: 5px;
+    margin-bottom: 0.3125em;
 
     &:last-child {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
 }
 
 .c-widget-upcoming-events__featured-event__label,
 .c-widget-upcoming-events__events_label {
-  margin-bottom: 3px;
-  padding-right: 5px;
+  margin-bottom: 0.1875em;
+  padding-right: 0.3125em;
 
-  font-size: 0.8em;
-  font-weight: 600;
+  font-size: font-size(13);
+  font-weight: $font-weight-semi-bold;
   color: $color-text-gray-light;
   text-align: right;
 }
