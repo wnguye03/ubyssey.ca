@@ -13,14 +13,14 @@ from dispatch.apps.frontend.themes.default import DefaultTheme
 from ubyssey.helpers import EventsHelper
 
 class EventsTheme(DefaultTheme):
-    def events_calendar(self, request):
+    def calendar(self, request):
         category = request.GET.get('category')
         months = request.GET.get('months')
         start = request.GET.get('start')
         end = request.GET.get('end')
 
         events = EventsHelper.get_calendar_events(category=category, months=months, start=start, end=end)
-        events_by_date = EventsHelper.organize_events_by_date(events)
+        events_by_date = EventsHelper.group_events_by_date(events)
 
         context = {
             'meta': {
@@ -47,7 +47,7 @@ class EventsTheme(DefaultTheme):
             'url': "%sevent/%s/" % (settings.BASE_URL, event.id)
         }
 
-    def event_detail(self, request, event_id):
+    def event(self, request, event_id):
         try:
             event = EventsHelper.get_event(event_id)
         except:

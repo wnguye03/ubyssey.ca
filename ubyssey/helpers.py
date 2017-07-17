@@ -11,6 +11,8 @@ from django.db.models.aggregates import Count
 from dispatch.apps.content.models import Article, Section
 from dispatch.apps.events.models import Event
 
+import settings
+
 class ArticleHelper(object):
 
     @staticmethod
@@ -208,12 +210,12 @@ class EventsHelper(object):
         return events
 
     @staticmethod
-    def organize_events_by_date(events):
+    def group_events_by_date(events):
         events_by_date = OrderedDict()
 
         for event in events:
             start = event.start_time # Zulu
-            start = start.astimezone(timezone('America/Vancouver'))
+            start = start.astimezone(timezone(settings.TIME_ZONE))
             year = start.year
             month_name = calendar.month_name[start.month]
             day = '%s. %d' % (start.strftime('%a'), start.day)
