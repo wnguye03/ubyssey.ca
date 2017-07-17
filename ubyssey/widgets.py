@@ -19,10 +19,8 @@ class UpcomingEvents(Widget):
 
   number_of_events = UIntField('Number of Events')
 
-  def prepare_data(self):
-    """Override prepare_data to add the next N events occuring to the context"""
-
-    result = super(UpcomingEvents, self).prepare_data()
+  def context(self, result):
+    """Override context to add the next N events occuring to the context"""
 
     num_events = result['number_of_events']
     if num_events is None:
