@@ -2,7 +2,7 @@ from datetime import datetime
 
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from dispatch.theme.fields import UIntField, EventField, DateTimeField
+from dispatch.theme.fields import IntegerField, EventField, DateTimeField
 from dispatch.apps.events.models import Event
 
 from zones import HomePageSidebar, HomePageSidebarBottom
@@ -17,7 +17,7 @@ class UpcomingEvents(Widget):
   featured_event = EventField('Featured Event', many=False)
   featured_event_until = DateTimeField('Featured Event Time Limit')
 
-  number_of_events = UIntField('Number of Events')
+  number_of_events = IntegerField('Number of Events', min_value=0)
 
   def context(self, result):
     """Override context to add the next N events occuring to the context"""
