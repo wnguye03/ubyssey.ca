@@ -46,7 +46,7 @@
 }
 
 .c-form .errorlist {
-	position: relative;
+  position: relative;
   list-style: none;
   display: inline-block;
   margin-right: 0;
@@ -68,18 +68,18 @@
 
 .c-form .errorlist:after {
   // Structure
-	bottom: 100%;
-	left: 20px;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
+  bottom: 100%;
+  left: 20px;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
   margin-left: -8px;
 
   // Border
   border: solid transparent;
-	border-color: rgba(221, 44, 44, 0);
-	border-bottom-color: #dd2c2c;
-	border-width: 8px;
+  border-color: rgba(221, 44, 44, 0);
+  border-bottom-color: #dd2c2c;
+  border-width: 8px;
 }
