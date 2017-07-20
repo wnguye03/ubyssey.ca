@@ -1,7 +1,22 @@
 .c-form-input {
   // Structure
-  padding-top: 15px;
-  padding-bottom: 15px;
+  margin-bottom: 1.25rem;
+}
+
+.c-form-input > label {
+  // Structure
+  display: block;
+  margin-bottom: 0.75rem;
+
+  // Text
+  font-weight: $font-weight-semi-bold;
+  font-size: font-size(16);
+  color: $color-text-black;
+}
+
+.c-form-input > input {
+  // Structure
+  width: 100%;
 }
 
 .c-form-input__title,
@@ -62,14 +77,4 @@ textarea > input {
 
   // Background
   background-color: #dfdfdf;
-}
-
-.c-form-input > label {
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.c-form-input--image > label {
-  padding-top: 10px;
-  padding-bottom: 20px;
 }

@@ -3,22 +3,25 @@
   display: flex;
   margin: auto;
   justify-content: center;
-  padding-right: 1em;
-  padding-left: 1em;
   align-items: center;
-  text-align: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
 
   // Background
   background-color: #ffffff;
 
   // Border
   border: 1px solid #e7e7e7;
+
+  // Text
+  text-align: center;
 }
 
 .c-event-submit-landing__column {
   // Structure
   flex: 1;
-  padding: 2em;
+  padding: 2rem;
 
   &:first-child {
     // Border
@@ -70,7 +73,7 @@
 
 .c-input--button {
   // Structure
-  height: 41px;
+  height: 32px;
   margin: 0;
   padding: 5px 12px;
 
@@ -92,18 +95,33 @@
   font: $font-default;
 }
 
-.c-input .c-input--text {
-  // Structure
-  margin: 0;
-
-  // Text
-  font-size: 16px;
-}
-
 .c-input--button--left {
-  // Border
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+
+.c-input--text {
+  // Structure
+  height: 29px;
+  margin: 0;
+
+  // Border
+  border: solid;
+  border-right: 0;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-color: #d3d3d3;
+  border-width: 0.5px;
+
+  // Text
+  font-size: 12px;
+  text-align: left;
+  vertical-align: middle;
+  font: $font-default;
+
+    &:focus {
+    outline: none;
+  }
 }
 
 .c-input::placeholder {

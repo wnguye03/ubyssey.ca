@@ -20,34 +20,22 @@
         <form method="post" action="{% url 'events-submit-form' %}?facebook=1">
           {% csrf_token %}
 
-          <div class="c-two_col__title">
-            <h3>Import from Facebook</h3>
-          </div>
+          <h3 class="c-heading c-heading--3">Import from Facebook</h3>
+          <p class="c-paragraph">Just paste the Facebook event URL below and we’ll handle the rest. Don’t worry, you’ll have a chance to double-check the information before we save it.</p>
 
-          <div class="c-two_col__description">
-            <p>Just paste the Facebook event URL below and we’ll handle the rest. Don’t worry, you’ll have a chance to double-check the information before we save it.</p>
-          </div>
+          <input type="hidden" name="facebook_import" value="1" />
 
-          <div class="c-input">
+          <div class="c-input-group">
             {{ form.facebook_url.errors }}
-            <input class="c-input c-input--text" placeholder="Event URL" id="facebook_url" type="text" name="facebook_url" />
-            <input type="hidden" name="facebook_import" value="1" />
-            <input class="c-input c-input--button c-input--button--left" type="submit" value="Import" />
+            <input class="c-text-input" type="text" name="facebook_url" placeholder="Event URL" />
+            <input class="c-button" type="submit" value="Import" />
           </div>
         </form>
       </div>
       <div class="c-event-submit-landing__column">
-          <div class="c-two_col__title">
-            <h3>Submit manually</h3>
-          </div>
-
-          <div class="c-two_col__description">
-            <p>If you don’t have a Facebook event, you can use the manual submission form.</p>
-          </div>
-
-          <div class="c-input">
-            <a href="{% url 'events-submit-form' %}">Submit manually</a>
-          </div>
+        <h3 class="c-heading c-heading--3">Submit manually</h3>
+        <p class="c-paragraph">If you don’t have a Facebook event, you can use the manual submission form.</p>
+        <a class="c-button" href="{% url 'events-submit-form' %}">Submit manually</a>
       </div>
     </div>
   </div>
