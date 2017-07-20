@@ -1,5 +1,7 @@
 .c-text-input,
-.c-form-input > input[type='text'] {
+.c-form__input > input[type='text'],
+.c-form__input > input[type='email'],
+.c-form__input > input[type='tel'] {
   // Structure
   height: 45px;
   padding-top: 0;
@@ -19,6 +21,9 @@
   line-height: 1.5rem;
   font-size: font-size(16);
   color: $color-text-black;
+
+  // Extra
+  transition: border-color 0.4s;
 
   &:focus {
     // Border

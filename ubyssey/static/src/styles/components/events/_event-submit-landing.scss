@@ -1,11 +1,8 @@
 .c-event-submit-landing {
   // Structure
-  display: flex;
   margin: auto;
   justify-content: center;
   align-items: center;
-  padding-right: 1rem;
-  padding-left: 1rem;
   margin-bottom: 2rem;
 
   // Background
@@ -16,6 +13,11 @@
 
   // Text
   text-align: center;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: flex;
+  }
 }
 
 .c-event-submit-landing__column {
@@ -24,106 +26,11 @@
   padding: 2rem;
 
   &:first-child {
-    // Border
-    border-right: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+    @media($bp-larger-than-tablet) {
+      // Border
+      border-right: 1px solid #e7e7e7;
+      border-bottom: none;
+    }
   }
-}
-
-.c-fb-import {
-  // Structure
-  height: auto;
-  width: 48%;
-  float: left;
-  text-align: center;
-  margin-right: 5%;
-}
-
-.c-manual-submit {
-  // Structure
-  float: right;
-  height: auto;
-  width: 48%;
-  text-align: center;
-  margin-left: 5%;
-}
-
-.c-two_col__title {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.c-two_col__description {
-  font-size: 14px;
-}
-
-.line {
-  // Structure
-  width: 0px;
-  height: 210px;
-
-  // Border
-  border: #e7e7e7;
-  border-width: 0.5px;
-  border-style: solid;
-}
-
-.c-input {
-  display: inline-flex;
-}
-
-.c-input--button {
-  // Structure
-  height: 32px;
-  margin: 0;
-  padding: 5px 12px;
-
-  // Border
-  border: solid;
-  border-left: 0;
-  border-radius: 2px;
-  border-color: #2377c6;
-  border-width: 0.5px;
-
-  // Background
-  background-color: #2377c6;
-
-  // Text
-  color: white;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 16px;
-  font: $font-default;
-}
-
-.c-input--button--left {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.c-input--text {
-  // Structure
-  height: 29px;
-  margin: 0;
-
-  // Border
-  border: solid;
-  border-right: 0;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-color: #d3d3d3;
-  border-width: 0.5px;
-
-  // Text
-  font-size: 12px;
-  text-align: left;
-  vertical-align: middle;
-  font: $font-default;
-
-    &:focus {
-    outline: none;
-  }
-}
-
-.c-input::placeholder {
-  padding-left: 8px;
 }
