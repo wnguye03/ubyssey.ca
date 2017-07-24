@@ -34,14 +34,20 @@
 @import 'components/section-page';
 @import 'components/homepage';
 
-@import 'modules/events/calendar';
-@import 'modules/events/event';
-@import 'modules/events/date_box';
+
 @import 'modules/events/event_box';
-
+@import 'modules/events/date_box';
+@import 'modules/events/event';
+@import 'modules/events/calendar';
 @import 'modules/widgets/upcoming_events';
-
-//////
+@import 'components/button';
+@import 'components/heading';
+@import 'components/paragraph';
+@import 'components/form';
+@import 'components/text-input';
+@import 'components/input-group';
+@import 'components/events/event-submit-form';
+@import 'components/events/event-submit-landing';
 
 div.image-container {
     height: 100%;

@@ -1,0 +1,36 @@
+.c-event-submit-landing {
+  // Structure
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  // Background
+  background-color: #ffffff;
+
+  // Border
+  border: 1px solid #e7e7e7;
+
+  // Text
+  text-align: center;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: flex;
+  }
+}
+
+.c-event-submit-landing__column {
+  // Structure
+  flex: 1;
+  padding: 2rem;
+
+  &:first-child {
+    border-bottom: 1px solid #e7e7e7;
+    @media($bp-larger-than-tablet) {
+      // Border
+      border-right: 1px solid #e7e7e7;
+      border-bottom: none;
+    }
+  }
+}
