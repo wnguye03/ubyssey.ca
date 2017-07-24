@@ -20,3 +20,9 @@
   font-weight: $font-weight-semi-bold;
   color: $color-text-gray-light;
 }
+
+.c-widget-upcoming-events__events {
+  // Structure
+  max-height: 400px;
+  overflow-y: auto;
+}
