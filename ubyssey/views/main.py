@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -65,8 +65,6 @@ class UbysseyTheme(DefaultTheme):
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
 
-        component_set = Homepage()
-
         popular = Article.objects.get_popular()[:5]
 
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
@@ -85,7 +83,6 @@ class UbysseyTheme(DefaultTheme):
             'sections': sections,
             'popular': popular,
             'blog': blog,
-            'components': component_set.components(),
             'day_of_week': datetime.now().weekday(),
         }
         return render(request, 'homepage/base.html', context)
@@ -113,7 +110,8 @@ class UbysseyTheme(DefaultTheme):
             'base_template': 'base.html'
         }
 
-        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
+        template = article.get_template_path()
+        t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
         return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):

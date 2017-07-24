@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header %}
+  {% include 'headers/topbar.html' with section='events' %}
+  {% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+<main class="u-container u-container--padded">
+  <div class="c-event-detail__container">
+    <div class="c-event-detail__title"><h1>{{ event.title }}</h1></div>
+    <div class="c-event-detail__info">
+      {% if event.image %}
+      <div class="c-event-detail__image-container">
+        <img class="c-event-detail__image" src="{{ event.image.url }}" alt="{{ event.title }}">
+      </div>
+      {% endif %}
+      <div class="c-event-detail__category">{{ event.category|capfirst }}</div>
+      <div class="c-event-detail__start">{{ event.start_time|date:"l, F j \a\t g A" }}</div>
+      <div class="c-event-detail__time-separator">-</div>
+      <div class="c-event-detail__end">{{ event.end_time|date:"l, F j \a\t g A" }}</div>
+      <div class="c-event-detail__description">{{ event.description|linebreaks }}</div>
+      <div class="c-event-detail__host">Hosted by {{ event.host }}</div>
+      <div class="c-event-detail__location-info">
+        <div class="c-event-detail__location"><span>@</span>{{ event.location }}</div>
+        {% if event.address %}
+        <div class="c-event-detail__address">
+          <a href="https://maps.google.com/?q={{ event.address|urlencode }}" target="_blank">
+          {{ event.address }}
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      {% if event.facebook_url %}
+      <a class="c-event-detail__fb-link" href="{{ event.facebook_url }}" target="_blank">
+        <button>
+          View on Facebook
+        </button>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}
