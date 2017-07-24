@@ -1,15 +1,4 @@
 {% load static %}
-<div class="c-event">
-  <div class="c-event__image" style="background-image: url('{% static event.image %}')"></div>
-  <div class="c-event__meta">
-    <div class="c-event-date">
-      <div class="c-event-date__month">{{ event.start_month }}</div>
-      <div class="c-event-date__day">{{ event.start_day }}</div>
-    </div>
-    <div class="c-event__info">
-      <h3 class="c-event__title">{{ event.title }}</h3>
-      <p class="c-event__time">{{ event.start_time }}</p>
-      <p class="c-event__location">{{ event.location }}</p>
-    </div>
-  </div>
+<div class="c-widget-event">
+{% include 'events/event_box.html' with event=event %}
 </div>

@@ -234,3 +234,10 @@ class EventsHelper(object):
     @staticmethod
     def get_event(pk):
         return Event.objects.get(pk=pk, is_submission=False, is_published=True)
+
+    @staticmethod
+    def get_random_event():
+        queryset = Event.objects.filter(is_published=True)
+        count = queryset.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count - 1)
+        return queryset[random_index]

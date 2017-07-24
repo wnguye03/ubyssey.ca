@@ -41,7 +41,6 @@
 @import 'components/form';
 @import 'components/text-input';
 @import 'components/input-group';
-@import 'components/events/event';
 @import 'components/events/event-submit-form';
 @import 'components/events/event-submit-landing';
 
@@ -50,6 +49,7 @@
 @import 'modules/events/date_box';
 @import 'modules/events/event_box';
 
+@import 'modules/widgets/event';
 @import 'modules/widgets/upcoming_events';
 
 div.image-container {

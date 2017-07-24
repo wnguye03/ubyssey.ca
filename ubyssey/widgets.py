@@ -2,51 +2,67 @@ from datetime import datetime
 
 from dispatch.theme.fields import (
     CharField, TextField, ArticleField, ImageField,
-    EventField, InvalidField, DateTimeField
+    EventField, IntegerField, InvalidField, DateTimeField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
 from dispatch.apps.events.models import Event
 
-from ubyssey.zones import EventSidebar, HomePageSidebar, HomePageSidebarBottom
+from ubyssey.helpers import EventsHelper
+from ubyssey.zones import ArticleSidebar, HomePageSidebar, HomePageSidebarBottom
 
 @register.widget
-class UpcomingEvents(Widget):
-  id = 'upcoming-events'
-  name = 'Upcoming Events'
-  template = 'widgets/upcoming-events.html'
-  zones = (HomePageSidebar, HomePageSidebarBottom)
+class EventWidget(Widget):
+  id = 'event-widget'
+  name = 'Event Widget'
+  template = 'widgets/event.html'
+  zones = (ArticleSidebar,)
 
-  featured_event = EventField('Featured Event', many=False)
-  featured_event_until = DateTimeField('Featured Event Time Limit')
-
-  number_of_events = IntegerField('Number of Events', min_value=0)
+  event = EventField('Custom Event')
 
   def context(self, result):
-    """Override context to add the next N events occuring to the context"""
+      """Select random event if custom event is not specified"""
+      
+      if not result.get('event'):
+          result['event'] = EventsHelper.get_random_event()
+      return result
 
-    num_events = result['number_of_events']
-    if num_events is None:
-        num_events = 5
+@register.widget
+class UpcomingEventsWidget(Widget):
+    id = 'upcoming-events'
+    name = 'Upcoming Events'
+    template = 'widgets/upcoming-events.html'
+    zones = (HomePageSidebar, HomePageSidebarBottom)
 
-    if result['featured_event_until']:
-        today = datetime.today()
-        if today > result['featured_event_until'].replace(tzinfo=None):
-            result['featured_event'] = None
+    featured_event = EventField('Featured Event', many=False)
+    featured_event_until = DateTimeField('Featured Event Time Limit')
+    number_of_events = IntegerField('Number of Events', min_value=0)
 
-    # exclude the featured event from showing up in the other list
-    if result['featured_event']:
-        featured_id = result['featured_event'].pk
-    else:
-        featured_id = None
+    def context(self, result):
+        """Override context to add the next N events occuring to the context"""
 
-    events = Event.objects \
-        .filter(is_submission=False) \
-        .filter(is_published=True) \
-        .filter(start_time__gt=datetime.today()) \
-        .exclude(pk=featured_id) \
-        .order_by('start_time')[:num_events]
+        num_events = result['number_of_events']
+        if num_events is None:
+            num_events = 5
 
-    result['upcoming'] = events
+        if result['featured_event_until']:
+            today = datetime.today()
+            if today > result['featured_event_until'].replace(tzinfo=None):
+                result['featured_event'] = None
 
-    return result
+        # exclude the featured event from showing up in the other list
+        if result['featured_event']:
+            featured_id = result['featured_event'].pk
+        else:
+            featured_id = None
+
+        events = Event.objects \
+            .filter(is_submission=False) \
+            .filter(is_published=True) \
+            .filter(start_time__gt=datetime.today()) \
+            .exclude(pk=featured_id) \
+            .order_by('start_time')[:num_events]
+
+        result['upcoming'] = events
+
+        return result
