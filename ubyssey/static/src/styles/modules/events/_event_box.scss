@@ -1,19 +1,22 @@
 .c-event {
   // Background
-  background: #fff;
+  background: $color-white;
 
   // Border
-  border: solid 0.5px #e6e6e6;
+  border: solid 1px $color-border-gray;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 
   // Text
-  font-family: 'ub-lft-etica';
+  font-family: $font-default;
 }
 
 .c-event__image {
+  // Structure
   position: relative;
-  padding-top: 60%;
+  padding-top: 50%;
+
+  // Background
   background-position: center;
   background-size: cover;
 }
@@ -45,7 +48,7 @@
 
 .c-event__title {
   // Text
-  font-size: 16px;
+  font-size: font-size(16);
   font-weight: $font-weight-semi-bold;
 }
 

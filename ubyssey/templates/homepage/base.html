@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load humanize %}
+{% load widgets %}
 {% block content %}
 {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 {% include 'headers/main.html' %}
@@ -50,7 +51,7 @@
                 {% endwith %}
             </div>
             <div class="multi-zone cell right">
-              {{ components.print_issue|safe }}
+              {% zone 'homepage-sidebar' %}
             </div>
         </div>
     </div>
@@ -89,7 +90,7 @@
                 </ul>
             </div>
             <div class="multi-zone cell right">
-                {{ components.print_issue|safe }}
+              {% zone 'homepage-sidebar-bottom' %}
             </div>
         </div>
     </div>

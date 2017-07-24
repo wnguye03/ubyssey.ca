@@ -1,0 +1,22 @@
+@import '../fonts';
+@import '../variables';
+
+.c-widget-upcoming-events__featured {
+  margin-bottom: 0.625em;
+}
+
+.c-widget-upcoming-events__events {
+  .c-event:not(:last-child) {
+    border-bottom: none;
+  }
+}
+
+.c-widget-upcoming-events__label {
+  // Structure
+  margin-bottom: 0.5em;
+
+  // Text
+  font-size: font-size(13);
+  font-weight: $font-weight-semi-bold;
+  color: $color-text-gray-light;
+}
