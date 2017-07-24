@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -16,7 +16,6 @@ from dispatch.apps.frontend.themes.default import DefaultTheme
 from dispatch.apps.frontend.helpers import templates
 
 from ubyssey.helpers import ArticleHelper
-from ubyssey.widgets import EventWidget
 
 def parse_int_or_none(maybe_int):
     try:

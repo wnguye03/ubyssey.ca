@@ -7,11 +7,16 @@ from ubyssey.views.main import UbysseyTheme
 from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
 from ubyssey.views.advertise import AdvertiseTheme
+from ubyssey.views.events import EventsTheme
+
+from zones import *
+from widgets import *
 
 theme = UbysseyTheme()
 guide = GuideTheme()
 magazine = MagazineTheme()
 advertise = AdvertiseTheme()
+events = EventsTheme()
 
 theme_urls = [
     url(r'^$', theme.home, name='home'),
@@ -36,6 +41,9 @@ theme_urls = [
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
+
+    url(r'^events/$', events.calendar, name='events'),
+    url(r'^event/(?P<event_id>[0-9]+)/$', events.event, name='event'),
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),

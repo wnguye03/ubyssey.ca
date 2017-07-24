@@ -1,0 +1,125 @@
+$border                           : 1px dotted $color-border-gray-dark;
+$calendar-event-time-label-color  : #006fcc;
+$tiles-margin                     : 35px;
+
+@import 'calendar_categories';
+
+.c-event-calendar {
+  min-height: 500px;
+  margin-bottom: 40px;
+
+  @media($bp-smaller-than-phablet) {
+    padding: 0 2px;
+
+    h1 {
+       padding: 0 5px;
+    }
+  }
+}
+
+.c-event-calendar__container {
+  width: 100%;
+}
+
+.c-event-calendar__year-label {
+  width: 160px;
+
+  font-size: 42px;
+  text-align: left;
+  border-bottom: $border;
+}
+
+.c-event-calendar__month-label {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 0 5px 15px;
+  margin: 25px 0 0 0;
+
+  font-size: 32px;
+  text-align: left;
+}
+
+.c-event-calendar__day-row {
+  border-bottom: $border;
+
+  &:nth-child(2) {
+    border-top: $border;
+    padding-top: $tiles-margin;
+  }
+
+  @media($bp-larger-than-tablet) {
+    margin-top: $tiles-margin;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    margin: 15px 5px 0 5px;
+  }
+}
+
+.c-event-calendar__day-label {
+  padding-right: 5px;
+  width: 90px;
+  margin-top: 36px;
+
+  color: $calendar-event-time-label-color;
+  text-align: right;
+  font-size: 28px;
+  vertical-align: top;
+
+  @media($bp-larger-than-tablet) {
+    display: inline-block;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    display: block;
+  }
+}
+
+.c-event-calendar__event-list-wrapper {
+  display: inline-block;
+
+  @media($bp-larger-than-tablet) {
+    width: calc(100% - 110px - #{$tiles-margin});
+    padding-left: 10px;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    width: 100%;
+  }
+}
+
+.c-event-calendar__event-list-container {
+  width: 100%;
+  margin: 0 0 $tiles-margin 0;
+
+  @media($bp-larger-than-tablet) {
+    padding: 0 0 0 $tiles-margin;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    border-left: $border;
+    border-right: $border;
+  }
+
+  @media($bp-smaller-than-tablet) {
+    margin: 15px 0;
+  }
+}
+
+.c-event-calendar__event-box-container {
+  @media($bp-larger-than-tablet) {
+    flex: 1 0 210px;
+    margin-right: $tiles-margin;
+  }
+
+  @media($bp-smaller-than-tablet) {
+   width: 100%;
+   margin-top: $tiles-margin;
+  }
+}
+
+.c-event-calendar__event-box-container--wrapped {
+  margin-top: $tiles-margin;
+}

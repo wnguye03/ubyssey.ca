@@ -1,0 +1,16 @@
+<div class="c-event-calendar-categories">
+  <div class="c-event-calendar-categories__label">
+    <h2>Categories</h2>
+  </div>
+  <ul>
+    <li {% if category == 'all' or not category %}class="active"{% endif %}><a href="?category=all">All</a></li>
+    <li {% if category == 'sports' %}class="active"{% endif %}><a href="?category=sports">Sports</a></li>
+    <li {% if category == 'music' %}class="active"{% endif %}><a href="?category=music">Music</a></li>
+    <li {% if category == 'academic' %}class="active"{% endif %}><a href="?category=academic">Academic</a></li>
+    <li {% if category == 'party' %}class="active"{% endif %}><a href="?category=party">Party</a></li>
+    <li {% if category == 'business' %}class="active"{% endif %}><a href="?category=business">Business</a></li>
+    <li {% if category == 'ceremony' %}class="active"{% endif %}><a href="?category=ceremony">Ceremony</a></li>
+    <li {% if category == 'workshop' %}class="active"{% endif %}><a href="?category=workshop">Workshop</a></li>
+    <li {% if category == 'other' %}class="active"{% endif %}><a href="?category=other">Other</a></li>
+  </ul>
+</div>

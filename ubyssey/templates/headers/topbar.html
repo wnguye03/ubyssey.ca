@@ -16,8 +16,10 @@
                     <a href="{% url 'page' 'sports' %}">Sports</a>
                 </li><li {% if section == 'blog' %}class="current"{% endif %}>
                     <a href="{% url 'page' 'blog' %}">Blog</a>
-                </li><li>
+                </li><li {% if section == 'science' %}class="current"{% endif %}>
                     <a href="{% url 'page' 'science' %}">Science</a>
+                </li><li {% if section == 'events' %}class="current"{% endif %}>
+                    <a href="{% url 'events' %}">Events</a>
                 </li>
             </ul>
         </nav>

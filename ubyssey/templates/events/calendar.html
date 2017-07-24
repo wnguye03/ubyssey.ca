@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header %}
+  {% include 'headers/topbar.html' with section='events' %}
+  {% include 'headers/mobile.html' %}
+{% endblock %}
+
+{% load tz %}
+
+{% block content %}
+{% localtime on %}
+{% timezone 'America/Vancouver' %}
+
+<main class="u-container c-calendar">
+  <h1>Calendar of Events</h1>
+
+  {% include './calendar_categories.html' %}
+
+  <div class="c-event-calendar__container">
+    {% for year, months in events_by_date.items %}
+    {% ifnotequal year this_year %}
+    <div class="c-event-calendar__year-label">
+      {{ year }}
+    </div>
+    {% endifnotequal %}
+    {% for month, days in months.items %}
+    <div class="c-event-calendar__month">
+      <div class="c-event-calendar__month-label">
+        {{ month }}
+      </div>
+      {% for day, events in days.items %}
+      <div class="c-event-calendar__day-row">
+        <div class="c-event-calendar__day-label">
+          {{ day }}
+        </div>
+        <div class="c-event-calendar__event-list-wrapper">
+          <div class="c-event-calendar__event-list-container">
+          {% for event in events %}
+            <div class="c-event-calendar__event-box-container">
+            {% include './event_box.html' with event=event hide_datebox=False hide_day_label=True only %}
+            </div>
+          {% endfor %}{# event #}
+        </div>
+        </div>
+      </div>
+      {% endfor %}{# day #}
+    </div>
+    {% endfor %}{# month #}
+    {% endfor %}{# year #}
+  </div>
+</main>
+
+{% endtimezone %}
+{% endlocaltime %}
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(function() {
+  var baseClass = 'c-event-calendar__event-box-container';
+  var wrappedClass = baseClass + '--wrapped';
+  function fixrows() {
+    $('.' + baseClass).each(function() {
+      var parent_y = $(this).parent().position().top;
+      var y = $(this).position().top;
+      if (y > parent_y) {
+        $(this).addClass(wrappedClass);
+      } else {
+        $(this).removeClass(wrappedClass);
+      }
+    });
+  }
+  fixrows();
+  $(window).resize(fixrows);
+
+  $(".c-event__image").each(function() {
+    var h = $(this).outerHeight();
+    if (h > 400) {
+      $(this).css('padding-top', '40%');
+    }
+  });
+});
+</script>
+{% endblock %}

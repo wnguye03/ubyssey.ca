@@ -1,13 +1,20 @@
 // Breakpoints
-$bp-larger-than-mobile    : "min-width: 401px" !default;
-$bp-smaller-than-mobile   : "max-width: 400px" !default;
+$bp-mobile-size             : 401;
+$bp-phablet-size            : 760;
+$bp-tablet-size             : 960;
+$bp-desktop-size            : 1200;
+$bp-desktophd-size          : 1400;
 
-$bp-larger-than-phablet   : "min-width: 760px" !default;
-$bp-larger-than-tablet    : "min-width: 960px" !default;
-
-$bp-half-desktop          : "min-width: 800px" !default;
-$bp-larger-than-desktop   : "min-width: 1200px" !default;
-$bp-larger-than-desktophd : "min-width: 1400px" !default;
+$bp-larger-than-mobile      : "min-width: #{$bp-mobile-size}px" !default;
+$bp-smaller-than-mobile     : "max-width: #{$bp-mobile-size - 1}px" !default;
+$bp-larger-than-phablet     : "min-width: #{$bp-phablet-size}px" !default;
+$bp-smaller-than-phablet    : "max-width: #{$bp-phablet-size - 1}px" !default;
+$bp-larger-than-tablet      : "min-width: #{$bp-tablet-size}px" !default;
+$bp-smaller-than-tablet     : "max-width: #{$bp-tablet-size - 1}px" !default;
+$bp-larger-than-desktop     : "min-width: #{$bp-desktop-size}px" !default;
+$bp-smaller-than-desktop    : "max-width: #{$bp-desktop-size - 1}px" !default;
+$bp-larger-than-desktophd   : "min-width: #{$bp-desktophd-size}px" !default;
+$bp-smaller-than-desktophd  : "min-width: #{$bp-desktophd-size - 1}px" !default;
 
 $bp-phablet               : "550px";
 $bp-tablet                : "960px";
@@ -26,6 +33,7 @@ $color-red: #fd3333;
 
 $color-text-black: #1b1b1b;
 $color-text-gray: #4e4e4e;
+$color-text-gray-light: #8c8c8c;
 
 $color-border-gray-light: #DADADA;
 $color-border-gray: #E6E6E6;
