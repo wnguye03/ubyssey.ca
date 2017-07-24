@@ -11,42 +11,46 @@
 {% localtime on %}
 {% timezone 'America/Vancouver' %}
 
-<main class="u-container c-calendar">
-  <h1>Calendar of Events</h1>
+<main class="u-container u-container--padded c-calendar">
+  <div class="c-page__header">
+    <h1 class="c-page__heading">Events</h1>
+  </div>
 
-  {% include './calendar_categories.html' %}
 
   <div class="c-event-calendar__container">
-    {% for year, months in events_by_date.items %}
-    {% ifnotequal year this_year %}
-    <div class="c-event-calendar__year-label">
-      {{ year }}
+    <div class="c-event-calendar__sidebar">
+      {% include './calendar_categories.html' %}
     </div>
-    {% endifnotequal %}
-    {% for month, days in months.items %}
-    <div class="c-event-calendar__month">
-      <div class="c-event-calendar__month-label">
-        {{ month }}
+    <div class="c-event-calendar__main">
+      {% for year, months in events_by_date.items %}
+      {% ifnotequal year this_year %}
+      <div class="c-event-calendar__year-label">
+        {{ year }}
       </div>
-      {% for day, events in days.items %}
-      <div class="c-event-calendar__day-row">
-        <div class="c-event-calendar__day-label">
-          {{ day }}
+      {% endifnotequal %}
+      {% for month, days in months.items %}
+      <div class="c-event-calendar__month">
+        <div class="c-event-calendar__month-label">
+          {{ month }}
         </div>
-        <div class="c-event-calendar__event-list-wrapper">
-          <div class="c-event-calendar__event-list-container">
-          {% for event in events %}
-            <div class="c-event-calendar__event-box-container">
-            {% include './event_box.html' with event=event hide_datebox=False hide_day_label=True only %}
-            </div>
-          {% endfor %}{# event #}
+        {% for day, events in days.items %}
+        <div class="c-event-calendar__day-row">
+          <div class="c-event-calendar__day-label">{{ day }}</div>
+          <div class="c-event-calendar__event-list-wrapper">
+            <div class="c-event-calendar__event-list-container">
+            {% for event in events %}
+              <div class="c-event-calendar__event-box-container">
+              {% include './event_box.html' with event=event hide_datebox=False hide_day_label=True only %}
+              </div>
+            {% endfor %}{# event #}
+          </div>
+          </div>
         </div>
-        </div>
+        {% endfor %}{# day #}
       </div>
-      {% endfor %}{# day #}
+      {% endfor %}{# month #}
+      {% endfor %}{# year #}
     </div>
-    {% endfor %}{# month #}
-    {% endfor %}{# year #}
   </div>
 </main>
 
