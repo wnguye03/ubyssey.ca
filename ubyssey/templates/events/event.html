@@ -4,12 +4,7 @@
   {% include 'headers/topbar.html' with section='events' %}
   {% include 'headers/mobile.html' %}
 {% endblock %}
-
-{% load tz %}
-
 {% block content %}
-{% localtime on %}
-{% timezone "America/Vancouver" %}
 <main class="u-container u-container--padded">
   <div class="c-event-detail__container">
     <div class="c-event-detail__title"><h1>{{ event.title }}</h1></div>
@@ -45,6 +40,4 @@
     </div>
   </div>
 </main>
-{% endtimezone %}
-{% endlocaltime %}
 {% endblock %}

@@ -4,13 +4,7 @@
   {% include 'headers/topbar.html' with section='events' %}
   {% include 'headers/mobile.html' %}
 {% endblock %}
-
-{% load tz %}
-
 {% block content %}
-{% localtime on %}
-{% timezone 'America/Vancouver' %}
-
 <main class="u-container u-container--padded c-calendar">
   <div class="c-page__header">
     <h1 class="c-page__heading">Events</h1>
@@ -53,36 +47,4 @@
     </div>
   </div>
 </main>
-
-{% endtimezone %}
-{% endlocaltime %}
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript">
-$(function() {
-  var baseClass = 'c-event-calendar__event-box-container';
-  var wrappedClass = baseClass + '--wrapped';
-  function fixrows() {
-    $('.' + baseClass).each(function() {
-      var parent_y = $(this).parent().position().top;
-      var y = $(this).position().top;
-      if (y > parent_y) {
-        $(this).addClass(wrappedClass);
-      } else {
-        $(this).removeClass(wrappedClass);
-      }
-    });
-  }
-  fixrows();
-  $(window).resize(fixrows);
-
-  $(".c-event__image").each(function() {
-    var h = $(this).outerHeight();
-    if (h > 400) {
-      $(this).css('padding-top', '40%');
-    }
-  });
-});
-</script>
 {% endblock %}
