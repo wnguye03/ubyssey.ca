@@ -16,10 +16,11 @@
       <div class="c-page__header__meta">
         <h1 class="c-page__heading">{{ event.title }}</h1>
         <p class="c-page__description">{{ event.start_time|date:"l, F j \a\t g A" }}</p>
-        <p class="c-page__description">Hosted by {{ event.host }} &middot; {{ event.location }}</p>
-        <p class="c-page__description">{{ event.description|linebreaks }}</p>
+        <p class="c-page__description">Hosted by {{ event.host }} &middot; {{ event.location }}</p><br/>
+        {% if event.facebook_url %}<a class="c-button" href="{{ event.facebook_url}}">View on Facebook</a> {% endif %}<a class="c-button">Buy Tickets</a>
       </div>
     </div>
+    <p class="c-paragraph">{{ event.description|safe }}</p>
   </div>
 </main>
 {% endblock %}
