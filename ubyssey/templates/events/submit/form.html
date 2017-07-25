@@ -120,7 +120,6 @@
         <div class="c-form__input">
           <label for="{{ form.address.id_for_label }}">Ticket Link</label>
           {{ form.ticket_url }}
-          {{ form.ticket_url.errors }}
         </div>
       </div>
 
@@ -140,6 +139,9 @@
           {{ form.submitter_phone }}
           {{ form.submitter_phone.errors }}
         </div>
+
+        <p hidden>{{ form.facebook_url }}</p>
+        <p hidden>{{ form.facebook_image_url }}</p>
 
         <div class="c-form__input">
           <input method="post" class="c-button" type="submit" name="submit_event" value="Submit Event" />
@@ -176,8 +178,6 @@
       reader.onload = function(e) {
         $('#previewImage').attr('src', e.target.result);
       }
-      // TODO: Hidden vs unhidden for the image
-      // If (not facebook image or image) display else dont
 
       reader.readAsDataURL(input.files[0]);
     }
