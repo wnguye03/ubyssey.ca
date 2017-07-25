@@ -6,7 +6,7 @@
 }
 
 .c-widget-upcoming-events__events {
-  .c-event:not(:last-child) {
+  .c-event {
     border-bottom: none;
   }
 }
@@ -19,4 +19,28 @@
   font-size: font-size(13);
   font-weight: $font-weight-semi-bold;
   color: $color-text-gray-light;
+}
+
+.c-widget-upcoming-events__view-all {
+  // Structure
+  width: 100%;
+  box-sizing: border-box;
+  height: 26px;
+  line-height: 26px;
+
+  // Border
+  border-radius: 1px;
+  border: solid 1px $color-border-gray;
+  border-top: 0;
+
+  // Display
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  background-color: #f6f6f6;
+
+  // Text
+  color: $color-text-gray-light;
+  text-align: center;
+  font-size: font-size(11);
+  font-weight: $font-weight-semi-bold;
+  letter-spacing: 0.045em;
 }
