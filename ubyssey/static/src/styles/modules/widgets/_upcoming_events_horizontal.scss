@@ -1,0 +1,42 @@
+.c-widget-upcoming-events-horizontal {
+  background-color: #f5f5f5;
+  width: 100%;
+  margin: 15px 0;
+
+  box-sizing: border-box;
+  padding: 25px 50px;
+  border-top: solid 1px $color-border-gray;
+  border-bottom: solid 1px $color-border-gray;
+}
+
+.c-widget-upcoming-events-horizontal__label-row {
+  width: 100%;
+  overflow: hidden;
+
+  // Text
+  color: $color-text-gray;
+  text-align: center;
+  font-size: font-size(14);
+  font-weight: $font-weight-semi-bold;
+  letter-spacing: 0.045em;
+}
+
+.c-widget-upcoming-events-horizontal__label {
+  display: inline-block;
+  float: left;
+}
+
+.c-widget-upcoming-events-horizontal__view-all {
+  display: inline-block;
+  float: right;
+}
+
+.c-widget-upcoming-events-horizontal__events-row {
+  margin-top: 7px;
+  display: flex;
+  justify-content: space-between;
+
+  .c-event {
+    flex-basis: 32%;
+  }
+}

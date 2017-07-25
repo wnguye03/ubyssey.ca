@@ -9,7 +9,10 @@ from dispatch.theme.widgets import Widget
 from dispatch.apps.events.models import Event
 
 from ubyssey.helpers import EventsHelper
-from ubyssey.zones import ArticleSidebar, HomePageSidebar, HomePageSidebarBottom
+from ubyssey.zones import (
+    ArticleSidebar, HomePageSidebar, HomePageSidebarBottom,
+    ArticleHorizontal
+)
 
 @register.widget
 class EventWidget(Widget):
@@ -64,5 +67,34 @@ class UpcomingEventsWidget(Widget):
             .order_by('start_time')[:num_events]
 
         result['upcoming'] = events
+
+        return result
+
+@register.widget
+class UpcomingEventsHorizontalWidget(Widget):
+    id = 'upcoming-events-horizontal'
+    name = 'Upcoming Events Horizontal'
+    template = 'widgets/upcoming-events-horizontal.html'
+    zones = (ArticleHorizontal, )
+
+    events = EventField('Override Events', many=True)
+
+    def context(self, result):
+
+        num = len(result['events'])
+
+        # Target to display is 3
+        if num < 3:
+            events = Event.objects \
+                .filter(is_submission=False) \
+                .filter(is_published=True) \
+                .filter(start_time__gt=datetime.today()) \
+                .exclude(pk__in=map(lambda e: e.pk, result['events'])) \
+                .order_by('start_time')[:3 - num]
+
+            result['events'].extend(events)
+
+        elif num > 3:
+            result['events'] = result['events'][:3]
 
         return result

@@ -1,0 +1,13 @@
+<div class="c-widget-upcoming-events-horizontal">
+  <div class="u-container u-container--padded">
+    <div class="c-widget-upcoming-events-horizontal__label-row">
+      <div class="c-widget-upcoming-events-horizontal__label">UPCOMING EVENTS ON CAMPUS</div>
+      <div class="c-widget-upcoming-events-horizontal__view-all"><a href="{% url 'events'%}">SEE MORE</a></div>
+    </div>
+    <div class="c-widget-upcoming-events-horizontal__events-row">
+      {% for event in events %}
+        {% include '../events/event_box.html' with event=event hide_image=True only %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
