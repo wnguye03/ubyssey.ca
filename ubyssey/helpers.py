@@ -218,7 +218,7 @@ class EventsHelper(object):
             start = start.astimezone(timezone(settings.TIME_ZONE))
             year = start.year
             month_name = calendar.month_name[start.month]
-            day = '%s. %d' % (start.strftime('%a'), start.day)
+            day = '%s %d' % (start.strftime('%A'), start.day)
             if year not in events_by_date:
                 events_by_date[year] = OrderedDict()
             if month_name not in events_by_date[year]:
