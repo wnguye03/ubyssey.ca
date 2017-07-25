@@ -51,13 +51,13 @@
         </div>
 
         <div class="c-two-col">
-          <div class="c-form__input" type="left">
+          <div class="c-form__input c-two-col--left" type="left">
             <label for="{{ form.host.id_for_label }}">Host</label>
             {{ form.host }}
             {{ form.host.errors }}
           </div>
 
-          <div class="c-form__input" type="right">
+          <div class="c-form__input c-two-col--right" type="right">
             <label for="{{ form.category.id_for_label }}">Category</label>
             {{ form.category }}
             {{ form.category.errors }}
@@ -65,13 +65,13 @@
         </div>
 
         <div class="c-two-col">
-          <div class="c-form__input" type="left">
+          <div class="c-form__input c-two-col--left" type="left">
             <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time</label>
             {{ form.start_time }}
             {{ form.start_time.errors }}
           </div>
 
-          <div class="c-form__input" type="right">
+          <div class="c-form__input c-two-col--right" type="right">
             <label for="{{ form.end_time.id_for_label }}">End Time</label>
             {{ form.end_time }}
             {{ form.end_time.errors }}

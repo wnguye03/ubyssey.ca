@@ -33,6 +33,43 @@
   width: 100%;
 }
 
+.c-two-col {
+  // Structure
+  overflow: hidden;
+  width: 100%;
+}
+
+.c-two-col label {
+  display: block;
+}
+
+.c-two-col--right,
+.c-two-col--left {
+  width: 49%;
+}
+
+.c-two-col--right {
+  float: right;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.c-two-col--left {
+  float: left;
+}
+
+.c-form__input > option {
+  // Structure
+  display: inline-block;
+  position: absolute;
+  min-width: 160px;
+  padding: 12px 16px;
+  z-index: 1;
+
+  // Background
+  background-color: #f9f9f9;
+}
+
 #previewImage {
   // Structure
   padding: 0;
