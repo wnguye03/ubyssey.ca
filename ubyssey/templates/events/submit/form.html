@@ -116,6 +116,12 @@
           {{ form.address }}
           {{ form.address.errors }}
         </div>
+
+        <div class="c-form__input">
+          <label for="{{ form.address.id_for_label }}">Ticket Link</label>
+          {{ form.ticket_url }}
+          {{ form.ticket_url.errors }}
+        </div>
       </div>
 
       <div class="c-form__section">
