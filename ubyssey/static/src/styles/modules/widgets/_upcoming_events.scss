@@ -44,3 +44,33 @@
   font-weight: $font-weight-semi-bold;
   letter-spacing: 0.045em;
 }
+
+.carousel {
+  position: relative;
+}
+
+.carousel-left, .carousel-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 10px 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e3e3e3;
+
+  background-color: #fff;
+  opacity: 0.65;
+}
+
+.carousel-left {
+  left: 0;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+.carousel-right {
+  right: 0;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
