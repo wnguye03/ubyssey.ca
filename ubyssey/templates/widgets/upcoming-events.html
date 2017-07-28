@@ -1,7 +1,7 @@
 <div class="c-widget-upcoming-events">
-  <div class="carousel">
+  <div class="js-carousel">
     {% for featured_event in featured_events %}
-    <div class="c-widget-upcoming-events__featured carousel-item" {% ifnotequal forloop.counter0 0 %}style="display:none;"{% endifnotequal %}>
+    <div class="c-widget-upcoming-events__featured js-carousel__item" {% ifnotequal forloop.counter0 0 %}style="display:none;"{% endifnotequal %}>
       {% include '../events/event_box.html' with event=featured_event only %}
     </div>
     {% endfor %}

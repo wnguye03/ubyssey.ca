@@ -1,10 +1,12 @@
+var AUTOPLAY_SPEED = 5000; //ms
+
 function registerWidget() {
-  $('.carousel').each(function() {
+  $('.js-carousel').each(function() {
     var carousel = $(this);
     carousel.currentSlide = 0;
     carousel.slides = [];
 
-    carousel.find('.carousel-item').each(function(i) {
+    carousel.find('.js-carousel__item').each(function(i) {
       var item = $(this);
       item.slideIndex = i;
       carousel.slides.push(item);
@@ -13,8 +15,8 @@ function registerWidget() {
     var numSlides = carousel.slides.length;
 
     if (numSlides > 1) {
-      carousel.moveSlide = function(n) {
-        carousel.currentSlide += n;
+      carousel.setSlide = function(n) {
+        carousel.currentSlide = n;
 
         if (carousel.currentSlide >= numSlides) {
           carousel.currentSlide = 0;
@@ -22,34 +24,60 @@ function registerWidget() {
           carousel.currentSlide = numSlides - 1;
         }
 
+        var slideToActivate;
         $.each(carousel.slides, function(i, slide) {
           if (slide.slideIndex == carousel.currentSlide) {
-              slide.css('display', 'block');
+              slideToActivate = slide;
           } else {
-            slide.css('display', 'none');
+            if (slide.css('display') != 'none') {
+              slide.animate({ opacity: 0 }, 100, 'linear', function() {
+                slide.css('display', 'none')
+
+                slideToActivate.css('opacity', 0);
+                slideToActivate.css('display', 'block');
+                slideToActivate.animate({ opacity: 1 }, 600, 'linear');
+              });
+            }
           }
         });
+
+        $.each(carouselButtons, function(i, button) {
+          button.removeClass('carousel-button--active');
+          if (carousel.currentSlide == i) {
+            button.addClass('carousel-button--active');
+          }
+        })
       };
 
-      // "autoplay"
-      carousel.interval = setInterval(function() {
-        carousel.moveSlide(1);
-      }, 5000);
+      var startAutoplay = function() {
+        carousel.interval = setInterval(function() {
+          carousel.setSlide(carousel.currentSlide + 1);
+        }, AUTOPLAY_SPEED);
+      };
 
-      var left = $('<div>', { 'class': 'carousel-left fa fa-arrow-circle-left' });
-      left.click(function() {
-        carousel.moveSlide(-1);
-        clearInterval(carousel.interval); // disable autoplay
-      });
+      var carouselButtons = [];
+      var buttonRow = $('<div>', { class: 'carousel-button-row' });
+      carousel.append(buttonRow);
+      for (var j = 0; j < carousel.slides.length; j++) {
+        var button = $('<div>', {
+          class: 'carousel-button' + (!j ? ' carousel-button--active' : ''),
+          'data-index': j
+        });
 
-      var right = $('<div>', { 'class': 'carousel-right fa fa-arrow-circle-right' });
-      right.click(function() {
-        carousel.moveSlide(1);
-        clearInterval(carousel.interval);
-      });
+        button.click(function() {
+          var i = $(this).data('index')
+          carousel.setSlide(i);
+          clearInterval(carousel.interval);
 
-      carousel.append(left);
-      carousel.append(right);
+          // restart autoplay after some time
+          carousel.interval = setTimeout(startAutoplay, AUTOPLAY_SPEED / 2);
+        });
+
+        buttonRow.append(button)
+        carouselButtons.push(button);
+      }
+
+      startAutoplay();
     }
   });
 }
