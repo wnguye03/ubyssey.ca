@@ -24,11 +24,9 @@ function registerWidget() {
           carousel.currentSlide = numSlides - 1;
         }
 
-        var slideToActivate;
+        var slideToActivate = carousel.slides[carousel.currentSlide];
         $.each(carousel.slides, function(i, slide) {
-          if (slide.slideIndex == carousel.currentSlide) {
-              slideToActivate = slide;
-          } else if (slide.css('display') != 'none') {
+          if (slide.css('display') != 'none') {
             slide.animate({ opacity: 0 }, 100, 'linear', function() {
               slide.css('display', 'none')
 
