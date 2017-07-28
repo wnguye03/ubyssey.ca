@@ -10,8 +10,8 @@ from dispatch.apps.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
-    ArticleSidebar, HomePageSidebar, HomePageSidebarBottom,
-    ArticleHorizontal
+    ArticleHorizontal, ArticleSidebar,
+    HomePageSidebar, HomePageSidebarBottom    
 )
 
 @register.widget
@@ -25,7 +25,7 @@ class EventWidget(Widget):
 
   def context(self, result):
       """Select random event if custom event is not specified"""
-      
+
       if not result.get('event'):
           result['event'] = EventsHelper.get_random_event()
       return result
