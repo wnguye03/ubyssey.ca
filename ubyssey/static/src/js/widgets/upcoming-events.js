@@ -1,4 +1,6 @@
-var AUTOPLAY_SPEED = 5000; //ms
+var AUTOPLAY_SPEED = 5000; // ms
+var FADE_OUT_SPEED = 100; // ms
+var FADE_IN_SPEED = 600; // ms
 
 function registerWidget() {
   $('.js-carousel').each(function() {
@@ -27,12 +29,12 @@ function registerWidget() {
         var slideToActivate = carousel.slides[carousel.currentSlide];
         $.each(carousel.slides, function(i, slide) {
           if (slide.css('display') != 'none') {
-            slide.animate({ opacity: 0 }, 100, 'linear', function() {
+            slide.animate({ opacity: 0 }, FADE_OUT_SPEED, 'linear', function() {
               slide.css('display', 'none');
 
               slideToActivate.css('opacity', 0);
               slideToActivate.css('display', 'block');
-              slideToActivate.animate({ opacity: 1 }, 600, 'linear');
+              slideToActivate.animate({ opacity: 1 }, FADE_IN_SPEED, 'linear');
             });
           }
         });
