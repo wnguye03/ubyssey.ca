@@ -28,16 +28,14 @@ function registerWidget() {
         $.each(carousel.slides, function(i, slide) {
           if (slide.slideIndex == carousel.currentSlide) {
               slideToActivate = slide;
-          } else {
-            if (slide.css('display') != 'none') {
-              slide.animate({ opacity: 0 }, 100, 'linear', function() {
-                slide.css('display', 'none')
+          } else if (slide.css('display') != 'none') {
+            slide.animate({ opacity: 0 }, 100, 'linear', function() {
+              slide.css('display', 'none')
 
-                slideToActivate.css('opacity', 0);
-                slideToActivate.css('display', 'block');
-                slideToActivate.animate({ opacity: 1 }, 600, 'linear');
-              });
-            }
+              slideToActivate.css('opacity', 0);
+              slideToActivate.css('display', 'block');
+              slideToActivate.animate({ opacity: 1 }, 600, 'linear');
+            });
           }
         });
 
