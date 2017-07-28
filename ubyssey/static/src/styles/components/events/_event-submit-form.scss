@@ -33,29 +33,31 @@
   width: 100%;
 }
 
-.c-two-col {
+.c-form__row {
   // Structure
   overflow: hidden;
   width: 100%;
+  display: flex;
 }
 
-.c-two-col label {
+.c-form__row label {
   display: block;
 }
 
-.c-two-col--right,
-.c-two-col--left {
+.c-form__row__col {
   width: 49%;
-}
+  flex: 1;
 
-.c-two-col--right {
-  float: right;
-  padding-right: 0;
-  margin-right: 0;
-}
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
 
-.c-two-col--left {
-  float: left;
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
 }
 
 .c-form__input > option {
