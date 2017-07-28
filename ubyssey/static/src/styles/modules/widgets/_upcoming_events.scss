@@ -22,7 +22,14 @@
 }
 
 .c-widget-upcoming-events__events {
-  // Structure
   max-height: 400px;
-  overflow-y: auto;
+  overflow: hidden;
+
+  .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .mCSB_dragger_onDrag .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
 }
