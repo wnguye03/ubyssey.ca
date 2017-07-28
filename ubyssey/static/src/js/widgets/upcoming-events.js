@@ -28,7 +28,7 @@ function registerWidget() {
         $.each(carousel.slides, function(i, slide) {
           if (slide.css('display') != 'none') {
             slide.animate({ opacity: 0 }, 100, 'linear', function() {
-              slide.css('display', 'none')
+              slide.css('display', 'none');
 
               slideToActivate.css('opacity', 0);
               slideToActivate.css('display', 'block');
@@ -69,7 +69,7 @@ function registerWidget() {
           carousel.interval = setTimeout(startAutoplay, AUTOPLAY_SPEED / 2);
         });
 
-        buttonRow.append(button)
+        buttonRow.append(button);
         carouselButtons.push(button);
       }
 
@@ -78,4 +78,4 @@ function registerWidget() {
   });
 }
 
-module.exports = registerWidget
+module.exports = registerWidget;
