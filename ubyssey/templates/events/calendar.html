@@ -7,9 +7,12 @@
 {% block content %}
 <main class="u-container u-container--padded c-calendar">
   <div class="c-page__header">
-    <h1 class="c-page__heading">Events</h1>
+    <div class="c-page__header__meta">
+      <h1 class="c-page__heading">Events</h1>
+      <h3 class="c-page__sub-heading">Upcoming campus events from UBC clubs and student organizations</h3>
+      <p class="c-page__description">Hosting an event? <a href="{% url 'events-submit-landing' %}">Submit it here</a> to have it featured on our website!</p>
+    </div>
   </div>
-
 
   <div class="c-event-calendar__container">
     <div class="c-event-calendar__sidebar">
