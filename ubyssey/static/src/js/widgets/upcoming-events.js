@@ -28,7 +28,7 @@ function registerWidget() {
 
         var slideToActivate = carousel.slides[carousel.currentSlide];
         $.each(carousel.slides, function(i, slide) {
-          if (slide.css('display') != 'none') {
+          if (slide.is(':visible')) {
             slide.animate({ opacity: 0 }, FADE_OUT_SPEED, 'linear', function() {
               slide.css('display', 'none');
 

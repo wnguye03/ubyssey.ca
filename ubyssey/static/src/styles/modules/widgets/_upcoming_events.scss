@@ -3,6 +3,11 @@
 
 .c-widget-upcoming-events__featured {
   margin-bottom: 0.625em;
+  display: none;
+
+  &:first-child {
+    display: block;
+  }
 }
 
 .c-widget-upcoming-events__events {
