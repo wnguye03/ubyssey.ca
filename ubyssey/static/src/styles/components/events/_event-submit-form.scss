@@ -35,8 +35,6 @@
 
 .c-form__row {
   // Structure
-  overflow: hidden;
-  width: 100%;
   display: flex;
 }
 
@@ -45,7 +43,6 @@
 }
 
 .c-form__row__col {
-  width: 49%;
   flex: 1;
 
   padding-right: 0.75rem;
