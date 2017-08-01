@@ -33,6 +33,42 @@
   width: 100%;
 }
 
+.c-form__row {
+  // Structure
+  display: flex;
+}
+
+.c-form__row label {
+  display: block;
+}
+
+.c-form__row__col {
+  flex: 1;
+
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.c-form__input > option {
+  // Structure
+  display: inline-block;
+  position: absolute;
+  min-width: 160px;
+  padding: 12px 16px;
+  z-index: 1;
+
+  // Background
+  background-color: #f9f9f9;
+}
+
 #previewImage {
   // Structure
   padding: 0;

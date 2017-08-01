@@ -1,7 +1,8 @@
 .c-text-input,
 .c-form__input > input[type='text'],
 .c-form__input > input[type='email'],
-.c-form__input > input[type='tel'] {
+.c-form__input > input[type='tel'],
+.c-form__input > textarea {
   // Structure
   height: 45px;
   padding-top: 0;
@@ -33,4 +34,8 @@
     box-shadow: 0 0 2px 0px rgba(134, 197, 249, 0.15);
     outline: none;
   }
+}
+
+.c-form__input > textarea {
+  height: initial;
 }
