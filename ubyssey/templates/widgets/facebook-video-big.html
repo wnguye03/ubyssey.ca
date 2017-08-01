@@ -1,3 +1,4 @@
+{% if do_show %}
 <div id="fb-root"></div>
 <div class='c-homepage-takeover'>
 {% if title %}
@@ -22,3 +23,4 @@
   js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+{% endif %}
