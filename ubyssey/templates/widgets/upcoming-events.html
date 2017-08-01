@@ -1,11 +1,13 @@
 <div class="c-widget-upcoming-events">
-  {% if featured_event %}
-  <div class="c-widget-upcoming-events__featured">
-    {% include 'events/event_box.html' with event=featured_event only %}
+  <div class="js-carousel">
+    {% for featured_event in featured_events %}
+    <div class="c-widget-upcoming-events__featured js-carousel__item">
+      {% include '../events/event_box.html' with event=featured_event only %}
+    </div>
+    {% endfor %}
   </div>
-  {% endif %}
   <div class="c-widget-upcoming-events__label">Upcoming Events</div>
-  <div class="c-widget-upcoming-events__events">
+  <div class="c-widget-upcoming-events__events mCustomScrollbar" data-mcs-theme="minimal-dark">
   {% for event in upcoming %}
     {% include 'events/event_box.html' with event=event hide_image=True only %}
   {% endfor %}

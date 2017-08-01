@@ -50,28 +50,28 @@
           {{ form.description.errors }}
         </div>
 
-        <div class="c-two-col">
-          <div class="c-form__input" type="left">
+        <div class="c-form__row">
+          <div class="c-form__input c-form__row__col" type="left">
             <label for="{{ form.host.id_for_label }}">Host</label>
             {{ form.host }}
             {{ form.host.errors }}
           </div>
 
-          <div class="c-form__input" type="right">
+          <div class="c-form__input c-form__row__col" type="right">
             <label for="{{ form.category.id_for_label }}">Category</label>
             {{ form.category }}
             {{ form.category.errors }}
           </div>
         </div>
 
-        <div class="c-two-col">
-          <div class="c-form__input" type="left">
+        <div class="c-form__row">
+          <div class="c-form__input c-form__row__col" type="left">
             <label class="starttime" for="{{ form.start_time.id_for_label }}">Start Time</label>
             {{ form.start_time }}
             {{ form.start_time.errors }}
           </div>
 
-          <div class="c-form__input" type="right">
+          <div class="c-form__input c-form__row__col" type="right">
             <label for="{{ form.end_time.id_for_label }}">End Time</label>
             {{ form.end_time }}
             {{ form.end_time.errors }}
@@ -116,6 +116,11 @@
           {{ form.address }}
           {{ form.address.errors }}
         </div>
+
+        <div class="c-form__input">
+          <label for="{{ form.address.id_for_label }}">Ticket Link</label>
+          {{ form.ticket_url }}
+        </div>
       </div>
 
       <div class="c-form__section">
@@ -134,6 +139,9 @@
           {{ form.submitter_phone }}
           {{ form.submitter_phone.errors }}
         </div>
+
+        <p hidden>{{ form.facebook_url }}</p>
+        <p hidden>{{ form.facebook_image_url }}</p>
 
         <div class="c-form__input">
           <input method="post" class="c-button" type="submit" name="submit_event" value="Submit Event" />
@@ -170,8 +178,6 @@
       reader.onload = function(e) {
         $('#previewImage').attr('src', e.target.result);
       }
-      // TODO: Hidden vs unhidden for the image
-      // If (not facebook image or image) display else dont
 
       reader.readAsDataURL(input.files[0]);
     }

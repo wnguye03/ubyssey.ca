@@ -3,10 +3,15 @@
 
 .c-widget-upcoming-events__featured {
   margin-bottom: 0.625em;
+  display: none;
+
+  &:first-child {
+    display: block;
+  }
 }
 
 .c-widget-upcoming-events__events {
-  .c-event {
+  .c-event:not(:last-child) {
     border-bottom: none;
   }
 }
@@ -43,4 +48,41 @@
   font-size: font-size(11);
   font-weight: $font-weight-semi-bold;
   letter-spacing: 0.045em;
+}
+
+.c-widget-upcoming-events__events {
+  max-height: 400px;
+  overflow: hidden;
+
+  .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .mCSB_dragger_onDrag .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+.c-widget-upcoming-events {
+  $button-color: lighten($color-text-gray-light, 10%);
+
+  .carousel-button-row {
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .carousel-button {
+    width: 8px;
+    height: 8px;
+
+    cursor: pointer;
+    margin: 0 3px;
+    border: 2px solid $button-color;
+    border-radius: 18px;
+  }
+
+  .carousel-button--active {
+    background-color: $button-color;
+  }
 }
