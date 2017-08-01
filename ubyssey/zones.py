@@ -15,3 +15,8 @@ class HomePageSidebar(Zone):
 class HomePageSidebarBottom(Zone):
     id = 'homepage-sidebar-bottom'
     name = 'Homepage Sidebar Bottom'
+
+@register.zone
+class ArticleHorizontal(Zone):
+    id = 'article-horizontal'
+    name = 'Article Horizontal'
