@@ -5,7 +5,7 @@
   </div>
   {% endif %}
   <div class="c-widget-upcoming-events__label">Upcoming Events</div>
-  <div class="c-widget-upcoming-events__events">
+  <div class="c-widget-upcoming-events__events mCustomScrollbar" data-mcs-theme="minimal-dark">
   {% for event in upcoming %}
     {% include '../events/event_box.html' with event=event hide_image=True only %}
   {% endfor %}
