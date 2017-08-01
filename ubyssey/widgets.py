@@ -11,7 +11,8 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom    
+    HomePageSidebar, HomePageSidebarBottom,
+    HomePageTakeover
 )
 
 @register.widget
@@ -97,3 +98,14 @@ class UpcomingEventsHorizontalWidget(Widget):
             result['events'] = result['events'][:3]
 
         return result
+
+@register.widget
+class FacebookVideoBig(Widget):
+    id = 'facebook-video-big'
+    name = 'Facebook Video Big'
+    template = 'widgets/facebook-video-big.html'
+    zones = (HomePageTakeover, )
+
+    title = CharField('Title')
+    video_url = CharField('Video URL')
+    show_comments = IntegerField('Show Comment Box (0 or 1)', min_value=0, max_value=1) # Should be a BoolField, ie. checkbox

@@ -1,0 +1,72 @@
+<style>
+
+.homepage-takeover {
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 15px;
+	padding: 15px;
+	border: 1px solid #e6e6e6;
+}
+
+.homepage-takeover > div {
+	width: 100%;
+	display: flex;
+}
+
+.fb-video {
+	width: 50%;
+	height: 500px;
+
+	flex: 1;
+	margin-right: 25px;
+}
+
+/* Very hacky. How to make FB set the width/height to something other than 0? */
+.fb-video > span {
+	width: 100% !important;
+	height: 500px !important;
+}
+
+.fb-video > span > iframe {
+	width: 100% !important;
+	height: 500px !important;
+}
+
+.fb_hide_iframes iframe {
+	left: 0 !important;
+}
+
+.fb-comments > span > iframe {
+	height: 500px !important;
+
+	margin-top: 25px;
+}
+
+</style>
+
+  <div id="fb-root"></div>
+
+	<div class='homepage-takeover'>
+
+		{% if title %}
+		<h1>{{ title }}</h1>
+		{% endif %}
+
+		<div>
+
+		  <div class="fb-video" data-href="{{ video_url }}" data-width="400" data-show-text="false">
+		  </div>
+			{% if show_comments %}
+		  <div class="fb-comments" data-href="{{ video_url }}" data-width="300" data-numposts="5"></div>
+			{% endif %}
+
+		</div>
+	</div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
