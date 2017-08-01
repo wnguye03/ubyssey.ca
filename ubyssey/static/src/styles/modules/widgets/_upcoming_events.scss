@@ -11,7 +11,7 @@
 }
 
 .c-widget-upcoming-events__events {
-  .c-event {
+  .c-event:not(:last-child) {
     border-bottom: none;
   }
 }
@@ -48,6 +48,19 @@
   font-size: font-size(11);
   font-weight: $font-weight-semi-bold;
   letter-spacing: 0.045em;
+}
+
+.c-widget-upcoming-events__events {
+  max-height: 400px;
+  overflow: hidden;
+
+  .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .mCSB_dragger_onDrag .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
 }
 
 .c-widget-upcoming-events {
