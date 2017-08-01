@@ -22,7 +22,7 @@ class EventWidget(Widget):
 
   def context(self, result):
       """Select random event if custom event is not specified"""
-      
+
       if not result.get('event'):
           result['event'] = EventsHelper.get_random_event()
       return result
@@ -34,9 +34,9 @@ class UpcomingEventsWidget(Widget):
     template = 'widgets/upcoming-events.html'
     zones = (HomePageSidebar, HomePageSidebarBottom)
 
-    featured_event = EventField('Featured Event', many=False)
+    featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
-    number_of_events = IntegerField('Number of Events', min_value=0)
+    number_of_events = IntegerField('Number of Upcoming Events', min_value=0)
 
     def context(self, result):
         """Override context to add the next N events occuring to the context"""
@@ -46,21 +46,20 @@ class UpcomingEventsWidget(Widget):
             num_events = 5
 
         if result['featured_event_until']:
-            today = datetime.today()
-            if today > result['featured_event_until'].replace(tzinfo=None):
-                result['featured_event'] = None
+           today = datetime.today()
+           if today > result['featured_event_until'].replace(tzinfo=None):
+               result['featured_events'] = None
 
-        # exclude the featured event from showing up in the other list
-        if result['featured_event']:
-            featured_id = result['featured_event'].pk
+        if result['featured_events']:
+            exclusions = map(lambda e: e.pk, result['featured_events'])
         else:
-            featured_id = None
+            exclusions = []
 
         events = Event.objects \
             .filter(is_submission=False) \
             .filter(is_published=True) \
             .filter(start_time__gt=datetime.today()) \
-            .exclude(pk=featured_id) \
+            .exclude(pk__in=exclusions) \
             .order_by('start_time')[:num_events]
 
         result['upcoming'] = events
