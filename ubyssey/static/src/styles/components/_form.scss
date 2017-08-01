@@ -19,17 +19,19 @@
   color: $color-text-black;
 }
 
+.c-form__input > textarea,
 .c-form__input > input {
   // Structure
   width: 100%;
 }
 
-.c-form__input--text > select {
+.c-form__input > select {
   // Structure
   -webkit-appearance: none;
+  height: 45px;
   display: block;
   padding: 10px 6px;
-  width: 98%;
+  width: 100%;
   margin-bottom: 1rem;
 
   // Border
