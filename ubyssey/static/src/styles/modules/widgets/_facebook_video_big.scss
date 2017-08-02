@@ -13,27 +13,33 @@
 }
 
 .c-homepage-takeover__container {
-	$fb-plugins-height: 500px;
 	width: 100%;
 	display: flex;
 
-	.fb-video {
-		flex: 1;
-		height: 500px;
-		margin-right: 15px;
+	@media($bp-smaller-than-tablet) {
+		display: block;
 
-		&> span {
-			width: 100% !important;
-			height: $fb-plugins-height !important;
+		.fb-comments {
+			margin-top: 15px;
+			width: 100%;
 
-			&> iframe {
+			&> span {
 				width: 100% !important;
-				height: $fb-plugins-height !important;
+
+				&> iframe {
+					width: 100% !important;
+				}
 			}
 		}
 	}
 
-	.fb-comments > span > iframe {
-		height: $fb-plugins-height !important;
+	.fb-video {
+		flex: 1;
+		margin-right: 15px;
+
+		@media($bp-smaller-than-tablet) {
+			display: block;
+		}
 	}
+
 }
