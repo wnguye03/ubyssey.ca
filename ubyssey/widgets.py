@@ -14,7 +14,6 @@ from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
     HomePageSidebar, HomePageSidebarBottom
 )
-from ubyssey.helpers import ArticleHelper
 
 @register.widget
 class EventWidget(Widget):
