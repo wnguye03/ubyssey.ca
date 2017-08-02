@@ -100,11 +100,24 @@ class UpcomingEventsHorizontalWidget(Widget):
         return result
 
 @register.widget
+class FrontPageDefault(Widget):
+    id = 'frontpage-default'
+    name = 'Default Front Page'
+    template = 'widgets/frontpage/default.html'
+    zones = (FrontPage, )
+
+    valid_extra_ctx_kw = ('articles', )
+
+    # disabled until WidgetField is fixed on dispatch end
+    # sidebar = WidgetField('Sidebar')
+
+
+@register.widget
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
     name = 'Facebook Video Big'
     template = 'widgets/facebook-video-big.html'
-    zones = (HomePageTakeover, )
+    zones = (FrontPage, )
 
     title = CharField('Title')
     video_url = CharField('Video URL')
@@ -126,15 +139,3 @@ class FacebookVideoBig(Widget):
         result['do_show'] = do_show
 
         return result
-
-@register.widget
-class FrontPageDefault(Widget):
-    id = 'frontpage-default'
-    name = 'Default Front Page'
-    template = 'widgets/frontpage/default.html'
-    zones = (FrontPage, )
-
-    valid_extra_ctx_kw = ('articles', )
-
-    # disabled until WidgetField is fixed on dispatch end
-    # sidebar = WidgetField('Sidebar')
