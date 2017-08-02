@@ -3,7 +3,7 @@ from datetime import datetime
 from dispatch.theme.fields import (
     CharField, TextField, ArticleField, ImageField,
     EventField, IntegerField, InvalidField, DateTimeField,
-    WidgetField
+    WidgetField, BoolField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
@@ -121,7 +121,7 @@ class FacebookVideoBig(Widget):
 
     title = CharField('Title')
     video_url = CharField('Video URL')
-    show_comments = IntegerField('Show Comment Box (0 or 1)', min_value=0, max_value=1) # Should be a BoolField, ie. checkbox
+    show_comments = BoolField('Show Comment Box')
 
     start_time = DateTimeField('Start Time')
     end_time = DateTimeField('End Time')
