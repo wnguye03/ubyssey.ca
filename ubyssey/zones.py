@@ -20,3 +20,8 @@ class HomePageSidebarBottom(Zone):
 class ArticleHorizontal(Zone):
     id = 'article-horizontal'
     name = 'Article Horizontal'
+
+@register.zone
+class FrontPage(Zone):
+    id = 'frontpage'
+    name = 'FrontPage'

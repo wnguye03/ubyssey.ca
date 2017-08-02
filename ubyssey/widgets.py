@@ -2,7 +2,8 @@ from datetime import datetime
 
 from dispatch.theme.fields import (
     CharField, TextField, ArticleField, ImageField,
-    EventField, IntegerField, InvalidField, DateTimeField
+    EventField, IntegerField, InvalidField, DateTimeField,
+    WidgetField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
@@ -10,9 +11,10 @@ from dispatch.apps.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
-    ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom    
+    ArticleHorizontal, ArticleSidebar, FrontPage,
+    HomePageSidebar, HomePageSidebarBottom
 )
+from ubyssey.helpers import ArticleHelper
 
 @register.widget
 class EventWidget(Widget):
@@ -97,3 +99,15 @@ class UpcomingEventsHorizontalWidget(Widget):
             result['events'] = result['events'][:3]
 
         return result
+
+@register.widget
+class FrontPageDefault(Widget):
+    id = 'frontpage-default'
+    name = 'Default Front Page'
+    template = 'widgets/frontpage/default.html'
+    zones = (FrontPage, )
+
+    valid_extra_ctx_kw = ('articles', )
+
+    # disabled until WidgetField is fixed on dispatch end
+    # sidebar = WidgetField('Sidebar')
