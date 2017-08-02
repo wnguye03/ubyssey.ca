@@ -100,6 +100,34 @@ class UpcomingEventsHorizontalWidget(Widget):
         return result
 
 @register.widget
+class FacebookVideoBig(Widget):
+    id = 'facebook-video-big'
+    name = 'Facebook Video Big'
+    template = 'widgets/facebook-video-big.html'
+    zones = (HomePageTakeover, )
+
+    title = CharField('Title')
+    video_url = CharField('Video URL')
+    show_comments = IntegerField('Show Comment Box (0 or 1)', min_value=0, max_value=1) # Should be a BoolField, ie. checkbox
+
+    start_time = DateTimeField('Start Time')
+    end_time = DateTimeField('End Time')
+
+    def context(self, result):
+        today = datetime.today()
+        do_show = True
+
+        if result['start_time'] and today < result['start_time'].replace(tzinfo=None):
+            do_show = False
+
+        if result['end_time'] and today > result['end_time'].replace(tzinfo=None):
+            do_show = False
+
+        result['do_show'] = do_show
+
+        return result
+
+@register.widget
 class FrontPageDefault(Widget):
     id = 'frontpage-default'
     name = 'Default Front Page'

@@ -1,0 +1,45 @@
+.c-homepage-takeover {
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 15px;
+	padding: 15px;
+
+	border: 1px solid $color-border-gray-dark;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+
+	h1 {
+		margin-top: 0;
+	}
+}
+
+.c-homepage-takeover__container {
+	width: 100%;
+	display: flex;
+
+	@media($bp-smaller-than-tablet) {
+		display: block;
+
+		.fb-comments {
+			margin-top: 15px;
+			width: 100%;
+
+			&> span {
+				width: 100% !important;
+
+				&> iframe {
+					width: 100% !important;
+				}
+			}
+		}
+	}
+
+	.fb-video {
+		flex: 1;
+		margin-right: 15px;
+
+		@media($bp-smaller-than-tablet) {
+			display: block;
+		}
+	}
+
+}
