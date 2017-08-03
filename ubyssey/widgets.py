@@ -106,7 +106,7 @@ class FrontPageDefault(Widget):
     template = 'widgets/frontpage/default.html'
     zones = (FrontPage, )
 
-    valid_extra_ctx_kw = ('articles', )
+    accepted_keywords = ('articles', )
 
     # disabled until WidgetField is fixed on dispatch end
     # sidebar = WidgetField('Sidebar')
