@@ -26,3 +26,8 @@ class ArticleHorizontal(Zone):
 class FrontPage(Zone):
     id = 'frontpage'
     name = 'FrontPage'
+
+@register.zone
+class WholeSiteBanner(Zone):
+    id = 'while-site-banner'
+    name = 'Whole Site Banner'

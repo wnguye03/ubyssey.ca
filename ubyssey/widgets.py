@@ -12,7 +12,8 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    HomePageSidebar, HomePageSidebarBottom
+    HomePageSidebar, HomePageSidebarBottom,
+    WholeSiteBanner
 )
 
 @register.widget
@@ -111,6 +112,17 @@ class FrontPageDefault(Widget):
     sidebar = WidgetField('Sidebar', zone=HomePageSidebar)
 
 
+def in_date_range(start, end):
+    today = datetime.today()
+
+    if start and today < start.replace(tzinfo=None):
+        return False
+
+    if end and today > end.replace(tzinfo=None):
+        return False
+
+    return True
+
 @register.widget
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
@@ -126,15 +138,24 @@ class FacebookVideoBig(Widget):
     end_time = DateTimeField('End Time')
 
     def context(self, result):
-        today = datetime.today()
-        do_show = True
 
-        if result['start_time'] and today < result['start_time'].replace(tzinfo=None):
-            do_show = False
+        result['do_show'] = in_date_range(result['start_time'], result['end_time'])
+        return result
 
-        if result['end_time'] and today > result['end_time'].replace(tzinfo=None):
-            do_show = False
+@register.widget
+class LiveVideoBanner(Widget):
+    id = 'live-video-banner'
+    name = 'Live Video Banner'
+    template = 'widgets/banners/livevideo.html'
+    zones = (WholeSiteBanner, )
 
-        result['do_show'] = do_show
+    text = CharField('Announcement Text')
+    url = CharField('Link to URL')
 
+    start_time = DateTimeField('Start Time')
+    end_time = DateTimeField('End Time')
+
+    def context(self, result):
+
+        result['do_show'] = in_date_range(result['start_time'], result['end_time'])
         return result

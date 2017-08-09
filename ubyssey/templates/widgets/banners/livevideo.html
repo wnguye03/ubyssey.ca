@@ -1,0 +1,11 @@
+{% if do_show %}
+{% if url %}
+<a href="{{ url }}">
+{% endif %}
+  <div class="c-banner">
+    <div class='c-banner__text'>{% if text %}{{ text }}{% endif %}</div>
+  </div>
+{% if url %}
+</a>
+{% endif %}
+{% endif %}
