@@ -119,6 +119,8 @@ class FacebookVideoBig(Widget):
     zones = (FrontPage, )
 
     title = CharField('Title')
+    description = CharField('Description')
+    host = CharField('Video Hoster (will display as author)')
     video_url = CharField('Video URL')
     show_comments = BoolField('Show Comment Box')
 

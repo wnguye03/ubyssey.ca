@@ -4,6 +4,10 @@
 {% if title %}
 	<h1>{{ title }}</h1>
 {% endif %}
+{% if description %}{{ description }}{% endif %}
+{% if host %}{{ host }}{% endif %}
+{% if start_time %}{{ start_time }}{% endif %}
+{% if end_time %}{{ end_time }}{% endif %}
 
 	<div class="c-homepage-takeover__container">
 		<div class="fb-video" data-href="{{ video_url }}" data-show-text="false"></div>
