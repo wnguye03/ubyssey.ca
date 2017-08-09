@@ -108,8 +108,7 @@ class FrontPageDefault(Widget):
 
     accepted_keywords = ('articles', )
 
-    # disabled until WidgetField is fixed on dispatch end
-    # sidebar = WidgetField('Sidebar')
+    sidebar = WidgetField('Sidebar', zone=HomePageSidebar)
 
 
 @register.widget
