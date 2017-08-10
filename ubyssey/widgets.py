@@ -115,7 +115,7 @@ class FrontPageDefault(Widget):
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
     name = 'Facebook Video Big'
-    template = 'widgets/facebook-video-big.html'
+    template = 'widgets/frontpage/facebook-video-big.html'
     zones = (FrontPage, )
 
     title = CharField('Title')
