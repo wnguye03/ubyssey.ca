@@ -108,7 +108,7 @@ class FrontPageDefault(Widget):
 
     accepted_keywords = ('articles', )
 
-    sidebar = WidgetField('Sidebar', zone=HomePageSidebar)
+    sidebar = WidgetField('Sidebar', zone=HomePageSidebar, required=True)
 
 
 @register.widget
