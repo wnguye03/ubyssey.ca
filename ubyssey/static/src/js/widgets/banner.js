@@ -15,6 +15,12 @@ function registerBanner() {
           headerCount++;
         }
       });
+
+      $('.header-article').each(function() {
+        $(this).css('top', height);
+        $(this).find('.nav-headline').css('top', height + 16);
+      });
+
       if (headerCount == 1 && $(window).width() < MOBILE_BREAKPOINT) {
         banner.css('position', 'fixed');
         var padding = DEFAULT_HOMEPAGE_PADDING + mainOriginalHeight + height;
@@ -33,6 +39,7 @@ function registerBanner() {
     bannerResize();
 
     $(window).resize(bannerResize);
+    $(window).scroll(bannerResize);
   }
 }
 
