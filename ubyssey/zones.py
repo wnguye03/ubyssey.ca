@@ -29,5 +29,5 @@ class FrontPage(Zone):
 
 @register.zone
 class WholeSiteBanner(Zone):
-    id = 'while-site-banner'
+    id = 'whole-site-banner'
     name = 'Whole Site Banner'
