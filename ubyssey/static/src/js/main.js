@@ -1,5 +1,6 @@
 import * as mp from './modules/Mixpanel';
 import upcomingEvents from './widgets/upcoming-events';
+import registerBanner from './widgets/banner';
 
 function disableScroll($document) {
   $document.on('touchmove', function(e) {
@@ -136,34 +137,8 @@ function enableScroll($document) {
     mp.pageView();
   }
 
+  // register widgets
   upcomingEvents();
-
-  var banner = $('.c-banner');
-  if (banner && banner[0]) {
-    var mainOriginalHeight = parseInt($('main').css('padding-top'), 10);
-
-    function bannerResize() {
-      var height = $('.c-banner')[0].offsetHeight;
-      var headerCount = 0;
-      $('header').each(function() {
-        if ($(this).hasClass('header-site') || $(this).hasClass('mobile')) {
-          $(this).css('top', height);
-          headerCount++;
-        }
-      });
-      if (headerCount == 1 && $(window).width() < 960) {
-        $('main').css('padding-top', 55 + mainOriginalHeight + height);
-      } else if (headerCount == 2 || $(window).width() < 960) {
-        banner.css('position', 'fixed');
-        $('main').css('padding-top', mainOriginalHeight + height);
-      } else {
-        banner.css('position', 'static');
-        $('main').css('padding-top', mainOriginalHeight);
-      }
-    }
-    bannerResize();
-
-    $(window).resize(bannerResize);
-  }
+  registerBanner();
 
 })();
