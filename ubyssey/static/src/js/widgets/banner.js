@@ -18,12 +18,15 @@ function registerBanner() {
       if (headerCount == 1 && $(window).width() < MOBILE_BREAKPOINT) {
         banner.css('position', 'fixed');
         var padding = DEFAULT_HOMEPAGE_PADDING + mainOriginalHeight + height;
+        $('#search-form').css('top', height)
         $('main').css('padding-top', padding);
       } else if (headerCount == 2 || $(window).width() < MOBILE_BREAKPOINT) {
         banner.css('position', 'fixed');
+        $('#search-form').css('top', height)
         $('main').css('padding-top', mainOriginalHeight + height);
       } else {
         banner.css('position', 'static');
+        $('#search-form').css('top', 0)
         $('main').css('padding-top', mainOriginalHeight);
       }
     }
