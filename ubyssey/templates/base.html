@@ -102,11 +102,11 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
   }(document, 'script', 'twitter-wjs'));
 </script>
 
-<div class="page-wrapper">
+<div id="page-wrapper">
 {% zone 'whole-site-banner' %}
 {% block header %}{% endblock %}
 <div id="search-form"></div>
-<div class="content-wrapper">
+<div id="content-wrapper">
 {% block content %}{% endblock %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}
 </div>

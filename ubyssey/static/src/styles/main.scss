@@ -54,6 +54,21 @@
 @import 'modules/widgets/facebook_video_big';
 @import 'modules/widgets/banner';
 
+body, html, #page-wrapper {
+  max-height: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#page-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#content-wrapper {
+  overflow: auto;
+}
+
 div.image-container {
     height: 100%;
     display: table;

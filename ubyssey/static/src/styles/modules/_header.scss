@@ -193,6 +193,7 @@ header.topbar {
 
   &.header-article {
       display: none;
+      position: absolute;
   }
 
   img.logo {
@@ -244,7 +245,6 @@ header.topbar {
 
   h1.nav-headline {
     display: inline-block;
-    position: fixed;
     top: 16px;
     white-space: nowrap;
     font-family: $font-default;
