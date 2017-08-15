@@ -1,6 +1,5 @@
 import * as mp from './modules/Mixpanel';
 import upcomingEvents from './widgets/upcoming-events';
-import registerBanner from './widgets/banner';
 
 function disableScroll($document) {
   $document.on('touchmove', function(e) {
@@ -139,6 +138,5 @@ function enableScroll($document) {
 
   // register widgets
   upcomingEvents();
-  registerBanner();
 
 })();

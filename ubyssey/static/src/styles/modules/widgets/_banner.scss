@@ -1,11 +1,26 @@
 .c-banner {
-  padding: 15px 0;
-  width: 100%;
-  top: 0;
+  display: block;
   z-index: 200;
+  padding: 15px 0;
 
+  line-height: 1rem;
   background-color: $color-ub-blue;
   color: $color-white;
   font-size: font-size(24);
   text-align: center;
+}
+
+body, html, .super-wrapper {
+  max-height: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  overflow: auto;
 }
