@@ -6,7 +6,7 @@ from dispatch.theme.fields import (
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from dispatch.apps.events.models import Event
+from ubyssey.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
