@@ -7,12 +7,6 @@ class ArticleSidebar(Zone):
   name = 'Article Sidebar'
 
 @register.zone
-class HomePageSidebar(Zone):
-    id = 'homepage-sidebar'
-    name = 'Homepage Sidebar'
-    nested = True
-
-@register.zone
 class HomePageSidebarBottom(Zone):
     id = 'homepage-sidebar-bottom'
     name = 'Homepage Sidebar Bottom'

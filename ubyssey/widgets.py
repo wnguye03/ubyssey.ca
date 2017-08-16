@@ -12,7 +12,7 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    HomePageSidebar, HomePageSidebarBottom
+    HomePageSidebarBottom
 )
 
 @register.widget
@@ -36,7 +36,7 @@ class UpcomingEventsWidget(Widget):
     id = 'upcoming-events'
     name = 'Upcoming Events'
     template = 'widgets/upcoming-events.html'
-    zones = (HomePageSidebar, HomePageSidebarBottom)
+    zones = (HomePageSidebarBottom, )
 
     featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
@@ -108,7 +108,7 @@ class FrontPageDefault(Widget):
 
     accepted_keywords = ('articles', )
 
-    sidebar = WidgetField('Sidebar', zone=HomePageSidebar, required=True)
+    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget], required=True)
 
 
 @register.widget
