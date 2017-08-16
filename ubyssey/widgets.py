@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from dispatch.theme.fields import (
+from ubyssey.fields import (
     CharField, TextField, ArticleField, ImageField,
     EventField, IntegerField, InvalidField, DateTimeField
 )
@@ -11,7 +11,7 @@ from ubyssey.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom    
+    HomePageSidebar, HomePageSidebarBottom
 )
 
 @register.widget
