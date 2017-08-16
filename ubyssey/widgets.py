@@ -12,8 +12,7 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    HomePageSidebar, HomePageSidebarBottom,
-    WholeSiteBanner
+    HomePageSidebarBottom
 )
 
 @register.widget
@@ -37,7 +36,7 @@ class UpcomingEventsWidget(Widget):
     id = 'upcoming-events'
     name = 'Upcoming Events'
     template = 'widgets/upcoming-events.html'
-    zones = (HomePageSidebar, HomePageSidebarBottom)
+    zones = (HomePageSidebarBottom, )
 
     featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
@@ -109,7 +108,7 @@ class FrontPageDefault(Widget):
 
     accepted_keywords = ('articles', )
 
-    sidebar = WidgetField('Sidebar', zone=HomePageSidebar)
+    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget], required=True)
 
 
 def in_date_range(start, end):
@@ -127,10 +126,12 @@ def in_date_range(start, end):
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
     name = 'Facebook Video Big'
-    template = 'widgets/facebook-video-big.html'
+    template = 'widgets/frontpage/facebook-video-big.html'
     zones = (FrontPage, )
 
     title = CharField('Title')
+    description = CharField('Description')
+    host = CharField('Video Hoster (will display as author)')
     video_url = CharField('Video URL')
     show_comments = BoolField('Show Comment Box')
 
