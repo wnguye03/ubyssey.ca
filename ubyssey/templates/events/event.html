@@ -6,22 +6,48 @@
 {% endblock %}
 {% block content %}
 <main class="c-page c-page--author">
-  <div class="u-container u-container--padded">
-    <div class="c-page__header">
+
+  <div class="c-event-detail__container c-event-detail__padded">
+
+    <div class="c-event-detail__image-container">
       {% if event.image %}
-      <div class="c-page__header__thumbnail">
+      <div class="c-event-detail__image">
         <img style="width: 25rem;" src="{{ event.image.url }}" alt="{{ event.title }}" />
       </div>
       {% endif %}
-      <div class="c-page__header__meta">
-        <h1 class="c-page__heading">{{ event.title }}</h1>
-        <p class="c-page__description">{{ event.start_time|date:"l, F j \a\t g A" }}</p>
-        <p class="c-page__description">Hosted by {{ event.host }} &middot; {{ event.location }}</p><br/>
-        {% if event.facebook_url %}<a class="c-button" href="{{ event.facebook_url}}">View on Facebook</a> {% endif %}
-        {% if event.ticket_url %}<a class="c-button" href="{{ event.ticket_url}}">Buy Tickets</a> {% endif %}
-      </div>
     </div>
-    <p class="c-paragraph">{{ event.description|safe }}</p>
+
+    <div class="c-event-detail__info-container">
+      <div class="c-event-detail__date_box">
+        {% if not hide_datebox %}
+          {% include 'events/date_box.html' with month=event.start_time|date:"F"|slice:":3" day=event.start_time|date:"j" only %}
+        {% endif %}
+      </div>
+
+      <div class="c-event-detail__info-padded">
+        <h1 class="c-event-detail__title">{{ event.title }}</h1>
+        <p class="c-event-detail__bold">{{ event.start_time|date:"l, F j \a\t g A" }} to {{ event.end_time|date:"l, F j \a\t g A" }}</p>
+        <p class="c-event-detail__description-light">{{ event.location }}</p>
+        <p class="c-event-detail__description-light">Hosted by {{ event.host }}</p><br/>
+      </div>
+
+    </div>
+
+    <div class="c-event-detail__buttons">
+      {% if event.event_url %}
+        <a class="c-button" href="{{ event.event_url }}"><i class="fa fa-facebook-square" style="vertical-align: middle;">   View on Facebook</i></a>
+      {% endif %}
+
+      {% if event.ticket_url %}
+        <a class="c-button " href="{{ event.ticket_url }}"><i class="fa fa-ticket" style="vertical-align: middle;">   Buy Tickets</i></a>
+      {% endif %}
+    </div>
+
+    <div class="c-event-detail__info-container">
+      <p class="c-event-detail__bold">Information</p>
+      <p class="c-event-detail__description">{{ event.description|safe }}</p>
+
   </div>
+
 </main>
 {% endblock %}

@@ -1,50 +1,109 @@
+// Super-styles of page
 .c-event-detail__container {
-  // structure
-  margin-bottom: 25px;
-  min-height: 600px;
-}
+  // Structure
+  max-width: 1000px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 
-.c-event-detail__title {
-  border-bottom: 1px solid #ccc;
+  // Flex
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
 
-  @media($bp-smaller-than-tablet) {
-    border-bottom: 0;
+  @media($bp-larger-than-phablet) {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
-.c-event-detail__info {
-  // structure
-  box-sizing: border-box;
-  margin: 16px 0;
-  padding: 0 5px;
-  width: 100%;
-  display: inline-block;
+.c-event-detail__padded {
+  padding-left: 15px;
+  padding-right: 15px;
 
+  @media($bp-larger-than-phablet) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
+// Image container and image styles
 .c-event-detail__image-container {
-  display: block;
-  position: relative;
-  box-sizing: border-box;
-  padding: 0 0 40px 40px;
-  float: right;
-  width: 50%;
+  // Structure
+  margin-top: 1.5em;
+  margin-bottom: 0;
+  padding-bottom: 0;
 
-  background-color: #FFF;
-
-  @media($bp-smaller-than-tablet) {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin-bottom: 15px;
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: flex;
+    margin-top: 1.75em;
+    margin-bottom: 1.75em;
   }
 }
 
 .c-event-detail__image {
   // structure
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 600px;
+  margin-bottom: 0;
+
+  img {
+    width: 100%;
+  }
+
+  width: 25em;
+
+  @media($bp-larger-than-phablet) {
+    // Structure
+    padding-right: 1.75em;
+
+    img {
+      width: 10em;
+    }
+  }
+}
+
+// Event information containers
+.c-event-detail__info-flex {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.c-event-detail__info-container {
+  @extend .c-event-detail__info-flex;
+  // structure
+  box-sizing: border-box;
+  margin-top: 1em;
+  width: 100%;
+
+}
+
+.c-event-detail__info-padded {
+  padding-left: 1em;
+  line-height: 1.45em;
+
+  h1, p {
+    margin: 0;
+  }
+}
+
+.c-event-detail__date_box {
+  border: solid 0.5px #e6e6e6;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+  -webkit-box-shadow: 2px #f8f8f8;
+  height: 100%;
+  padding: 6px 3px 6px 3px;
+}
+
+// Event specifics
+.c-event-detail__title {
+  font-size: font-size(18);
+  @media($bp-smaller-than-tablet) {
+    border-bottom: 0;
+  }
 }
 
 .c-event-detail__category {
@@ -54,57 +113,41 @@
   font-weight: 600;
 }
 
-.c-event-detail__start, .c-event-detail__end {
+.c-event-detail__bold {
   // structure
   display: inline-block;
+  margin: 0;
+  padding: 0;
 
   // display
   color: $color-text-gray;
-  font-weight: 400;
-}
+  font-weight: bold;
 
-.c-event-detail__time-separator {
-  display: inline-block;
+  // text
+  font-size: font-size(14);
+
 }
 
 .c-event-detail__description {
-  // structure
-  padding: 15px 0;
-  margin-bottom: 15px;
+  // Text
+  color: $color-text-gray;
+  white-space: pre-wrap;
+  font-size: font-size(13);
 
-  // display
-  font-family: $font-body;
-  line-height: 1.5em;
-  border-bottom: 1px dotted #ccc;
+  a {
+    // Text
+    color: $color-accent-blue;
+    font-weight: 600;
 
-  // display
-  line-height: 1.625rem;
+    &:hover {
+      // Text
+      text-decoration: underline;
+    }
+  }
 }
 
-.c-event-detail__location-info {
-  text-align: right;
-  line-height: 1.25em;
-}
+.c-event-detail__description-light {
+  @extend .c-event-detail__description;
 
-.c-event-detail__location span {
-  color: $color-accent-blue;
-  font-weight: 600;
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-.c-event-detail__address {
-  font-style: italic;
-  font-size: 14px;
-}
-
-.c-event-detail__fb-link > button {
-  // structure
-  margin-top: 25px;
-
-  // display
-  background-color: $color-social-facebook-dark;
-  color: $color-white;
-  border-color: $color-social-facebook-dark;
-  background-image: initial;
+  color: $color-text-gray-light;
 }
