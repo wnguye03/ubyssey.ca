@@ -32,14 +32,12 @@
 // Image container and image styles
 .c-event-detail__image-container {
   // Structure
-  margin-top: 1.5em;
-  margin-bottom: 0;
+  margin-top: 0;
   padding-bottom: 0;
 
   @media($bp-larger-than-phablet) {
     // Structure
     display: flex;
-    margin-top: 1.75em;
     margin-bottom: 1.75em;
   }
 }
