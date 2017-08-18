@@ -12,9 +12,9 @@
 
       <div class="c-event-detail__image-container">
         {% if event.image %}
-        <div class="c-event-detail__image">
-          <img style="width: 35rem;" src="{{ event.image.url }}" alt="{{ event.title }}" />
-        </div>
+        <!-- <div > -->
+          <img class="c-event-detail__image" src="{{ event.image.url }}" alt="{{ event.title }}" />
+        <!-- </div> -->
         {% endif %}
       </div>
 
@@ -36,15 +36,15 @@
 
       <div class="c-event-detail__buttons">
         {% if event.event_url %}
-          <a class="c-button" href="{{ event.event_url }}"><i class="fa fa-facebook-square" style="vertical-align: middle;">   View on Facebook</i></a>
+          <a class="c-button" href="{{ event.event_url }}"><i class="fa fa-facebook-square" style="vertical-align: middle;"></i>   View on Facebook</a>
         {% endif %}
 
         {% if event.ticket_url %}
-          <a class="c-button " href="{{ event.ticket_url }}"><i class="fa fa-ticket" style="vertical-align: middle;">   Buy Tickets</i></a>
+          <a class="c-button " href="{{ event.ticket_url }}"><i class="fa fa-ticket" style="vertical-align: middle;"></i>   Buy Tickets</a>
         {% endif %}
       </div>
 
-      <div class="c-event-detail__info-container">
+      <div class="c-event-detail__info-description-container">
         <p class="c-event-detail__bold">Information</p>
         <p class="c-event-detail__description">{{ event.description|safe }}</p>
       </div>
