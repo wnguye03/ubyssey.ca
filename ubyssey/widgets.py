@@ -11,7 +11,8 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom    
+    HomePageSidebar, HomePageSidebarBottom,
+    EventSidebar
 )
 
 @register.widget
@@ -35,7 +36,7 @@ class UpcomingEventsWidget(Widget):
     id = 'upcoming-events'
     name = 'Upcoming Events'
     template = 'widgets/upcoming-events.html'
-    zones = (HomePageSidebar, HomePageSidebarBottom)
+    zones = (HomePageSidebar, HomePageSidebarBottom, EventSidebar, )
 
     featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
