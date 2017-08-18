@@ -1,16 +1,17 @@
 // Super-styles of page
 .c-event-detail__container {
   // Structure
-  max-width: 1000px;
+  max-width: 800px;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
   box-sizing: border-box;
 
   // Flex
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
+  justify-content: center;
 
   @media($bp-larger-than-phablet) {
     padding-left: 20px;
@@ -150,4 +151,15 @@
   @extend .c-event-detail__description;
 
   color: $color-text-gray-light;
+}
+
+.c-event-detail__main__columns {
+  @extend .c-event-detail__info-flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.c-event-detail__sidebar {
+  float: left;
+  margin-right: 3rem;
 }

@@ -7,13 +7,13 @@
 {% endblock %}
 {% block content %}
 <main class="c-page c-page--author">
-  <div>
+  <div class="c-event-detail__main__columns">
     <div class="c-event-detail__container c-event-detail__padded">
 
       <div class="c-event-detail__image-container">
         {% if event.image %}
         <div class="c-event-detail__image">
-          <img style="width: 25rem;" src="{{ event.image.url }}" alt="{{ event.title }}" />
+          <img style="width: 30rem;" src="{{ event.image.url }}" alt="{{ event.title }}" />
         </div>
         {% endif %}
       </div>
@@ -47,10 +47,10 @@
       <div class="c-event-detail__info-container">
         <p class="c-event-detail__bold">Information</p>
         <p class="c-event-detail__description">{{ event.description|safe }}</p>
-
+      </div>
     </div>
 
-    <div class="multi-zone cell right">
+    <div class="c-event-detail__sidebar">
       {% zone 'event-sidebar' %}
     </div>
 
