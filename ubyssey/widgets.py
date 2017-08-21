@@ -110,7 +110,6 @@ class FrontPageDefault(Widget):
 
     sidebar = WidgetField('Sidebar', [UpcomingEventsWidget], required=True)
 
-
 @register.widget
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
@@ -120,7 +119,7 @@ class FacebookVideoBig(Widget):
 
     title = CharField('Title')
     description = CharField('Description')
-    host = CharField('Video Hoster (will display as author)')
+    host = CharField('Video Host (will display as author)')
     video_url = CharField('Video URL')
     show_comments = BoolField('Show Comment Box')
 

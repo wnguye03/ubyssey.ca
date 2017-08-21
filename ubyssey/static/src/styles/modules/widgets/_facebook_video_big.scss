@@ -47,6 +47,13 @@
 
 }
 
+@media($bp-larger-than-tablet) {
+	.c-facebook-video__comments {
+	  max-height: 450px;
+	  overflow-y: auto;
+	}
+}
+
 .c-facebook-video__info {
 	font-size: font-size(14);
 	margin-bottom: 0.5rem;
