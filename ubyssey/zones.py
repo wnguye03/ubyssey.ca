@@ -22,6 +22,6 @@ class FrontPage(Zone):
     name = 'FrontPage'
 
 @register.zone
-class WholeSiteBanner(Zone):
-    id = 'whole-site-banner'
-    name = 'Whole Site Banner'
+class SiteBanner(Zone):
+    id = 'site-banner'
+    name = 'Site Banner'

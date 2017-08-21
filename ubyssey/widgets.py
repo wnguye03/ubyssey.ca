@@ -12,7 +12,7 @@ from dispatch.apps.events.models import Event
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    HomePageSidebarBottom
+    SiteBanner, HomePageSidebarBottom
 )
 
 @register.widget
@@ -144,14 +144,14 @@ class FacebookVideoBig(Widget):
         return result
 
 @register.widget
-class LiveVideoBanner(Widget):
-    id = 'live-video-banner'
-    name = 'Live Video Banner'
-    template = 'widgets/banners/livevideo.html'
-    zones = (WholeSiteBanner, )
+class AlertBanner(Widget):
+    id = 'alert-banner'
+    name = 'Alert Banner'
+    template = 'widgets/alert-banner.html'
+    zones = (SiteBanner, )
 
-    text = CharField('Announcement Text')
-    url = CharField('Link to URL')
+    text = CharField('Text')
+    url = CharField('URL')
 
     start_time = DateTimeField('Start Time')
     end_time = DateTimeField('End Time')
