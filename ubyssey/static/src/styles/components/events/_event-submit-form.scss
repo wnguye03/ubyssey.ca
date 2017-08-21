@@ -1,9 +1,9 @@
-.c-fb-err-message {
+.c-url-err-message {
   // Structure
   margin-bottom: 2.5rem;
 }
 
-.c-fb-err-message__header {
+.c-url-err-message__header {
   // Background
   background-color: #dd2c2c;
   padding: 1rem;
@@ -18,7 +18,7 @@
   font-size: font-size(16);
 }
 
-.c-fb-err-message__body {
+.c-url-err-message__body {
   // Structure
   padding: 1rem;
 
@@ -28,7 +28,7 @@
   border-bottom-right-radius: 4px;
 }
 
-.c-fb-err-message .c-input-group {
+.c-url-err-message .c-input-group {
   // Structure
   width: 100%;
 }
