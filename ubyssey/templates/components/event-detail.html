@@ -27,7 +27,10 @@
       </a>
     {% endif %}
     {% if event.ticket_url %}
-      <a class="c-button " href="{{ event.ticket_url }}"><i class="fa fa-ticket" style="vertical-align: middle;"></i>   Buy Tickets</a>
+      <a class="c-button " href="{{ event.ticket_url }}">
+        <i class="fa fa-ticket" style="vertical-align: middle;"></i>
+        <span>Buy Tickets</span>
+      </a>
     {% endif %}
   </div>
 </div>
