@@ -32,7 +32,6 @@ const ArticleList = React.createClass({
       if (bannerHeight) {
         $('.header-article').css('top', bannerHeight);
       }
-
     },
     updateHeader(topPos) {
         if (topPos > 50 && !window.articleHeader){
