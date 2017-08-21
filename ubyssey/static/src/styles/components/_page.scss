@@ -1,3 +1,10 @@
+.c-page {
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: flex;
+  }
+}
+
 .c-page__header {
   // Structure
   margin-top: 1.5rem;
@@ -84,4 +91,32 @@
 
   // Text
   font-size: 24px;
+}
+
+.c-page__content,
+.c-page__sidebar {
+  // Structure
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+.c-page__content {
+  // Structure
+  flex: 2;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    padding-right: 1.5rem;
+  }
+}
+
+.c-page__sidebar {
+  // Structure
+  flex: 1;
 }
