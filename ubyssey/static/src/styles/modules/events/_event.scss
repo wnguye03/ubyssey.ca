@@ -1,143 +1,141 @@
-// Super-styles of page
-.c-event-detail__container {
+.c-event {
+  // Background
+  background: $color-white;
+
+  // Text
+  font-family: $font-default;
+}
+
+.c-event__image {
   // Structure
-  max-width: 800px;
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-  box-sizing: border-box;
+  position: relative;
+  padding-top: 50%;
 
-  // Flex
+  // Background
+  background-position: center;
+  background-size: cover;
+}
+
+.c-event__meta {
+  // Structure
   display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 
-  @media($bp-larger-than-phablet) {
-    padding-left: 20px;
-    padding-right: 20px;
+.c-event__info {
+  // Structure
+  flex: 1;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  // Text
+  line-height: 1.4em;
+
+  h3, p {
+    // Structure
+    margin: 0;
+    padding: 0;
   }
 }
 
-.c-event-detail__padded {
-  padding-left: 15px;
-  padding-right: 15px;
-
-  @media($bp-larger-than-phablet) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-// Image container and image styles
-.c-event-detail__image-container {
+.c-event__title {
   // Structure
   margin-top: 0;
-  padding-bottom: 0;
 
-  @media($bp-larger-than-phablet) {
-    // Structure
-    // display: flex;
-    margin-bottom: 1.75em;
-  }
-}
-
-.c-event-detail__image {
-  // structure
-  margin-bottom: 0;
-
-  height: auto;
-  width: 15em;
-
-  @media($bp-larger-than-phablet) {
-    // Structure
-    padding-right: 1.75em;
-
-    height: auto;
-    width: 35em;
-  }
-}
-
-// Event information containers
-.c-event-detail__info-flex {
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.c-event-detail__info-container {
-  @extend .c-event-detail__info-flex;
-  // structure
-  box-sizing: border-box;
-  margin-top: 1em;
-  width: 100%;
-}
-
-.c-event-detail__info-description-container {
-  box-sizing: border-box;
-  margin-top: 1em;
-  width: 100%;
-}
-
-.c-event-detail__info-padded {
-  padding-left: 1em;
-  line-height: 1.45em;
-
-  h1, p {
-    margin: 0;
-  }
-}
-
-.c-event-detail__date_box {
-  border: solid 0.5px #e6e6e6;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
-  -webkit-box-shadow: 2px #f8f8f8;
-  height: 100%;
-  padding: 6px 3px 6px 3px;
-}
-
-// Event specifics
-.c-event-detail__title {
-  font-size: font-size(18);
-  @media($bp-smaller-than-tablet) {
-    border-bottom: 0;
-  }
-}
-
-.c-event-detail__description {
   // Text
-  color: $color-text-gray;
-  white-space: pre-wrap;
+  font-size: font-size(16);
+  font-weight: $font-weight-semi-bold;
+}
+
+.c-event__time,
+.c-event__location {
+  // Text
   font-size: font-size(13);
+  color: $color-text-gray;
+}
 
-  a {
+.c-event__time {
+  // Text
+  font-weight: $font-weight-semi-bold;
+}
+
+// EventBox
+.c-event--box {
+  // Border
+  border: solid 1px $color-border-gray;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+
+  .c-event__meta {
+    // Structure
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+// EventDetail
+.c-event--detail {
+  .c-event__meta {
+    // Structure
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .c-event__date {
+    // Structure
+    display: none;
+  }
+
+  .c-event__info {
+    // Structure
+    padding-left: 0;
+
     // Text
-    color: $color-accent-blue;
-    font-weight: 600;
+    line-height: 1.8rem;
+  }
 
-    &:hover {
-      // Text
-      text-decoration: underline;
+  .c-event__title {
+    // Structure
+    margin-bottom: 0.5rem;
+
+    // Text
+    font-size: font-size(24);
+  }
+
+  .c-event__time,
+  .c-event__location {
+    // Text
+    font-size: font-size(16);
+  }
+
+  .c-event__buttons {
+    // Structure
+    margin-bottom: 1rem;
+
+    .c-button {
+      margin-bottom: 0.5rem;
     }
   }
-}
 
-.c-event-detail__description-light {
-  @extend .c-event-detail__description;
+  @media($bp-larger-than-mobile) {
+    .c-event__meta {
+      // Structure
+      margin-top: 1.5rem;
+    }
 
-  color: $color-text-gray-light;
-}
+    .c-event__date {
+      // Structure
+      display: block;
+    }
 
-.c-event-detail__main__columns {
-  @extend .c-event-detail__info-flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  padding-top: 2em;
-}
-
-.c-event-detail__sidebar {
-  float: left;
-  margin-right: 3rem;
+    .c-event__info {
+      // Structure
+      padding-left: 1.5rem;
+    }
+  }
 }

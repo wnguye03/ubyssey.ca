@@ -6,56 +6,14 @@
   {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main class="c-page c-page--author">
-  <div class="c-event-detail__main__columns">
-    <div class="c-event-detail__container c-event-detail__padded">
-
-      <div class="c-event-detail__image-container">
-        {% if event.image %}
-        <!-- <div > -->
-          <img class="c-event-detail__image" src="{{ event.image.url }}" alt="{{ event.title }}" />
-        <!-- </div> -->
-        {% endif %}
-      </div>
-
-      <div class="c-event-detail__info-container">
-        <div class="c-event-detail__date_box">
-          {% if not hide_datebox %}
-            {% include 'events/date_box.html' with month=event.start_time|date:"F"|slice:":3" day=event.start_time|date:"j" only %}
-          {% endif %}
-        </div>
-
-        <div class="c-event-detail__info-padded">
-          <h1 class="c-event-detail__title">{{ event.title }}</h1>
-          <p class="c-event-detail__bold">{{ event.start_time|date:"l, F j \a\t g A" }} to {{ event.end_time|date:"l, F j \a\t g A" }}</p>
-          <p class="c-event-detail__description-light">{{ event.location }}</p>
-          <p class="c-event-detail__description-light">Hosted by {{ event.host }}</p><br/>
-        </div>
-
-      </div>
-
-      <div class="c-event-detail__buttons">
-        {% if event.event_url %}
-          <a class="c-button" href="{{ event.event_url }}"><i class="fa fa-facebook-square" style="vertical-align: middle;"></i>   View on Facebook</a>
-        {% endif %}
-
-        {% if event.ticket_url %}
-          <a class="c-button " href="{{ event.ticket_url }}"><i class="fa fa-ticket" style="vertical-align: middle;"></i>   Buy Tickets</a>
-        {% endif %}
-      </div>
-
-      <div class="c-event-detail__info-description-container">
-        <p class="c-event-detail__bold">Information</p>
-        <p class="c-event-detail__description">{{ event.description|safe }}</p>
-      </div>
-    </div>
-
-    <div class="c-event-detail__sidebar">
-      {% zone 'event-sidebar' %}
-    </div>
-
+<main class="c-page c-page--author u-container u-container--padded">
+  <div class="c-page__content">
+    {% include 'components/event-detail.html' with event=event %}
+    <p class="c-heading c-heading--3 c-heading--light">Information</p>
+    <p class="c-paragraph">{{ event.description|safe }}</p>
   </div>
-
-
+  <div class="c-page__sidebar">
+    {% include 'widgets/upcoming-events.html' with upcoming=upcoming %}
+  </div>
 </main>
 {% endblock %}

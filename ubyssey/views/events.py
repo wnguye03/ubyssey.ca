@@ -53,9 +53,16 @@ class EventsTheme(DefaultTheme):
         except:
             raise Http404('Event could not be found.')
 
+        upcoming = Event.objects \
+            .filter(is_submission=False) \
+            .filter(is_published=True) \
+            .filter(start_time__gt=date.today()) \
+            .order_by('start_time')[:3]
+
         context = {
             'meta': self.get_event_meta(event),
-            'event': event
+            'event': event,
+            'upcoming': upcoming
         }
 
         return render(request, 'events/event.html', context)
