@@ -6,7 +6,7 @@
   {% endif %}
   <div class="c-event__meta">
     {% if not hide_datebox %}
-    {% include './date_box.html' with month=event.start_time|date:"F"|slice:":3" day=event.start_time|date:"j" only %}
+    {% include 'events/date_box.html' with month=event.start_time|date:"F"|slice:":3" day=event.start_time|date:"j" only %}
     {% endif %}
     <div class="c-event__info">
       <h3 class="c-event__title"><a href="{% url 'event' event.pk %}">{{ event.title|wordwrap:30|linebreaksbr }}</a></h3>
