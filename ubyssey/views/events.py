@@ -62,7 +62,10 @@ class EventsTheme(DefaultTheme):
         context = {
             'meta': self.get_event_meta(event),
             'event': event,
-            'upcoming': upcoming
+            'upcoming': upcoming,
+            'info_text': 'Hosting an event? Promote it for free on our website!',
+            'info_link_text': 'Submit your event',
+            'info_link': reverse('events-submit-landing')
         }
 
         return render(request, 'events/event.html', context)

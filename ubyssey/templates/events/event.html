@@ -13,7 +13,12 @@
     <p class="c-paragraph">{{ event.description|safe }}</p>
   </div>
   <div class="c-page__sidebar">
+    <div class="c-page__sidebar__item">
     {% include 'widgets/upcoming-events.html' with upcoming=upcoming %}
+    </div>
+    <div class="c-page__sidebar__item">
+    {% include 'components/info-box.html' with text=info_text link_text=info_link_text link=info_link %}
+    </div>
   </div>
 </main>
 {% endblock %}

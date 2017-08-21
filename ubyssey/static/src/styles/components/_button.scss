@@ -44,3 +44,14 @@
     vertical-align: middle;
   }
 }
+
+.c-button--small {
+  // Structure
+  height: 36px;
+  line-height: 36px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+
+  // Text
+  font-size: font-size(14);
+}
