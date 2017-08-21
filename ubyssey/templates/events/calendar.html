@@ -37,7 +37,7 @@
             <div class="c-event-calendar__event-list-container">
             {% for event in events %}
               <div class="c-event-calendar__event-box-container">
-              {% include './event_box.html' with event=event hide_datebox=False hide_day_label=True only %}
+              {% include 'components/event-box.html' with event=event hide_datebox=False hide_day_label=True only %}
               </div>
             {% endfor %}{# event #}
           </div>
