@@ -136,6 +136,7 @@ function enableScroll($document) {
     mp.pageView();
   }
 
+  // register widgets
   upcomingEvents();
 
 })();

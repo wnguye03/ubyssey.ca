@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widgets %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,10 +101,16 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
     return t;
   }(document, 'script', 'twitter-wjs'));
 </script>
+
+<div id="page-wrapper">
+{% zone 'site-banner' %}
 {% block header %}{% endblock %}
 <div id="search-form"></div>
+<div id="content-wrapper">
 {% block content %}{% endblock %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}
+</div>
+</div>
 
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

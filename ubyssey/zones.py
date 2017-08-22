@@ -20,3 +20,8 @@ class ArticleHorizontal(Zone):
 class FrontPage(Zone):
     id = 'frontpage'
     name = 'FrontPage'
+
+@register.zone
+class SiteBanner(Zone):
+    id = 'site-banner'
+    name = 'Site Banner'

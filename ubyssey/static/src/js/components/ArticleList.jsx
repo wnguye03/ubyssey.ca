@@ -27,6 +27,12 @@ const ArticleList = React.createClass({
         if(this.state.active.next)
             this.loadNext(this.state.active.next.data);
     },
+    adjustHeaderForBanner() {
+      const bannerHeight= $('.c-banner').outerHeight();
+      if (bannerHeight) {
+        $('.header-article').css('top', bannerHeight);
+      }
+    },
     updateHeader(topPos) {
         if (topPos > 50 && !window.articleHeader){
             window.articleHeader = true;
@@ -40,6 +46,7 @@ const ArticleList = React.createClass({
               $('.header-site').show();
             }
         }
+        this.adjustHeaderForBanner();
     },
     getArticle(id) {
         return this.state.articles[this.articlesTable[id]];
@@ -65,7 +72,7 @@ const ArticleList = React.createClass({
 
         var updateScroll = () => {
 
-            const topPos = $(document).scrollTop();
+            const topPos = $('#content-wrapper').scrollTop();
             const bottomPos = topPos + windowHeight;
 
             if($(window).width() > 960)
@@ -87,7 +94,7 @@ const ArticleList = React.createClass({
 
         };
 
-        $(window).scroll(updateScroll);
+        $('#content-wrapper').scroll(updateScroll);
 
     },
     prepNext() {
