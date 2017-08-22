@@ -55,20 +55,30 @@ def submit_form(request):
 
     return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
 
-def event(self, request, event_id):
+def event(request, event_id):
     try:
         event = EventsHelper.get_event(event_id)
     except:
         raise Http404('Event could not be found.')
 
+    upcoming = Event.objects \
+        .filter(is_submission=False) \
+        .filter(is_published=True) \
+        .filter(start_time__gt=date.today()) \
+        .order_by('start_time')[:3]
+
     context = {
-        'meta': self.get_event_meta(event),
-        'event': event
+        'meta': get_event_meta(event),
+        'event': event,
+        'upcoming': upcoming,
+        'info_text': 'Hosting an event? Promote it for free on our website!',
+        'info_link_text': 'Submit your event',
+        'info_link': reverse('events-submit-landing')
     }
 
     return render(request, 'events/event.html', context)
 
-def calendar(self, request):
+def calendar(request):
     category = request.GET.get('category')
     months = request.GET.get('months')
     start = request.GET.get('start')
@@ -90,7 +100,7 @@ def calendar(self, request):
 
     return render(request, 'events/calendar.html', context)
 
-def get_event_meta(self, event):
+def get_event_meta(event):
     meta_image = None
     if event.image:
         meta_image = event.image.url

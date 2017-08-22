@@ -35,7 +35,7 @@ class UpcomingEventsWidget(Widget):
     id = 'upcoming-events'
     name = 'Upcoming Events'
     template = 'widgets/upcoming-events.html'
-    zones = (HomePageSidebar, HomePageSidebarBottom)
+    zones = (HomePageSidebar, HomePageSidebarBottom,)
 
     featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
