@@ -2,7 +2,8 @@ from datetime import datetime
 
 from ubyssey.fields import (
     CharField, TextField, ArticleField, ImageField,
-    EventField, IntegerField, InvalidField, DateTimeField
+    EventField, IntegerField, InvalidField, DateTimeField,
+    WidgetField, BoolField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
@@ -10,8 +11,8 @@ from ubyssey.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
-    ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom
+    ArticleHorizontal, ArticleSidebar, FrontPage,
+    HomePageSidebarBottom
 )
 
 @register.widget
@@ -35,7 +36,7 @@ class UpcomingEventsWidget(Widget):
     id = 'upcoming-events'
     name = 'Upcoming Events'
     template = 'widgets/upcoming-events.html'
-    zones = (HomePageSidebar, HomePageSidebarBottom,)
+    zones = (HomePageSidebarBottom, )
 
     featured_events = EventField('Featured Event(s)', many=True)
     featured_event_until = DateTimeField('Featured Event Time Limit')
@@ -95,5 +96,46 @@ class UpcomingEventsHorizontalWidget(Widget):
 
         elif num > 3:
             result['events'] = result['events'][:3]
+
+        return result
+
+@register.widget
+class FrontPageDefault(Widget):
+    id = 'frontpage-default'
+    name = 'Default Front Page'
+    template = 'widgets/frontpage/default.html'
+    zones = (FrontPage, )
+
+    accepted_keywords = ('articles', )
+
+    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget], required=True)
+
+@register.widget
+class FacebookVideoBig(Widget):
+    id = 'facebook-video-big'
+    name = 'Facebook Video Big'
+    template = 'widgets/frontpage/facebook-video-big.html'
+    zones = (FrontPage, )
+
+    title = CharField('Title')
+    description = CharField('Description')
+    host = CharField('Video Host (will display as author)')
+    video_url = CharField('Video URL')
+    show_comments = BoolField('Show Comment Box')
+
+    start_time = DateTimeField('Start Time')
+    end_time = DateTimeField('End Time')
+
+    def context(self, result):
+        today = datetime.today()
+        do_show = True
+
+        if result['start_time'] and today < result['start_time'].replace(tzinfo=None):
+            do_show = False
+
+        if result['end_time'] and today > result['end_time'].replace(tzinfo=None):
+            do_show = False
+
+        result['do_show'] = do_show
 
         return result
