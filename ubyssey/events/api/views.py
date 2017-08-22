@@ -1,13 +1,11 @@
 from django.db.models import Q
 
-from ubyssey.events.models import Event
+from dispatch.apps.api.mixins import DispatchModelViewSet
 
-from ubyssey.events.api.mixins import DispatchModelViewSet
+from ubyssey.events.models import Event
 from ubyssey.events.api.serializers import EventSerializer
 
 class EventViewSet(DispatchModelViewSet):
-    """ViewSet for Event"""
-
     model = Event
     serializer_class = EventSerializer
 
