@@ -1,5 +1,5 @@
 from ubyssey.events.models import Event
-from ubyssey.events.api.mixins import DispatchModelSerializer
+from dispatch.apps.api.mixins import DispatchModelSerializer
 
 class EventSerializer(DispatchModelSerializer):
 
