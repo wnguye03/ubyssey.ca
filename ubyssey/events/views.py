@@ -1,19 +1,12 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
-from django.conf import settings
-from dispatch.apps.frontend.themes.default import DefaultTheme
+import re
 
-from ubyssey.events.facebook import FacebookEvent, FacebookEventError
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
+from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
-from ubyssey.helpers import EventsHelper
-
-import calendar
-from pytz import timezone
-from collections import OrderedDict
-from datetime import date
 
 def submit_landing(request):
     return render(request, 'events/submit/landing.html')
@@ -22,30 +15,58 @@ def submit_success(request):
     return render(request, 'events/submit/success.html')
 
 def submit_form(request):
-    facebook_url = request.POST.get('facebook_url')
-    facebook_error = False
+    event_url = request.POST.get('event_url')
+    url_error = False
 
-    if request.POST.get('facebook_import') and facebook_url is not None:
+    if request.POST.get('url_import') and event_url is not None:
+
+        sources = {
+            'calendar.events.ubc.ca': UBCEvent,
+            'facebook.com': FacebookEvent
+        }
+
+        hostname = get_host_from_url(event_url)
+
+        if hostname in sources:
+            handler = sources[hostname]
+        else:
+            handler = NoEventHandler
+
         try:
-            event = FacebookEvent(facebook_url)
+            event = handler(event_url)
             data = event.get_data()
+            data['event_type'] = event.event_type
             form = EventForm(initial=data)
-        except FacebookEventError:
-            facebook_error = True
+        except EventError:
+            url_error = True
             form = EventForm()
 
     elif request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.is_submission = True
-            form.save()
 
+            event = form.save(commit=False)
+            event.is_submission = True
+            event.save()
             return redirect(submit_success)
     else:
         form = EventForm()
 
-    return render(request, 'events/submit/form.html', {'form': form, 'facebook_error': facebook_error})
+    return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
+
+def event(self, request, event_id):
+    try:
+        event = EventsHelper.get_event(event_id)
+    except:
+        raise Http404('Event could not be found.')
+
+    context = {
+        'meta': self.get_event_meta(event),
+        'event': event
+    }
+
+    return render(request, 'events/event.html', context)
 
 def calendar(self, request):
     category = request.GET.get('category')
@@ -81,15 +102,13 @@ def get_event_meta(self, event):
         'url': "%sevent/%s/" % (settings.BASE_URL, event.id)
     }
 
-def event(self, request, event_id):
-    try:
-        event = EventsHelper.get_event(event_id)
-    except:
-        raise Http404('Event could not be found.')
+def get_host_from_url(url):
+    """Parses URL against regex to pull out the hostname"""
 
-    context = {
-        'meta': self.get_event_meta(event),
-        'event': event
-    }
+    # Match numbers that is the event id from the url and return them
+    m = re.search('.*(facebook\.com|calendar\.events\.ubc\.ca)+.*', url)
 
-    return render(request, 'events/event.html', context)
+    if m:
+        return m.group(1)
+    else:
+        raise EventError('URL provided is not a valid Facebook event or UBC event url')

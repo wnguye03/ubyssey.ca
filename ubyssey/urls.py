@@ -3,21 +3,18 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.shortcuts import render_to_response
 
-from ubyssey.events.api.urls import urlpatterns as event_api_urls
+from dispatch.apps.api.urls import urlpatterns as api_urls
+
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
 from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
 from ubyssey.views.advertise import AdvertiseTheme
-from ubyssey.events import views as EventView
+
+from ubyssey.events.api.urls import urlpatterns as event_api_urls
 from ubyssey.events.urls import urlpatterns as events_urls
 
-from dispatch.helpers.theme import ThemeHelper
-from dispatch.apps.api.urls import urlpatterns as api_urls
-
-from rest_framework import routers
-
-from widgets import *
+from ubyssey.widgets import *
 
 def admin(request):
     """Render HTML entry point for manager app."""
@@ -52,8 +49,7 @@ theme_urls = [
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
-    url(r'^events/$', EventView.calendar, name='events'),
-    url(r'^events/(?P<event_id>[0-9]+)/$', EventView.event, name='event'),
+    # Events
     url(r'^events/', include(events_urls)),
     url(r'^api/events/', include(event_api_urls)),
 
