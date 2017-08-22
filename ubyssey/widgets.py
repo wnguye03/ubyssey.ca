@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from dispatch.theme.fields import (
+from ubyssey.fields import (
     CharField, TextField, ArticleField, ImageField,
     EventField, IntegerField, InvalidField, DateTimeField,
     WidgetField, BoolField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from dispatch.apps.events.models import Event
+from ubyssey.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
@@ -110,7 +110,6 @@ class FrontPageDefault(Widget):
 
     sidebar = WidgetField('Sidebar', [UpcomingEventsWidget], required=True)
 
-
 def in_date_range(start, end):
     today = datetime.today()
 
@@ -131,7 +130,7 @@ class FacebookVideoBig(Widget):
 
     title = CharField('Title')
     description = CharField('Description')
-    host = CharField('Video Hoster (will display as author)')
+    host = CharField('Video Host (will display as author)')
     video_url = CharField('Video URL')
     show_comments = BoolField('Show Comment Box')
 

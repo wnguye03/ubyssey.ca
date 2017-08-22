@@ -7,7 +7,7 @@
     <div class="c-widget-upcoming-events-horizontal__events-row">
       {% for event in events %}
         <div class="c-widget-upcoming-events-horizontal__event-wrapper">
-          {% include '../events/event_box.html' with event=event hide_image=True only %}
+          {% include '../components/event-box.html' with event=event hide_image=True only %}
         </div>
       {% endfor %}
     </div>
