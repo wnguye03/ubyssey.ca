@@ -54,9 +54,10 @@ class Event(Model):
     def save_image_from_url(self, url):
         """Store image locally if an external URL is passed"""
         result = urllib.urlretrieve(url)
+        filename = os.path.basename(url).split('?')[0]
 
         self.image.save(
-            os.path.basename(url),
+            filename,
             File(open(result[0]))
         )
 
