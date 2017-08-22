@@ -1,27 +1,24 @@
 {% extends 'base.html' %}
+{% load widgets %}
 {% load staticfiles %}
 {% block header %}
   {% include 'headers/topbar.html' with section='events' %}
   {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main class="c-page c-page--author">
-  <div class="u-container u-container--padded">
-    <div class="c-page__header">
-      {% if event.image %}
-      <div class="c-page__header__thumbnail">
-        <img style="width: 25rem;" src="{{ event.image.url }}" alt="{{ event.title }}" />
-      </div>
-      {% endif %}
-      <div class="c-page__header__meta">
-        <h1 class="c-page__heading">{{ event.title }}</h1>
-        <p class="c-page__description">{{ event.start_time|date:"l, F j \a\t g A" }}</p>
-        <p class="c-page__description">Hosted by {{ event.host }} &middot; {{ event.location }}</p><br/>
-        {% if event.facebook_url %}<a class="c-button" href="{{ event.facebook_url}}">View on Facebook</a> {% endif %}
-        {% if event.ticket_url %}<a class="c-button" href="{{ event.ticket_url}}">Buy Tickets</a> {% endif %}
-      </div>
-    </div>
+<main class="c-page c-page--author u-container u-container--padded">
+  <div class="c-page__content">
+    {% include 'components/event-detail.html' with event=event %}
+    <p class="c-heading c-heading--3 c-heading--light">Information</p>
     <p class="c-paragraph">{{ event.description|safe }}</p>
+  </div>
+  <div class="c-page__sidebar">
+    <div class="c-page__sidebar__item">
+    {% include 'widgets/upcoming-events.html' with upcoming=upcoming %}
+    </div>
+    <div class="c-page__sidebar__item">
+    {% include 'components/info-box.html' with text=info_text link_text=info_link_text link=info_link %}
+    </div>
   </div>
 </main>
 {% endblock %}

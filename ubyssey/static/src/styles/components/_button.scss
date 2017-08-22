@@ -32,4 +32,26 @@
     // Text
     color: $color-white;
   }
+
+  i {
+    // Text
+    font-size: 1.25em;
+    margin-right: 0.25em;
+  }
+
+  i, span {
+    // Text
+    vertical-align: middle;
+  }
+}
+
+.c-button--small {
+  // Structure
+  height: 36px;
+  line-height: 36px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+
+  // Text
+  font-size: font-size(14);
 }

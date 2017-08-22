@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from dispatch.theme.fields import (
+from ubyssey.fields import (
     CharField, TextField, ArticleField, ImageField,
     EventField, IntegerField, InvalidField, DateTimeField,
     WidgetField, BoolField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from dispatch.apps.events.models import Event
+from ubyssey.events.models import Event
 
 from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (

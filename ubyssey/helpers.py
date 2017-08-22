@@ -9,7 +9,7 @@ from django.db import connection
 from django.db.models.aggregates import Count
 
 from dispatch.apps.content.models import Article, Section
-from dispatch.apps.events.models import Event
+from ubyssey.events.models import Event
 
 import settings
 
