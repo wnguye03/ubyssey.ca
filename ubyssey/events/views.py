@@ -1,9 +1,12 @@
 import re
+from datetime import date
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse, Http404
+from django.conf import settings
 
+from ubyssey.helpers import EventsHelper
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
@@ -56,9 +59,10 @@ def submit_form(request):
     return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
 
 def event(request, event_id):
+
     try:
         event = EventsHelper.get_event(event_id)
-    except:
+    except Event.DoesNotExist:
         raise Http404('Event could not be found.')
 
     upcoming = Event.objects \
