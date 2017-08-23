@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, Http404
 from django.conf import settings
 
-from ubyssey.helpers import EventsHelper
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
@@ -59,9 +58,8 @@ def submit_form(request):
     return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
 
 def event(request, event_id):
-
     try:
-        event = EventsHelper.get_event(event_id)
+        event = Event.objects.get_published(event_id)
     except Event.DoesNotExist:
         raise Http404('Event could not be found.')
 
@@ -88,8 +86,8 @@ def calendar(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
 
-    events = EventsHelper.get_calendar_events(category=category, months=months, start=start, end=end)
-    events_by_date = EventsHelper.group_events_by_date(events)
+    events = Event.objects.get_calendar_events(category=category, months=months, start=start, end=end)
+    events_by_date = Event.objects.group_events_by_date(events)
 
     context = {
         'meta': {
