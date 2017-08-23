@@ -5,16 +5,15 @@
   {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main class="u-container u-container--padded c-calendar">
-  <div class="c-page__header">
-    <div class="c-page__header__meta">
+<main class="c-calendar">
+  <div class="c-calendar__banner c-page__header c-page__header--banner">
+    <div class="u-container u-container--padded">
       <h1 class="c-page__heading">Events</h1>
       <h3 class="c-page__sub-heading">Upcoming campus events from UBC clubs and student organizations</h3>
-      <p class="c-page__description">Hosting an event? <a href="{% url 'events-submit-landing' %}">Submit it here</a> to have it featured on our website!</p>
     </div>
   </div>
 
-  <div class="c-event-calendar__container">
+  <div class="c-event-calendar__container u-container u-container--padded ">
     <div class="c-event-calendar__sidebar">
       {% include './calendar_categories.html' %}
     </div>

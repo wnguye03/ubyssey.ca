@@ -18,6 +18,36 @@
   }
 }
 
+.c-page__header--banner {
+  // Structure
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  // Background
+  background-color: $color-ub-blue-light;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // Text
+  text-align: center;
+
+  .c-page__heading,
+  .c-page__sub-heading {
+    // Text
+    color: $color-white;
+  }
+
+  .c-page__sub-heading {
+    // Structure
+    margin-top: 0.75rem;
+
+    // Text
+    font-weight: $font-weight-normal;
+  }
+}
+
 .c-page__header__thumbnail {
   // Structure
   margin-bottom: 1rem;
