@@ -67,10 +67,10 @@ body {
 }
 
 main {
-  padding-top: 55px;
+  //padding-top: 55px;
 
   @media($bp-larger-than-tablet){
-    padding-top: 49px;
+    //padding-top: 49px;
     &.homepage {
       padding-top: 0;
     }

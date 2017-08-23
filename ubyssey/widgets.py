@@ -11,7 +11,7 @@ from ubyssey.events.models import Event
 
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    SiteBanner, HomePageSidebarBottom
+    SiteBanner, HomePageSidebarBottom, WeeklyEvents
 )
 
 @register.widget
@@ -70,6 +70,22 @@ class UpcomingEventsWidget(Widget):
         return result
 
 @register.widget
+class WeeklyEventsWidget(Widget):
+    id = 'weekly-events'
+    name = 'Weekly Events'
+    template = 'widgets/weekly-events.html'
+    zones = (WeeklyEvents,)
+
+    events = EventField('Featured Events', many=True)
+
+    def context(self, data):
+        print data['events']
+        data['events'] = data['events'] \
+            .order_by('start_time') \
+            .filter(is_published=True)[:5]
+        return data
+
+@register.widget
 class UpcomingEventsHorizontalWidget(Widget):
     id = 'upcoming-events-horizontal'
     name = 'Upcoming Events Horizontal'
@@ -79,7 +95,6 @@ class UpcomingEventsHorizontalWidget(Widget):
     events = EventField('Override Events', many=True)
 
     def context(self, result):
-
         num = len(result['events'])
 
         # Target to display is 3

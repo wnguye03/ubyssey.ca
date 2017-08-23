@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widgets %}
 {% load staticfiles %}
 {% block header %}
   {% include 'headers/topbar.html' with section='events' %}
@@ -13,7 +14,10 @@
     </div>
   </div>
 
-  <div class="c-event-calendar__container u-container u-container--padded ">
+  <div class="c-calendar__container u-container u-container--padded ">
+    
+    {% zone 'weekly-events' %}
+
     <div class="c-event-calendar__sidebar">
       {% include './calendar_categories.html' %}
     </div>

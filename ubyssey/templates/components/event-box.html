@@ -1,4 +1,4 @@
-<div class="c-event c-event--box">
+<div class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}">
   {% if event.image and not hide_image %}
   <a href="{% url 'event' event.pk %}">
     <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
