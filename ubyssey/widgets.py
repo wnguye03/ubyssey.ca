@@ -79,7 +79,6 @@ class WeeklyEventsWidget(Widget):
     events = EventField('Featured Events', many=True)
 
     def context(self, data):
-        print data['events']
         data['events'] = data['events'] \
             .order_by('start_time') \
             .filter(is_published=True)[:5]
