@@ -12,10 +12,26 @@ from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
 
 def submit_landing(request):
-    return render(request, 'events/submit/landing.html')
+
+    context = {
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Hosting an event on or off campus? Submit it to us and we\'ll feature it on our website!'
+        }
+    }
+
+    return render(request, 'events/submit/landing.html', context)
 
 def submit_success(request):
-    return render(request, 'events/submit/success.html')
+
+    context = {
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Thanks for your submission! Your event has been submitted for approval. We\'ll email you once it goes live on our site.'
+        }
+    }
+
+    return render(request, 'events/submit/success.html', context)
 
 def submit_form(request):
     event_url = request.POST.get('event_url')
@@ -56,7 +72,16 @@ def submit_form(request):
     else:
         form = EventForm()
 
-    return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
+    context = {
+        'form': form,
+        'url_error': url_error,
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Hosting an event on or off campus? Submit it to us and we\'ll feature it on our website!'
+        }
+    }
+
+    return render(request, 'events/submit/form.html', context)#{'form': form, 'url_error': url_error})
 
 def event(request, event_id):
 
@@ -125,4 +150,4 @@ def get_host_from_url(url):
     if m:
         return m.group(1)
     else:
-        raise EventError('URL provided is not a valid Facebook event or UBC event url')
+        return
