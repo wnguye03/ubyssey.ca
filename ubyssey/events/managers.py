@@ -1,5 +1,5 @@
 import calendar
-from datetime import date
+import datetime
 from pytz import timezone
 from collections import OrderedDict
 
@@ -16,12 +16,21 @@ class EventManager(Manager):
         random_index = randint(0, count - 1)
         return queryset[random_index]
 
+    def get_events_in_week(self, start_day):
+        start = start_day
+        end = start_day + datetime.timedelta(weeks=1)
+
+        return self.filter(
+            is_published=True,
+            start_time__gt=start,
+            start_time__lte=end)
+
     def get_calendar_events(self, category=None, months=None, start=None, end=None):
         events = self.filter(is_submission=False) \
             .filter(is_published=True) \
             .order_by('start_time')
 
-        today = date.today()
+        today = datetime.date.today()
         # filter start
         if start is not None:
             events = events.filter(start_time__gt=start)

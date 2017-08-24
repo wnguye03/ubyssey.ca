@@ -1,5 +1,5 @@
 import re
-from datetime import date
+import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.shortcuts import render, redirect, reverse
@@ -66,16 +66,14 @@ def event(request, event_id):
     upcoming = Event.objects \
         .filter(is_submission=False) \
         .filter(is_published=True) \
-        .filter(start_time__gt=date.today()) \
+        .filter(start_time__gt=datetime.date.today()) \
         .order_by('start_time')[:3]
 
     context = {
         'meta': get_event_meta(event),
         'event': event,
         'upcoming': upcoming,
-        'info_text': 'Hosting an event? Promote it for free on our website!',
-        'info_link_text': 'Submit your event',
-        'info_link': reverse('events-submit-landing')
+        'info': get_submit_box()
     }
 
     return render(request, 'events/event.html', context)
@@ -89,6 +87,24 @@ def calendar(request):
     events = Event.objects.get_calendar_events(category=category, months=months, start=start, end=end)
     events_by_date = Event.objects.group_events_by_date(events)
 
+    week = request.GET.get('week')
+
+    if week:
+        try:
+            week_start = datetime.datetime.strptime(week, '%y-%m-%d').date()
+        except:
+            return redirect(calendar)
+
+        # Date should be a Monday
+        if week_start.weekday() != 0:
+            return redirect(calendar)
+    else:
+        week_start = current_week()
+
+    week_end = week_start + datetime.timedelta(weeks=1)
+
+    events = Event.objects.get_events_in_week(week_start)
+
     context = {
         'meta': {
             'title': 'Calendar',
@@ -96,8 +112,14 @@ def calendar(request):
             'url': "%s%s" % (settings.BASE_URL, reverse('events'))
         },
         'events_by_date': events_by_date,
-        'this_year': date.today().year,
-        'category': category
+        'this_year': datetime.date.today().year,
+        'events': events,
+        'weeks': upcoming_weeks(4),
+        'week_start': week_start,
+        'week_end': week_end,
+        'today': datetime.date.today(),
+        'category': category,
+        'info':  get_submit_box()
     }
 
     return render(request, 'events/calendar.html', context)
@@ -124,3 +146,35 @@ def get_host_from_url(url):
         return m.group(1)
     else:
         raise EventError('URL provided is not a valid Facebook event or UBC event url')
+
+def get_submit_box():
+    return {
+        'text': 'Hosting an event? Promote it for free on our website!',
+        'link_text': 'Submit your event',
+        'link': reverse(submit_landing)
+    }
+
+def current_week():
+    """Returns a datetime.date object for Monday of the current week."""
+    today = datetime.date.today()
+    return today - datetime.timedelta(days=today.weekday())
+
+def upcoming_weeks(n):
+    """Returns a list of the next `n` upcoming weeks, where each week is a list of
+    datetime.date objects.
+    """
+    today = datetime.date.today()
+    start_monday = current_week()
+
+    weeks = []
+
+    for i in xrange(n):
+        start_day = start_monday + datetime.timedelta(weeks=i)
+        week = []
+
+        for j in range(7):
+            week.append(start_day + datetime.timedelta(days=j))
+
+        weeks.append(week)
+
+    return weeks
