@@ -81,7 +81,7 @@ def submit_form(request):
         }
     }
 
-    return render(request, 'events/submit/form.html', context)#{'form': form, 'url_error': url_error})
+    return render(request, 'events/submit/form.html', context)
 
 def event(request, event_id):
 
