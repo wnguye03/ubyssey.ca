@@ -78,15 +78,8 @@ def event(request, event_id):
 
     return render(request, 'events/event.html', context)
 
-def calendar(request):
+def events(request):
     category = request.GET.get('category')
-    months = request.GET.get('months')
-    start = request.GET.get('start')
-    end = request.GET.get('end')
-
-    events = Event.objects.get_calendar_events(category=category, months=months, start=start, end=end)
-    events_by_date = Event.objects.group_events_by_date(events)
-
     week = request.GET.get('week')
 
     if week:
@@ -107,12 +100,10 @@ def calendar(request):
 
     context = {
         'meta': {
-            'title': 'Calendar',
-            'description': 'Ubyssey calendar of events',
-            'url': "%s%s" % (settings.BASE_URL, reverse('events'))
+            'title': 'The Ubyssey - Events',
+            'description': 'Upcoming campus events from UBC clubs and student organizations',
+            'url': reverse('events')
         },
-        'events_by_date': events_by_date,
-        'this_year': datetime.date.today().year,
         'events': events,
         'weeks': upcoming_weeks(4),
         'week_start': week_start,
@@ -122,7 +113,7 @@ def calendar(request):
         'info':  get_submit_box()
     }
 
-    return render(request, 'events/calendar.html', context)
+    return render(request, 'events/events.html', context)
 
 def get_event_meta(event):
     meta_image = None
