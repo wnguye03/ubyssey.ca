@@ -1,0 +1,42 @@
+.c-related-events__row {
+  margin-top: 0.75rem;
+  display: block;
+  width: 100%;
+
+  @media($bp-larger-than-mobile) {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+
+    .c-event:not(:last-child) {
+      border-bottom: 0;
+    }
+  }
+
+}
+
+.c-related-events__event-wrapper {
+  flex: 1;
+
+  &:first-child {
+    padding-right: 0.5rem;
+  }
+  &:last-child {
+    padding-left: 0.5rem;
+  }
+
+  .c-event {
+    height: 100%;
+  }
+}
+
+.c-related-events__label {
+  // Structure
+  margin-bottom: 0.75em;
+
+  // Text
+  font-size: font-size(14);
+  font-weight: $font-weight-semi-bold;
+  color: $color-text-gray-light;
+}

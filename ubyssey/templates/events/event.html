@@ -11,6 +11,7 @@
     {% include 'components/event-detail.html' with event=event %}
     <p class="c-heading c-heading--3 c-heading--light">Information</p>
     <p class="c-paragraph">{{ event.description|safe }}</p>
+    {% include 'components/related-events.html' with related=related %}
   </div>
   <div class="c-page__sidebar">
     <div class="c-page__sidebar__item">
