@@ -2,7 +2,8 @@ import re
 from datetime import date
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.conf import settings
 
