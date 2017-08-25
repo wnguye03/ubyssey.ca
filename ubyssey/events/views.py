@@ -98,7 +98,7 @@ def event(request, event_id):
     related = Event.objects \
         .filter(is_submission=False) \
         .filter(is_published=True) \
-        .filter(start_time__gt=date.today()) \
+        .filter(start_time__gt=datetime.date.today()) \
         .filter(category=event.category) \
         .exclude(id=event_id) \
         .order_by('start_time')[:2]
