@@ -15,16 +15,29 @@
 }
 
 .c-related-events__event {
+  // Structure
   flex: 1;
+  padding-bottom: 1rem;
 
-  &:first-child {
-    padding-right: 0.5rem;
-  }
   &:last-child {
-    padding-left: 0.5rem;
+    // Structure
+    padding-bottom: 0;
+  }
+
+  @media($bp-larger-than-mobile) {
+    // Structure
+    padding-bottom: 0;
+    
+    &:first-child {
+      padding-right: 0.5rem;
+    }
+    &:last-child {
+      padding-left: 0.5rem;
+    }
   }
 
   .c-event {
+    // Structure
     height: 100%;
   }
 }
