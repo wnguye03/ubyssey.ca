@@ -11,13 +11,16 @@
     {% include 'components/event-detail.html' with event=event %}
     <p class="c-heading c-heading--3 c-heading--light">Information</p>
     <p class="c-paragraph">{{ event.description|safe }}</p>
+    {% include 'components/related-events.html' with related=related %}
   </div>
   <div class="c-page__sidebar">
-    <div class="c-page__sidebar__item">
-    {% include 'widgets/upcoming-events.html' with upcoming=upcoming %}
-    </div>
-    <div class="c-page__sidebar__item">
-    {% include 'components/info-box.html' with text=info_text link_text=info_link_text link=info_link %}
+    <div class="c-page__sidebar__sticky">
+      <div class="c-page__sidebar__item">
+      {% include 'widgets/upcoming-events.html' with upcoming=upcoming %}
+      </div>
+      <div class="c-page__sidebar__item">
+      {% include 'components/info-box.html' with text=info_text link_text=info_link_text link=info_link %}
+      </div>
     </div>
   </div>
 </main>

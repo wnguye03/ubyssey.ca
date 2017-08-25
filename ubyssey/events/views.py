@@ -97,10 +97,19 @@ def event(request, event_id):
         .filter(start_time__gt=date.today()) \
         .order_by('start_time')[:3]
 
+    related = Event.objects \
+        .filter(is_submission=False) \
+        .filter(is_published=True) \
+        .filter(start_time__gt=date.today()) \
+        .filter(category=event.category) \
+        .exclude(id=event_id) \
+        .order_by('start_time')[:2]
+
     context = {
         'meta': get_event_meta(event),
         'event': event,
         'upcoming': upcoming,
+        'related': related,
         'info_text': 'Hosting an event? Promote it for free on our website!',
         'info_link_text': 'Submit your event',
         'info_link': reverse('events-submit-landing')

@@ -67,23 +67,8 @@ body {
 }
 
 main {
-  padding-top: 55px;
-
-  @media($bp-larger-than-tablet){
-    padding-top: 49px;
-    &.homepage {
-      padding-top: 0;
-    }
-  }
-
   &.page {
     margin-bottom: 1rem;
-  }
-}
-
-html.hairlines {
-  main {
-    margin-top: 54.5px;
   }
 }
 
