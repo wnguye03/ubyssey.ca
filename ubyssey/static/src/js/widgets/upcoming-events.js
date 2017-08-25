@@ -24,7 +24,7 @@ function registerWidget() {
       containerHeight = Math.max(height, item.outerHeight());
       var width = item.outerWidth();
       item.css('position', 'absolute');
-      item.css('height', height);
+      item.css('height', containerHeight);
       item.css('width', width);
 
       if (i) {
