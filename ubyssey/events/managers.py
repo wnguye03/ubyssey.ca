@@ -2,6 +2,7 @@ import calendar
 import datetime
 from pytz import timezone
 from collections import OrderedDict
+from random import randint
 
 from django.conf import settings
 from django.db.models import Manager, Count
