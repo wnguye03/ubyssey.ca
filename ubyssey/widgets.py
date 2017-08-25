@@ -8,7 +8,7 @@ from ubyssey.fields import (
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
 from ubyssey.events.models import Event
-
+from dispatch.theme.zones import Embed
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
     SiteBanner, HomePageSidebarBottom, WeeklyEvents
@@ -19,7 +19,7 @@ class EventWidget(Widget):
   id = 'event-widget'
   name = 'Event Widget'
   template = 'widgets/event.html'
-  zones = (ArticleSidebar,)
+  zones = (ArticleSidebar, Embed)
 
   event = EventField('Custom Event')
 
