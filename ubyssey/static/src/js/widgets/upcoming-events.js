@@ -3,6 +3,11 @@ var FADE_OUT_SPEED = 100; // ms
 var FADE_IN_SPEED = 600; // ms
 
 function registerWidget() {
+  $('.js-scrollbar').mCustomScrollbar({
+    theme: 'minimal-dark',
+    scrollInertia: 100
+  })
+
   $('.js-carousel').each(function() {
     var carousel = $(this);
     carousel.currentSlide = 0;
@@ -19,7 +24,7 @@ function registerWidget() {
     if (numSlides > 1) {
       carousel.setSlide = function(n) {
         carousel.currentSlide = n;
-
+        return
         if (carousel.currentSlide >= numSlides) {
           carousel.currentSlide = 0;
         } else if (carousel.currentSlide < 0) {
