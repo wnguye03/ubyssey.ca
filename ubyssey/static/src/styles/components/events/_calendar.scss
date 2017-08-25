@@ -13,14 +13,18 @@ $color-today: #ff5555;
 .c-calendar__navigation {
   // Structure
   display: flex;
-  margin-top: 2rem;
+  padding-top: 2rem;
   margin-bottom: 2rem;
 }
 
 .c-calendar__weeks {
   // Structure
   flex: 1;
-  padding-right: 2rem;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    padding-right: 2rem;
+  }
 }
 
 .c-calendar__weeks__table {
@@ -127,6 +131,16 @@ $color-today: #ff5555;
   color: $color-white;
 }
 
+.c-calendar__info {
+  // Structure
+  display: none;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: block;
+  }
+}
+
 .c-calendar__results {
   // Structure
   margin-bottom: 0.5rem;
@@ -144,23 +158,34 @@ $color-today: #ff5555;
 }
 
 .c-calendar__results__list {
-  // Structure
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
 }
 
 .c-calendar__results__event {
   // Structure
-  width: 33.33%;
   padding-bottom: 1.5rem;
+
+  @media($bp-larger-than-phablet) {
+    width: 50%;
+  }
+
+  @media($bp-larger-than-tablet) {
+    width: 33.33%;
+  }
 }
 
 .c-calendar__results__event__inner {
   // Structure
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  height: 100%;
+  @media($bp-larger-than-phablet) {
+    height: 100%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
 
   .c-event {
     // Structure
@@ -168,12 +193,26 @@ $color-today: #ff5555;
   }
 }
 
-.c-calendar__results__event:nth-child(3n+1) .c-calendar__results__event__inner {
-  padding-left: 0;
-  padding-right: 1rem;
+@media($bp-larger-than-phablet) {
+  .c-calendar__results__event:nth-child(2n+1) .c-calendar__results__event__inner {
+    padding-left: 0;
+    padding-right: 0.75rem;
+  }
+
+  .c-calendar__results__event:nth-child(2n+2) .c-calendar__results__event__inner {
+    padding-right: 0;
+    padding-left: 0.75rem;
+  }
 }
 
-.c-calendar__results__event:nth-child(3n+3) .c-calendar__results__event__inner {
-  padding-right: 0;
-  padding-left: 1rem;
+@media($bp-larger-than-tablet) {
+  .c-calendar__results__event:nth-child(3n+1) .c-calendar__results__event__inner {
+    padding-left: 0;
+    padding-right: 1rem;
+  }
+
+  .c-calendar__results__event:nth-child(3n+3) .c-calendar__results__event__inner {
+    padding-right: 0;
+    padding-left: 1rem;
+  }
 }
