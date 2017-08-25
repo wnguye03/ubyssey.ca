@@ -6,9 +6,6 @@
 
   @media($bp-larger-than-mobile) {
     display: flex;
-    justify-content: center;
-    flex-direction: row;
-    width: 100%;
 
     .c-event:not(:last-child) {
       padding-bottom: 5px;
