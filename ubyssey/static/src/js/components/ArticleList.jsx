@@ -36,14 +36,14 @@ const ArticleList = React.createClass({
     updateHeader(topPos) {
         if (topPos > 50 && !window.articleHeader){
             window.articleHeader = true;
-            $('.header-site').hide();
+            $('.header-site').css('visibility', 'hidden');
             $('.header-article').show();
         } else if (topPos < 50 && window.articleHeader){
             window.articleHeader = false;
             $('.header-article').hide();
             // Only display site header if width > $bp-larger-than-tablet
             if($(window).width() > 960) {
-              $('.header-site').show();
+              $('.header-site').css('visibility', 'visible');
             }
         }
         this.adjustHeaderForBanner();

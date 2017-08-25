@@ -2,7 +2,8 @@ import re
 import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.conf import settings
 
@@ -11,10 +12,26 @@ from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
 
 def submit_landing(request):
-    return render(request, 'events/submit/landing.html')
+
+    context = {
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Hosting an event on or off campus? Submit it to us and we\'ll feature it on our website!'
+        }
+    }
+
+    return render(request, 'events/submit/landing.html', context)
 
 def submit_success(request):
-    return render(request, 'events/submit/success.html')
+
+    context = {
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Thanks for your submission! Your event has been submitted for approval. We\'ll email you once it goes live on our site.'
+        }
+    }
+
+    return render(request, 'events/submit/success.html', context)
 
 def submit_form(request):
     event_url = request.POST.get('event_url')
@@ -55,7 +72,16 @@ def submit_form(request):
     else:
         form = EventForm()
 
-    return render(request, 'events/submit/form.html', {'form': form, 'url_error': url_error})
+    context = {
+        'form': form,
+        'url_error': url_error,
+        'meta': {
+            'title': 'Submit an Event',
+            'description': 'Hosting an event on or off campus? Submit it to us and we\'ll feature it on our website!'
+        }
+    }
+
+    return render(request, 'events/submit/form.html', context)
 
 def event(request, event_id):
     try:
@@ -69,10 +95,19 @@ def event(request, event_id):
         .filter(start_time__gt=datetime.date.today()) \
         .order_by('start_time')[:3]
 
+    related = Event.objects \
+        .filter(is_submission=False) \
+        .filter(is_published=True) \
+        .filter(start_time__gt=date.today()) \
+        .filter(category=event.category) \
+        .exclude(id=event_id) \
+        .order_by('start_time')[:2]
+
     context = {
         'meta': get_event_meta(event),
         'event': event,
         'upcoming': upcoming,
+        'related': related,
         'info': get_submit_box()
     }
 
@@ -136,7 +171,7 @@ def get_host_from_url(url):
     if m:
         return m.group(1)
     else:
-        raise EventError('URL provided is not a valid Facebook event or UBC event url')
+        return
 
 def get_submit_box():
     return {

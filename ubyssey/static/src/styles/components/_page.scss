@@ -151,6 +151,14 @@
   flex: 1;
 }
 
+.c-page__sidebar__sticky {
+  @media($bp-larger-than-tablet) {
+    // Structure
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
 .c-page__sidebar__item {
   // Structure
   margin-bottom: 1.5rem;
