@@ -1,4 +1,5 @@
 .c-related-events__row {
+  // Structure
   margin-top: 0.75rem;
   display: block;
   width: 100%;
@@ -10,13 +11,13 @@
     width: 100%;
 
     .c-event:not(:last-child) {
-      border-bottom: 0;
+      padding-bottom: 5px;
     }
   }
 
 }
 
-.c-related-events__event-wrapper {
+..c-related-events__event {
   flex: 1;
 
   &:first-child {
