@@ -3,16 +3,36 @@ var FADE_OUT_SPEED = 100; // ms
 var FADE_IN_SPEED = 600; // ms
 
 function registerWidget() {
+  $('.js-scrollbar').mCustomScrollbar({
+    theme: 'minimal-dark',
+    scrollInertia: 100
+  })
+
   $('.js-carousel').each(function() {
     var carousel = $(this);
     carousel.currentSlide = 0;
     carousel.slides = [];
 
+    var containerHeight = 0;
+
     carousel.find('.js-carousel__item').each(function(i) {
       var item = $(this);
+      item.css('display', 'block');
       item.slideIndex = i;
       carousel.slides.push(item);
+
+      containerHeight = Math.max(height, item.outerHeight());
+      var width = item.outerWidth();
+      item.css('position', 'absolute');
+      item.css('height', height);
+      item.css('width', width);
+
+      if (i) {
+        item.css('display', 'none');
+      }
     });
+
+    carousel.find('.js-carousel-inner').css('height', containerHeight);
 
     var numSlides = carousel.slides.length;
 
@@ -27,14 +47,15 @@ function registerWidget() {
         }
 
         var slideToActivate = carousel.slides[carousel.currentSlide];
+
+        slideToActivate.css('opacity', 0);
+        slideToActivate.css('display', 'block');
+        slideToActivate.animate({ opacity: 1 }, FADE_IN_SPEED, 'linear');
+
         $.each(carousel.slides, function(i, slide) {
-          if (slide.is(':visible')) {
+          if (slide != slideToActivate && slide.is(':visible')) {
             slide.animate({ opacity: 0 }, FADE_OUT_SPEED, 'linear', function() {
               slide.css('display', 'none');
-
-              slideToActivate.css('opacity', 0);
-              slideToActivate.css('display', 'block');
-              slideToActivate.animate({ opacity: 1 }, FADE_IN_SPEED, 'linear');
             });
           }
         });

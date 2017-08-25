@@ -11,8 +11,16 @@
 }
 
 .c-widget-upcoming-events__events {
-  .c-event:not(:last-child) {
+  border-radius: 2px;
+  border-top: solid 1px $color-border-gray-light;
+  border-bottom: solid 1px $color-border-gray-light;
+
+  .c-event {
     border-bottom: none;
+
+    &:first-child {
+      border-top: none;
+    }
   }
 }
 
