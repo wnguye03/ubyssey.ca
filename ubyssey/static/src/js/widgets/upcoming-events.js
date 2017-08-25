@@ -53,8 +53,7 @@ function registerWidget() {
         slideToActivate.animate({ opacity: 1 }, FADE_IN_SPEED, 'linear');
 
         $.each(carousel.slides, function(i, slide) {
-          if (slide != slideToActivate)
-          if (slide.is(':visible')) {
+          if (slide != slideToActivate && slide.is(':visible')) {
             slide.animate({ opacity: 0 }, FADE_OUT_SPEED, 'linear', function() {
               slide.css('display', 'none');
             });
