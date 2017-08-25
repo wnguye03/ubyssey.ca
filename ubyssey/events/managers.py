@@ -4,7 +4,7 @@ from pytz import timezone
 from collections import OrderedDict
 
 from django.conf import settings
-from django.db.models import Manager
+from django.db.models import Manager, Count
 
 class EventManager(Manager):
     def get_published(self, pk):
