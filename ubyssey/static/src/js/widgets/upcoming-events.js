@@ -21,7 +21,7 @@ function registerWidget() {
       item.slideIndex = i;
       carousel.slides.push(item);
 
-      containerHeight = Math.max(height, item.outerHeight());
+      containerHeight = Math.max(containerHeight, item.outerHeight());
       var width = item.outerWidth();
       item.css('position', 'absolute');
       item.css('height', containerHeight);
