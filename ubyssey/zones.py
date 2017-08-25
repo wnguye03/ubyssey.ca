@@ -25,3 +25,8 @@ class FrontPage(Zone):
 class SiteBanner(Zone):
     id = 'site-banner'
     name = 'Site Banner'
+
+@register.zone
+class WeeklyEvents(Zone):
+    id = 'weekly-events'
+    name = 'Weekly Events'

@@ -9,10 +9,9 @@ from dispatch.theme import register
 from dispatch.theme.widgets import Widget
 from ubyssey.events.models import Event
 from dispatch.theme.zones import Embed
-from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, FrontPage,
-    SiteBanner, HomePageSidebarBottom
+    SiteBanner, HomePageSidebarBottom, WeeklyEvents
 )
 
 @register.widget
@@ -28,7 +27,7 @@ class EventWidget(Widget):
       """Select random event if custom event is not specified"""
 
       if not result.get('event'):
-          result['event'] = EventsHelper.get_random_event()
+          result['event'] = Event.objects.get_random_event()
       return result
 
 @register.widget
@@ -71,6 +70,21 @@ class UpcomingEventsWidget(Widget):
         return result
 
 @register.widget
+class WeeklyEventsWidget(Widget):
+    id = 'weekly-events'
+    name = 'Weekly Events'
+    template = 'widgets/weekly-events.html'
+    zones = (WeeklyEvents,)
+
+    events = EventField('Featured Events', many=True)
+
+    def context(self, data):
+        data['events'] = data['events'] \
+            .order_by('start_time') \
+            .filter(is_published=True)[:5]
+        return data
+
+@register.widget
 class UpcomingEventsHorizontalWidget(Widget):
     id = 'upcoming-events-horizontal'
     name = 'Upcoming Events Horizontal'
@@ -80,7 +94,6 @@ class UpcomingEventsHorizontalWidget(Widget):
     events = EventField('Override Events', many=True)
 
     def context(self, result):
-
         num = len(result['events'])
 
         # Target to display is 3

@@ -12,6 +12,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.db.models.signals import post_save, pre_save
 
+from ubyssey.events.managers import EventManager
+
 class Event(Model):
     title = CharField(max_length=255)
     description = TextField()
@@ -50,6 +52,8 @@ class Event(Model):
 
     submitter_email = EmailField(null=True)
     submitter_phone = PhoneNumberField(null=True)
+
+    objects = EventManager()
 
     def save_image_from_url(self, url):
         """Store image locally if an external URL is passed"""

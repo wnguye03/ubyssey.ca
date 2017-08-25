@@ -1,4 +1,4 @@
-<div class="c-event c-event--box">
+<div class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}">
   {% if event.image and not hide_image %}
   <a href="{% url 'event' event.pk %}">
     <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
@@ -13,9 +13,9 @@
 
   {% if not hide_day_label %}
     {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
-      <p class="c-event__time">{{ event.start_time|date:"l \a\t g A" }} - {{ event.end_time|date:"g A"}}</p>
+      <p class="c-event__time">{{ event.start_time|date:"l, M j \a\t g A" }} - {{ event.end_time|date:"g A"}}</p>
     {% else %}
-      <p class="c-event__time">{{ event.start_time|date:"l \a\t g A" }} - {{ event.end_time|date:"l \a\t g A" }}</p>
+      <p class="c-event__time">{{ event.start_time|date:"l, M j \a\t g A" }} - {{ event.end_time|date:"l, M j \a\t g A" }}</p>
     {% endif %}
   {% else %}
     {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}

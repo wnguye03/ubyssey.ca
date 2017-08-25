@@ -41,6 +41,7 @@
 @import 'components/text-input';
 @import 'components/input-group';
 @import 'components/info-box';
+@import 'components/events/calendar';
 @import 'components/events/event-submit-form';
 @import 'components/events/event-submit-landing';
 @import 'components/events/related-events';
@@ -54,6 +55,7 @@
 @import 'modules/widgets/upcoming_events_horizontal';
 @import 'modules/widgets/facebook_video_big';
 @import 'modules/widgets/banner';
+@import 'modules/widgets/weekly-events';
 
 body, html, #page-wrapper {
   max-height: 100%;

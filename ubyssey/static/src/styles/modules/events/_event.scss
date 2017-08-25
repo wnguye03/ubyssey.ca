@@ -78,7 +78,7 @@
   }
 }
 
-// EventDetail
+// Event Detail
 .c-event--detail {
   .c-event__meta {
     // Structure
@@ -138,5 +138,28 @@
       // Structure
       padding-left: 1.5rem;
     }
+  }
+}
+
+// Event Card
+.c-event--card {
+  // Structure
+  flex: 1;
+
+  .c-event__info {
+    // Structure
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .c-event__title {
+    // Text
+    font-size: font-size(14);
+    line-height: 1.4em;
+  }
+
+  .c-event__image {
+    // Structure
+    height: 7rem;
   }
 }
