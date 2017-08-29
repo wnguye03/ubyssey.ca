@@ -1,18 +1,20 @@
 from datetime import datetime
 
 from dispatch.theme.fields import (
-    CharField, TextField, ArticleField, ImageField,
-    EventField, IntegerField, InvalidField, DateTimeField
+    ModelField, CharField, TextField, ArticleField, ImageField,
+    IntegerField, InvalidField, DateTimeField
 )
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from dispatch.apps.events.models import Event
+from dispatch.models import Article
 
-from ubyssey.helpers import EventsHelper
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar,
-    HomePageSidebar, HomePageSidebarBottom    
+    HomePageSidebar, HomePageSidebarBottom
 )
+
+class EventField(ArticleField):
+    pass
 
 @register.widget
 class EventWidget(Widget):
@@ -57,13 +59,15 @@ class UpcomingEventsWidget(Widget):
             exclusions = map(lambda e: e.pk, result['featured_events'])
         else:
             exclusions = []
+        #
+        # events = Event.objects \
+        #     .filter(is_submission=False) \
+        #     .filter(is_published=True) \
+        #     .filter(start_time__gt=datetime.today()) \
+        #     .exclude(pk__in=exclusions) \
+        #     .order_by('start_time')[:num_events]
 
-        events = Event.objects \
-            .filter(is_submission=False) \
-            .filter(is_published=True) \
-            .filter(start_time__gt=datetime.today()) \
-            .exclude(pk__in=exclusions) \
-            .order_by('start_time')[:num_events]
+        events = []
 
         result['upcoming'] = events
 

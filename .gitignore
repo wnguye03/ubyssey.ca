@@ -11,4 +11,4 @@ __pycache__/
 node_modules/
 
 /_settings/
-settings.py
+settings*.py

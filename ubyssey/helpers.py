@@ -5,15 +5,35 @@ from datetime import date
 
 from random import randint
 
+from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.apps.content.models import Article, Section
-from dispatch.apps.events.models import Event
+from dispatch.models import Article, Page, Section
 
 import settings
 
 class ArticleHelper(object):
+
+    @staticmethod
+    def get_article(request, slug, section=None):
+        def _find_article(slug, section=None):
+            if section is not None:
+                return Article.objects.get(slug=slug, section__name=section, head=True)
+            else:
+                return Article.objects.get(slug=slug, head=True)
+
+        if request.user.is_staff:
+            try:
+                article = _find_article(slug, section)
+            except Article.DoesNotExist:
+                raise Http404("This article does not exist.")
+        else:
+            try:
+                article = _find_article(slug, section)
+            except Article.DoesNotExist:
+                raise Http404("This article does not exist.")
+        return article
 
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
@@ -52,7 +72,7 @@ class ArticleHelper(object):
                  ELSE 0.5
             END as reading,
             TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
-            FROM content_article
+            FROM dispatch_article
         """
 
         query_where = """
@@ -63,12 +83,12 @@ class ArticleHelper(object):
 
         if section is not None:
             query += """
-                INNER JOIN content_section on content_article.section_id = content_section.id AND content_section.slug = %(section)s
+                INNER JOIN dispatch_section on dispatch_article.section_id = dispatch_section.id AND dispatch_section.slug = %(section)s
             """
         elif section_id is not None:
             query_where += " AND section_id = %(section_id)s "
         elif sections:
-            query_where += "AND section_id in (SELECT id FROM content_section WHERE FIND_IN_SET(slug,%(sections)s))"
+            query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         query += query_where + """
             ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
@@ -118,7 +138,7 @@ class ArticleHelper(object):
     @staticmethod
     def get_years():
 
-        query = 'SELECT DISTINCT YEAR(published_at) FROM content_article ORDER BY published_at DESC'
+        query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article ORDER BY published_at DESC'
 
         cursor = connection.cursor()
         cursor.execute(query)
@@ -173,71 +193,16 @@ class ArticleHelper(object):
 
         return results
 
-class EventsHelper(object):
-
-    @staticmethod
-    def get_calendar_events(category=None, months=None, start=None, end=None):
-        events = Event.objects \
-            .filter(is_submission=False) \
-            .filter(is_published=True) \
-            .order_by('start_time')
-
-        today = date.today()
-        # filter start
-        if start is not None:
-            events = events.filter(start_time__gt=start)
+class PageHelper(object):
+    def get_page(request, slug):
+        if request.user.is_staff:
+            try:
+                page = Page.objects.get(slug=slug, head=True)
+            except Article.DoesNotExist:
+                raise Http404("This page does not exist.")
         else:
-            events = events.filter(start_time__gt=today)
-
-        # filter end
-        if end is not None:
-            events = events.filter(end_time__lte=end)
-        else:
-            until_month = today.month + (months if months is not None else 12)
-            until_year = today.year
-            while until_month > 12:
-                until_month -= 12
-                until_year += 1
-            dt_until = today.replace(year=until_year, month=until_month)
-            events = events.filter(end_time__lte=dt_until)
-
-        if category is not None and category != 'all':
-            events = events.filter(category__exact=category)
-
-        HARD_MAX = 100
-        events = events[:HARD_MAX]
-
-        return events
-
-    @staticmethod
-    def group_events_by_date(events):
-        events_by_date = OrderedDict()
-
-        for event in events:
-            start = event.start_time # Zulu
-            start = start.astimezone(timezone(settings.TIME_ZONE))
-            year = start.year
-            month_name = calendar.month_name[start.month]
-            day = '%s %d' % (start.strftime('%A'), start.day)
-            if year not in events_by_date:
-                events_by_date[year] = OrderedDict()
-            if month_name not in events_by_date[year]:
-                events_by_date[year][month_name] = OrderedDict()
-            if day not in events_by_date[year][month_name]:
-                events_by_date[year][month_name][day] = []
-
-            events_by_date[year][month_name][day].append(event)
-
-        return events_by_date
-
-
-    @staticmethod
-    def get_event(pk):
-        return Event.objects.get(pk=pk, is_submission=False, is_published=True)
-
-    @staticmethod
-    def get_random_event():
-        queryset = Event.objects.filter(is_published=True)
-        count = queryset.aggregate(count=Count('id'))['count']
-        random_index = randint(0, count - 1)
-        return queryset[random_index]
+            try:
+                page = Page.objects.get(slug=slug, head=True, is_published=True)
+            except Page.DoesNotExist:
+                raise Http404("This page does not exist.")
+        return page

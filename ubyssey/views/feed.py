@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 
-from dispatch.apps.content.models import Section, Article
+from dispatch.models import Section, Article
 
 from ubyssey.helpers import ArticleHelper
 
