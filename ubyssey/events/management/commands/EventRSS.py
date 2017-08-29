@@ -4,20 +4,18 @@ import feedparser
 
 from ubyssey.events.models import Event, ScrapedEvent
 
-"""http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss"""
-
 class RSSFeed(object):
 
     def __init__(self, url):
         self.url = url
         self.feed = feedparser.parse(self.url)
-        self.scrape_time = datetime.now()
+        self.scrape_time = datetime.datetime.now()
 
     def get_new_events(self):
         """Returns set of new event GUIDs"""
 
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
-        new_events = set()
+        new_events = []
 
         # Get events in the Ubyssey database
         scraped_events = ScrapedEvent.objects.filter(scrape_time__gte=yesterday)
@@ -36,7 +34,7 @@ class RSSFeed(object):
                     'GUID': guid
                 }
 
-                new_events.add(event_data)
+                new_events.append(event_data)
 
         return new_events
 
@@ -91,15 +89,5 @@ class RSSFeed(object):
         else:
             raise FeedError('Error parsing GUID from event link')
 
-
 class FeedError(Exception):
     pass
-
-
-if __name__ == '__main__':
-    
-    feedObj = RSSFeed('http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss')
-
-    feedObj.create_new_events()
-
-    print ScrapedEvent.objects.all()
