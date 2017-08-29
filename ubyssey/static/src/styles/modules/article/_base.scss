@@ -139,6 +139,7 @@ div.article-content {
   > h1,
   > h2,
   > h3,
+  > div.c-widget-event,
   > .attachment.pull-quote {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -159,6 +160,8 @@ div.article-content {
     }
   }
 }
+
+
 
 div.caption {
   margin-top: 6px;
@@ -183,6 +186,11 @@ div.article-content {
     line-height: 1.625rem !important;
     margin-top: 1.4rem;
 
+    a {
+      color: $color-accent-blue;
+      text-decoration: underline;
+    }
+
     &:first-child {
         margin-top: 5px;
     }
@@ -193,11 +201,6 @@ div.article-content {
     font-weight: normal;
     font-size: 28px;
     margin: 30px 0 0 0;
-  }
-
-  a {
-    color: $color-accent-blue;
-    text-decoration: underline;
   }
 
 }

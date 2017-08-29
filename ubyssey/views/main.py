@@ -125,7 +125,7 @@ class UbysseyTheme(object):
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template(), context)
+            'html': loader.render_to_string(article.get_template_path(), context)
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')

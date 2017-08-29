@@ -1,110 +1,165 @@
-.c-event-detail__container {
-  // structure
-  margin-bottom: 25px;
-  min-height: 600px;
+.c-event {
+  // Background
+  background: $color-white;
+
+  // Text
+  font-family: $font-default;
 }
 
-.c-event-detail__title {
-  border-bottom: 1px solid #ccc;
-
-  @media($bp-smaller-than-tablet) {
-    border-bottom: 0;
-  }
-}
-
-.c-event-detail__info {
-  // structure
-  box-sizing: border-box;
-  margin: 16px 0;
-  padding: 0 5px;
-  width: 100%;
-  display: inline-block;
-
-}
-
-.c-event-detail__image-container {
-  display: block;
+.c-event__image {
+  // Structure
   position: relative;
-  box-sizing: border-box;
-  padding: 0 0 40px 40px;
-  float: right;
-  width: 50%;
+  padding-top: 50%;
 
-  background-color: #FFF;
+  // Background
+  background-position: center;
+  background-size: cover;
+}
 
-  @media($bp-smaller-than-tablet) {
-    display: block;
-    width: 100%;
+.c-event__meta {
+  // Structure
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.c-event__info {
+  // Structure
+  flex: 1;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  // Text
+  line-height: 1.4em;
+
+  h3, p {
+    // Structure
+    margin: 0;
     padding: 0;
-    margin-bottom: 15px;
   }
 }
 
-.c-event-detail__image {
-  // structure
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 600px;
+.c-event__title {
+  // Structure
+  margin-top: 0;
+
+  // Text
+  font-size: font-size(16);
+  font-weight: $font-weight-semi-bold;
 }
 
-.c-event-detail__category {
-  display: inline-block;
-  margin-right: 0.5em;
-
-  font-weight: 600;
-}
-
-.c-event-detail__start, .c-event-detail__end {
-  // structure
-  display: inline-block;
-
-  // display
+.c-event__time,
+.c-event__location {
+  // Text
+  font-size: font-size(13);
   color: $color-text-gray;
-  font-weight: 400;
 }
 
-.c-event-detail__time-separator {
-  display: inline-block;
+.c-event__time {
+  // Text
+  font-weight: $font-weight-semi-bold;
 }
 
-.c-event-detail__description {
-  // structure
-  padding: 15px 0;
-  margin-bottom: 15px;
+// EventBox
+.c-event--box {
+  // Border
+  border: solid 1px $color-border-gray;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
 
-  // display
-  font-family: $font-body;
-  line-height: 1.5em;
-  border-bottom: 1px dotted #ccc;
-
-  // display
-  line-height: 1.625rem;
+  .c-event__meta {
+    // Structure
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
-.c-event-detail__location-info {
-  text-align: right;
-  line-height: 1.25em;
+// Event Detail
+.c-event--detail {
+  .c-event__meta {
+    // Structure
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .c-event__date {
+    // Structure
+    display: none;
+  }
+
+  .c-event__info {
+    // Structure
+    padding-left: 0;
+
+    // Text
+    line-height: 1.8rem;
+  }
+
+  .c-event__title {
+    // Structure
+    margin-bottom: 0.5rem;
+
+    // Text
+    font-size: font-size(24);
+  }
+
+  .c-event__time,
+  .c-event__location {
+    // Text
+    font-size: font-size(16);
+  }
+
+  .c-event__buttons {
+    // Structure
+    margin-bottom: 1rem;
+
+    .c-button {
+      margin-right: 0.2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  @media($bp-larger-than-mobile) {
+    .c-event__meta {
+      // Structure
+      margin-top: 1.5rem;
+    }
+
+    .c-event__date {
+      // Structure
+      display: block;
+    }
+
+    .c-event__info {
+      // Structure
+      padding-left: 1.5rem;
+    }
+  }
 }
 
-.c-event-detail__location span {
-  color: $color-accent-blue;
-  font-weight: 600;
-  font-size: 20px;
-  margin-right: 5px;
-}
+// Event Card
+.c-event--card {
+  // Structure
+  flex: 1;
 
-.c-event-detail__address {
-  font-style: italic;
-  font-size: 14px;
-}
+  .c-event__info {
+    // Structure
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-.c-event-detail__fb-link > button {
-  // structure
-  margin-top: 25px;
+  .c-event__title {
+    // Text
+    font-size: font-size(14);
+    line-height: 1.4em;
+  }
 
-  // display
-  background-color: $color-social-facebook-dark;
-  color: $color-white;
-  border-color: $color-social-facebook-dark;
-  background-image: initial;
+  .c-event__image {
+    // Structure
+    height: 7rem;
+  }
 }

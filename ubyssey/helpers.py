@@ -1,8 +1,3 @@
-import calendar
-from pytz import timezone
-from collections import OrderedDict
-from datetime import date
-
 from random import randint
 
 from django.http import Http404
@@ -11,7 +6,7 @@ from django.db.models.aggregates import Count
 
 from dispatch.models import Article, Page, Section
 
-import settings
+from ubyssey.events.models import Event
 
 class ArticleHelper(object):
 

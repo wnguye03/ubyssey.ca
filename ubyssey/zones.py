@@ -7,11 +7,6 @@ class ArticleSidebar(Zone):
   name = 'Article Sidebar'
 
 @register.zone
-class HomePageSidebar(Zone):
-    id = 'homepage-sidebar'
-    name = 'Homepage Sidebar'
-
-@register.zone
 class HomePageSidebarBottom(Zone):
     id = 'homepage-sidebar-bottom'
     name = 'Homepage Sidebar Bottom'
@@ -20,3 +15,18 @@ class HomePageSidebarBottom(Zone):
 class ArticleHorizontal(Zone):
     id = 'article-horizontal'
     name = 'Article Horizontal'
+
+@register.zone
+class FrontPage(Zone):
+    id = 'frontpage'
+    name = 'FrontPage'
+
+@register.zone
+class SiteBanner(Zone):
+    id = 'site-banner'
+    name = 'Site Banner'
+
+@register.zone
+class WeeklyEvents(Zone):
+    id = 'weekly-events'
+    name = 'Weekly Events'

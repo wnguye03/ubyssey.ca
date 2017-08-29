@@ -27,19 +27,26 @@ const ArticleList = React.createClass({
         if(this.state.active.next)
             this.loadNext(this.state.active.next.data);
     },
+    adjustHeaderForBanner() {
+      const bannerHeight= $('.c-banner').outerHeight();
+      if (bannerHeight) {
+        $('.header-article').css('top', bannerHeight);
+      }
+    },
     updateHeader(topPos) {
         if (topPos > 50 && !window.articleHeader){
             window.articleHeader = true;
-            $('.header-site').hide();
+            $('.header-site').css('visibility', 'hidden');
             $('.header-article').show();
         } else if (topPos < 50 && window.articleHeader){
             window.articleHeader = false;
             $('.header-article').hide();
             // Only display site header if width > $bp-larger-than-tablet
             if($(window).width() > 960) {
-              $('.header-site').show();
+              $('.header-site').css('visibility', 'visible');
             }
         }
+        this.adjustHeaderForBanner();
     },
     getArticle(id) {
         return this.state.articles[this.articlesTable[id]];
@@ -65,7 +72,7 @@ const ArticleList = React.createClass({
 
         var updateScroll = () => {
 
-            const topPos = $(document).scrollTop();
+            const topPos = $('#content-wrapper').scrollTop();
             const bottomPos = topPos + windowHeight;
 
             if($(window).width() > 960)
@@ -87,7 +94,7 @@ const ArticleList = React.createClass({
 
         };
 
-        $(window).scroll(updateScroll);
+        $('#content-wrapper').scroll(updateScroll);
 
     },
     prepNext() {

@@ -10,19 +10,13 @@
   text-align: center;
 }
 
-.c-event-date--bordered {
-  // Border
-  border: 1px solid $color-border-gray-light;
-  border-radius: 2px;
-}
-
 .c-event-date__month {
   // Structure
   margin-bottom: 0.25rem;
 
   // Text
   font-weight: $font-weight-semi-bold;
-  font-size: 10px;
+  font-size: font-size(10);
   letter-spacing: 1px;
   text-transform: uppercase;
   color: $color-text-gray-light;
@@ -32,7 +26,31 @@
 .c-event-date__day {
   // Text
   color: $color-accent-blue;
-  font-size: 24px;
+  font-size: font-size(24);
   font-weight: $font-weight-semi-bold;
   line-height: 0.85em;
+}
+
+.c-event-date--large {
+  // Structure
+  width: 4.75rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+
+  // Border
+  border-radius: 2px;
+  border: solid 1px $color-border-gray-light;
+
+  // Extra
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+
+  .c-event-date__month {
+    // Text
+    font-size: font-size(13);
+  }
+
+  .c-event-date__day {
+    // Text
+    font-size: font-size(32);
+  }
 }
