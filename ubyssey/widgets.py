@@ -16,10 +16,6 @@ from ubyssey.zones import (
 )
 from ubyssey.fields import EventField
 
-
-class EventField(ArticleField):
-    pass
-
 @register.widget
 class EventWidget(Widget):
   id = 'event-widget'
