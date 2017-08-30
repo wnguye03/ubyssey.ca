@@ -17,6 +17,7 @@ from ubyssey.events.managers import EventManager
 
 class Event(Model):
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    secret_id = UUIDField(default=uuid.uuid4, editable=False)
     title = CharField(max_length=255)
     description = TextField()
     host = CharField(max_length=255)
@@ -73,7 +74,7 @@ class Event(Model):
 def send_submitted_email(sender, instance, **kwargs):
     """Send an email to the submitter when the event is submitted."""
     if instance.is_submission and not instance.is_submission_email:
-        body = render_to_string('events/email/submitted.html', {'title': instance.title})
+        body = render_to_string('events/email/submitted.html', {'title': instance.title, 'secret_id': instance.secret_id})
 
         send_mail(
             'Your event has been submitted!',
@@ -84,6 +85,7 @@ def send_submitted_email(sender, instance, **kwargs):
         )
 
         instance.is_submission_email = True
+        instance.save()
 
 @receiver(post_save, sender=Event)
 def send_published_email(sender, instance, **kwargs):

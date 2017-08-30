@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.conf import settings
+from django.forms.models import model_to_dict
 
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
@@ -112,6 +113,40 @@ def event(request, event_id):
     }
 
     return render(request, 'events/event.html', context)
+
+def edit(request, secret_id):
+
+    try:
+        event = Event.objects.get_secret(secret_id)
+    except Event.DoesNotExist:
+        raise Http404('Event could not be found.')
+
+    if request.method == 'GET':
+        event_data = model_to_dict(event)
+        form = EventForm(event_data)
+
+    elif request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            updated_data = form.cleaned_data
+            event.update(**updated_data)
+
+            return redirect(submit_success)
+
+    else:
+        form = EventForm()
+
+    context = {
+        'form': form,
+        'meta': {
+            'title': 'Edit an Event',
+            'description': ''
+        }
+    }
+
+    return render(request, 'events/submit/form.html', context)
 
 def events(request):
     category = request.GET.get('category')

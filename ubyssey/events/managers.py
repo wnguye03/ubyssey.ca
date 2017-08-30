@@ -11,6 +11,9 @@ class EventManager(Manager):
     def get_published(self, pk):
         return self.get(pk=pk, is_submission=False, is_published=True)
 
+    def get_secret(self, secret_id):
+        return self.get(secret_id=secret_id, is_submission=False, is_published=True)
+
     def get_random_event(self):
         queryset = self.filter(is_published=True)
         count = queryset.aggregate(count=Count('id'))['count']
