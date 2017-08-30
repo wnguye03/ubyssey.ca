@@ -1,10 +1,11 @@
 import urllib
 import os
 from phonenumber_field.modelfields import PhoneNumberField
+import uuid
 
 from django.db.models import (
     Model, DateTimeField, CharField, TextField,
-    ImageField, BooleanField, EmailField)
+    ImageField, BooleanField, EmailField, UUIDField)
 from django.core.files import File
 from django.dispatch import receiver
 from django.template.loader import render_to_string
@@ -15,6 +16,7 @@ from django.db.models.signals import post_save, pre_save
 from ubyssey.events.managers import EventManager
 
 class Event(Model):
+    id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = CharField(max_length=255)
     description = TextField()
     host = CharField(max_length=255)
