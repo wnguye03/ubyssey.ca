@@ -101,7 +101,7 @@ def send_published_email(sender, instance, **kwargs):
         instance.save()
 
 class ScrapedEvent(Model):
-    """Model to keep track of events that have been scraped from"""
+    """Model to keep track of events that have been scraped from UBC Event RSS"""
 
-    GUID = CharField(max_length=50)
+    guid = CharField(max_length=50, primary_key=True)
     scrape_time = DateTimeField(null=True)
