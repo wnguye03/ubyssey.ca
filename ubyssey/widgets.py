@@ -63,15 +63,13 @@ class UpcomingEventsWidget(Widget):
             exclusions = map(lambda e: e.pk, result['featured_events'])
         else:
             exclusions = []
-        #
-        # events = Event.objects \
-        #     .filter(is_submission=False) \
-        #     .filter(is_published=True) \
-        #     .filter(start_time__gt=datetime.today()) \
-        #     .exclude(pk__in=exclusions) \
-        #     .order_by('start_time')[:num_events]
 
-        events = []
+        events = Event.objects \
+            .filter(is_submission=False) \
+            .filter(is_published=True) \
+            .filter(start_time__gt=datetime.today()) \
+            .exclude(pk__in=exclusions) \
+            .order_by('start_time')[:num_events]
 
         result['upcoming'] = events
 
