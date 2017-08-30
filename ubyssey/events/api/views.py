@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from dispatch.apps.api.mixins import DispatchModelViewSet
+from dispatch.api.mixins import DispatchModelViewSet
 
 from ubyssey.events.models import Event
 from ubyssey.events.api.serializers import EventSerializer

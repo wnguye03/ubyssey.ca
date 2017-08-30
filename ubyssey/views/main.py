@@ -10,12 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
-from dispatch.apps.content.models import Article, Page, Section, Topic
-from dispatch.apps.core.models import Person
-from dispatch.apps.frontend.themes.default import DefaultTheme
-from dispatch.apps.frontend.helpers import templates
+from dispatch.models import Article, Page, Section, Topic, Person
 
-from ubyssey.helpers import ArticleHelper
+from ubyssey.helpers import ArticleHelper, PageHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -23,7 +20,7 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
-class UbysseyTheme(DefaultTheme):
+class UbysseyTheme(object):
 
     SITE_TITLE = 'The Ubyssey'
     SITE_URL = settings.BASE_URL
@@ -65,7 +62,7 @@ class UbysseyTheme(DefaultTheme):
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
 
-        popular = Article.objects.get_popular()[:5]
+        popular = ArticleHelper.get_popular()[:5]
 
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
 
@@ -89,7 +86,7 @@ class UbysseyTheme(DefaultTheme):
 
     def article(self, request, section=None, slug=None):
         try:
-            article = self.find_article(request, slug, section)
+            article = ArticleHelper.get_article(request, slug, section)
         except:
             raise Http404('Article could not be found.')
 
@@ -135,7 +132,7 @@ class UbysseyTheme(DefaultTheme):
 
     def page(self, request, slug=None):
         try:
-            page = self.find_page(request, slug)
+            page = PageHelper.get_page(request, slug)
         except:
             raise Http404('Page could not be found.')
 

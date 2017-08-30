@@ -3,7 +3,8 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.shortcuts import render_to_response
 
-from dispatch.apps.api.urls import urlpatterns as api_urls
+from dispatch.admin import urls as admin_urls
+from dispatch.api import urls as api_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
@@ -11,21 +12,23 @@ from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
 from ubyssey.views.advertise import AdvertiseTheme
 
+from ubyssey.zones import *
+from ubyssey.widgets import *
+from ubyssey.templates import *
+
 from ubyssey.events.api.urls import urlpatterns as event_api_urls
 from ubyssey.events.urls import urlpatterns as events_urls
 
-from ubyssey.widgets import *
-
-def admin(request):
-    """Render HTML entry point for manager app."""
-    return render_to_response('manager/index.html', {})
 
 theme = UbysseyTheme()
 guide = GuideTheme()
 magazine = MagazineTheme()
 advertise = AdvertiseTheme()
 
-theme_urls = [
+urlpatterns = [
+    url(r'^admin', include(admin_urls)),
+    url(r'^api/', include(api_urls)),
+
     url(r'^$', theme.home, name='home'),
     url(r'^search/$', theme.search, name='search'),
     url(r'^archive/$', theme.archive, name='archive'),
@@ -60,4 +63,4 @@ theme_urls = [
 ]
 
 if settings.DEBUG:
-    theme_urls += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
