@@ -6,12 +6,11 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
-from dispatch.apps.content.models import Article
-from dispatch.apps.frontend.themes.default import DefaultTheme
+from dispatch.models import Article
 
 from ubyssey.helpers import ArticleHelper
 
-class MagazineTheme(DefaultTheme):
+class MagazineTheme(object):
     """Views for The Ubyssey Magazine microsite."""
 
     def landing(self, request):
@@ -37,7 +36,7 @@ class MagazineTheme(DefaultTheme):
         """Magazine article page view."""
 
         try:
-            article = self.find_article(request, slug, 'magazine')
+            article = ArticleHelper.get_article(request, slug, 'magazine')
         except:
             raise Http404('Article could not be found.')
 

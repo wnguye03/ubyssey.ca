@@ -1,18 +1,24 @@
 from datetime import datetime
 
-from ubyssey.fields import (
-    CharField, TextField, ArticleField, ImageField,
-    EventField, IntegerField, InvalidField, DateTimeField,
-    WidgetField, BoolField
-)
+from dispatch.models import Article
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
-from ubyssey.events.models import Event
 from dispatch.theme.zones import Embed
-from ubyssey.zones import (
-    ArticleHorizontal, ArticleSidebar, FrontPage,
-    SiteBanner, HomePageSidebarBottom, WeeklyEvents
+from dispatch.theme.fields import (
+    ModelField, CharField, TextField, ArticleField, ImageField,
+    IntegerField, InvalidField, DateTimeField, BoolField, WidgetField
 )
+
+from ubyssey.events.models import Event
+from ubyssey.zones import (
+    ArticleHorizontal, ArticleSidebar, HomePageSidebarBottom,
+    WeeklyEvents, FrontPage, SiteBanner
+)
+from ubyssey.fields import EventField
+
+
+class EventField(ArticleField):
+    pass
 
 @register.widget
 class EventWidget(Widget):

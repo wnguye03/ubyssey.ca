@@ -1,11 +1,11 @@
-from dispatch.apps.frontend.helpers import templates
-from dispatch.apps.frontend.templates import BaseTemplate
+from dispatch.theme import register
+from dispatch.theme.templates import Template
 from dispatch.apps.frontend.fields import TextField, ModelField, SelectField
 
-class Default(BaseTemplate):
-
-    NAME = 'Default'
-    SLUG = 'default'
+@register.template
+class Default(Template):
+    id = 'default'
+    name = 'Default'
 
     IMAGE_SIZE_OPTIONS = (
         ('default', 'Default'),
@@ -16,17 +16,17 @@ class Default(BaseTemplate):
         ('image_size', 'Image Size', SelectField(options=IMAGE_SIZE_OPTIONS)),
     )
 
-class Blank(BaseTemplate):
-
-    NAME = 'Blank'
-    SLUG = 'blank'
+@register.template
+class Blank(Template):
+    id = 'blank'
+    name = 'Blank'
 
     fields = ()
 
-class FullWidth(BaseTemplate):
-
-    NAME = 'Full width story'
-    SLUG = 'fw-story'
+@register.template
+class FullWidth(Template):
+    id = 'fw-story'
+    name = 'Full width story'
 
     IMAGE_SIZE_OPTIONS = (
         ('default', 'Default'),
@@ -45,10 +45,10 @@ class FullWidth(BaseTemplate):
         ('header_layout', 'Header Layout', SelectField(options=HEADER_LAYOUT_OPTIONS))
     )
 
-class Guide(BaseTemplate):
-
-    NAME = 'Guide to UBC'
-    SLUG = 'guide-to-ubc'
+@register.template
+class Guide(Template):
+    id = 'guide-to-ubc'
+    name = 'Guide to UBC'
 
     fields = (
         ('subheading', 'Sub-heading', TextField()),
@@ -57,10 +57,10 @@ class Guide(BaseTemplate):
         ('next_b', 'Up next B', TextField())
     )
 
-class Magazine(BaseTemplate):
-
-    NAME = 'Magazine - Article'
-    SLUG = 'magazine'
+@register.template
+class Magazine(Template):
+    id = 'magazine'
+    name = 'Magazine - Article'
 
     COLOR_OPTIONS = (
         ('green', 'Green'),
@@ -75,10 +75,10 @@ class Magazine(BaseTemplate):
         ('color', 'Accent Color', SelectField(options=COLOR_OPTIONS)),
     )
 
-class MagazinePoem(BaseTemplate):
-
-    NAME = 'Magazine - Poem'
-    SLUG = 'magazine-poem'
+@register.template
+class MagazinePoem(Template):
+    id = 'magazine-poem'
+    name = 'Magazine - Poem'
 
     fields = (
         ('byline', 'Byline', TextField()),
@@ -89,11 +89,3 @@ class MagazinePoem(BaseTemplate):
         ('text_color_b', 'Text Color B', TextField()),
         ('offset', 'Top Offset', TextField()),
     )
-
-
-templates.register(Default)
-templates.register(Blank)
-templates.register(FullWidth)
-templates.register(Guide)
-templates.register(Magazine)
-templates.register(MagazinePoem)

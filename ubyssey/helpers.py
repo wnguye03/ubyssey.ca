@@ -1,12 +1,34 @@
 from random import randint
 
+from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.apps.content.models import Article, Section
+from dispatch.models import Article, Page, Section
+
 from ubyssey.events.models import Event
 
 class ArticleHelper(object):
+
+    @staticmethod
+    def get_article(request, slug, section=None):
+        def _find_article(slug, section=None):
+            if section is not None:
+                return Article.objects.get(slug=slug, section__name=section, head=True)
+            else:
+                return Article.objects.get(slug=slug, head=True)
+
+        if request.user.is_staff:
+            try:
+                article = _find_article(slug, section)
+            except Article.DoesNotExist:
+                raise Http404("This article does not exist.")
+        else:
+            try:
+                article = _find_article(slug, section)
+            except Article.DoesNotExist:
+                raise Http404("This article does not exist.")
+        return article
 
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
@@ -45,7 +67,7 @@ class ArticleHelper(object):
                  ELSE 0.5
             END as reading,
             TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
-            FROM content_article
+            FROM dispatch_article
         """
 
         query_where = """
@@ -56,12 +78,12 @@ class ArticleHelper(object):
 
         if section is not None:
             query += """
-                INNER JOIN content_section on content_article.section_id = content_section.id AND content_section.slug = %(section)s
+                INNER JOIN dispatch_section on dispatch_article.section_id = dispatch_section.id AND dispatch_section.slug = %(section)s
             """
         elif section_id is not None:
             query_where += " AND section_id = %(section_id)s "
         elif sections:
-            query_where += "AND section_id in (SELECT id FROM content_section WHERE FIND_IN_SET(slug,%(sections)s))"
+            query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         query += query_where + """
             ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
@@ -111,7 +133,7 @@ class ArticleHelper(object):
     @staticmethod
     def get_years():
 
-        query = 'SELECT DISTINCT YEAR(published_at) FROM content_article ORDER BY published_at DESC'
+        query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article ORDER BY published_at DESC'
 
         cursor = connection.cursor()
         cursor.execute(query)
@@ -165,3 +187,36 @@ class ArticleHelper(object):
                 results.append(articles[index])
 
         return results
+
+    @staticmethod
+    def get_popular(dur='week'):
+        """Returns the most popular articles in the time period."""
+
+        durations = {
+            'week': 7,
+            'month': 30
+        }
+
+        articles = Article.objects.filter(is_published=True)
+
+        if dur in durations:
+            end = datetime.datetime.now() + datetime.timedelta(days=1)
+            start = end - datetime.timedelta(days=durations[dur])
+            time_range = (start, end)
+            articles = articles.filter(created_at__range=(time_range))
+
+        return articles.order_by('-views')
+
+class PageHelper(object):
+    def get_page(request, slug):
+        if request.user.is_staff:
+            try:
+                page = Page.objects.get(slug=slug, head=True)
+            except Article.DoesNotExist:
+                raise Http404("This page does not exist.")
+        else:
+            try:
+                page = Page.objects.get(slug=slug, head=True, is_published=True)
+            except Page.DoesNotExist:
+                raise Http404("This page does not exist.")
+        return page
