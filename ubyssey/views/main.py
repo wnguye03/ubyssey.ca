@@ -62,7 +62,7 @@ class UbysseyTheme(object):
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
 
-        popular = Article.objects.get_popular()[:5]
+        popular = ArticleHelper.get_popular()[:5]
 
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
 

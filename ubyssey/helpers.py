@@ -188,6 +188,25 @@ class ArticleHelper(object):
 
         return results
 
+    @staticmethod
+    def get_popular(dur='week'):
+        """Returns the most popular articles in the time period."""
+
+        durations = {
+            'week': 7,
+            'month': 30
+        }
+
+        articles = Article.objects.filter(is_published=True)
+
+        if dur in durations:
+            end = datetime.datetime.now() + datetime.timedelta(days=1)
+            start = end - datetime.timedelta(days=durations[dur])
+            time_range = (start, end)
+            articles = articles.filter(created_at__range=(time_range))
+
+        return articles.order_by('-views')
+
 class PageHelper(object):
     def get_page(request, slug):
         if request.user.is_staff:
