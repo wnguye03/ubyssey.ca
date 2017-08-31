@@ -140,7 +140,7 @@ def edit(request, secret_id):
                     'An event has been updated',
                     body,
                     settings.EMAIL_HOST_USER,
-                    ['axelnj44@gmail.com'],#[settings.EVENT_EMAIL],
+                    [settings.EVENT_EMAIL],
                     fail_silently=True,
                 )
 
