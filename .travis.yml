@@ -1,17 +1,17 @@
-sudo: false
 language: python
 python:
 - '2.7'
-install:
-- pip install -r requirements.txt
-# before_script:
-# - cd ubyssey/static
-# - npm install -g gulp
-# - npm install
-# script:
-# - gulp
+# install:
+# - pip install -r requirements.txt
+# # before_script:
+# # - cd ubyssey/static
+# # - npm install -g gulp
+# # - npm install
+# # script:
+# # - gulp
 deploy:
   provider: gae
   keyfile: client-secret.json
   project: ubyssey-prd
+  default: true
   on: cd-gcp
