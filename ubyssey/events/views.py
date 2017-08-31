@@ -15,7 +15,6 @@ from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
 
 def submit_landing(request):
-
     context = {
         'meta': {
             'title': 'Submit an Event',
@@ -26,7 +25,6 @@ def submit_landing(request):
     return render(request, 'events/submit/landing.html', context)
 
 def submit_success(request):
-
     context = {
         'meta': {
             'title': 'Submit an Event',
@@ -37,7 +35,6 @@ def submit_success(request):
     return render(request, 'events/submit/success.html', context)
 
 def edit_success(request):
-
     context = {
         'meta': {
             'title': 'Edit an Event',
@@ -52,7 +49,6 @@ def submit_form(request):
     url_error = False
 
     if request.POST.get('url_import') and event_url is not None:
-
         sources = {
             'calendar.events.ubc.ca': UBCEvent,
             'facebook.com': FacebookEvent
@@ -76,9 +72,7 @@ def submit_form(request):
 
     elif request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
-
         if form.is_valid():
-
             event = form.save(commit=False)
             event.is_submission = True
             event.save()
@@ -128,7 +122,6 @@ def event(request, event_id):
     return render(request, 'events/event.html', context)
 
 def edit(request, secret_id):
-
     try:
         event = Event.objects.get_secret(secret_id)
     except Event.DoesNotExist:
@@ -139,16 +132,15 @@ def edit(request, secret_id):
 
     elif request.method == 'POST':
         form = EventForm(request.POST, request.FILES, instance=event)
-
         if form.is_valid():
 
             body = render_to_string('events/email/edit.html', {'secret_id': event.secret_id, 'title': event.title})
 
             send_mail(
-                    'Your event has been published!',
+                    'An event has been updated',
                     body,
                     settings.EMAIL_HOST_USER,
-                    ['events@ubyssey.ca'],
+                    ['axelnj44@gmail.com'],#[settings.EVENT_EMAIL],
                     fail_silently=True,
                 )
 
@@ -162,8 +154,7 @@ def edit(request, secret_id):
     context = {
         'form': form,
         'meta': {
-            'title': 'Edit an Event',
-            'description': ''
+            'title': 'Edit an Event'
         }
     }
 

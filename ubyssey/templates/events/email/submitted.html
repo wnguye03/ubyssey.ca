@@ -2,9 +2,7 @@ Thanks for submitting your event to The Ubyssey!
 
 {{ title|safe }}
 
-You will receive another email once it is published. You can edit your event here:
-
-https://www.ubyssey.ca/events/edit/{{ secret_id|safe }}
+You will receive another email once it is published. You can edit your event <a href="{% url 'events-edit' secret_id %}">here</a>.
 
 In the meantime, please don't hesitate to contact us if you have any questions.
 
