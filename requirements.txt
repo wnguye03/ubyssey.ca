@@ -1,3 +1,4 @@
+django==1.11
 dispatch==0.2.33
 django-storages
 boto
