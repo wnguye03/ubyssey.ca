@@ -29,6 +29,7 @@ class UBCEventsRSSFeed(object):
             scraped_event.save()
 
             # Add events to Event model, ready to be approved and published by staff
+            # TODO: Add missing fields from events when RSS Stream is updated
             event_for_approval = Event(
                 title=event['title'],
                 description=event['description'],
@@ -48,7 +49,6 @@ class UBCEventsRSSFeed(object):
 
         raw_events = self.get_event_data()
         raw_event_guids = [event.get('guid') for event in raw_events]
-
         for event in scraped_events:
 
             if event.guid not in raw_event_guids:
@@ -66,15 +66,13 @@ class UBCEventsRSSFeed(object):
 
         # Get events from the RSS Stream
         for event in self.get_event_data():
-
             if event['guid'] not in previous_event_guids:
-
                 new_events.append(event)
 
         return new_events
 
     def get_guid(self, url):
-        """returns guid from url"""
+        """Returns guid from url"""
 
         guid_regex = re.search('.*(?:guid=)(.{44}).*', url)
 
@@ -88,7 +86,6 @@ class UBCEventsRSSFeed(object):
         events = []
 
         for event in self.feed.entries:
-
             guid = self.get_guid(event.links[0]['href'])
 
             event_data = {
@@ -105,7 +102,6 @@ class FeedError(Exception):
     pass
 
 class Command(BaseCommand):
-
     def handle(self, **options):
 
         feedObj = UBCEventsRSSFeed('http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss')
