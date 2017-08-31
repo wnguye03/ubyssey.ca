@@ -1,10 +1,12 @@
 language: python
 python:
-- '2.7'
+  - '2.7'
+install:
+  - ls
 deploy:
   provider: gae
   keyfile: client-secret.json
   project: ubyssey-prd
   default: true
-  on: 
+  on:
     branch: cd-gcp
