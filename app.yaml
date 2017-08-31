@@ -13,4 +13,4 @@ libraries:
   version: 1.1.7
 
 skip_files:
-    - sitepackages/PIL*
+    - lib/PIL*
