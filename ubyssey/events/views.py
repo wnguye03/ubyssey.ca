@@ -2,11 +2,13 @@ import re
 import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
 
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
@@ -33,6 +35,17 @@ def submit_success(request):
     }
 
     return render(request, 'events/submit/success.html', context)
+
+def edit_success(request):
+
+    context = {
+        'meta': {
+            'title': 'Edit an Event',
+            'description': 'Thanks for your submission! Your event has been submitted for approval. We\'ll email you once it goes live on our site.'
+        }
+    }
+
+    return render(request, 'events/submit/edit_success.html', context)
 
 def submit_form(request):
     event_url = request.POST.get('event_url')
@@ -129,9 +142,19 @@ def edit(request, secret_id):
 
         if form.is_valid():
 
+            body = render_to_string('events/email/edit.html', {'secret_id': event.secret_id, 'title': event.title})
+
+            send_mail(
+                    'Your event has been published!',
+                    body,
+                    settings.EMAIL_HOST_USER,
+                    ['events@ubyssey.ca'],
+                    fail_silently=True,
+                )
+
             form.save()
 
-            return redirect(submit_success)
+            return redirect(edit_success)
 
     else:
         form = EventForm()
