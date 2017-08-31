@@ -6,10 +6,10 @@ before_install:
   -in client-secret.json.enc -out client-secret.json -d
 install:
 - ls
-deploy:
-  provider: gae
-  keyfile: "client-secret.json"
-  project: "ubyssey-prd"
-  default: true
-  on:
-    branch: cd-gcp
+# deploy:
+#   provider: gae
+#   keyfile: "client-secret.json"
+#   project: "ubyssey-prd"
+#   default: true
+#   on:
+#     branch: cd-gcp
