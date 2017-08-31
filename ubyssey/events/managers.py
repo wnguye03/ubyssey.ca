@@ -12,7 +12,7 @@ class EventManager(Manager):
         return self.get(pk=pk, is_submission=False, is_published=True)
 
     def get_secret(self, secret_id):
-        return self.get(secret_id=secret_id, is_submission=False, is_published=True)
+        return self.get(secret_id=secret_id)
 
     def get_random_event(self):
         queryset = self.filter(is_published=True)

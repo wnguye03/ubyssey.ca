@@ -122,16 +122,14 @@ def edit(request, secret_id):
         raise Http404('Event could not be found.')
 
     if request.method == 'GET':
-        event_data = model_to_dict(event)
-        form = EventForm(event_data)
+        form = EventForm(instance=event)
 
     elif request.method == 'POST':
-        form = EventForm(request.POST, request.FILES)
+        form = EventForm(request.POST, request.FILES, instance=event)
 
         if form.is_valid():
 
-            updated_data = form.cleaned_data
-            event.update(**updated_data)
+            form.save()
 
             return redirect(submit_success)
 
