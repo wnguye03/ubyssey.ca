@@ -100,7 +100,7 @@
         <div class="c-form__input">
           <label for="{{ form.image.id_for_label }}">Image</label>
           <input id="imgInp" type="file" onchange="readUrl(this);" name="image"/>
-          <img id="previewImage" />
+          <img id="previewImage" src="{{ form.instance.image.url }}" />
           {{ form.image.errors }}
         </div>
         {% endif %}

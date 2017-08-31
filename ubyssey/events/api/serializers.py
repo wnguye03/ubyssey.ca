@@ -7,6 +7,7 @@ class EventSerializer(DispatchModelSerializer):
         model = Event
         fields = (
             'id',
+            'secret_id',
             'title',
             'description',
             'host',

@@ -2,17 +2,19 @@ import re
 import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.conf import settings
+from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
 
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
 
 def submit_landing(request):
-
     context = {
         'meta': {
             'title': 'Submit an Event',
@@ -23,7 +25,6 @@ def submit_landing(request):
     return render(request, 'events/submit/landing.html', context)
 
 def submit_success(request):
-
     context = {
         'meta': {
             'title': 'Submit an Event',
@@ -33,12 +34,21 @@ def submit_success(request):
 
     return render(request, 'events/submit/success.html', context)
 
+def edit_success(request):
+    context = {
+        'meta': {
+            'title': 'Edit an Event',
+            'description': 'Thanks for your submission! Your event has been submitted for approval. We\'ll email you once it goes live on our site.'
+        }
+    }
+
+    return render(request, 'events/submit/edit_success.html', context)
+
 def submit_form(request):
     event_url = request.POST.get('event_url')
     url_error = False
 
     if request.POST.get('url_import') and event_url is not None:
-
         sources = {
             'calendar.events.ubc.ca': UBCEvent,
             'facebook.com': FacebookEvent
@@ -62,9 +72,7 @@ def submit_form(request):
 
     elif request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
-
         if form.is_valid():
-
             event = form.save(commit=False)
             event.is_submission = True
             event.save()
@@ -112,6 +120,45 @@ def event(request, event_id):
     }
 
     return render(request, 'events/event.html', context)
+
+def edit(request, secret_id):
+    try:
+        event = Event.objects.get_secret(secret_id)
+    except Event.DoesNotExist:
+        raise Http404('Event could not be found.')
+
+    if request.method == 'GET':
+        form = EventForm(instance=event)
+
+    elif request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+
+            body = render_to_string('events/email/edit.html', {'secret_id': event.secret_id, 'title': event.title})
+
+            send_mail(
+                    'An event has been updated',
+                    body,
+                    settings.EMAIL_HOST_USER,
+                    ['axelnj44@gmail.com'],#[settings.EVENT_EMAIL],
+                    fail_silently=True,
+                )
+
+            form.save()
+
+            return redirect(edit_success)
+
+    else:
+        form = EventForm()
+
+    context = {
+        'form': form,
+        'meta': {
+            'title': 'Edit an Event'
+        }
+    }
+
+    return render(request, 'events/submit/form.html', context)
 
 def events(request):
     category = request.GET.get('category')
