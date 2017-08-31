@@ -1,8 +1,8 @@
 language: python
 python:
-  - '2.7'
+- '2.7'
 install:
-  - ls
+- ls
 deploy:
   provider: gae
   keyfile: client-secret.json
@@ -10,3 +10,6 @@ deploy:
   default: true
   on:
     branch: cd-gcp
+before_install:
+- openssl aes-256-cbc -K $encrypted_430686a93cbd_key -iv $encrypted_430686a93cbd_iv
+  -in client-secret.json.enc -out client-secret.json -d
