@@ -1,6 +1,7 @@
 from dispatch.theme import register
 from dispatch.theme.templates import Template
-from dispatch.apps.frontend.fields import TextField, ModelField, SelectField
+from dispatch.apps.frontend.fields import ModelField
+from dispatch.theme.fields import SelectField, CharField, TextField
 
 @register.template
 class Default(Template):
@@ -12,16 +13,13 @@ class Default(Template):
         ('full', 'Full')
     )
 
-    fields = (
-        ('image_size', 'Image Size', SelectField(options=IMAGE_SIZE_OPTIONS)),
-    )
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
 
 @register.template
 class Blank(Template):
     id = 'blank'
     name = 'Blank'
 
-    fields = ()
 
 @register.template
 class FullWidth(Template):
@@ -39,23 +37,19 @@ class FullWidth(Template):
         ('banner-image', 'Banner Image')
     )
 
-    fields = (
-        ('description', 'Description', TextField()),
-        ('image_size', 'Image Size', SelectField(options=IMAGE_SIZE_OPTIONS)),
-        ('header_layout', 'Header Layout', SelectField(options=HEADER_LAYOUT_OPTIONS))
-    )
+    description = TextField('Description')
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS)
 
 @register.template
 class Guide(Template):
     id = 'guide-to-ubc'
     name = 'Guide to UBC'
 
-    fields = (
-        ('subheading', 'Sub-heading', TextField()),
-        ('intro', 'Intro text', TextField()),
-        ('next_a', 'Up next A', TextField()),
-        ('next_b', 'Up next B', TextField())
-    )
+    subheading = CharField('Sub-heading')
+    intro = TextField('Intro text')
+    next_a = CharField('Up next A')
+    next_b = CharField('Up next B')
 
 @register.template
 class Magazine(Template):
@@ -68,24 +62,20 @@ class Magazine(Template):
         ('blue', 'Blue')
     )
 
-    fields = (
-        ('byline', 'Byline', TextField()),
-        ('byline_2', 'Byline 2', TextField()),
-        ('description', 'Description', TextField()),
-        ('color', 'Accent Color', SelectField(options=COLOR_OPTIONS)),
-    )
+    byline = TextField('Byline')
+    byline_2 = TextField('Byline 2')
+    description = TextField('Description')
+    color = SelectField('Accent Color', options=COLOR_OPTIONS)
 
 @register.template
 class MagazinePoem(Template):
     id = 'magazine-poem'
     name = 'Magazine - Poem'
 
-    fields = (
-        ('byline', 'Byline', TextField()),
-        ('byline_2', 'Byline 2', TextField()),
-        ('top_color', 'Top Color', TextField()),
-        ('bottom_color', 'Bottom Color', TextField()),
-        ('text_color_a', 'Text Color A', TextField()),
-        ('text_color_b', 'Text Color B', TextField()),
-        ('offset', 'Top Offset', TextField()),
-    )
+    byline = TextField('Byline')
+    byline_2 = TextField('Byline 2')
+    top_color = CharField('Top Color')
+    bottom_color = CharField('Bottom Color')
+    text_color_a = CharField('Text Color A')
+    text_color_b = CharField('Text Color B')
+    offset = CharField('Top Offset')
