@@ -51,7 +51,7 @@ class Event(Model):
     is_published_email = BooleanField(default=False)
 
     submitter_email = EmailField(null=True)
-    submitter_phone = PhoneNumberField(null=True)
+    submitter_phone = PhoneNumberField(null=True, blank=True)
 
     objects = EventManager()
 
@@ -99,3 +99,9 @@ def send_published_email(sender, instance, **kwargs):
 
         instance.is_published_email = True
         instance.save()
+
+class ScrapedEvent(Model):
+    """Model to keep track of events that have been scraped from UBC Event RSS"""
+
+    guid = CharField(max_length=50, primary_key=True)
+    scrape_time = DateTimeField(null=True)
