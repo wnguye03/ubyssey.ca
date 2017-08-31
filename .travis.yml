@@ -6,4 +6,5 @@ deploy:
   keyfile: client-secret.json
   project: ubyssey-prd
   default: true
-  on: cd-gcp
+  on: 
+    branch: cd-gcp
