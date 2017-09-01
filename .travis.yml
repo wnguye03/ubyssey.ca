@@ -11,7 +11,8 @@ install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/
 script:
-- echo "No script to run"
+- python manage.py collectstatic
+- ls
 deploy:
   provider: gae
   keyfile: client-secret.json
