@@ -6,7 +6,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_430686a93cbd_key -iv $encrypted_430686a93cbd_iv
   -in secrets.tar.gz.enc -out secrets.tar.gz -d
 - tar -xzf secrets.tar.gz
-- mv settings-prd.py ubyssey/settings.py
+- mv _settings/settings-prd.py ubyssey/settings.py
 install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/

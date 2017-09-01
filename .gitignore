@@ -10,5 +10,4 @@ __pycache__/
 
 node_modules/
 
-/_settings/
-settings*.py
+ubyssey/settings*.py
