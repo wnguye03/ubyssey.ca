@@ -12,7 +12,7 @@ class Secrets(ndb.Model):
 
     if not result:
         result = Secrets()
-        result.name = name
+        result.key = key
         result.value = PLACEHOLDER_VALUE
         result.put()
 
