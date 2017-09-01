@@ -15,6 +15,7 @@ script:
 - source ~/virtualenv/python2.7/bin/activate
 - python -c "import django; print(django.get_version())"
 - python manage.py collectstatic
+- ls lib
 - ls
 deploy:
   provider: gae
