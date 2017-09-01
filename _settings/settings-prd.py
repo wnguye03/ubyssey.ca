@@ -1,10 +1,12 @@
 import os
 
+from ubyssey.secrets import Secrets
+
 from dispatch.default_settings import *
 
 BASE_URL = 'https://ubyssey-prd.appspot.com/'
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = Secrets.get('SECRET_KEY')
 
 ALLOWED_HOSTS = ['*']
 
@@ -23,10 +25,10 @@ TIME_ZONE = 'America/Vancouver'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': os.environ.get('SQL_HOST'),
-        'NAME': os.environ.get('SQL_DATABASE'),
-        'USER': os.environ.get('SQL_USER'),
-        'PASSWORD': os.environ.get('SQL_USER'),
+        'HOST': Secrets.get('SQL_HOST'),
+        'NAME': Secrets.get('SQL_DATABASE'),
+        'USER': Secrets.get('SQL_USER'),
+        'PASSWORD': Secrets.get('SQL_USER'),
     }
 }
 
