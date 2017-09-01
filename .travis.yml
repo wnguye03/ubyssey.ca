@@ -9,6 +9,7 @@ before_install:
 - mv settings-prd.py ubyssey/settings.py
 install:
 - pip install -r requirements.txt -t lib/
+- pip install requests --upgrade -t lib/
 script:
 - echo "No Script to run"
 deploy:
