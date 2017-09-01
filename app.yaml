@@ -4,7 +4,7 @@ threadsafe: yes
 
 handlers:
 - url: .*
-  script: ubyssey.wsgi
+  script: ubyssey.wsgi.application
 
 libraries:
 - name: MySQLdb
