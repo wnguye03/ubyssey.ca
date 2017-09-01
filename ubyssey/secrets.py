@@ -6,7 +6,17 @@ class Secrets(ndb.Model):
 
   @staticmethod
   def get(key):
+    PLACEHOLDER_VALUE = 'NOT SET'
+
     result = Secret.query(Secret.key == key).get()
+
     if not result:
-      raise Exception('Secret %s not found in the database' % name)
+        result = Secrets()
+        result.name = name
+        result.value = PLACEHOLDER_VALUE
+        result.put()
+
+    if result.value == PLACEHOLDER_VALUE:
+        raise Exception('Secret %s not defined in the Secrets database.' % key)
+
     return result.value
