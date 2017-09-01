@@ -3,4 +3,3 @@ django-storages
 boto
 mysql-python
 django-phonenumber-field
-beautifulsoup4
