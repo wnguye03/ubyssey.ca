@@ -2,3 +2,5 @@ dispatch==0.3.0
 django-storages
 boto
 mysql-python
+django-phonenumber-field
+beautifulsoup4
