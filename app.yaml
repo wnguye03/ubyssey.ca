@@ -2,12 +2,12 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
-env_variables:
-  SECRET_KEY: {{SECRET_KEY}}
-  SQL_HOST: {{SQL_HOST}}
-  SQL_DATABASE: {{SQL_DATABASE}}
-  SQL_USER: {{SQL_USER}}
-  SQL_PASSWORD: {{SQL_PASSWORD}}
+# env_variables:
+#   SECRET_KEY: {{SECRET_KEY}}
+#   SQL_HOST: {{SQL_HOST}}
+#   SQL_DATABASE: {{SQL_DATABASE}}
+#   SQL_USER: {{SQL_USER}}
+#   SQL_PASSWORD: {{SQL_PASSWORD}}
 
 handlers:
 - url: .*
