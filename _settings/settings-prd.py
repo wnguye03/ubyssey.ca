@@ -29,6 +29,7 @@ DATABASES = {
         'NAME': Secrets.get('SQL_DATABASE'),
         'USER': Secrets.get('SQL_USER'),
         'PASSWORD': Secrets.get('SQL_USER'),
+        'PORT': 3306,
     }
 }
 
