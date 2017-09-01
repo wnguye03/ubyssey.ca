@@ -7,15 +7,13 @@ before_install:
   -in secrets.tar.gz.enc -out secrets.tar.gz -d
 - tar -xzf secrets.tar.gz
 - mv _settings/settings-prd.py ubyssey/settings.py
+- export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
 install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/
 script:
 - python -c "import django; print(django.get_version())"
-- source ~/virtualenv/python2.7/bin/activate
-- python -c "import django; print(django.get_version())"
 - python manage.py collectstatic
-- ls lib
 - ls
 deploy:
   provider: gae
