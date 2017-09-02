@@ -21,6 +21,7 @@ script:
 - python manage.py collectstatic --noinput
 - rm ubyssey/settings.py
 - mv _settings/settings-prd.py ubyssey/settings.py
+- cat ubyssey/settings.py
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
