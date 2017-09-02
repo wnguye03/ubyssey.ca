@@ -43,6 +43,10 @@ TEMPLATES += [
     }
 ]
 
+# GCS File Storage
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'ubyssey'
+
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
