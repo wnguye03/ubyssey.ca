@@ -6,15 +6,16 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_430686a93cbd_key -iv $encrypted_430686a93cbd_iv
   -in secrets.tar.gz.enc -out secrets.tar.gz -d
 - tar -xzf secrets.tar.gz
-- mv _settings/settings-prd.py ubyssey/settings.py
 - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
 install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/
 script:
+- mv _settings/settings-dpl.py ubyssey/settings.py
 - python -c "import django; print(django.get_version())"
 - python manage.py collectstatic
 - ls
+- mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
   provider: gae
   keyfile: client-secret.json
