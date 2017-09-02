@@ -19,7 +19,7 @@ script:
 - cd ${TRAVIS_BUILD_DIR}
 - mv _settings/settings-dpl.py ubyssey/settings.py
 - python manage.py collectstatic --noinput
-- ls
+- rm ubyssey/settings.py
 - mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
   - provider: gcs
