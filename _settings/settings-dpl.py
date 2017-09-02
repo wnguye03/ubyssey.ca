@@ -9,7 +9,6 @@ SECRET_KEY = 'TEMP-KEY'
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
-    'ubyssey',
 	'ubyssey.events',
 ]
 
