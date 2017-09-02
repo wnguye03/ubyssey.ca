@@ -47,5 +47,5 @@ STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATIC_URL = 'https://storage.googleapis.com/ubyssey/static/'
+MEDIA_URL = 'https://storage.googleapis.com/ubyssey/media/'
