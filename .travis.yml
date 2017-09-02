@@ -14,7 +14,7 @@ script:
 - cd ubyssey/static
 - npm install -g gulp
 - npm install
-- gulp
+- gulp build
 - cd ${TRAVIS_BUILD_DIR}
 - mv _settings/settings-dpl.py ubyssey/settings.py
 - python manage.py collectstatic --noinput
