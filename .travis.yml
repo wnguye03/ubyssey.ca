@@ -22,10 +22,19 @@ script:
 - ls
 - mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
-  provider: gae
-  keyfile: client-secret.json
-  project: ubyssey-prd
-  default: true
-  skip_cleanup: true
-  on:
-    branch: cd-gcp
+  - provider: gcs
+    access_key_id: GOOG6VXJ7FN5TYTTPSQI
+    secret_access_key:
+      secure: aaEg1a+0HCaoUazqB+wIn2Br5LBlNqbit442i+9+c6JMEG4RqpCnlcct5LrvoNq2x4+OdKuV/Q/hM9RkBVOqNLLR9Qw1Uxn2L/Jay1aHpd24lmRxTnjLq0/1eitjIhg0G8LYSVgzdhOfQxSd99/IBmbHk42Dul4g9E6dXEjkue5VivAnDsHCe8wnJdc5ahC0sVSif9cpIOyWLiotdS9LCeN6wKmksGCdkNv5S3Yndm0VXzGrN191Q4TYS7YdXMBSznH2BYYkJQD5XtsB19Pffai/dtxLGMRGLabVNVDtVB//K5WMn1AR/+5OoFhvd72ZWhMqIiPVZxyB1Hw79o9l1ZjyX/feYFfO+n5RvFzTq9rKbiWQ7o5rP+X0d8q8v1Nt51Di/cJJFVzZn9L/5+LmFDgq/OMImPH0yFyL7riDfPB4rQkEdfR5kOat+f9q/pLLEy9MaFn8dQXiTQ34Fw6FwIDATJjUPuFp1pt/70rY/SdN6RiXclxQN3RJEVuBw4YCAMjWuu0z7kE7yOK2MkDU9RDXhVKnZjhBJSsC3Ny3NA0y89SHpobK/HgoY1BSdGzpe0SlfmY+ZVNFnDWQbGwmRQtmPmOSmojOjpJAJW8aIqHFpoZm0nNibsnep6e9Ds4uZZlWFNs4/y4s7vYxozGQBwBOHFN0U1ZbAktAdbJwPQg=
+      bucket: ubyssey
+      local-dir: static
+    on:
+      repo: ubyssey/ubyssey-dispatch-theme
+      branch: cd-gcp
+  - provider: gae
+    keyfile: client-secret.json
+    project: ubyssey-prd
+    default: true
+    skip_cleanup: true
+    on:
+      branch: cd-gcp
