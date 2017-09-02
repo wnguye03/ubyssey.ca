@@ -13,7 +13,7 @@ install:
 script:
 - mv _settings/settings-dpl.py ubyssey/settings.py
 - python -c "import django; print(django.get_version())"
-- python manage.py collectstatic
+- python manage.py collectstatic --noinput
 - ls
 - mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
