@@ -1,5 +1,6 @@
 dispatch==0.3.1
-django-google-storage-updated
+git+git://github.com:ubyssey/django-storages.git
+google-cloud-storage
 mysql-python
 django-phonenumber-field
 beautifulsoup4

@@ -44,12 +44,14 @@ TEMPLATES += [
 ]
 
 # GCS File Storage
-DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
-
-GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
-GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
-GS_STORAGE_BUCKET_NAME = 'ubyssey'
+#DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
+
+# GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
+# GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
+# GS_STORAGE_BUCKET_NAME = 'ubyssey'
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
