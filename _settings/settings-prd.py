@@ -49,7 +49,7 @@ STATICFILES_STORAGE = 'ubyssey.custom_storages.StaticStorage'
 
 GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
-GS_BUCKET_NAME = 'ubyssey'
+GS_STORAGE_BUCKET_NAME = 'ubyssey'
 
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
