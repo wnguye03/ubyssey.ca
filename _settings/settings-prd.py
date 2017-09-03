@@ -44,7 +44,7 @@ TEMPLATES += [
 ]
 
 # GCS File Storage
-DEFAULT_FILE_STORAGE = 'ubyssey.custom_storages.MediaStorage'
+DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
