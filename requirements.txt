@@ -1,6 +1,5 @@
 dispatch==0.3.1
-django-storages
-boto
+django-google-storage-updated
 mysql-python
 django-phonenumber-field
 beautifulsoup4
