@@ -1,8 +1,13 @@
 from google.appengine.ext import vendor
 
-# # Patch to fix GCS in django-storages
-# import tempfile
-# tempfile.SpooledTemporaryFile = tempfile.TemporaryFile
+import tempfile
+
+# Patch to fix GCS in django-storages
+class SpooledTemporaryFile(tempfile.TemporaryFile):
+    def __init__(max_size=0, mode='w+b', bufsize=-1, suffix='', prefix='tmp', dir=None):
+        super(SpooledTemporaryFile, self).__init__(mode, bufsize, suffix, prefix, dir)
+
+tempfile.SpooledTemporaryFile = SpooledTemporaryFile
 
 # Add any libraries installed in the "lib" folder.
 vendor.add('lib')
