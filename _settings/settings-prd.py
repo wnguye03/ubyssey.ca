@@ -45,14 +45,11 @@ TEMPLATES += [
 
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'ubyssey.custom_storages.MediaStorage'
-STATICFILES_STORAGE = 'ubyssey.custom_storages.StaticStorage'
 
 GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
-
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'media'
+GS_LOCATION = 'media'
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
