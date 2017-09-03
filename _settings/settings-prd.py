@@ -44,7 +44,11 @@ TEMPLATES += [
 ]
 
 # GCS File Storage
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
+STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
+
+GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
+GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
 GS_BUCKET_NAME = 'ubyssey'
 
 STATICFILES_DIRS += (
