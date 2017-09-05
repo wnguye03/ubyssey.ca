@@ -31,6 +31,8 @@ deploy:
     skip_cleanup: true
     acl: public-read
     local-dir: ${TRAVIS_BUILD_DIR}/gcs
+    detect_encoding: true
+    cache_control: "max-age=31536000"
     on:
       repo: ubyssey/ubyssey-dispatch-theme
       branch: cd-gcp
