@@ -12,7 +12,7 @@ ALLOWED_HOSTS = ['beta.ubyssey.ca', 'ubyssey.ca']
 
 INSTALLED_APPS += [
     'ubyssey',
-	'ubyssey.events',
+    'ubyssey.events',
 ]
 
 ROOT_URLCONF = 'ubyssey.urls'

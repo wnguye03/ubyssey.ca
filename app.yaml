@@ -5,7 +5,9 @@ threadsafe: yes
 handlers:
 - url: .*
   script: ubyssey.wsgi.application
-
+- url: /.well-known
+  static_dir: well-known
+  
 libraries:
 - name: MySQLdb
   version: 1.2.5
