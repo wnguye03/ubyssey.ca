@@ -11,19 +11,19 @@ class GuideTheme(object):
     def article(self, request, slug=None):
         """Guide article page."""
         try:
-            article = ArticleHelper.get_article(request, slug, 'guide')
+            article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
 
         template_fields = article.get_template_fields()
 
         try:
-            next_a = ArticleHelper.get_article(request, template_fields['next_a'], 'guide')
+            next_a = ArticleHelper.get_article(request, template_fields['next_a'])
         except:
             next_a = None
 
         try:
-            next_b = ArticleHelper.get_article(request, template_fields['next_b'], 'guide')
+            next_b = ArticleHelper.get_article(request, template_fields['next_b'])
         except:
             next_b = None
 

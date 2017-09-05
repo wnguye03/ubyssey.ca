@@ -44,10 +44,6 @@ TEMPLATES += [
 ]
 
 # GCS File Storage
-# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-# GS_BUCKET_NAME = 'ubyssey'
-# GS_LOCATION = 'media'
-
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')

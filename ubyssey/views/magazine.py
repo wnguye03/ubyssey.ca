@@ -36,7 +36,7 @@ class MagazineTheme(object):
         """Magazine article page view."""
 
         try:
-            article = ArticleHelper.get_article(request, slug, 'magazine')
+            article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
 

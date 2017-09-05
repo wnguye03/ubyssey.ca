@@ -12,24 +12,21 @@ from ubyssey.events.models import Event
 class ArticleHelper(object):
 
     @staticmethod
-    def get_article(request, slug, section=None):
-        def _find_article(slug, section=None):
-            if section is not None:
-                return Article.objects.get(slug=slug, section__name=section, head=True)
-            else:
-                return Article.objects.get(slug=slug, head=True)
+    def get_article(request, slug):
+        return Article.objects.get(slug=slug, is_published=True)
 
-        if request.user.is_staff:
-            try:
-                article = _find_article(slug, section)
-            except Article.DoesNotExist:
-                raise Http404("This article does not exist.")
-        else:
-            try:
-                article = _find_article(slug, section)
-            except Article.DoesNotExist:
-                raise Http404("This article does not exist.")
-        return article
+        # TODO: enable previews
+        # if request.user.is_staff:
+        #     try:
+        #         article = Article.objects.get(slug=slug, head=True)
+        #     except Article.DoesNotExist:
+        #         raise Http404("This article does not exist.")
+        # else:
+        #     try:
+        #         article = Article.objects.get(slug=slug, is_published=True)
+        #     except Article.DoesNotExist:
+        #         raise Http404("This article does not exist.")
+        # return article
 
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
@@ -133,17 +130,19 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_years():
+        # query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article WHERE published_at IS NOT NULL ORDER BY published_at DESC'
+        #
+        # cursor = connection.cursor()
+        # cursor.execute(query)
+        #
+        # results = cursor.fetchall()
+        #
+        # years = [r[0] for r in results]
+        #
+        # return filter(lambda y: y is not None, years)
 
-        query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article ORDER BY published_at DESC'
-
-        cursor = connection.cursor()
-        cursor.execute(query)
-
-        results = cursor.fetchall()
-
-        years = [r[0] for r in results]
-
-        return filter(lambda y: y is not None, years)
+        # TODO: fix this query ^ or replace with something better
+        return [2017, 2016, 2015, 2014, 2013]
 
     @staticmethod
     def get_topic(topic_name):
@@ -209,7 +208,9 @@ class ArticleHelper(object):
         return articles.order_by('-views')
 
 class PageHelper(object):
+    @staticmethod
     def get_page(request, slug):
+        print request
         if request.user.is_staff:
             try:
                 page = Page.objects.get(slug=slug, head=True)
@@ -217,7 +218,8 @@ class PageHelper(object):
                 raise Http404("This page does not exist.")
         else:
             try:
-                page = Page.objects.get(slug=slug, head=True, is_published=True)
+                page = Page.objects.get(slug=slug, is_published=True)
             except Page.DoesNotExist:
+                print 'asdasdf'
                 raise Http404("This page does not exist.")
         return page

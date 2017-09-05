@@ -86,7 +86,7 @@ class UbysseyTheme(object):
 
     def article(self, request, section=None, slug=None):
         try:
-            article = ArticleHelper.get_article(request, slug, section)
+            article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
 
@@ -131,11 +131,7 @@ class UbysseyTheme(object):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
-        try:
-            page = PageHelper.get_page(request, slug)
-        except:
-            raise Http404('Page could not be found.')
-
+        page = PageHelper.get_page(request, slug)
         page.add_view()
 
         try:

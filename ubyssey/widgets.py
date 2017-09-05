@@ -153,7 +153,6 @@ class FacebookVideoBig(Widget):
     end_time = DateTimeField('End Time')
 
     def context(self, result):
-
         result['do_show'] = in_date_range(result['start_time'], result['end_time'])
         return result
 
