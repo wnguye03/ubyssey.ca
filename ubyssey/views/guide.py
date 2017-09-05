@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
 
+from ubyssey.helpers import ArticleHelper
+
 class GuideTheme(object):
     """Theme for the 2016 Ubyssey Guide to UBC."""
 
@@ -12,10 +14,10 @@ class GuideTheme(object):
         """Guide article page."""
         try:
             article = ArticleHelper.get_article(request, slug)
-        except:
+        except Http404:
             raise Http404('Article could not be found.')
 
-        template_fields = article.get_template_fields()
+        template_fields = article.template_fields
 
         try:
             next_a = ArticleHelper.get_article(request, template_fields['next_a'])
@@ -31,7 +33,7 @@ class GuideTheme(object):
 
         context = {
             'title': article.headline,
-            'meta': self.get_article_meta(article),
+            'meta': ArticleHelper.get_meta(article),
             'article': article,
             'next': [next_a, next_b]
         }

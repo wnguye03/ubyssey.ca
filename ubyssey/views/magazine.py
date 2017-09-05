@@ -44,7 +44,7 @@ class MagazineTheme(object):
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': self.get_article_meta(article, default_image=static('images/magazine/cover-social.png')),
+            'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html'

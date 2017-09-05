@@ -207,6 +207,21 @@ class ArticleHelper(object):
 
         return articles.order_by('-views')
 
+    @staticmethod
+    def get_meta(article, default_image=None):
+        try:
+            image = article.featured_image.image.get_medium_url()
+        except:
+            image = default_image
+
+        return {
+            'title': article.headline,
+            'description': article.seo_description if article.seo_description is not None else article.snippet,
+            'url': article.get_absolute_url,
+            'image': image,
+            'author': article.get_author_string()
+        }
+
 class PageHelper(object):
     @staticmethod
     def get_page(request, slug):

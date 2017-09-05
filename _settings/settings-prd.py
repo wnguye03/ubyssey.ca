@@ -4,11 +4,11 @@ from ubyssey.secrets import Secrets
 
 from dispatch.default_settings import *
 
-BASE_URL = 'https://ubyssey-prd.appspot.com/'
+BASE_URL = 'http://beta.ubyssey.ca/'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['beta.ubyssey.ca', 'ubyssey.ca']
 
 INSTALLED_APPS += [
     'ubyssey',
@@ -56,3 +56,15 @@ STATICFILES_DIRS += (
 
 STATIC_URL = 'https://storage.googleapis.com/ubyssey/static/'
 MEDIA_URL = 'https://storage.googleapis.com/ubyssey/media/'
+
+# Facebook
+FACEBOOK_CLIENT_ID = Secrets.get('FACEBOOK_CLIENT_ID')
+FACEBOOK_CLIENT_SECRET = Secrets.get('FACEBOOK_CLIENT_SECRET')
+
+EMAIL_HOST = Secrets.get('EMAIL_HOST')
+EMAIL_PORT = 465
+EMAIL_HOST_USER = Secrets.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = Secrets.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+
+UBYSSEY_ADVERTISING_EMAIL = Secrets.get('UBYSSEY_ADVERTISING_EMAIL')
