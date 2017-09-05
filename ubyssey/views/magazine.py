@@ -13,6 +13,8 @@ from ubyssey.helpers import ArticleHelper
 class MagazineTheme(object):
     """Views for The Ubyssey Magazine microsite."""
 
+    SITE_TITLE = 'The Ubyssey Magazine'
+
     def landing(self, request):
         """Magazine landing page view."""
 
