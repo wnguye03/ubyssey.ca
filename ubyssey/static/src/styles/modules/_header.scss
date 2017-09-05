@@ -166,6 +166,7 @@ nav.main {
 header.topbar, header.mobile {
   width: 100%;
   z-index: $z-scale-2;
+  position: relative;
   position: sticky;
   top: 0;
 }
