@@ -70,5 +70,5 @@ EMAIL_USE_SSL = True
 UBYSSEY_ADVERTISING_EMAIL = Secrets.get('UBYSSEY_ADVERTISING_EMAIL')
 
 # Use in-memory file handler on app engine
-FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440
