@@ -29,6 +29,7 @@ DATABASES = {
         'USER': Secrets.get('SQL_USER'),
         'PASSWORD': Secrets.get('SQL_PASSWORD'),
         'PORT': 3306,
+        'CONN_MAX_AGE': 60,
     }
 }
 
