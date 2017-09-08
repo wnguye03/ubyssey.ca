@@ -4,11 +4,11 @@ from ubyssey.secrets import Secrets
 
 from dispatch.default_settings import *
 
-BASE_URL = 'http://beta.ubyssey.ca/'
+BASE_URL = 'https://www.ubyssey.ca/'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['beta.ubyssey.ca', 'ubyssey.ca']
+ALLOWED_HOSTS = ['ubyssey.ca',]
 
 INSTALLED_APPS += [
     'ubyssey',
