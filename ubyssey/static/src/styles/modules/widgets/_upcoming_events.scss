@@ -26,7 +26,8 @@
 
 .c-widget-upcoming-events__label {
   // Structure
-  margin-bottom: 0.75em;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5em;
 
   // Text
   font-size: font-size(14);
@@ -59,7 +60,7 @@
 }
 
 .c-widget-upcoming-events__events {
-  max-height: 400px;
+  max-height: 250px;
   overflow: hidden;
 
   .mCSB_dragger_bar {
