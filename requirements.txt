@@ -1,4 +1,4 @@
-dispatch==0.3.10
+dispatch==0.3.11
 git+git://github.com/ubyssey/django-google-storage.git
 mysql-python
 django-phonenumber-field
