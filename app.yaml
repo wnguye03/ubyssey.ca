@@ -6,6 +6,7 @@ instance_class: F4_1G
 handlers:
 - url: .*
   script: ubyssey.wsgi.application
+  secure: always
 - url: /.well-known
   static_dir: well-known
 

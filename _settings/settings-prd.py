@@ -5,11 +5,10 @@ from ubyssey.secrets import Secrets
 from dispatch.default_settings import *
 
 BASE_URL = 'https://www.ubyssey.ca/'
-API_URL = 'https://ubyssey-prd.appspot.com/api/'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['beta.ubyssey.ca', 'ubyssey.ca', 'ubyssey-prd.appspot.com',]
+ALLOWED_HOSTS = ['ubyssey.ca', 'beta.ubyssey.ca', 'ubyssey-prd.appspot.com',]
 
 INSTALLED_APPS += [
     'ubyssey',
@@ -54,9 +53,6 @@ GS_LOCATION = 'media'
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
-
-#STATIC_URL = 'http://static.beta.ubyssey.ca/static/'
-#MEDIA_URL = 'http://static.beta.ubyssey.ca/media/'
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
