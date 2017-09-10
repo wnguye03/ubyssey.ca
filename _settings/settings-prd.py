@@ -5,6 +5,7 @@ from ubyssey.secrets import Secrets
 from dispatch.default_settings import *
 
 BASE_URL = 'https://www.ubyssey.ca/'
+API_URL = 'https://ubyssey-prd.appspot.com/api/'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
