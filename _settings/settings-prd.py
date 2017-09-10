@@ -54,8 +54,11 @@ STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
-STATIC_URL = 'http://static.beta.ubyssey.ca/static/'
-MEDIA_URL = 'http://static.beta.ubyssey.ca/media/'
+#STATIC_URL = 'http://static.beta.ubyssey.ca/static/'
+#MEDIA_URL = 'http://static.beta.ubyssey.ca/media/'
+
+STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
+MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
 # Facebook
 FACEBOOK_CLIENT_ID = Secrets.get('FACEBOOK_CLIENT_ID')
