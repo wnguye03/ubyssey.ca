@@ -117,7 +117,7 @@ class ArticleHelper(object):
                 articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
                 name = 'Top Stories'
             elif ref == 'popular':
-                articles = Article.objects.get_popular(dur=dur).exclude(pk=article.id)[:5]
+                articles = ArticleHelper.get_popular(dur=dur).exclude(pk=article.id)[:5]
                 name = "Most popular this week"
         else:
             articles = article.get_related()
