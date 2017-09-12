@@ -10,11 +10,12 @@ before_install:
 install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/
-script:
 - cd ubyssey/static
 - npm install -g gulp
 - npm install
+script:
 - gulp build
+after_success:
 - rm -rf node_modules
 - cd ${TRAVIS_BUILD_DIR}
 - mv _settings/settings-dpl.py ubyssey/settings.py
@@ -36,11 +37,11 @@ deploy:
     cache_control: "max-age=31536000"
     on:
       repo: ubyssey/ubyssey-dispatch-theme
-      branch: cd-gcp
+      branch: production
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd
     default: true
     skip_cleanup: true
     on:
-      branch: cd-gcp
+      branch: production
