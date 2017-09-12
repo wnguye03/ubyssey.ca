@@ -5,6 +5,7 @@ from ubyssey.secrets import Secrets
 from dispatch.default_settings import *
 
 BASE_URL = 'https://www.ubyssey.ca/'
+CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
@@ -48,6 +49,10 @@ CACHES = {
         'TIMEOUT': 60,
     }
 }
+
+MIDDLEWARE_CLASSES += [
+    'canonical_domain.middleware.CanonicalDomainMiddleware',
+]
 
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
