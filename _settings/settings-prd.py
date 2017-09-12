@@ -8,7 +8,7 @@ BASE_URL = 'https://www.ubyssey.ca/'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['ubyssey.ca', 'beta.ubyssey.ca', 'ubyssey-prd.appspot.com',]
+ALLOWED_HOSTS = ['ubyssey.ca', 'www.ubyssey.ca', 'ubyssey-prd.appspot.com',]
 
 INSTALLED_APPS += [
     'ubyssey',
