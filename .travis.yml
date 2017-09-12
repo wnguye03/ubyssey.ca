@@ -10,19 +10,20 @@ before_install:
 install:
 - pip install -r requirements.txt -t lib/
 - pip install requests --upgrade -t lib/
-- cd ubyssey/static
-- npm install -g gulp
-- npm install
+# - cd ubyssey/static
+# - npm install -g gulp
+# - npm install
+# script:
+# - gulp build
+# after_success:
+# - rm -rf node_modules
+# - cd ${TRAVIS_BUILD_DIR}
+# - mv _settings/settings-dpl.py ubyssey/settings.py
+# - python manage.py collectstatic --noinput
+# # gzip static files
+# - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+# - rm ubyssey/settings.py ubyssey/settings.pyc
 script:
-- gulp build
-after_success:
-- rm -rf node_modules
-- cd ${TRAVIS_BUILD_DIR}
-- mv _settings/settings-dpl.py ubyssey/settings.py
-- python manage.py collectstatic --noinput
-# gzip static files
-- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
-- rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
   - provider: gcs
@@ -44,4 +45,4 @@ deploy:
     default: true
     skip_cleanup: true
     on:
-      branch: production
+      branch: cd-gcp

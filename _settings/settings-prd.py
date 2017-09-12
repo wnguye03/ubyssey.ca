@@ -42,6 +42,13 @@ TEMPLATES += [
     }
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'gae_backends.memcache.MemcacheCache',
+        'TIMEOUT': 60,
+    }
+}
+
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 

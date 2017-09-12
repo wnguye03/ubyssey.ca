@@ -1,5 +1,6 @@
 dispatch==0.3.11
 git+git://github.com/ubyssey/django-google-storage.git
+django-gae-backends
 mysql-python
 django-phonenumber-field
 beautifulsoup4
