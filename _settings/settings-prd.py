@@ -9,7 +9,11 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['ubyssey.ca', 'www.ubyssey.ca', 'ubyssey-prd.appspot.com',]
+ALLOWED_HOSTS = [
+    'ubyssey.ca', 
+    'www.ubyssey.ca', 
+    'ubyssey-prd.appspot.com',
+]
 
 INSTALLED_APPS += [
     'ubyssey',
@@ -81,6 +85,6 @@ EMAIL_USE_SSL = True
 
 UBYSSEY_ADVERTISING_EMAIL = Secrets.get('UBYSSEY_ADVERTISING_EMAIL')
 
-# Use in-memory file handler on app engine
+# Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440
