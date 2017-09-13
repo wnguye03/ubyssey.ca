@@ -39,11 +39,11 @@ deploy:
     detect_encoding: true
     cache_control: "max-age=31536000"
     on:
-      branch: production
+      branch: develop
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd
     default: true
     skip_cleanup: true
     on:
-      branch: production
+      branch: develop
