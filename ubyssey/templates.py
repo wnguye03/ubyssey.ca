@@ -1,6 +1,5 @@
 from dispatch.theme import register
 from dispatch.theme.templates import Template
-from dispatch.apps.frontend.fields import ModelField
 from dispatch.theme.fields import SelectField, CharField, TextField
 
 @register.template

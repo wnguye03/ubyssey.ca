@@ -76,6 +76,7 @@ def submit_form(request):
             event = form.save(commit=False)
             event.is_submission = True
             event.save()
+            
             return redirect(submit_success)
     else:
         form = EventForm()

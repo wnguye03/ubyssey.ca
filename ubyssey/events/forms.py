@@ -49,7 +49,7 @@ class EventForm(ModelForm):
 
         if not event.image and facebook_image_url:
             event.save_image_from_url(facebook_image_url)
-
+                
         if commit:
             event.save()
 

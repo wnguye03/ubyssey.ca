@@ -1,5 +1,7 @@
-import urllib
 import os
+import tempfile
+
+import requests
 from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 
@@ -60,14 +62,16 @@ class Event(Model):
 
     def save_image_from_url(self, url):
         """Store image locally if an external URL is passed"""
-        result = urllib.urlretrieve(url)
+        result = requests.get(url)
+
         filename = os.path.basename(url).split('?')[0]
 
-        self.image.save(
-            filename,
-            File(open(result[0]))
-        )
+        # Use tempfile.TemporaryFile for App Engine
+        temp = tempfile.TemporaryFile()
+        temp.write(result.content)
+        temp.flush()
 
+        self.image.save(filename, File(temp))
         self.save()
 
 @receiver(pre_save, sender=Event)

@@ -1,8 +1,7 @@
 import os
 
-os.environ.setdefault("DISPATCH_PROJECT_DIR", os.path.dirname(os.path.dirname(__file__)))
-os.environ.setdefault("DISPATCH_PROJECT_MODULE", "ubyssey")
+from django.core.wsgi import get_wsgi_application
 
-from dispatch.core.wsgi import get_wsgi_application
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ubyssey.settings")
 
 application = get_wsgi_application()

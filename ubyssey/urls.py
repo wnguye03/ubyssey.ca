@@ -19,7 +19,6 @@ from ubyssey.templates import *
 from ubyssey.events.api.urls import urlpatterns as event_api_urls
 from ubyssey.events.urls import urlpatterns as events_urls
 
-
 theme = UbysseyTheme()
 guide = GuideTheme()
 magazine = MagazineTheme()
@@ -63,4 +62,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [url(r'^__debug__/', include(debug_toolbar.urls)),]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

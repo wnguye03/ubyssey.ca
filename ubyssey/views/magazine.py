@@ -13,6 +13,8 @@ from ubyssey.helpers import ArticleHelper
 class MagazineTheme(object):
     """Views for The Ubyssey Magazine microsite."""
 
+    SITE_TITLE = 'The Ubyssey Magazine'
+
     def landing(self, request):
         """Magazine landing page view."""
 
@@ -36,7 +38,7 @@ class MagazineTheme(object):
         """Magazine article page view."""
 
         try:
-            article = ArticleHelper.get_article(request, slug, 'magazine')
+            article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
 
@@ -44,7 +46,7 @@ class MagazineTheme(object):
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': self.get_article_meta(article, default_image=static('images/magazine/cover-social.png')),
+            'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html'

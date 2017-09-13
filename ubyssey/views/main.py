@@ -25,20 +25,6 @@ class UbysseyTheme(object):
     SITE_TITLE = 'The Ubyssey'
     SITE_URL = settings.BASE_URL
 
-    def get_article_meta(self, article, default_image=None):
-        try:
-            image = article.featured_image.image.get_medium_url()
-        except:
-            image = default_image
-
-        return {
-            'title': article.headline,
-            'description': article.seo_description if article.seo_description is not None else article.snippet,
-            'url': article.get_absolute_url,
-            'image': image,
-            'author': article.get_author_string()
-        }
-
     def home(self, request):
         frontpage = ArticleHelper.get_frontpage(
             sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'),
@@ -86,7 +72,7 @@ class UbysseyTheme(object):
 
     def article(self, request, section=None, slug=None):
         try:
-            article = ArticleHelper.get_article(request, slug, section)
+            article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
 
@@ -99,7 +85,7 @@ class UbysseyTheme(object):
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': self.get_article_meta(article),
+            'meta': ArticleHelper.get_meta(article),
             'article': article,
             'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
@@ -131,11 +117,7 @@ class UbysseyTheme(object):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
-        try:
-            page = PageHelper.get_page(request, slug)
-        except:
-            raise Http404('Page could not be found.')
-
+        page = PageHelper.get_page(request, slug)
         page.add_view()
 
         try:

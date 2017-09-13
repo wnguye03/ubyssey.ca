@@ -1,3 +1,4 @@
+import datetime
 from random import randint
 
 from django.http import Http404
@@ -11,24 +12,9 @@ from ubyssey.events.models import Event
 class ArticleHelper(object):
 
     @staticmethod
-    def get_article(request, slug, section=None):
-        def _find_article(slug, section=None):
-            if section is not None:
-                return Article.objects.get(slug=slug, section__name=section, head=True)
-            else:
-                return Article.objects.get(slug=slug, head=True)
-
-        if request.user.is_staff:
-            try:
-                article = _find_article(slug, section)
-            except Article.DoesNotExist:
-                raise Http404("This article does not exist.")
-        else:
-            try:
-                article = _find_article(slug, section)
-            except Article.DoesNotExist:
-                raise Http404("This article does not exist.")
-        return article
+    def get_article(request, slug):
+        # TODO: enable previews
+        return Article.objects.get(slug=slug, is_published=True)
 
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
@@ -119,7 +105,7 @@ class ArticleHelper(object):
                 articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
                 name = 'Top Stories'
             elif ref == 'popular':
-                articles = Article.objects.get_popular(dur=dur).exclude(pk=article.id)[:5]
+                articles = ArticleHelper.get_popular(dur=dur).exclude(pk=article.id)[:5]
                 name = "Most popular this week"
         else:
             articles = article.get_related()
@@ -132,17 +118,19 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_years():
+        # query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article WHERE published_at IS NOT NULL ORDER BY published_at DESC'
+        #
+        # cursor = connection.cursor()
+        # cursor.execute(query)
+        #
+        # results = cursor.fetchall()
+        #
+        # years = [r[0] for r in results]
+        #
+        # return filter(lambda y: y is not None, years)
 
-        query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article ORDER BY published_at DESC'
-
-        cursor = connection.cursor()
-        cursor.execute(query)
-
-        results = cursor.fetchall()
-
-        years = [r[0] for r in results]
-
-        return filter(lambda y: y is not None, years)
+        # TODO: fix this query ^ or replace with something better
+        return [2017, 2016, 2015]
 
     @staticmethod
     def get_topic(topic_name):
@@ -207,7 +195,23 @@ class ArticleHelper(object):
 
         return articles.order_by('-views')
 
+    @staticmethod
+    def get_meta(article, default_image=None):
+        try:
+            image = article.featured_image.image.get_medium_url()
+        except:
+            image = default_image
+
+        return {
+            'title': article.headline,
+            'description': article.seo_description if article.seo_description is not None else article.snippet,
+            'url': article.get_absolute_url,
+            'image': image,
+            'author': article.get_author_string()
+        }
+
 class PageHelper(object):
+    @staticmethod
     def get_page(request, slug):
         if request.user.is_staff:
             try:
@@ -216,7 +220,7 @@ class PageHelper(object):
                 raise Http404("This page does not exist.")
         else:
             try:
-                page = Page.objects.get(slug=slug, head=True, is_published=True)
+                page = Page.objects.get(slug=slug, is_published=True)
             except Page.DoesNotExist:
                 raise Http404("This page does not exist.")
         return page
