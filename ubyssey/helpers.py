@@ -15,7 +15,7 @@ class ArticleHelper(object):
     def get_article(request, slug):
         # TODO: enable previews
         return Article.objects.get(slug=slug, is_published=True)
-        
+
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
@@ -213,7 +213,6 @@ class ArticleHelper(object):
 class PageHelper(object):
     @staticmethod
     def get_page(request, slug):
-        print request
         if request.user.is_staff:
             try:
                 page = Page.objects.get(slug=slug, head=True)
@@ -223,6 +222,5 @@ class PageHelper(object):
             try:
                 page = Page.objects.get(slug=slug, is_published=True)
             except Page.DoesNotExist:
-                print 'asdasdf'
                 raise Http404("This page does not exist.")
         return page
