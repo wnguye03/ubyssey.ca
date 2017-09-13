@@ -13,21 +13,9 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_article(request, slug):
-        return Article.objects.get(slug=slug, is_published=True)
-
         # TODO: enable previews
-        # if request.user.is_staff:
-        #     try:
-        #         article = Article.objects.get(slug=slug, head=True)
-        #     except Article.DoesNotExist:
-        #         raise Http404("This article does not exist.")
-        # else:
-        #     try:
-        #         article = Article.objects.get(slug=slug, is_published=True)
-        #     except Article.DoesNotExist:
-        #         raise Http404("This article does not exist.")
-        # return article
-
+        return Article.objects.get(slug=slug, is_published=True)
+        
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
@@ -142,7 +130,7 @@ class ArticleHelper(object):
         # return filter(lambda y: y is not None, years)
 
         # TODO: fix this query ^ or replace with something better
-        return [2017, 2016, 2015, 2014, 2013]
+        return [2017, 2016, 2015]
 
     @staticmethod
     def get_topic(topic_name):
