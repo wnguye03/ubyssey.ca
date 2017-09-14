@@ -11,3 +11,6 @@ __pycache__/
 node_modules/
 
 ubyssey/settings*.py
+
+# Client secret for Travis
+client-secret.json
