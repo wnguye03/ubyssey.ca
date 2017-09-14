@@ -26,16 +26,16 @@ after_success:
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
 deploy:
-  - provider: gcs
-    keyfile: client-secret.json
-    bucket: ubyssey
-    skip_cleanup: true
-    acl: public-read
-    local-dir: ${TRAVIS_BUILD_DIR}/gcs
-    detect_encoding: true
-    cache_control: "max-age=31536000"
-    on:
-      branch: develop
+  # - provider: gcs
+  #   keyfile: client-secret.json
+  #   bucket: ubyssey
+  #   skip_cleanup: true
+  #   acl: public-read
+  #   local-dir: ${TRAVIS_BUILD_DIR}/gcs
+  #   detect_encoding: true
+  #   cache_control: "max-age=31536000"
+  #   on:
+  #     branch: develop
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd
