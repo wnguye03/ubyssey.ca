@@ -6,7 +6,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
 - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
 install:
-- pip install -r requirements.txt -t lib/
+- pip install -r requirements-prd.txt -t lib/
 - pip install requests --upgrade -t lib/
 - cd ubyssey/static
 - npm install -g gulp
