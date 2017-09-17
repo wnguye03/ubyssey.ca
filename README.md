@@ -2,9 +2,9 @@
 
 ## Installation
 
-[Mac Instructions](SETUP-MAC.md)
+[Mac Instructions](https://code.ubyssey.ca/getting-started/installation/mac.html)
 
-[Windows Instructions](SETUP-WINDOWS.md)
+[Windows Instructions](https://code.ubyssey.ca/getting-started/installation/windows.html)
 
 ## Development
 
@@ -24,11 +24,11 @@ cd ubyssey-dev
 source bin/activate
 
 # Run the server!
-cd ubyssey-dispatch-theme
+cd ubyssey.ca
 python manage.py runserver
 
 # In a separate terminal tab, start the gulp process. It will watch for changes to the source files and automatically re-build the static files during development.
-cd ubyssey-dispatch-theme/ubyssey/static/
+cd ubyssey.ca/ubyssey/static/
 gulp
 ```
 
@@ -43,10 +43,10 @@ cd ubyssey-dev
 .\Scripts\activate
 
 # Run the server!
-cd ubyssey-dispatch-theme
+cd ubyssey.ca
 python manage.py runserver
 
 # In a separate command prompt window, start the gulp process. It will watch for changes to the source files and automatically re-build the static files during development.
-cd ubyssey-dispatch-theme/ubyssey/static/
+cd ubyssey.ca/ubyssey/static/
 gulp
 ```
