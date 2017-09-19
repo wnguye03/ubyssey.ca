@@ -5,6 +5,7 @@ import feedparser
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+from django.http import HttpResponse
 
 from ubyssey.events.models import Event, ScrapedEvent
 
@@ -118,4 +119,6 @@ def main():
     feedObj.create_new_events()
     feedObj.remove_old_events()
 
-    return feedObj.feed.status
+    http_status = feedObj.feed.status
+
+    return HttpResponse(status=http_status)
