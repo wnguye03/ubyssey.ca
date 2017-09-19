@@ -108,3 +108,14 @@ class Command(BaseCommand):
 
         feedObj.create_new_events()
         feedObj.remove_old_events()
+
+        return feedObj.feed.status
+
+def main():
+
+    feedObj = UBCEventsRSSFeed('http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss')
+
+    feedObj.create_new_events()
+    feedObj.remove_old_events()
+
+    return feedObj.feed.status

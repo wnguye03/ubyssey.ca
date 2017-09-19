@@ -13,6 +13,7 @@ from django.template.loader import render_to_string
 from ubyssey.events.sources import FacebookEvent, UBCEvent, NoEventHandler, EventError
 from ubyssey.events.forms import EventForm
 from ubyssey.events.models import Event
+from ubyssey.events.management.commands import import_events
 
 def submit_landing(request):
     context = {
@@ -76,7 +77,7 @@ def submit_form(request):
             event = form.save(commit=False)
             event.is_submission = True
             event.save()
-            
+
             return redirect(submit_success)
     else:
         form = EventForm()
@@ -197,6 +198,9 @@ def events(request):
     }
 
     return render(request, 'events/events.html', context)
+
+def event_import(request):
+    return import_events.main()
 
 def get_event_meta(event):
     meta_image = None
