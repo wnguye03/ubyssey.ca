@@ -1,6 +1,6 @@
 {
   "name": "ubyssey",
-  "version": "1.2.4",
+  "version": "1.3.1",
   "description": "The Ubyssey's frontend framework.",
   "author": "Peter Siemens <peter@ubyssey.ca>",
   "homepage": "https://www.ubyssey.ca",
@@ -43,5 +43,6 @@
   "engines": {
     "node": ">=0.10"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

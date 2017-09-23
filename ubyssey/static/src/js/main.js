@@ -1,4 +1,5 @@
 import * as mp from './modules/Mixpanel';
+import upcomingEvents from './widgets/upcoming-events';
 
 function disableScroll($document) {
   $document.on('touchmove', function(e) {
@@ -134,5 +135,8 @@ function enableScroll($document) {
   } else {
     mp.pageView();
   }
+
+  // register widgets
+  upcomingEvents();
 
 })();

@@ -1,0 +1,12 @@
+.c-paragraph {
+  // Structure
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+
+  // Text
+  font-family: $font-default;
+  font-size: font-size(16);
+  line-height: 22/16 + em;
+  color: $color-text-gray;
+  white-space: pre-wrap;
+}

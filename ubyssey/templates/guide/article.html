@@ -9,7 +9,7 @@
         <div class="c-banner--article__inner">
           <div class="c-banner--article__nav">
             <nav class="c-nav-top">
-              <a class="o-logo--small" href="{% url 'guide-index' %}"></a>
+              <a class="o-logo--small" href="{% url 'guide-landing' %}"></a>
               <div class="c-nav-top__message">From your friends at <a href="{% url 'home' %}">The Ubyssey</a></div>
             </nav>
           </div>
@@ -30,7 +30,7 @@
         <div class="advertisement box sidebar">
             <div class="adslot" id="div-gpt-ad-1443288719995-15-{{ article.id }}" data-size="box" data-dfp="News_BoxA_300x250"></div>
         </div>
-        {{ article.get_html|safe }}
+        {{ article.html|safe }}
       </div>
     </div>
   </div>

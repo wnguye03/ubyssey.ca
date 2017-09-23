@@ -1,5 +1,6 @@
 {% extends base_template %}
 {% load staticfiles %}
+{% load widgets %}
 {% block header %}
     {% include 'headers/topbar.html' with article=article section=article.section.slug %}
     {% include 'headers/mobile.html' %}
@@ -10,13 +11,13 @@
   {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 article=article.id %}
   {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=2 article=article.id %}
   {% endblock %}
-  <article class="c-article c-article--{{ article.template }} c-article--{{ article.section.slug }} js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}">
+  <article class="c-article c-article--{{ article.template }} js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}">
   {% block banner %}
     <div class="u-container u-container--content u-container--padded">
       <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
       <div class="c-article__info">
         <div class="c-article__byline">
-          <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+          <div class="c-article__author">By {{ article.get_author_string|safe }}</div>
           <div class="c-article__byline__meta">
             <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
             {% with article.calc_est_reading_time as reading_time %}
@@ -39,7 +40,7 @@
           <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}" data-credit="{% if article.featured_image.get_credit %}{{ article.featured_image.get_credit }}{% endif %}" data-url="{{ article.featured_image.image.get_absolute_url }}" src="{{ article.featured_image.image.get_medium_url }}"/>
           {% if article.featured_image.caption or article.featured_image.get_credit %}
           <div class="caption">
-            {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.get_credit %}<span class="credit">{{ article.featured_image.get_credit }}{% if not article.featured_image.has_custom_credit %} / The Ubyssey{% endif %}</span>{% endif %}
+            {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
           </div>
           {% endif %}
         </div>
@@ -48,17 +49,19 @@
         <div class="sidebar">
         {% endif %}
           {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+          {% zone 'article-sidebar' %}
         </div>
       </div>
       {% endblock %}
       <div class="article-content">
       {% block pre-content %}{% endblock %}
-        {{ article.get_html|safe }}
+        {{ article.html|safe }}
       </div>
       {% include 'objects/social-icons-bottom.html' with article=article %}
   </article>
 </main>
 
+{% zone 'article-horizontal' %}
 <div class="slideshow">
   <div class="image-container">
     <div class="image-inner">

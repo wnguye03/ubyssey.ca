@@ -166,7 +166,8 @@ nav.main {
 header.topbar, header.mobile {
   width: 100%;
   z-index: $z-scale-2;
-  position: fixed;
+  position: relative;
+  position: sticky;
   top: 0;
 }
 
@@ -193,6 +194,7 @@ header.topbar {
 
   &.header-article {
       display: none;
+      position: absolute;
   }
 
   img.logo {
@@ -244,7 +246,6 @@ header.topbar {
 
   h1.nav-headline {
     display: inline-block;
-    position: fixed;
     top: 16px;
     white-space: nowrap;
     font-family: $font-default;
@@ -267,6 +268,7 @@ header.topbar {
 
 header.mobile {
   height: 54px;
+  min-height: 54px;
   line-height: 54px;
   border-bottom: 1px solid #DADADA;
 

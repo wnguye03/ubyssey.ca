@@ -34,7 +34,7 @@
           </li>
         {% for section in sections %}
           <li class="o-archive__sidebar__filter{% if section.id == section_id %} o-archive__sidebar__filter--is-active{% endif %}">
-            <a href="{{ request.path }}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section }}</a>
+            <a href="{{ request.path }}?{% if year %}year={{ year }}&{% endif %}{% if q %}q={{ q }}&{% endif %}section_id={{ section.id }}">{{ section.name }}</a>
           </li>
         {% endfor %}
         </ul>

@@ -1,9 +1,49 @@
+sudo: false
 language: python
 python:
-  - "2.7"
-install: "pip install -r requirements.txt"
-before_script:
-  - cd ubyssey/static
-  - npm install -g gulp
-  - npm install
-script: gulp
+- '2.7'
+before_install:
+- openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
+- export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
+install:
+- pip install -r requirements-prd.txt -t lib/
+- pip install requests --upgrade -t lib/
+- cd ubyssey/static
+- npm install -g gulp
+- npm install
+script:
+- gulp build
+after_success:
+# clean up node_modules
+- rm -rf node_modules
+- cd ${TRAVIS_BUILD_DIR}
+# use deploy settings
+- mv _settings/settings-dpl.py ubyssey/settings.py
+- mkdir ${TRAVIS_BUILD_DIR}/gcs
+- python manage.py collectstatic --noinput
+# gzip static files
+- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+# replace deploy settings with production settings
+- rm ubyssey/settings.py ubyssey/settings.pyc
+- mv _settings/settings-prd.py ubyssey/settings.py
+deploy:
+  - provider: gcs
+    access_key_id: GOOG6VXJ7FN5TYTTPSQI
+    secret_access_key:
+      secure: saCd6ww5nyVA1vUKjmKoe1s+Xf6B+gWWQOTFs8pnQyacSPI9KnGZ3/+H41OoZyMkV8gNEOzgMaFd1eKyO5npisaVas/a0VDtStPek0WtfzTGpEsUDfzAPzC18H2dOzwv25EmpRDcY6YIe9qaove7yOQ5ptAKkWlbUlh9jsG7r88shQtJNP91TYoSaBtpX8YMvmxkFTFuzgQ/M5Mxmz/ObtMfNj9WyGBRtSVKss1tIMvhwxHHUc+R7EYIcVoUgsLIdOtkdqe6iDPEx3qBJsrg2uu1i7SmGvpoQwIPXheqZEKxpbaSzenxy2UXD6zXjFgS9xP0nz06t3OKjIce10jhR3+d2FNffeadwbEEj/UuLqSmU/p0W2S4pzdGDxZRpgADxmfMwqG+qP8l177Pyui1c+npCUvVtON0F850Ih8P3G9gQZiyz3rKOFzISEym62H8HiPYA04dqnis/F5+ELa6QkMwNQZKlGQAHBJ849bT4K72/X8yq6ywZiXVE+6meqsIdAWmUDUBvoDAVNCuLW6AMtW387/WwqzKG5+qcx7tvuRrgowhk1JNdldLdw+7XtEuZ82XRO/EMeytdubDLwqpNjflqpRGTb0qDvByffSrzBrPAVXp5/zC3D1E5uQI/eONiYeAlR+vhOLm5UIAIor5KXojFb5eVTKd1xcCPI8uZpg=
+    bucket: ubyssey
+    skip_cleanup: true
+    acl: public-read
+    local-dir: ${TRAVIS_BUILD_DIR}/gcs
+    detect_encoding: true
+    cache_control: "max-age=31536000"
+    repo: ubyssey/ubyssey.ca
+    on:
+      branch: production
+  - provider: gae
+    keyfile: client-secret.json
+    project: ubyssey-prd
+    default: true
+    skip_cleanup: true
+    on:
+      branch: production

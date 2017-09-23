@@ -1,0 +1,115 @@
+$border                           : 1px dotted $color-border-gray-dark;
+$calendar-event-time-label-color  : #006fcc;
+$tiles-margin                     : 35px;
+
+@import 'calendar_categories';
+
+.c-event-calendar {
+  min-height: 500px;
+  margin-bottom: 40px;
+
+  @media($bp-smaller-than-phablet) {
+    padding: 0 2px;
+
+    h1 {
+       padding: 0 5px;
+    }
+  }
+}
+
+.c-event-calendar__container {
+  // Structure
+  display: flex;
+}
+
+.c-event-calendar__sidebar {
+  // Structure
+  display: none;
+  width: 11.5rem;
+  padding-right: 2rem;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: block;
+  }
+}
+
+.c-event-calendar__main {
+  // Structure
+  flex: 1;
+}
+
+.c-event-calendar__year-label {
+  font-size: font-size(32);
+  font-weight: $font-weight-semi-bold;
+  border-bottom: $border;
+}
+
+.c-event-calendar__month-label {
+  font-size: font-size(32);
+  font-weight: $font-weight-semi-bold;
+  margin-bottom: 1rem;
+}
+
+.c-event-calendar__day-row {
+  // Structure
+  padding-top: 1rem;
+
+  // Border
+  border-top: $border;
+
+  @media($bp-larger-than-phablet) {
+    display: flex;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
+
+.c-event-calendar__day-label {
+  // Structure
+  width: 8rem;
+  padding-right: 2rem;
+  margin-bottom: 1rem;
+
+  // Text
+  font-size: font-size(24);
+  color: $calendar-event-time-label-color;
+  font-weight: $font-weight-semi-bold;
+}
+
+.c-event-calendar__event-list-wrapper {
+  flex: 1;
+}
+
+.c-event-calendar__event-list-container {
+  @media($bp-larger-than-phablet) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+.c-event-calendar__event-box-container {
+  // Structure
+  padding-bottom: 1.5rem;
+
+  @media($bp-larger-than-phablet) {
+    flex: 1 0;
+
+    &:nth-child(3n+1) {
+      flex-basis: 100%;
+    }
+
+    &:nth-child(3n+2) {
+      padding-right: 0.75rem;
+    }
+
+    &:nth-child(3n+3) {
+      padding-left: 0.75rem;
+    }
+  }
+}

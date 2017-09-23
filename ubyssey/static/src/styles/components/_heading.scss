@@ -1,0 +1,26 @@
+.c-heading {
+  // Structure
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  // Text
+  font-family: $font-default;
+  font-weight: $font-weight-bold;
+  color: $color-text-black;
+}
+
+.c-heading--light {
+  // Text
+  color: $color-text-gray;
+  font-weight: $font-weight-semi-bold;
+}
+
+.c-heading--2 {
+  // Text
+  font-size: font-size(24);
+}
+
+.c-heading--3 {
+  // Text
+  font-size: font-size(18);
+}

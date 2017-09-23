@@ -1,0 +1,57 @@
+.c-button {
+  // Structure
+  display: inline-block;
+  height: 45px;
+  min-width: 8rem;
+  line-height: 45px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  // Background
+  background-color: $color-accent-blue;
+
+  // Border
+  border: none;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+
+  // Text
+  color: $color-white;
+  text-align: center;
+  font-size: font-size(16);
+
+  // Extra
+  cursor: pointer;
+
+  &:hover {
+    // Background
+    background-color: #338dd4;
+
+    // Text
+    color: $color-white;
+  }
+
+  i {
+    // Text
+    font-size: 1.25em;
+    margin-right: 0.25em;
+  }
+
+  i, span {
+    // Text
+    vertical-align: middle;
+  }
+}
+
+.c-button--small {
+  // Structure
+  height: 36px;
+  line-height: 36px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+
+  // Text
+  font-size: font-size(14);
+}
