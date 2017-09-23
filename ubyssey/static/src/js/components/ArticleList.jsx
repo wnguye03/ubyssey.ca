@@ -135,7 +135,11 @@ const ArticleList = React.createClass({
     },
     updateURL() {
         try {
-            history.pushState(null, null, this.getArticle(this.state.active.data).url);
+            history.replaceState(
+                history.state, 
+                this.getArticle(this.state.active.data).headline, 
+                this.getArticle(this.state.active.data).url
+            );
         } catch(err) {}
     },
     loadNext(articleId) {
