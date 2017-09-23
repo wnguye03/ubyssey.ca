@@ -37,7 +37,6 @@ deploy:
     local-dir: ${TRAVIS_BUILD_DIR}/gcs
     detect_encoding: true
     cache_control: "max-age=31536000"
-    repo: ubyssey/ubyssey.ca
     on:
       branch: production
   - provider: gae
