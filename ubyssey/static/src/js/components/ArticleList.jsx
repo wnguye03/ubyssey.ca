@@ -71,7 +71,6 @@ const ArticleList = React.createClass({
         var points;
 
         var updateScroll = () => {
-
             const topPos = $('#content-wrapper').scrollTop();
             const bottomPos = topPos + windowHeight;
 
@@ -91,7 +90,6 @@ const ArticleList = React.createClass({
 
             if(bottomPos < points.top - 50)
                 this.setPrev();
-
         };
 
         $('#content-wrapper').scroll(updateScroll);
@@ -121,8 +119,7 @@ const ArticleList = React.createClass({
             return;
         }
 
-        // Google analytics pageview
-        ga('set', 'dimension1', "Peter Siemens");
+        // Google Analytics pageview
         ga('send', 'pageview');
 
         this.setState({ active: this.state.active.next }, () => this.updateURL());
@@ -179,8 +176,7 @@ const ArticleList = React.createClass({
                 <ArticleHeader name={this.props.name} headline={this.getArticle(this.state.active.data).headline} />
                 {articles}
             </div>
-          );
-        // <CommentsBar breakpoint={this.props.breakpoint} userId={this.props.userId} articleId={this.state.active.data} />
+        );
     }
 })
 
