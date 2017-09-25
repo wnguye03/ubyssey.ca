@@ -14,6 +14,6 @@ STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
-STATIC_ROOT = '/home/travis/build/ubyssey/ubyssey-dispatch-theme/gcs/static'
+STATIC_ROOT = '/home/travis/build/ubyssey/ubyssey.ca/gcs/static'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
