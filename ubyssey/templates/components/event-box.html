@@ -1,15 +1,13 @@
-<div class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}">
+<div onclick=location.href="{% url 'event' event.pk.hex %}"; style="cursor: pointer;" class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}">
   {% if event.image and not hide_image %}
-  <a href="{% url 'event' event.pk.hex %}">
-    <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
-  </a>
+  <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
   {% endif %}
   <div class="c-event__meta">
     {% if not hide_datebox %}
     {% include 'components/event-date.html' with event=event %}
     {% endif %}
     <div class="c-event__info">
-      <h3 class="c-event__title"><a href="{% url 'event' event.pk.hex %}">{{ event.title|wordwrap:30|linebreaksbr }}</a></h3>
+      <h3 class="c-event__title">{{ event.title|wordwrap:30|linebreaksbr }}</h3>
 
   {% if not hide_day_label %}
     {% if event.start_time|date:"Ymd" == event.end_time|date:"Ymd" %}
