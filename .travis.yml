@@ -19,7 +19,6 @@ after_success:
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
 - mv _settings/settings-dpl.py ubyssey/settings.py
-- mkdir ${TRAVIS_BUILD_DIR}/gcs
 - python manage.py collectstatic --noinput
 # gzip static files
 - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
