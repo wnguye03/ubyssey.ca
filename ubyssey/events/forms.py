@@ -47,6 +47,18 @@ class EventForm(ModelForm):
 
         facebook_image_url = self.data.get('facebook_image_url')
 
+        old_event_url = self.data.get('event_url')
+        old_ticket_url = self.data.get('ticket_url')
+
+        has_protocol_event_url = old_event_url.startswith('http://') or old_event_url.startswith('https://')
+        has_protocol_ticket_url = old_ticket_url.startswith('http://') or old_ticket_url.startswith('https://')
+
+        if not has_protocol_event_url:
+            event.event_url = "http://" + old_event_url
+
+        if not has_protocol_ticket_url:
+            event.ticket_url = "http://" + old_ticket_url
+
         if not event.image and facebook_image_url:
             event.save_image_from_url(facebook_image_url)
                 
