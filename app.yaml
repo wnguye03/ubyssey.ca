@@ -8,6 +8,9 @@ handlers:
   secure: always
 - url: /.well-known
   static_dir: well-known
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
 
 libraries:
 - name: MySQLdb
