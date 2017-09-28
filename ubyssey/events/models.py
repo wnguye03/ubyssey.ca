@@ -91,6 +91,35 @@ def send_submitted_email(sender, instance, **kwargs):
         instance.is_submission_email = True
         instance.save()
 
+
+@receiver(pre_save, sender=Event)
+def format_event_ticket_url(sender, instance, **kwargs):
+    urls_formatted = has_protocol_or_empty(instance.event_url) and has_protocol_or_empty(instance.ticket_url)
+    
+    """Add "http://" in front of event_url and ticket_url if protocol missing."""
+    if instance.is_submission and not urls_formatted:
+
+        instance.event_url = format_url(instance.event_url);
+        instance.ticket_url = format_url(instance.ticket_url);
+
+        instance.save()
+
+def url_empty(url):
+    return not (url and url.strip())
+
+def has_protocol(url):
+    return url.startswith('http://') or url.startswith('https://')
+
+def has_protocol_or_empty(url):
+    return has_protocol(url) or url_empty(url)
+
+def format_url(url):
+    if has_protocol_or_empty(url):
+        return url
+    else:
+        return "http://" + url
+
+
 @receiver(post_save, sender=Event)
 def send_published_email(sender, instance, **kwargs):
     """Send an email to the submitter when the event has been published."""
