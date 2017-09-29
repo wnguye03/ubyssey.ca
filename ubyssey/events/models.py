@@ -94,9 +94,10 @@ def send_submitted_email(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Event)
 def format_event_ticket_url(sender, instance, **kwargs):
-    urls_formatted = has_protocol_or_empty(instance.event_url) and has_protocol_or_empty(instance.ticket_url)
+    urls_formatted = ( ( has_protocol(instance.event_url) or not instance.event_url ) and
+                       ( has_protocol(instance.ticket_url) or not instance.ticket_url ) )
     
-    """Add "http://" in front of event_url and ticket_url if protocol missing."""
+    """Add "http://" in front of (non-empty) event_url and ticket_url if protocol missing."""
     if instance.is_submission and not urls_formatted:
 
         instance.event_url = format_url(instance.event_url);
@@ -104,17 +105,11 @@ def format_event_ticket_url(sender, instance, **kwargs):
 
         instance.save()
 
-def url_empty(url):
-    return not (url and url.strip())
-
 def has_protocol(url):
     return url.startswith('http://') or url.startswith('https://')
 
-def has_protocol_or_empty(url):
-    return has_protocol(url) or url_empty(url)
-
 def format_url(url):
-    if has_protocol_or_empty(url):
+    if has_protocol(url) or not url:
         return url
     else:
         return "http://" + url
