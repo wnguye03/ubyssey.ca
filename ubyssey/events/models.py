@@ -94,16 +94,9 @@ def send_submitted_email(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Event)
 def format_event_ticket_url(sender, instance, **kwargs):
-    urls_formatted = ( ( has_protocol(instance.event_url) or not instance.event_url ) and
-                       ( has_protocol(instance.ticket_url) or not instance.ticket_url ) )
-    
     """Add "http://" in front of (non-empty) event_url and ticket_url if protocol missing."""
-    if instance.is_submission and not urls_formatted:
-
-        instance.event_url = format_url(instance.event_url);
-        instance.ticket_url = format_url(instance.ticket_url);
-
-        instance.save()
+    instance.event_url = format_url(instance.event_url);
+    instance.ticket_url = format_url(instance.ticket_url);
 
 def has_protocol(url):
     return url.startswith('http://') or url.startswith('https://')
