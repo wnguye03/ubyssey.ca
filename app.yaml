@@ -9,7 +9,6 @@ handlers:
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
-
 libraries:
 - name: MySQLdb
   version: 1.2.5
