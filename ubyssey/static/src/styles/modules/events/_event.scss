@@ -64,6 +64,7 @@
 
 // EventBox
 .c-event--box {
+  display: inline-block;
   // Border
   border: solid 1px $color-border-gray;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
