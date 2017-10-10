@@ -9,12 +9,10 @@
       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
       <div class="c-article__byline__meta">
         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
-        {% with article.calc_est_reading_time as reading_time %}
         {% if reading_time %}
         <span> &nbsp;&middot;&nbsp; </span>
         <span class="c-article__reading-time">{{ reading_time }} min read</span>
         {% endif %}
-        {% endwith %}
       </div>
     </div>
     {% include 'objects/social-icons.html' with article=article layout='top' %}

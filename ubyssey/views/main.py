@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import random
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
@@ -54,6 +55,8 @@ class UbysseyTheme(object):
 
         title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
 
+
+
         context = {
             'title': title,
             'meta': {
@@ -90,7 +93,8 @@ class UbysseyTheme(object):
             'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
-            'base_template': 'base.html'
+            'base_template': 'base.html',
+            'reading_time': ArticleHelper.get_reading_time(article)
         }
 
         template = article.get_template_path()
