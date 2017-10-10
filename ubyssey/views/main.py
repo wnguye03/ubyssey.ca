@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-import random
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
@@ -54,8 +53,6 @@ class UbysseyTheme(object):
         blog = ArticleHelper.get_frontpage(section='blog', limit=5)
 
         title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
-
-
 
         context = {
             'title': title,

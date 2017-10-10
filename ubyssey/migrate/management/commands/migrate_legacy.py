@@ -126,6 +126,7 @@ def migrate_articles():
                 section_id=row['section_id'],
                 topic_id=row['topic_id'],
                 importance=row['importance'],
+                reading_time=row['reading_time']
             )
 
             new_article.save(revision=False)
