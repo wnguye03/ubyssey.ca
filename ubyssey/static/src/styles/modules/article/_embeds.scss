@@ -125,7 +125,19 @@
 
   }
 }
+.o-article-embed--code {
+  // Structure
+  display: inline-block;
+  position: relative;
+  width: 100%;
 
+  &:after {
+    // Structure
+    padding-top: 56.25%; // 16:9 ratio
+    display: inline-block;
+    content: '';
+  }
+}
 
 .o-article-embed--video {
   // Structure
