@@ -20,6 +20,7 @@ class UBCEventsRSSFeed(object):
         """The new events must be added to both the Event Model and ScrapedEvent"""
 
         new_events = self.get_new_events()
+        num_events = 0
 
         for event in new_events:
 
@@ -43,10 +44,15 @@ class UBCEventsRSSFeed(object):
                 )
             event_for_approval.save()
 
+            num_events += 1
+
+        return num_events
+
     def remove_old_events(self):
         """Remove events from ScrapedEvents when they are removed from the RSS feed"""
 
         scraped_events = ScrapedEvent.objects.all()
+        num_events = 0
 
         raw_events = self.get_event_data()
         raw_event_guids = [event.get('guid') for event in raw_events]
@@ -54,6 +60,9 @@ class UBCEventsRSSFeed(object):
 
             if event.guid not in raw_event_guids:
                 event.delete()
+                num_events += 1
+
+        return num_events
 
     def get_new_events(self):
         """Returns set of new event guids"""
@@ -99,6 +108,20 @@ class UBCEventsRSSFeed(object):
 
         return events
 
+    def update(self):
+        """Update feed by deleting old events and creating new ones"""
+
+        num_created = self.create_new_events()
+        num_removed = self.remove_old_events()
+
+        http_status = self.feed.status
+
+        return {
+            'status': str(http_status),
+            'added': num_created,
+            'removed': num_removed
+        }
+
 class FeedError(Exception):
     pass
 
@@ -107,18 +130,6 @@ class Command(BaseCommand):
 
         feedObj = UBCEventsRSSFeed('http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss')
 
-        feedObj.create_new_events()
-        feedObj.remove_old_events()
+        feedObjData = feedObj.update()
 
-        return feedObj.feed.status
-
-def main():
-
-    feedObj = UBCEventsRSSFeed('http://services.calendar.events.ubc.ca/cgi-bin/rssCache.pl?days=2&mode=rss')
-
-    feedObj.create_new_events()
-    feedObj.remove_old_events()
-
-    http_status = feedObj.feed.status
-
-    return HttpResponse(status=http_status)
+        return feedObjData['status']

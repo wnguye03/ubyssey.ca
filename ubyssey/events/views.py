@@ -200,7 +200,8 @@ def events(request):
     return render(request, 'events/events.html', context)
 
 def event_import(request):
-    return import_events.main()
+
+    return import_events.update()
 
 def get_event_meta(event):
     meta_image = None
