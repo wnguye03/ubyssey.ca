@@ -17,6 +17,17 @@ class ArticleHelper(object):
         return Article.objects.get(slug=slug, is_published=True)
 
     @staticmethod
+    def get_reading_time(article):
+        word_count = 0
+        words_per_min = 150
+        for block in article.content:
+            if block['type'] == 'paragraph':
+                word_count += len(block['data'].split(' '))
+
+        reading_time = word_count / words_per_min
+        return reading_time
+
+    @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
