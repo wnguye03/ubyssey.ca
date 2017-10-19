@@ -18,14 +18,13 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_reading_time(article):
-
         word_count = 0
         words_per_min = 150
         for block in article.content:
             if block['type'] == 'paragraph':
                 word_count += len(block['data'].split(' '))
 
-        reading_time = word_count/words_per_min
+        reading_time = word_count / words_per_min
         return reading_time
 
     @staticmethod
