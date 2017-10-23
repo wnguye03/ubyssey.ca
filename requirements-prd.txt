@@ -5,3 +5,4 @@ django-canonical-domain
 mysql-python
 django-phonenumber-field
 beautifulsoup4
+feedparser

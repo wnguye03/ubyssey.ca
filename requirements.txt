@@ -2,3 +2,4 @@ dispatch==0.3.16
 mysql-python
 django-phonenumber-field
 beautifulsoup4
+feedparser
