@@ -42,6 +42,7 @@ deploy:
     keyfile: client-secret.json
     project: ubyssey-prd
     default: true
+    version: $TRAVIS_TAG
     skip_cleanup: true
     on:
       tags: true
