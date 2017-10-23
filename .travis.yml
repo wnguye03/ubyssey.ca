@@ -42,7 +42,7 @@ deploy:
     keyfile: client-secret.json
     project: ubyssey-prd
     default: true
-    version: $TRAVIS_TAG
+    version: ubyssey-${TRAVIS_TAG//./-} # Replace periods with hyphens
     skip_cleanup: true
     on:
       tags: true
