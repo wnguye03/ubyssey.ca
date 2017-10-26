@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
+{% load static %}
 {% include 'headers/topbar.html' %}
 {% include 'headers/mobile.html' %}
 <main class="c-page c-page--author">
@@ -9,7 +10,7 @@
     <div class="c-page__header">
       {% if person.image %}
       <div class="c-page__header__thumbnail">
-        <img src="{{ person.image }}" alt="{{ person.full_name }}" />
+        <img src="{% static person.image %}" alt="{{ person.full_name }}" />
       </div>
       {% endif %}
       <div class="c-page__header__meta">
