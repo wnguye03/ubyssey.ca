@@ -13,8 +13,13 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_article(request, slug):
-        # TODO: enable previews
-        return Article.objects.get(slug=slug, is_published=True)
+        version = request.GET.get('version', None)
+        preview_id = request.GET.get('preview_id', None)
+
+        if (version is not None) and (preview_id is not None):
+            return Article.objects.get(slug=slug, revision_id=version, preview_id=preview_id)
+        else:
+            return Article.objects.get(slug=slug, is_published=True)
 
     @staticmethod
     def get_reading_time(article):
