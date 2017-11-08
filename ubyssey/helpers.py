@@ -17,7 +17,7 @@ class ArticleHelper(object):
 
         Otherwise, get the published version of the article.
         """
-s
+        
         version = request.GET.get('version', None)
         preview_id = request.GET.get('preview_id', None)
 
