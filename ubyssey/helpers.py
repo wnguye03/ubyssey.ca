@@ -10,14 +10,14 @@ from dispatch.models import Article, Page, Section
 from ubyssey.events.models import Event
 
 class ArticleHelper(object):
-
     @staticmethod
     def get_article(request, slug):
-        # If the url requested includes the querystring parameters 'version' and 'preview_id',
-        # get the article with the specified version and preview_id.
-        # 
-        # Otherwise, get the published version of the article.
-        
+        """If the url requested includes the querystring parameters 'version' and 'preview_id',
+        get the article with the specified version and preview_id.
+
+        Otherwise, get the published version of the article.
+        """
+s
         version = request.GET.get('version', None)
         preview_id = request.GET.get('preview_id', None)
 
