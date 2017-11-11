@@ -5,9 +5,6 @@
   @media($bp-smaller-than-phablet){
     // Structure
     display: block;
-    -webkit-column-count: 1; 
-    -moz-column-count: 1; 
-    column-count: 1;
   }
 }
 
