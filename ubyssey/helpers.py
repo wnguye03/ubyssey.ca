@@ -18,7 +18,7 @@ class ArticleHelper(object):
         Otherwise, get the published version of the article.
         """
         
-        return Article.objects.get(request, slug=slug)
+        return Article.objects.get(request, slug=slug, is_published=True)
 
     @staticmethod
     def get_reading_time(article):
