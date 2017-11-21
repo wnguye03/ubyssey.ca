@@ -520,6 +520,27 @@ html, body {
       height: 25%;
       width: 100%;
     }
+
+    &[data-demo='magazine-full-page'] .o-placements__demo__inner::after {
+      content: '8" x 10.5"';
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    &[data-demo='magazine-half-page'] .o-placements__demo__inner::after {
+      content: '7" x 5"';
+      top: 50%;
+      height: 50%;
+      width: 100%;
+    }
+
+    &[data-demo='magazine-third-page'] .o-placements__demo__inner::after {
+      content: '7" x 3"';
+      bottom: 0;
+      height: 33%;
+      width: 100%;
+    }
   }
 
   .o-placements__demo__inner {
