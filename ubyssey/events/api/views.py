@@ -1,5 +1,7 @@
 from django.db.models import Q
 
+from rest_framework import viewsets, mixins, filters, status
+
 from dispatch.api.mixins import DispatchModelViewSet
 
 from ubyssey.events.models import Event
@@ -8,6 +10,10 @@ from ubyssey.events.api.serializers import EventSerializer
 class EventViewSet(DispatchModelViewSet):
     model = Event
     serializer_class = EventSerializer
+
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('start_time',)
+    ordering = ('-start_time',)
 
     def get_queryset(self):
 

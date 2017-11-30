@@ -90,7 +90,8 @@ class UbysseyTheme(object):
             'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
-            'base_template': 'base.html'
+            'base_template': 'base.html',
+            'reading_time': ArticleHelper.get_reading_time(article)
         }
 
         template = article.get_template_path()

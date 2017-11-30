@@ -52,6 +52,6 @@ class MagazineTheme(object):
             'base_template': 'magazine/base.html'
         }
 
-        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template()), article.get_template()])
+        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
 
         return HttpResponse(t.render(context))

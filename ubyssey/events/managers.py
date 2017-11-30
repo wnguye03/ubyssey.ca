@@ -27,7 +27,7 @@ class EventManager(Manager):
         return self.filter(
             is_published=True,
             start_time__gt=start,
-            start_time__lte=end)
+            start_time__lte=end).order_by('start_time')
 
     def get_calendar_events(self, category=None, months=None, start=None, end=None):
         events = self.filter(is_submission=False) \
