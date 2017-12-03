@@ -15,7 +15,7 @@ class EventManager(Manager):
         return self.get(secret_id=secret_id)
 
     def get_random_event(self):
-        queryset = self.filter(is_published=True)
+        queryset = self.filter(is_published=True, end_time__gt=datetime.date.today())
         count = queryset.aggregate(count=Count('id'))['count']
         random_index = randint(0, count - 1)
         return queryset[random_index]
