@@ -9,9 +9,8 @@ handlers:
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
-- url: .well-known/acme-challenge/9MinV1w3ZAYOKnlg0x4hEDqDjUbRELhvF0fZ7xFuyIA
-  static_files: challenge.txt
-  upload: challenge.txt
+- url: /.well-known/acme-challenge
+  static_dir: letsencrypt
 
 libraries:
 - name: MySQLdb
