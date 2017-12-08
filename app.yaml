@@ -6,8 +6,6 @@ handlers:
 - url: /robots.txt
   static_files: robots.txt
   upload: robots.txt
-- url: /.well-known/acme-challenge
-  static_dir: letsencrypt
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
