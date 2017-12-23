@@ -10,8 +10,8 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
 ALLOWED_HOSTS = [
-    'ubyssey.ca', 
-    'www.ubyssey.ca', 
+    'ubyssey.ca',
+    'www.ubyssey.ca',
     'ubyssey-prd.appspot.com',
 ]
 
@@ -47,10 +47,10 @@ TEMPLATES += [
     }
 ]
 
+SESSION_ENGINE = 'gae_backends.sessions.cached_db'
 CACHES = {
     'default': {
         'BACKEND': 'gae_backends.memcache.MemcacheCache',
-        'TIMEOUT': 60,
     }
 }
 
