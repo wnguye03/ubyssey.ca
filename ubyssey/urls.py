@@ -51,6 +51,9 @@ urlpatterns = [
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
+    # Centennial
+    url(r'^100/$', theme.centennial, name='centennial-landing'),
+
     # Events
     url(r'^events/', include(events_urls)),
     url(r'^api/events/', include(event_api_urls)),
