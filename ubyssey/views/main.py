@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-from itertools import groupby
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
@@ -76,8 +75,6 @@ class UbysseyTheme(object):
             article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
-
-        authors = dict((k, list(v)) for k, v in groupby(article.authors.all(), lambda a: a.type))
 
         article.add_view()
 
