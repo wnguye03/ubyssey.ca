@@ -115,8 +115,6 @@ class UpcomingEventsHorizontalWidget(Widget):
         return result
 
 @register.widget
-<<<<<<< Updated upstream
-=======
 class TopStoryDefault(Widget):
     id = 'top-story-default'
     name = 'Top Story Default'
@@ -146,12 +144,10 @@ class TwitterFrontPage(Widget):
     name = 'Twitter Front Page'
     template = 'widgets/frontpage/twitter-front-page.html'
     zones = (ArticleHorizontal,)
-
     handle = CharField('twitter handle')
 
 
 @register.widget
->>>>>>> Stashed changes
 class FrontPageDefault(Widget):
     id = 'frontpage-default'
     name = 'Default Front Page'
