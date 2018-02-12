@@ -99,7 +99,7 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.full_name for a in article.authors.all()])
+        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
 
         context = {
             'article': article,
