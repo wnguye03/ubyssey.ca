@@ -10,6 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
+from dispatch.models import Article, Section, Topic, Person
 
 from ubyssey.helpers import ArticleHelper, PageHelper
 
