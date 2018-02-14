@@ -234,7 +234,7 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        article_list = Article.objects.filter(authors=person, is_published=True).order_by(order_by)
+        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(order_by)
 
         if query:
             article_list = article_list.filter(headline__icontains=query)
