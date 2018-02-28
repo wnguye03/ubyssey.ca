@@ -195,26 +195,22 @@ class ArticleHelper(object):
 
         return articles.order_by('-views')
 
-        @staticmethod
-        def get_trending(dur='hour'):
-            """Returns the most popular articles in the time period."""
+    @staticmethod
+    def get_trending():
+        """Returns the most trending articles in the time period."""
 
-            durations = {
-                'hour': 6,
+        DURATION = 6
 
-            }
+        articles = Article.objects.filter(is_published=True)
 
-            articles = Article.objects.filter(is_published=True)
+        end = datetime.datetime.now()
+        start = end - datetime.timedelta(hours=DURATION)
+        time_range = (start, end)
+        trending_articles = articles.filter(
+            created_at__range=(time_range),
+            views__gt=1000)
 
-            if dur in durations:
-                end = datetime.now()
-                start = end - datetime.timedelta(durations[dur])
-                time_range = (start, end)
-                articles = articles.filter(created_at__range=(time_range))
-
-            articles = Article.objects.filter(views__lt = 1000)
-
-            return articles.order_by('-views')
+        return list(trending_articles.order_by('-views'))
 
     @staticmethod
     def get_meta(article, default_image=None):

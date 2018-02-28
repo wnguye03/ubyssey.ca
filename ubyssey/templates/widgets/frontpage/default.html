@@ -4,20 +4,34 @@
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
         <div class="cell left">
-          {% with article=articles.secondary %}
-          <div>
-          <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
-          <font color="red"> <b> TRENDING <b> </font>
-        </div>
 
+        {% if articles.trending %}
+
+          {% with articles.trending as trending_articles %}
+              <div>
+                <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
+                <font color="red"> <b> TRENDING <b> </font>
+              </div>
+
+              {% for article in trending_articles%}
+
+                <article class="secondary padded">
+                    <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
+                    <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
+                </article>
+
+             {% endfor %}
+          {% endwith %}
+        {% else %}
+          {% with articles.secondary as article %}
             <article class="secondary padded">
                 <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
                 <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
             </article>
-
-        {% endwith %}
+          {% endwith %}
+        {% endif %}
         {% include 'objects/advertisement.html' with size='box' name='Box_A' class='mobile-frontpage-box' id=2 %}
-        {% for article in articles.get_trending %}
+        {% for article in articles.thumbs %}
             <article class="thumb row padded">
                 <div class="image">
                     <a href="{{ article.get_absolute_url}}?ref=frontpage"><img src="{{ article.featured_image.image.get_thumbnail_url }}"/></a>
