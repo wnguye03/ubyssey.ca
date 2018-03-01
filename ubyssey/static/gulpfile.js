@@ -99,6 +99,8 @@ gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts'])
 
 gulp.task('build-dev', ['webpack:build-dev', 'sass:build-dev', 'copy:images', 'copy:fonts']);
 
+gulp.task('build-css', ['sass:build-dev']);
+
 gulp.task('default', ['build-dev'], function() {
   gulp.watch(['./src/js/**/*'],     ['webpack:build-dev']);
   gulp.watch(['./src/styles/**/*'], ['sass:build-dev']);
