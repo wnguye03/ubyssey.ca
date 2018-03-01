@@ -30,6 +30,24 @@ div.frontpage-container {
   }
 }
 
+div.c-election-banner-container {
+
+  padding-top: 20px;
+
+  img.election-banner {
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+div.c-election-fb-live {
+  iframe {
+    width: 100%;
+  }
+
+}
+
 div.frontpage {
 
   display: table-row;
