@@ -39,7 +39,6 @@ div.main-widget {
 
   @media($bp-smaller-than-phablet) {
     padding-bottom: 25px;
-
   }
 
 }
@@ -80,6 +79,10 @@ div.c-election-fb-live {
 
   @media($bp-larger-than-phablet) {
     min-width: 500px;
+  }
+
+  @media($bp-larger-than-desktop) {
+    margin-right: 15px;
   }
 
 }
