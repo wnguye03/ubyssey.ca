@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header %}
+    {% include 'headers/topbar.html' %}
+    {% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+    <main class="page">
+        <div class="u-container u-container--content">
+          <link href="{{ article.template_fields.css }}" rel="stylesheet">
+          <div id="vote-compass-root"></div>
+          <br/><br/>
+          <script type="text/javascript" src="{{ article.template_fields.js }}"></script>
+        </div>
+    </main>
+{% endblock %}

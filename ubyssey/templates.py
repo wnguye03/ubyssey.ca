@@ -84,3 +84,11 @@ class MagazinePoem(Template):
     text_color_a = CharField('Text Color A')
     text_color_b = CharField('Text Color B')
     offset = CharField('Top Offset')
+
+@register.template
+class VoteCompass(Template):
+    id = 'vote-compass'
+    name = 'Vote Compass'
+
+    css = CharField('CSS')
+    js = CharField('JavaScript')
