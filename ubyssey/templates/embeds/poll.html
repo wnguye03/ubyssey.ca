@@ -1,0 +1,10 @@
+{% if question %}
+<div class="poll attachment">
+    <p class="question">{{ question }}</p>
+    {% if choice1 %}<input type="radio" name="choice" value="choice1" class="choice"> {{ choice1 }}<br>{% endif %}
+    {% if choice2 %}<input type="radio" name="choice" value="choice2" class="choice"> {{ choice2 }}<br>{% endif %}
+    {% if choice3 %}<input type="radio" name="choice" value="choice3" class="choice"> {{ choice3 }}<br>{% endif %}
+    {% if choice4 %}<input type="radio" name="choice" value="choice4" class="choice"> {{ choice4 }}<br>{% endif %}
+    {% if choice5 %}<input type="radio" name="choice" value="choice5" class="choice"> {{ choice5 }}<br>{% endif %}
+</div>
+{% endif %}
