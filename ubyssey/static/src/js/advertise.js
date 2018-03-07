@@ -1,10 +1,10 @@
-$(function() {
+// Scripts for the /advertise/ page
+// Bundled as 'a.js' to prevent AdBlocker blocking.
 
+$(function() {
   // Navigation links smooth scrolling
-  $('a[href*=\\#]').on('click', function(event){
-    console.log(event);
-    event.preventDefault();
-    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+  $('a[href*=\\#]').on('click', function(e) {
+    $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 500);
   });
 
   $('.o-placements--web .o-placements__placement').click(function() {
@@ -16,17 +16,14 @@ $(function() {
   $('.o-placements--print .o-placements__placement--demo').click(function() {
     $('.o-placements--print .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
-
     $('.o-placements--print .o-placements__demo').attr('data-demo', $(this).data('demo'));
   });
 
   $('.o-placements--guide .o-placements__placement--demo').click(function() {
     $('.o-placements--guide .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
-
     $('.o-placements--guide .o-placements__demo').attr('data-demo', $(this).data('demo'));
   });
-
 
   // Open modal
   $('.c-production-schedule__view').click(function() {
@@ -72,7 +69,5 @@ $(function() {
     $('.c-web-slider__tooltip__arrow').css('left', offsetPercent + '%');
     $('.c-web-slider__tooltip__content').html(content);
     $('.c-web-slider__tooltip__cost').text(cost);
-
   }
-
 });

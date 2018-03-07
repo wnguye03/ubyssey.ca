@@ -8,26 +8,26 @@
             <div class="header-container">
                 <div class="headline-container left">
                     <h1 class="headline">{{ article.headline }}</h1>
+                    {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
+                    {% endif %}
                     <div class="c-article__byline">
                       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
-                        {% with article.calc_est_reading_time as reading_time %}
                         {% if reading_time %}
                         <span> &nbsp;&middot;&nbsp; </span>
                         <span class="c-article__reading-time">{{ reading_time }} min read</span>
                         {% endif %}
-                        {% endwith %}
                       </div>
                     </div>
                 </div>
                 <div class="right">
                     <div class="full-width featured-image">
-                        <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.get_credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
+                        <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
                         {% if article.featured_image.caption %}
                         <div class="caption">
-                            {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.get_credit }} / The Ubyssey</span>
+                          {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                         </div>
                         {% endif %}
                     </div>
@@ -36,21 +36,21 @@
         {% elif header_layout == 'top-image' %}
             <div class="header-container">
                 <div class="featured-image">
-                    <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.get_credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
+                    <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
                 </div>
                 <div class="headline-container">
                     <h1 class="o-headline o-headline--article">{{ article.headline }}</h1>
+                    {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
+                    {% endif %}
                     <div class="c-article__byline">
                       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
-                        {% with article.calc_est_reading_time as reading_time %}
                         {% if reading_time %}
                         <span> &nbsp;&middot;&nbsp; </span>
                         <span class="c-article__reading-time">{{ reading_time }} min read</span>
                         {% endif %}
-                        {% endwith %}
                       </div>
                     </div>
                 </div>
@@ -61,15 +61,17 @@
                 <div class="headline-container">
                     <div class="u-container u-container--padded">
                         <h1 class="headline">{{ article.headline }}</h1>
+                        {% if article.template_fields.description %}
                         <p class="fw-description">{{ article.template_fields.description }}</p>
+                        {% endif %}
                         <div class="article-byline">
                             <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
                         </div>
                     </div>
                 </div>
-                {% if article.featured_image.caption %}
+                {% if article.featured_image.caption or article.featured_image.credit %}
                 <div class="caption">
-                	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.get_credit }} / The Ubyssey</span>
+                	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                 </div>
                 {% endif %}
             </div>
@@ -81,7 +83,6 @@
 {% if article.template_fields.header_layout == 'banner-image' %}
 {% block banner_ad %}{% endblock %}
 {% endif %}
-
 
 {% block pre-content %}
 {% endblock %}

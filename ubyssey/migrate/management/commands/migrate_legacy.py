@@ -403,11 +403,11 @@ def migrate_versions():
             published_version = Page.objects.get(parent=a.parent, is_published=True).revision_id
         except:
             published_version = None
-    
+
         latest_version = a.revision_id
-    
+
         Page.objects.filter(parent=a.parent).update(published_version=published_version, latest_version=latest_version)
-    
+
         print 'Page %d - latest: %d, published: %d' % (a.parent_id, latest_version, published_version or 0)
 
 def migrate_tags():

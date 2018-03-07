@@ -61,10 +61,16 @@ class Magazine(Template):
         ('blue', 'Blue')
     )
 
+    DISPLAY_OPTIONS = (
+        ('default', 'Default'),
+        ('basic', 'Basic')
+    )
+
     byline = TextField('Byline')
     byline_2 = TextField('Byline 2')
     description = TextField('Description')
     color = SelectField('Accent Color', options=COLOR_OPTIONS)
+    display = SelectField('Display type', options=DISPLAY_OPTIONS)
 
 @register.template
 class MagazinePoem(Template):

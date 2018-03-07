@@ -43,6 +43,7 @@ urlpatterns = [
 
     # Magazine
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),
+    url(r'^magazine/2017/$', magazine.landing_2017, name='magazine-landing-2017'),
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     # Advertising
@@ -50,6 +51,9 @@ urlpatterns = [
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
+
+    # Centennial
+    url(r'^100/$', theme.centennial, name='centennial-landing'),
 
     # Events
     url(r'^events/', include(events_urls)),

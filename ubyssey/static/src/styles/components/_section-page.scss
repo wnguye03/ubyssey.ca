@@ -10,6 +10,7 @@
     // Structure
     margin-bottom: 1rem;
     padding-bottom: 1rem;
+    flex: 1;
 
     // Border
     border-bottom: thin dotted $color-border-gray-dark;
@@ -25,6 +26,7 @@
       margin-right: 0.5rem;
       margin-bottom: 0;
       padding-bottom: 0;
+      flex: 1;
 
       // Border
       border-bottom: none;
