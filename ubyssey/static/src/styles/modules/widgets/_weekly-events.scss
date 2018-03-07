@@ -1,6 +1,11 @@
 .c-weekly-events {
   // Structure
   display: flex;
+
+  @media($bp-smaller-than-phablet){
+    // Structure
+    display: block;
+  }
 }
 
 .c-weekly-events__event {
@@ -18,6 +23,10 @@
 
   &:last-child {
     padding-right: 0;
+  }
+  
+  @media($bp-smaller-than-phablet) {
+      margin-bottom: 1rem;
   }
 }
 

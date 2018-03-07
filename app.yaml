@@ -3,11 +3,12 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
-- url: /.well-known
-  static_dir: well-known
 
 libraries:
 - name: MySQLdb

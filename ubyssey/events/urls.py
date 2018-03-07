@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^submit/$', views.submit_landing, name='events-submit-landing'),
     url(r'^edit/success/', views.edit_success, name='events-edit-success'),
     url(r'^edit/(?P<secret_id>.+)', views.edit, name='events-edit'),
+    url(r'^import/', views.event_import, name='events-import'),
     url(r'^(?P<event_id>.+)/$', views.event, name='event'),
 ]

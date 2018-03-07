@@ -36,13 +36,13 @@ deploy:
     local-dir: ${TRAVIS_BUILD_DIR}/gcs
     detect_encoding: true
     cache_control: "max-age=31536000"
-    repo: ubyssey/ubyssey.ca
     on:
-      branch: production
+      tags: true
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd
     default: true
+    version: ubyssey-${TRAVIS_TAG//./-} # Replace periods with hyphens
     skip_cleanup: true
     on:
-      branch: production
+      tags: true

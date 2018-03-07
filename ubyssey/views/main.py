@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
-from dispatch.models import Article, Page, Section, Topic, Person
+from dispatch.models import Article, Section, Topic, Person
 
 from ubyssey.helpers import ArticleHelper, PageHelper
 
@@ -84,16 +84,16 @@ class UbysseyTheme(object):
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json = json.dumps([a.full_name for a in article.authors.all()])
+        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
             'article': article,
-            'authors_json': authors_json,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
-            'base_template': 'base.html'
+            'base_template': 'base.html',
+            'reading_time': ArticleHelper.get_reading_time(article)
         }
 
         template = article.get_template_path()
@@ -102,7 +102,7 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.full_name for a in article.authors.all()])
+        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
 
         context = {
             'article': article,
@@ -237,7 +237,7 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        article_list = Article.objects.filter(authors=person, is_published=True).order_by(order_by)
+        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(order_by)
 
         if query:
             article_list = article_list.filter(headline__icontains=query)
@@ -366,3 +366,6 @@ class UbysseyTheme(object):
 
     def newsletter(self, request):
         return render(request, 'objects/newsletter.html', {})
+
+    def centennial(self, request):
+        return render(request, 'centennial.html', {})
