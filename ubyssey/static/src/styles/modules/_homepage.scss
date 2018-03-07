@@ -514,4 +514,12 @@ ol.article-list {
     letter-spacing: 0;
     margin-right: 2px;
     font-size: 13px;
+
+}
+
+@media($bp-smaller-than-phablet){
+  .o-trending-badge {
+    margin-left: 15px;
+    margin-top: 15px;
+  }
 }
