@@ -560,7 +560,8 @@ ol.article-list {
   }
 }
 
-.o-trending-badge {
+.o-trending-article {
+  .o-trending-badge {
     color: white;
     width: 22px;
     height: 22px;
@@ -571,12 +572,12 @@ ol.article-list {
     letter-spacing: 0;
     margin-right: 2px;
     font-size: 13px;
+    margin-bottom: 5px;
 
-}
-
-@media($bp-smaller-than-phablet){
-  .o-trending-badge {
-    margin-left: 15px;
-    margin-top: 15px;
+    @media($bp-smaller-than-phablet){
+      margin-left: 15px;
+      margin-top: 15px;
+      margin-bottom: 0px;
+    }
   }
 }

@@ -4,24 +4,19 @@
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
         <div class="cell left">
-
         {% if articles.trending %}
-
-          {% with articles.trending as trending_articles %}
+          <div class="o-trending-article">
+          {% with articles.trending as trending_article %}
               <div>
                 <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
                 <font color="red"> <b> TRENDING <b> </font>
               </div>
-
-              {% for article in trending_articles%}
-
-                <article class="secondary padded">
-                    <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
-                    <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
-                </article>
-
-             {% endfor %}
+              <article class="secondary padded">
+                  <h2 class="headline"><a href="{{ trending_article.get_absolute_url }}?ref=frontpage">{{ trending_article.headline|safe }}</a></h2>
+                  <p class="o-article__snippet"><span class="timestamp">{{ trending_article.published_at|naturaltime }}</span>{{ trending_article.snippet|safe }}</p>
+              </article>
           {% endwith %}
+          </div>
         {% else %}
           {% with articles.secondary as article %}
             <article class="secondary padded">

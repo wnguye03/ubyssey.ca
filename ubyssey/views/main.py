@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 import json
 
 from django.shortcuts import render_to_response
@@ -31,8 +32,7 @@ class UbysseyTheme(object):
             max_days=7
         )
 
-        trendingpage = ArticleHelper.get_trending()
-        # print frontpage
+        trending_page = ArticleHelper.get_trending()
 
         elections = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
 
@@ -46,7 +46,8 @@ class UbysseyTheme(object):
                 'secondary': frontpage[1],
                 'thumbs': frontpage[2:4],
                 'bullets': frontpage[4:6],
-                'trending': trendingpage[0:5],
+                # Get random trending article
+                'trending': random.choice(trending_page),
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')

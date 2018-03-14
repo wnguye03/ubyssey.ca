@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from random import randint
 
 from django.http import Http404
@@ -219,9 +220,9 @@ class ArticleHelper(object):
 
         end = datetime.datetime.now()
         start = end - datetime.timedelta(hours=DURATION)
-        time_range = (start, end)
+        time_range = (pytz.utc.localize(start), pytz.utc.localize(end))
         trending_articles = articles.filter(
-            created_at__range=(time_range),
+            published_at__range=(time_range),
             views__gt=1000)
 
         return list(trending_articles.order_by('-views'))
