@@ -10,7 +10,7 @@ __pycache__/
 
 node_modules/
 
-# Mac file
+# Ignore Mac specific empty file
 .DS_Store
 
 ubyssey/settings*.py
