@@ -32,7 +32,7 @@ class UbysseyTheme(object):
             max_days=7
         )
 
-        trending_page = ArticleHelper.get_trending()
+        trending_article = ArticleHelper.get_trending()
 
         elections = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
 
@@ -47,7 +47,7 @@ class UbysseyTheme(object):
                 'thumbs': frontpage[2:4],
                 'bullets': frontpage[4:6],
                 # Get random trending article
-                'trending': random.choice(trending_page),
+                'trending': trending_article,
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')

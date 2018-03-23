@@ -225,7 +225,12 @@ class ArticleHelper(object):
             published_at__range=(time_range),
             views__gt=1000)
 
-        return list(trending_articles.order_by('-views'))
+        if len(trending_articles) == 0:
+            trending_article = None
+        else:
+            trending_article = random.choice(trending_articles)
+
+        return trending_article
 
     @staticmethod
     def get_meta(article, default_image=None):
