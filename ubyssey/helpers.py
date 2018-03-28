@@ -1,6 +1,6 @@
 import datetime
 import pytz
-from random import randint
+from random import randint, choice
 
 from django.http import Http404
 from django.db import connection
@@ -228,7 +228,7 @@ class ArticleHelper(object):
         if len(trending_articles) == 0:
             trending_article = None
         else:
-            trending_article = random.choice(trending_articles)
+            trending_article = choice(trending_articles)
 
         return trending_article
 
