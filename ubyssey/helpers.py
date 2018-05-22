@@ -250,14 +250,10 @@ class ArticleHelper(object):
 class PageHelper(object):
     @staticmethod
     def get_page(request, slug):
-        if request.user.is_staff:
-            try:
-                page = Page.objects.get(slug=slug, head=True)
-            except Article.DoesNotExist:
-                raise Http404("This page does not exist.")
-        else:
-            try:
-                page = Page.objects.get(slug=slug, is_published=True)
-            except Page.DoesNotExist:
-                raise Http404("This page does not exist.")
-        return page
+        """If the url requested includes the querystring parameters 'version' and 'preview_id',
+        get the page with the specified version and preview_id.
+
+        Otherwise, get the published version of the page.
+        """
+
+        return Page.objects.get(request=request, slug=slug, is_published=True)
