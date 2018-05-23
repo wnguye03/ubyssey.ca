@@ -21,7 +21,8 @@
     "Ron Yong",
     "Axel Jacobsen",
     "Jonathan Chapple",
-    "Ben Holmes"
+    "Ben Holmes",
+    "Rowan Baker-French"
   ],
   "devDependencies": {
     "babel-core": "^6.9.1",
@@ -48,5 +49,7 @@
     "node": ">=0.10"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "node-sass": "^4.9.0"
+  }
 }

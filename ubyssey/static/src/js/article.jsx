@@ -2,6 +2,8 @@ import React from 'react';
 import './modules/Youtube';
 import ArticleList from './components/ArticleList.jsx';
 import Search from './components/Search.jsx';
+//necessary to import Poll here so it can see the DOM
+import Poll from './components/Poll.jsx';
 
 window.articleHeader = false;
 
@@ -40,3 +42,5 @@ React.render(
     <Search />,
     document.getElementById('search-form')
 );
+
+

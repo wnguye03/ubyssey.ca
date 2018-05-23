@@ -2,6 +2,7 @@ import React from 'react';
 import Galleries from './Galleries.jsx';
 import * as mp from '../modules/Mixpanel';
 
+
 const Article = React.createClass({
 
     getInitialState() {
@@ -153,6 +154,7 @@ const Article = React.createClass({
               {this.props.html ? this.renderHTML() : null}
               <Galleries galleries={this.state.galleries} />
           </div>
+          
           );
     }
 });
