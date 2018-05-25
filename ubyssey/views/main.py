@@ -71,6 +71,7 @@ class UbysseyTheme(object):
             'popular': popular,
             'blog': blog,
             'day_of_week': datetime.now().weekday(),
+            'version': settings.VERSION
         }
         return render(request, 'homepage/base.html', context)
 
@@ -94,7 +95,8 @@ class UbysseyTheme(object):
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
-            'reading_time': ArticleHelper.get_reading_time(article)
+            'reading_time': ArticleHelper.get_reading_time(article),
+            'version': settings.VERSION
         }
 
         template = article.get_template_path()
@@ -108,7 +110,8 @@ class UbysseyTheme(object):
         context = {
             'article': article,
             'authors_json': authors_json,
-            'base_template': 'blank.html'
+            'base_template': 'blank.html',
+            'version': settings.VERSION
         }
 
         data = {
@@ -136,7 +139,8 @@ class UbysseyTheme(object):
                 'url': settings.BASE_URL[:-1] + reverse('page', args=[page.slug]),
                 'description': page.snippet if page.snippet else ''
             },
-            'page': page
+            'page': page,
+            'version': settings.VERSION
         }
 
         if page.get_template() != 'article/default.html':
@@ -165,7 +169,8 @@ class UbysseyTheme(object):
             'articles': {
                 'first': articles[0],
                 'rest': articles[1:9]
-            }
+            },
+            'version': settings.VERSION
         }
 
         return render(request, 'section.html', context)
@@ -217,7 +222,8 @@ class UbysseyTheme(object):
             },
             'articles': articles,
             'order': order,
-            'q': query
+            'q': query,
+            'version': settings.VERSION
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
@@ -264,7 +270,8 @@ class UbysseyTheme(object):
             'person': person,
             'articles': articles,
             'order': order,
-            'q': query
+            'q': query,
+            'version': settings.VERSION
         }
 
         return render(request, 'author.html', context)
@@ -288,7 +295,8 @@ class UbysseyTheme(object):
         context = {
             'sections': sections,
             'years': years,
-            'order': order
+            'order': order,
+            'version': settings.VERSION
         }
 
         query = request.GET.get('q', '').strip() or None
@@ -360,7 +368,8 @@ class UbysseyTheme(object):
             'articles': {
                 'first': articles[0] if articles else None,
                 'rest': articles[1:9]
-            }
+            },
+            'version': settings.VERSION
         }
 
         return render(request, 'section.html', context)
