@@ -1,7 +1,7 @@
 from datetime import datetime
 import random
 import json
-
+import ubyssey
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -71,7 +71,7 @@ class UbysseyTheme(object):
             'popular': popular,
             'blog': blog,
             'day_of_week': datetime.now().weekday(),
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
         return render(request, 'homepage/base.html', context)
 
@@ -96,7 +96,7 @@ class UbysseyTheme(object):
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
             'reading_time': ArticleHelper.get_reading_time(article),
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         template = article.get_template_path()
@@ -111,7 +111,7 @@ class UbysseyTheme(object):
             'article': article,
             'authors_json': authors_json,
             'base_template': 'blank.html',
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         data = {
@@ -140,7 +140,7 @@ class UbysseyTheme(object):
                 'description': page.snippet if page.snippet else ''
             },
             'page': page,
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         if page.get_template() != 'article/default.html':
@@ -170,7 +170,7 @@ class UbysseyTheme(object):
                 'first': articles[0],
                 'rest': articles[1:9]
             },
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         return render(request, 'section.html', context)
@@ -223,7 +223,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'order': order,
             'q': query,
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
@@ -271,7 +271,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'order': order,
             'q': query,
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         return render(request, 'author.html', context)
@@ -296,7 +296,7 @@ class UbysseyTheme(object):
             'sections': sections,
             'years': years,
             'order': order,
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         query = request.GET.get('q', '').strip() or None
@@ -369,7 +369,7 @@ class UbysseyTheme(object):
                 'first': articles[0] if articles else None,
                 'rest': articles[1:9]
             },
-            'version': settings.VERSION
+            'version': ubyssey.__version__
         }
 
         return render(request, 'section.html', context)

@@ -1,7 +1,8 @@
+import ubyssey
 from django.conf import settings
 
 
 def global_settings(request):
     return {
-        'version': settings.VERSION
+        'version': ubyssey.__version__
     }
