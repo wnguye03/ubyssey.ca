@@ -2,10 +2,20 @@ import React from 'react';
 import './modules/Youtube';
 import ArticleList from './components/ArticleList.jsx';
 import Search from './components/Search.jsx';
-//necessary to import Poll here so it can see the DOM
 import Poll from './components/Poll.jsx';
 
 window.articleHeader = false;
+
+$(document).ready(function() {
+    $('.c-widget-poll').each(function() {
+    
+        React.render(
+            <Poll many={false} id={$(this).data('id')} />,
+            $(this).get(0)
+        )
+    })
+});
+
 
 if ($('main.article').length) {
 

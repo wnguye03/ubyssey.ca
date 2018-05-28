@@ -6,7 +6,7 @@ from dispatch.theme.widgets import Widget
 from dispatch.theme.zones import Embed
 from dispatch.theme.fields import (
     ModelField, CharField, TextField, ArticleField, ImageField,
-    IntegerField, InvalidField, DateTimeField, BoolField, WidgetField
+    IntegerField, InvalidField, DateTimeField, BoolField, WidgetField, PollField
 )
 
 from ubyssey.events.models import Event
@@ -222,3 +222,13 @@ class AlertBanner(Widget):
 
         result['do_show'] = in_date_range(result['start_time'], result['end_time'])
         return result
+
+@register.widget
+class PollWidget(Widget):
+  id = 'poll-widget'
+  name = 'Poll Widget'
+  template = 'widgets/poll.html'
+  zones = (ArticleSidebar, Embed)
+
+  poll = PollField('Custom Poll')
+
