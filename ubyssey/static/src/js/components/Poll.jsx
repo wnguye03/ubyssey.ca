@@ -18,33 +18,45 @@ class Poll extends Component {
       hasVoted: false,
       pollQuestion: '',
       loading: true,
+      totalVotes: 0,
     }
+  }
+
+  componentDidUpdate() {
+    console.log(cookies.get('vote_id'))
   }
 
   componentDidMount() {
     //initialize poll with results if user already voted
-    if(cookies.get('voted') === 'true'){
+    if(cookies.get('vote_id')){
       this.setState({
         hasVoted: true
       })
     }
+    this.update()
+  }
+
+  update() {
     DispatchAPI.polls.getResults(this.props.id)
       .then((response)=> {
         let answers = []
         let votes = []
         let answer_ids = []
-
+        let vote_id = cookies.get('vote_id')
         for(let answer of response.answers){
           answers.push(answer['name'])
           votes.push(answer['vote_count'])
           answer_ids.push(answer['id'])
         }
+        let totalVotes = votes.reduce((acc, val) => { return acc + val; })
         this.setState({
           answers: answers,
           answer_ids: answer_ids,
           votes: votes,
+          vote_id: vote_id,
           pollQuestion: response.question,
           loading: false,
+          totalVotes: totalVotes
         })
       })
   }
@@ -93,16 +105,13 @@ class Poll extends Component {
         hasVoted: true
       }, () => {
         for(let index of this.state.checkedAnswers){
-          // console.log(this.state.answer_ids[index])
           let payload = {'answer_id': this.state.answer_ids[index]}
-          DispatchAPI.polls.vote(payload)
+          DispatchAPI.polls.vote(payload).then(response => {
+            cookies.set('vote_id', response.id, { path: '/' })
+            this.update()
+          })
         }
       })
-      if(cookies.get('voted') === 'true'){
-        alert('You may only vote once')
-      } else {
-        cookies.set('voted', 'true', { path: '/' });
-      }
   }
 
   editVote() {
@@ -113,7 +122,10 @@ class Poll extends Component {
 
   getPollResult(index) {
     let total = this.state.votes.reduce((acc, val) => { return acc + val; })
-    let width = String((100*this.state.votes[index]/total).toFixed(0)) + '%'
+    let width = 0
+    if(total !== 0){
+      width = String((100*this.state.votes[index]/total).toFixed(0)) + '%'
+    }
     return width
   }
 
@@ -180,7 +192,13 @@ class Poll extends Component {
               }
             })}
           </form>
-          {this.state.hasVoted && <button className={'poll-edit-button'} onClick={() => this.editVote()}>Edit Vote</button>}
+          {this.state.hasVoted && 
+            <div>
+              <i style={{position: 'relative', top: '-5px'}}>Total Votes: {this.state.totalVotes}</i>
+              <br/>
+              <button className={'poll-edit-button'} onClick={() => this.editVote()}>Change Vote</button>
+            </div>
+          }
         </div>
         }
         {this.state.loading && 'Loading Poll...'}
