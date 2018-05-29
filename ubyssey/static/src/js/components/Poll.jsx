@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import DispatchAPI from '../api/dispatch'
 
-import Cookies from 'universal-cookie';
+import Cookies from 'js-cookie';
  
-const cookies = new Cookies();
-
 const COLOR_OPACITY = .8
 
 class Poll extends Component {
@@ -19,30 +17,39 @@ class Poll extends Component {
       pollQuestion: '',
       loading: true,
       totalVotes: 0,
+      showResults: false,
+      pollOpen: false,
     }
-  }
-
-  componentDidUpdate() {
-    console.log(cookies.get('vote_id'))
   }
 
   componentDidMount() {
     //initialize poll with results if user already voted
-    if(cookies.get('vote_id')){
-      this.setState({
-        hasVoted: true
-      })
-    }
-    this.update()
+    console.log('cookie', Cookies.get(this.pollCookie()))
+    let answer_id = Number(this.getCookie('answer_id'))
+    this.update(answer_id)
   }
 
-  update() {
+  pollCookie() {
+    return 'poll_id_' + String(this.props.id)
+  }
+
+  getCookie(field){
+    let cookie = Cookies.get(this.pollCookie())
+    if(typeof cookie === 'string' && cookie !== ''){
+      cookie = JSON.parse(cookie)
+      return cookie[field]
+    }
+    return null
+  }
+
+  update(answer_id) {
     DispatchAPI.polls.getResults(this.props.id)
       .then((response)=> {
+        console.log(response)
         let answers = []
         let votes = []
         let answer_ids = []
-        let vote_id = cookies.get('vote_id')
+        let vote_id = Number(this.getCookie('vote_id'))
         for(let answer of response.answers){
           answers.push(answer['name'])
           votes.push(answer['vote_count'])
@@ -56,7 +63,17 @@ class Poll extends Component {
           vote_id: vote_id,
           pollQuestion: response.question,
           loading: false,
-          totalVotes: totalVotes
+          totalVotes: totalVotes,
+          showResults: response.show_results,
+          pollOpen: response.is_open
+        }, () => {
+          if(answer_id){
+            let checkedAnswers = this.state.checkedAnswers.concat(this.state.answer_ids.indexOf(answer_id))
+            this.setState({
+              hasVoted: true,
+              checkedAnswers: checkedAnswers
+            })
+          }
         })
       })
   }
@@ -107,7 +124,7 @@ class Poll extends Component {
         for(let index of this.state.checkedAnswers){
           let payload = {'answer_id': this.state.answer_ids[index]}
           DispatchAPI.polls.vote(payload).then(response => {
-            cookies.set('vote_id', response.id, { path: '/' })
+            Cookies.set(this.pollCookie(), {pole_id: this.props.id, vote_id: response.id, answer_id: this.state.answer_ids[index]}, { path: '/' })
             this.update()
           })
         }
@@ -132,8 +149,8 @@ class Poll extends Component {
   render() {
     const pollStyle = this.state.hasVoted ? 'poll-results' : 'poll-voting'
     const buttonStyle = this.state.hasVoted ? 'poll-button-voted': 'poll-button-no-vote'
-    const showResult = this.state.hasVoted ? COLOR_OPACITY : 0
-    const notShowResult = this.state.hasVoted ? 0 : COLOR_OPACITY
+    const showResult = this.state.showResults ? (this.state.hasVoted ? COLOR_OPACITY : 0) : 0
+    const notShowResult = this.state.showResults ? (this.state.hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
     return (
       <div>
         {!this.state.loading && 
@@ -158,6 +175,7 @@ class Poll extends Component {
                 )
               }else{
                 let isSelected = this.state.checkedAnswers.includes(index) ? 'poll-selected' : 'poll-not-selected'
+                let buttonSelected = this.state.checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
                 return (
                   <label className={['poll-button-label', buttonStyle].join(' ')}>
                     
@@ -172,7 +190,7 @@ class Poll extends Component {
 
                     <span className={'poll-button'}
                       style={{opacity: notShowResult}}>
-                      <span className={'poll-button-inner'}></span>
+                      <span className={['poll-button-inner', buttonSelected].join(' ')} ></span>
                     </span>
 
                     <span className={'poll-percentage'}
@@ -192,12 +210,21 @@ class Poll extends Component {
               }
             })}
           </form>
-          {this.state.hasVoted && 
+          { (this.state.hasVoted && this.state.showResults) &&
             <div>
               <i style={{position: 'relative', top: '-5px'}}>Total Votes: {this.state.totalVotes}</i>
               <br/>
               <button className={'poll-edit-button'} onClick={() => this.editVote()}>Change Vote</button>
             </div>
+          }
+          { (this.state.hasVoted && !this.state.showResults) && 
+            <div>
+              <p>Poll results hidden from public</p>
+              <h3>Thank you for your opinion</h3>
+            </div>
+          }
+          { !this.state.pollOpen &&
+            <h3>This poll is currently closed</h3>
           }
         </div>
         }
