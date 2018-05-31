@@ -74,6 +74,7 @@
   left: 0;
   height: 100%;
   z-index: -1;
+  width: 0;
 
   // Extra 
   transition: width .5s, opacity .25s;
@@ -137,7 +138,7 @@
   height: 15px;
   align-self: center;
   position: absolute;
-  right: -25px;
+  right: -35px;
   display: flex;
   align-items: center;
   justify-content: center;

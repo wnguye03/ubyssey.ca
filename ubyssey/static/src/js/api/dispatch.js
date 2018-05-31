@@ -48,12 +48,14 @@ function getRequest(route, id=null, query={}) {
 }
 
 function postRequest(route, id=null, payload={}) {
+  console.log('postRequest')
   return fetch(
     buildRoute(route, id),
     {
+      // credentials: 'include',
       method: 'POST',
       headers: DEFAULT_HEADERS,
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     }
   )
   .then(parseJSON)
