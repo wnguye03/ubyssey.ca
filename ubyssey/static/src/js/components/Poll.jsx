@@ -3,7 +3,7 @@ import DispatchAPI from '../api/dispatch'
 
 import Cookies from 'js-cookie'
 import PollAnswer from './PollAnswer.jsx'
- 
+
 const COLOR_OPACITY = .8
 
 class Poll extends Component {
@@ -49,8 +49,8 @@ class Poll extends Component {
   setCookie(vote_id, answer_id){
     console.log(vote_id, answer_id)
     Cookies.set(
-      this.getCookieName(), 
-      {pole_id: this.props.id, vote_id: vote_id, answer_id: answer_id}, 
+      this.getCookieName(),
+      {pole_id: this.props.id, vote_id: vote_id, answer_id: answer_id},
       { path: '/' }
     )
   }
@@ -62,7 +62,7 @@ class Poll extends Component {
         let answers = []
         let votes = []
         let answer_ids = []
-        let vote_id = Number(this.getCookie('vote_id'))
+        let vote_id = this.getCookie('vote_id')
 
         for(let answer of response.answers){
           answers.push(answer['name'])
@@ -77,7 +77,7 @@ class Poll extends Component {
             this.setCookie(vote_id, answer_ids[0])
           }
         }
-        
+
         let totalVotes = response.total_votes
         this.setState({
           answers: answers,
@@ -114,7 +114,7 @@ class Poll extends Component {
 
       if(!this.props.many){
         newCheckedAnswers = []
-        newCheckedAnswers.push(index)      
+        newCheckedAnswers.push(index)
       }
 
       else if(this.props.many){
@@ -174,7 +174,7 @@ class Poll extends Component {
     const notShowResult = showResults ? (hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
     return (
       <div>
-        {!loading && 
+        {!loading &&
           <div className={['poll-container', pollStyle].join(' ')}>
           <h1>{pollQuestion}</h1>
           <form className={'poll-answer-form'}>
@@ -183,9 +183,9 @@ class Poll extends Component {
               //   let selected = checkedAnswers.includes(index) ? 'selected' : ''
               //   return (
               //     <label className={['block', buttonStyle].join(' ')}>
-              //       <input className={['poll-button', selected].join(' ')} 
-              //         name={answer} 
-              //         type={'radio'} 
+              //       <input className={['poll-button', selected].join(' ')}
+              //         name={answer}
+              //         type={'radio'}
               //         value={answer}
               //         checked={checkedAnswers.includes(index)}
               //         onChange={(e) => this.changeAnswers(e, index)}>
@@ -199,7 +199,7 @@ class Poll extends Component {
                 let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
                 let answerPercentage = this.getPollResult(index)
                 return (
-                  <PollAnswer 
+                  <PollAnswer
                     key={answer}
                     index={index}
                     answer={answer}
@@ -219,7 +219,7 @@ class Poll extends Component {
               <button className={'poll-edit-button'} onClick={() => this.editVote()}>Change Vote</button>
             </div>
           }
-          { (hasVoted && !showResults) && 
+          { (hasVoted && !showResults) &&
             <div>
               <p>Poll results hidden from public</p>
               <h3>Thank you for your opinion</h3>
