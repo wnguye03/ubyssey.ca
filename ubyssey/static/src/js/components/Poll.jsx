@@ -165,7 +165,7 @@ class Poll extends Component {
   }
 
   render() {
-    const { answers, checkedAnswers, hasVoted, pollQuestion,
+    const { answers, checkedAnswers, hasVoted, pollQuestion, many,
       loading, totalVotes, showResults, pollOpen} = this.state
 
     const pollStyle = hasVoted ? 'poll-results' : 'poll-voting'
@@ -179,37 +179,22 @@ class Poll extends Component {
           <h1>{pollQuestion}</h1>
           <form className={'poll-answer-form'}>
             {answers.map((answer, index) =>{
-              // if(this.props.many){
-              //   let selected = checkedAnswers.includes(index) ? 'selected' : ''
-              //   return (
-              //     <label className={['block', buttonStyle].join(' ')}>
-              //       <input className={['poll-button', selected].join(' ')} 
-              //         name={answer} 
-              //         type={'radio'} 
-              //         value={answer}
-              //         checked={checkedAnswers.includes(index)}
-              //         onChange={(e) => this.changeAnswers(e, index)}>
-              //         {answer}
-              //       </input>
-              //       <div className={'poll-result-bar'} style={{width: this.getPollResult(index)}}> </div>
-              //     </label>
-              //   )
-              // }else{
-                let isSelected = checkedAnswers.includes(index) ? 'poll-selected' : 'poll-not-selected'
-                let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
-                let answerPercentage = this.getPollResult(index)
-                return (
-                  <PollAnswer 
-                    key={answer}
-                    index={index}
-                    answer={answer}
-                    hasVoted={hasVoted}
-                    showResults={showResults}
-                    checkedAnswers={checkedAnswers}
-                    answerPercentage={answerPercentage}
-                    changeAnswers={(e) => this.changeAnswers(e, index)}
-                    />
-                )
+              let isSelected = checkedAnswers.includes(index) ? 'poll-selected' : 'poll-not-selected'
+              let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
+              let answerPercentage = this.getPollResult(index)
+              return (
+                <PollAnswer 
+                  key={answer}
+                  many={many}
+                  index={index}
+                  answer={answer}
+                  hasVoted={hasVoted}
+                  showResults={showResults}
+                  checkedAnswers={checkedAnswers}
+                  answerPercentage={answerPercentage}
+                  changeAnswers={(e) => this.changeAnswers(e, index)}
+                  />
+              )
             })}
           </form>
           { (hasVoted && showResults) &&
