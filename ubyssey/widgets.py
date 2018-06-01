@@ -228,7 +228,6 @@ class PollWidget(Widget):
   id = 'poll-widget'
   name = 'Poll Widget'
   template = 'widgets/poll.html'
-  zones = (ArticleSidebar, Embed)
+  zones = (Embed, )
 
   poll = PollField('Custom Poll')
-
