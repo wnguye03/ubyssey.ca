@@ -133,19 +133,13 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_years():
-        # query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article WHERE published_at IS NOT NULL ORDER BY published_at DESC'
-        #
-        # cursor = connection.cursor()
-        # cursor.execute(query)
-        #
-        # results = cursor.fetchall()
-        #
-        # years = [r[0] for r in results]
-        #
-        # return filter(lambda y: y is not None, years)
+        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
+        years = []
 
-        # TODO: fix this query ^ or replace with something better
-        return [2017, 2016, 2015]
+        for publish_date in publish_dates:
+            years.append(publish_date.year)
+
+        return years
 
     @staticmethod
     def get_topic(topic_name):
@@ -250,14 +244,10 @@ class ArticleHelper(object):
 class PageHelper(object):
     @staticmethod
     def get_page(request, slug):
-        if request.user.is_staff:
-            try:
-                page = Page.objects.get(slug=slug, head=True)
-            except Article.DoesNotExist:
-                raise Http404("This page does not exist.")
-        else:
-            try:
-                page = Page.objects.get(slug=slug, is_published=True)
-            except Page.DoesNotExist:
-                raise Http404("This page does not exist.")
-        return page
+        """If the url requested includes the querystring parameters 'version' and 'preview_id',
+        get the page with the specified version and preview_id.
+
+        Otherwise, get the published version of the page.
+        """
+
+        return Page.objects.get(request=request, slug=slug, is_published=True)
