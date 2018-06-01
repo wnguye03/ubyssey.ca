@@ -48,7 +48,6 @@ function getRequest(route, id=null, query={}) {
 }
 
 function postRequest(route, id=null, payload={}) {
-  console.log('postRequest')
   return fetch(
     buildRoute(route, id),
     {
