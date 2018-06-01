@@ -19,15 +19,8 @@ class Poll extends Component {
       loading: true,
       totalVotes: 0,
       showResults: false,
-      pollOpen: false,
+      pollOpen: true,
     }
-  }
-
-  componentDidMount() {
-    //initialize poll with results if user already voted
-    let init = true
-    let answer_id = Number(this.getCookie('answer_id'))
-    this.update(init, answer_id)
   }
 
   getCookieName() {
@@ -46,59 +39,82 @@ class Poll extends Component {
     return cookie
   }
 
-  setCookie(vote_id, answer_id){
-    Cookies.set(
-      this.getCookieName(),
-      {pole_id: this.props.id, vote_id: vote_id, answer_id: answer_id},
-      { path: '/' }
-    )
+  setCookie(vote_id, answer_id, init){
+    if(this.state.pollOpen || init){
+      Cookies.set(
+        this.getCookieName(),
+        {pole_id: this.props.id, vote_id: vote_id, answer_id: answer_id},
+        { path: '/' }
+      )
+    }
+  }
+
+  componentDidMount() {
+    let init = true
+    let answer_id = Number(this.getCookie('answer_id'))
+    this.update(init, answer_id)
   }
 
   update(init, answer_id) {
     DispatchAPI.polls.getResults(this.props.id)
-      .then((response)=> {
-        let answers = []
-        let votes = []
-        let answer_ids = []
-        let vote_id = this.getCookie('vote_id')
+    .then((response)=> {
+      let answers = []
+      let votes = []
+      let answer_ids = []
+      let vote_id = this.getCookie('vote_id')
 
-        for(let answer of response.answers){
-          answers.push(answer['name'])
-          votes.push(answer['vote_count'])
-          answer_ids.push(answer['id'])
+      for(let answer of response.answers){
+        answers.push(answer['name'])
+        votes.push(answer['vote_count'])
+        answer_ids.push(answer['id'])
+      }
+
+      if(init){
+        let cookie = this.getCookie()
+        if(!cookie || !cookie.answer_id){
+          this.setCookie(vote_id, answer_ids[0], true)
         }
+      }
 
-        if(init){
-          // if the cookie or the answer_id is not set
-          let cookie = this.getCookie()
-          if(!cookie || !cookie.answer_id){
-            this.setCookie(vote_id, answer_ids[0])
-          }
+      let totalVotes = response.total_votes
+      this.setState({
+        answers: answers,
+        answer_ids: answer_ids,
+        votes: votes,
+        vote_id: vote_id,
+        pollQuestion: response.question,
+        loading: false,
+        totalVotes: totalVotes,
+        showResults: response.show_results,
+        pollOpen: response.is_open
+      }, () => {
+        if(answer_id){
+          let checkedAnswers = this.state.checkedAnswers.concat(this.state.answer_ids.indexOf(answer_id))
+          this.setState({
+            hasVoted: true,
+            checkedAnswers: checkedAnswers
+          })
         }
-
-        let totalVotes = response.total_votes
-        this.setState({
-          answers: answers,
-          answer_ids: answer_ids,
-          votes: votes,
-          vote_id: vote_id,
-          pollQuestion: response.question,
-          loading: false,
-          totalVotes: totalVotes,
-          showResults: response.show_results,
-          pollOpen: response.is_open
-        }, () => {
-          if(answer_id){
-            let checkedAnswers = this.state.checkedAnswers.concat(this.state.answer_ids.indexOf(answer_id))
-            this.setState({
-              hasVoted: true,
-              checkedAnswers: checkedAnswers
-            })
-          }
-        })
       })
+    })
   }
 
+  onVote() {
+      for(let index of this.state.checkedAnswers){
+        let payload = {poll_id: this.props.id, vote_id: this.state.vote_id, answer_id: this.state.answer_ids[this.state.checkedAnswers[0]]}
+        DispatchAPI.polls.vote(payload).then(response => {
+          this.setCookie(response.id, this.state.answer_ids[index])
+          this.update()
+        })
+      }
+  }
+
+  editVote() {
+    this.setState({
+      hasVoted: false
+    })
+  }
+  
   changeAnswers(e, index){
     if(!this.state.hasVoted){
       let deselect = false
@@ -125,28 +141,13 @@ class Poll extends Component {
         if(!deselect){
           if(this.props.many){
             //wait for vote submit
+            //do something to handle multiple votes
           }else{
             this.onVote();
           }
         }
       })
     }
-  }
-
-  onVote() {
-      for(let index of this.state.checkedAnswers){
-        let payload = {poll_id: this.props.id, vote_id: this.state.vote_id, answer_id: this.state.answer_ids[this.state.checkedAnswers[0]]}
-        DispatchAPI.polls.vote(payload).then(response => {
-          this.setCookie(response.id, this.state.answer_ids[index])
-          this.update()
-        })
-      }
-  }
-
-  editVote() {
-    this.setState({
-      hasVoted: false
-    })
   }
 
   getPollResult(index) {
@@ -159,11 +160,11 @@ class Poll extends Component {
     }
   }
 
-
-
   renderPollClosed() {
     return(
-      <span>This poll is currently closed </span>
+      <div className={'poll-overlay'}>
+        <span><h2>This poll is currently closed</h2></span>
+      </div>
     )
   }
 
@@ -196,41 +197,44 @@ class Poll extends Component {
     const { answers, checkedAnswers, hasVoted, pollQuestion, many,
       loading, totalVotes, showResults, pollOpen} = this.state
 
-    const pollStyle = hasVoted ? 'poll-results' : 'poll-voting'
+    const pollResult = hasVoted ? 'poll-results' : 'poll-voting'
+    const pollFocus = pollOpen ? '' : 'poll-de-focus'
     const buttonStyle = hasVoted ? 'poll-button-voted': 'poll-button-no-vote'
     const showResult = showResults ? (hasVoted ? COLOR_OPACITY : 0) : 0
     const notShowResult = showResults ? (hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
     return (
-      <div>
+      <div className={'poll-wrapper'}>
         {!loading &&
-          <div className={['poll-container', pollStyle].join(' ')}>
-            <h1>{pollQuestion}</h1>
-            <form className={'poll-answer-form'}>
-              {answers.map((answer, index) =>{
-                let isSelected = checkedAnswers.includes(index) ? 'poll-selected' : 'poll-not-selected'
-                let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
-                let answerPercentage = this.getPollResult(index)
-                return (
-                  <PollAnswer 
-                    key={answer}
-                    many={many}
-                    index={index}
-                    answer={answer}
-                    hasVoted={hasVoted}
-                    showResults={showResults}
-                    checkedAnswers={checkedAnswers}
-                    answerPercentage={answerPercentage}
-                    changeAnswers={(e) => this.changeAnswers(e, index)}
-                    />
-                )
-              })}
-            </form>
+          <div className={['poll-container', pollResult].join(' ')}>
+            <div className={['poll-inner-container', pollFocus].join(' ')}>
+              <h1>{pollQuestion}</h1>
+              <form className={'poll-answer-form'}>
+                {answers.map((answer, index) =>{
+                  let isSelected = checkedAnswers.includes(index) ? 'poll-selected' : 'poll-not-selected'
+                  let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
+                  let answerPercentage = this.getPollResult(index)
+                  return (
+                    <PollAnswer 
+                      key={answer}
+                      many={many}
+                      index={index}
+                      answer={answer}
+                      hasVoted={hasVoted}
+                      showResults={showResults}
+                      checkedAnswers={checkedAnswers}
+                      answerPercentage={answerPercentage}
+                      changeAnswers={(e) => this.changeAnswers(e, index)}
+                      />
+                  )
+                })}
+              </form>
+            </div>
+            { !pollOpen && this.renderPollClosed() }
           </div>
         }
-        { (hasVoted && showResults) && this.renderShowResults(totalVotes) }
-        { (hasVoted && !showResults) && this.renderNoResults() }
-        { !pollOpen && this.renderPollClosed()}
-        {/* {loading && this.renderLoadingPoll()} */}
+        { (pollOpen && hasVoted && showResults) && this.renderShowResults(totalVotes) }
+        { (pollOpen && hasVoted && !showResults) && this.renderNoResults() }
+        { loading && this.renderLoadingPoll() }
       </div>
     )
   }

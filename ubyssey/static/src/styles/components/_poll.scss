@@ -1,16 +1,17 @@
-.poll-container {
-  //structure
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  margin: 15px;
-  max-width: 500px;
 
+.poll-container {
+  margin: 15px 0;
+  max-width: 585px;
 
   // Border
   border: 2px solid black;
   @media($bp-larger-than-phablet) {
     margin-left: 0;
   }
+}
+.poll-inner-container{
+  //structure
+  margin: 1.5rem;
 }
 
 .poll-answer-form {
@@ -68,7 +69,6 @@
   background-color: $color-ub-blue-light; 
   border-radius: 5px;
 
-
   // Structure
   position: absolute;
   display: flex;
@@ -81,13 +81,16 @@
   transition: width .5s, opacity .25s;
 }
 
-.poll-container input {
-  // Structure
-  position: absolute;
+.poll-container {
+  position: relative;
+  input {
+    // Structure
+    position: absolute;
 
-  // Extra
-  cursor: pointer;
-  opacity: 0;
+    // Extra
+    cursor: pointer;
+    opacity: 0;
+  }
 }
 
 .poll-percentage {
@@ -190,4 +193,35 @@
 .poll-edit-button {
   // Structure
   margin-bottom: 15px;
+}
+
+.poll-de-focus {
+  // Structure
+  position:relative;
+
+  // Extra
+  opacity: .5;
+}
+
+.poll-overlay{
+  // Structure
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: inherit;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+
+  // Extra
+  opacity: 1;
+  transition: .25s;
+
+  &:hover{
+    opacity: 0.05;
+  }
+
+
 }
