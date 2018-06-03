@@ -70,6 +70,11 @@ gulp.task('copy:images', ['clean:images'], function() {
     .pipe(gulp.dest('./dist/images/'));
 });
 
+gulp.task('copy:videos', ['clean:videos'], function() {
+  return gulp.src('./src/videos/**/*')
+    .pipe(gulp.dest('./dist/videos/'));
+});
+
 gulp.task('copy:fonts', ['clean:fonts'], function() {
   return gulp.src('./src/fonts/**/*')
     .pipe(gulp.dest('./dist/fonts/'));
@@ -90,18 +95,24 @@ gulp.task('clean:images', function() {
     .pipe(clean());
 });
 
+gulp.task('clean:videos', function() {
+  return gulp.src('./dist/videos/', {read: false})
+    .pipe(clean());
+});
+
 gulp.task('clean:fonts', function() {
   return gulp.src('./dist/fonts/', {read: false})
     .pipe(clean());
 });
 
-gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:fonts']);
+gulp.task('build', ['webpack:build', 'sass:build', 'copy:images', 'copy:videos', 'copy:fonts']);
 
-gulp.task('build-dev', ['webpack:build-dev', 'sass:build-dev', 'copy:images', 'copy:fonts']);
+gulp.task('build-dev', ['webpack:build-dev', 'sass:build-dev', 'copy:images', 'copy:videos', 'copy:fonts']);
 
 gulp.task('default', ['build-dev'], function() {
   gulp.watch(['./src/js/**/*'],     ['webpack:build-dev']);
   gulp.watch(['./src/styles/**/*'], ['sass:build-dev']);
   gulp.watch(['./src/images/**/*'], ['copy:images']);
+  gulp.watch(['./src/videos/**/*'], ['copy:videos']);
   gulp.watch(['./src/fonts/**/*'],  ['copy:fonts']);
 });
