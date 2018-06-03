@@ -25,6 +25,7 @@ after_success:
 # replace deploy settings with production settings
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
+- rm -rf .git/
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
