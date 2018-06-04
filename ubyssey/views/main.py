@@ -1,7 +1,7 @@
 from datetime import datetime
 import random
 import json
-import ubyssey
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -13,6 +13,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from dispatch.models import Article, Section, Topic, Person
 
+import ubyssey
 from ubyssey.helpers import ArticleHelper, PageHelper
 
 def parse_int_or_none(maybe_int):
@@ -73,6 +74,7 @@ class UbysseyTheme(object):
             'day_of_week': datetime.now().weekday(),
             'version': ubyssey.__version__
         }
+
         return render(request, 'homepage/base.html', context)
 
     def article(self, request, section=None, slug=None):

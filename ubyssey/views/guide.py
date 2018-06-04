@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 
+import ubyssey
 from ubyssey.helpers import ArticleHelper
 
 class GuideTheme(object):
@@ -8,7 +9,7 @@ class GuideTheme(object):
 
     def landing(self, request):
         """The Guide to UBC landing page."""
-        return render(request, 'guide/index.html', {})
+        return render(request, 'guide/index.html', {'version': ubyssey.__version__})
 
     def article(self, request, slug=None):
         """Guide article page."""
@@ -35,7 +36,8 @@ class GuideTheme(object):
             'title': article.headline,
             'meta': ArticleHelper.get_meta(article),
             'article': article,
-            'next': [next_a, next_b]
+            'next': [next_a, next_b],
+            'version': ubyssey.__version__
         }
 
         return render(request, 'guide/article.html', context)
