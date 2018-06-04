@@ -32,22 +32,24 @@
     <article class="oyl-article">
       <header class="oyl-header">
         <div class="oyl-header__container">
-          <div class="oyl-header__logo">
-            <a href="https://www.ubyssey.ca"></a>
-          </div>
-          <div class="oyl-header__overlay">
-            <div class="oyl-article__header">
-              <h2 class="oyl-article__subtitle">{{ article.template_fields.subtitle }}</h2>
-              <h1 class="oyl-article__title">{{ article.template_fields.title }}</h1>
-              <p class="oyl-article__snippet">{{ article.template_fields.snippet }}</p>
-              <p class="oyl-article__byline">By Samantha McCabe &nbsp;&middot;&nbsp; June 3, 2018</p>
+          <div>
+            <div class="oyl-header__logo">
+              <a href="https://www.ubyssey.ca"></a>
             </div>
+            <div class="oyl-header__overlay">
+              <div class="oyl-article__header">
+                <h2 class="oyl-article__subtitle">{{ article.template_fields.subtitle }}</h2>
+                <h1 class="oyl-article__title">{{ article.template_fields.title }}</h1>
+                <p class="oyl-article__snippet">{{ article.template_fields.snippet }}</p>
+                <p class="oyl-article__byline">By Samantha McCabe &nbsp;&middot;&nbsp; June 3, 2018</p>
+              </div>
+            </div>
+            <div class="oyl-header__shadow"></div>
+            <video id="header-video" preload="yes" class="oyl-header__video" autoplay muted playsinline>
+              <source src="{{ article.template_fields.video_src }}.mp4" type="video/mp4">
+              <source src="{{ article.template_fields.video_src }}.ogg" type="video/ogg">
+            </video>
           </div>
-          <div class="oyl-header__shadow"></div>
-          <video id="header-video" preload="yes" class="oyl-header__video" width="100%" autoplay muted playsinline>
-            <source src="{{ article.template_fields.video_src }}.mp4" type="video/mp4">
-            <source src="{{ article.template_fields.video_src }}.ogg" type="video/ogg">
-          </video>
         </div>
         <nav class="oyl-nav js-sticky">
           <a class="oyl-nav__title">One Year Later</a>
