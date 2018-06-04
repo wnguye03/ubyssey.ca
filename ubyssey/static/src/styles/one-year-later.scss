@@ -336,7 +336,6 @@ html, body {
 }
 
 .oyl-article__snippet {
-  /* Despite a shiny new: */
   font-family: 'ub-avenir', Avenir, serif;
   font-weight: bold;
   font-size: 18px;
@@ -345,7 +344,7 @@ html, body {
   text-align: center;
   text-shadow: 0 2px 3px rgba(0,0,0,0.35);
 
-  max-width: 440px;
+  max-width: 460px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -354,8 +353,7 @@ html, body {
 }
 
 .oyl-article__byline {
-  /* By Samantha McCabe ·: */
-  opacity: 0.84;
+  opacity: 0.85;
   font-family: 'ub-avenir', Avenir, serif;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.75);
