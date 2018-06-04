@@ -100,5 +100,14 @@ class OneYearLater(Template):
 
     title = CharField('Title')
     subtitle = CharField('Subtitle')
+    snippet = TextField('Snippet')
     video_src = CharField('Video Source File')
-    next_article = ArticleField('Next Article')
+    next_article = ArticleField('Preview Article')
+    next_title = CharField('Preview Title')
+    next_snippet = TextField('Preview Snippet')
+
+    article_then = ArticleField('Then Article')
+    article_now = ArticleField('Now Article')
+    article_next = ArticleField('Next Article')
+
+    about = TextField('About')

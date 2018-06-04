@@ -198,7 +198,7 @@ html, body {
   width: 100%;
   height: auto;
   position: absolute;
-  z-index: 0;
+  z-index: 10;
   background: #000;
 
   &.vertical {
@@ -345,6 +345,7 @@ html, body {
     margin-right: 1.75rem;
     margin-left: 12%;
     width: 25%;
+    max-width: 500px;
 
     &.image-attachment {
       margin-left: 8%;
@@ -357,6 +358,7 @@ html, body {
     margin-left: 1.75rem;
     margin-right: 12%;
     width: 25%;
+    max-width: 500px;
 
     &.image-attachment {
       margin-right: 8%;
@@ -365,9 +367,19 @@ html, body {
   }
 }
 
-.image-attachment img {
-  width: 100%;
-  height: auto;
+.image-attachment {
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-family: Avenir;
+    font-size: 14px;
+    color: #666;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .oyl-preview {
@@ -428,6 +440,14 @@ html, body {
     font-family: Avenir-Heavy;
     font-size: 36px;
     color: #FFFFFF;;
+  }
+
+  p {
+    color: #fff;
+    padding: 0;
+    margin-top: 0.25rem;
+    font-family: Avenir;
+    margin-bottom: 0;
   }
 }
 
