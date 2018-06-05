@@ -130,7 +130,7 @@ class UbysseyTheme(object):
             page = PageHelper.get_page(request, slug)
         except:
             raise Http404('Page could not be found.')
-            
+
         page.add_view()
 
         try:
@@ -381,7 +381,7 @@ class UbysseyTheme(object):
         return render(request, 'section.html', context)
 
     def newsletter(self, request):
-        return render(request, 'objects/newsletter.html', {})
+        return render(request, 'objects/newsletter.html', {'version': ubyssey.__version__})
 
     def centennial(self, request):
-        return render(request, 'centennial.html', {})
+        return render(request, 'centennial.html', {'version': ubyssey.__version__})
