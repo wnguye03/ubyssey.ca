@@ -1,4 +1,13 @@
 
+.poll-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+  @media($bp-larger-than-phablet) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .poll-container {
   margin: 15px 0;
   width: 100%;
