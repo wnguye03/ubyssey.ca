@@ -102,7 +102,7 @@ class Poll extends Component {
   onVote() {
       for(let index of this.state.checkedAnswers){
         let payload = {poll_id: this.props.id, vote_id: this.state.vote_id, answer_id: this.state.answer_ids[this.state.checkedAnswers[0]]}
-        DispatchAPI.polls.vote(payload).then(response => {
+        DispatchAPI.polls.vote(this.props.id, payload).then(response => {
           this.setCookie(response.id, this.state.answer_ids[index])
           this.update()
         })
@@ -114,7 +114,7 @@ class Poll extends Component {
       hasVoted: false
     })
   }
-  
+
   changeAnswers(e, index){
     if(!this.state.hasVoted){
       let deselect = false
@@ -214,7 +214,7 @@ class Poll extends Component {
                   let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
                   let answerPercentage = this.getPollResult(index)
                   return (
-                    <PollAnswer 
+                    <PollAnswer
                       key={answer}
                       many={many}
                       index={index}

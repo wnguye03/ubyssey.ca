@@ -62,8 +62,8 @@ function postRequest(route, id=null, payload={}) {
 
 const DispatchAPI = {
   polls: {
-    vote: (payload) => {
-      return postRequest('vote', null, payload)
+    vote: (poll_id, payload) => {
+      return postRequest('polls.vote', poll_id, payload)
     },
     getResults: (id) => {
       return getRequest('polls', id, null)
