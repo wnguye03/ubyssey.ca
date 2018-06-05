@@ -37,6 +37,11 @@ TEMPLATES += [
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
         ],
+        'OPTIONS': {
+            'context_processors': [
+                'ubyssey.views.context_processors.global_settings',
+            ]
+        },
     }
 ]
 
