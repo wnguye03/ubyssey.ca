@@ -17,7 +17,7 @@ function buildRoute(route, id) {
   if (pieces.length > 1) {
     fullRoute += pieces[1]
   }
-  // Append slash to all urls
+  
   let lastCharacter = fullRoute.slice(-1)
 
   if (lastCharacter !== '/') {
@@ -51,7 +51,6 @@ function postRequest(route, id=null, payload={}) {
   return fetch(
     buildRoute(route, id),
     {
-      // credentials: 'include',
       method: 'POST',
       headers: DEFAULT_HEADERS,
       body: JSON.stringify(payload),

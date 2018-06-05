@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import DispatchAPI from '../api/dispatch'
+import DispatchAPI from '../../api/dispatch'
 
 import Cookies from 'js-cookie'
 import PollAnswer from './PollAnswer.jsx'
@@ -7,7 +7,7 @@ import PollAnswer from './PollAnswer.jsx'
 const COLOR_OPACITY = .8
 
 class Poll extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       answers: [],
@@ -27,11 +27,11 @@ class Poll extends Component {
     return 'poll_id_' + String(this.props.id)
   }
 
-  getCookie(field){
+  getCookie(field) {
     let cookie = Cookies.get(this.getCookieName())
-    if(typeof cookie === 'string' && cookie !== ''){
+    if(typeof cookie === 'string' && cookie !== '') {
       cookie = JSON.parse(cookie)
-      if(field){
+      if(field) {
         return cookie[field]
       }
       return cookie
@@ -39,8 +39,8 @@ class Poll extends Component {
     return cookie
   }
 
-  setCookie(vote_id, answer_id, init){
-    if(this.state.pollOpen || init){
+  setCookie(vote_id, answer_id, init) {
+    if(this.state.pollOpen || init) {
       Cookies.set(
         this.getCookieName(),
         {pole_id: this.props.id, vote_id: vote_id, answer_id: answer_id},
@@ -63,15 +63,15 @@ class Poll extends Component {
       let answer_ids = []
       let vote_id = this.getCookie('vote_id')
 
-      for(let answer of response.answers){
+      for(let answer of response.answers) {
         answers.push(answer['name'])
         votes.push(answer['vote_count'])
         answer_ids.push(answer['id'])
       }
 
-      if(init){
+      if(init) {
         let cookie = this.getCookie()
-        if(!cookie || !cookie.answer_id){
+        if(!cookie || !cookie.answer_id) {
           this.setCookie(vote_id, answer_ids[0], true)
         }
       }
@@ -88,7 +88,7 @@ class Poll extends Component {
         showResults: response.show_results,
         pollOpen: response.is_open
       }, () => {
-        if(answer_id){
+        if(answer_id) {
           let checkedAnswers = this.state.checkedAnswers.concat(this.state.answer_ids.indexOf(answer_id))
           this.setState({
             hasVoted: true,
@@ -99,24 +99,8 @@ class Poll extends Component {
     })
   }
 
-  onVote() {
-      for(let index of this.state.checkedAnswers){
-        let payload = {poll_id: this.props.id, vote_id: this.state.vote_id, answer_id: this.state.answer_ids[this.state.checkedAnswers[0]]}
-        DispatchAPI.polls.vote(this.props.id, payload).then(response => {
-          this.setCookie(response.id, this.state.answer_ids[index])
-          this.update()
-        })
-      }
-  }
-
-  editVote() {
-    this.setState({
-      hasVoted: false
-    })
-  }
-
-  changeAnswers(e, index){
-    if(!this.state.hasVoted){
+  changeAnswers(e, index) {
+    if(!this.state.hasVoted) {
       let deselect = false
       let newCheckedAnswers = this.state.checkedAnswers
 
@@ -125,12 +109,12 @@ class Poll extends Component {
         deselect = true
       }
 
-      if(!this.props.many){
+      if(!this.props.many) {
         newCheckedAnswers = []
         newCheckedAnswers.push(index)
       }
 
-      else if(this.props.many){
+      else if(this.props.many) {
         newCheckedAnswers.push(index)
       }
 
@@ -138,24 +122,31 @@ class Poll extends Component {
         checkedAnswers: newCheckedAnswers,
         hasVoted: true
       }, () => {
-        if(!deselect){
-          if(this.props.many){
-            //wait for vote submit
-            //do something to handle multiple votes
-          }else{
-            this.onVote();
-          }
+        if(!deselect) {
+          this.vote();
         }
       })
     }
   }
 
+  vote() {
+    for(let index of this.state.checkedAnswers) {
+      let payload = {poll_id: this.props.id, vote_id: this.state.vote_id, answer_id: this.state.answer_ids[this.state.checkedAnswers[0]]}
+      DispatchAPI.polls.vote(this.props.id, payload).then(response => {
+        this.setCookie(response.id, this.state.answer_ids[index])
+        this.update()
+      })
+    }
+  }
+
   getPollResult(index) {
-    if(this.state.showResults){
+    if(this.state.showResults) {
       let width = 0
-      if(this.state.totalVotes !== 0){
+
+      if(this.state.totalVotes !== 0) {
         width = String((100*this.state.votes[index]/this.state.totalVotes).toFixed(0)) + '%'
       }
+      
       return width
     }
   }
@@ -170,16 +161,17 @@ class Poll extends Component {
 
   renderLoadingPoll() {
     return(
-      <span>Loading Poll...</span>
+      // <span dangerouslySetInnerHTML={{__html: this.props.loaderHTML}}> </span>
+      <span></span>
     )
   }
 
-  renderShowResults(totalVotes){
+  renderShowResults(totalVotes) {
     return(
       <div>
         <i style={{position: 'relative', top: '-5px'}}>Total Votes: {totalVotes}</i>
         <br/>
-        <button className={'poll-edit-button'} onClick={() => this.editVote()}>Change Vote</button>
+        <button className={'poll-edit-button'} onClick={() => this.setState({hasVoted: false})}>Change Vote</button>
       </div>
     )
   }
