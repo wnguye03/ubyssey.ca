@@ -1,7 +1,9 @@
 $adslots: (
   leaderboard: (728px, 90px),
+  large-leaderboard: (970, 90),
   box: (300px, 250px),
-  mobile-leaderboard: (300px, 50px)
+  mobile-leaderboard: (300px, 50px),
+  large-skyscraper: (300px, 600px)
 );
 
 // Desktop leaderboard ad
@@ -33,6 +35,9 @@ $adslots: (
   }
 
   @media($bp-larger-than-tablet){
+    $width: nth(map-get($adslots, large-leaderboard), 1);
+    $height: nth(map-get($adslots, large-leaderboard), 2);
+
     &.o-advertisement--homepage {
       display: block;
     }
@@ -83,6 +88,7 @@ main.article .o-advertisement--leaderboard {
   }
 }
 
+// Box
 .o-advertisement--mobile-frontpage-box {
   // Structure
   padding-top: 1rem;
@@ -106,6 +112,41 @@ main.article .o-advertisement--leaderboard {
     min-height: $height;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+// Desktop skyscraper ad
+.o-advertisement--large-skyscraper {
+  $width: nth(map-get($adslots, large-skyscraper), 1);
+  $height: nth(map-get($adslots, large-skyscraper), 2);
+
+  display: none;
+
+  .adslot {
+    margin-left: auto;
+    margin-right: auto;
+    width: $width;
+    height: $height;
+    padding-top: 1.5rem;
+  }
+
+  &.o-advertisement--homepage {
+    .adslot {
+      padding-top: 1.5rem;
+    }
+  }
+
+  @media(min-width: $width + 40) {
+    display: block;
+    &.o-advertisement--homepage {
+      display: none;
+    }
+  }
+
+  @media($bp-larger-than-tablet){
+    &.o-advertisement--homepage {
+      display: block;
+    }
   }
 }
 
