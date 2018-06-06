@@ -6,6 +6,8 @@ BASE_URL = 'http://localhost:8000/'
 
 SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 
+VERSION = '1.4.3'
+
 ALLOWED_HOSTS = ['localhost', '*']
 
 INSTALLED_APPS += ['ubyssey.events',]
@@ -36,12 +38,7 @@ TEMPLATES += [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
-        ],
-        'OPTIONS': {
-            'context_processors': [
-                'ubyssey.views.context_processors.global_settings',
-            ]
-        },
+        ]
     }
 ]
 
