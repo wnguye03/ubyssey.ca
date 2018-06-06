@@ -9,6 +9,8 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
+VERSION = '1.4.3'
+
 ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
@@ -43,7 +45,7 @@ TEMPLATES += [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
-        ],
+        ]
     }
 ]
 

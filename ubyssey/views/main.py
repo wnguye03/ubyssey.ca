@@ -71,8 +71,7 @@ class UbysseyTheme(object):
             'sections': sections,
             'popular': popular,
             'blog': blog,
-            'day_of_week': datetime.now().weekday(),
-            'version': ubyssey.__version__
+            'day_of_week': datetime.now().weekday()
         }
 
         return render(request, 'homepage/base.html', context)
@@ -97,8 +96,7 @@ class UbysseyTheme(object):
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
-            'reading_time': ArticleHelper.get_reading_time(article),
-            'version': ubyssey.__version__
+            'reading_time': ArticleHelper.get_reading_time(article)
         }
 
         template = article.get_template_path()
@@ -112,8 +110,7 @@ class UbysseyTheme(object):
         context = {
             'article': article,
             'authors_json': authors_json,
-            'base_template': 'blank.html',
-            'version': ubyssey.__version__
+            'base_template': 'blank.html'
         }
 
         data = {
@@ -126,7 +123,11 @@ class UbysseyTheme(object):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
-        page = PageHelper.get_page(request, slug)
+        try:
+            page = PageHelper.get_page(request, slug)
+        except:
+            raise Http404('Page could not be found.')
+
         page.add_view()
 
         try:
@@ -141,8 +142,7 @@ class UbysseyTheme(object):
                 'url': settings.BASE_URL[:-1] + reverse('page', args=[page.slug]),
                 'description': page.snippet if page.snippet else ''
             },
-            'page': page,
-            'version': ubyssey.__version__
+            'page': page
         }
 
         if page.get_template() != 'article/default.html':
@@ -171,8 +171,7 @@ class UbysseyTheme(object):
             'articles': {
                 'first': articles[0],
                 'rest': articles[1:9]
-            },
-            'version': ubyssey.__version__
+            }
         }
 
         return render(request, 'section.html', context)
@@ -224,8 +223,7 @@ class UbysseyTheme(object):
             },
             'articles': articles,
             'order': order,
-            'q': query,
-            'version': ubyssey.__version__
+            'q': query
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
@@ -272,8 +270,7 @@ class UbysseyTheme(object):
             'person': person,
             'articles': articles,
             'order': order,
-            'q': query,
-            'version': ubyssey.__version__
+            'q': query
         }
 
         return render(request, 'author.html', context)
@@ -297,8 +294,7 @@ class UbysseyTheme(object):
         context = {
             'sections': sections,
             'years': years,
-            'order': order,
-            'version': ubyssey.__version__
+            'order': order
         }
 
         query = request.GET.get('q', '').strip() or None
@@ -370,8 +366,7 @@ class UbysseyTheme(object):
             'articles': {
                 'first': articles[0] if articles else None,
                 'rest': articles[1:9]
-            },
-            'version': ubyssey.__version__
+            }
         }
 
         return render(request, 'section.html', context)

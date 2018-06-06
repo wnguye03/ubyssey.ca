@@ -30,8 +30,7 @@ class MagazineTheme(object):
                 'image': static('images/magazine/cover-social.jpg')
             },
             'cover': 'images/magazine/cover.jpg',
-            'articles': articles,
-            'version': ubyssey.__version__
+            'articles': articles
         }
 
         return render(request, 'magazine/landing.html', context)
@@ -51,8 +50,7 @@ class MagazineTheme(object):
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
-            'base_template': 'magazine/base.html',
-            'version': ubyssey.__version__
+            'base_template': 'magazine/base.html'
         }
 
         t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
@@ -73,8 +71,7 @@ class MagazineTheme(object):
                 'image': static('images/magazine/2017/cover-social.png')
             },
             'cover': 'images/magazine/2017/cover-%d.jpg' % randint(1, 2),
-            'articles': articles,
-            'version': ubyssey.__version__
+            'articles': articles
         }
 
         return render(request, 'magazine/2017/landing.html', context)

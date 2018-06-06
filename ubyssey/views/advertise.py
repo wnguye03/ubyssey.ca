@@ -26,4 +26,4 @@ class AdvertiseTheme(object):
                     fail_silently=True,
                 )
 
-        return render(request, 'advertise/index.html', {'version': ubyssey.__version__})
+        return render(request, 'advertise/index.html', {})
