@@ -50,12 +50,11 @@ class Poll extends Component {
   }
 
   componentDidMount() {
-    const init = true
     const answerId = Number(this.getCookie('answer_id'))
-    this.update(init, answerId)
+    this.update(answerId)
   }
 
-  update(init, answerId) {
+  update(answerId) {
     DispatchAPI.polls.get(this.props.id)
     .then ((response)=> {
       let answers = []
@@ -70,13 +69,6 @@ class Poll extends Component {
         answers.push(answer['name'])
         votes.push(answer['vote_count'])
         answerIds.push(answer['id'])
-      }
-
-      if (init) {
-        let cookie = this.getCookie()
-        if (!cookie || !cookie.answer_id) {
-          this.setCookie(voteId, answerIds[0], true)
-        }
       }
 
       if (answerId) {
@@ -217,7 +209,7 @@ class Poll extends Component {
                   let answerPercentage = this.getPollResult(index)
                   return (
                     <PollAnswer
-                      key={answer}
+                      key={index}
                       many={many}
                       index={index}
                       answer={answer}
