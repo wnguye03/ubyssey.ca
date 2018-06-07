@@ -127,7 +127,7 @@ class Poll extends Component {
     for (let index of this.state.checkedAnswers) {
       const payload = {
         poll_id: this.props.id,
-        vote_id: this.state.voteId, 
+        vote_id: this.state.voteId,
         answer_id: this.state.answerIds[this.state.checkedAnswers[0]]
       }
       DispatchAPI.polls.vote(this.props.id, payload).then (response => {
@@ -144,7 +144,7 @@ class Poll extends Component {
       if (this.state.totalVotes !== 0) {
         width = String((100*this.state.votes[index]/this.state.totalVotes).toFixed(0)) + '%'
       }
-      
+
       return width
     }
   }
@@ -169,9 +169,8 @@ class Poll extends Component {
   renderShowResults(totalVotes) {
     return (
       <div>
-        <i style={{position: 'relative', top: '-5px'}}>Total Votes: {totalVotes}</i>
-        <br/>
-        <button className='poll-edit-button' onClick={() => this.setState({hasVoted: false})}>Change Vote</button>
+        <div className='poll-total'>Total Votes: {totalVotes}</div>
+        <button className='c-button c-button--small' onClick={() => this.setState({hasVoted: false})}>Change Vote</button>
       </div>
     )
   }
@@ -199,7 +198,7 @@ class Poll extends Component {
     return (
       <div className='poll-wrapper'>
         {!loading &&
-          <div className={['poll-container', pollResult].join (' ')}>
+          <div className={['c-info-box', 'poll-container', pollResult].join(' ')}>
             <div className='poll-inner-container'>
               <h1>{pollQuestion}</h1>
               <form className='poll-answer-form'>
@@ -228,7 +227,7 @@ class Poll extends Component {
           </div>
         }
         { (pollOpen && hasVoted && showResults) && this.renderShowResults(totalVotes) }
-        
+
         { loading && this.renderLoadingPoll() }
       </div>
     )
