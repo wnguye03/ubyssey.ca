@@ -6,16 +6,14 @@ import Poll from './components/Poll/Poll.jsx';
 
 window.articleHeader = false;
 
-$(document).ready(function() {
+$(function() {
     $('.c-widget-poll').each(function() {
-    
         React.render(
-            <Poll many={false} id={$(this).data('id')} loaderHTML={$(this).html()} />,
+            <Poll id={$(this).data('id')} loaderHTML={$(this).html()} />,
             $(this).get(0)
         )
     })
 });
-
 
 if ($('main.article').length) {
 
@@ -52,5 +50,3 @@ React.render(
     <Search />,
     document.getElementById('search-form')
 );
-
-

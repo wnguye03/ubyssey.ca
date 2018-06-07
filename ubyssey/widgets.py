@@ -225,8 +225,8 @@ class AlertBanner(Widget):
 
 @register.widget
 class PollWidget(Widget):
-  id = 'poll-widget'
-  name = 'Poll Widget'
+  id = 'poll'
+  name = 'Poll'
   template = 'widgets/poll.html'
   zones = (Embed, )
 
