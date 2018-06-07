@@ -3,6 +3,7 @@ import './modules/Youtube';
 import ArticleList from './components/ArticleList.jsx';
 import Search from './components/Search.jsx';
 import Poll from './components/Poll/Poll.jsx';
+import AdblockSplash from './components/AdblockSplash.jsx'
 
 window.articleHeader = false;
 
@@ -16,6 +17,15 @@ $(document).ready(function() {
     })
 });
 
+$(document).ready(function() {
+    $('#adblock-splash').each(function() {
+    
+        React.render(
+            <AdblockSplash />,
+            $(this).get(0)
+        )
+    })
+});
 
 if ($('main.article').length) {
 
@@ -52,5 +62,3 @@ React.render(
     <Search />,
     document.getElementById('search-form')
 );
-
-

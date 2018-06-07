@@ -50,6 +50,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "blockadblock": "^3.2.1",
+    "js-cookie": "^2.2.0",
     "node-sass": "^4.9.0",
     "tough-cookie": "^2.3.4"
   }
