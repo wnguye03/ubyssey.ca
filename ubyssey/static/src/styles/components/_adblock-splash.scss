@@ -36,8 +36,17 @@
 }
 
 .adblock-button {
-  position:absolute;
+  position: absolute;
   width: 120px;
   right: 25px;
   bottom: 25px;
+  background-color: white;
+  background-image: none;
+  color: #2173C4;
+  margin-right: 0;
+  border: none;
+  transition: opacity .1s;
+  &:hover {
+    opacity: .8;
+  }
 }
