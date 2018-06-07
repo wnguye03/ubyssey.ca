@@ -2,13 +2,14 @@ $adslots: (
   leaderboard: (728px, 90px),
   large-leaderboard: (970px, 90px),
   box: (300px, 250px),
+  large-box: (336px, 280px),
   mobile-leaderboard: (300px, 50px),
   large-skyscraper: (300px, 600px)
 );
 
-.adslot {
+.adslot-test {
   display: block !important;
-  background-color: blue;
+  background-color: red;
 }
 // Desktop leaderboard ad
 .o-advertisement--leaderboard {
@@ -17,7 +18,7 @@ $adslots: (
 
   display: none;
 
-  .adslot {
+  .adslot-test {
     margin-left: auto;
     margin-right: auto;
     width: $width;
@@ -26,8 +27,8 @@ $adslots: (
   }
 
   &.o-advertisement--homepage {
-    .adslot {
-      padding-top: 1.5rem;
+    .adslot-test {
+      margin: 1.5rem auto;
     }
   }
 
@@ -38,11 +39,11 @@ $adslots: (
     }
   }
   
-  @media($bp-larger-than-desktop ){
+  @media( min-width: 1010px ){
     $width: nth(map-get($adslots, large-leaderboard), 1);
     $height: nth(map-get($adslots, large-leaderboard), 2);
 
-    .adslot {
+    .adslot-test {
       width: $width;
       height: $height;
     }
@@ -57,7 +58,7 @@ $adslots: (
 
 main.article .o-advertisement--leaderboard {
   padding-top: 1rem;
-  .adslot {
+  .adslot-test {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
@@ -86,10 +87,11 @@ main.article .o-advertisement--leaderboard {
 
   $desktop-width: nth(map-get($adslots, leaderboard), 1);
 
-  .adslot {
+  .adslot-test {
     width: $width;
     height: $height;
     padding-top: 1rem;
+    margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -118,11 +120,21 @@ main.article .o-advertisement--leaderboard {
   $width: nth(map-get($adslots, box), 1);
   $height: nth(map-get($adslots, box), 2);
 
-  .adslot {
+  .adslot-test {
     width: $width;
     min-height: $height;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media($bp-larger-than-desktop) {
+    $width: nth(map-get($adslots, large-box), 1);
+    $height: nth(map-get($adslots, large-box), 2);
+
+    .adslot-test {
+      width: $width;
+      height: $height;
+    }
   }
 }
 
@@ -133,7 +145,7 @@ main.article .o-advertisement--leaderboard {
 
   display: none;
 
-  .adslot {
+  .adslot-test {
     margin-left: auto;
     margin-right: auto;
     width: $width;
@@ -142,7 +154,7 @@ main.article .o-advertisement--leaderboard {
   }
 
   &.o-advertisement--homepage {
-    .adslot {
+    .adslot-test {
       padding-top: 1.5rem;
     }
   }
