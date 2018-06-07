@@ -212,25 +212,48 @@
   opacity: .5;
 }
 
-.poll-overlay{
+.poll-overlay {
   // Structure
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   padding: inherit;
   height: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 
-  // Extra
-  opacity: 1;
-  transition: .25s;
+  .poll-overlay-blur {
+    // Structure
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
 
-  &:hover{
-    opacity: 0.05;
+    // Background
+    background-color: white;
+  
+    // Extra
+    opacity: .5;
+    transition: .25s;
+  }
+  .poll-overlay-content {
+    // Extra
+    opacity: 1;
+    z-index: 1;
   }
 
+  &:hover{
+    .poll-overlay-content {
+      opacity: .05;
+    }
+  }
 
+  p {
+    margin: 0;
+  }
 }

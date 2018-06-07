@@ -159,8 +159,11 @@ class Poll extends Component {
 
   renderPollClosed() {
     return (
-      <div className={'poll-overlay'}>
-        <span><h2>This poll is currently closed</h2></span>
+      <div className='poll-overlay'>
+        <div className='poll-overlay-blur' />
+        <div className='poll-overlay-content'>
+          <span><h2>This poll is currently closed</h2></span>
+        </div>
       </div>
     )
   }
@@ -176,16 +179,19 @@ class Poll extends Component {
       <div>
         <i style={{position: 'relative', top: '-5px'}}>Total Votes: {totalVotes}</i>
         <br/>
-        <button className={'poll-edit-button'} onClick={() => this.setState({hasVoted: false})}>Change Vote</button>
+        <button className='poll-edit-button' onClick={() => this.setState({hasVoted: false})}>Change Vote</button>
       </div>
     )
   }
 
   renderNoResults() {
     return (
-      <div>
-        <p>Poll results hidden from public</p>
-        <h3>Thank you for your opinion</h3>
+      <div className='poll-overlay'>
+        <div className='poll-overlay-blur' />
+        <div className='poll-overlay-content'>
+          <h3>Thank you for your opinion</h3>
+          <p>Poll results hidden from public</p>
+        </div>
       </div>
     )
   }
@@ -195,7 +201,6 @@ class Poll extends Component {
       loading, totalVotes, showResults, pollOpen} = this.state
 
     const pollResult = hasVoted ? 'poll-results' : 'poll-voting'
-    const pollFocus = pollOpen ? '' : 'poll-de-focus'
     const buttonStyle = hasVoted ? 'poll-button-voted': 'poll-button-no-vote'
     const showResult = showResults ? (hasVoted ? COLOR_OPACITY : 0) : 0
     const notShowResult = showResults ? (hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
@@ -203,7 +208,7 @@ class Poll extends Component {
       <div className='poll-wrapper'>
         {!loading &&
           <div className={['poll-container', pollResult].join (' ')}>
-            <div className={['poll-inner-container', pollFocus].join (' ')}>
+            <div className='poll-inner-container'>
               <h1>{pollQuestion}</h1>
               <form className='poll-answer-form'>
                 {answers.map((answer, index) =>{
@@ -227,10 +232,11 @@ class Poll extends Component {
               </form>
             </div>
             { !pollOpen && this.renderPollClosed() }
+            { (pollOpen && hasVoted && !showResults) && this.renderNoResults() }
           </div>
         }
         { (pollOpen && hasVoted && showResults) && this.renderShowResults(totalVotes) }
-        { (pollOpen && hasVoted && !showResults) && this.renderNoResults() }
+        
         { loading && this.renderLoadingPoll() }
       </div>
     )
