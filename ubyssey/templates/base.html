@@ -142,11 +142,9 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
 {% block scripts %}{% endblock %}
 <script>
 function adBlockNotDetected() {
-  // alert('AdBlock is not enabled');
   document.getElementById('adblock-splash').style.display = 'none'
 }
 function adBlockDetected() {
-  // alert('AdBlock is enabled');
   document.getElementById('adblock-splash').style.display = 'inline'
 }
 if(typeof blockAdBlock === 'undefined') {

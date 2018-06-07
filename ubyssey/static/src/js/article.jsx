@@ -9,7 +9,6 @@ window.articleHeader = false;
 
 $(document).ready(function() {
     $('.c-widget-poll').each(function() {
-    
         React.render(
             <Poll many={false} id={$(this).data('id')} loaderHTML={$(this).html()} />,
             $(this).get(0)
@@ -19,7 +18,6 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#adblock-splash').each(function() {
-    
         React.render(
             <AdblockSplash />,
             $(this).get(0)
