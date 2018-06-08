@@ -1,7 +1,10 @@
 .c-info-box {
   // Structure
   display: flex;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
 
   // Border
   border: solid 1px $color-border-gray;
@@ -27,7 +30,7 @@
   // Structure
   margin-top: 0;
   margin-bottom: 1rem;
-  
+
   // Text
   font-size: font-size(14);
   font-weight: $font-weight-semi-bold;
