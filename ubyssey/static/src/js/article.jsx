@@ -2,20 +2,18 @@ import React from 'react';
 import './modules/Youtube';
 import ArticleList from './components/ArticleList.jsx';
 import Search from './components/Search.jsx';
-import Poll from './components/Poll.jsx';
+import Poll from './components/Poll/Poll.jsx';
 
 window.articleHeader = false;
 
-$(document).ready(function() {
+$(function() {
     $('.c-widget-poll').each(function() {
-    
         React.render(
-            <Poll many={false} id={$(this).data('id')} />,
+            <Poll id={$(this).data('id')} loaderHTML={$(this).html()} />,
             $(this).get(0)
         )
     })
 });
-
 
 if ($('main.article').length) {
 
@@ -52,5 +50,3 @@ React.render(
     <Search />,
     document.getElementById('search-form')
 );
-
-

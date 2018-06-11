@@ -22,7 +22,8 @@
     "Axel Jacobsen",
     "Jonathan Chapple",
     "Ben Holmes",
-    "Rowan Baker-French"
+    "Rowan Baker-French",
+    "Jaime Lee"
   ],
   "devDependencies": {
     "babel-core": "^6.9.1",
@@ -38,7 +39,9 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "hammerjs": "^2.0.4",
+    "isomorphic-fetch": "^2.2.1",
     "jasmine": "^2.5.3",
+    "js-cookie": "^2.2.0",
     "keymaster": "^1.6.2",
     "lru-cache": "^2.7.0",
     "react": "^0.13.3",
