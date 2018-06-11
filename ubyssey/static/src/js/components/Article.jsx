@@ -95,7 +95,6 @@ const Article = React.createClass({
     },
 
     setupGalleries() {
-
         const gatherImages = function(gallery) {
           var selector, trigger;
 
@@ -149,11 +148,11 @@ const Article = React.createClass({
     render() {
       const html = {__html: this.props.html};
       return (
-          <div className={this.props.html ? "article-slide" : "article-extras"}>
-              {this.props.html ? this.renderHTML() : null}
-              <Galleries galleries={this.state.galleries} />
-          </div>
-          );
+        <div className={this.props.html ? "article-slide" : "article-extras"}>
+            {this.props.html ? this.renderHTML() : null}
+            <Galleries galleries={this.state.galleries} />
+        </div>
+      );
     }
 });
 
