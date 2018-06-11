@@ -72,7 +72,7 @@ class Poll extends Component {
       if(init){
         let cookie = this.getCookie()
         if(!cookie || !cookie.answer_id){
-          this.setCookie(vote_id, answer_ids[0], true)
+          this.setCookie(vote_id, null, true)
         }
       }
 
