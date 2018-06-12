@@ -27,13 +27,13 @@ if ($('main.article').length) {
 
     var articleIds = $article.data('list');
     var listName = $article.data('list-name');
-
+    console.log(articleIds)
     if(articleIds === parseInt(articleIds, 10)){
         articleIds = [articleIds];
     } else {
         articleIds = articleIds.split(',');
     }
-
+    console.log(articleIds)
     var firstArticle = {
         id: articleId,
         headline: articleHeadline,
@@ -45,7 +45,7 @@ if ($('main.article').length) {
             const paragraphs = $(`#article-${articleId} .article-content > p`);
             const windowHeight = $(window).height();
 
-            function injectAd(version, number, index) {
+            function injectAd(version, number, index, type) {
                 /* !!!Important!!!
                     * Ensure Production is enabled before deploying to live site
                 /*
@@ -56,7 +56,11 @@ if ($('main.article').length) {
                 
                 /* Test */
                 const id = `div-${number}-${articleId}`;
+                
                 var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot-test" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
+                
+                if (type = 'LEADERBOARD')
+                    adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--leaderboard o-advertisement--center"><div class="adslot-test" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
                 
                 if (!$(`#${id}`).length) {
                     $(adString).insertAfter(paragraphs.get(index));
@@ -66,12 +70,9 @@ if ($('main.article').length) {
             // Mobile
             if ($(window).width() < 960) {
                 let insertIndex = Math.floor((Math.random() * 3) + 3);
-                let lastIndex = null
                 $(paragraphs).each(function(index) {
                     if(index === insertIndex) {
-                        lastIndex = insertIndex
                         insertIndex += Math.floor((Math.random() * 3) + 3);
-                        console.log(insertIndex, lastIndex)
                         
                         if(insertIndex % 2 === 0 ) {
                             injectAd('A', 99 + index, index)
@@ -83,11 +84,15 @@ if ($('main.article').length) {
             } 
             // Desktop
             else {
+                function removeSidebarAd(version, number, index) {
+                    $('.sidebar').children('.o-advertisement--box').removeClass('o-advertisement--box')
+                }
+
                 function useSkyscraper(version, number, index) {
                     $('.sidebar').children('.o-advertisement--box').addClass('o-advertisement--skyscraper').removeClass('o-advertisement--box')
                 }
 
-                function stickyAds(scrollTop, windowHeight, headerHeight, sidebarOffset, stickyElements, scrollDistance) {
+                function stickyAds(scrollTop, windowHeight, headerHeight, sidebarMarginTop, sidebarOffset, stickyElements, scrollDistance) {
                     
                     // console.log(scrollTop, stickyElements[0].offset)
                     
@@ -95,16 +100,18 @@ if ($('main.article').length) {
                         // console.log(scrollTop, stickyElement.offset)
                         const stickyElementHeight = $(stickyElement.element).height()
         
-                        const dropoff = stickyElement.offset + scrollDistance*windowHeight - stickyElementHeight - sidebarOffset
-                        const pickup = scrollTop + headerHeight + sidebarOffset
-        
+                        const dropoff = stickyElement.offset + scrollDistance*windowHeight
+                        const pickup = scrollTop + headerHeight + sidebarMarginTop
+                        
+                        console.log('scroll', scrollTop, 'elementHeight', stickyElementHeight, 'dropoff', dropoff, 'sidebarOffset', sidebarOffset)
+
                         // Dropoff bottom
                         if (scrollTop > dropoff) {
                             if (!stickyElement.dropoff) {
-                                stickyElement.dropoff = dropoff
+                                stickyElement.dropoff = scrollTop - sidebarOffset + headerHeight + sidebarMarginTop
                             }
         
-                            const topOffset = String( dropoff - stickyElementHeight - headerHeight) + 'px'
+                            const topOffset = String( stickyElement.dropoff ) + 'px'
                             stickyElement.element.css('position', 'absolute')
                             stickyElement.element.css('margin-top', topOffset)
                         } 
@@ -114,7 +121,7 @@ if ($('main.article').length) {
                                 stickyElement.pickup = pickup
                             }
                             
-                            const topOffset = String(headerHeight + sidebarOffset) + 'px'
+                            const topOffset = String(headerHeight + sidebarMarginTop) + 'px'
                             stickyElement.element.css('position', 'fixed')
                             stickyElement.element.css('margin-top', topOffset)
                             stickyElement.element.css('top', 0)
@@ -127,14 +134,13 @@ if ($('main.article').length) {
                     })
                 }
 
-                useSkyscraper();
-
                 $( window ).on( "load", function() {
                     // Setup sticky ads
                     const headerHeight = $('.topbar').height();
-                    const sidebarOffset = parseInt($('.sidebar.offset').css('margin-top'), 10)
+                    const sidebarOffset = $('.sidebar.offset').offset().top + $('#content-wrapper').scrollTop()
+                    const sidebarMarginTop = parseInt($('.sidebar.offset').css('margin-top'), 10)
                     let stickyElements = []
-                    const scrollDistance = 1.5
+                    const scrollDistance = 1
             
                     $('.sidebar').children('[class*="o-advertisement--"]').addClass('js-sticky')
             
@@ -154,28 +160,31 @@ if ($('main.article').length) {
                     $('#content-wrapper').scroll(() => {
                         const scrollTop = $('#content-wrapper').scrollTop();
 
-                        stickyAds(scrollTop, windowHeight, headerHeight, sidebarOffset, stickyElements, scrollDistance)
+                        stickyAds(scrollTop, windowHeight, headerHeight, sidebarMarginTop, sidebarOffset, stickyElements, scrollDistance)
                     })
 
                     // Inline Ads
                     // First inline ad should be after dropoff of sticky
                     let insertIndex = Math.floor((Math.random() * 3) + 3);
-                    let lastIndex = null
+                    let count = 0;
                     $(paragraphs).each(function(index) {
-                        
-                        if(index === insertIndex) {
-                            lastIndex = insertIndex
-                            insertIndex += Math.floor((Math.random() * 3) + 3);
-                            console.log(insertIndex, lastIndex)
+                        if($(paragraphs.get(index)).offset().top + $('.content-wrapper').scrollTop() > count*windowHeight + 300) {
+                            count += 1
+                            console.log(count)
                             
-                            // let lastIndex = adOffsets[adOffsets.indexOf(index) - 1]
-                            if(insertIndex % 2 === 0 ) {
-                                injectAd('A', 99 + index, index)
+                            if(count % 2 === 0 ) {
+                                injectAd('A', 99 + index, index + 1)
                             } else {
-                                injectAd('B', 100 + index, index)
+                                injectAd('B', 100 + index, index + 1, 'NOT')
                             }
                         }
                     });
+                    if ($('.article-content').height() < 700) {
+                        removeSidebarAd();
+                    }
+                    if ($('.article-content').height() > 1200 && windowHeight > 800) {
+                        useSkyscraper();
+                    }
                 })
             }
         })

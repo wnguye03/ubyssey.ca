@@ -61,10 +61,6 @@ const Article = React.createClass({
       });
     },
 
-    
-
-    
-
     executeAJAXLoadedScripts() {
         var scripts = $("#article-list").find("script");
         for (var i=0;i<scripts.length;i++) {
