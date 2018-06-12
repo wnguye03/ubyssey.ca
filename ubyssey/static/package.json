@@ -1,6 +1,6 @@
 {
   "name": "ubyssey",
-  "version": "1.4.3",
+  "version": "1.4.6",
   "description": "The Ubyssey's frontend framework.",
   "author": "Peter Siemens <peter@ubyssey.ca>",
   "homepage": "https://www.ubyssey.ca",
@@ -21,7 +21,9 @@
     "Ron Yong",
     "Axel Jacobsen",
     "Jonathan Chapple",
-    "Ben Holmes"
+    "Ben Holmes",
+    "Rowan Baker-French",
+    "Jaime Lee"
   ],
   "devDependencies": {
     "babel-core": "^6.9.1",
@@ -37,7 +39,9 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "hammerjs": "^2.0.4",
+    "isomorphic-fetch": "^2.2.1",
     "jasmine": "^2.5.3",
+    "js-cookie": "^2.2.0",
     "keymaster": "^1.6.2",
     "lru-cache": "^2.7.0",
     "react": "^0.13.3",
@@ -48,5 +52,8 @@
     "node": ">=0.10"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "node-sass": "^4.9.0",
+    "tough-cookie": "^2.3.4"
+  }
 }
