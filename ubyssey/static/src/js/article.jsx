@@ -19,7 +19,6 @@ $(function() {
     })
 });
 
-<<<<<<< HEAD
 $(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
@@ -29,8 +28,6 @@ $(document).ready(function() {
     })
 });
 
-=======
->>>>>>> develop
 if ($('main.article').length) {
 
     const $article = $('article');
