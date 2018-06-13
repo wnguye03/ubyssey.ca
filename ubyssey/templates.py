@@ -1,6 +1,6 @@
 from dispatch.theme import register
 from dispatch.theme.templates import Template
-from dispatch.theme.fields import SelectField, CharField, TextField
+from dispatch.theme.fields import SelectField, CharField, TextField, ArticleField
 
 @register.template
 class Default(Template):
@@ -92,3 +92,22 @@ class VoteCompass(Template):
 
     css = CharField('CSS')
     js = CharField('JavaScript')
+
+@register.template
+class OneYearLater(Template):
+    id = 'one-year-later'
+    name = 'Feature: One Year Later'
+
+    title = CharField('Title')
+    subtitle = CharField('Subtitle')
+    snippet = TextField('Snippet')
+    video_src = CharField('Video Source File')
+    next_article = ArticleField('Preview Article')
+    next_title = CharField('Preview Title')
+    next_snippet = TextField('Preview Snippet')
+
+    article_then = ArticleField('Then Article')
+    article_now = ArticleField('Now Article')
+    article_next = ArticleField('Next Article')
+
+    about = TextField('About')

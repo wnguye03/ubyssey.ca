@@ -64,7 +64,7 @@ const DispatchAPI = {
     vote: (poll_id, payload) => {
       return postRequest('polls.vote', poll_id, payload)
     },
-    getResults: (id) => {
+    get: (id) => {
       return getRequest('polls', id, null)
     }
   }

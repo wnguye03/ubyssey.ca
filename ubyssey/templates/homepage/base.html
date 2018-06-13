@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load humanize %}
-{% load widgets %}
+{% load dispatch_tags %}
 {% block content %}
-{% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 {% include 'headers/main.html' %}
 {% include 'headers/mobile.html' %}
+{% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 <main class="u-container u-container--large homepage">
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">

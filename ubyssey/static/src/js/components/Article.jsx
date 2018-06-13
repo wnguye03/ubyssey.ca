@@ -2,6 +2,8 @@ import React from 'react';
 import Galleries from './Galleries.jsx';
 import * as mp from '../modules/Mixpanel';
 
+let adTop = -1;
+let adBottom = -1;
 
 const Article = React.createClass({
 
@@ -14,7 +16,6 @@ const Article = React.createClass({
     componentDidMount() {
       // Setup galleries after DOM is loaded
       this.setState({ galleries: this.setupGalleries() });
-      this.injectInlineAds();
       this.addTrackingEventListeners();
       this.executeAJAXLoadedScripts();
 
@@ -60,32 +61,6 @@ const Article = React.createClass({
       });
     },
 
-    injectInlineAds() {
-      // If on mobile, insert box advertisement after 2nd and 7th paragraphs
-      if ($(window).width() < 960) {
-        const paragraphs = $(`#article-${this.props.articleId} .article-content > p`);
-
-        var articleId = this.props.articleId;
-
-        function injectAd(version, number, index) {
-          const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
-          var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
-
-          if (!$(`#${id}`).length) {
-            $(adString).insertAfter(paragraphs.get(index));
-          }
-        }
-
-        if (paragraphs.length > 2) {
-          injectAd('A', 99, 1);
-        }
-
-        if (paragraphs.length > 8) {
-          injectAd('B', 100, 6);
-        }
-      }
-    },
-
     executeAJAXLoadedScripts() {
         var scripts = $("#article-list").find("script");
         for (var i=0;i<scripts.length;i++) {
@@ -96,7 +71,6 @@ const Article = React.createClass({
     },
 
     setupGalleries() {
-
         const gatherImages = function(gallery) {
           var selector, trigger;
 
@@ -150,12 +124,11 @@ const Article = React.createClass({
     render() {
       const html = {__html: this.props.html};
       return (
-          <div className={this.props.html ? "article-slide" : "article-extras"}>
-              {this.props.html ? this.renderHTML() : null}
-              <Galleries galleries={this.state.galleries} />
-          </div>
-          
-          );
+        <div className={this.props.html ? "article-slide" : "article-extras"}>
+            {this.props.html ? this.renderHTML() : null}
+            <Galleries galleries={this.state.galleries} />
+        </div>
+      );
     }
 });
 

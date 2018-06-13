@@ -8,6 +8,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from dispatch.models import Article
 
+import ubyssey
 from ubyssey.helpers import ArticleHelper
 
 class MagazineTheme(object):
