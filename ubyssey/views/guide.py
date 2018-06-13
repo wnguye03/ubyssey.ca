@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 
+import ubyssey
 from ubyssey.helpers import ArticleHelper
 
 class GuideTheme(object):

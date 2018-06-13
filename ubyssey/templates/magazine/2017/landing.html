@@ -1,10 +1,10 @@
 {% extends 'magazine/base.html' %}
 
 {% load staticfiles %}
-
+{% load dispatch_tags %}
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/magazine-2017-'|add:version|add:'.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% add_version 'css/magazine-2017.css' %}" type="text/css" />
 
 <div class="magazine-container">
   <div class="cover-photo-container">

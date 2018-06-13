@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 
+import ubyssey
+
 class AdvertiseTheme(object):
     """Theme for the advertising microsite."""
 
@@ -24,4 +26,4 @@ class AdvertiseTheme(object):
                     fail_silently=True,
                 )
 
-        return render(request, 'advertise/index.html')
+        return render(request, 'advertise/index.html', {})
