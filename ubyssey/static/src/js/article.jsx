@@ -19,7 +19,6 @@ $(function() {
     })
 });
 
-<<<<<<< HEAD
 $(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
@@ -29,8 +28,6 @@ $(document).ready(function() {
     })
 });
 
-=======
->>>>>>> develop
 if ($('main.article').length) {
 
     const $article = $('article');
@@ -58,16 +55,16 @@ if ($('main.article').length) {
     //     /* !!!Important!!!
     //      * Ensure Production is enabled before deploying to live site
     //     /*
-        
+
     //     /* Production */
     //     // const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
     //     // var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
-        
+
     //     /* Test */
     //     const id = `div-${number}-${articleId}`;
-            
+
     //     var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot-test" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
-        
+
     //     // if (!$(`#${id}`).length) {
     //     //     $(adString).insertAfter(paragraphs.get(index));
     //     // }
@@ -83,16 +80,16 @@ if ($('main.article').length) {
     }
 
     function stickyAds(scrollTop, windowHeight, headerHeight, sidebarMarginTop, sidebarOffset, stickyElements, scrollDistance) {
-        
+
         stickyElements.map( (stickyElement, index) => {
             // console.log(scrollTop, stickyElement.offset)
             const stickyElementHeight = $(stickyElement.element).height()
 
             const dropoff = stickyElement.offset + scrollDistance*windowHeight
             const pickup = scrollTop + headerHeight + sidebarMarginTop
-            
+
             // console.log('scroll', scrollTop, 'elementHeight', stickyElementHeight, 'dropoff', dropoff, 'sidebarOffset', sidebarOffset)
-            
+
             // //check last stickyelement to see if there is space for another one
             // if (stickyElements.length - 1 === index) {
             //     if ($('.article-content').height() > dropoff + stickyElement.height + BOX_HEIGHT) {
@@ -109,18 +106,18 @@ if ($('main.article').length) {
                 const topOffset = String( stickyElement.dropoff ) + 'px'
                 stickyElement.element.css('position', 'absolute')
                 stickyElement.element.css('margin-top', topOffset)
-            } 
+            }
             // Pickup
             else if (pickup > stickyElement.offset) {
                 if (!stickyElement.pickup) {
                     stickyElement.pickup = pickup
                 }
-                
+
                 const topOffset = String(headerHeight + sidebarMarginTop) + 'px'
                 stickyElement.element.css('position', 'fixed')
                 stickyElement.element.css('margin-top', topOffset)
                 stickyElement.element.css('top', 0)
-            } 
+            }
             // Dropoff top
             else {
                 stickyElement.element.css('position', 'static')
@@ -133,15 +130,15 @@ if ($('main.article').length) {
         /* !!!Important!!!
             * Ensure Production is enabled before deploying to live site
         /*
-        
+
         /* Production */
         const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
         var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
-        
+
         /* Test */
         // const id = `div-${number}-${articleId}`;
         // var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot-test" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
-        
+
         if (!$(`#${id}`).length) {
             $(adString).insertAfter(paragraphs.get(index));
         }
@@ -158,7 +155,7 @@ if ($('main.article').length) {
                 $(paragraphs).each(function(index) {
                     if(index === insertIndex) {
                         insertIndex += Math.floor((Math.random() * 3) + 3);
-                        
+
                         if(insertIndex % 2 === 0 ) {
                             injectInlineAds(paragraphs, 'A', 99 + index, index, 'o-advertisement--mobile-leaderboard')
                         } else {
@@ -166,7 +163,7 @@ if ($('main.article').length) {
                         }
                     }
                 });
-            } 
+            }
             // Desktop
             else {
                 $( window ).on( "load", function() {
@@ -176,8 +173,8 @@ if ($('main.article').length) {
                     const sidebarMarginTop = parseInt($('.sidebar.offset').css('margin-top'), 10)
                     let stickyElements = []
                     const scrollDistance = 1
-                    
-                    //check if windowheight can take 
+
+                    //check if windowheight can take
                     if ($('.article-content').height() < sidebarOffset + BOX_HEIGHT) {
                         removeSidebarAd();
                     }
@@ -188,7 +185,7 @@ if ($('main.article').length) {
                     // for (let i = 0; i < sidebarAds; i++) {
                     //     const id = `div-gpt-ad-1443288719995-sidebar-${i}-${articleId}`;
                     //     $('.sidebar').children('[class*="o-advertisement--"]').append("<div class='o-advertisement js-sticky o-advertisement--box js-sticky'><div class='adslot-test' id=''></div>")
-                    // } 
+                    // }
 
                     $('.sidebar').children('[class*="o-advertisement--"]').addClass('js-sticky')
 
@@ -203,7 +200,7 @@ if ($('main.article').length) {
                     })
 
                     console.log('offsets calculated!')
-                    
+
                     // Sticky Ads
                     $('#content-wrapper').scroll(() => {
                         const scrollTop = $('#content-wrapper').scrollTop();
@@ -219,7 +216,7 @@ if ($('main.article').length) {
                         if($(paragraphs.get(index)).offset().top + $('.content-wrapper').scrollTop() > count*windowHeight + 300) {
                             count += 1
                             console.log(count)
-                            
+
                             if(count % 2 === 0 ) {
                                 injectInlineAds(paragraphs, 'A', 99 + index, index + 1, 'o-advertisement--banner')
                             } else {
@@ -232,9 +229,9 @@ if ($('main.article').length) {
             }
         })
     }
-    
+
     articleAds()
-    
+
     var articleList = React.render(
         <ArticleList breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
         document.getElementById('article-list')
