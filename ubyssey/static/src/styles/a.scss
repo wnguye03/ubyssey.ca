@@ -692,14 +692,22 @@ html, body {
 
   img {
     // Structure
-    display: block;
+    display: flex;
     position: absolute;
-    top: 0;
+    // top: 0;
     width: 100%;
     height: auto;
 
     // Extra
     transition: top 0.5s;
+  }
+  .o-placements__demo__inner__left img{
+    left:0%;
+    top: 0;
+  }
+  .o-placements__demo__inner__right img{
+    left:100%;
+    height: 100%;
   }
 }
 

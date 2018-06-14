@@ -10,13 +10,21 @@ $(function() {
   $('.o-placements--web .o-placements__placement').click(function() {
     $('.o-placements--web .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
-    $('.o-placements--web .o-placements__demo__inner img').css('top', $(this).data('offset'));
+    $('.o-placements--web .o-placements__demo__inner__right img').animate({
+      left: $(this).data('horizontaloffset'),
+    }, 250, function() {
+      //animaiton complete
+    }
+    )
+    $('.o-placements--web .o-placements__demo__inner__left img').css('top', $(this).data('offset'));
+
   });
 
   $('.o-placements--print .o-placements__placement--demo').click(function() {
     $('.o-placements--print .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
     $('.o-placements--print .o-placements__demo').attr('data-demo', $(this).data('demo'));
+    console.log('print demo', $(this).data('demo'));
   });
 
   $('.o-placements--guide .o-placements__placement--demo').click(function() {
