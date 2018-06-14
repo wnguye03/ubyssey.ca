@@ -35,12 +35,12 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
-    def insert_ads(article):
+    def insert_ads(article, article_type = 'desktop'):
         """ inject upto 5 ads evenly throughout the article content
             ads can not inject directly beneath headers """
         ad = {
             unicode('type'): unicode('ad'),
-            unicode('data'): unicode('an ad lives here')
+            unicode('data'): unicode(article_type)
         }
 
         paragraph_count = 1
@@ -63,7 +63,7 @@ class ArticleHelper(object):
             if block['type'] == 'paragraph':
                 paragraph_count += 1
             if paragraph_count == next_ad:
-                    if article.content[index - 1]['type'] != 'header':
+                    if index != 0 and article.content[index - 1]['type'] != 'header':
                         ad_placements.insert(index + ad_count, ad)
                         next_ad += randint(med - 2, med + 2)
                         ad_count += 1

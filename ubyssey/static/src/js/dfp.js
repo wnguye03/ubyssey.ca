@@ -19,7 +19,7 @@ class DFP {
   static setup() {
     // Infinite scroll requires SRA
     // grapefruit
-    // googletag.pubads().enableSingleRequest();
+    googletag.pubads().enableSingleRequest();
 
     // Disable initial load, we will use refresh() to fetch ads.
     // Calling this function means that display() calls just
@@ -55,8 +55,8 @@ class DFP {
   refreshAds() {
     this.adslots.forEach(slot => {
       googletag.display(slot[0]);
-      // googletag.pubads().refresh([slot[1]]);
-      googletag.pubads().refresh();
+      googletag.pubads().refresh([slot[1]]);
+      // googletag.pubads().refresh();
     });
   };
 
@@ -78,12 +78,6 @@ const dfp = new DFP();
 // grapefruit
 $(document).ready(function() {
   dfp.load(document);
-});
-
-$(window).on('load', function() {
-  setTimeout(function(){
-    dfp.load(document);
-  }, 200)
 });
 
 window.resetAds = function(element) {

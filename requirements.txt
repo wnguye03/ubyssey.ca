@@ -3,3 +3,7 @@ mysql-python
 django-phonenumber-field
 beautifulsoup4
 feedparser
+pyyaml
+ua-parser 
+user-agents
+django-user-agents

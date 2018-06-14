@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Topic, Person
 
@@ -21,6 +22,7 @@ def parse_int_or_none(maybe_int):
         return int(maybe_int)
     except (TypeError, ValueError):
         return None
+
 
 class UbysseyTheme(object):
 
@@ -83,6 +85,12 @@ class UbysseyTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
+        
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
 
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
@@ -92,7 +100,7 @@ class UbysseyTheme(object):
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
-            'article': ArticleHelper.insert_ads(article),
+            'article': ArticleHelper.insert_ads(article, article_type),
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
