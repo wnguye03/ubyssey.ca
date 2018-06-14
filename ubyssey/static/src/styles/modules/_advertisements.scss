@@ -31,7 +31,7 @@ $adslots: (
 
   &.o-advertisement--homepage {
     .adslot {
-      margin: 1.5rem auto;
+      padding-top: 1.5rem;
     }
   }
 
@@ -115,7 +115,6 @@ main.article .o-advertisement--leaderboard {
   }
 }
 
-// Box
 .o-advertisement--mobile-frontpage-box {
   // Structure
   padding-top: 1rem;

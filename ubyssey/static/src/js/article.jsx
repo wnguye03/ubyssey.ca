@@ -35,6 +35,7 @@ if ($('main.article').length) {
     } else {
         articleIds = articleIds.split(',');
     }
+
     var firstArticle = {
         id: articleId,
         headline: articleHeadline,
@@ -143,10 +144,10 @@ if ($('main.article').length) {
 
     articleAds()
 
-    var articleList = React.render(
-        <ArticleList breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
-        document.getElementById('article-list')
-    );
+    // var articleList = React.render(
+    //     <ArticleList breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
+    //     document.getElementById('article-list')
+    // );
 }
 
 React.render(

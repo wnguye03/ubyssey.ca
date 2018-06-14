@@ -114,6 +114,77 @@ a.c-button--white {
   background-color: $color-white;
 }
 
+.c-join {
+  @media(min-width: 840px) {
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.c-join__left {
+  flex: 2;
+
+  @media(min-width: 840px) {
+    padding-right: 3rem;
+    max-width: none;
+    text-align: right;
+  }
+
+  text-align: center;
+
+  padding-top: 2rem;
+}
+
+.c-join__left, .c-join__right {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c-join__right {
+  flex: 2;
+  text-align: center;
+
+}
+
+.c-join__box {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 30px;
+  padding-bottom: 220px;
+  background-color: $color-white;
+  color: $color-secondary;
+
+  p {
+    font-size: 18px;
+    text-shadow: none;
+  }
+}
+
+.c-join__itinerary {
+  P {
+    font-size: 20px;
+  }
+}
+
+.c-join__itinerary__items {
+  float: left;
+  text-align: left;
+}
+
+.c-join__itinerary__times {
+  float: right;
+}
+
+.c-join__invitation {
+  float: left;
+}
+
 .c-date {
   @media(min-width: 840px) {
     display: flex;
