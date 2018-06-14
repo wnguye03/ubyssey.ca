@@ -24,6 +24,9 @@ class ArticleHelper(object):
     def get_reading_time(article):
         word_count = 0
         words_per_min = 150
+        print()
+        print(type(article.content))
+        print()
         for block in article.content:
             if block['type'] == 'paragraph':
                 word_count += len(block['data'].split(' '))
@@ -31,6 +34,45 @@ class ArticleHelper(object):
         reading_time = word_count / words_per_min
         return reading_time
 
+    @staticmethod
+    def insert_ads(article):
+        """ inject upto 5 ads evenly throughout the article content
+            ads can not inject directly beneath headers """
+        ad = {
+            unicode('type'): unicode('ad'),
+            unicode('data'): unicode('an ad lives here')
+        }
+
+        paragraph_count = 1
+        for block in article.content:
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+        
+        numberOfAds = 1
+        while paragraph_count / numberOfAds > 6 :
+            numberOfAds += 1
+            if numberOfAds >= 5:
+                break
+
+        med = paragraph_count // numberOfAds
+        ad_count = 0
+        paragraph_count = 0
+        next_ad = randint(med - 2, med + 2)
+        ad_placements = article.content
+        for index, block in enumerate(article.content):
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+            if paragraph_count == next_ad:
+                    if article.content[index - 1]['type'] != 'header':
+                        ad_placements.insert(index + ad_count, ad)
+                        next_ad += randint(med - 2, med + 2)
+                        ad_count += 1
+                    else:
+                        next_ad += 1
+
+        article.content = ad_placements
+        return article
+        
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 

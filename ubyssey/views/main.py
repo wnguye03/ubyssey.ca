@@ -92,7 +92,7 @@ class UbysseyTheme(object):
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
-            'article': article,
+            'article': ArticleHelper.insert_ads(article),
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',

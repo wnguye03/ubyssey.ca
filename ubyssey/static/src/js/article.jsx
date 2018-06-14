@@ -56,16 +56,18 @@ if ($('main.article').length) {
     function injectSidebarAd(version, number) {
         console.log('add Box_B')
         const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
-        var adString = '<div class="o-advertisement  o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '">Text</div></div>';
+        var adString = '<div class="o-advertisement  o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div>';
     
         $('.sidebar').append(adString)
     }
 
-    function injectInlineAds(paragraphs, version, number, index) {
+    function injectInlineAds(paragraphs, version, number, index, adType) {
         const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
-        var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement o-advertisement--box o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
+        const size = adType.split('--')[1]
+        var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot" id="' + id + '" data-size=' + size + ' data-dfp="Box_' + version + '"></div></div></div></div>';
 
         if (!$(`#${id}`).length) {
+            $(adString).remove()
             $(adString).insertAfter(paragraphs.get(index));
         }
     }
@@ -100,7 +102,6 @@ if ($('main.article').length) {
                 const topOffset = String(headerHeight) + 'px'
                 element.element.css('position', 'fixed')
                 element.element.css('top', topOffset)
-                // element.element.css('top', 0)
             } 
             // Dropoff top last element
             else {
@@ -125,9 +126,9 @@ if ($('main.article').length) {
                         insertIndex += Math.floor((Math.random() * 3) + 3);
                         
                         if(insertIndex % 2 === 0 ) {
-                            injectInlineAds(paragraphs, 'C', 99 + index, index)
+                            injectInlineAds(paragraphs, 'C', 99 + index, index, 'o-advertisement--box')
                         } else {
-                            injectInlineAds(paragraphs, 'D', 100 + index, index)
+                            injectInlineAds(paragraphs, 'D', 100 + index, index, 'o-advertisement--box')
                         }
                     }
                 });
@@ -141,7 +142,25 @@ if ($('main.article').length) {
                     const scrollDistance = ($('.article-content').height() - $('.sidebar').height())/2
                     let stickyElements = []
 
-                    console.log($('.article-content').height(), $('.sidebar').height())
+                    // Inline Ads
+                    // let count = 1;
+                    // $(paragraphs).each(function(index) {
+                    //     if($(paragraphs.get(index)).offset().top + $('.content-wrapper').scrollTop() > count*windowHeight) {
+                            
+                    //         console.log(count)
+                    //         if(count === 1 ) {
+                    //             injectInlineAds(paragraphs, '1', 99, index + 1, 'o-advertisement--banner')
+                    //         } else if (count === 2){
+                    //             injectInlineAds(paragraphs, '2', 100, index + 1, 'o-advertisement--banner')
+                    //         } else if (count === 3){
+                    //             injectInlineAds(paragraphs, '3', 100, index + 1, 'o-advertisement--banner')
+                    //         } else if (count === 4){
+                    //             injectInlineAds(paragraphs, '4', 100, index + 1, 'o-advertisement--banner')
+                    //         }
+
+                    //         count += 1
+                    //     }
+                    // });
 
                     if ($('.article-content').height() < $('.sidebar').height()) {
                         removeSidebar();
@@ -149,7 +168,10 @@ if ($('main.article').length) {
                     if ($('.article-content').height() > sidebarOffset + SKYSCRAPER_HEIGHT && windowHeight > 800) {
                         useSkyscraper();
                     }
-                    if ($('.article-content').height() > sidebarOffset + SKYSCRAPER_HEIGHT + scrollDistance + BOX_HEIGHT + 50 && windowHeight > 800) {
+
+                    console.log($('.article-content').height(), $('.sidebar').height())
+
+                    if ($('.article-content').height() > sidebarOffset + SKYSCRAPER_HEIGHT + scrollDistance + BOX_HEIGHT && windowHeight > 800) {
                         injectSidebarAd('B', 200)
                     }
 
@@ -171,22 +193,6 @@ if ($('main.article').length) {
 
                         stickyAds(scrollTop, headerHeight, sidebarOffset, scrollDistance, stickyElements)
                     })
-
-                    // Inline Ads
-                    let count = 1;
-                    $(paragraphs).each(function(index) {
-                        if($(paragraphs.get(index)).offset().top + $('.content-wrapper').scrollTop() > count*windowHeight) {
-                            count += 1
-                            console.log(count)
-                            
-                            if(count % 2 === 0 ) {
-                                injectInlineAds(paragraphs, 'C', 99 + index, index + 1)
-                            } else {
-                                injectInlineAds(paragraphs, 'D', 100 + index, index + 1)
-                            }
-                        }
-                    });
-
                 })
             }
         })
