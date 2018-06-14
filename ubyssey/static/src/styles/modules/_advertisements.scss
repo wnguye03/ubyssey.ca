@@ -1,20 +1,9 @@
 $adslots: (
   leaderboard: (728px, 90px),
-  large-leaderboard: (970px, 90px),
-  mobile-leaderboard: (300px, 50px),
-  billboard: (970px, 250px),
-  banner: (468px, 60px),
   box: (300px, 250px),
-  large-box: (336px, 280px),
-  skyscraper: (120px, 600px),
-  large-skyscraper: (300px, 600px)
+  mobile-leaderboard: (300px, 50px)
 );
 
-.adslot {
-  display: block !important;
-  background-color: red;
-  background-clip: content-box !important;
-}
 // Desktop leaderboard ad
 .o-advertisement--leaderboard {
   $width: nth(map-get($adslots, leaderboard), 1);
@@ -32,7 +21,7 @@ $adslots: (
 
   &.o-advertisement--homepage {
     .adslot {
-      margin: 1.5rem auto;
+      padding-top: 1.5rem;
     }
   }
 
@@ -42,51 +31,12 @@ $adslots: (
       display: none;
     }
   }
-  
-  @media( min-width: 1010px ){
-    $width: nth(map-get($adslots, large-leaderboard), 1);
-    $height: nth(map-get($adslots, large-leaderboard), 2);
-
-    .adslot {
-      width: $width;
-      height: $height;
-    }
-  }
 
   @media($bp-larger-than-tablet){
     &.o-advertisement--homepage {
       display: block;
     }
   }
-}
-
-.o-advertisement--banner {
-  $width: nth(map-get($adslots, banner), 1);
-  $height: nth(map-get($adslots, banner), 2);
-
-  .adslot {
-    margin-left: auto;
-    margin-right: auto;
-    width: $width;
-    height: $height;
-    padding-top: 1.5rem;
-  }
-}
-
-#article-list {
-  .o-advertisement--leaderboard {
-    @media( min-width: 1010px ){
-      $width: nth(map-get($adslots, billboard), 1);
-      $height: nth(map-get($adslots, billboard), 2);
-  
-      .adslot {
-        width: $width;
-        height: $height;
-      }
-    }
-  }
-
-
 }
 
 main.article .o-advertisement--leaderboard {
@@ -133,7 +83,6 @@ main.article .o-advertisement--leaderboard {
   }
 }
 
-// Box
 .o-advertisement--mobile-frontpage-box {
   // Structure
   padding-top: 1rem;
@@ -157,62 +106,6 @@ main.article .o-advertisement--leaderboard {
     min-height: $height;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 1.5rem;
-  }
-
-  @media($bp-larger-than-desktop) {
-    $width: nth(map-get($adslots, large-box), 1);
-    $height: nth(map-get($adslots, large-box), 2);
-
-    .adslot {
-      width: $width;
-      height: $height;
-    }
-  }
-}
-
-// Desktop skyscraper ad
-.o-advertisement--skyscraper {
-  $width: nth(map-get($adslots, skyscraper), 1);
-  $height: nth(map-get($adslots, skyscraper), 2);
-
-  display: none;
-
-  .adslot {
-    margin-left: auto;
-    margin-right: auto;
-    width: $width;
-    height: $height;
-    padding-top: 1.5rem;
-  }
-
-  &.o-advertisement--homepage {
-    .adslot {
-      padding-top: 1.5rem;
-    }
-  }
-
-  @media(min-width: $width + 40) {
-    display: block;
-    &.o-advertisement--homepage {
-      display: none;
-    }
-  }
-
-  @media($bp-larger-than-tablet){
-    $width: nth(map-get($adslots, large-box), 1);
-    $height: nth(map-get($adslots, large-skyscraper), 2);
-
-    width: $width;
-    .adslot {
-      $width: nth(map-get($adslots, large-skyscraper), 1);
-      width: $width;
-      height: $height;
-    }
-
-    &.o-advertisement--homepage {
-      display: block;
-    }
   }
 }
 

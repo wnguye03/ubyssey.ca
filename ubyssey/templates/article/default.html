@@ -46,8 +46,8 @@
         {% else %}
         <div class="sidebar">
         {% endif %}
-          {% zone 'article-sidebar' %}
           {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+          {% zone 'article-sidebar' %}
         </div>
       </div>
       {% endblock %}
