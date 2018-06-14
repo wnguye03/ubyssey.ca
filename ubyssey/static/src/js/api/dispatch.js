@@ -17,7 +17,7 @@ function buildRoute(route, id) {
   if (pieces.length > 1) {
     fullRoute += pieces[1]
   }
-  
+
   let lastCharacter = fullRoute.slice(-1)
 
   if (lastCharacter !== '/') {
@@ -66,6 +66,15 @@ const DispatchAPI = {
     },
     get: (id) => {
       return getRequest('polls', id, null)
+    },
+  },
+  articles: {
+    rendered: (id) => {
+      return getRequest('articles.rendered', id, null)
+    },
+    search: (query) => {
+      return getRequest('articles', null, query)
+
     }
   }
 }
