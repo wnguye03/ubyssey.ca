@@ -133,7 +133,7 @@ if ($('main.article').length) {
 
         /* Production */
         const id = `div-gpt-ad-1443288719995-${number}-${articleId}`;
-        var adString = '<div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div>';
+        var adString = '<div><div class="o-article-embed o-article-embed--advertisement"><div class="o-article-embed__advertisement"><div class="o-advertisement ' + adType + ' o-advertisement--center"><div class="adslot" id="' + id + '" data-size="box" data-dfp="Box_' + version + '"></div></div></div></div><div class="o-hidden o-replacement o-replacement--center"><p class="replacement">Consider turning off adblock</p></div></div>';
 
         /* Test */
         // const id = `div-${number}-${articleId}`;

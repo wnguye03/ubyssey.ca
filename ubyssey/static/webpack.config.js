@@ -8,7 +8,8 @@ module.exports = {
         article:          './src/js/article.jsx',
         vendors:          './src/js/vendors.js',
         a:                './src/js/advertise.js',
-        'one-year-later': './src/js/one-year-later.js'
+        'one-year-later': './src/js/one-year-later.js',
+        blockadblock:     './src/js/blockAdBlock.js'
     },
     output: {
         path: __dirname + '/dist/js',

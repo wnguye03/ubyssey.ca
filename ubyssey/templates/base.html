@@ -141,7 +141,7 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
 
 {% block scripts %}{% endblock %}
 <script>var blockAdBlock = false;</script>
-<script src="{% static 'js/blockadblock.js' %}"></script>
+<script src="{% add_version 'js/blockadblock.js' %}"></script>
 <script>
 
   blockAdBlock = new BlockAdBlock({
@@ -154,9 +154,13 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
   }
   function adBlockDetected() {
     document.getElementById('adblock-splash').style.display = 'inline'
+    var replacements = document.getElementsByClassName('o-replacement')
+    for ( var i = 0; i < replacements.length; i++) {
+      replacements[i].classList.remove("o-hidden")
+    }
   }
 
-  if(typeof blockAdBlock === 'undefined') {
+  if (typeof blockAdBlock === 'undefined') {
   	adBlockDetected();
   } else {
   	blockAdBlock.onDetected(adBlockDetected);
