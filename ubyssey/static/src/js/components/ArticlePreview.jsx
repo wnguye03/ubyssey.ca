@@ -6,7 +6,6 @@ class ArticlePreview extends Component{
   }
   
   goToArticle() {
-    console.log('go to article')
     window.location = this.props.url
   }
 
@@ -14,9 +13,19 @@ class ArticlePreview extends Component{
     return (
       <div 
         onClick={() => this.goToArticle()}
-        id={'suggested-article' + String(this.props.articleId)}
+        id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
-          <h3>{this.props.headline}</h3>
+          <div className='sa-content'>
+            <img 
+              className='sa-thumbnail-image' 
+              src={this.props.featuredImageUrl}>
+              </img>
+            <h3>{this.props.headline}</h3>
+          </div>
+          <div className='sa-subtitle'>
+            <span className='sa-date'>{this.props.publishTime}</span>
+            <span className='sa-author'><em>{this.props.authors[0]}</em></span>
+          </div>
       </div>
     )
   }

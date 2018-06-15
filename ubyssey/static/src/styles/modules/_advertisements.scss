@@ -33,6 +33,10 @@ $adslots: (
     .adslot {
       padding-top: 1.5rem;
     }
+
+    &.o-advertisement--leaderboard {
+      padding-bottom: 1.5rem;
+    }
   }
 
   @media(min-width: $width + 40) {

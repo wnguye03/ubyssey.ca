@@ -49,12 +49,13 @@ class ArticleHelper(object):
                 paragraph_count += 1
         
         numberOfAds = 1
-        while paragraph_count / numberOfAds > 6 :
+        med = 6
+        while paragraph_count / numberOfAds > med :
             numberOfAds += 1
             if numberOfAds >= 5:
+                med = paragraph_count // numberOfAds
                 break
 
-        med = paragraph_count // numberOfAds
         ad_count = 0
         paragraph_count = 0
         next_ad = randint(med - 2, med + 2)

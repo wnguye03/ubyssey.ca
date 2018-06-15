@@ -22,7 +22,9 @@ class ArticlesSuggested extends Component{
   }
 
   componentDidMount() {
-    for (let id in this.props.articles) {
+    console.log(this.props.articles)
+    for (let id of this.props.articles) {
+      console.log('id', id)
       this.getArticle(id)
     }
   }
@@ -44,16 +46,21 @@ class ArticlesSuggested extends Component{
             articleId={article.id}
             headline={article.headline}
             url={article.url}
+            authors={article.authors}
+            publishTime={article.published_at}
+            featuredImageUrl={article.featured_image}
             key={index} />
         )
       }
     });
 
     return (
-      <div className={'suggested-articles-container-outer'}>
-        <h1>Suggested Articles</h1>
-        <div className={'suggested-articles-container-inner'}>
-          {articles}
+      <div className='sa-container-outer'>
+        <div className='u-container'>
+          <h1>Suggested Articles</h1>
+          <div className={'sa-container-inner'}>
+            {articles}
+          </div>
         </div>
       </div>
     );

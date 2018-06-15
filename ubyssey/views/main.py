@@ -95,8 +95,6 @@ class UbysseyTheme(object):
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
-
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
@@ -113,17 +111,18 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
-        # timestamp = 
-
-        print(article)
+        authors_json = [a.person.full_name for a in article.authors.all()]
+        
+        published_at = article.published_at.strftime('%m/%d/%Y')
+        featured_image = article.featured_image.image.get_thumbnail_url()
 
         data = {
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            # 'html': loader.render_to_string(article.get_template_path(), context)
-            'authors': json.loads(authors_json),
+            'authors': authors_json,
+            'published_at': published_at,
+            'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
