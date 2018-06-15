@@ -114,6 +114,9 @@ class UbysseyTheme(object):
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
         authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
+        # timestamp = 
+
+        print(article)
 
         context = {
             'article': article,
@@ -125,7 +128,8 @@ class UbysseyTheme(object):
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template_path(), context)
+            # 'html': loader.render_to_string(article.get_template_path(), context)
+            'authors': json.loads(authors_json),
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')

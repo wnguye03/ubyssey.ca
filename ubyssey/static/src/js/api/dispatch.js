@@ -74,7 +74,6 @@ const DispatchAPI = {
     },
     search: (query) => {
       return getRequest('articles', null, query)
-
     }
   }
 }

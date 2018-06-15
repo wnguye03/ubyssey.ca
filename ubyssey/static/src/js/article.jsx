@@ -1,6 +1,6 @@
 import React from 'react';
 import './modules/Youtube';
-import ArticleList from './components/ArticleList.jsx';
+import ArticlesSuggested from './components/ArticlesSuggested.jsx';
 import Search from './components/Search.jsx';
 import Poll from './components/Poll/Poll.jsx';
 
@@ -21,6 +21,7 @@ $(function () {
 if ($('main.article').length) {
 
     const $article = $('article');
+    console.log($article)
 
     var articleId = $article.data('id');
     var articleHeadline = $article.data('headline');
@@ -144,10 +145,10 @@ if ($('main.article').length) {
 
     articleAds()
 
-    // var articleList = React.render(
-    //     <ArticleList breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
-    //     document.getElementById('article-list')
-    // );
+    var articleList = React.render(
+        <ArticlesSuggested breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
+        document.getElementById('article-list')
+    );
 }
 
 React.render(

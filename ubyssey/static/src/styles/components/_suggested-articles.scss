@@ -1,0 +1,39 @@
+.suggested-articles-container-outer {
+  // Structure
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #DADADA;
+  // text
+  h1 {
+    font-weight: 600;
+  }
+}
+
+.suggested-articles-container-inner {
+  // Structure
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  .article-preview {
+    // Structure
+    padding: 20px;
+    width: 30%;
+    margin-right: 3%;
+    margin-left: 3%;
+    cursor: pointer;
+  
+    // text
+    h3 {
+      font-weight: 600;
+      font-size: 16px;
+    }
+  
+    &:hover {
+      color: white;
+      background-color: $color-ub-blue-light;
+    }
+  }
+}
+
