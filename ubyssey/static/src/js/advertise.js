@@ -18,7 +18,6 @@ $(function() {
     $('.o-placements--print .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');
     $('.o-placements--print .o-placements__demo').attr('data-demo', $(this).data('demo'));
-    console.log('print demo', $(this).data('demo'));
   });
 
   $('.o-placements--guide .o-placements__placement--demo').click(function() {
