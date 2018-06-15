@@ -118,12 +118,6 @@ class UbysseyTheme(object):
 
         print(article)
 
-        context = {
-            'article': article,
-            'authors_json': authors_json,
-            'base_template': 'blank.html'
-        }
-
         data = {
             'id': article.parent_id,
             'headline': article.headline,

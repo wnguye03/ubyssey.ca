@@ -44,7 +44,7 @@ class ArticlesSuggested extends Component{
             articleId={article.id}
             headline={article.headline}
             url={article.url}
-            index={index} />
+            key={index} />
         )
       }
     });
