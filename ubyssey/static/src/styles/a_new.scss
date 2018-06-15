@@ -1,5 +1,5 @@
 // Styles for the /advertise/ page
-// Renamed from 'advertise.scss' to 'a.scss' to prevent AdBlocker blocking.
+// Renamed from 'advertise_new.scss' to 'a_new.scss' to prevent AdBlocker blocking.
 
 // Variables
 $color-white: #fff;
@@ -680,7 +680,7 @@ html, body {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding-bottom: 65%;
+  padding-bottom: 120%;
   overflow: hidden;
 
   // Background
@@ -692,14 +692,23 @@ html, body {
 
   img {
     // Structure
-    display: block;
+    display: flex;
     position: absolute;
-    top: 0;
+    // top: 0;
     width: 100%;
     height: auto;
 
     // Extra
     transition: top 0.5s;
+  }
+
+  .o-placements__demo__inner__left img{
+    left:0%;
+    top: 0;
+  }
+
+  .o-placements__demo__inner__right img{
+    left:100%;
   }
 }
 

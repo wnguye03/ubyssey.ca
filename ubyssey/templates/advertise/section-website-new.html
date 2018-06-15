@@ -40,17 +40,40 @@
       <div class="o-placements__list">
         <h3 class="o-heading o-heading--small">Placements</h3>
         <ul>
-          <li class="o-placements__placement o-placements__placement--demo o-placements__placement--active" data-offset="0%">
+          <li class="o-placements__placement o-placements__placement--demo o-placements__placement--active" data-offset="0%" data-horizontaloffset="100%">
+            <h4>Homepage</h4>
             <div>
-              <h4>Leaderboard</h4>
+              <h3>Leaderboard*</h3>
+              <p>970 x 90 pixels</p>
               <p>728 x 90 pixels</p>
               <p>320 x 50 pixels (mobile)</p>
             </div>
           </li>
-          <li class="o-placements__placement o-placements__placement--demo" data-offset="-80%">
+          <li class="o-placements__placement o-placements__placement--demo" data-offset="-45%" data-horizontaloffset="100%">
             <div>
-              <h4>Box</h4>
+              <h3>Box</h3>
               <p>300 x 250 pixels</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-offset="0%" data-horizontaloffset="0%">
+            <h4>Articles</h4>
+            <div>
+              <h3>Leaderboard*</h3>
+              <p>970 x 90 pixels</p>
+              <p>728 x 90 pixels</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-offset="-40%" data-horizontaloffset="0%">
+            <div>
+              <h3>Sidebar</h3>
+              <p>300 x 250 pixels</p>
+              <p>300 x 600 pixels</p>
+            </div>
+          </li>
+          <li class="o-placements__placement o-placements__placement--demo" data-offset="-50%" data-horizontaloffset="0%">
+            <div>
+              <h3>Banner</h3>
+              <p>468 x 60 pixels</p>
             </div>
           </li>
         </ul>
@@ -60,9 +83,13 @@
             <div class="o-placements__demo__inner__left">
               <img src="{% static 'images/a/demo-homepage.png' %}" />
             </div>
+            <div class="o-placements__demo__inner__right">
+              <img src="{% static 'images/a/demo-article-new.png' %}" />
+            </div>
         </div>
       </div>
     </div>
+    <p>*Leaderboard requires both 970 & 728 sizes</p>
     <div>
       <h3 class="o-heading o-heading--small">Pricing</h3>
       <div class="c-web-slider">
