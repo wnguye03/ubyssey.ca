@@ -36,10 +36,9 @@ class ArticlesSuggested extends Component{
   }
 
   render() {
-    console.log(this.state.articles)
     const articles = this.state.articles.map((article, index) => {
       // only show 3 suggested articles
-      if (index >= 2 && index < 5 && article.headline !== this.props.currentArticle.headline) {
+      if (index !== 0 && article.headline !== this.props.currentArticle.headline) {
         return (
           <ArticlePreview 
             articleId={article.id}
@@ -58,7 +57,7 @@ class ArticlesSuggested extends Component{
         <div className='u-container'>
           <h1>Suggested Articles</h1>
           <div className={'sa-container-inner'}>
-            {articles}
+            {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
           </div>
         </div>
       </div>

@@ -17,9 +17,6 @@ class ArticlePreview extends Component{
         className='article-preview'>
           <div className='sa-content'>
             {this.props.featuredImageUrl && 
-              // <img 
-              //   className='sa-thumbnail-image' 
-              //   src={this.props.featuredImageUrl} />
               <div
                 className='sa-thumbnail-image'
                 style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}></div>
