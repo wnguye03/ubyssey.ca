@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div>
   <div class="o-advertisement o-advertisement--{{ size }}{% if class %} o-advertisement--{{ class }}{% endif %}">
     <!-- google-adsense-test -->
@@ -5,6 +6,10 @@
     <!-- <div class="adslot-test" id="div-{{ size }}{% if article %}-{{ article }}{% endif %}" data-size="{{ size }}" data-dfp="{{ name }}"></div> -->
   </div>
   <div class="o-hidden o-replacement o-replacement--{{ size }}{% if class %} o-replacement--{{ class }}{% endif %}">
+    {% if size == "box" %}
+    <a href='http://ubyssey.ca/volunteer' target="_blank"><img href='http://ubyssey.ca/volunteer/' src="{% static 'images/house/volunteer.jpg' %}" /></a>
+    {% else %}
     <p class="replacement">Consider turning off adblock</p>
+    {% endif %}
   </div>
 </div>
