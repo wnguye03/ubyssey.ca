@@ -731,6 +731,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
+blockadblock:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/blockadblock/-/blockadblock-3.2.1.tgz#888c80a8eb221cc3f1e84a0f066e54c90fe87d66"
+
 boom@2.x.x:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -2204,6 +2208,10 @@ jasmine@^2.3.0, jasmine@^2.5.3:
 js-base64@^2.1.8:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.5.tgz#e293cd3c7c82f070d700fc7a1ca0a2e69f101f92"
+
+js-cookie:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
