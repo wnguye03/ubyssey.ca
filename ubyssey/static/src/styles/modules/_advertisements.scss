@@ -40,12 +40,12 @@ $adslots: (
   }
 
   @media(min-width: $width + 40) {
-    display: block;
+    display: flex;
     &.o-advertisement--homepage {
       display: none;
     }
   }
-  
+
   @media( min-width: 1010px ){
     .adslot {
       min-width: nth(map-get($adslots, leaderboard), 1);
@@ -66,7 +66,7 @@ $adslots: (
     @media( min-width: 1010px ){
       $width: nth(map-get($adslots, billboard), 1);
       $height: nth(map-get($adslots, billboard), 2);
-  
+
       .adslot {
         width: $width;
         height: $height;
