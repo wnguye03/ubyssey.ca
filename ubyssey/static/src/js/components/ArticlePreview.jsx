@@ -16,10 +16,19 @@ class ArticlePreview extends Component{
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
           <div className='sa-content'>
-            <img 
-              className='sa-thumbnail-image' 
-              src={this.props.featuredImageUrl}>
-              </img>
+            {this.props.featuredImageUrl && 
+              // <img 
+              //   className='sa-thumbnail-image' 
+              //   src={this.props.featuredImageUrl} />
+              <div
+                className='sa-thumbnail-image'
+                style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}></div>
+            }
+            {!this.props.featuredImageUrl && 
+              <div className='sa-thumbnail-image'>
+                No image
+              </div>
+            }
             <h3>{this.props.headline}</h3>
           </div>
           <div className='sa-subtitle'>

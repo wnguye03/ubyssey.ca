@@ -9,22 +9,20 @@ class ArticlesSuggested extends Component{
     super(props)
 
     var articles = props.articles
-    articles.unshift(props.firstArticle.id)
+    articles.unshift(props.currentArticle.id)
 
     this.articlesTable = {};
-    this.articlesTable[this.props.firstArticle.id] = 0;
+    this.articlesTable[this.props.currentArticle.id] = 0;
 
     this.state = {
       active: new LinkedList(articles),
-      articles: [props.firstArticle],
+      articles: [props.currentArticle],
       loading: false
     }
   }
 
   componentDidMount() {
-    console.log(this.props.articles)
     for (let id of this.props.articles) {
-      console.log('id', id)
       this.getArticle(id)
     }
   }
@@ -38,9 +36,10 @@ class ArticlesSuggested extends Component{
   }
 
   render() {
+    console.log(this.state.articles)
     const articles = this.state.articles.map((article, index) => {
-      console.log(index, article)
-      if (index !== 0 && index <= 3) {
+      // only show 3 suggested articles
+      if (index >= 2 && index < 5 && article.headline !== this.props.currentArticle.headline) {
         return (
           <ArticlePreview 
             articleId={article.id}

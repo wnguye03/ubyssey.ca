@@ -21,7 +21,6 @@ $(function () {
 if ($('main.article').length) {
 
     const $article = $('article');
-    console.log($article)
 
     var articleId = $article.data('id');
     var articleHeadline = $article.data('headline');
@@ -47,20 +46,19 @@ if ($('main.article').length) {
         $('.sidebar').remove()
     }
 
-    function removeSidebarAd() {
-        $('.sidebar').children('.o-advertisement--box').removeClass('o-advertisement--box')
+    function removeSidebarAds() {
+        $('.sidebar').children('.o-advertisement--skyscraper').remove()
+        removeSidebarAd()
     }
 
-    function stickyAds(scrollTop, headerHeight, sidebarOffset, scrollDistance, stickyElements) {
-
+    function stickyAds(scrollTop, headerHeight, sidebarOffset, stickyElements) {
         stickyElements.map(element => {
             // adjust when skyscraper is served
-            if (element.height !== $(element.element).height() && element.index != stickyElements.length - 1) {
-                element.heightChange += $(element.element).height() - element.height
+            if (element.height !== $(element.element).height() && element.index == 0) {
                 element.height = $(element.element).height()
             }
 
-            const dropoff = element.offset + scrollDistance + headerHeight - element.heightChange
+            const dropoff = element.offset + element.scrollDistance - element.height
 
             const pickup = element.offset - headerHeight
 
@@ -95,49 +93,57 @@ if ($('main.article').length) {
         })
     }
 
-
     function articleAds() {
         $(function () {
             const paragraphs = $(`#article-${articleId} .article-content > p`);
             const windowHeight = $(window).height();
 
             // // Mobile
-            if ($(window).width() < 960) {
-                // do mobile stuff
-            }
-            // Desktop
-            else {
-                if ($('.article-content').height() < $('.sidebar').height()) {
-                    removeSidebar();
+            if ($(window).width() >= 960) {
+                const sidebarHeight = $('.sidebar').children('[class*="c-widget"]').outerHeight(true) ? $('.sidebar').children('[class*="c-widget"]').outerHeight(true) : 0
+                let adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
+                
+                if (adSpace < 0) {
+                    removeSidebar()
+                    return
+                }
+                if (adSpace < SKYSCRAPER_HEIGHT - BOX_HEIGHT) {
+                    removeSidebarAds()
+                    return
                 }
 
-                console.log($('.article-content').height(), $('.sidebar').height())
-
-                // Setup sticky ads
-                const headerHeight = $('.topbar').height() + parseInt($('.sidebar').css('margin-top'), 10)
-                const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
-                const scrollDistance = ($('.article-content').height() - $('.sidebar').height()) / 2
+                // Create sticky elements
                 let stickyElements = []
+
                 $('.sidebar').children('[class*="o-advertisement--"]').addClass('js-sticky')
+                const stickyElementLength = $('.js-sticky').length
 
                 $('.js-sticky').each(function (index) {
                     const element = {
                         element: $(this),
                         index: index,
-                        offset: $(this).offset().top + $('#content-wrapper').scrollTop() + index * scrollDistance + index * 100,
+                        offset: $(this).offset().top + $('#content-wrapper').scrollTop() + index * adSpace/stickyElementLength,
                         pickup: null,
                         dropoff: null,
                         height: $(this).height(),
-                        heightChange: 0
+                        scrollDistance: adSpace/stickyElementLength
                     }
                     stickyElements.push(element)
                 })
 
+                // Adjust last sticky element's offset
+                if (stickyElements.length > 1) {
+                    stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height/2
+                }
+                
+                // Setup sticky ads
+                const headerHeight = $('.topbar').height() + parseInt($('.sidebar').css('margin-top'), 10)
+                const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+                
                 // Sticky Ads
                 $('#content-wrapper').scroll(() => {
                     const scrollTop = $('#content-wrapper').scrollTop();
-
-                    stickyAds(scrollTop, headerHeight, sidebarOffset, scrollDistance, stickyElements)
+                    stickyAds(scrollTop, headerHeight, sidebarOffset, stickyElements)
                 })
             }
         })
@@ -146,7 +152,7 @@ if ($('main.article').length) {
     articleAds()
 
     var articleList = React.render(
-        <ArticlesSuggested breakpoint={960} name={listName} firstArticle={firstArticle} articles={articleIds} userId={userId} />,
+        <ArticlesSuggested breakpoint={960} name={listName} currentArticle={firstArticle} articles={articleIds} userId={userId} />,
         document.getElementById('article-list')
     );
 }

@@ -114,7 +114,11 @@ class UbysseyTheme(object):
         authors_json = [a.person.full_name for a in article.authors.all()]
         
         published_at = article.published_at.strftime('%m/%d/%Y')
-        featured_image = article.featured_image.image.get_thumbnail_url()
+        
+        try:
+            featured_image = article.featured_image.image.get_thumbnail_url()
+        except:
+            featured_image = None
 
         data = {
             'id': article.parent_id,

@@ -34,7 +34,7 @@
       h3 {
         // Text
         font-weight: 500;
-        font-size: 14px;
+        font-size: .875rem;
         margin-top: 0;
         width: 75%;
         max-height: 50px;
@@ -50,7 +50,7 @@
     .sa-date,
     .sa-author {
       // Text
-      font-size: 12px;
+      font-size: .75rem;
     } 
 
     .sa-subtitle {
@@ -73,10 +73,20 @@
 
     .sa-thumbnail-image {
       // Strucuture
-      width: 60px;
-      height: auto;
       display: inline-block;
       margin-right: 15px;
+      width: 60px;
+      height: 40px;
+
+      //Image
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+
+      // Text
+      color: $color-text-gray-light;
+      font-size: .75rem;
+
     }
   }
 }
@@ -114,9 +124,15 @@
 
       .sa-thumbnail-image {
         // Strucuture
-        width: 100%;
-        height: auto;
-        display: block;
+        width: 240px;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+
+        // Text
+        font-size: 1rem;
       }
     }
   }
