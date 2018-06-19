@@ -57,7 +57,7 @@ if ($('main.article').length) {
     }
 
     function removeSidebarAds() {
-        $('.sidebar').children('.o-advertisement--skyscraper').remove()
+        $('.sidebar').find('.o-advertisement--skyscraper').remove()
         removeSidebarAd()
     }
 
@@ -108,9 +108,9 @@ if ($('main.article').length) {
             const paragraphs = $(`#article-${articleId} .article-content > p`);
             const windowHeight = $(window).height();
 
-            // // Mobile
+            // Desktop
             if ($(window).width() >= 960) {
-                const sidebarHeight = $('.sidebar').children('[class*="c-widget"]').outerHeight(true) ? $('.sidebar').children('[class*="c-widget"]').outerHeight(true) : 0
+                const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) ? $('.sidebar').find('[class*="c-widget"]').outerHeight(true) : 0
                 let adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
                 
                 if (adSpace < 0) {
@@ -125,7 +125,7 @@ if ($('main.article').length) {
                 // Create sticky elements
                 let stickyElements = []
 
-                $('.sidebar').children('[class*="o-advertisement--"]').addClass('js-sticky')
+                $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
                 const stickyElementLength = $('.js-sticky').length
 
                 $('.js-sticky').each(function (index) {
