@@ -50,19 +50,14 @@
         <div class="sidebar">
         {% endif %}
           {% zone 'article-sidebar' %}
-<<<<<<< HEAD
           {% if explicit is not True %}
-          {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+            {% if reading_time >= 3 %}
+              {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
+              {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
+            {% else %}
+              {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+            {% endif %}
           {% endif %}
-=======
-          {% if reading_time >= 3 %}
-            {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
-            {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
-          {% else %}
-            {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
-          {% endif %}
-          
->>>>>>> 480-remove-article-continuous-scroll
         </div>
       </div>
       {% endblock %}
