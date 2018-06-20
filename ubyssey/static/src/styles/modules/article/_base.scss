@@ -87,7 +87,6 @@ div.indicator {
   }
 } 
 
-.960px 
 .960px {
   margin-bottom: 0.9rem;
   display: inline-block;
@@ -248,13 +247,6 @@ div.right-column {
       }
     }
   }
-
-  @media($bp-larger-than-desktop){
-    div.sidebar {
-      width: 336px;
-    }
-  }
-
 }
 
 div.side {

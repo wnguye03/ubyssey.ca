@@ -32,6 +32,49 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
+    def insert_ads(article, article_type = 'desktop'):
+        """ inject upto 5 ads evenly throughout the article content
+            ads can not inject directly beneath headers """
+        ad = {
+            unicode('type'): unicode('ad'),
+            unicode('data'): unicode(article_type)
+        }
+
+        paragraph_count = 1
+        
+        for block in article.content:
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+        
+        numberOfAds = 1
+        paragraphs_per_ad = 6
+
+        while paragraph_count / numberOfAds > paragraphs_per_ad :
+            numberOfAds += 1
+            if numberOfAds >= 5:
+                paragraphs_per_ad = paragraph_count // numberOfAds
+                break
+
+        ad_count = 0
+        paragraph_count = 0
+        next_ad = randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+        ad_placements = article.content
+
+        for index, block in enumerate(article.content):
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+            if paragraph_count == next_ad:
+                    if index != 0 and article.content[index - 1]['type'] != 'header':
+                        ad_placements.insert(index + ad_count, ad)
+                        next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+                        ad_count += 1
+                    else:
+                        next_ad += 1
+
+        article.content = ad_placements
+        return article
+        
+    @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:

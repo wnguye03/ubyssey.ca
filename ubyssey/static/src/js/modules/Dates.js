@@ -20,3 +20,13 @@ export function formatPubDate(date) {
 
   return `${dateString}, ${hour}:${minute} ${ampm}`;
 }
+
+export function humanizeDatetime(timestamp, isDateTime) {
+    if (!timestamp) {
+      return null
+    }
+  
+    return isDateTime ?
+      moment(timestamp).format('lll') : // April 18, 2017 12:50 PM
+      moment(timestamp).format('ll')   // April 18, 2017
+}

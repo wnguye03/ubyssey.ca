@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Topic, Person
 
@@ -21,6 +22,7 @@ def parse_int_or_none(maybe_int):
         return int(maybe_int)
     except (TypeError, ValueError):
         return None
+
 
 class UbysseyTheme(object):
 
@@ -83,16 +85,20 @@ class UbysseyTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
+        
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
 
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
-
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
-            'article': article,
+            'article': ArticleHelper.insert_ads(article, article_type),
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
@@ -106,19 +112,28 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
+        authors_json = [a.person.full_name for a in article.authors.all()]
 
         context = {
             'article': article,
             'authors_json': authors_json,
             'base_template': 'blank.html'
         }
+        
+        # published_at = article.published_at.strftime('%m/%d/%Y')
+        
+        try:
+            featured_image = article.featured_image.image.get_thumbnail_url()
+        except:
+            featured_image = None
 
         data = {
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template_path(), context)
+            'authors': authors_json,
+            'published_at': str(article.published_at),
+            'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')

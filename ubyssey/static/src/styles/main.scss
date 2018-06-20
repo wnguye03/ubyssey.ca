@@ -3,7 +3,6 @@
 @import 'modules/fonts';
 @import 'modules/font_faces';
 @import 'modules/advertisements';
-@import 'modules/advertisements-test';
 @import 'modules/variables';
 @import 'modules/mixins';
 @import 'modules/utilities';
@@ -35,7 +34,10 @@
 @import 'components/section-page';
 @import 'components/homepage';
 @import 'components/poll';
+@import 'components/suggested-articles';
 
+@import 'components/adblock-splash';
+@import 'components/replacement';
 @import 'components/button';
 @import 'components/heading';
 @import 'components/paragraph';
