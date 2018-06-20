@@ -7,7 +7,7 @@ import AdblockSplash from './components/AdblockSplash.jsx'
 
 window.articleHeader = false;
 
-const BOX_HEIGHT = 300
+const BOX_HEIGHT = 274
 const SKYSCRAPER_HEIGHT = 624
 
 $(function () {
@@ -52,16 +52,10 @@ if ($('main.article').length) {
         url: articleURL
     };
 
-    function removeSidebar() {
-        $('.sidebar').remove()
-    }
+    function stickyAds(scrollTop, stickyElements) {
+        const headerHeight = $('.topbar').outerHeight(true)
+        const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
 
-    function removeSidebarAds() {
-        $('.sidebar').find('.o-advertisement--skyscraper').remove()
-        removeSidebarAd()
-    }
-
-    function stickyAds(scrollTop, headerHeight, sidebarOffset, stickyElements) {
         stickyElements.map(element => {
             // adjust when skyscraper is served
             if (element.height !== $(element.element).height() && element.index == 0) {
@@ -69,9 +63,7 @@ if ($('main.article').length) {
             }
 
             const dropoff = element.offset + element.scrollDistance - element.height
-
             const pickup = element.offset - headerHeight
-
             const articleBottom = $('#content-wrapper').scrollTop() + $('.article-content').offset().top + $('.article-content').outerHeight() - element.height
 
             // Dropoff bottom
@@ -86,10 +78,6 @@ if ($('main.article').length) {
             }
             // Pickup
             else if (scrollTop > pickup) {
-                if (!element.pickup) {
-                    element.pickup = pickup
-                }
-
                 const topOffset = String(headerHeight) + 'px'
                 element.element.css('position', 'fixed')
                 element.element.css('top', topOffset)
@@ -110,30 +98,29 @@ if ($('main.article').length) {
 
             // Desktop
             if ($(window).width() >= 960) {
-                const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) ? $('.sidebar').find('[class*="c-widget"]').outerHeight(true) : 0
-                let adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
+                const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) || 0
+                const adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
                 
+                $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
+                const stickyElementLength = $('.js-sticky').length
+
                 if (adSpace < 0) {
-                    removeSidebar()
+                    $('.sidebar').remove()
                     return
                 }
-                if (adSpace < SKYSCRAPER_HEIGHT - BOX_HEIGHT) {
-                    removeSidebarAds()
+                if (adSpace < SKYSCRAPER_HEIGHT) {
+                    $('.sidebar').find('.o-advertisement--skyscraper').remove()
                     return
                 }
 
                 // Create sticky elements
                 let stickyElements = []
 
-                $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
-                const stickyElementLength = $('.js-sticky').length
-
                 $('.js-sticky').each(function (index) {
                     const element = {
                         element: $(this),
                         index: index,
                         offset: $(this).offset().top + $('#content-wrapper').scrollTop() + index * adSpace/stickyElementLength,
-                        pickup: null,
                         dropoff: null,
                         height: $(this).height(),
                         scrollDistance: adSpace/stickyElementLength
@@ -146,14 +133,10 @@ if ($('main.article').length) {
                     stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height/2
                 }
                 
-                // Setup sticky ads
-                const headerHeight = $('.topbar').height() + parseInt($('.sidebar').css('margin-top'), 10)
-                const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
-                
                 // Sticky Ads
                 $('#content-wrapper').scroll(() => {
                     const scrollTop = $('#content-wrapper').scrollTop();
-                    stickyAds(scrollTop, headerHeight, sidebarOffset, stickyElements)
+                    stickyAds(scrollTop, stickyElements)
                 })
             }
         })

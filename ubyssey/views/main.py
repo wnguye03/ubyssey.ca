@@ -112,8 +112,14 @@ class UbysseyTheme(object):
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
         authors_json = [a.person.full_name for a in article.authors.all()]
+
+        context = {
+            'article': article,
+            'authors_json': authors_json,
+            'base_template': 'blank.html'
+        }
         
-        published_at = article.published_at.strftime('%m/%d/%Y')
+        # published_at = article.published_at.strftime('%m/%d/%Y')
         
         try:
             featured_image = article.featured_image.image.get_thumbnail_url()
@@ -125,7 +131,7 @@ class UbysseyTheme(object):
             'headline': article.headline,
             'url': article.get_absolute_url(),
             'authors': authors_json,
-            'published_at': published_at,
+            'published_at': str(article.published_at),
             'featured_image': featured_image
         }
 

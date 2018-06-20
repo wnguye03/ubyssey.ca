@@ -2,11 +2,8 @@ $adslots: (
   leaderboard: (728px, 90px),
   large-leaderboard: (970px, 90px),
   mobile-leaderboard: (300px, 50px),
-  billboard: (970px, 250px),
   banner: (468px, 60px),
   box: (300px, 250px),
-  large-box: (336px, 280px),
-  skyscraper: (120px, 600px),
   large-skyscraper: (300px, 600px)
 );
 
@@ -66,22 +63,6 @@ $adslots: (
     height: $height;
     padding-top: 1.5rem;
   }
-}
-
-#article-list {
-  .o-replacement--leaderboard {
-    @media( min-width: 1010px ){
-      $width: nth(map-get($adslots, billboard), 1);
-      $height: nth(map-get($adslots, billboard), 2);
-
-      .replacement {
-        width: $width;
-        height: $height;
-      }
-    }
-  }
-
-
 }
 
 main.article .o-replacement--leaderboard {
@@ -153,43 +134,21 @@ main.article .o-replacement--leaderboard {
     margin-right: auto;
     padding-top: 1.5rem;
   }
-
-  @media($bp-larger-than-desktop) {
-    $width: nth(map-get($adslots, large-box), 1);
-    $height: nth(map-get($adslots, large-box), 2);
-
-    .replacement {
-      width: $width;
-      height: $height;
-    }
-  }
 }
 
 // Desktop skyscraper ad
 .o-replacement--skyscraper {
-  $width: nth(map-get($adslots, skyscraper), 1);
-  $height: nth(map-get($adslots, skyscraper), 2);
-
   display: none;
 
   .replacement {
     margin-left: auto;
     margin-right: auto;
-    width: $width;
-    height: $height;
     padding-top: 1.5rem;
   }
 
   &.o-replacement--homepage {
     .replacement {
       padding-top: 1.5rem;
-    }
-  }
-
-  @media(min-width: $width + 40) {
-    display: block;
-    &.o-replacement--homepage {
-      display: none;
     }
   }
 

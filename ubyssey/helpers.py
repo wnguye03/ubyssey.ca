@@ -24,9 +24,6 @@ class ArticleHelper(object):
     def get_reading_time(article):
         word_count = 0
         words_per_min = 150
-        print()
-        print(type(article.content))
-        print()
         for block in article.content:
             if block['type'] == 'paragraph':
                 word_count += len(block['data'].split(' '))
@@ -44,29 +41,32 @@ class ArticleHelper(object):
         }
 
         paragraph_count = 1
+        
         for block in article.content:
             if block['type'] == 'paragraph':
                 paragraph_count += 1
         
         numberOfAds = 1
-        med = 6
-        while paragraph_count / numberOfAds > med :
+        paragraphs_per_ad = 6
+
+        while paragraph_count / numberOfAds > paragraphs_per_ad :
             numberOfAds += 1
             if numberOfAds >= 5:
-                med = paragraph_count // numberOfAds
+                paragraphs_per_ad = paragraph_count // numberOfAds
                 break
 
         ad_count = 0
         paragraph_count = 0
-        next_ad = randint(med - 2, med + 2)
+        next_ad = randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
         ad_placements = article.content
+
         for index, block in enumerate(article.content):
             if block['type'] == 'paragraph':
                 paragraph_count += 1
             if paragraph_count == next_ad:
                     if index != 0 and article.content[index - 1]['type'] != 'header':
                         ad_placements.insert(index + ad_count, ad)
-                        next_ad += randint(med - 2, med + 2)
+                        next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
                         ad_count += 1
                     else:
                         next_ad += 1
