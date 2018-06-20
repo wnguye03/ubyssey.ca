@@ -8,6 +8,7 @@ module.exports = {
         article:          './src/js/article.jsx',
         vendors:          './src/js/vendors.js',
         a:                './src/js/advertise.js',
+        a_new:            './src/js/advertise_new.js',
         'one-year-later': './src/js/one-year-later.js',
         blockadblock:     './src/js/blockadblock.js'
     },
