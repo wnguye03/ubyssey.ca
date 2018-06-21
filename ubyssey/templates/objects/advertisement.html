@@ -5,9 +5,10 @@
     <div class="adslot" id="div-gpt-ad-1443288719995-{{ id }}{% if article %}-{{ article }}{% endif %}" data-size="{{ size }}" data-dfp="{{ name }}"></div>
     <!-- <div class="adslot-test" id="div-{{ size }}{% if article %}-{{ article }}{% endif %}" data-size="{{ size }}" data-dfp="{{ name }}"></div> -->
   </div>
-  <div class="o-hidden o-replacement o-replacement--{{ size }}{% if class %} o-replacement--{{ class }}{% endif %}">
-    {% if size == "box" %}
-    <a href='http://ubyssey.ca/volunteer' target="_blank"><img href='http://ubyssey.ca/volunteer/' src="{% static 'images/house/volunteer.jpg' %}" /></a>
-    {% endif %}
-  </div>
+  {% if size == "box" %}
+  <a href='http://ubyssey.ca/volunteer' target="_blank">
+    <div class="o-hidden o-replacement o-replacement--{{ size }}{% if class %} o-replacement--{{ class }}{% endif %}" style="background-image:url({% static 'images/house/volunteer.jpg' %});">
+    </div>
+  </a>
+  {% endif %}
 </div>
