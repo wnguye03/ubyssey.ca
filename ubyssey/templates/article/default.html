@@ -65,6 +65,7 @@
       {% block pre-content %}{% endblock %}
         {{ article.html|safe }}
       </div>
+      
       {% include 'objects/social-icons-bottom.html' with article=article %}
   </article>
 </main>
@@ -87,7 +88,8 @@
 </div>
 <div id="gallery"></div>
 
-<div id="article-list"></div>
+{% include 'objects/bottom-banner.html' with article=article %}
+
 {% endblock %}
 
 {% block scripts %}

@@ -5,9 +5,6 @@
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 15px;
-
-  // Border
-  border-top: 1px solid #DADADA;
   
   .u-container {
     // Strucuture
@@ -22,6 +19,7 @@
     // Structure
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
 
     .article-preview {
       // Structure
@@ -91,13 +89,11 @@
   }
 }
 .sa-container-outer {
-  // Structure
-  padding-left: 15px;
-  padding-right: 15px;
   @media($bp-larger-than-tablet) {
     .u-container {
       // Strucuture
       max-width: 960px;
+      padding: 0;
     }
     .sa-container-inner {
       // Structure
@@ -105,9 +101,7 @@
 
       .article-preview {
         // Strucuture
-        width: 32%;
-        margin-right: 1%;
-        margin-left: 1%;
+        width: 33%;
             
         h3 {
           // Strucuture
