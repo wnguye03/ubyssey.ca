@@ -193,6 +193,15 @@ class ArticleHelper(object):
         )
 
     @staticmethod
+    def is_explicit(article):
+        explicit_tags = ['sex']
+        tags = article.tags.all().values_list('name', flat=True)
+        for tag in tags:
+            if tag in explicit_tags:
+                return True
+        return False
+
+    @staticmethod
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
 
