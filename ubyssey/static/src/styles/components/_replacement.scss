@@ -127,60 +127,19 @@ main.article .o-replacement--leaderboard {
   $width: nth(map-get($adslots, box), 1);
   $height: nth(map-get($adslots, box), 2);
 
-  .replacement {
-    width: $width;
-    min-height: $height;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 1.5rem;
-  }
+  width: $width;
+  min-height: $height;
+  margin-left: auto;
+  margin-right: auto;
+  background-size: 100% 100%;
 }
 
-// Desktop skyscraper ad
-.o-replacement--skyscraper {
-  display: none;
-
-  .replacement {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 1.5rem;
-  }
-
-  &.o-replacement--homepage {
-    .replacement {
-      padding-top: 1.5rem;
-    }
-  }
-
-  @media($bp-larger-than-tablet){
-    $width: nth(map-get($adslots, large-box), 1);
-    $height: nth(map-get($adslots, large-skyscraper), 2);
-
-    width: $width;
-    .replacement {
-      $width: nth(map-get($adslots, large-skyscraper), 1);
-      width: $width;
-      height: $height;
-    }
-
-    &.o-replacement--homepage {
-      display: block;
-    }
-  }
-}
 
 // Hide ads when printed
 .o-replacement {
   @media print {
     display: none;
   }
-}
-
-.replacement {
-  padding: 1rem;
-  text-align: center;
-  background-color: $color-ub-blue;
-  color: white;
 }
 
 .o-hidden {
