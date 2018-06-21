@@ -85,7 +85,7 @@ class UbysseyTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
-        
+
         # determine if user is viewing from mobile
         article_type = 'desktop'
         user_agent = get_user_agent(request)
@@ -95,10 +95,13 @@ class UbysseyTheme(object):
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
+        if not ArticleHelper.is_explicit(article):
+            article = ArticleHelper.insert_ads(article, article_type)
+
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
-            'article': ArticleHelper.insert_ads(article, article_type),
+            'article': article,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
@@ -119,9 +122,9 @@ class UbysseyTheme(object):
             'authors_json': authors_json,
             'base_template': 'blank.html'
         }
-        
+
         # published_at = article.published_at.strftime('%m/%d/%Y')
-        
+
         try:
             featured_image = article.featured_image.image.get_thumbnail_url()
         except:
