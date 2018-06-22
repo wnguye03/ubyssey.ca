@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import humanizeDateTime from '../modules/Dates'
+import humanizeDateTime from '../../modules/Dates'
 
 class ArticlePreview extends Component{
   constructor(props) {
@@ -13,10 +13,8 @@ class ArticlePreview extends Component{
   render() {
     const msec = Date.parse(this.props.publishTime)
     const publishedDate = new Date(msec)
-    console.log(publishedDate.toDateString())
     return (
       <a
-        // onClick={() => this.goToArticle()}
         href={this.props.url}
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>

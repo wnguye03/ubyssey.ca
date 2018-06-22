@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react'
-import LinkedList from '../modules/LinkedList'
 import ArticlePreview from './ArticlePreview.jsx'
-import DispatchAPI from '../api/dispatch'
-class ArticlesSuggested extends Component{
+import LinkedList from '../../modules/LinkedList'
+import DispatchAPI from '../../api/dispatch'
+
+class ArticlesSuggested extends Component {
 
   constructor(props) {
     super(props)

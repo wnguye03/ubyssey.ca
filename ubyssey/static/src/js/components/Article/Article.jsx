@@ -1,6 +1,6 @@
 import React from 'react';
-import Galleries from './Galleries.jsx';
-import * as mp from '../modules/Mixpanel';
+import { Galleries } from '../Gallery';
+import * as mp from '../../modules/Mixpanel';
 
 const Article = React.createClass({
 
