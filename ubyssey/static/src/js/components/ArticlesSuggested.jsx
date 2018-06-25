@@ -55,7 +55,7 @@ class ArticlesSuggested extends Component{
     return (
       <div className='sa-container-outer'>
         <div className='u-container'>
-          <h1>Suggested Articles</h1>
+          <h2 className='block-title'>Suggested Articles</h2>
           <div className={'sa-container-inner'}>
             {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
           </div>

@@ -194,7 +194,7 @@ class ArticleHelper(object):
 
     @staticmethod
     def is_explicit(article):
-        explicit_tags = ['sex']
+        explicit_tags = ['sex', 'Sex', 'explicit', 'Explicit']
         tags = article.tags.all().values_list('name', flat=True)
         for tag in tags:
             if tag in explicit_tags:
