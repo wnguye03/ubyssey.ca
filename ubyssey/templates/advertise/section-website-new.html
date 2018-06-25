@@ -44,47 +44,56 @@
             <h4>Homepage</h4>
             <div>
               <h3>Leaderboard*</h3>
-              <p>970 x 90 pixels</p>
-              <p>728 x 90 pixels</p>
+              <p>970 x 90 pixels (desktop)</p>
+              <p>728 x 90 pixels (desktop)</p>
               <p>320 x 50 pixels (mobile)</p>
             </div>
           </li>
           <li class="o-placements__placement o-placements__placement--demo" data-offset="-20%" data-horizontaloffset="100%">
             <div>
               <h3>Box</h3>
-              <p>300 x 250 pixels</p>
+              <p>300 x 250 pixels
+              </br> (desktop + mobile)</p>
             </div>
           </li>
           <li class="o-placements__placement o-placements__placement--demo" data-offset="0%" data-horizontaloffset="0%">
             <h4>Articles</h4>
             <div>
               <h3>Leaderboard*</h3>
-              <p>970 x 90 pixels</p>
-              <p>728 x 90 pixels</p>
+              <p>970 x 90 pixels (desktop)</p>
+              <p>728 x 90 pixels (desktop)</p>
+              <p>320 x 50 pixels (mobile)</p>
             </div>
           </li>
-          <li class="o-placements__placement o-placements__placement--demo" data-offset="-40%" data-horizontaloffset="0%">
+          <li class="o-placements__placement o-placements__placement--demo o-placements__placement--demo--sidebar" data-offset="-40%" data-horizontaloffset="0%">
             <div>
               <h3>Sidebar</h3>
               <p>300 x 250 pixels</p>
               <p>300 x 600 pixels</p>
             </div>
           </li>
-          <li class="o-placements__placement o-placements__placement--demo" data-offset="-50%" data-horizontaloffset="0%">
+          <li class="o-placements__placement o-placements__placement--demo " data-offset="-50%" data-horizontaloffset="0%">
             <div>
-              <h3>Banner</h3>
-              <p>468 x 60 pixels</p>
+              <h3>Intra-Article</h3>
+              <p>468 x 60 pixels (desktop)</p>
+              <p>300 x 250 pixels (mobile)</p>
             </div>
           </li>
         </ul>
       </div>
       <div class="o-placements__demo">
+        <div class="o-placements__platforms">
+          <div class="o-placements__platform--mode  o-placements__platforms--active" data-platform="desktop"><h3>Desktop</h3></div>
+          <div class="o-placements__platform--mode" data-platform="mobile"><h3>Mobile</h3></div>
+        </div>
         <div class="o-placements__demo__inner">
             <div class="o-placements__demo__inner__left">
-              <img src="{% static 'images/a/demo-homepage-new.png' %}" />
+              <img class="o-placements__demo__desktop" src="{% static 'images/a/demo-homepage-new.png' %}" />
+              <img class="o-hidden o-placements__demo__mobile" src="{% static 'images/a/demo-homepage-mobile.png' %}" />
             </div>
             <div class="o-placements__demo__inner__right">
-              <img src="{% static 'images/a/demo-article-new.png' %}" />
+              <img class="o-placements__demo__desktop" src="{% static 'images/a/demo-article-new.png' %}" />
+              <img class="o-hidden o-placements__demo__mobile" src="{% static 'images/a/demo-article-mobile.png' %}" />
             </div>
         </div>
       </div>
