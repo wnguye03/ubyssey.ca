@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load dispatch_tags %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -17,7 +18,7 @@
 
     <meta property="fb:pages" content="99164676792" />
 
-    <link rel="stylesheet" href="{% static 'css/magazine-'|add:version|add:'.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% add_version 'css/magazine.css' %}" type="text/css" />
 
 
     <script>
