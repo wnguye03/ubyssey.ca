@@ -57,7 +57,10 @@
             {% else %}
               {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
             {% endif %}
+          {% else %}
+            {% include 'objects/replacement.html' with size='box' %}
           {% endif %}
+
         </div>
       </div>
       {% endblock %}
