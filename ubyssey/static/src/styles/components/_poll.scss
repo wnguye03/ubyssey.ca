@@ -164,14 +164,14 @@
   width: 15px;
   height: 15px;
   align-self: center;
-  position: absolute;
-  right: -30px;
+  position: relative;
+  left: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 
   // Border
-  border: 2px solid $color-ub-blue-light;
+  border: 2px solid #045594;
   border-radius: 15px;
 
   // Extra
@@ -188,7 +188,8 @@
     transform: rotate(45deg);
 
     // Border
-    border: solid $color-ub-blue-light;
+    //border: 2px solid $color-ub-blue;
+    border: 2px solid #045594;
     border-width: 0 2px 2px 0;
   }
 }
