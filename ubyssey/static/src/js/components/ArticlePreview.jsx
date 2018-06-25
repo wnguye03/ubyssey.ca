@@ -1,22 +1,11 @@
 import React, { Component } from 'react'
-import humanizeDateTime from '../modules/Dates'
 
 class ArticlePreview extends Component{
-  constructor(props) {
-    super(props)
-  }
-  
-  goToArticle() {
-    window.location = this.props.url
-  }
-
   render() {
     const msec = Date.parse(this.props.publishTime)
     const publishedDate = new Date(msec)
-    console.log(publishedDate.toDateString())
     return (
       <a
-        // onClick={() => this.goToArticle()}
         href={this.props.url}
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
