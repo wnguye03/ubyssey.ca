@@ -21,7 +21,7 @@ class ArticlePreview extends Component{
               <a href={this.props.url}>{this.props.headline}</a>
             </h3>
             <div className='o-article__byline'>
-              <span className='o-article__author'>{this.props.authors[0]}</span> &nbsp;&middot;&nbsp; <span className='o-article__published'>{publishedDate.toDateString().slice(4)}</span>
+              <span className='o-article__author'>{this.props.authorString}</span> &nbsp;&middot;&nbsp; <span className='o-article__published'>{publishedDate.toDateString().slice(4)}</span>
             </div>
           </div>
       </article>
