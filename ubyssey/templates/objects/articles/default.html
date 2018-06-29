@@ -12,7 +12,7 @@
         <a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a>
       </h3>
       <div class="o-article__byline">
-        <span class="o-article___author">By {{ article.get_author_url|safe }}</span>
+        <span class="o-article__author">By {{ article.get_author_url|safe }}</span>
         <span> &nbsp;·&nbsp; </span>
         <span class="o-article__published">{{ article.published_at }}</span>
       </div>

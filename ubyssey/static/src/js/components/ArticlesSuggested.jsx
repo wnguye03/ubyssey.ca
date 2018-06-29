@@ -30,6 +30,7 @@ class ArticlesSuggested extends Component{
   getArticle(id) {
     DispatchAPI.articles.rendered(id)
     .then ( (response) => {
+      console.log(response)
       const articles = [...this.state.articles, response]
       this.setState({articles})
     })
@@ -40,7 +41,7 @@ class ArticlesSuggested extends Component{
       // only show 3 suggested articles
       if (index !== 0 && article.headline !== this.props.currentArticle.headline) {
         return (
-          <ArticlePreview 
+          <ArticlePreview
             articleId={article.id}
             headline={article.headline}
             url={article.url}
@@ -54,11 +55,9 @@ class ArticlesSuggested extends Component{
 
     return (
       <div className='sa-container-outer'>
-        <div className='u-container'>
-          <h2 className='block-title'>Suggested Articles</h2>
-          <div className={'sa-container-inner'}>
-            {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
-          </div>
+        <h2 className='bottom-banner__title'>Suggested Articles</h2>
+        <div className={'sa-container-inner'}>
+          {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
         </div>
       </div>
     );

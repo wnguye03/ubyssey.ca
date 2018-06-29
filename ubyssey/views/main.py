@@ -92,11 +92,14 @@ class UbysseyTheme(object):
         if user_agent.is_mobile:
             article_type = 'mobile'
 
+        print article_type
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
         if not ArticleHelper.is_explicit(article):
-            article = ArticleHelper.insert_ads(article, article_type)
+            print 'not explicit'
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
 
         popular = ArticleHelper.get_popular()[:5]
 
