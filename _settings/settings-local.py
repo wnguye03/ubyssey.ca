@@ -10,11 +10,16 @@ VERSION = '1.4.11'
 
 ALLOWED_HOSTS = ['localhost', '*']
 
-INSTALLED_APPS += ['ubyssey.events',]
+INSTALLED_APPS += ['ubyssey.events', 'django_user_agents',]
 
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 ROOT_URLCONF = 'ubyssey.urls'
+
+MIDDLEWARE_CLASSES = (
+    # other middlewares...
+    'django_user_agents.middleware.UserAgentMiddleware',
+)
 
 DEBUG = True
 USE_TZ = True
@@ -38,7 +43,12 @@ TEMPLATES += [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
-        ]
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+            ],
+        },
     }
 ]
 

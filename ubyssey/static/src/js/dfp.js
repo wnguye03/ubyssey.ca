@@ -1,6 +1,8 @@
 const SIZES = {
-    'box': [300, 250],
-    'leaderboard': [728, 90],
+    'box': [300, 250], 
+    'skyscraper' : [[300, 250], [300, 600]],
+    'banner': [468, 60],
+    'leaderboard': [[728, 90], [970, 90]],
     'mobile-leaderboard': [300, 50]
 };
 
@@ -16,7 +18,8 @@ class DFP {
 
   static setup() {
     // Infinite scroll requires SRA
-    googletag.pubads().enableSingleRequest();
+    // grapefruit
+    // googletag.pubads().enableSingleRequest();
 
     // Disable initial load, we will use refresh() to fetch ads.
     // Calling this function means that display() calls just
@@ -33,22 +36,27 @@ class DFP {
     $(dfpslots).each((_, dfpslot) => {
       const slotName = $(dfpslot).attr('id')
 
-      const slot = googletag.defineSlot(
-        `/61222807/${$(dfpslot).data('dfp')}`,
-        SIZES[$(dfpslot).data('size')],
-        slotName
-      )
+      // only reload the slot if its new
+      const priorSlotNames = this.adslots.reduce((acc, val) => acc.concat(val), [])
+      if (!priorSlotNames.includes(slotName)) {
+        const slot = googletag.defineSlot(
+          `/61222807/${$(dfpslot).data('dfp')}`,
+          SIZES[$(dfpslot).data('size')],
+          slotName
+        )
         .setCollapseEmptyDiv(true)
         .addService(googletag.pubads());
-
-      this.adslots.push([slotName, slot]);
+  
+        this.adslots.push([slotName, slot]);
+      }
     });
   }
 
   refreshAds() {
     this.adslots.forEach(slot => {
       googletag.display(slot[0]);
-      googletag.pubads().refresh([slot[1]]);
+      // googletag.pubads().refresh([slot[1]]);
+      googletag.pubads().refresh();
     });
   };
 
@@ -63,11 +71,11 @@ class DFP {
     this.adslots = [];
     googletag.cmd.push(googletag.destroySlots);
   }
-
 }
 
 const dfp = new DFP();
 
+// grapefruit
 $(document).ready(function() {
   dfp.load(document);
 });

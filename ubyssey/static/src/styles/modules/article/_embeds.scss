@@ -1,9 +1,18 @@
 @import 'modules/fonts';
 
-.o-article-embed {
-  margin: 30px 0;
-  max-width: 585px;
+// for articles
+.article {
+  .o-article-embed {
+    margin: 30px 0;
+    max-width: 585px;
+  }
 }
+.page {
+  .o-article-embed {
+    margin: 30px 0;
+  }
+}
+
 
 .o-article-embed--advertisement {
   text-align: center;

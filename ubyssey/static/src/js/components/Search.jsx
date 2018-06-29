@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LRU from 'lru-cache';
 import DispatchAPI from '../api/dispatch'
 
-class Search extends Component{
+class Search extends Component {
     constructor(props) {
       super(props)
 

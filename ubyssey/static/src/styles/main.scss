@@ -27,6 +27,7 @@
 @import 'objects/article';
 @import 'objects/inputs';
 @import 'objects/archive';
+@import 'objects/bottom_banner';
 
 @import 'components/header-banner';
 @import 'components/elections-sidebar';
@@ -34,7 +35,10 @@
 @import 'components/section-page';
 @import 'components/homepage';
 @import 'components/poll';
+@import 'components/suggested-articles';
 
+@import 'components/adblock-splash';
+@import 'components/replacement';
 @import 'components/button';
 @import 'components/heading';
 @import 'components/paragraph';

@@ -70,11 +70,10 @@ const DispatchAPI = {
   },
   articles: {
     rendered: (id) => {
-      return getRequest('articles.rendered', id, null)
+      return getRequest('articles', id, null)
     },
     search: (query) => {
       return getRequest('articles', null, query)
-
     }
   }
 }
