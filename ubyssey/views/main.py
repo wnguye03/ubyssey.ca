@@ -98,7 +98,6 @@ class UbysseyTheme(object):
         dur = request.GET.get('dur', None)
 
         if not ArticleHelper.is_explicit(article):
-            print 'not explicit'
             article.content = ArticleHelper.insert_ads(article.content, article_type)
 
         popular = ArticleHelper.get_popular()[:5]
@@ -128,8 +127,6 @@ class UbysseyTheme(object):
             'authors_json': authors_json,
             'base_template': 'blank.html'
         }
-
-        # published_at = article.published_at.strftime('%m/%d/%Y')
 
         try:
             featured_image = article.featured_image.image.get_thumbnail_url()
