@@ -65,7 +65,6 @@ class ArticleHelper(object):
             if paragraph_count == next_ad:
                     if index != 0 and content[index - 1]['type'] != 'header':
                         ad_placements.insert(index + ad_count, ad)
-                        print 'inserting ad'
                         next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
                         ad_count += 1
                     else:

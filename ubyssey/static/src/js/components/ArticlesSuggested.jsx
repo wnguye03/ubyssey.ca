@@ -30,7 +30,6 @@ class ArticlesSuggested extends Component{
   getArticle(id) {
     DispatchAPI.articles.rendered(id)
     .then ( (response) => {
-      console.log(response)
       const articles = [...this.state.articles, response]
       this.setState({articles})
     })
