@@ -203,7 +203,7 @@ class ArticleHelper(object):
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
 
-        # Get all magazine articles
+        # Get all articles in section
         queryset = Article.objects.filter(is_published=True, section__slug=section)
 
         # Exclude article (optional)

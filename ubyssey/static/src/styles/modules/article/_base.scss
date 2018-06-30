@@ -81,11 +81,12 @@ div.indicator {
   font-weight: $font-weight-semi-bold;
 
   @media($bp-larger-than-tablet) {
+    display: flex;
     flex: 1 0;
     line-height: 2rem;
     margin-bottom: 0;
   }
-} 
+}
 
 .960px {
   margin-bottom: 0.9rem;
@@ -96,18 +97,24 @@ div.indicator {
 }
 
 .c-article__byline__meta {
+  margin-bottom: 0.75rem;
+
   color: #777;
   font-weight: $font-weight-normal;
   @media($bp-larger-than-tablet) {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    display: inline-block;
+    margin-right: 0.75em;
+    margin-bottom: 0;
   }
 }
 
 .c-article__author {
-  margin-right: 0.5em;
+  margin-bottom: 0.75rem;
+
   @media($bp-larger-than-tablet) {
-    margin-right: 0;
+    display: inline-block;
+    margin-right: 0.75em;
+    margin-bottom: 0;
   }
 }
 
@@ -260,4 +267,3 @@ div.side {
     display: none;
   }
 }
-

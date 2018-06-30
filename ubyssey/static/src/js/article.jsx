@@ -101,7 +101,7 @@ if ($('main.article').length) {
             if ($(window).width() >= 960) {
                 const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) || 0
                 const adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
-                
+
                 $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
                 const stickyElementLength = $('.js-sticky').length
 
@@ -133,7 +133,7 @@ if ($('main.article').length) {
                 if (stickyElements.length > 1) {
                     stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height/2
                 }
-                
+
                 // Sticky Ads
                 $('#content-wrapper').scroll(() => {
                     const scrollTop = $('#content-wrapper').scrollTop();
@@ -146,7 +146,12 @@ if ($('main.article').length) {
     articleAds()
 
     var articleList = React.render(
-        <ArticlesSuggested breakpoint={960} name={listName} currentArticle={firstArticle} articles={articleIds} userId={userId} />,
+        <ArticlesSuggested
+          breakpoint={960}
+          name={listName}
+          currentArticle={firstArticle}
+          articles={articleIds}
+          userId={userId} />,
         document.getElementById('article-list')
     );
 
