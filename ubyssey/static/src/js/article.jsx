@@ -4,6 +4,7 @@ import ArticlesSuggested from './components/ArticlesSuggested.jsx';
 import Search from './components/Search.jsx';
 import Poll from './components/Poll/Poll.jsx';
 import AdblockSplash from './components/AdblockSplash.jsx'
+import Galleries from './components/Galleries.jsx'
 
 window.articleHeader = false;
 
@@ -152,6 +153,56 @@ if ($('main.article').length) {
           articles={articleIds}
           userId={userId} />,
         document.getElementById('article-list')
+    );
+
+    const gatherImages = function(gallery) {
+        var selector, trigger;
+
+        if (gallery) {
+          const id = $(gallery).data("id");
+          selector = `#gallery-${id} .gallery-image`;
+          trigger = `#gallery-${id} .gallery-thumb`;
+        } else {
+          selector = `#article-${articleId} .article-attachment`;
+          trigger = `#article-${articleId} .article-attachment`;
+        }
+
+        const images = $(selector).map((_, el) => {
+          const $el = $(el);
+          return {
+            id: $el.data('id'),
+            url: $el.data('url'),
+            caption: $el.data('caption'),
+            credit: $el.data('credit'),
+            width: $el.width(),
+            height: $el.height()
+          };
+        }).get();
+
+        const imagesTable = images.reduce((table, image, i) => {
+          table[image.id] = i;
+          return table;
+        }, {});
+
+        return {
+          selector,
+          trigger,
+          title: gallery ? $(gallery).data('id') : 'Images',
+          list: images,
+          table: imagesTable,
+        };
+      }.bind(this);
+
+
+    var galleries = [
+        gatherImages(),
+        ...$(`#article-${articleId} .gallery-attachment`)
+          .map((_, elem) => gatherImages(elem)).get()
+      ];
+
+    var gallery = React.render(
+        <Galleries galleries={galleries} />, 
+        document.getElementById('gallery')
     );
 }
 

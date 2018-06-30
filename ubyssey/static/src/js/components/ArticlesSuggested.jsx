@@ -44,9 +44,9 @@ class ArticlesSuggested extends Component{
             articleId={article.id}
             headline={article.headline}
             url={article.url}
-            authors={article.authors}
+            authorString={article.authors_string}
             publishTime={article.published_at}
-            featuredImageUrl={article.featured_image}
+            featuredImageUrl={article.featured_image.image.url}
             key={index} />
         )
       }

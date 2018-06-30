@@ -92,8 +92,6 @@ class UbysseyTheme(object):
         if user_agent.is_mobile:
             article_type = 'mobile'
 
-        print article_type
-
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
