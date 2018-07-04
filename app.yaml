@@ -12,7 +12,6 @@ handlers:
 - url: /test
   secure: always
 
-
 libraries:
 - name: MySQLdb
   version: 1.2.5
