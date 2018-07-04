@@ -7,10 +7,19 @@ self.addEventListener('push', function (event) {
     body: data.snippet,
     data: data.url,
     icon: '/static/images/ubyssey-logo-square.png',
-    image: data.image
+    badge: '/static/images/ubyssey-logo.png',
+    image: data.image,
+    vibrate: [200, 100, 200]
   };
 
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(self.registration.showNotification(title, options).then(
+    // function(event) {
+    //   console.log(event);
+    //   setTimeout(function() {
+    //     event.notification.close()
+    //   }, 2000);
+    // } 
+  ));
 });
 
 self.addEventListener('notificationclick', function (event) {

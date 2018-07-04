@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Topic, Person
 
@@ -21,6 +22,7 @@ def parse_int_or_none(maybe_int):
         return int(maybe_int)
     except (TypeError, ValueError):
         return None
+
 
 class UbysseyTheme(object):
 
@@ -84,19 +86,30 @@ class UbysseyTheme(object):
 
         article.add_view()
 
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
+        if not ArticleHelper.is_explicit(article):
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
+
+        popular = ArticleHelper.get_popular()[:5]
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
             'article': article,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+            # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
-            'reading_time': ArticleHelper.get_reading_time(article)
+            'popular': popular,
+            'reading_time': ArticleHelper.get_reading_time(article),
+            'explicit': ArticleHelper.is_explicit(article)
         }
 
         template = article.get_template_path()
@@ -105,7 +118,7 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
+        authors_json = [a.person.full_name for a in article.authors.all()]
 
         context = {
             'article': article,
@@ -113,11 +126,18 @@ class UbysseyTheme(object):
             'base_template': 'blank.html'
         }
 
+        try:
+            featured_image = article.featured_image.image.get_thumbnail_url()
+        except:
+            featured_image = None
+
         data = {
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template_path(), context)
+            'authors': authors_json,
+            'published_at': str(article.published_at),
+            'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')

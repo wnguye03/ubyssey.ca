@@ -1,0 +1,140 @@
+@import '../modules/variables';
+
+.sa-container-outer {
+  // Structure
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 15px;
+
+  .u-container {
+    // Strucuture
+    max-width: 585px;
+  }
+
+  h1 {
+    // Text
+    font-weight: 600;
+  }
+
+  .sa-container-inner {
+    // Structure
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    .o-article {
+      // Structure
+      flex: 1;
+    }
+
+    .article-preview {
+      // Structure
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+
+      h3 {
+        // Text
+        font-weight: 500;
+        font-size: .875rem;
+        margin-top: 0;
+        width: 75%;
+        max-height: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &:hover {
+        background-color: #DADADA;
+      }
+    }
+
+    .sa-date,
+    .sa-author {
+      // Text
+      font-size: .75rem;
+    }
+
+    .sa-subtitle {
+      // Strucuture
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      // Text
+      color: $color-text-gray-light;
+    }
+
+    .sa-content {
+      // Strucuture
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .sa-thumbnail-image {
+      // Strucuture
+      display: inline-block;
+      margin-right: 15px;
+      width: 60px;
+      height: 40px;
+
+      //Image
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+
+      // Text
+      color: $color-text-gray-light;
+      font-size: .75rem;
+
+    }
+  }
+}
+.sa-container-outer {
+  @media($bp-larger-than-phablet) {
+    .u-container {
+      // Strucuture
+      max-width: 960px;
+      padding: 0;
+    }
+
+    .sa-container-inner {
+      // Structure
+      flex-direction: row;
+
+      .article-preview {
+        // Strucuture
+        width: 33%;
+
+        h3 {
+          // Strucuture
+          width: 100%;
+          margin-top: 10px;
+        }
+      }
+
+      .sa-content {
+        // Strucuture
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .sa-thumbnail-image {
+        // Strucuture
+        width: 240px;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+
+        // Text
+        font-size: 1rem;
+      }
+    }
+  }
+}

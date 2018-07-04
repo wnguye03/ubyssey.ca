@@ -195,6 +195,7 @@ class Poll extends Component {
     const buttonStyle = hasVoted ? 'poll-button-voted': 'poll-button-no-vote'
     const showResult = showResults ? (hasVoted ? COLOR_OPACITY : 0) : 0
     const notShowResult = showResults ? (hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
+    
     return (
       <div className='poll-wrapper'>
         {!loading &&

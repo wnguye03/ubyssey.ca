@@ -39,7 +39,7 @@
                     <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
                 </div>
                 <div class="headline-container">
-                    <h1 class="o-headline o-headline--article">{{ article.headline }}</h1>
+                    <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}

@@ -5,11 +5,8 @@ import {initializeUI} from './notifications';
 let swRegistration = null;
 
 if ('serviceWorker' in navigator && 'PushManager' in window) {
-  console.log('Service Worker and Push is supported');
-
   navigator.serviceWorker.register('/service-worker.js')
   .then(function(swReg) {
-    console.log('Service Worker is registered', swReg);
 
     swRegistration = swReg;
     initializeUI(swRegistration);
