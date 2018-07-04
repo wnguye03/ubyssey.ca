@@ -9,8 +9,6 @@ handlers:
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
-- url: /test
-  login: admin
 
 libraries:
 - name: MySQLdb
