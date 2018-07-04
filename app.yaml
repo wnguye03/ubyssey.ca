@@ -6,7 +6,7 @@ handlers:
 - url: /robots.txt
   static_files: robots.txt
   upload: robots.txt
-- url: /test
+- url: /test/
   secure: never
 - url: .*
   script: ubyssey.wsgi.application
