@@ -6,11 +6,11 @@ handlers:
 - url: /robots.txt
   static_files: robots.txt
   upload: robots.txt
+- url: /test
+  secure: never
 - url: .*
   script: ubyssey.wsgi.application
   secure: always
-- url: /test
-
 
 libraries:
 - name: MySQLdb
