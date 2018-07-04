@@ -396,3 +396,7 @@ class UbysseyTheme(object):
 
     def centennial(self, request):
         return render(request, 'centennial.html', {})
+
+    def cron_test(self, request):
+        print('running cron test')
+        return render(request, 'test.html', {})
