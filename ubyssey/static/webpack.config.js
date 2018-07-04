@@ -1,9 +1,5 @@
 var webpack = require('webpack');
 var version = require('./package.json').version;
-var path = require('path');
-
-import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
-var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -36,7 +32,6 @@ module.exports = {
         }
       }),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
-      new SWPrecacheWebpackPlugin(),
+      new webpack.optimize.UglifyJsPlugin()
     ]
 };

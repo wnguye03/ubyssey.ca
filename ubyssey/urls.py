@@ -6,8 +6,6 @@ from django.shortcuts import render_to_response
 from dispatch.admin import urls as admin_urls
 from dispatch.api import urls as api_urls
 
-from django.views.generic import TemplateView
-
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
 from ubyssey.views.guide import GuideTheme
@@ -65,12 +63,7 @@ urlpatterns = [
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
     url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
-
-    # Service Worker
-    url(r'^service-worker.js', (TemplateView.as_view(
-        template_name="service-worker.js",
-        content_type='application/javascript',
-    )), name='service-worker.js'),
+#    url(r'^api/test/$', theme.cron_test, name='cron-test')
 ]
 
 if settings.DEBUG:
