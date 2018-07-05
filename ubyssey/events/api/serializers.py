@@ -1,7 +1,13 @@
 from ubyssey.events.models import Event
 from dispatch.api.mixins import DispatchModelSerializer
+from rest_framework import serializers
+from dispatch.api.validators import FilenameValidator
 
 class EventSerializer(DispatchModelSerializer):
+
+    image = serializers.ImageField(required=False, validators=[FilenameValidator], write_only=True)
+
+    image_url = serializers.CharField(source='get_absolute_image_url', read_only=True)
 
     class Meta:
         model = Event
@@ -13,6 +19,7 @@ class EventSerializer(DispatchModelSerializer):
             'description',
             'host',
             'image',
+            'image_url',
             'start_time',
             'end_time',
             'location',

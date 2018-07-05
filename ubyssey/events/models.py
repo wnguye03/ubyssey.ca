@@ -74,6 +74,13 @@ class Event(Model):
         self.image.save(filename, File(temp))
         self.save()
 
+    def get_absolute_image_url(self):
+        """
+        Returns image URL.
+        """
+        if self.image:
+            return "%s%s%s/" % (settings.BASE_URL.strip("/"), settings.MEDIA_URL, str(self.image))
+
 @receiver(pre_save, sender=Event)
 def send_submitted_email(sender, instance, **kwargs):
     """Send an email to the submitter when the event is submitted."""
