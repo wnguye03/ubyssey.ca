@@ -14,6 +14,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from dispatch.models import Article, Section, Topic, Person
 
 import ubyssey
+import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper
 
 def parse_int_or_none(maybe_int):

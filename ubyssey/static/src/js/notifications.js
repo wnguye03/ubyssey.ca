@@ -47,36 +47,27 @@ function updateSubscriptionOnServer(subscription) {
   const uuid = getCookie('uuid')
   if (subscription && uuid) {
     DispatchAPI.notifications.updateSubscription(uuid, subscription)
-    .then ( (response) => {
-      console.log('patch', uuid, response)
-      // setCookie(response.id)
-    })
   } else if (subscription) {
-    console.log('post')
     DispatchAPI.notifications.subscribe(subscription)
     .then ( (response) => {
-      console.log('post', response)
       setCookie(response.id)
     })
   }
 }
 
-function subscribeUser(init) {
+function subscribeUser() {
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   swRegistration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: applicationServerKey
   })
   .then(function(subscription) {
-    console.log('User is subscribed');
-
     updateSubscriptionOnServer(subscription);
 
     isSubscribed = true;
-
   })
   .catch(function(err) {
-    console.log('Failed to subscribe the user: ', err);
+    console.error('Failed to subscribe the user: ', err);
   });
 }
 
@@ -91,10 +82,8 @@ export function initializeUI(swReg) {
     
     updateSubscriptionOnServer(subscription);
 
-    if (isSubscribed) {
-      console.log('User IS subscribed.');
-    } else {
-      console.log('User is NOT subscribed.');
+    if (!isSubscribed) {
+      console.warn('User is NOT subscribed.');
     }
   });
 }

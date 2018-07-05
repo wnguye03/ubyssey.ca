@@ -1,7 +1,0 @@
-cron:
-- description: Daily UBC event import
-  url: /events/import
-  schedule: every 24 hours
-  retry_parameters:
-      min_backoff_seconds: 10
-      max_doublings: 3
