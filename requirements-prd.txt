@@ -1,4 +1,4 @@
-dispatch==0.4.13
+dispatch==0.4.14
 git+git://github.com/ubyssey/django-google-storage.git
 django-gae-backends
 django-canonical-domain
@@ -7,6 +7,6 @@ django-phonenumber-field
 beautifulsoup4
 feedparser
 pyyaml
-ua-parser 
+ua-parser
 user-agents
 django-user-agents
