@@ -8,7 +8,7 @@ handlers:
   upload: robots.txt
 - url: .*
   script: ubyssey.wsgi.application
-  secure: optional
+  secure: never
 
 libraries:
 - name: MySQLdb
