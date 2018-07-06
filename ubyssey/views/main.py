@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Topic, Person
+from dispatch.models import Article, Section, Column, Topic, Person
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper, PageHelper
@@ -213,6 +213,8 @@ class UbysseyTheme(object):
 
         featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
 
+        columns = Column.objects.filter(section=section)
+        print('columns', columns.first().get_articles())
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
         if query:
@@ -236,6 +238,7 @@ class UbysseyTheme(object):
                 'title': section.name,
             },
             'section': section,
+            'columns': columns,
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],

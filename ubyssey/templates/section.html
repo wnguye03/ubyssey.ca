@@ -20,6 +20,9 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
+      {% for column in columns %}
+        {% include 'objects/column.html' with column=column %}
+      {% endfor %}
     </div>
 
     <h3 class="c-page__section">Archive</h3>
