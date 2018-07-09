@@ -146,7 +146,7 @@ class UbysseyTheme(object):
         try:
             page = PageHelper.get_page(request, slug)
         except:
-            raise Http404('Page could not be found.')
+            return self.column(request, slug)
 
         page.add_view()
 
@@ -214,7 +214,7 @@ class UbysseyTheme(object):
         featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
 
         columns = Column.objects.filter(section=section)
-        print('columns', columns.first().get_articles())
+
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
         if query:
@@ -250,6 +250,59 @@ class UbysseyTheme(object):
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
+        return HttpResponse(t.render(context))
+
+    def column(self, request, slug=None):
+        try:
+            column = Column.objects.get(slug=slug)
+        except:
+            raise Http404('Page could not be found')
+
+        order = request.GET.get('order', 'newest')
+
+        if order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+
+        query = request.GET.get('q', False)
+
+        featured_articles = Article.objects.filter(column=column, is_published=True).order_by('-published_at')
+
+        article_list = Article.objects.filter(column=column, is_published=True).order_by(order_by)
+
+        if query:
+            article_list = article_list.filter(headline__icontains=query)
+
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+
+        page = request.GET.get('page')
+
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+
+        context = {
+            'meta': {
+                'title': column.name
+            },
+            'column': column,
+            'type': 'column',
+            'featured_articles': {
+                'first': featured_articles[0],
+                'rest': featured_articles[1:4]
+            },
+            'articles': articles,
+            'order': order,
+            'q': query
+        }
+
+        t = loader.select_template(['%s/%s' % (column.slug, 'column.html'), 'column.html'])
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):
@@ -401,5 +454,4 @@ class UbysseyTheme(object):
         return render(request, 'centennial.html', {})
 
     def cron_test(self, request):
-        print('running cron test')
         return render(request, 'test.html', {})
