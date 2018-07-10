@@ -21,7 +21,9 @@
       {% endfor %}
       </div>
       {% for column in columns %}
-        {% include 'objects/column.html' with column=column %}
+        {% if column.get_published_articles %}
+          {% include 'objects/column.html' with column=column %}
+        {% endif %}
       {% endfor %}
     </div>
 
