@@ -43,6 +43,9 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        breaking = ArticleHelper.get_breaking_news().first()
+        print('breaking', breaking)
+
         try:
             articles = {
                 'primary': frontpage[0],
@@ -51,6 +54,7 @@ class UbysseyTheme(object):
                 'bullets': frontpage[4:6],
                 # Get random trending article
                 'trending': trending_article,
+                'breaking': breaking
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
@@ -72,6 +76,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'sections': sections,
             'popular': popular,
+            'breaking': breaking,
             'blog': blog,
             'day_of_week': datetime.now().weekday()
         }
