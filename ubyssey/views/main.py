@@ -258,6 +258,9 @@ class UbysseyTheme(object):
         except:
             raise Http404('Page could not be found')
 
+        if not column.get_published_articles().exists():
+            raise Http404('Page could not be found')
+
         order = request.GET.get('order', 'newest')
 
         if order == 'newest':
