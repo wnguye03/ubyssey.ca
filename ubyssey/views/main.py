@@ -211,9 +211,9 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
-
         columns = Column.objects.filter(section=section)
+
+        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(column__in=columns).order_by('-published_at')
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
