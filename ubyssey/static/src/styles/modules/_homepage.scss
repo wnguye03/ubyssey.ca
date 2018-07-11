@@ -566,6 +566,10 @@ ol.article-list {
   a {
     color: black;
     font-weight: lighter;
+
+    &:hover {
+      color: $color-accent-blue;
+    }
   }
 }
 
