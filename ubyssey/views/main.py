@@ -44,7 +44,6 @@ class UbysseyTheme(object):
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
         breaking = ArticleHelper.get_breaking_news().first()
-        print('breaking', breaking)
 
         try:
             articles = {
