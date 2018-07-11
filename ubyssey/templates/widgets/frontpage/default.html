@@ -7,8 +7,6 @@
         <div class="o-breaking-news">
           <h3>BREAKING: <a href="{{ articles.breaking.get_absolute_url }}">{{ articles.breaking.headline|safe }}</a></h3>
         </div>
-      {% else %}
-      <div><h3>NOT BREAKING</h3></div>
       {% endif %}
       <div class="frontpage__columns">
         <div class="cell left">
