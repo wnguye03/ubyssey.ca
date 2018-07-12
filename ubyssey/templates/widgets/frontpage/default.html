@@ -3,11 +3,6 @@
 {% load dispatch_tags %}
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
-      {% if articles.breaking %}
-        <div class="o-breaking-news">
-          <h3>BREAKING: <a href="{{ articles.breaking.get_absolute_url }}">{{ articles.breaking.headline|safe }}</a></h3>
-        </div>
-      {% endif %}
       <div class="frontpage__columns">
         <div class="cell left">
         {% if articles.trending %}

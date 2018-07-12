@@ -8,6 +8,11 @@
 {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 class='homepage' %}
 <main class="u-container u-container--large homepage">
+    {% if articles.breaking %}
+      <div class="o-breaking-news">
+        <h3>BREAKING: <a href="{{ articles.breaking.get_absolute_url }}">{{ articles.breaking.headline|safe }}</a></h3>
+      </div>
+    {% endif %}
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">
         <div class="sections">
