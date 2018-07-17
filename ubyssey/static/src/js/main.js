@@ -1,6 +1,10 @@
 import * as mp from './modules/Mixpanel';
 import upcomingEvents from './widgets/upcoming-events';
 
+import {timelineHeight} from './timeline.js'
+
+timelineHeight()
+
 function disableScroll($document) {
   $document.on('touchmove', function(e) {
     e.preventDefault();

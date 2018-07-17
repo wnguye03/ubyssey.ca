@@ -17,7 +17,6 @@ class Timeline extends Component {
   }
 
 
-
   renderNode(node) {
     // const data = this.getArticleData(node[0])
     let date = new Date(Date.parse(node[1].timeline_date))
@@ -40,6 +39,7 @@ class Timeline extends Component {
   render() {
     return (
       <div className='timeline-container'>
+        <h1 class='o-headline'>The Galloway Case</h1>
         <div className='timeline-tree'>
           {this.state.nodes.map((node) => {
             return this.renderNode(node)
