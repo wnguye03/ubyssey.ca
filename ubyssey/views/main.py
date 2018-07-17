@@ -90,7 +90,7 @@ class UbysseyTheme(object):
 
         article.add_view()
 
-        breaking = ArticleHelper.get_breaking_news().first()
+        breaking = ArticleHelper.get_breaking_news().exclude(id=article.id).first()
 
         # determine if user is viewing from mobile
         article_type = 'desktop'
