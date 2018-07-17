@@ -91,15 +91,14 @@ class UbysseyTheme(object):
         user_agent = get_user_agent(request)
         if user_agent.is_mobile:
             article_type = 'mobile'
-        
-        
+
+
         if article.template == 'timeline':
             timeline_tag = article.tags.filter(name__icontains='timeline')
             # templateData = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values("template_data"))
             # ids = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values('parent_id', 'template_data'))
-            temp = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values_list('parent_id', 'template_data'))
+            temp = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values_list('parent_id', 'template_data', 'slug', 'headline'))
             article.timeline_articles = json.dumps(temp)
-
 
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
