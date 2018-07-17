@@ -553,42 +553,23 @@ ol.article-list {
   }
 }
 
-.o-breaking-news-homepage{
+.o-breaking-news{
   width: 100%;
   display:flex;
-  border-top: 1px solid RED;
-  border-bottom: 1px solid RED;
-  margin-bottom:1rem;
+  border-radius: 3px;
+  background-color:#e41818;
+
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   h3 {
-    color: red;
-  }
-
-  a {
-    color: black;
-    font-weight: lighter;
-
-    &:hover {
-      color: $color-accent-blue;
-    }
-  }
-}
-
-.o-breaking-news-article{
-  border-top: 1px solid RED;
-  border-bottom: 1px solid RED;
-  margin-bottom:1rem;
-
-  h3 {
-    color: red;
-  }
-
-  a {
-    color: black;
-    font-weight: lighter;
-
-    &:hover {
-      color: $color-accent-blue;
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
     }
   }
 }

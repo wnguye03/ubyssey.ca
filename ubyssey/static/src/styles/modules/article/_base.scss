@@ -29,6 +29,29 @@ div.indicator {
   z-index: 2000;
 }
 
+.o-breaking-news-article{
+  display:flex;
+  border-radius: 3px;
+  background-color:#e41818;
+  display:flex;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h3 {
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
+    }
+  }
+
+  // @media($bp-larger-than-tablet) {
+  // }
+}
+
 
 // Article
 .c-article--default {
