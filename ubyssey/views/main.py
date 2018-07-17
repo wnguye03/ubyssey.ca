@@ -90,6 +90,8 @@ class UbysseyTheme(object):
 
         article.add_view()
 
+        breaking = ArticleHelper.get_breaking_news().first()
+
         # determine if user is viewing from mobile
         article_type = 'desktop'
         user_agent = get_user_agent(request)
@@ -113,7 +115,8 @@ class UbysseyTheme(object):
             'base_template': 'base.html',
             'popular': popular,
             'reading_time': ArticleHelper.get_reading_time(article),
-            'explicit': ArticleHelper.is_explicit(article)
+            'explicit': ArticleHelper.is_explicit(article),
+            'breaking': breaking
         }
 
         template = article.get_template_path()

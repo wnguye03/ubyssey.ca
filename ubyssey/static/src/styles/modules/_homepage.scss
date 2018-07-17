@@ -553,9 +553,28 @@ ol.article-list {
   }
 }
 
-.o-breaking-news{
+.o-breaking-news-homepage{
   width: 100%;
   display:flex;
+  border-top: 1px solid RED;
+  border-bottom: 1px solid RED;
+  margin-bottom:1rem;
+
+  h3 {
+    color: red;
+  }
+
+  a {
+    color: black;
+    font-weight: lighter;
+
+    &:hover {
+      color: $color-accent-blue;
+    }
+  }
+}
+
+.o-breaking-news-article{
   border-top: 1px solid RED;
   border-bottom: 1px solid RED;
   margin-bottom:1rem;

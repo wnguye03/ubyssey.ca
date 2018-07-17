@@ -9,7 +9,7 @@
 {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 class='homepage' %}
 <main class="u-container u-container--large homepage">
     {% if articles.breaking %}
-      <div class="o-breaking-news">
+      <div class="o-breaking-news-homepage">
         <h3>BREAKING: <a href="{{ articles.breaking.get_absolute_url }}">{{ articles.breaking.headline|safe }}</a></h3>
       </div>
     {% endif %}

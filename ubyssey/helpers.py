@@ -257,7 +257,7 @@ class ArticleHelper(object):
     @staticmethod
     def get_breaking_news():
         """Returns breaking news stories"""
-        return Article.objects.filter(is_published=True, is_breaking=True, published_at__gte=datetime.datetime.now() - datetime.timedelta(hours=2))
+        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=datetime.datetime.now())
 
     @staticmethod
     def get_trending():
