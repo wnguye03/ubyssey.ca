@@ -5,6 +5,7 @@ import Search from './components/Search.jsx';
 import Poll from './components/Poll/Poll.jsx';
 import AdblockSplash from './components/AdblockSplash.jsx'
 import Galleries from './components/Galleries.jsx'
+import Timeline from './components/Timeline.jsx'
 
 window.articleHeader = false;
 
@@ -24,6 +25,15 @@ $(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
             <AdblockSplash />,
+            $(this).get(0)
+        )
+    })
+});
+
+$(document).ready(function() {
+    $('.c-timeline').each(function() {
+        React.render(
+            <Timeline id={$(this).data('currentArticleId')} nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })
@@ -54,8 +64,13 @@ if ($('main.article').length) {
     };
 
     function stickyAds(scrollTop, stickyElements) {
-        const headerHeight = $('.topbar').outerHeight(true)
-        const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        try {
+            const headerHeight = $('.topbar').outerHeight(true)
+            const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        }
+        catch (error) {
+            console.warn('sticky ads will not work on this page')
+        }
 
         stickyElements.map(element => {
             // adjust when skyscraper is served

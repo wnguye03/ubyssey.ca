@@ -1,6 +1,6 @@
 from dispatch.theme import register
 from dispatch.theme.templates import Template
-from dispatch.theme.fields import SelectField, CharField, TextField, ArticleField
+from dispatch.theme.fields import SelectField, CharField, TextField, ArticleField, DateTimeField
 
 @register.template
 class Default(Template):
@@ -111,3 +111,24 @@ class OneYearLater(Template):
     article_next = ArticleField('Next Article')
 
     about = TextField('About')
+
+@register.template
+class Timeline(Template):
+    id = 'timeline'
+    name = 'Timeline'
+
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+
+    HEADER_LAYOUT_OPTIONS = (
+        ('right-image', 'Right Image'),
+        ('top-image', 'Top Image'),
+        ('banner-image', 'Banner Image')
+    )
+
+    description = TextField('Description')
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    timeline_date = DateTimeField('Timeline Date')
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)

@@ -1,0 +1,116 @@
+@import '../modules/variables';
+
+$nodeRadius: 30px;
+$nodeThickness: 8px;
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background-color: $color-accent-blue;
+  
+  .timeline-tree {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: center;
+    width: 75%;
+    height: 25%;
+
+    .timeline-branch {
+      height: 75%;
+      width: $nodeThickness;
+      background-color: white;
+    }
+
+    .timeline-node {
+      border: $nodeThickness solid white;
+      border-radius: $nodeRadius;
+      height: $nodeRadius;
+      width: $nodeRadius;
+      position: relative;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .timeline-node-solid {
+      border-radius: $nodeRadius;
+      background-color: white;
+      width: 2*$nodeThickness;
+      height: 2*$nodeThickness;
+
+    }
+
+    .timeline-node-hover {
+      display: none;
+    }
+  }
+
+
+  @media($bp-larger-than-phablet) {
+    flex-direction: row;
+    width: 100vw;
+    height: 75vh;
+
+    .timeline-tree {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 75%;
+      height: $nodeThickness;
+      background-color: white;
+
+      .timeline-node {
+        border: $nodeThickness solid white;
+        border-radius: $nodeRadius;
+        background-color: $color-accent-blue;
+        height: $nodeRadius;
+        width: $nodeRadius;
+        position: relative;
+        top: 0;
+
+        &:hover{
+          cursor: pointer;
+          .timeline-node-hover {
+            display: block;
+            border-radius: $nodeRadius;
+            background-color: white;
+            width: $nodeThickness;
+            height: $nodeThickness;
+
+
+          }
+        }
+      }
+
+      .timeline-node-date {
+        text-align: center;
+        padding: 10px;
+        background: white;
+        width: 120px;
+        display: block;
+        position: absolute;
+        top: -60px;
+        border-radius: 3px;
+      }
+
+      .timeline-node-info {
+        width: 320px;
+        background: white;
+        border-radius: 3px;
+        position: absolute;
+        padding: 10px;
+        opacity: 1;
+        top: 50px;
+        left: -155px;
+      }
+    }
+  }
+}

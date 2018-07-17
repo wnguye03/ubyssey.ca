@@ -1,0 +1,6 @@
+{% load staticfiles %}
+
+{% block content %}
+    <div class='c-timeline' data-current-article-id='{{article.parent_id}}' data-nodes='{{article.timeline_articles}}'></div>
+    {% include './fw-story.html' %}
+{% endblock %}
