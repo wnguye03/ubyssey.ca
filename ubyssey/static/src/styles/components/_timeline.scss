@@ -1,117 +1,178 @@
 @import '../modules/variables';
 
-$nodeRadius: 30px;
-$nodeThickness: 5px;
+$nodeRadius: 14px;
+$nodeThickness: 3px;
+$backgroundColor: rgba(238, 238, 238, .9);
 
-.timeline-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 75vw;
-  height: 100Vh;
-  position: relative;
-  top: 0;
-  background-color: $color-accent-blue;
-  
-  .timeline-tree {
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    justify-content: center;
+.c-timeline {
+  position: fixed;
+  width: 10%;
+
+  .timeline-tree-container {
     width: 75%;
-    height: 25%;
-
-    .timeline-branch {
-      height: 75%;
-      width: $nodeThickness;
-      background-color: white;
-    }
-
-    .timeline-node {
-      border: $nodeThickness solid white;
-      border-radius: $nodeRadius;
-      height: $nodeRadius;
-      width: $nodeRadius;
-      position: relative;
-      top: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .timeline-node-solid {
-      border-radius: $nodeRadius;
-      background-color: white;
-      width: 2*$nodeThickness;
-      height: 2*$nodeThickness;
-
-    }
-
-    .timeline-node-hover {
-      display: none;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  @media($bp-larger-than-phablet) {
+  .timeline-container {
+    display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 50vh;
-    h1 {
-      bottom: 100px;
+    align-items: flex-start;
+    justify-content: center;
     position: relative;
-    font-size: 60px;
+    top: 0;
+    background-color: $backgroundColor;
+
+    margin-left: 25%;
+
+    transition: margin .2s;
+
+    &:hover {
+      margin-left: 0;
     }
-    
-    .timeline-tree {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      width: 75%;
-      height: $nodeThickness;
-      background-color: white;
 
-      .timeline-node {
-        border: $nodeThickness solid white;
-        border-radius: $nodeRadius;
-        background-color: $color-accent-blue;
-        height: $nodeRadius;
-        width: $nodeRadius;
+    h1{
+      margin-left: 10px;
+    }
+    .timeline-tree-container {
+      height: 100%;
+
+      .timeline-tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5%;
+        height: 85%;
+        width: $nodeThickness;
+        background-color: white;
         position: relative;
-        top: 0;
+        left: -50%;
 
-        &:hover{
-          cursor: pointer;
-          .timeline-node-hover {
-            display: block;
-            border-radius: $nodeRadius;
-            background-color: white;
-            width: $nodeThickness;
-            height: $nodeThickness;
-          }
+        .timeline-branch {
+          height: 75%;
+          width: $nodeThickness;
+          background-color: white;
+        }
+    
+        .timeline-node {
+          border: $nodeThickness solid white;
+          border-radius: $nodeRadius;
+          background-color: black;
+          height: $nodeRadius;
+          width: $nodeRadius;
+          position: relative;
+          top: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition:width 0.25s, height .25s;
+          -webkit-transition:width .25s, height .25s;
+          -moz-transition: width 0.25s, height .25s;
+        }
+      
+        .timeline-node-solid {
+          border-radius: $nodeRadius;
+          background-color: white;
+          width: 2*$nodeThickness;
+          height: 2*$nodeThickness;
+        }
+    
+        .timeline-node-hover {
+          display: none;
+        }
+        .timeline-node-date {
+          width: 90px;
+          position: absolute;
+          left: 35px;
         }
       }
+    }
+  }
+  @media($bp-larger-than-tablet) {
+    width: 100%;
+    margin-left: 0px;
+    .timeline-container {
+      flex-direction: row;
+      align-items: center;
+      height: 80px;
 
-      .timeline-node-date {
-        text-align: center;
-        padding: 10px;
-        background: white;
-        width: 120px;
-        display: block;
-        position: absolute;
-        top: -60px;
-        border-radius: 3px;
+      left: 0;
+
+      h1 {
+        position: relative;
+        margin-left: 0;
       }
+      .timeline-tree-container {
+        justify-content: flex-end;
+        
+        .timeline-tree {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 85%;
+          height: $nodeThickness;
+          background-color: white;
+          left: 0;
+          margin-top: 0;
+          margin-right: 22px;
 
-      .timeline-node-info {
-        width: 320px;
-        background: white;
-        border-radius: 3px;
-        position: absolute;
-        padding: 10px;
-        opacity: 1;
-        top: 50px;
-        left: -155px;
+          .timeline-node {
+            &:hover{
+              height: $nodeRadius*2;
+              width: $nodeRadius*2;
+              border-radius: $nodeRadius*2;
+              cursor: pointer;
+              .timeline-node-hover {
+                display: block;
+                border-radius: $nodeRadius;
+                background-color: white;
+                width: $nodeThickness;
+                height: $nodeThickness;
+              }
+            }
+          }
+    
+          .timeline-node-date {
+            width: 75px;
+            top: -29px;
+            left: -25px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: $nodeThickness;
+          }
+    
+          .timeline-node-info {
+            width: 250px;
+            background: white;
+            // border-radius: $nodeThickness;
+            border: $nodeThickness solid black;
+            position: absolute;
+            padding: 10px;
+            opacity: 1;
+            font-size: 12px;
+            left: -230px;
+            top: 50px;
+
+
+            &:after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 50%;
+              width: 0;
+              height: 0;
+              border: 25px solid transparent;
+              border-bottom-color: black;
+              border-top: 0;
+              border-right: 0;
+              margin-left: -28.5px;
+              margin-top: -25px;
+            }
+          }
+
+        }
       }
     }
   }
