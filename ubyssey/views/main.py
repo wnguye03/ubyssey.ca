@@ -97,7 +97,7 @@ class UbysseyTheme(object):
             timeline_tag = article.tags.filter(name__icontains='timeline')
             # templateData = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values("template_data"))
             # ids = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values('parent_id', 'template_data'))
-            temp = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values_list('parent_id', 'template_data', 'slug', 'headline'))
+            temp = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values('parent_id', 'template_data', 'slug', 'headline'))
             article.timeline_articles = json.dumps(temp)
 
         ref = request.GET.get('ref', None)
