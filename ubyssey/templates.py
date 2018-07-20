@@ -128,7 +128,8 @@ class Timeline(Template):
         ('banner-image', 'Banner Image')
     )
 
-    description = TextField('Description')
     image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS)
+    description = TextField('Description')
     timeline_date = DateTimeField('Timeline Date')
-    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
+    

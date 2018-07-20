@@ -33,7 +33,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.c-timeline').each(function() {
         React.render(
-            <Timeline id={$(this).data('currentArticleId')} nodes={$(this).data('nodes')} />,
+            <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })

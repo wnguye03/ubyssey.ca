@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import ReactDOM from 'react-dom'
 
 const desktopSize = 960;
 
@@ -14,13 +13,11 @@ class Timeline extends Component {
       }),
       isMobile: false,
       mobileShow: false,
-      loaded: false,
-      openNode: -1,
+      loaded: false
     }
   }
 
   componentDidMount() {
-    // console.log(ReactDOM.findDOMNode(this.refs.myRef))
     const isMobile = window.innerWidth < desktopSize
     this.state.nodes.map((node, index) => {
       if (node.id === this.props.id) {
@@ -48,10 +45,10 @@ class Timeline extends Component {
 
   prepareDescription(description) {
     if (description) {
-      if (description.length > 250) {
-        return description.slice(0, 250).concat('...')
+      if (description.length > 500) {
+        return <p> {description.slice(0, 500).concat('...')} </p>
       } else {
-        return description
+        return <p> {description} </p>
       }
     } else {
       return ''
@@ -59,7 +56,6 @@ class Timeline extends Component {
   }
 
   prepareUrl(slug) {
-    
     return window.location.origin + window.location.pathname.replace(this.state.nodes[this.state.selectedNodeIndex].slug, slug)
   }
 
@@ -83,7 +79,6 @@ class Timeline extends Component {
     
     return (
       <div className={timelineNodeStyle}>
-        
         <div ref='myRef' className='t-node'>{ this.state.selectedNodeId === node.id && <div className='t-node-solid'></div>}</div>
         <div className='t-node-hover'>
           <div className='t-node-info'> 
@@ -103,15 +98,9 @@ class Timeline extends Component {
   renderMobileNode(node, index) {
     const date = new Date(Date.parse(node.template_data.timeline_date))
     const timelineNodeStyle = this.state.selectedNodeId === node.id ? 't-node-container t-node-selected': 't-node-container'
-    // const backgroundColor = index % 2 === 0 ? 'rgba(255, 255, 255, .9)' : 'rgba(255, 255, 255, 1)'
-    const color = index % 2 === 0 ? 'black': 'black'
 
-    // const isClicked = this.state.openNode === index ? {height: '100px', display: 'block'} : {height: 0, display: 'none'}
     return (
-      <div className={timelineNodeStyle}
-        onClick={() => { console.log(index); this.setState(prevState => ({openNode: prevState.openNode !== index ? index: -1}))}}
-        // style={{backgroundColor: backgroundColor, color: color}}
-        >
+      <div className={timelineNodeStyle}>
         <div className='t-node-mobile-box'>
           <div className='t-node-date' >{date.toDateString().slice(4)}</div>
           <div className='t-node-info'>
@@ -137,6 +126,7 @@ class Timeline extends Component {
       marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : 0),
       height: this.state.isMobile ? window.innerHeight - 54 : 80
     }
+
     return (
       <div style={{width: '100%'}}>
         {this.state.loaded && 
@@ -145,7 +135,7 @@ class Timeline extends Component {
               { this.state.isMobile && 
                 <i className="fa fa-bars" style={{fontSize: '20px', padding: '0 25px'}}></i>
               }
-              <h1 className='o-headline'>The Galloway Case {this.state.isMobile && 'Timeline'}</h1>
+              <h1 className='o-headline'>{this.props.title} {this.state.isMobile && 'Timeline'}</h1>
             </div>
             <div className='t-tree-container'>
               {!this.state.isMobile && <div className='t-tree-branch'/>}
@@ -162,7 +152,8 @@ class Timeline extends Component {
                 })
               }
             </div>
-          </div>}
+          </div>
+        }
       </div>
     )
   }
