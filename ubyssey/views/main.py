@@ -95,9 +95,11 @@ class UbysseyTheme(object):
 
         if article.template == 'timeline':
             timeline_tag = article.tags.filter(name__icontains='timeline')
-            # templateData = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values("template_data"))
-            # ids = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values('parent_id', 'template_data'))
-            temp = list(Article.objects.filter(tags__in=timeline_tag, is_published=True).values('parent_id', 'template_data', 'slug', 'headline'))
+            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            for i, a in enumerate(timelineArticles) :
+                print(a.featured_image.image.get_thumbnail_url(), temp[i])
+                temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
             article.timeline_articles = json.dumps(temp)
 
         ref = request.GET.get('ref', None)
