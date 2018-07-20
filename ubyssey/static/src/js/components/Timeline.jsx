@@ -38,7 +38,7 @@ class Timeline extends Component {
 
   prepareHeadline (headline) {
     if (headline) {
-      return headline.length > 35 ? headline.slice(0, 32).concat('...') : headline
+      return headline.length > 65 ? headline.slice(0, 63).concat('...') : headline
     }
     return ''
   }
@@ -104,7 +104,7 @@ class Timeline extends Component {
         <div className='t-node-mobile-box'>
           <div className='t-node-date' >{date.toDateString().slice(4)}</div>
           <div className='t-node-info'>
-            <h3 className='o-headline'>{node.headline}</h3>
+            <h3 className='o-headline'>{this.prepareHeadline(node.headline)}</h3>
           </div>
         </div>
         <div className='t-node-mobile-box'>

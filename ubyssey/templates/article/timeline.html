@@ -3,7 +3,7 @@
        
 {% block banner %}
     {% with article.template_fields.header_layout as header_layout %}
-    <div class="fw-banner {{ header_layout }}">
+    <div class="fw-banner timeline-banner {{ header_layout }}">
         <div class='c-timeline' data-current-article-id='{{article.parent_id}}' data-timeline-title='{{article.timeline_title}}' data-nodes='{{article.timeline_articles}}'></div>
         {% if header_layout == 'right-image' %}
             <div class="header-container">

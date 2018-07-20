@@ -11,6 +11,10 @@ $backgroundColor: rgba(0, 47, 84, 0.89);
 $colorPrimary: white;
 $colorSecondary: black;
 
+.timeline-banner {
+  padding-top: $bannerHeight;
+}
+
 .c-timeline {
   position: fixed;
   left: 0;
@@ -19,7 +23,7 @@ $colorSecondary: black;
 
   .t-container {
     position: relative;
-    top: 0;
+    top: -$bannerHeight;
     background-color: $colorPrimary;
     transition: margin .2s;
 

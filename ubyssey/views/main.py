@@ -98,8 +98,10 @@ class UbysseyTheme(object):
             timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
             temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
             print(type(datetime.strptime(json.loads(temp[0]['template_data'])['timeline_date'][:15], '%a %b %d %Y')))
-            temp = sorted(temp, key=lambda article: datetime.strptime(json.loads(article['template_data'])['timeline_date'][:15], '%a %b %d %Y') )
-            print(temp)
+            try :
+                temp = sorted(temp, key=lambda article: datetime.strptime(json.loads(article['template_data'])['timeline_date'][:15], '%a %b %d %Y') )
+            except:
+                print('ERROR: no timeline date')
             for i, a in enumerate(timelineArticles) :
                 temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
             article.timeline_articles = json.dumps(temp)
