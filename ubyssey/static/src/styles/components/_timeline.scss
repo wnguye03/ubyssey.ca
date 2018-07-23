@@ -12,7 +12,9 @@ $colorPrimary: white;
 $colorSecondary: black;
 
 .timeline-banner {
-  padding-top: $bannerHeight;
+  @media($bp-larger-than-tablet) {
+    padding-top: $bannerHeight; 
+  }
 }
 
 .c-timeline {
@@ -24,9 +26,9 @@ $colorSecondary: black;
   .t-container {
     position: relative;
     top: -$bannerHeight;
+    top: 0;
     background-color: $colorPrimary;
     transition: margin .2s;
-
     color: $colorPrimary;
 
     &:hover {
@@ -79,6 +81,10 @@ $colorSecondary: black;
           align-items:center;
           height: 100%;
           background-color: $backgroundColor;
+          .c-button{
+            background-color: transparent;
+            min-width: auto;
+          }
           &:first-child {
             flex: 3;
             flex-direction: column;
