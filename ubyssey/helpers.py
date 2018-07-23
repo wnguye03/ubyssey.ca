@@ -32,48 +32,46 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
-    def insert_ads(article, article_type = 'desktop'):
-        """ inject upto 5 ads evenly throughout the article content
-            ads can not inject directly beneath headers """
+    def insert_ads(content, article_type='desktop'):
+        """Inject upto 5 ads evenly throughout the article content.
+        Ads cannot inject directly beneath headers."""
         ad = {
-            unicode('type'): unicode('ad'),
-            unicode('data'): unicode(article_type)
+            'type': 'ad',
+            'data': article_type
         }
 
         paragraph_count = 1
-        
-        for block in article.content:
-            if block['type'] == 'paragraph':
-                paragraph_count += 1
-        
-        numberOfAds = 1
+
+        for block in content:
+            paragraph_count = len(filter(lambda b: b['type'] == 'paragraph', content))
+
+        number_of_ads = 1
         paragraphs_per_ad = 6
 
-        while paragraph_count / numberOfAds > paragraphs_per_ad :
-            numberOfAds += 1
-            if numberOfAds >= 5:
-                paragraphs_per_ad = paragraph_count // numberOfAds
+        while paragraph_count / number_of_ads > paragraphs_per_ad :
+            number_of_ads += 1
+            if number_of_ads >= 5:
+                paragraphs_per_ad = paragraph_count // number_of_ads
                 break
 
         ad_count = 0
         paragraph_count = 0
         next_ad = randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
-        ad_placements = article.content
+        ad_placements = content
 
-        for index, block in enumerate(article.content):
+        for index, block in enumerate(content):
             if block['type'] == 'paragraph':
                 paragraph_count += 1
             if paragraph_count == next_ad:
-                    if index != 0 and article.content[index - 1]['type'] != 'header':
+                    if index != 0 and content[index - 1]['type'] != 'header':
                         ad_placements.insert(index + ad_count, ad)
                         next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
                         ad_count += 1
                     else:
                         next_ad += 1
 
-        article.content = ad_placements
-        return article
-        
+        return ad_placements
+
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
@@ -194,10 +192,10 @@ class ArticleHelper(object):
 
     @staticmethod
     def is_explicit(article):
-        explicit_tags = ['sex', 'Sex', 'explicit', 'Explicit']
+        explicit_tags = ['sex', 'explicit']
         tags = article.tags.all().values_list('name', flat=True)
         for tag in tags:
-            if tag in explicit_tags:
+            if tag.lower() in explicit_tags:
                 return True
         return False
 
@@ -205,7 +203,7 @@ class ArticleHelper(object):
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
 
-        # Get all magazine articles
+        # Get all articles in section
         queryset = Article.objects.filter(is_published=True, section__slug=section)
 
         # Exclude article (optional)

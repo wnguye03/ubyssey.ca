@@ -20,6 +20,21 @@ $(function() {
     $('.o-placements--web .o-placements__demo__inner__left img').css('top', $(this).data('offset'));
   });
 
+  $('.o-placements--web .o-placements__platform--mode').click(function() {
+    $('.o-placements--web .o-placements__platform--mode').removeClass('o-placements__platforms--active');
+    $(this).addClass('o-placements__platforms--active');
+    if($(this).data('platform') == 'desktop') {
+      $('.o-placements__demo__desktop').removeClass('o-hidden');
+      $('.o-placements__demo__mobile').addClass('o-hidden');
+      $('.o-placements__placement--demo--sidebar').removeClass('o-unavailable');
+    }
+    else {
+      $('.o-placements__demo__desktop').addClass('o-hidden')
+      $('.o-placements__demo__mobile').removeClass('o-hidden')
+      $('.o-placements__placement--demo--sidebar').addClass('o-unavailable')
+    }
+  });
+
   $('.o-placements--print .o-placements__placement--demo').click(function() {
     $('.o-placements--print .o-placements__placement').removeClass('o-placements__placement--active');
     $(this).addClass('o-placements__placement--active');

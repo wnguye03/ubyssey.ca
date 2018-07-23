@@ -21,6 +21,7 @@
 @import 'modules/article/embeds';
 @import 'modules/article/comments_bar';
 @import 'modules/article/gallery';
+@import 'modules/article/full_width';
 @import 'modules/social';
 @import 'modules/search';
 
@@ -51,6 +52,7 @@
 @import 'components/events/event-submit-form';
 @import 'components/events/event-submit-landing';
 @import 'components/events/related-events';
+@import 'components/timeline';
 
 @import 'modules/events/calendar';
 @import 'modules/events/event';

@@ -15,13 +15,16 @@ class PollAnswer extends Component {
     let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
     return(
       <label className={['poll-button-label', buttonStyle].join(' ')}>
-        <input className={'poll-input'} 
-          name={'answer'} 
-          type={'radio'} 
+        <input className={'poll-input'}
+          name={'answer'}
+          type={'radio'}
           value={answer}
           checked={this.props.checkedAnswers.includes(index)}
           onChange={(e) => this.props.changeAnswers(e, index)}>
             <span className={'poll-answer-text'}>{answer}</span>
+            <div className={isSelected}>
+              <span className={'poll-checkmark'}></span>
+            </div>
         </input>
 
         <span className={'poll-button'}
@@ -34,12 +37,9 @@ class PollAnswer extends Component {
           {answerPercentage}
         </span>
 
-        <div className={'poll-result-bar'} 
-          style={{width: answerPercentage, opacity: showResult}}>
-            <div className={isSelected}>                      
-              <span className={'poll-checkmark'}></span>
-            </div>
+        <div className={'poll-result-bar'} style={{width: answerPercentage, opacity: showResult}}>
         </div>
+        
       </label>
     )
   }

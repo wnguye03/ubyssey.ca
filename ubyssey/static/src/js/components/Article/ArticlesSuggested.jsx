@@ -1,11 +1,9 @@
 
 import React, { Component } from 'react'
-import ArticlePreview from './ArticlePreview.jsx'
-import LinkedList from '../../modules/LinkedList'
+import { ArticlePreview } from './'
 import DispatchAPI from '../../api/dispatch'
 
-class ArticlesSuggested extends Component {
-
+class ArticlesSuggested extends Component{
   constructor(props) {
     super(props)
 
@@ -30,7 +28,7 @@ class ArticlesSuggested extends Component {
 
   getArticle(id) {
     DispatchAPI.articles.rendered(id)
-    .then ( (response) => {
+    .then((response) => {
       const articles = [...this.state.articles, response]
       this.setState({articles})
     })
@@ -41,13 +39,13 @@ class ArticlesSuggested extends Component {
       // only show 3 suggested articles
       if (index !== 0 && article.headline !== this.props.currentArticle.headline) {
         return (
-          <ArticlePreview 
+          <ArticlePreview
             articleId={article.id}
             headline={article.headline}
             url={article.url}
-            authors={article.authors}
+            authorString={article.authors_string}
             publishTime={article.published_at}
-            featuredImageUrl={article.featured_image}
+            featuredImageUrl={article.featured_image.image.url}
             key={index} />
         )
       }
@@ -55,11 +53,9 @@ class ArticlesSuggested extends Component {
 
     return (
       <div className='sa-container-outer'>
-        <div className='u-container'>
-          <h2 className='block-title'>Suggested Articles</h2>
-          <div className={'sa-container-inner'}>
-            {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
-          </div>
+        <h2 className='bottom-banner__title'>Suggested Articles</h2>
+        <div className={'sa-container-inner'}>
+          {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
         </div>
       </div>
     );

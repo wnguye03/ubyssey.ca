@@ -1,41 +1,35 @@
 import React, { Component } from 'react'
-import humanizeDateTime from '../../modules/Dates'
 
 class ArticlePreview extends Component{
-  constructor(props) {
-    super(props)
-  }
-  
-  goToArticle() {
-    window.location = this.props.url
+
+  createMarkup(content) {
+    return {__html: content};
   }
 
   render() {
     const msec = Date.parse(this.props.publishTime)
     const publishedDate = new Date(msec)
+    const imageStyle = {backgroundImage: `url(${this.props.featuredImageUrl})`}
+
     return (
-      <a
-        href={this.props.url}
+      <article
         id={'suggested-article-' + String(this.props.articleId)}
-        className='article-preview'>
-          <div className='sa-content'>
-            {this.props.featuredImageUrl && 
+        className='o-article o-article--suggested'>
+          {this.props.featuredImageUrl &&
+            <a href={this.props.url}>
               <div
-                className='sa-thumbnail-image'
-                style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}></div>
-            }
-            {!this.props.featuredImageUrl && 
-              <div className='sa-thumbnail-image'>
-                No image
-              </div>
-            }
-            <h3>{this.props.headline}</h3>
+                className='o-article__image'
+                style={imageStyle}></div>
+            </a>}
+          <div className='o-article__meta'>
+            <h3 className='o-article__headline'>
+              <a href={this.props.url} dangerouslySetInnerHTML={this.createMarkup(this.props.headline)}/>
+            </h3>
+            <div className='o-article__byline'>
+              <span className='o-article__author'>{this.props.authorString}</span> &nbsp;&middot;&nbsp; <span className='o-article__published'>{publishedDate.toDateString().slice(4)}</span>
+            </div>
           </div>
-          <div className='sa-subtitle'>
-            <span className='sa-date'>{publishedDate.toDateString().slice(4)}</span>
-            <span className='sa-author'><em>{this.props.authors[0]}</em></span>
-          </div>
-      </a>
+      </article>
     )
   }
 }

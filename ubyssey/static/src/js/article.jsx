@@ -1,10 +1,12 @@
-import React from 'react';
-import './modules/Youtube';
-import { ArticlesSuggested } from './components/Article';
-import { Poll } from './components/Poll';
+import React from 'react'
+import './modules/Youtube'
+import { ArticlesSuggested } from './components/Article'
+import { Poll } from './components/Poll'
 import Search from './components/Search.jsx';
-import AdblockSplash from './components/AdblockSplash.jsx';
-import CookieDisclaimer from './components/CookieDisclaimer.jsx';
+import AdblockSplash from './components/AdblockSplash.jsx'
+import { Galleries } from './components/Gallery'
+import Timeline from './components/Timeline.jsx'
+import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 
 window.articleHeader = false;
 
@@ -35,6 +37,15 @@ $(document).ready(function() {
     })
 });
 
+$(document).ready(function() {
+    $('.c-timeline').each(function() {
+        React.render(
+            <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
+            $(this).get(0)
+        )
+    })
+});
+
 if ($('main.article').length) {
 
     const $article = $('article');
@@ -60,8 +71,13 @@ if ($('main.article').length) {
     };
 
     function stickyAds(scrollTop, stickyElements) {
-        const headerHeight = $('.topbar').outerHeight(true)
-        const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        try {
+            const headerHeight = $('.topbar').outerHeight(true)
+            const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        }
+        catch (error) {
+            console.warn('sticky ads will not work on this page')
+        }
 
         stickyElements.map(element => {
             // adjust when skyscraper is served
@@ -107,7 +123,7 @@ if ($('main.article').length) {
             if ($(window).width() >= 960) {
                 const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) || 0
                 const adSpace = ($('.article-content').height() - sidebarHeight - $('.right-column').height())
-                
+
                 $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
                 const stickyElementLength = $('.js-sticky').length
 
@@ -139,7 +155,7 @@ if ($('main.article').length) {
                 if (stickyElements.length > 1) {
                     stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height/2
                 }
-                
+
                 // Sticky Ads
                 $('#content-wrapper').scroll(() => {
                     const scrollTop = $('#content-wrapper').scrollTop();
@@ -152,8 +168,63 @@ if ($('main.article').length) {
     articleAds()
 
     var articleList = React.render(
-        <ArticlesSuggested breakpoint={960} name={listName} currentArticle={firstArticle} articles={articleIds} userId={userId} />,
+        <ArticlesSuggested
+          breakpoint={960}
+          name={listName}
+          currentArticle={firstArticle}
+          articles={articleIds}
+          userId={userId} />,
         document.getElementById('article-list')
+    );
+
+    const gatherImages = function(gallery) {
+        var selector, trigger;
+
+        if (gallery) {
+          const id = $(gallery).data("id");
+          selector = `#gallery-${id} .gallery-image`;
+          trigger = `#gallery-${id} .gallery-thumb`;
+        } else {
+          selector = `#article-${articleId} .article-attachment`;
+          trigger = `#article-${articleId} .article-attachment`;
+        }
+
+        const images = $(selector).map((_, el) => {
+          const $el = $(el);
+          return {
+            id: $el.data('id'),
+            url: $el.data('url'),
+            caption: $el.data('caption'),
+            credit: $el.data('credit'),
+            width: $el.width(),
+            height: $el.height()
+          };
+        }).get();
+
+        const imagesTable = images.reduce((table, image, i) => {
+          table[image.id] = i;
+          return table;
+        }, {});
+
+        return {
+          selector,
+          trigger,
+          title: gallery ? $(gallery).data('id') : 'Images',
+          list: images,
+          table: imagesTable,
+        };
+      }.bind(this);
+
+
+    var galleries = [
+        gatherImages(),
+        ...$(`#article-${articleId} .gallery-attachment`)
+          .map((_, elem) => gatherImages(elem)).get()
+      ];
+
+    var gallery = React.render(
+        <Galleries galleries={galleries} />, 
+        document.getElementById('gallery')
     );
 }
 

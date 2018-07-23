@@ -92,11 +92,26 @@ class UbysseyTheme(object):
         if user_agent.is_mobile:
             article_type = 'mobile'
 
+
+        if article.template == 'timeline':
+            timeline_tag = article.tags.filter(name__icontains='timeline-')
+            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            print(type(datetime.strptime(json.loads(temp[0]['template_data'])['timeline_date'][:15], '%a %b %d %Y')))
+            try :
+                temp = sorted(temp, key=lambda article: datetime.strptime(json.loads(article['template_data'])['timeline_date'][:15], '%a %b %d %Y') )
+            except:
+                print('ERROR: no timeline date')
+            for i, a in enumerate(timelineArticles) :
+                temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+            article.timeline_articles = json.dumps(temp)
+            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
         if not ArticleHelper.is_explicit(article):
-            article = ArticleHelper.insert_ads(article, article_type)
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
 
         popular = ArticleHelper.get_popular()[:5]
 
@@ -105,11 +120,11 @@ class UbysseyTheme(object):
             'meta': ArticleHelper.get_meta(article),
             'article': article,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+            # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
             'popular': popular,
             'reading_time': ArticleHelper.get_reading_time(article),
-            'explicit': ArticleHelper.is_explicit(article)
+            'explicit': ArticleHelper.is_explicit(article),
         }
 
         template = article.get_template_path()
@@ -125,8 +140,6 @@ class UbysseyTheme(object):
             'authors_json': authors_json,
             'base_template': 'blank.html'
         }
-
-        # published_at = article.published_at.strftime('%m/%d/%Y')
 
         try:
             featured_image = article.featured_image.image.get_thumbnail_url()
@@ -398,3 +411,6 @@ class UbysseyTheme(object):
 
     def centennial(self, request):
         return render(request, 'centennial.html', {})
+
+    def cron_test(self, request):
+        return render(request, 'test.html', {})
