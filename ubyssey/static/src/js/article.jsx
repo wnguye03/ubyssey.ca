@@ -167,7 +167,7 @@ if ($('main.article').length) {
           currentArticle={firstArticle}
           articles={articleIds}
           userId={userId} />,
-        document.getElementById('article-list')
+          document.getElementById('article-list')
     );
 
     const gatherImages = function(gallery) {
@@ -187,6 +187,7 @@ if ($('main.article').length) {
           return {
             id: $el.data('id'),
             url: $el.data('url'),
+            style: $el.data('style'),
             caption: $el.data('caption'),
             credit: $el.data('credit'),
             width: $el.width(),
