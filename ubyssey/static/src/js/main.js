@@ -14,8 +14,8 @@ function enableScroll($document) {
 }
 
 function embedMargins() {
-  const marginLeft = $('.article-content p').css('marginLeft')
-  const marginRight = $('.article-content p').css('marginRight')
+  const marginLeft = $('.article-content > p:first-child').css('marginLeft')
+  const marginRight = $('.article-content > p:first-child').css('marginRight')
   console.log(marginLeft, marginRight)
   $('.image-attachment.left').css('marginLeft', marginLeft)
   $('.image-attachment.right').css('marginRight', marginRight)
