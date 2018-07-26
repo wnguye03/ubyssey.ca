@@ -6,11 +6,10 @@ class Timeline extends Component {
   constructor(props){
     super(props)
     this.state = {
-      selectedNodeId: props.id,
-      selectedNodeIndex: 0,
       nodes: props.nodes.map((node)=>{
         return {'headline': node.headline, 'id': node.parent_id, 'slug': node.slug, 'template_data': JSON.parse(node.template_data), 'featured_image': node.featured_image}
       }),
+      selectedNodeIndex: 0,
       isMobile: false,
       mobileShow: false,
       loaded: false
@@ -75,11 +74,11 @@ class Timeline extends Component {
   renderDesktopNode(node, index) {
     const date = new Date(Date.parse(node.template_data.timeline_date))
     const dateStyle = index % 2 === 0 ? {top:'-20px'} : {top: '26px'}
-    const timelineNodeStyle = this.state.selectedNodeId === node.id ? 't-node-container t-node-selected': 't-node-container'
+    const timelineNodeStyle = this.props.id === node.id ? 't-node-container t-node-selected': 't-node-container'
     
     return (
       <div className={timelineNodeStyle}>
-        <div ref='myRef' className='t-node'>{ this.state.selectedNodeId === node.id && <div className='t-node-solid'></div>}</div>
+        <div ref='myRef' className='t-node'>{ this.props.id === node.id && <div className='t-node-solid'></div>}</div>
         <div className='t-node-hover'>
           <div className='t-node-info'> 
             <div className='t-node-info-text' style={{right: index == this.state.nodes.length - 1 ? 0: 'auto'}}>
@@ -95,9 +94,9 @@ class Timeline extends Component {
     )
   }
 
-  renderMobileNode(node, index) {
+  renderMobileNode(node) {
     const date = new Date(Date.parse(node.template_data.timeline_date))
-    const timelineNodeStyle = this.state.selectedNodeId === node.id ? 't-node-container t-node-selected': 't-node-container'
+    const timelineNodeStyle = this.props.id === node.id ? 't-node-container t-node-selected': 't-node-container'
 
     return (
       <div className={timelineNodeStyle}>
@@ -111,7 +110,7 @@ class Timeline extends Component {
           <div style={{width: '100%', height: '100%', backgroundImage: 'url(' + node.featured_image + ')', backgroundSize: 'cover'}}/>
         </div>
         <div className='t-node-mobile-box'>
-          <a href={this.prepareUrl(node.slug)}><span>Read More</span></a>
+          {this.renderButton(node.slug)}
         </div>
       </div>
     )
@@ -123,7 +122,7 @@ class Timeline extends Component {
     const mobileStyle = {
       width: winWidth, 
       overflow: this.state.mobileShow ? 'scroll': 'visible',
-      marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : 0),
+      marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : -54),
       height: this.state.isMobile ? window.innerHeight - 54 : 80
     }
 
@@ -147,8 +146,8 @@ class Timeline extends Component {
                 </div>
               }
               {this.state.isMobile && 
-                this.state.nodes.map((node, index) => {
-                  return this.renderMobileNode(node, index)
+                this.state.nodes.map((node) => {
+                  return this.renderMobileNode(node)
                 })
               }
             </div>
