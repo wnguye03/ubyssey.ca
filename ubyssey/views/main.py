@@ -97,7 +97,10 @@ class UbysseyTheme(object):
             timeline_tag = article.tags.filter(name__icontains='timeline-')
             timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
             temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
-            temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
+            try:
+                temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
+            except:
+                pass
             for i, a in enumerate(timelineArticles) :
                 try:
                     temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
