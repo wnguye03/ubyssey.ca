@@ -9,7 +9,7 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
 
-VERSION = '1.4.30'
+VERSION = '1.4.31'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',

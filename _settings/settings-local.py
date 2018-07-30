@@ -6,7 +6,7 @@ BASE_URL = 'http://localhost:8000/'
 
 SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 
-VERSION = '1.4.30'
+VERSION = '1.4.31'
 
 ALLOWED_HOSTS = ['localhost', '*']
 
