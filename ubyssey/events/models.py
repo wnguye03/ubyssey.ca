@@ -109,7 +109,7 @@ def has_protocol(url):
     return url.startswith('http://') or url.startswith('https://')
 
 def format_url(url):
-    if  not url or has_protocol(url):
+    if not url or has_protocol(url):
         return url
     else:
         return "http://" + url
