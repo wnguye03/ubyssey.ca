@@ -376,21 +376,6 @@
   img {
     width: 100%;
   }
-  &.right, &.left {
-    height: auto;
-    margin: 0;
-    margin-top: 15px !important;
-  }
-  &.right {
-    margin-left: 15px !important;
-    float: right;
-    clear: right;
-  }
-  &.left {
-    margin-right: 15px !important;
-    float: left;
-    clear: left;
-  }
 }
 
 .pull-quote {
