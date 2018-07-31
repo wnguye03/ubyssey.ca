@@ -8,6 +8,7 @@ before_install:
 install:
 - pip install -r requirements-prd.txt -t lib/
 - pip install requests --upgrade -t lib/
+- sudo apt-get install -qq libexempi3
 - cd ubyssey/static
 - npm install -g gulp
 - npm install

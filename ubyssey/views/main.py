@@ -98,6 +98,24 @@ class UbysseyTheme(object):
         if user_agent.is_mobile:
             article_type = 'mobile'
 
+
+        if article.template == 'timeline':
+            timeline_tag = article.tags.filter(name__icontains='timeline-')
+            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            try:
+                temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
+            except:
+                pass
+            for i, a in enumerate(timelineArticles) :
+                try:
+                    temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+                except:
+                    temp[i]['featured_image'] = None
+            article.timeline_articles = json.dumps(temp)
+            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+            
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
@@ -405,5 +423,4 @@ class UbysseyTheme(object):
         return render(request, 'centennial.html', {})
 
     def cron_test(self, request):
-        print('running cron test')
         return render(request, 'test.html', {})
