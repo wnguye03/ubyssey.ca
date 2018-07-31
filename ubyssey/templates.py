@@ -138,7 +138,7 @@ class Timeline(Template):
         ('banner-image', 'Banner Image')
     )
 
-    intructions = InstructionField('Instructions', options=INSTRUCTIONS)
+    instructions = InstructionField('Instructions', options=INSTRUCTIONS)
     image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
     header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
     description = TextField('Description', required=True)

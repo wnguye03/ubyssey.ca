@@ -1,6 +1,6 @@
 {% extends 'article/default.html' %}
 {% load staticfiles %}
-       
+
 {% block banner %}
     {% with article.template_fields.header_layout as header_layout %}
     <div class="fw-banner timeline-banner {{ header_layout }}">
@@ -12,7 +12,7 @@
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
-                    <div class="c-article__byline">
+                    <div class="c-article__byline c-article__byline-center">
                         <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                         <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
@@ -44,7 +44,7 @@
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
-                    <div class="c-article__byline">
+                    <div class="c-article__byline c-article__byline-center">
                         <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                         <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
@@ -59,7 +59,7 @@
         {% elif header_layout == 'banner-image' %}
             <div class="banner-image">
                 <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
-                <div class="headline-container">
+                <div class="headline-container c-article__byline-center">
                     <div class="u-container u-container--padded">
                         <h1 class="headline">{{ article.headline }}</h1>
                         {% if article.template_fields.description %}
@@ -88,4 +88,3 @@
 
 {% block right-column %}
 {% endblock %}
-
