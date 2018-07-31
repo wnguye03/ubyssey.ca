@@ -11,7 +11,7 @@
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
-                    <div class="c-article__byline">
+                    <div class="c-article__byline c-article__byline-center">
                       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
@@ -43,7 +43,7 @@
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
-                    <div class="c-article__byline">
+                    <div class="c-article__byline c-article__byline-center">
                       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
@@ -64,7 +64,7 @@
                         {% if article.template_fields.description %}
                         <p class="fw-description">{{ article.template_fields.description }}</p>
                         {% endif %}
-                        <div class="article-byline">
+                        <div class="article-byline c-article__byline-center">
                             <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
                         </div>
                     </div>

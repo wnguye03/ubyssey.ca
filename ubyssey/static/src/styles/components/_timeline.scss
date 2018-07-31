@@ -13,7 +13,7 @@ $colorSecondary: black;
 
 .timeline-banner {
   @media($bp-larger-than-tablet) {
-    padding-top: $bannerHeight; 
+    padding-top: $bannerHeight;
   }
 }
 
@@ -101,7 +101,7 @@ $colorSecondary: black;
             font-size: 0.8rem;
           }
         }
-       
+
         .t-node-info {
           position: relative;
           padding: 0 10px;
@@ -176,7 +176,7 @@ $colorSecondary: black;
           align-items: center;
           width: 85%;
 
-            
+
           .t-node-container {
             height: $nodeRadius*$scaleModifier + 2*$nodeThickness;
             width: $nodeRadius*$scaleModifier  + 2*$nodeThickness;
@@ -257,7 +257,7 @@ $colorSecondary: black;
                 position: relative;
                 opacity: 1;
                 font-size: 12px;
-                
+
                 left: -28px;
                 top: -8px;
                 display: flex;
@@ -270,7 +270,7 @@ $colorSecondary: black;
                   height: 30px;
                   background-color: black;
                 }
-    
+
                 .t-node-info-text {
                   position: absolute;
                   width: $infoBoxWidth - 34;
