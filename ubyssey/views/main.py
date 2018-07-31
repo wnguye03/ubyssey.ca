@@ -43,6 +43,8 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        breaking = ArticleHelper.get_breaking_news().first()
+
         try:
             articles = {
                 'primary': frontpage[0],
@@ -51,6 +53,7 @@ class UbysseyTheme(object):
                 'bullets': frontpage[4:6],
                 # Get random trending article
                 'trending': trending_article,
+                'breaking': breaking
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
@@ -72,6 +75,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'sections': sections,
             'popular': popular,
+            'breaking': breaking,
             'blog': blog,
             'day_of_week': datetime.now().weekday()
         }
@@ -85,6 +89,8 @@ class UbysseyTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
+
+        breaking = ArticleHelper.get_breaking_news().exclude(id=article.id).first()
 
         # determine if user is viewing from mobile
         article_type = 'desktop'
@@ -128,6 +134,7 @@ class UbysseyTheme(object):
             'popular': popular,
             'reading_time': ArticleHelper.get_reading_time(article),
             'explicit': ArticleHelper.is_explicit(article),
+            'breaking': breaking
         }
 
         template = article.get_template_path()

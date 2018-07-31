@@ -3,6 +3,7 @@
 {% load dispatch_tags %}
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
+      <div class="frontpage__columns">
         <div class="cell left">
         {% if articles.trending %}
           <div class="o-trending-article">
@@ -62,5 +63,6 @@
         <div class="multi-zone cell right">
           {{ sidebar.render }}
         </div>
+      </div>
     </div>
 </div>
