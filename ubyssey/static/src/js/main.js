@@ -13,6 +13,13 @@ function enableScroll($document) {
   $('body').removeClass('u-no-scroll');
 }
 
+function embedMargins() {
+  const marginLeft = $('.article-content > p:first-child').css('marginLeft')
+  const marginRight = $('.article-content > p:first-child').css('marginRight')
+  $('.image-attachment.left').css('marginLeft', marginLeft)
+  $('.image-attachment.right').css('marginRight', marginRight)
+}
+
 (function() {
   var $searchform = $('#search-form'),
       $document = $(document);
@@ -135,6 +142,8 @@ function enableScroll($document) {
   } else {
     mp.pageView();
   }
+
+  $document.ready(embedMargins())
 
   // register widgets
   upcomingEvents();

@@ -3,7 +3,8 @@
 
 {% block banner %}
     {% with article.template_fields.header_layout as header_layout %}
-    <div class="fw-banner {{ header_layout }}">
+    <div class="fw-banner timeline-banner {{ header_layout }}">
+        <div class='c-timeline' data-current-article-id='{{article.parent_id}}' data-timeline-title='{{article.timeline_title}}' data-nodes='{{article.timeline_articles}}'></div>
         {% if header_layout == 'right-image' %}
             <div class="header-container">
                 <div class="headline-container left">
@@ -12,14 +13,14 @@
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
                     <div class="c-article__byline c-article__byline-center">
-                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
-                      <div class="c-article__byline__meta">
+                        <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+                        <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
                         {% if reading_time %}
                         <span> &nbsp;&middot;&nbsp; </span>
                         <span class="c-article__reading-time">{{ reading_time }} min read</span>
                         {% endif %}
-                      </div>
+                        </div>
                     </div>
                 </div>
                 <div class="right">
@@ -27,7 +28,7 @@
                         <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}"/>
                         {% if article.featured_image.caption %}
                         <div class="caption">
-                          {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                            {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                         </div>
                         {% endif %}
                     </div>
@@ -44,34 +45,34 @@
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
                     <div class="c-article__byline c-article__byline-center">
-                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
-                      <div class="c-article__byline__meta">
+                        <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+                        <div class="c-article__byline__meta">
                         <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
                         {% if reading_time %}
                         <span> &nbsp;&middot;&nbsp; </span>
                         <span class="c-article__reading-time">{{ reading_time }} min read</span>
                         {% endif %}
-                      </div>
+                        </div>
                     </div>
                 </div>
             </div>
         {% elif header_layout == 'banner-image' %}
             <div class="banner-image">
                 <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
-                <div class="headline-container">
+                <div class="headline-container c-article__byline-center">
                     <div class="u-container u-container--padded">
                         <h1 class="headline">{{ article.headline }}</h1>
                         {% if article.template_fields.description %}
                         <p class="fw-description">{{ article.template_fields.description }}</p>
                         {% endif %}
-                        <div class="article-byline c-article__byline-center">
+                        <div class="article-byline">
                             <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
                         </div>
                     </div>
                 </div>
                 {% if article.featured_image.caption or article.featured_image.credit %}
                 <div class="caption">
-                	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                    {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                 </div>
                 {% endif %}
             </div>
@@ -80,9 +81,7 @@
     {% endwith %}
 {% endblock %}
 
-{% if article.template_fields.header_layout == 'banner-image' %}
 {% block banner_ad %}{% endblock %}
-{% endif %}
 
 {% block pre-content %}
 {% endblock %}

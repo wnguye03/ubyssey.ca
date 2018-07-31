@@ -108,6 +108,11 @@ div.indicator {
   }
 }
 
+.c-article__byline-center{
+  display: flex;
+  justify-content: center;
+}
+
 .960px {
   margin-bottom: 0.9rem;
   display: inline-block;
@@ -218,6 +223,7 @@ div.article-content {
 
     &:first-child {
         margin-top: 5px;
+        margin-right: auto;
     }
   }
 
