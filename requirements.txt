@@ -1,4 +1,4 @@
-dispatch==0.4.21
+dispatch==0.4.22
 mysql-python
 django-phonenumber-field
 beautifulsoup4
