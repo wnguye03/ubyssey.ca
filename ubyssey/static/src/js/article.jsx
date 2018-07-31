@@ -64,12 +64,11 @@ if ($('main.article').length) {
     };
 
     function stickyAds(scrollTop, stickyElements) {
-        try {
-            const headerHeight = $('.topbar').outerHeight(true)
-            const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
-        }
-        catch (error) {
-            console.warn('sticky ads will not work on this page')
+        
+        const headerHeight = $('.topbar').outerHeight(true)
+        const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        if (headerHeight === null || typeof headerHeight === 'undefined') {
+            return null
         }
 
         stickyElements.map(element => {
@@ -167,7 +166,7 @@ if ($('main.article').length) {
           currentArticle={firstArticle}
           articles={articleIds}
           userId={userId} />,
-        document.getElementById('article-list')
+          document.getElementById('article-list')
     );
 
     const gatherImages = function(gallery) {
@@ -187,6 +186,7 @@ if ($('main.article').length) {
           return {
             id: $el.data('id'),
             url: $el.data('url'),
+            style: $el.data('style'),
             caption: $el.data('caption'),
             credit: $el.data('credit'),
             width: $el.width(),
