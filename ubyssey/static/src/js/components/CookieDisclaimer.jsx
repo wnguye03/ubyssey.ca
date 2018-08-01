@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Cookies from 'js-cookie'
 
 class CookieDisclaimer extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       showCookieDisclaimer: true,
@@ -14,9 +14,9 @@ class CookieDisclaimer extends Component {
 
   getCookie(field) {
     let cookie = Cookies.get(this.getCookieName())
-    if(typeof cookie === 'string' && cookie !== '') {
+    if (typeof cookie === 'string' && cookie !== '') {
       cookie = JSON.parse(cookie)
-      if(field) {
+      if (field) {
         return cookie[field]
       }
       return cookie
