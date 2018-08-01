@@ -1,7 +1,12 @@
 import kronos
 import json
+import requests
 
 from pywebpush import webpush, WebPushException
+
+from django.conf import settings
+from django.utils import timezone
+from django.core.urlresolvers import reverse
 from dispatch.models import Notification, Subscription
 
 # Cron job helper functions
@@ -12,9 +17,10 @@ def push_notifications(article):
         'headline': article.headline,
         'url': article.get_absolute_url(),
         'snippet': article.snippet,
-        'image': article.featured_image.image.get_thumbnail_url(),
-        'tag': 'not-breaking'
         }
+    if article.featured_image is not None:
+        data['image'] = article.featured_image.image.get_thumbnail_url()
+
     subscriptions = Subscription.objects.all()
     for sub in subscriptions:
         try:
@@ -26,42 +32,32 @@ def push_notifications(article):
                         "auth": sub.auth
                     }},
                 data=json.dumps(data),
-                vapid_private_key="Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E",
+                vapid_private_key=settings.NOTIFICATION_KEY,
                 vapid_claims={
                         "sub": "mailto:YourNameHere@example.org===",
                     }
             )
         except WebPushException as ex:
-            sub.delete()
+            if ex.response.status_code == 410:
+                sub.delete()
 
 # Setup cron jobs
 
 # 8:30 am
-@kronos.register('29 8 * * *')
-def push_morning():
-    notification = Notification.objects.all().order_by('created_at').first()
+@kronos.register('*/5 * * * *')
+def send_notifications():
+    notification = Notification.objects \
+        .filter(scheduled_push_time__lte=timezone.now()) \
+        .order_by('scheduled_push_time') \
+        .first()
 
     if notification is not None:
         push_notifications(notification.article)
         notification.delete()
+
     return
 
-# 12:00 pm
-@kronos.register('0 12 * * *')
-def push_noon():
-    notification = Notification.objects.all().order_by('created_at').first()
-
-    if notification is not None:
-        push_notifications(notification.article)
-        notification.delete()
-    return
-
-# 5:30 pm
-@kronos.register('29 5 * * *')
-def push_afternoon():
-    notification = Notification.objects.all().order_by('created_at').first()
-
-    if notification is not None:
-        push_notifications(notification.article)
-        notification.delete()
-    return
+@kronos.register('0 0 * * *')
+def count_subscribers():
+    url = "%s%s" % (settings.BASE_URL.strip('/'), reverse('api-subscriptioncount-list'))
+    requests.post(url)
