@@ -1,0 +1,18 @@
+{% load staticfiles %}
+{% load dispatch_tags %}
+
+{% block content %}
+<div class='bottom-banner-wrapper'>
+  <div class='bottom-banner-container'>
+    <div id="article-list" class='area-1'></div>
+    <div class="popular sidebar-block area-2">
+      <h2 class="bottom-banner__title">Most popular this week</h2>
+      <ol class="article-list">
+          {% for article in popular %}
+          <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
+          {% endfor %}
+      </ol>
+    </div>
+  </div>
+</div>
+{% endblock %}

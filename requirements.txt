@@ -1,7 +1,9 @@
-dispatch==0.4.11
+dispatch==0.4.24
 mysql-python
 django-phonenumber-field
 beautifulsoup4
 feedparser
-pywebpush
-requests==2.13.0
+pyyaml
+ua-parser
+user-agents
+django-user-agents

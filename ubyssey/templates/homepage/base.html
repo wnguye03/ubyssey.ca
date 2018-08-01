@@ -3,10 +3,16 @@
 {% load humanize %}
 {% load dispatch_tags %}
 {% block content %}
-{% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 {% include 'headers/main.html' %}
 {% include 'headers/mobile.html' %}
+{% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
+{% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 class='homepage' %}
 <main class="u-container u-container--large homepage">
+    {% if articles.breaking %}
+    <a class="o-breaking-news" href="{{ articles.breaking.get_absolute_url }}">
+      <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
+    </a>
+    {% endif %}
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">
         <div class="sections">

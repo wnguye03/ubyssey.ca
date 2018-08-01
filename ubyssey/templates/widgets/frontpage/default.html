@@ -3,6 +3,7 @@
 {% load dispatch_tags %}
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
+      <div class="frontpage__columns">
         <div class="cell left">
         {% if articles.trending %}
           <div class="o-trending-article">
@@ -50,7 +51,7 @@
                 <div class="meta">
                     <a href="{{ article.get_absolute_url }}?ref=frontpage"><h1 class="headline">{{ article.headline|safe }}</h1></a>
                     <div class="o-article__byline">
-                      <span class="o-article___author">By {{ article.get_author_url|safe }}</span>
+                      <span class="o-article__author">By {{ article.get_author_url|safe }}</span>
                       <span> &nbsp;·&nbsp; </span>
                       <span class="o-article__published">{{ article.published_at }}</span>
                     </div>
@@ -62,5 +63,6 @@
         <div class="multi-zone cell right">
           {{ sidebar.render }}
         </div>
+      </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
     <div class="c-page__header">
       {% if person.image %}
       <div class="c-page__header__thumbnail">
-        <img src="{% static person.image %}" alt="{{ person.full_name }}" />
+        <img src="{{ person.get_absolute_image_url }}" alt="{{ person.full_name }}" />
       </div>
       {% endif %}
       <div class="c-page__header__meta">

@@ -32,6 +32,47 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
+    def insert_ads(content, article_type='desktop'):
+        """Inject upto 5 ads evenly throughout the article content.
+        Ads cannot inject directly beneath headers."""
+        ad = {
+            'type': 'ad',
+            'data': article_type
+        }
+
+        paragraph_count = 1
+
+        for block in content:
+            paragraph_count = len(filter(lambda b: b['type'] == 'paragraph', content))
+
+        number_of_ads = 1
+        paragraphs_per_ad = 6
+
+        while paragraph_count / number_of_ads > paragraphs_per_ad :
+            number_of_ads += 1
+            if number_of_ads >= 5:
+                paragraphs_per_ad = paragraph_count // number_of_ads
+                break
+
+        ad_count = 0
+        paragraph_count = 0
+        next_ad = randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+        ad_placements = content
+
+        for index, block in enumerate(content):
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+            if paragraph_count == next_ad:
+                    if index != 0 and content[index - 1]['type'] != 'header':
+                        ad_placements.insert(index + ad_count, ad)
+                        next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+                        ad_count += 1
+                    else:
+                        next_ad += 1
+
+        return ad_placements
+
+    @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
@@ -150,10 +191,19 @@ class ArticleHelper(object):
         )
 
     @staticmethod
+    def is_explicit(article):
+        explicit_tags = ['sex', 'explicit']
+        tags = article.tags.all().values_list('name', flat=True)
+        for tag in tags:
+            if tag.lower() in explicit_tags:
+                return True
+        return False
+
+    @staticmethod
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
 
-        # Get all magazine articles
+        # Get all articles in section
         queryset = Article.objects.filter(is_published=True, section__slug=section)
 
         # Exclude article (optional)
@@ -203,6 +253,11 @@ class ArticleHelper(object):
             articles = articles.filter(created_at__range=(time_range))
 
         return articles.order_by('-views')
+
+    @staticmethod
+    def get_breaking_news():
+        """Returns breaking news stories"""
+        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=datetime.datetime.now())
 
     @staticmethod
     def get_trending():

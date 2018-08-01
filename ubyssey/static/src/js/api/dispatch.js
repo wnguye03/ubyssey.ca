@@ -15,11 +15,7 @@ function buildRoute(route, id) {
     fullRoute += `/${id}/`
   }
   if (pieces.length > 1) {
-    if(id){
-      fullRoute += pieces[1]
-    } else {
-      fullRoute += '/' + pieces[1]
-    }
+    fullRoute += pieces[1]
   }
 
   let lastCharacter = fullRoute.slice(-1)
@@ -63,18 +59,6 @@ function postRequest(route, id=null, payload={}) {
   .then(parseJSON)
 }
 
-function patchRequest(route, id=null, payload={}) {
-  return fetch(
-    buildRoute(route, id),
-    {
-      method: 'PATCH',
-      headers: DEFAULT_HEADERS,
-      body: JSON.stringify(payload),
-    }
-  )
-  .then(parseJSON)
-}
-
 const DispatchAPI = {
   polls: {
     vote: (poll_id, payload) => {
@@ -86,19 +70,10 @@ const DispatchAPI = {
   },
   articles: {
     rendered: (id) => {
-      return getRequest('articles.rendered', id, null)
+      return getRequest('articles', id, null)
     },
     search: (query) => {
       return getRequest('articles', null, query)
-
-    }
-  },
-  notifications: {
-    subscribe: (subscription) => {
-      return postRequest('notifications.subscribe', 1, subscription)
-    },
-    updateSubscription: (uuid, subscription) => {
-      return patchRequest('notifications.subscribe', uuid, subscription)
     }
   }
 }

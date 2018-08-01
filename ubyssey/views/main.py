@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Topic, Person
 
@@ -22,6 +23,7 @@ def parse_int_or_none(maybe_int):
         return int(maybe_int)
     except (TypeError, ValueError):
         return None
+
 
 class UbysseyTheme(object):
 
@@ -42,6 +44,8 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        breaking = ArticleHelper.get_breaking_news().first()
+
         try:
             articles = {
                 'primary': frontpage[0],
@@ -50,6 +54,7 @@ class UbysseyTheme(object):
                 'bullets': frontpage[4:6],
                 # Get random trending article
                 'trending': trending_article,
+                'breaking': breaking
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
@@ -71,6 +76,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'sections': sections,
             'popular': popular,
+            'breaking': breaking,
             'blog': blog,
             'day_of_week': datetime.now().weekday()
         }
@@ -85,19 +91,51 @@ class UbysseyTheme(object):
 
         article.add_view()
 
+        breaking = ArticleHelper.get_breaking_news().exclude(id=article.id).first()
+
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
+
+
+        if article.template == 'timeline':
+            timeline_tag = article.tags.filter(name__icontains='timeline-')
+            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            try:
+                temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
+            except:
+                pass
+            for i, a in enumerate(timelineArticles) :
+                try:
+                    temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+                except:
+                    temp[i]['featured_image'] = None
+            article.timeline_articles = json.dumps(temp)
+            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+            
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
+        if not ArticleHelper.is_explicit(article):
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
+
+        popular = ArticleHelper.get_popular()[:5]
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
             'article': article,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+            # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
-            'reading_time': ArticleHelper.get_reading_time(article)
+            'popular': popular,
+            'reading_time': ArticleHelper.get_reading_time(article),
+            'explicit': ArticleHelper.is_explicit(article),
+            'breaking': breaking
         }
 
         template = article.get_template_path()
@@ -106,7 +144,7 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
+        authors_json = [a.person.full_name for a in article.authors.all()]
 
         context = {
             'article': article,
@@ -114,15 +152,22 @@ class UbysseyTheme(object):
             'base_template': 'blank.html'
         }
 
+        try:
+            featured_image = article.featured_image.image.get_thumbnail_url()
+        except:
+            featured_image = None
+
         data = {
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template_path(), context)
+            'authors': authors_json,
+            'published_at': str(article.published_at),
+            'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
-    
+
     def page(self, request, slug=None):
         try:
             page = PageHelper.get_page(request, slug)
@@ -377,3 +422,6 @@ class UbysseyTheme(object):
 
     def centennial(self, request):
         return render(request, 'centennial.html', {})
+
+    def cron_test(self, request):
+        return render(request, 'test.html', {})

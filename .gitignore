@@ -8,6 +8,9 @@ __pycache__/
 /static/
 /ubyssey/static/dist/
 
+# local GAE
+/lib/
+
 node_modules/
 
 # Ignore Mac specific empty file

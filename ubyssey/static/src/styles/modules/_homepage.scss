@@ -519,14 +519,15 @@ ol.article-list {
   counter-reset: ol-counter;
   > li {
     h4.headline {
-      font-weight: normal;
       margin-bottom: 0;
+      padding-top: 1px;
+      line-height: 1.25em;
     }
     margin: 18px 0;
     position: relative;
     padding-top: 0;
     padding-bottom: 15px;
-    padding-left: 40px;
+    padding-left: 30px;
     a {
       display: inline-block;
     }
@@ -542,15 +543,33 @@ ol.article-list {
       position: absolute;
       top: 0;
       left: 0;
-      width: 40px;
+      width: 30px;
       font-size: 15px;
       line-height: 24px;
-      text-align: center;
-      color: rgb(50,50,50);
       content: counter(ol-counter) ".";
       counter-increment: ol-counter;
     }
 
+  }
+}
+
+.o-breaking-news{
+  width: 100%;
+  display:flex;
+  border-radius: 3px;
+  background-color:#e41818;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h3 {
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
+    }
   }
 }
 

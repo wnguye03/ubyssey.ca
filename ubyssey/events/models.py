@@ -74,6 +74,13 @@ class Event(Model):
         self.image.save(filename, File(temp))
         self.save()
 
+    def get_absolute_image_url(self):
+        """
+        Returns image URL.
+        """
+        if self.image:
+            return settings.MEDIA_URL + str(self.image)
+
 @receiver(pre_save, sender=Event)
 def send_submitted_email(sender, instance, **kwargs):
     """Send an email to the submitter when the event is submitted."""
@@ -102,7 +109,7 @@ def has_protocol(url):
     return url.startswith('http://') or url.startswith('https://')
 
 def format_url(url):
-    if has_protocol(url) or not url:
+    if not url or has_protocol(url):
         return url
     else:
         return "http://" + url

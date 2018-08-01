@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
       if (promptMessage !== '') {
         $('body').append("<div class='beta-prompt'><div class='beta-prompt-internal'></div></div>")
         $('.beta-prompt-internal').html(promptMessage)
-  
+
         setTimeout(() => {
           $('.beta-prompt').remove()
         }, 3000)
@@ -52,6 +52,13 @@ function disableScroll($document) {
 function enableScroll($document) {
   $document.off('touchmove');
   $('body').removeClass('u-no-scroll');
+}
+
+function embedMargins() {
+  const marginLeft = $('.article-content > p:first-child').css('marginLeft')
+  const marginRight = $('.article-content > p:first-child').css('marginRight')
+  $('.image-attachment.left').css('marginLeft', marginLeft)
+  $('.image-attachment.right').css('marginRight', marginRight)
 }
 
 (function() {
@@ -176,6 +183,8 @@ function enableScroll($document) {
   } else {
     mp.pageView();
   }
+
+  $document.ready(embedMargins())
 
   // register widgets
   upcomingEvents();
