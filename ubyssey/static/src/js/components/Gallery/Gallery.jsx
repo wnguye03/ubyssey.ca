@@ -1,6 +1,6 @@
 import React from 'react';
-import LinkedList from '../modules/LinkedList';
 import GallerySlide from './GallerySlide.jsx';
+import LinkedList from '../../modules/LinkedList';
 import Hammer from 'hammerjs';
 import key from 'keymaster';
 

@@ -1,11 +1,12 @@
-import React from 'react';
-import './modules/Youtube';
-import ArticlesSuggested from './components/ArticlesSuggested.jsx';
+import React from 'react'
+import './modules/Youtube'
+import { ArticlesSuggested } from './components/Article'
+import { Poll } from './components/Poll'
 import Search from './components/Search.jsx';
-import Poll from './components/Poll/Poll.jsx';
 import AdblockSplash from './components/AdblockSplash.jsx'
-import Galleries from './components/Galleries.jsx'
+import { Galleries } from './components/Gallery'
 import Timeline from './components/Timeline.jsx'
+import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 
 window.articleHeader = false;
 
@@ -25,6 +26,12 @@ $(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
             <AdblockSplash />,
+            $(this).get(0)
+        )
+    })
+    $('#cookie-disclaimer').each(function() {
+        React.render(
+            <CookieDisclaimer />,
             $(this).get(0)
         )
     })
