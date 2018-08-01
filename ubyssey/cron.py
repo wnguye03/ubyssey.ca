@@ -54,13 +54,9 @@ def send_notifications():
     if notification is not None:
         article = Article.objects.filter(parent__id=notification.article.parent_id, is_published=True).first()
         if article is not None:
-            print('pushing notificaiton')
             push_notifications(article)
             notification.delete()
-        else:
-            print('not pushing notification')
-    else:
-        print('not pushing notification')
+
     return
 
 @kronos.register('0 0 * * *')
