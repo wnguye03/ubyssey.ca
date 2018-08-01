@@ -7,7 +7,7 @@ from pywebpush import webpush, WebPushException
 from django.conf import settings
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-from dispatch.models import Notification, Subscription
+from dispatch.models import Article, Notification, Subscription
 
 # Cron job helper functions
 
@@ -44,7 +44,7 @@ def push_notifications(article):
 # Setup cron jobs
 
 # 8:30 am
-@kronos.register('*/5 * * * *')
+@kronos.register('* * * * *')
 def send_notifications():
     notification = Notification.objects \
         .filter(scheduled_push_time__lte=timezone.now()) \
@@ -52,9 +52,15 @@ def send_notifications():
         .first()
 
     if notification is not None:
-        push_notifications(notification.article)
-        notification.delete()
-
+        article = Article.objects.filter(parent__id=notification.article.parent_id, is_published=True).first()
+        if article is not None:
+            print('pushing notificaiton')
+            push_notifications(article)
+            notification.delete()
+        else:
+            print('not pushing notification')
+    else:
+        print('not pushing notification')
     return
 
 @kronos.register('0 0 * * *')
