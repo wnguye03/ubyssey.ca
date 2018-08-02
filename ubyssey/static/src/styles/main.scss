@@ -21,6 +21,7 @@
 @import 'modules/article/embeds';
 @import 'modules/article/comments_bar';
 @import 'modules/article/gallery';
+@import 'modules/article/full_width';
 @import 'modules/social';
 @import 'modules/search';
 
@@ -29,27 +30,29 @@
 @import 'objects/archive';
 @import 'objects/bottom_banner';
 
-@import 'components/header-banner';
-@import 'components/elections-sidebar';
-@import 'components/page';
-@import 'components/section-page';
-@import 'components/homepage';
-@import 'components/poll';
-@import 'components/suggested-articles';
-
 @import 'components/adblock-splash';
-@import 'components/replacement';
 @import 'components/button';
-@import 'components/heading';
-@import 'components/paragraph';
+@import 'components/cookie-disclaimer';
+@import 'components/elections-sidebar';
+@import 'components/replacement';
+@import 'components/section-page';
+@import 'components/suggested-articles';
 @import 'components/form';
-@import 'components/text-input';
-@import 'components/input-group';
+@import 'components/header-banner';
+@import 'components/heading';
+@import 'components/homepage';
 @import 'components/info-box';
+@import 'components/input-group';
+@import 'components/page';
+@import 'components/paragraph';
+@import 'components/poll';
+@import 'components/text-input';
+
 @import 'components/events/calendar';
 @import 'components/events/event-submit-form';
 @import 'components/events/event-submit-landing';
 @import 'components/events/related-events';
+@import 'components/timeline';
 
 @import 'modules/events/calendar';
 @import 'modules/events/event';

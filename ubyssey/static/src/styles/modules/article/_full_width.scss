@@ -1,7 +1,7 @@
 @import 'modules/fonts';
 @import 'modules/variables';
 
-.c-article--fw-story, div.container.clearfix.fw-story {
+.c-article--fw-story, div.container.clearfix.fw-story, .c-article--timeline {
   .fw-banner {
     overflow: auto;
     .header-container {
@@ -91,12 +91,12 @@
         height: 300px;
         .backdrop {
           display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            background-size: cover;
-            background-position: center;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          background-size: cover;
+          background-position: center;
         }
       }
       .headline-container {
@@ -183,6 +183,10 @@
     .o-article-embed {
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .o-article-embed--code {
+      display: flex;
     }
   }
 }

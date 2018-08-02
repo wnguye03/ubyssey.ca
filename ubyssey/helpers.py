@@ -255,6 +255,11 @@ class ArticleHelper(object):
         return articles.order_by('-views')
 
     @staticmethod
+    def get_breaking_news():
+        """Returns breaking news stories"""
+        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=datetime.datetime.now())
+
+    @staticmethod
     def get_trending():
         """Returns the most trending articles in the time period."""
 

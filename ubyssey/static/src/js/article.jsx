@@ -1,10 +1,12 @@
-import React from 'react';
-import './modules/Youtube';
-import ArticlesSuggested from './components/ArticlesSuggested.jsx';
+import React from 'react'
+import './modules/Youtube'
+import { ArticlesSuggested } from './components/Article'
+import { Poll } from './components/Poll'
 import Search from './components/Search.jsx';
-import Poll from './components/Poll/Poll.jsx';
 import AdblockSplash from './components/AdblockSplash.jsx'
-import Galleries from './components/Galleries.jsx'
+import { Galleries } from './components/Gallery'
+import Timeline from './components/Timeline.jsx'
+import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 
 window.articleHeader = false;
 
@@ -24,6 +26,21 @@ $(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
             <AdblockSplash />,
+            $(this).get(0)
+        )
+    })
+    $('#cookie-disclaimer').each(function() {
+        React.render(
+            <CookieDisclaimer />,
+            $(this).get(0)
+        )
+    })
+});
+
+$(document).ready(function() {
+    $('.c-timeline').each(function() {
+        React.render(
+            <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })
@@ -54,8 +71,12 @@ if ($('main.article').length) {
     };
 
     function stickyAds(scrollTop, stickyElements) {
+        
         const headerHeight = $('.topbar').outerHeight(true)
         const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
+        if (headerHeight === null || typeof headerHeight === 'undefined') {
+            return null
+        }
 
         stickyElements.map(element => {
             // adjust when skyscraper is served
@@ -152,7 +173,7 @@ if ($('main.article').length) {
           currentArticle={firstArticle}
           articles={articleIds}
           userId={userId} />,
-        document.getElementById('article-list')
+          document.getElementById('article-list')
     );
 
     const gatherImages = function(gallery) {
@@ -172,6 +193,7 @@ if ($('main.article').length) {
           return {
             id: $el.data('id'),
             url: $el.data('url'),
+            style: $el.data('style'),
             caption: $el.data('caption'),
             credit: $el.data('credit'),
             width: $el.width(),

@@ -553,6 +553,26 @@ ol.article-list {
   }
 }
 
+.o-breaking-news{
+  width: 100%;
+  display:flex;
+  border-radius: 3px;
+  background-color:#e41818;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h3 {
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
+    }
+  }
+}
+
 @media($bp-larger-than-phablet){
   ol.article-list {
     padding: 0;

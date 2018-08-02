@@ -75,7 +75,6 @@ class DFP {
 
 const dfp = new DFP();
 
-// grapefruit
 $(document).ready(function() {
   dfp.load(document);
 });

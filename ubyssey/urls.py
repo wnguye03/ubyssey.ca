@@ -49,6 +49,7 @@ urlpatterns = [
     # Advertising
     url(r'^advertise/$', advertise.landing, name='advertise-landing'),
     url(r'^advertise/new/$', advertise.new, name='advertise-new'),
+
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
@@ -63,7 +64,6 @@ urlpatterns = [
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
     url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
-#    url(r'^api/test/$', theme.cron_test, name='cron-test')
 ]
 
 if settings.DEBUG:

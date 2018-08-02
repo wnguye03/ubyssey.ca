@@ -29,6 +29,26 @@ div.indicator {
   z-index: 2000;
 }
 
+.o-breaking-news-article{
+  display:flex;
+  border-radius: 3px;
+  background-color:#e41818;
+  display:flex;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h3 {
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
+    }
+  }
+}
+
 
 // Article
 .c-article--default {
@@ -86,6 +106,11 @@ div.indicator {
     line-height: 2rem;
     margin-bottom: 0;
   }
+}
+
+.c-article__byline-center{
+  display: flex;
+  justify-content: center;
 }
 
 .960px {
@@ -198,6 +223,7 @@ div.article-content {
 
     &:first-child {
         margin-top: 5px;
+        margin-right: auto;
     }
   }
 

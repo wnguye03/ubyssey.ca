@@ -167,7 +167,7 @@
     // Structure
     padding-top: 56.25%; // 16:9 ratio
     display: inline-block;
-    //  content: ''; Removed for #435
+    content: '';
   }
 }
 
@@ -375,6 +375,36 @@
 .image-attachment {
   img {
     width: 100%;
+  }
+
+  @media($bp-larger-than-phablet){
+    &.right, &.left {
+      height: auto;
+      margin: 0;
+      margin-top: 15px !important;
+    }
+    &.right {
+      margin-left: 15px !important;
+      float: right;
+      clear: right;
+    }
+    &.left {
+      margin-right: 15px !important;
+      float: left;
+      clear: left;
+    }
+
+    &.small {
+      width:100px;
+    }
+
+    &.medium {
+      width:200px;
+    }
+
+    &.large {
+      width:300px;
+    }
   }
 }
 
