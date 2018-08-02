@@ -13,11 +13,12 @@ from dispatch.models import Article, Notification, Subscription
 
 def push_notifications(article):
     # grab each endpoint from list in database and make a push
-    data={
+    data = {
         'headline': article.headline,
         'url': article.get_absolute_url(),
         'snippet': article.snippet,
-        }
+    }
+
     if article.featured_image is not None:
         data['image'] = article.featured_image.image.get_thumbnail_url()
 
