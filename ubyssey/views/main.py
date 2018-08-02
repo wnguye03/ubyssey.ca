@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Column, Topic, Person
+from dispatch.models import Article, Section, Subsection, Topic, Person
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper, PageHelper
@@ -146,7 +146,7 @@ class UbysseyTheme(object):
         try:
             page = PageHelper.get_page(request, slug)
         except:
-            return self.column(request, slug)
+            return self.subsection(request, slug)
 
         page.add_view()
 
@@ -211,9 +211,9 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        columns = Column.objects.filter(section=section)
+        subsections = Subsection.objects.filter(section=section)
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(column__in=columns).order_by('-published_at')
+        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
@@ -238,7 +238,7 @@ class UbysseyTheme(object):
                 'title': section.name,
             },
             'section': section,
-            'columns': columns,
+            'subsections': subsections,
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],
@@ -252,13 +252,13 @@ class UbysseyTheme(object):
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
         return HttpResponse(t.render(context))
 
-    def column(self, request, slug=None):
+    def subsection(self, request, slug=None):
         try:
-            column = Column.objects.get(slug=slug)
+            subsection = Subsection.objects.get(slug=slug)
         except:
             raise Http404('Page could not be found')
 
-        if not column.get_published_articles().exists():
+        if not subsection.get_published_articles().exists():
             raise Http404('Page could not be found')
 
         order = request.GET.get('order', 'newest')
@@ -270,9 +270,9 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        featured_articles = Article.objects.filter(column=column, is_published=True).order_by('-published_at')
+        featured_articles = Article.objects.filter(subsection=subsection, is_published=True).order_by('-published_at')
 
-        article_list = Article.objects.filter(column=column, is_published=True).order_by(order_by)
+        article_list = Article.objects.filter(subsection=subsection, is_published=True).order_by(order_by)
 
         if query:
             article_list = article_list.filter(headline__icontains=query)
@@ -292,10 +292,10 @@ class UbysseyTheme(object):
 
         context = {
             'meta': {
-                'title': column.name
+                'title': subsection.name
             },
-            'column': column,
-            'type': 'column',
+            'subsection': subsection,
+            'type': 'subsection',
             'featured_articles': {
                 'first': featured_articles[0],
                 'rest': featured_articles[1:4]
@@ -305,7 +305,7 @@ class UbysseyTheme(object):
             'q': query
         }
 
-        t = loader.select_template(['%s/%s' % (column.slug, 'column.html'), 'column.html'])
+        t = loader.select_template(['%s/%s' % (subsection.slug, 'subsection.html'), 'subsection.html'])
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):

@@ -20,9 +20,9 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
-      {% for column in columns %}
-        {% if column.get_published_articles %}
-          {% include 'objects/column.html' with column=column %}
+      {% for subsection in subsections %}
+        {% if subsection.get_published_articles %}
+          {% include 'objects/subsection.html' with subsection=subsection %}
         {% endif %}
       {% endfor %}
     </div>
