@@ -266,12 +266,18 @@ header.topbar {
     vertical-align: middle;
   }
 }
-#header-mobile-spacer, header.mobile {
+#header-mobile-spacer {
   height: 54px;
   min-height: 54px;
+  @media ($bp-larger-than-tablet) {
+    height: 48px;
+    min-height: 48px;
+  }
 }
 
 header.mobile {
+  height: 54px;
+  min-height: 54px;
   line-height: 54px;
   border-bottom: 1px solid #DADADA;
 
