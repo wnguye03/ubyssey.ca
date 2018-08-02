@@ -267,10 +267,12 @@ header.topbar {
     vertical-align: middle;
   }
 }
-
-header.mobile {
+#header-mobile-spacer, header.mobile {
   height: 54px;
   min-height: 54px;
+}
+
+header.mobile {
   line-height: 54px;
   border-bottom: 1px solid #DADADA;
 

@@ -4,18 +4,6 @@
 {% block banner %}
     {% with article.template_fields.header_layout as header_layout %}
     <div class="fw-banner {{ header_layout }}">
-        <div class="sidebar">
-            {% if explicit is not True %}
-            {% if reading_time >= 3 %}
-                {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
-                {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
-            {% else %}
-                {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
-            {% endif %}
-            {% else %}
-                {% include 'objects/replacement.html' with size='box' %}
-            {% endif %}
-        </div>
         {% if header_layout == 'right-image' %}
             <div class="header-container">
                 <div class="headline-container left">
@@ -23,7 +11,6 @@
                     {% if article.template_fields.description %}
                     <p class="fw-description">{{ article.template_fields.description }}</p>
                     {% endif %}
-
                     <div class="c-article__byline c-article__byline-center">
                       <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
                       <div class="c-article__byline__meta">
