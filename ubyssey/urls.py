@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.shortcuts import render_to_response
+from django.contrib.staticfiles.views import serve as serve_static
 
 from dispatch.admin import urls as admin_urls
 from dispatch.api import urls as api_urls
@@ -18,6 +19,8 @@ from ubyssey.templates import *
 
 from ubyssey.events.api.urls import urlpatterns as event_api_urls
 from ubyssey.events.urls import urlpatterns as events_urls
+
+from django.views.generic import TemplateView
 
 theme = UbysseyTheme()
 guide = GuideTheme()
@@ -70,3 +73,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [url(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
