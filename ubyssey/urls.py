@@ -55,14 +55,17 @@ urlpatterns = [
     # Centennial
     url(r'^100/$', theme.centennial, name='centennial-landing'),
 
+    # Beta-features
+    url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
+
     # Events
     url(r'^events/', include(events_urls)),
     url(r'^api/events/', include(event_api_urls)),
-    url(r'^test/$', theme.cron_test, name='cron-test'),
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
     url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
+
 ]
 
 if settings.DEBUG:
