@@ -55,6 +55,7 @@ TEMPLATES += [
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'service-workers')
 )
 
 STATIC_URL = '/static/'
