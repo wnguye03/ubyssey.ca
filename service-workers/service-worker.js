@@ -1,7 +1,7 @@
 self.addEventListener('push', function (event) {
   const data = JSON.parse(event.data.text())
   const title = data.headline;
-  console.log(data)
+
   const options = {
     body: data.snippet,
     data: data.url,

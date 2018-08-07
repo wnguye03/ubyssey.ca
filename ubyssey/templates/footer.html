@@ -2,11 +2,6 @@
 <footer>
     <div class="u-container{% if homepage %} u-container--large{% endif %}">
         <div class="top-row">
-            <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small-grey.svg' %}" /></a>
-            <div class='beta-features'>
-                <em>Want to beta test our notification feature! Note: It may not work on ios devices.</em>
-                <div id="beta-test-push-notifications" style='margin-top: 1rem;' class='c-button'>Subscribe</div>
-            </div>
             <ul class="sections">
                 <li><a href="{% url 'page' 'news' %}">News</a></li>
                 <li><a href="{% url 'page' 'culture' %}">Culture</a></li>
