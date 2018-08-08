@@ -5,7 +5,7 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 
   {% include 'components/seo.html' %}
 
@@ -103,6 +103,7 @@ if (window.devicePixelRatio && devicePixelRatio >= 2) {
 </script>
 
 <div id="page-wrapper">
+<div id="cookie-disclaimer"></div>
 <div id="adblock-splash"></div>
 {% zone 'site-banner' %}
 {% block header %}{% endblock %}

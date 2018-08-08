@@ -167,7 +167,8 @@ header.topbar, header.mobile {
   width: 100%;
   z-index: $z-scale-2;
   position: relative;
-  position: sticky;
+  position: fixed;
+  transform: translate3d(0,0,0);
   top: 0;
 }
 
@@ -265,6 +266,14 @@ header.topbar {
     vertical-align: middle;
   }
 }
+#header-mobile-spacer {
+  height: 54px;
+  min-height: 54px;
+  @media ($bp-larger-than-tablet) {
+    height: 48px;
+    min-height: 48px;
+  }
+}
 
 header.mobile {
   height: 54px;
@@ -334,6 +343,7 @@ header.mobile {
 nav.mobile {
   display: none; // Initially
   position: fixed;
+  transform: translate3d(0,0,0);
   width: 100%;
   top: 55px;
   background: rgba(249, 249, 249, 0.99); // Barely transparent

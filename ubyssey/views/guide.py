@@ -15,7 +15,7 @@ class GuideTheme(object):
         """Guide article page."""
         try:
             article = ArticleHelper.get_article(request, slug)
-        except Http404:
+        except:
             raise Http404('Article could not be found.')
 
         template_fields = article.template_fields
