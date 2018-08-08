@@ -46,7 +46,7 @@ class CookieDisclaimer extends Component {
       this.setState({
         showCookieDisclaimer: false
       })
-    } 
+    }
   }
 
   render() {
@@ -56,13 +56,13 @@ class CookieDisclaimer extends Component {
           <div className='cookie-disclaimer-wrapper'>
             <div className='cookie-disclaimer-container'>
               <h3>Cookies on the Ubyssey website</h3>
-              <div className='c-row'> 
+              <div className='c-row'>
                 <p>
-                  This website uses cookies to give you the best experience possible. 
-                  Using this website means you accept our use of cookies. You can disable cookies in your broswer settings.
+                  This website uses cookies to give you the best experience possible.
+                  Using this website means you accept our use of cookies. You can disable cookies in your browser settings.
                   We respect your privacy and you can read more about our cookie policy <em><a href={'https://www.ubyssey.ca/cookie-policy-2018/'}>here</a></em>.
                 </p>
-                <button 
+                <button
                   className='c-button c-button--small'
                   onClick={() => {this.disableCookieDisclaimer()}}
                   >Continue</button>
