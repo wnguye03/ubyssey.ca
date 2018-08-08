@@ -15,6 +15,7 @@ from django_user_agents.utils import get_user_agent
 from dispatch.models import Article, Section, Topic, Person
 
 import ubyssey
+import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper
 
 def parse_int_or_none(maybe_int):
@@ -114,7 +115,7 @@ class UbysseyTheme(object):
                     temp[i]['featured_image'] = None
             article.timeline_articles = json.dumps(temp)
             article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
-            
+
 
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
@@ -422,5 +423,5 @@ class UbysseyTheme(object):
     def centennial(self, request):
         return render(request, 'centennial.html', {})
 
-    def cron_test(self, request):
-        return render(request, 'test.html', {})
+    def notification(self, request):
+        return render(request, 'notification_signup.html', {})
