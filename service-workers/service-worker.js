@@ -5,7 +5,7 @@ self.addEventListener('push', function (event) {
   const options = {
     body: data.snippet,
     data: data.url,
-    icon: data.tag === 'breaking' ? '/static/images/ubyssey-logo-square.png' : '/static/images/ubyssey-breaking-square.png',
+    icon: data.tag === 'breaking' ? '/static/images/ubyssey-breaking-square.png' : '/static/images/ubyssey-logo-square.png',
     badge: 'static/images/ubyssey_icon.png',
     tag: data.tag,
     image: data.image
