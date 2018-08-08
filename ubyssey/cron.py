@@ -1,13 +1,8 @@
 import kronos
-import json
 import requests
 
-from pywebpush import webpush, WebPushException
-
 from django.conf import settings
-from django.utils import timezone
 from django.core.urlresolvers import reverse
-from dispatch.models import Article, Notification, Subscription
 
 # Setup cron jobs
 
