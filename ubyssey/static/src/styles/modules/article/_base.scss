@@ -286,6 +286,16 @@ div.side {
     float: right;
 }
 
+.fw-story, .timeline {
+  div.right-column {
+    display: none;
+    right: -150px;
+    @media($bp-larger-than-desktophd){
+      display: block;
+    }
+  }
+}
+
 // Article-list
 #article-list {
   // Hide when printed
