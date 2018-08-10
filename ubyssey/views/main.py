@@ -114,7 +114,7 @@ class UbysseyTheme(object):
                     temp[i]['featured_image'] = None
             article.timeline_articles = json.dumps(temp)
             article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
-            
+
 
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
@@ -236,7 +236,7 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        subsections = Subsection.objects.filter(section=section)
+        subsections = Subsection.objects.filter(section=section, is_active=True)
 
         featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
 
