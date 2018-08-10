@@ -279,7 +279,7 @@ class UbysseyTheme(object):
 
     def subsection(self, request, slug=None):
         try:
-            subsection = Subsection.objects.get(slug=slug)
+            subsection = Subsection.objects.get(slug=slug, is_active=True)
         except:
             raise Http404('Page could not be found')
 
