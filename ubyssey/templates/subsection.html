@@ -6,11 +6,11 @@
 {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
-<main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
+<main class="subsection" data-id="{{ subsection.id }}" data-type="{{ type }}">
   {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
   <div class="u-container u-container--padded">
     <div class="c-page__header">
-      <h1 class="c-page__heading">{{ section.name }}</h1>
+      <h1 class="c-page__heading">{{ subsection.name }}</h1>
     </div>
 
     <div class="c-section__featured">
@@ -20,11 +20,6 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
-      {% for subsection in subsections %}
-        {% if subsection.get_published_articles %}
-          {% include 'objects/subsection.html' with subsection=subsection %}
-        {% endif %}
-      {% endfor %}
     </div>
 
     <h3 class="c-page__section">Archive</h3>

@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Topic, Person
+from dispatch.models import Article, Section, Subsection, Topic, Person
 
 import ubyssey
 import ubyssey.cron
@@ -172,7 +172,7 @@ class UbysseyTheme(object):
         try:
             page = PageHelper.get_page(request, slug)
         except:
-            raise Http404('Page could not be found.')
+            return self.subsection(request, slug)
 
         page.add_view()
 
@@ -237,7 +237,9 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
+        subsections = Subsection.objects.filter(section=section, is_active=True)
+
+        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
@@ -262,6 +264,7 @@ class UbysseyTheme(object):
                 'title': section.name,
             },
             'section': section,
+            'subsections': subsections,
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],
@@ -273,6 +276,62 @@ class UbysseyTheme(object):
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
+        return HttpResponse(t.render(context))
+
+    def subsection(self, request, slug=None):
+        try:
+            subsection = Subsection.objects.get(slug=slug, is_active=True)
+        except:
+            raise Http404('Page could not be found')
+
+        if not subsection.get_published_articles().exists():
+            raise Http404('Page could not be found')
+
+        order = request.GET.get('order', 'newest')
+
+        if order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+
+        query = request.GET.get('q', False)
+
+        featured_articles = Article.objects.filter(subsection=subsection, is_published=True).order_by('-published_at')
+
+        article_list = Article.objects.filter(subsection=subsection, is_published=True).order_by(order_by)
+
+        if query:
+            article_list = article_list.filter(headline__icontains=query)
+
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+
+        page = request.GET.get('page')
+
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+
+        context = {
+            'meta': {
+                'title': subsection.name
+            },
+            'subsection': subsection,
+            'type': 'subsection',
+            'featured_articles': {
+                'first': featured_articles[0],
+                'rest': featured_articles[1:4]
+            },
+            'articles': articles,
+            'order': order,
+            'q': query
+        }
+
+        t = loader.select_template(['%s/%s' % (subsection.slug, 'subsection.html'), 'subsection.html'])
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):

@@ -5,6 +5,7 @@
 
 .c-section__featured__articles {
 
+  padding-bottom: 1rem;
   .o-article--column {
 
     // Structure
@@ -42,7 +43,12 @@
         margin-left: 1rem;
         margin-right: 0;
       }
+
+      &:only-child {
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
   }
-  
+
 }
