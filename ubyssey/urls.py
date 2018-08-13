@@ -60,7 +60,7 @@ urlpatterns = [
     url(r'^100/$', theme.centennial, name='centennial-landing'),
 
     # Beta-features
-    url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
+    # url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
 
     # Events
     url(r'^events/', include(events_urls)),
