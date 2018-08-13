@@ -1,5 +1,6 @@
 {% extends 'article/default.html' %}
 {% load staticfiles %}
+{% load dispatch_tags %}
 
 {% block banner %}
     {% with article.template_fields.header_layout as header_layout %}
@@ -88,4 +89,19 @@
 {% endblock %}
 
 {% block right-column %}
+    <div class="right-column">
+        <div class="sidebar">
+            {% zone 'article-sidebar' %}
+            {% if explicit is not True %}
+            {% if reading_time >= 3 %}
+                {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
+                {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
+            {% else %}
+                {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+            {% endif %}
+            {% else %}
+            {% include 'objects/replacement.html' with size='box' %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
