@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import DispatchAPI from '../../api/dispatch'
 
 import Cookies from 'js-cookie'
@@ -6,7 +6,7 @@ import PollAnswer from './PollAnswer.jsx'
 
 const COLOR_OPACITY = .8
 
-class Poll extends Component {
+class Poll extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

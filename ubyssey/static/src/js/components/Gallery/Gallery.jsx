@@ -47,7 +47,7 @@ const Gallery = React.createClass({
             this.setState({ slideWidth: $(window).width() });
         });
 
-        if(this.paneCount > 1){
+        if (this.paneCount > 1){
 
             var mc = new Hammer.Manager(element, { drag_lock_to_axis: true } );
 
@@ -67,8 +67,8 @@ const Gallery = React.createClass({
                   'WebkitTransition':'webkitTransitionEnd'
                 }
 
-                for(t in transitions){
-                    if( el.style[t] !== undefined ){
+                for (t in transitions){
+                    if ( el.style[t] !== undefined ){
                         return transitions[t];
                     }
                 }
@@ -115,12 +115,12 @@ const Gallery = React.createClass({
 
     },
     nextSlide() {
-        if(this.state.active && this.state.active.next)
+        if (this.state.active && this.state.active.next)
             this.setState({ active: this.state.active.next});
         return this.showPane(this.currentPane + 1, true);
     },
     prevSlide() {
-        if(this.state.active && this.state.active.prev)
+        if (this.state.active && this.state.active.prev)
             this.setState({ active: this.state.active.prev});
         return this.showPane(this.currentPane - 1, true);
     },
@@ -137,7 +137,7 @@ const Gallery = React.createClass({
                 var drag_offset = ((100/this.paneWidth) * ev.deltaX) / this.paneCount;
 
                 // slow down at the first and last pane
-                if((this.currentPane == 0  && ev.direction == Hammer.DIRECTION_RIGHT) ||
+                if ((this.currentPane == 0  && ev.direction == Hammer.DIRECTION_RIGHT) ||
                    (this.currentPane == this.paneCount-1 && ev.direction == Hammer.DIRECTION_LEFT)) {
                   drag_offset *= .4;
                 }
@@ -149,7 +149,7 @@ const Gallery = React.createClass({
             case 'pancancel':
                 //Left & Right
                 //less then 2/3 moved, don't register swipe
-                if(Math.abs(ev.deltaX) < (this.paneWidth * 2/3)) {
+                if (Math.abs(ev.deltaX) < (this.paneWidth * 2/3)) {
                   this.showPane(this.currentPane, true);
                 }
 
@@ -189,7 +189,7 @@ const Gallery = React.createClass({
             e.preventDefault();
             const imageId = $(e.target).data('id');
 
-            if(this.state.visible){
+            if (this.state.visible){
                 this.close();
             } else {
                 this.open(imageId);
@@ -211,7 +211,7 @@ const Gallery = React.createClass({
     getActiveImage(imageId) {
         let active = this.images;
         while(active){
-            if(active.data.id == imageId)
+            if (active.data.id == imageId)
                 return active;
             active = active.next;
         }
@@ -240,17 +240,17 @@ const Gallery = React.createClass({
         $('body').removeClass('no-scroll');
     },
     previous(callback) {
-        if(!this.state.active || !this.state.active.prev)
+        if (!this.state.active || !this.state.active.prev)
             return
         this.setState({ active: this.state.active.prev }, callback);
     },
     next(callback) {
-        if(!this.state.active || !this.state.active.next)
+        if (!this.state.active || !this.state.active.next)
             return
         this.setState({ active: this.state.active.next }, callback);
     },
     renderImage() {
-        if(this.state.image){
+        if (this.state.image){
             var imageStyle = { maxHeight: $(window).height() - 200 };
             return (
                 <div className="slide">
@@ -262,7 +262,7 @@ const Gallery = React.createClass({
         }
     },
     renderControls() {
-        if(this.props.images.length > 1){
+        if (this.props.images.length > 1){
             return (
                 <div className="navigation">
                     <a className="prev-slide" href="#"><i className="fa fa-chevron-left"></i></a>

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import LRU from 'lru-cache';
 import DispatchAPI from '../api/dispatch'
 
-class Search extends Component {
+class Search extends React.Component {
     constructor(props) {
       super(props)
 

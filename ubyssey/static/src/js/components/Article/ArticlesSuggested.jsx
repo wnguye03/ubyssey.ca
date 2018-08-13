@@ -1,9 +1,9 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import { ArticlePreview } from './'
 import DispatchAPI from '../../api/dispatch'
 
-class ArticlesSuggested extends Component{
+class ArticlesSuggested extends React.Component{
   constructor(props) {
     super(props)
 
@@ -14,7 +14,6 @@ class ArticlesSuggested extends Component{
     this.articlesTable[this.props.currentArticle.id] = 0;
 
     this.state = {
-      active: new LinkedList(articles),
       articles: [props.currentArticle],
       loading: false
     }

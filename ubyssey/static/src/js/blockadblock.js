@@ -24,17 +24,17 @@
 			loopNumber:			0,
 			event:				{ detected: [], notDetected: [] }
 		};
-		if(options !== undefined) {
+		if (options !== undefined) {
 			this.setOption(options);
 		}
 		var self = this;
 		var eventCallback = function() {
 			setTimeout(function() {
-				if(self._options.checkOnLoad === true) {
-					if(self._options.debug === true) {
+				if (self._options.checkOnLoad === true) {
+					if (self._options.debug === true) {
 						self._log('onload->eventCallback', 'A check loading is launched');
 					}
-					if(self._var.bait === null) {
+					if (self._var.bait === null) {
 						self._creatBait();
 					}
 					setTimeout(function() {
@@ -43,7 +43,7 @@
 				}
 			}, 1);
 		};
-		if(window.addEventListener !== undefined) {
+		if (window.addEventListener !== undefined) {
 			window.addEventListener('load', eventCallback, false);
 		} else {
 			window.attachEvent('onload', eventCallback);
@@ -58,14 +58,14 @@
 	};
 	
 	BlockAdBlock.prototype.setOption = function(options, value) {
-		if(value !== undefined) {
+		if (value !== undefined) {
 			var key = options;
 			options = {};
 			options[key] = value;
 		}
-		for(var option in options) {
+		for (var option in options) {
 			this._options[option] = options[option];
-			if(this._options.debug === true) {
+			if (this._options.debug === true) {
 				this._log('setOption', 'The option "'+option+'" he was assigned to "'+options[option]+'"');
 			}
 		}
@@ -86,7 +86,7 @@
 		this._var.bait.clientHeight;
 		this._var.bait.clientWidth;
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('_creatBait', 'Bait has been created');
 		}
 	};
@@ -94,35 +94,35 @@
 		window.document.body.removeChild(this._var.bait);
 		this._var.bait = null;
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('_destroyBait', 'Bait has been removed');
 		}
 	};
 	
 	BlockAdBlock.prototype.check = function(loop) {
-		if(loop === undefined) {
+		if (loop === undefined) {
 			loop = true;
 		}
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('check', 'An audit was requested '+(loop===true?'with a':'without')+' loop');
 		}
 		
-		if(this._var.checking === true) {
-			if(this._options.debug === true) {
+		if (this._var.checking === true) {
+			if (this._options.debug === true) {
 				this._log('check', 'A check was canceled because there is already an ongoing');
 			}
 			return false;
 		}
 		this._var.checking = true;
 		
-		if(this._var.bait === null) {
+		if (this._var.bait === null) {
 			this._creatBait();
 		}
 		
 		var self = this;
 		this._var.loopNumber = 0;
-		if(loop === true) {
+		if (loop === true) {
 			this._var.loop = setInterval(function() {
 				self._checkBait(loop);
 			}, this._options.loopCheckTime);
@@ -130,7 +130,7 @@
 		setTimeout(function() {
 			self._checkBait(loop);
 		}, 1);
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('check', 'A check is in progress ...');
 		}
 		
@@ -139,11 +139,11 @@
 	BlockAdBlock.prototype._checkBait = function(loop) {
 		var detected = false;
 		
-		if(this._var.bait === null) {
+		if (this._var.bait === null) {
 			this._creatBait();
 		}
 		
-		if(window.document.body.getAttribute('abp') !== null
+		if (window.document.body.getAttribute('abp') !== null
 		|| this._var.bait.offsetParent === null
 		|| this._var.bait.offsetHeight == 0
 		|| this._var.bait.offsetLeft == 0
@@ -153,35 +153,35 @@
 		|| this._var.bait.clientWidth == 0) {
 			detected = true;
 		}
-		if(window.getComputedStyle !== undefined) {
+		if (window.getComputedStyle !== undefined) {
 			var baitTemp = window.getComputedStyle(this._var.bait, null);
-			if(baitTemp && (baitTemp.getPropertyValue('display') == 'none' || baitTemp.getPropertyValue('visibility') == 'hidden')) {
+			if (baitTemp && (baitTemp.getPropertyValue('display') == 'none' || baitTemp.getPropertyValue('visibility') == 'hidden')) {
 				detected = true;
 			}
 		}
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('_checkBait', 'A check ('+(this._var.loopNumber+1)+'/'+this._options.loopMaxNumber+' ~'+(1+this._var.loopNumber*this._options.loopCheckTime)+'ms) was conducted and detection is '+(detected===true?'positive':'negative'));
 		}
 		
-		if(loop === true) {
+		if (loop === true) {
 			this._var.loopNumber++;
-			if(this._var.loopNumber >= this._options.loopMaxNumber) {
+			if (this._var.loopNumber >= this._options.loopMaxNumber) {
 				this._stopLoop();
 			}
 		}
 		
-		if(detected === true) {
+		if (detected === true) {
 			this._stopLoop();
 			this._destroyBait();
 			this.emitEvent(true);
-			if(loop === true) {
+			if (loop === true) {
 				this._var.checking = false;
 			}
-		} else if(this._var.loop === null || loop === false) {
+		} else if (this._var.loop === null || loop === false) {
 			this._destroyBait();
 			this.emitEvent(false);
-			if(loop === true) {
+			if (loop === true) {
 				this._var.checking = false;
 			}
 		}
@@ -191,26 +191,26 @@
 		this._var.loop = null;
 		this._var.loopNumber = 0;
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('_stopLoop', 'A loop has been stopped');
 		}
 	};
 	
 	BlockAdBlock.prototype.emitEvent = function(detected) {
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('emitEvent', 'An event with a '+(detected===true?'positive':'negative')+' detection was called');
 		}
 		
 		var fns = this._var.event[(detected===true?'detected':'notDetected')];
-		for(var i in fns) {
-			if(this._options.debug === true) {
+		for (var i in fns) {
+			if (this._options.debug === true) {
 				this._log('emitEvent', 'Call function '+(parseInt(i)+1)+'/'+fns.length);
 			}
-			if(fns.hasOwnProperty(i)) {
+			if (fns.hasOwnProperty(i)) {
 				fns[i]();
 			}
 		}
-		if(this._options.resetOnEnd === true) {
+		if (this._options.resetOnEnd === true) {
 			this.clearEvent();
 		}
 		return this;
@@ -219,14 +219,14 @@
 		this._var.event.detected = [];
 		this._var.event.notDetected = [];
 		
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('clearEvent', 'The event list has been cleared');
 		}
 	};
 	
 	BlockAdBlock.prototype.on = function(detected, fn) {
 		this._var.event[(detected===true?'detected':'notDetected')].push(fn);
-		if(this._options.debug === true) {
+		if (this._options.debug === true) {
 			this._log('on', 'A type of event "'+(detected===true?'detected':'notDetected')+'" was added');
 		}
 		
@@ -241,7 +241,7 @@
 	
 	window.BlockAdBlock = BlockAdBlock;
 	
-	if(window.blockAdBlock === undefined) {
+	if (window.blockAdBlock === undefined) {
 		window.blockAdBlock = new BlockAdBlock({
 			checkOnLoad: true,
 			resetOnEnd: true

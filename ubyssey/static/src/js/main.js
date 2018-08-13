@@ -68,7 +68,7 @@ function embedMargins() {
   $('.dropdown > a').click(function(e){
     e.preventDefault();
     var dropdown = $(this).parent().find('.list');
-    if(dropdown.is(':visible')){
+    if (dropdown.is(':visible')){
       dropdown.hide();
     } else {
       dropdown.show();
@@ -87,7 +87,7 @@ function embedMargins() {
   $('.js-dropdown > a').click(function(e) {
     e.preventDefault();
     var dropdown = $(this).parent().find('.js-dropdown-list');
-    if(dropdown.is(':visible')){
+    if (dropdown.is(':visible')){
       dropdown.fadeOut(DROPDOWN_FADE_TIME);
       enableScroll($document);
     } else {
@@ -113,11 +113,11 @@ function embedMargins() {
 
   $('a.menu').click(function(e){
     e.preventDefault();
-    if($('nav.mobile').is(':visible')){
+    if ($('nav.mobile').is(':visible')){
       $('nav.mobile').hide();
       $(this).removeClass('active');
     } else {
-      if($searchform.is(':visible')){
+      if ($searchform.is(':visible')){
         $searchform.hide();
         $('a.search').removeClass('active');
       }
@@ -143,11 +143,11 @@ function embedMargins() {
 
   $(document).on('click', 'a.search', function(e){
     e.preventDefault();
-    if($searchform.is(':visible')){
+    if ($searchform.is(':visible')){
       $searchform.hide();
       $(this).removeClass('active');
     } else {
-      if($('nav.mobile').is(':visible')){
+      if ($('nav.mobile').is(':visible')){
         $('nav.mobile').hide();
         $('a.menu').removeClass('active');
       }

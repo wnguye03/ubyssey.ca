@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const desktopSize = 960;
 
-class Timeline extends Component {
+class Timeline extends React.Component {
   constructor(props){
     super(props)
     this.state = {

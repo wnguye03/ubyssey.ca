@@ -17,7 +17,7 @@ export function YoutubePlayer(element) {
     });
 
     function onPlayerReady(event) {
-        if(userReady){
+        if (userReady){
             player.playVideo();
         } else {
             playerReady = true;
@@ -27,7 +27,7 @@ export function YoutubePlayer(element) {
     $(element).find('.js-video-launch').click(function(){
         $(this).hide();
         $(`#video-${node.data('id')}`).show();
-        if(playerReady){
+        if (playerReady){
             player.playVideo();
         } else {
             userReady = true;

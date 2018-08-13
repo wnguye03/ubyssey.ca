@@ -14,13 +14,13 @@ var CommentsBar = React.createClass({
 
         this.initialized = false;
 
-        if($(window).width() <= this.props.breakpoint){
+        if ($(window).width() <= this.props.breakpoint){
             this.loadComments(this.props.articleId);
         }
 
         $(document).on('click', '.open-comments', function(e){
             e.preventDefault();
-            if(!this.initialized){
+            if (!this.initialized){
                 this.loadComments(this.props.articleId);
             }
             this.toggle(true);
@@ -28,7 +28,7 @@ var CommentsBar = React.createClass({
 
     },
     componentWillReceiveProps: function(nextProps){
-        if(nextProps.articleId != this.props.articleId){
+        if (nextProps.articleId != this.props.articleId){
             this.initialized = false;
             this.toggle(false);
         }

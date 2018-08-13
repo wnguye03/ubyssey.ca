@@ -62,7 +62,7 @@ const Article = React.createClass({
     executeAJAXLoadedScripts() {
         var scripts = $("#article-list").find("script");
         for (var i=0;i<scripts.length;i++) {
-          if(!scripts[i].src) {
+          if (!scripts[i].src) {
             eval(scripts[i].innerHTML);
           }
         }

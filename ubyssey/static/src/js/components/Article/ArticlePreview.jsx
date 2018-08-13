@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class ArticlePreview extends Component{
+class ArticlePreview extends React.Component{
 
   createMarkup(content) {
     return {__html: content};

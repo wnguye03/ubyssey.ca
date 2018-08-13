@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const COLOR_OPACITY = .8
 
-class PollAnswer extends Component {
+class PollAnswer extends React.Component {
   constructor(props){
     super(props)
   }

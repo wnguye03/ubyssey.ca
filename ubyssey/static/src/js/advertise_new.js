@@ -23,7 +23,7 @@ $(function() {
   $('.o-placements--web .o-placements__platform--mode').click(function() {
     $('.o-placements--web .o-placements__platform--mode').removeClass('o-placements__platforms--active');
     $(this).addClass('o-placements__platforms--active');
-    if($(this).data('platform') == 'desktop') {
+    if ($(this).data('platform') == 'desktop') {
       $('.o-placements__demo__desktop').removeClass('o-hidden');
       $('.o-placements__demo__mobile').addClass('o-hidden');
       $('.o-placements__placement--demo--sidebar').removeClass('o-unavailable');
