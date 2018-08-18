@@ -20,18 +20,14 @@ $(function () {
             $(this).get(0)
         )
     })
-    $('#adblock-splash').each(function() {
-        React.render(
-            <AdblockSplash />,
-            $(this).get(0)
-        )
-    })
-    $('#cookie-disclaimer').each(function() {
-        React.render(
-            <CookieDisclaimer />,
-            $(this).get(0)
-        )
-    })
+    React.render(
+        <AdblockSplash />,
+        document.getElementById('adblock-splash')
+    )
+    React.render(
+        <CookieDisclaimer />,
+        document.getElementById('cookie-disclaimer')
+    )
     $('.c-timeline').each(function() {
         React.render(
             <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
@@ -39,14 +35,6 @@ $(function () {
         )
     })
 });
-
-// $(document).ready(function() {
-
-// });
-
-// $(document).ready(function() {
-
-// });
 
 if ($('main.article').length) {
 
