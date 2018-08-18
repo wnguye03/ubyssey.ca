@@ -20,9 +20,6 @@ $(function () {
             $(this).get(0)
         )
     })
-});
-
-$(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
             <AdblockSplash />,
@@ -35,9 +32,6 @@ $(document).ready(function() {
             $(this).get(0)
         )
     })
-});
-
-$(document).ready(function() {
     $('.c-timeline').each(function() {
         React.render(
             <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
@@ -45,6 +39,14 @@ $(document).ready(function() {
         )
     })
 });
+
+// $(document).ready(function() {
+
+// });
+
+// $(document).ready(function() {
+
+// });
 
 if ($('main.article').length) {
 
@@ -115,9 +117,6 @@ if ($('main.article').length) {
 
     function articleAds() {
         $(function () {
-            const paragraphs = $(`#article-${articleId} .article-content > p`);
-            const windowHeight = $(window).height();
-
             // Desktop
             if ($(window).width() >= 960) {
                 const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) || 0
@@ -126,12 +125,20 @@ if ($('main.article').length) {
                 $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
                 const stickyElementLength = $('.js-sticky').length
 
+                console.log(adSpace)
                 if (adSpace < 0) {
                     $('.sidebar').remove()
+                    console.warn('Insufficient space: sidebar removed', adSpace)
+                    return
+                }
+                if (adSpace < BOX_HEIGHT) {
+                    $('.sidebar').find('.o-advertisement--box').remove()
+                    console.warn('Insufficient space: box ads blocked', adSpace)
                     return
                 }
                 if (adSpace < SKYSCRAPER_HEIGHT) {
                     $('.sidebar').find('.o-advertisement--skyscraper').remove()
+                    console.warn('Insufficient space: skyscraper ads blocked', adSpace)
                     return
                 }
 
