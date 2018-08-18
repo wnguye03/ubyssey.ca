@@ -113,7 +113,6 @@ if ($('main.article').length) {
                 $('.sidebar').find('[class*="o-advertisement--"]').addClass('js-sticky')
                 const stickyElementLength = $('.js-sticky').length
 
-                console.log(adSpace)
                 if (adSpace < 0) {
                     $('.sidebar').remove()
                     console.warn('Insufficient space: sidebar removed', adSpace)
