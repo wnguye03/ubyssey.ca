@@ -20,24 +20,14 @@ $(function () {
             $(this).get(0)
         )
     })
-});
-
-$(document).ready(function() {
-    $('#adblock-splash').each(function() {
-        React.render(
-            <AdblockSplash />,
-            $(this).get(0)
-        )
-    })
-    $('#cookie-disclaimer').each(function() {
-        React.render(
-            <CookieDisclaimer />,
-            $(this).get(0)
-        )
-    })
-});
-
-$(document).ready(function() {
+    React.render(
+        <AdblockSplash />,
+        document.getElementById('adblock-splash')
+    )
+    React.render(
+        <CookieDisclaimer />,
+        document.getElementById('cookie-disclaimer')
+    )
     $('.c-timeline').each(function() {
         React.render(
             <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
@@ -115,9 +105,6 @@ if ($('main.article').length) {
 
     function articleAds() {
         $(function () {
-            const paragraphs = $(`#article-${articleId} .article-content > p`);
-            const windowHeight = $(window).height();
-
             // Desktop
             if ($(window).width() >= 960) {
                 const sidebarHeight = $('.sidebar').find('[class*="c-widget"]').outerHeight(true) || 0
@@ -128,10 +115,17 @@ if ($('main.article').length) {
 
                 if (adSpace < 0) {
                     $('.sidebar').remove()
+                    console.warn('Insufficient space: sidebar removed', adSpace)
+                    return
+                }
+                if (adSpace < BOX_HEIGHT) {
+                    $('.sidebar').find('.o-advertisement--box').remove()
+                    console.warn('Insufficient space: box ads blocked', adSpace)
                     return
                 }
                 if (adSpace < SKYSCRAPER_HEIGHT) {
                     $('.sidebar').find('.o-advertisement--skyscraper').remove()
+                    console.warn('Insufficient space: skyscraper ads blocked', adSpace)
                     return
                 }
 
