@@ -46,6 +46,9 @@ class UbysseyTheme(object):
 
         breaking = ArticleHelper.get_breaking_news().first()
 
+        # determine if user is viewing from mobile
+        user_agent = get_user_agent(request)
+
         try:
             articles = {
                 'primary': frontpage[0],
@@ -78,7 +81,8 @@ class UbysseyTheme(object):
             'popular': popular,
             'breaking': breaking,
             'blog': blog,
-            'day_of_week': datetime.now().weekday()
+            'day_of_week': datetime.now().weekday(),
+            'is_mobile': user_agent.is_mobile
         }
 
         return render(request, 'homepage/base.html', context)
@@ -135,7 +139,7 @@ class UbysseyTheme(object):
             'popular': popular,
             'reading_time': ArticleHelper.get_reading_time(article),
             'explicit': ArticleHelper.is_explicit(article),
-            'breaking': breaking
+            'breaking': breaking,
         }
 
         template = article.get_template_path()

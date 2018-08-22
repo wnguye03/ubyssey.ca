@@ -4,7 +4,9 @@
 {% load dispatch_tags %}
 {% block content %}
 {% include 'headers/main.html' %}
-{% include 'headers/mobile.html' %}
+{% if is_mobile%}
+    {% include 'headers/mobile.html' %}
+{% endif %}
 {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
 {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 class='homepage' %}
 <main class="u-container u-container--large homepage">
