@@ -68,6 +68,7 @@ GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
+GS_USE_SIGNED_URLS = True
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),

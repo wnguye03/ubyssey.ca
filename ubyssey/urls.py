@@ -4,8 +4,7 @@ from django.conf.urls.static import static
 from django.shortcuts import render_to_response
 from django.contrib.staticfiles.views import serve as serve_static
 
-from dispatch.admin import urls as admin_urls
-from dispatch.api import urls as api_urls
+from dispatch.urls import admin_urls, api_urls, podcasts_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
@@ -30,6 +29,7 @@ advertise = AdvertiseTheme()
 urlpatterns = [
     url(r'^admin', include(admin_urls)),
     url(r'^api/', include(api_urls)),
+    url(r'^podcasts/', include(podcasts_urls)),
 
     url(r'^$', theme.home, name='home'),
     url(r'^search/$', theme.search, name='search'),
