@@ -1,7 +1,7 @@
 <div class="c-subsection">
   <h3 class="c-subsection__heading"><a href="{{ subsection.get_absolute_url }}">{{ subsection.name }}</a></h3>
   <div class="c-section__featured__articles u-flex--tablet">
-  {% for article in subsection.get_published_articles %}
+  {% for article in subsection.get_published_articles|slice:":3" %}
     {% include 'objects/articles/column.html' with article=article %}
   {% endfor %}
   </div>
