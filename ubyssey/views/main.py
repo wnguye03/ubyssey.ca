@@ -241,7 +241,7 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        subsections = SubsectionHelper.get_subsections(section)#Subsection.objects.filter(section=section, is_active=True)
+        subsections = SubsectionHelper.get_subsections(section)
 
         featured_subsection = None
 
