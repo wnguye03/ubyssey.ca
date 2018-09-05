@@ -242,6 +242,14 @@ class UbysseyTheme(object):
         query = request.GET.get('q', False)
 
         subsections = Subsection.objects.filter(section=section, is_active=True)
+        featured_subsections = []
+        for subsection in subsections:
+            most_recent_publish_date = subsection.get_published_articles().first().published_at
+            featured_subsections.append((subsection, most_recent_publish_date))
+        print('suup',featured_subsections)
+
+        featured_subsections = sorted(featured_subsections, key=lambda tup: tup[1])
+        print('suup',featured_subsections)
 
         featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
 

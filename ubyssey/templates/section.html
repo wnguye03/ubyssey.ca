@@ -12,7 +12,15 @@
     <div class="c-page__header">
       <h1 class="c-page__heading">{{ section.name }}</h1>
     </div>
-
+    {% if subsections %}
+      <div class="c-page__header__subsections">
+        <ul>
+          {% for subsection in subsections %}
+            <li><a href="{% url 'page' subsection.slug %}">{{ subsection.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
       <div class="c-section__featured__articles u-flex--tablet">
