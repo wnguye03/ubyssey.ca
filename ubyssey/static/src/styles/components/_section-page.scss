@@ -18,11 +18,10 @@
     list-style-type: none;
 
     li {
-      padding-left: 1rem;
       display: inline-block;
-
-      &:first-child {
-        padding-left: 0rem;
+      
+      &:not(:last-child):after {
+        content: "  |  ";
       }
     }
   }
