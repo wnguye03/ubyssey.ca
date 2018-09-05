@@ -316,7 +316,8 @@ class SubsectionHelper(object):
         }
 
         query = """
-            SELECT * FROM dispatch_subsection
+            SELECT DISTINCT dispatch_subsection.id
+            FROM dispatch_subsection
             INNER JOIN dispatch_article on dispatch_article.subsection_id = dispatch_subsection.id
             WHERE dispatch_subsection.is_active = 1
             AND dispatch_subsection.section_id = %(section_id)s
