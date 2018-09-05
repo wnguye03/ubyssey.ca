@@ -248,7 +248,7 @@ class UbysseyTheme(object):
         if subsections:
             featured_subsection = subsections[0]
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
+        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 

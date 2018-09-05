@@ -29,7 +29,7 @@
       {% endfor %}
       </div>
         {% if featured_subsection %}
-          {% include 'objects/subsection.html' with subsection=featured_subsection %}
+          {% include 'objects/subsection.html' with subsection=featured_subsection featured_article=featured_articles.first %}
         {% endif %}
     </div>
 

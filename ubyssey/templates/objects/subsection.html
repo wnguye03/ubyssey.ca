@@ -2,7 +2,9 @@
   <h3 class="c-subsection__heading"><a href="{{ subsection.get_absolute_url }}">{{ subsection.name|safe }}</a></h3>
   <div class="c-section__featured__articles u-flex--tablet">
   {% for article in subsection.get_published_articles|slice:":3" %}
-    {% include 'objects/articles/column.html' with article=article %}
+    {% ifnotequal article.id featured_article.id %}
+      {% include 'objects/articles/column.html' with article=article %}
+    {% endifnotequal %}
   {% endfor %}
   </div>
 </div>
