@@ -241,15 +241,15 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
+        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
+
         subsections = SubsectionHelper.get_subsections(section)
 
         featured_subsection = None
 
         if subsections:
             featured_subsection = subsections[0]
-
-        featured_article = Article.objects.filter(section=section, is_published=True).order_by('-published_at').first()
-        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
+            featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
@@ -275,10 +275,13 @@ class UbysseyTheme(object):
             },
             'section': section,
             'subsections': subsections,
-            'featured_subsection': featured_subsection,
+            'featured_subsection': {
+                'subsection': featured_subsection,
+                'articles' : featured_subsection_articles
+            },
             'type': 'section',
             'featured_articles': {
-                'first': featured_article,
+                'first': featured_articles[0],
                 'rest': featured_articles[1:4]
             },
             'articles': articles,

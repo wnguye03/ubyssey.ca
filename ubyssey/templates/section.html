@@ -28,8 +28,8 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
-        {% if featured_subsection %}
-          {% include 'objects/subsection.html' with subsection=featured_subsection featured_article=featured_articles.first %}
+        {% if featured_subsection.subsection %}
+          {% include 'objects/subsection.html' with featured_subsection=featured_subsection %}
         {% endif %}
     </div>
 

@@ -326,3 +326,8 @@ class SubsectionHelper(object):
         """
 
         return list(Subsection.objects.raw(query, context))
+
+    @staticmethod
+    def get_featured_subsection_articles(subsection, featured_articles):
+        featured_articles_ids = list(featured_articles.values_list('id', flat=True)[0:4])
+        return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3]
