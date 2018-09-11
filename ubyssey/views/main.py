@@ -246,7 +246,8 @@ class UbysseyTheme(object):
         subsections = SubsectionHelper.get_subsections(section)
 
         featured_subsection = None
-
+        featured_subsection_articles = None
+        
         if subsections:
             featured_subsection = subsections[0]
             featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
