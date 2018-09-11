@@ -316,12 +316,14 @@ class SubsectionHelper(object):
         }
 
         query = """
-            SELECT DISTINCT dispatch_subsection.id
+            SELECT dispatch_subsection.id, MAX(dispatch_article.published_at) as published_at
             FROM dispatch_subsection
             INNER JOIN dispatch_article on dispatch_article.subsection_id = dispatch_subsection.id
             WHERE dispatch_subsection.is_active = 1
             AND dispatch_subsection.section_id = %(section_id)s
             AND dispatch_article.is_published = 1
+            GROUP BY dispatch_subsection.id
+            ORDER BY published_at DESC
         """
 
         return list(Subsection.objects.raw(query, context))
