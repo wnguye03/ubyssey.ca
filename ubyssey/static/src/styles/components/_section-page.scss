@@ -3,6 +3,30 @@
   margin-bottom: 2rem;
 }
 
+.c-page__header__subsections {
+  ul {
+    // Structure
+    margin: 0;
+    padding-left:0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    // Border
+    border-top: 1px solid #e2e2e2;;
+    border-bottom: thin groove #C8C8C8;
+
+    list-style-type: none;
+
+    li {
+      display: inline-block;
+      
+      &:not(:last-child):after {
+        content: "  |  ";
+      }
+    }
+  }
+}
+
 .c-section__featured__articles {
 
   padding-bottom: 1rem;

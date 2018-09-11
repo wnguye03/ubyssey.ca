@@ -16,7 +16,7 @@ from dispatch.models import Article, Section, Subsection, Topic, Person
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -241,9 +241,15 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        subsections = Subsection.objects.filter(section=section, is_active=True)
+        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
+        subsections = SubsectionHelper.get_subsections(section)
+
+        featured_subsection = None
+
+        if subsections:
+            featured_subsection = subsections[0]
+            featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
@@ -269,6 +275,10 @@ class UbysseyTheme(object):
             },
             'section': section,
             'subsections': subsections,
+            'featured_subsection': {
+                'subsection': featured_subsection,
+                'articles' : featured_subsection_articles
+            },
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],

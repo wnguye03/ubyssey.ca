@@ -6,7 +6,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section
+from dispatch.models import Article, Page, Section, Subsection
 
 from ubyssey.events.models import Event
 
@@ -306,3 +306,28 @@ class PageHelper(object):
         """
 
         return Page.objects.get(request=request, slug=slug, is_published=True)
+
+class SubsectionHelper(object):
+
+    @staticmethod
+    def get_subsections(section):
+        context = {
+            'section_id': section.id
+        }
+
+        query = """
+            SELECT DISTINCT dispatch_subsection.id
+            FROM dispatch_subsection
+            INNER JOIN dispatch_article on dispatch_article.subsection_id = dispatch_subsection.id
+            WHERE dispatch_subsection.is_active = 1
+            AND dispatch_subsection.section_id = %(section_id)s
+            AND dispatch_article.is_published = 1
+            ORDER BY dispatch_article.published_at DESC
+        """
+
+        return list(Subsection.objects.raw(query, context))
+
+    @staticmethod
+    def get_featured_subsection_articles(subsection, featured_articles):
+        featured_articles_ids = list(featured_articles.values_list('id', flat=True)[0:4])
+        return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3]
