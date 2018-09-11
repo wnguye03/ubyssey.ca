@@ -322,7 +322,6 @@ class SubsectionHelper(object):
             WHERE dispatch_subsection.is_active = 1
             AND dispatch_subsection.section_id = %(section_id)s
             AND dispatch_article.is_published = 1
-            ORDER BY dispatch_article.published_at DESC
         """
 
         return list(Subsection.objects.raw(query, context))
