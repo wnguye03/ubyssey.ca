@@ -56,6 +56,7 @@ curl https://storage.googleapis.com/ubyssey/dropbox/ubyssey.sql | mysql -u root 
 #### 2: Perform django migrations on the docker container
 
 Connect to the ubyssey-dev docker container
+
 ```bash
 sudo docker exec -t -i ubyssey-dev bash
 ```
@@ -63,6 +64,7 @@ sudo docker exec -t -i ubyssey-dev bash
 Run migrations on the mysql database
 ```bash
 cd ubyssey.ca
+cp _settings/settings-local.py ubyssey/settings.py
 python manage.py migrate
 ```
 Once the database has been populated, and migrations have been applied,
