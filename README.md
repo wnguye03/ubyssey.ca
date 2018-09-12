@@ -2,6 +2,8 @@
 
 ## Installation
 
+[Docker Instructions](/SETUP_DOCKER.md)
+
 [Mac Instructions](https://code.ubyssey.ca/getting-started/installation/mac.html)
 
 [Windows Instructions](https://code.ubyssey.ca/getting-started/installation/windows.html)
