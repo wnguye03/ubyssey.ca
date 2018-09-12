@@ -71,6 +71,12 @@ Once the database has been populated, and migrations have been applied,
 you should be able to proceed to localhost:8000 and localhost:8000/admin
 to view ubyssey.ca and dispatch running from your ubyssey-dev docker container.
 
+##### Dispatch
+
+You can see Dispatch by going to `http://localhost:8000/admin/`
+
+Username is `volunteer@ubyssey.ca`, password is `ubyssey`
+
 #### 3: Extra docker info
 
 ##### When in doubt, you may need to clear docker's cache and remove all docker images.
