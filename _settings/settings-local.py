@@ -17,7 +17,7 @@ INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 ROOT_URLCONF = 'ubyssey.urls'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
 )
@@ -27,19 +27,33 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
+################ LOCAL MYSQL ##################
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ubyssey',
+#         'USER': 'root',
+#         'PASSWORD': 'ubyssey',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     },
+# }
+
+############## DOCKER MYSQL ###################
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ubyssey',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'ubyssey',
+        'HOST': 'db',
         'PORT': '3306',
     },
 }
+###############################################
 
 TEMPLATES += [
-    {
+ {
         'NAME': 'ubyssey',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
@@ -60,17 +74,11 @@ STATICFILES_DIRS += (
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
 SERVICE_WORKER_URL = '/service-worker.js'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media')
 
-FACEBOOK_CLIENT_ID = ''
-FACEBOOK_CLIENT_SECRET = ''
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'noreply@ubyssey.ca'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_SSL = True
-
-UBYSSEY_ADVERTISING_EMAIL = ''
+# Use in-memory file handler on Google App Engine
+FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
+FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440
