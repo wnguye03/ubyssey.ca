@@ -85,7 +85,7 @@ to view ubyssey.ca and dispatch running from your ubyssey-dev docker container.
 
 You can see Dispatch by going to `http://localhost:8000/admin/`
 
-Username is `volunteer@ubyssey.ca`, password is `ubyssey`
+Username is `volunteer@ubyssey.ca`, password is `volunteer`
 
 
 #### Extra docker info
