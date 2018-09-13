@@ -61,6 +61,8 @@ apt-get install curl
 curl https://storage.googleapis.com/ubyssey/dropbox/ubyssey.sql | mysql -u root ubyssey -p
 ```
 
+Your db container is up and running! Type `exit` to exit this container
+
 #### 2: Perform django migrations on the docker container
 
 Connect to the ubyssey-dev docker container
