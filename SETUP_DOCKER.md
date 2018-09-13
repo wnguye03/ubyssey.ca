@@ -85,7 +85,8 @@ You can see Dispatch by going to `http://localhost:8000/admin/`
 
 Username is `volunteer@ubyssey.ca`, password is `ubyssey`
 
-#### 3: Extra docker info
+
+#### Extra docker info
 
 ##### When in doubt, you may need to clear docker's cache and remove all docker images.
 
