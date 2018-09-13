@@ -9,6 +9,14 @@ https://docs.docker.com/
 
 *If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*
 
+Create `ubyssey-dev` folder at the location you want to code in, then run these commands
+
+```
+# Inside ubyssey-dev dir
+git clone https://github.com/ubyssey/ubyssey.ca.git
+git clone https://github.com/ubyssey/dispatch.git
+```
+
 cd into the root directory for both your ubyssey.ca and dispatch repos, this is */ubyssey-dev* if you followed the ubyssey Mac|Windows installation instructions, and run the following command
 
 ```bash
