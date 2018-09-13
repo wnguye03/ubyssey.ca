@@ -48,8 +48,8 @@ Setup the local database in ubyssey_db docker container.
 ```bash
 # password is ubyssey
 mysql -u root -p
-create database ubyssey
-quit
+create database ubyssey;
+quit;
 ```
 
 Populate the database.
