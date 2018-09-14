@@ -50,8 +50,7 @@ urlpatterns = [
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     # Advertising
-    url(r'^advertise/$', advertise.landing, name='advertise-landing'),
-    url(r'^advertise/new/$', advertise.new, name='advertise-new'),
+    url(r'^advertise/$', advertise.new, name='advertise-new'),
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),

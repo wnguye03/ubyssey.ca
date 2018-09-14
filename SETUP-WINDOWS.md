@@ -173,7 +173,7 @@ Note that this is the first edition of troubleshooting FAQ on Windows installati
 
 **Q: I encountered following warnings when trying to install gulp, what should I do?**
 
-SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents)
+SKIPPING OPTIONAL DEPENDENCY: fsadvertising@^1.0.0 (node_modules\chokidar\node_modules\fsevents)
 wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"ia32"})
 
 **A:** Ignore these warning messages. Fsevents was built for MacOS, this shouldn't have any actual impact on your installation.
