@@ -13,7 +13,7 @@ RUN apt-get update \
 COPY ./ubyssey.ca ./ubyssey.ca
 WORKDIR ./ubyssey.ca/
 RUN pip install -r requirements.txt
-# RUN cp _settings/settings-local.py ubyssey/settings.py
+RUN cp _settings/settings-local.py ubyssey/settings.py
 WORKDIR ./ubyssey/static
 RUN npm install && npm install -g gulp && npm rebuild node-sass && gulp build-dev
 CMD ["gulp"]
