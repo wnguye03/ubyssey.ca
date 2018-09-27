@@ -1,7 +1,6 @@
 from dispatch.theme import register
 from dispatch.theme.templates import Template
 from dispatch.theme.fields import SelectField, CharField, TextField, ArticleField, DateTimeField, InstructionField
-import json
 
 @register.template
 class Default(Template):
