@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS += [
     'ubyssey',
     'ubyssey.events',
+    'django_user_agents',
 ]
 
 ROOT_URLCONF = 'ubyssey.urls'
