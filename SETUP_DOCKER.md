@@ -1,11 +1,15 @@
 # Docker setup
+**READ ALL THESE INSTRUCTIONS CAREFULLY**
+
 *Note: the following setup was done on an ubunutu linux computer.*
 #### 0: Install Docker
 
-Install docker 18.06.x and docker-compose 1.10.x.
+Install docker 18.06.x
+(Follow the instructions here. This will require you to create a docker account if you do not already have one.
+https://docs.docker.com/)
 
-Follow the instructions here. This will require you to create a docker account if you do not already have one.
-https://docs.docker.com/
+Install docker-compose 1.10.x (If not already installed with docker)
+
 
 *If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*
 
@@ -41,7 +45,7 @@ docker ps
 
 Connect to the ubyssey_db docker container.
 ```bash
-sudo docker exec -t -i ubyssey_db bash
+docker exec -t -i ubyssey_db bash
 ```
 
 Setup the local database in ubyssey_db docker container.
@@ -66,7 +70,7 @@ curl https://storage.googleapis.com/ubyssey/dropbox/ubyssey.sql | mysql -u root 
 Connect to the ubyssey-dev docker container
 
 ```bash
-sudo docker exec -t -i ubyssey-dev bash
+docker exec -t -i ubyssey-dev bash
 ```
 
 Run migrations on the mysql database
@@ -97,6 +101,6 @@ docker system prune -a
 then you can rebuild your docker images using
 ``` bash
 # from ubyssey-dev dir
-sudo docker-compose up
+docker-compose up
 ```
 
