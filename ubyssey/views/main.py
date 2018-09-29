@@ -12,11 +12,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person
+from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -499,3 +499,29 @@ class UbysseyTheme(object):
 
     def notification(self, request):
         return render(request, 'notification_signup.html', {})
+
+    def podcasts(self, request):
+        try:
+            podcasts = Podcast.objects.all()
+        except:
+            raise Http404('We could not find any podcasts')
+
+        context = {
+            'podcasts': podcasts
+        }
+
+        return render(request, 'podcasts/podcasts.html', context)
+        
+    def podcast(self, request, slug=None):
+        try:
+            podcast = PodcastHelper.get_podcast(request, slug)
+        except:
+            raise Http404('Podcast could not be found.')
+
+        context = {
+            'title': podcast.title,
+            'description': podcast.description,
+            'author': podcast.author
+        }
+
+        return render(request, 'podcasts/podcast.html', context)

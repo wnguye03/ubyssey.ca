@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header %}
+    {% include 'headers/topbar.html' %}
+    {% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+    <main class="page">
+        <div class="u-container u-container--content u-container--padded">
+            <h1>Podcast Shows</h1>
+        </div>
+        <div class="u-container">
+            <div class="row">
+                <ol class=" podcast-list">
+                        {% for podcast in podcasts %}
+                        <li><h4 class="headline"><a href="{{ podcast.get_absolute_url }}?ref=popular&dur=week">{{ podcast.title|safe }}</a></h4></li>
+                        {% endfor %}
+                </ol>
+                  {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

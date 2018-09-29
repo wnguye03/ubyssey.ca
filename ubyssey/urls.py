@@ -61,6 +61,9 @@ urlpatterns = [
     # Beta-features
     # url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
 
+    # Podcasts
+    url(r'^podcast/$', theme.podcasts, name='podcast-landing'),
+
     # Events
     url(r'^events/', include(events_urls)),
     url(r'^api/events/', include(event_api_urls)),
