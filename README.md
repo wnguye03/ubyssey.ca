@@ -22,3 +22,6 @@ Once you have your local environment configured, follow [the steps here](https:/
 
 You can open issues for bugs you've found or features you think are missing. You can also submit pull requests to this repository. We welcome volunteers to help make student journalism better! Head over to the [Getting Started Guide](https://code.ubyssey.ca/getting-started) to get stared. Hope to see you at one of our [Office Hours](https://code.ubyssey.ca/office-hour)!
 
+## License
+
+GNU General Public License v2.0
