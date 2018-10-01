@@ -7,6 +7,7 @@ import AdblockSplash from './components/AdblockSplash.jsx'
 import { Galleries } from './components/Gallery'
 import Timeline from './components/Timeline.jsx'
 import CookieDisclaimer from './components/CookieDisclaimer.jsx'
+import Episode from './components/Podcast/Episode.jsx'
 
 window.articleHeader = false;
 
@@ -30,7 +31,15 @@ $(function () {
     )
     $('.c-timeline').each(function() {
         React.render(
-            <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
+            <Timeline   id={$(this).data('currentArticleId')}
+                        title={$(this).data('timelineTitle')} 
+                        nodes={$(this).data('nodes')} />,
+            $(this).get(0)
+        )
+    })
+    $('.c-podcast-episode').each(function() {
+        React.render(
+            <Episode    file={$(this).data('file')} />,
             $(this).get(0)
         )
     })
