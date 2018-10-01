@@ -1,8 +1,14 @@
 # Ubyssey Dispatch Theme
 
+![ubyssey_top](https://user-images.githubusercontent.com/9669739/46310069-2e177400-c573-11e8-8b94-bf567daf5f45.png) 
+
+Made with :heart: by [_The Ubyssey_](https://www.ubyssey.ca/), the University of British Columbia's student newspaper since 1918.
+
+For overall documentation, head over to [code.ubyssey.ca](https://code.ubyssey.ca)
+
 ## Installation
 
-[Docker Instructions](/SETUP_DOCKER.md)
+[Docker Instructions](https://code.ubyssey.ca/getting-started/installation/docker.html)
 
 [Mac Instructions](https://code.ubyssey.ca/getting-started/installation/mac.html)
 
@@ -10,56 +16,9 @@
 
 ## Development
 
-Once you have your local environment configured, follow these steps to start the server for development:
+Once you have your local environment configured, follow [the steps here](https://code.ubyssey.ca/installation/running-the-server) to start the server for development
 
-### New way with Docker
-  navigate to your ubyssey-dev directory.
-  ```bash
-    docker-compose up
-  ```
-  If on linux you may need to run the above command with sudo
-  
-  That should be it, happy hacking!
-  
-### Old way without Docker
+## Contributing 
 
-#### Mac OSX
+You can open issues for bugs you've found or features you think are missing. You can also submit pull requests to this repository. We welcome volunteers to help make student journalism better! Head over to the [Getting Started Guide](https://code.ubyssey.ca/getting-started) to get stared. Hope to see you at one of our [Office Hours]!(https://code.ubyssey.ca/office-hour)
 
-```bash
-# Start the MySQL server
-mysql.server start
-
-# If that doesn't work, try:
-brew services start mysql
-
-# Activate your virtualenv (if you're using one)
-cd ubyssey-dev
-source bin/activate
-
-# Run the server!
-cd ubyssey.ca
-python manage.py runserver
-
-# In a separate terminal tab, start the gulp process. It will watch for changes to the source files and automatically re-build the static files during development.
-cd ubyssey.ca/ubyssey/static/
-gulp
-```
-
-#### Windows
-
-First, make sure your MySQL server is running!
-
-```bash
-
-# Activate your virtualenv (if you're using one)
-cd ubyssey-dev
-.\Scripts\activate
-
-# Run the server!
-cd ubyssey.ca
-python manage.py runserver
-
-# In a separate command prompt window, start the gulp process. It will watch for changes to the source files and automatically re-build the static files during development.
-cd ubyssey.ca/ubyssey/static/
-gulp
-```
