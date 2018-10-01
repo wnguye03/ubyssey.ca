@@ -1,4 +1,5 @@
 dispatch==0.5.12
+google-cloud-storage
 git+git://github.com/ubyssey/django-google-storage.git
 django-gae-backends
 django-canonical-domain

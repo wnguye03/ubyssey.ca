@@ -12,7 +12,18 @@
 
 Once you have your local environment configured, follow these steps to start the server for development:
 
-### Mac OSX
+### New way with Docker
+  navigate to your ubyssey-dev directory.
+  ```bash
+    docker-compose up
+  ```
+  If on linux you may need to run the above command with sudo
+  
+  That should be it, happy hacking!
+  
+### Old way without Docker
+
+#### Mac OSX
 
 ```bash
 # Start the MySQL server
@@ -34,7 +45,7 @@ cd ubyssey.ca/ubyssey/static/
 gulp
 ```
 
-### Windows
+#### Windows
 
 First, make sure your MySQL server is running!
 

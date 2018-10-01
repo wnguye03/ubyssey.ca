@@ -10,7 +10,7 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 SECRET_KEY = Secrets.get('SECRET_KEY')
 NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
-VERSION = '1.4.59'
+VERSION = '1.4.66'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS += [
     'ubyssey',
     'ubyssey.events',
+    'django_user_agents',
 ]
 
 ROOT_URLCONF = 'ubyssey.urls'

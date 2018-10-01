@@ -16,7 +16,6 @@ script:
 - gulp build
 after_success:
 # clean up node_modules
-- rm -rf node_modules
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
 - mv _settings/settings-dpl.py ubyssey/settings.py
@@ -26,7 +25,7 @@ after_success:
 # replace deploy settings with production settings
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
-- rm -rf .git/
+- rm -rf .git/ ubyssey/static/
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI

@@ -12,6 +12,7 @@ __pycache__/
 /lib/
 
 node_modules/
+yarn.lock
 
 # Ignore Mac specific empty file
 .DS_Store
