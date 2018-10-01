@@ -6,7 +6,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section, Subsection, Podcast
+from dispatch.models import Article, Page, Section, Subsection, Podcast, PodcastEpisode
 
 from ubyssey.events.models import Event
 
@@ -334,6 +334,14 @@ class SubsectionHelper(object):
         return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3]
 
 class PodcastHelper(object):
+    @staticmethod
+    def get_frontpage_podcast_episodes():
+
+        results = {}
+
+        results = PodcastEpisode.objects.all()
+
+        return results
     @staticmethod
     def get_podcast(request, slug):
         """If the url requested includes the querystring parameters 'version' and 'preview_id',

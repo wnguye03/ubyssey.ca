@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+{% load humanize %}
+{% load staticfiles %}
+{% block header %}
+{% include 'headers/topbar.html' with section=section.slug %}
+{% include 'headers/mobile.html' %}
+{% endblock %}
+{% block content %}
+<main class="subsection" data-id="{{ subsection.id }}" data-type="{{ type }}">
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
+  <div class="u-container u-container--padded">
+    <div class="c-page__header">
+      <h1 class="c-page__heading">{{ podcast.title|safe }}</h1>
+    </div>
+    {% if subsection.description %}
+      <p class="c-subsection__description">{{ subsection.description|safe }}</p>
+    {% endif %}
+    <ul class='c-podcast-episode-list'>
+        {% for episode in episodes %}
+          {% include 'objects/podcasts/episode.html' with episode=episode %}
+        {% endfor %}
+    </ul>
+
+
+    <h3 class="c-page__section">Archive</h3>
+    {% include 'objects/archive.html' %}
+
+  </div>
+</main>
+{% endblock %}

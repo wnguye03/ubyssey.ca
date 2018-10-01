@@ -1,0 +1,6 @@
+<li>
+    <img src="{{ episode.image.get_thumbnail_url }}" />
+    <h3 class="headline">{{ episode.title|safe }}</h3>
+    <p class="snippet">{{ episode.description|safe }}</p>
+    <div class="c-podcast-episode" data-id="{{ episode.id }}" data-file="{{episode.get_file_url}}"></div>
+</li>

@@ -44,6 +44,10 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        podcast = Podcast.objects.all()[0]
+
+        episodes = PodcastEpisode.objects.all()
+
         breaking = ArticleHelper.get_breaking_news().first()
 
         # determine if user is viewing from mobile
@@ -78,6 +82,13 @@ class UbysseyTheme(object):
             'title': '%s - UBC\'s official student newspaper' % self.SITE_TITLE,
             'articles': articles,
             'sections': sections,
+            'podcast': {
+                'title': podcast.title,
+                'episodes': {
+                    'first': episodes[0],
+                    'rest': episodes[1:]
+                }
+            },
             'popular': popular,
             'breaking': breaking,
             'blog': blog,
@@ -500,28 +511,17 @@ class UbysseyTheme(object):
     def notification(self, request):
         return render(request, 'notification_signup.html', {})
 
-    def podcasts(self, request):
-        try:
-            podcasts = Podcast.objects.all()
-        except:
-            raise Http404('We could not find any podcasts')
-
-        context = {
-            'podcasts': podcasts
-        }
-
-        return render(request, 'podcasts/podcasts.html', context)
-        
     def podcast(self, request, slug=None):
         try:
-            podcast = PodcastHelper.get_podcast(request, slug)
+            podcast = Podcast.objects.filter(slug=slug)[0]
         except:
-            raise Http404('Podcast could not be found.')
+            raise Http404('We could not find the podcast')
 
+        episodes = PodcastEpisode.objects.filter(podcast_id=podcast.id)
         context = {
-            'title': podcast.title,
-            'description': podcast.description,
-            'author': podcast.author
+            'podcast': podcast,
+            'episodes': episodes
         }
 
         return render(request, 'podcasts/podcast.html', context)
+        
