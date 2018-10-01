@@ -63,3 +63,7 @@ python manage.py runserver
 cd ubyssey.ca/ubyssey/static/
 gulp
 ```
+
+## Office hours
+
+Our office hours for 2018 is 12:30 - 2:00 every Thursday.
