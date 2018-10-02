@@ -40,7 +40,14 @@ $(function () {
     
     $('.c-podcast-episode').each(function() {
         React.render(
-            <Episode file={$(this).data('file')} />,
+            <Episode    author = {$(this).data('author')}
+                        description = {$(this).data('description')}
+                        file = {$(this).data('file')}
+                        image = {$(this).data('image')}
+                        publishedAt = {$(this).data('published_at')}
+                        title = {$(this).data('title')}
+                        file = {$(this).data('file')}
+                        />,
             $(this).get(0)
         )
     })
