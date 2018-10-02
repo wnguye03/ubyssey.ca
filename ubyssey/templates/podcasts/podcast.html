@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load staticfiles %}
 {% block header %}
-{% include 'headers/topbar.html' with section=section.slug %}
+{% include 'headers/topbar.html' with section='podcast' %}
 {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="c-page__header">
       <h1 class="c-page__heading">{{ podcast.title|safe }}</h1>
     </div>
-    {% if subsection.description %}
+    {% if podcast.description %}
       <p class="c-subsection__description">{{ subsection.description|safe }}</p>
     {% endif %}
     <ul class='c-podcast-episode-list'>

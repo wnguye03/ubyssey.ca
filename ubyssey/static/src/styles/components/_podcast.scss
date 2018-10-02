@@ -1,0 +1,18 @@
+.c-episode-container {
+  max-width: 600px;
+
+  .c-episode-flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .image{
+      width: 240px;
+      height: 180px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .description {
+      
+    }
+  }
+}

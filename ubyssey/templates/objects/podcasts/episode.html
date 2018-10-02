@@ -1,15 +1,19 @@
-<div class="c-episode" >
-        <h3>{{episode.title}}</h3>
-        <div class='right'>
-            <img src="{{episode.image.get_thumbnail_url}}"" />
+<div class="c-episode-container" >
+    <a name="{{episode.title}}" ></a> 
+    <h3>{{episode.title}}</h3>
+    <div class='c-episode-flex-wrapper'>
+        <div class='image' style="background-image: url('{{episode.image.get_thumbnail_url}}')" ></div>
+        <div class='description'>
+            {{episode.description}}
         </div>
-        <p>{{episode.description}}</p>
-        <div class='c-podcast-dropdown'>
-            <div class="c-podcast-episode"
-                data-file="{{ episode.get_file_url }}" > 
-                    Loading Episode...
-            </div>
-        </div>
-       
     </div>
+
+    
+    <div class='c-podcast-dropdown'>
+        <div class="c-podcast-episode"
+            data-file="{{ episode.get_file_url }}" > 
+                Loading Episode...
+        </div>
+    </div>
+</div>
 

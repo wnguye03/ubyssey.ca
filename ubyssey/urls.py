@@ -70,7 +70,8 @@ urlpatterns = [
 
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
-    url(r'^podcast/(?P<slug>[-\w]+)/', theme.podcast, name='podcast'),
+    # url(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcast'),
+    url(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcast'),
     url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
 
 ]

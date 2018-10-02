@@ -37,9 +37,10 @@ $(function () {
             $(this).get(0)
         )
     })
+    
     $('.c-podcast-episode').each(function() {
         React.render(
-            <Episode    file={$(this).data('file')} />,
+            <Episode file={$(this).data('file')} />,
             $(this).get(0)
         )
     })
