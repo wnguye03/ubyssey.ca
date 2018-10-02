@@ -6,56 +6,53 @@ class Episode extends React.Component {
     super(props);
     this.state = {
       open: window.location ? window.location.hash.includes(props.title) : false,
-      playing: false
+      playing: false,
+      maxHeight: 1000
     }
   }
 
   handleClick() {
     this.setState(prevstate => ({
-      open: !prevstate.open
-    }))
-  }
-
-  handlePlayPause(e) {
-    console.log(e)
-    this.setState(prevstate => ({
-      playing: !prevstate.playing
+      open: !prevstate.open,
+      maxHeight: document.getElementById(this.props.title.replace(/ /g, '-')).clientHeight
     }))
   }
 
   render() {
     const {author, description, file, image, publishedAt, title} = this.props
-    const openStyle = this.state.open ? {flexDirection: 'column'} : {flexDirection: 'row'}
+    const openStyle = this.state.open ? {maxHeight: this.state.maxHeight} : {maxHeight: '120px'}
     return (
-      <div className="c-episode-container" >
+      <div className="c-episode-container" style={openStyle}>
         <a name={title} ></a> 
-        <div onClick={() => this.handleClick()}>
-          <div className='c-episode-flex-wrapper-top'>
-              <h3>{title}</h3>
-              <h4>{publishedAt}</h4>
+        <div id={this.props.title.replace(/ /g, '-')}>
+          <div onClick={() => this.handleClick()}>
+            <div className='c-episode-flex-wrapper-top'>
+                <h3>{title}</h3>
+                <h4>{publishedAt}</h4>
+            </div>
+            <div className={this.state.open ? 'c-episode-flex-wrapper-mid-col' : 'c-episode-flex-wrapper-mid-row'}>
+                
+                <div className='description'>
+                    {description}
+                </div>
+            </div>
           </div>
-          <div className={this.state.open ? 'c-episode-flex-wrapper-mid-col' : 'c-episode-flex-wrapper-mid-row'}>
-              
-              <div className='description'>
-                  {description}
-              </div>
-          </div>
-        </div>
-        <div className='c-episode-obscure'>
-          { this.state.open &&  
+          <div className='c-episode-obscure'>
+            { this.state.open &&  
+                <div className='c-episode-flex-wrapper-bottom'>
+                  <div className='image' style={{backgroundImage: "url(" + image + ")"}} ></div>
+                  <audio controls >
+                    <source src={file} />
+                  </audio>
+                </div>
+            } { !this.state.open &&
               <div className='c-episode-flex-wrapper-bottom'>
-                <div className='image' style={{backgroundImage: "url(" + image + ")"}} ></div>
-                <audio controls >
-                  <source src={file} />
+                <div className='image'/>
+                <audio controls>
                 </audio>
               </div>
-          } { !this.state.open &&
-            <div className='c-episode-flex-wrapper-bottom'>
-              <div className='image'/>
-              <audio controls>
-              </audio>
-            </div>
-          }
+            }
+          </div>
         </div>
       </div>
 
