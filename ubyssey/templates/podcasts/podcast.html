@@ -14,7 +14,10 @@
       <h1 class="c-page__heading">{{ podcast.title|safe }}</h1>
     </div>
     {% if podcast.description %}
-      <p class="c-subsection__description">{{ subsection.description|safe }}</p>
+      <div class="c-podcast-decsription">{{ podcast.description|safe }}</div>
+    {% endif %}
+    {% if podcast.image %}
+      <div class="c-podcast-image" style="background-image: url('{{podcast.image.get_medium_url}}');"></div>
     {% endif %}
     <ul class='c-podcast-episode-list'>
         {% for episode in episodes %}

@@ -6,7 +6,8 @@
     data-file="{{episode.get_file_url}}"
     data-image="{{episode.image.get_medium_url}}"
     data-published_at="{{episode.published_at}}"
-    data-title="{{ episode.title }}" > 
+    data-title="{{ episode.title }}" 
+    data-slug="{{episode.get_slug_from_title}}"> 
         Loading Episode...
 </div>
 

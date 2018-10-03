@@ -45,8 +45,8 @@ $(function () {
                         file = {$(this).data('file')}
                         image = {$(this).data('image')}
                         publishedAt = {$(this).data('published_at')}
+                        slug = {$(this).data('slug')}
                         title = {$(this).data('title')}
-                        file = {$(this).data('file')}
                         />,
             $(this).get(0)
         )
