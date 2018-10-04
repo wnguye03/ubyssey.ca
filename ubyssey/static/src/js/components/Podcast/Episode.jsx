@@ -26,7 +26,7 @@ class Episode extends React.Component {
 
   render() {
     const {author, description, file, image, publishedAt, slug, title} = this.props
-    const openStyle = this.state.open ? {maxHeight: this.state.maxHeight} : {maxHeight: '120px'}
+    const openStyle = this.state.open ? {maxHeight: this.state.maxHeight} : {maxHeight: '150px'}
     return (
       <div className="c-episode-container" style={openStyle}>
         <a name={slug} ></a> 
@@ -36,9 +36,9 @@ class Episode extends React.Component {
               <h4>{publishedAt}</h4>
           </div>
           <div className={this.state.open ? 'c-episode-flex-wrapper-mid-col' : 'c-episode-flex-wrapper-mid-row'}>
-              <div className='description'>
+              <p className='description'>
                   {description}
-              </div>
+              </p>
           </div>
           <div className='c-episode-content'>
             { this.state.open &&  
