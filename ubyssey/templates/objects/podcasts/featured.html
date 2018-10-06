@@ -1,7 +1,7 @@
 <article class="o-article o-article--featured{% if padded %} o-article--padded{% endif %}">
   {% if episode.image %}
   <div class="o-article__left">
-    <a class="o-article__image" href="{{ episode.get_absolute_url }}">
+    <a class="o-article__image" href="{{ episode_url }}">
       <img src="{{ episode.image.get_medium_url }}" />
     </a>
   </div>
@@ -9,7 +9,7 @@
   <div class="o-article__right">
     <div class="o-article__meta">
       <h3 class="o-article__headline">
-        <a href="{{ episode.get_absolute_url }}">{{ episode.title|safe }}</a>
+        <a href="{{ episode_url }}">{{ episode.title|safe }}</a>
       </h3>
       <div class="o-article__byline">
         <span class="o-article__author">By {{ episode.author|safe }}</span>
@@ -17,6 +17,6 @@
         <span class="o-article__published">{{ episode.published_at }}</span>
       </div>
     </div>
-    <p class="o-article__snippet">{{ episdoe.description|safe }}</p>
+    <p class="o-article__snippet__podcast__featured">{{ episode.description|safe }}</p>
   </div>
 </article>

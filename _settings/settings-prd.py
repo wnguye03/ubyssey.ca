@@ -70,6 +70,8 @@ GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 
+LOCAL_DEV = False
+
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )

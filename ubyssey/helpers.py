@@ -2,11 +2,12 @@ import datetime
 import pytz
 from random import randint, choice
 
+from django.conf import settings
 from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section, Subsection, Podcast, PodcastEpisode
+from dispatch.models import Article, Page, Section, Subsection, Podcast
 
 from ubyssey.events.models import Event
 
@@ -335,18 +336,13 @@ class SubsectionHelper(object):
 
 class PodcastHelper(object):
     @staticmethod
-    def get_frontpage_podcast_episodes():
-
-        results = {}
-
-        results = PodcastEpisode.objects.all()
-
-        return results
+    def get_podcast_episode_url(podcast_id, id):
+        """ Return the podcast episode url"""
+        podcast = Podcast.objects.get(id=podcast_id)
+        return "%spodcast/%s#%s" % (settings.BASE_URL, podcast.slug, id)
+    
     @staticmethod
-    def get_podcast(request, slug):
-        """If the url requested includes the querystring parameters 'version' and 'preview_id',
-        get the article with the specified version and preview_id.
-
-        Otherwise, get the published version of the article.
-        """
-        return Podcast.objects.get(request=request, slug=slug, is_published=True)
+    def get_podcast_url(id=None):
+        """ Return the podcast url"""
+        return "%spodcast/episodes" % (settings.BASE_URL)
+    

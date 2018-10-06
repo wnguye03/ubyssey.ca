@@ -45,8 +45,13 @@ class UbysseyTheme(object):
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
         podcast = Podcast.objects.all()[0]
+        podcast_url = PodcastHelper.get_podcast_url(podcast.id)
 
-        episodes = PodcastEpisode.objects.all()
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id)
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+        episodes = zip(episode_list, episode_urls)
 
         breaking = ArticleHelper.get_breaking_news().first()
 
@@ -84,6 +89,7 @@ class UbysseyTheme(object):
             'sections': sections,
             'podcast': {
                 'title': podcast.title,
+                'url': podcast_url,
                 'episodes': {
                     'first': episodes[0],
                     'rest': episodes[1:]
@@ -519,9 +525,18 @@ class UbysseyTheme(object):
         except:
             raise Http404('We could not find the podcast')
 
-        episodes = PodcastEpisode.objects.filter(podcast_id=podcast.id)
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id)
+
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+
+        episodes = zip(episode_list, episode_urls)
+
+        url = PodcastHelper.get_podcast_url(id=podcast.id)
         context = {
             'podcast': podcast,
+            'url': url,
             'episodes': episodes
         }
 

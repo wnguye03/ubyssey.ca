@@ -21,8 +21,8 @@
     </div>
 
     <div class='c-podcast-episode-list'>
-        {% for episode in episodes %}
-          {% include 'objects/podcasts/episode.html' with episode=episode %}
+        {% for episode_tuple in episodes %}
+          {% include 'objects/podcasts/episode.html' with episode=episode_tuple.0 episode_url=episode_tuple.1 %}
         {% endfor %}
     </div>
 

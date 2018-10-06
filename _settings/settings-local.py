@@ -24,6 +24,7 @@ MIDDLEWARE = (
 
 DEBUG = True
 USE_TZ = True
+LOCAL_DEV = True
 
 TIME_ZONE = 'America/Vancouver'
 
@@ -74,6 +75,9 @@ STATICFILES_DIRS += (
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+
+GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 SERVICE_WORKER_URL = '/service-worker.js'
 

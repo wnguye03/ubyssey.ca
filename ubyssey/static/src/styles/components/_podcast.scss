@@ -1,5 +1,15 @@
 $show-more-height: 60px;
 
+.o-article__snippet__podcast__featured {
+  @extend .o-article__snippet;
+  max-height: 120px;
+  overflow: hidden;
+}
+.o-article__snippet__podcast__column {
+  @extend .o-article__snippet;
+  max-height: 80px;
+  overflow: hidden;
+}
 .u-podcast-container {
   // Structure
   width: 100%;
@@ -125,15 +135,19 @@ $show-more-height: 60px;
     // Structure
     position: absolute;
     display: flex;
-    align-items:center;
+    align-items:flex-end;
     justify-content: center;
     width: 100%;
     height: $show-more-height;
     bottom: 0;
+    padding-bottom:1rem;
     // Text
     font-size: 1.3rem;
     // Background
-    background: linear-gradient(to bottom, #ffffff00 0%, #ffffff 70%);
+    background: linear-gradient(to bottom, #ffffff00 0%, #ffffff 66%);
+    span {
+      padding-top: 1rem;
+    }
     &:hover {
       // Text
       color: $color-accent-blue;
