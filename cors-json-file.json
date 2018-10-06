@@ -1,8 +1,0 @@
-[
-  {
-    "maxAgeSeconds": 3600, 
-    "method": ["GET", "PUT", "HEAD", "DELETE"], 
-    "origin": ["http://beta.ubyssey.ca", "https://www.ubyssey.ca", "http://www.ubyssey.ca", "http://localhost:8000"], 
-    "responseHeader": ["Content-Type"]
-  }
-]

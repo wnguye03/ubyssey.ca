@@ -519,8 +519,6 @@ class UbysseyTheme(object):
 
     def podcast(self, request, slug=None):
         try:
-            # this is for when we have more than one podcast show
-            # podcast = Podcast.objects.filter(slug=slug)[0]
             podcast = Podcast.objects.all()[0]
         except:
             raise Http404('We could not find the podcast')
