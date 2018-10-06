@@ -47,7 +47,7 @@ class UbysseyTheme(object):
         podcast = Podcast.objects.all()[0]
         podcast_url = PodcastHelper.get_podcast_url(podcast.id)
 
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id)
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
         episode_urls = []
         for episode in episode_list:
             episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
@@ -523,7 +523,7 @@ class UbysseyTheme(object):
         except:
             raise Http404('We could not find the podcast')
 
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id)
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
 
         episode_urls = []
         for episode in episode_list:
