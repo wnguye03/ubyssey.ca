@@ -10,8 +10,6 @@ __pycache__/
 
 # local GAE
 /lib/   
-gcs-local.json
-cors-json-file.json
 
 node_modules/
 yarn.lock
