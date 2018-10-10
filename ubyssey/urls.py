@@ -26,7 +26,19 @@ guide = GuideTheme()
 magazine = MagazineTheme()
 advertise = AdvertiseTheme()
 
-urlpatterns = [
+urlpatterns = []
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [url(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
+
+urlpatterns += [
     url(r'^admin', include(admin_urls)),
     url(r'^api/', include(api_urls)),
     url(r'^podcasts/', include(podcasts_urls)),
@@ -74,6 +86,3 @@ urlpatterns = [
 
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += [url(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
