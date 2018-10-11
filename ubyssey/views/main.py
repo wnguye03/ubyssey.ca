@@ -44,14 +44,27 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
-        podcast = Podcast.objects.all()[0]
-        podcast_url = PodcastHelper.get_podcast_url(podcast.id)
+        try:
+            podcast = Podcast.objects.all()[:1].get()
+            podcast_url = PodcastHelper.get_podcast_url(podcast.id)
+        except:
+            podcast = None
+            podcast_url = None
 
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
+        episode_list = None    
         episode_urls = []
-        for episode in episode_list:
-            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-        episodes = zip(episode_list, episode_urls)
+        episodes = None
+
+        if (podcast):
+            try:
+                episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
+            except: 
+                episode_list = None
+            if episode_list:    
+                for episode in episode_list:
+                    episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+            
+            episodes = zip(episode_list, episode_urls)
 
         breaking = ArticleHelper.get_breaking_news().first()
 
@@ -77,6 +90,10 @@ class UbysseyTheme(object):
 
         title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
 
+        podcast_obj = None
+        if podcast and episode_list:
+            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:]} }
+
         context = {
             'title': title,
             'meta': {
@@ -87,14 +104,7 @@ class UbysseyTheme(object):
             'title': '%s - UBC\'s official student newspaper' % self.SITE_TITLE,
             'articles': articles,
             'sections': sections,
-            'podcast': {
-                'title': podcast.title,
-                'url': podcast_url,
-                'episodes': {
-                    'first': episodes[0],
-                    'rest': episodes[1:]
-                }
-            },
+            'podcast': podcast_obj,
             'popular': popular,
             'breaking': breaking,
             'blog': blog,
@@ -519,7 +529,7 @@ class UbysseyTheme(object):
 
     def podcast(self, request, slug=None):
         try:
-            podcast = Podcast.objects.all()[0]
+            podcast = Podcast.objects.all()[:1].get()
         except:
             raise Http404('We could not find the podcast')
 
