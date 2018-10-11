@@ -12,11 +12,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person
+from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -44,6 +44,28 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        try:
+            podcast = Podcast.objects.all()[:1].get()
+            podcast_url = PodcastHelper.get_podcast_url(podcast.id)
+        except:
+            podcast = None
+            podcast_url = None
+
+        episode_list = None    
+        episode_urls = []
+        episodes = None
+
+        if (podcast):
+            try:
+                episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
+            except: 
+                episode_list = None
+            if episode_list:    
+                for episode in episode_list:
+                    episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+            
+            episodes = zip(episode_list, episode_urls)
+
         breaking = ArticleHelper.get_breaking_news().first()
 
         # determine if user is viewing from mobile
@@ -68,6 +90,10 @@ class UbysseyTheme(object):
 
         title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
 
+        podcast_obj = None
+        if podcast and episode_list:
+            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:]} }
+
         context = {
             'title': title,
             'meta': {
@@ -78,6 +104,7 @@ class UbysseyTheme(object):
             'title': '%s - UBC\'s official student newspaper' % self.SITE_TITLE,
             'articles': articles,
             'sections': sections,
+            'podcast': podcast_obj,
             'popular': popular,
             'breaking': breaking,
             'blog': blog,
@@ -499,3 +526,27 @@ class UbysseyTheme(object):
 
     def notification(self, request):
         return render(request, 'notification_signup.html', {})
+
+    def podcast(self, request, slug=None):
+        try:
+            podcast = Podcast.objects.all()[:1].get()
+        except:
+            raise Http404('We could not find the podcast')
+
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
+
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+
+        episodes = zip(episode_list, episode_urls)
+
+        url = PodcastHelper.get_podcast_url(id=podcast.id)
+        context = {
+            'podcast': podcast,
+            'url': url,
+            'episodes': episodes
+        }
+
+        return render(request, 'podcasts/podcast.html', context)
+        

@@ -2,11 +2,12 @@ import datetime
 import pytz
 from random import randint, choice
 
+from django.conf import settings
 from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section, Subsection
+from dispatch.models import Article, Page, Section, Subsection, Podcast
 
 from ubyssey.events.models import Event
 
@@ -332,3 +333,16 @@ class SubsectionHelper(object):
     def get_featured_subsection_articles(subsection, featured_articles):
         featured_articles_ids = list(featured_articles.values_list('id', flat=True)[0:4])
         return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3]
+
+class PodcastHelper(object):
+    @staticmethod
+    def get_podcast_episode_url(podcast_id, id):
+        """ Return the podcast episode url"""
+        podcast = Podcast.objects.get(id=podcast_id)
+        return "%spodcast/%s#%s" % (settings.BASE_URL, podcast.slug, id)
+    
+    @staticmethod
+    def get_podcast_url(id=None):
+        """ Return the podcast url"""
+        return "%spodcast/episodes" % (settings.BASE_URL)
+    
