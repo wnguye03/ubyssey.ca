@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 import pytz
 from random import randint, choice
 
@@ -258,7 +259,7 @@ class ArticleHelper(object):
     @staticmethod
     def get_breaking_news():
         """Returns breaking news stories"""
-        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=datetime.datetime.now())
+        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=timezone.now())
 
     @staticmethod
     def get_trending():
