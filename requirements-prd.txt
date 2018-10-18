@@ -1,4 +1,4 @@
-dispatch==0.5.20
+dispatch==0.5.21
 google-cloud-storage
 git+git://github.com/ubyssey/django-google-storage.git
 django-gae-backends
