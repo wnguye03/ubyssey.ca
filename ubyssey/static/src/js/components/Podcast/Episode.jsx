@@ -19,8 +19,7 @@ class Episode extends React.Component {
   }
 
   render() {
-    const {description, image, publishedAt, id, title} = this.props
-    const file = this.props.file.slice(-1) == '/' ? this.props.file.slice(0, -1) : this.props.file
+    const {description, file, image, publishedAt, id, title} = this.props
     const openStyle = this.state.open ? {maxHeight: this.state.maxHeight} : {maxHeight: '150px'}
     return (
       <div className="c-episode-container" style={openStyle}>
