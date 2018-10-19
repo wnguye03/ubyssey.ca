@@ -549,4 +549,7 @@ class UbysseyTheme(object):
         }
 
         return render(request, 'podcasts/podcast.html', context)
+    
+    def donate(self, request):
+      return render(request, 'donate.html')
         

@@ -1,0 +1,46 @@
+{% load staticfiles %}
+{% load dispatch_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Ubyssey Centennial</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link rel="icon" type="image/png" href="{% static 'images/favicons/favicon-32x32.png' %}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{% static 'images/favicons/android-chrome-192x192.png' %}" sizes="192x192">
+  <link rel="icon" type="image/png" href="{% static 'images/favicons/favicon-96x96.png' %}" sizes="96x96">
+  <link rel="icon" type="image/png" href="{% static 'images/favicons/favicon-16x16.png' %}" sizes="16x16">
+  <meta property="fb:pages" content="99164676792" />
+  <link rel="stylesheet" href="{% add_version 'css/centennial.css' %}" type="text/css"/>
+</head>
+<body>
+  <div class="c-wrapper">
+    <header class="c-header">
+      <div class="c-container">
+        <h1 class="c-donate-title">Donate to the Ubyssey</h1>
+      </div>
+    </header>
+    <div class="c-container">
+      <div class='c-description'>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat erat nulla, vitae viverra felis tempor in.
+            Maecenas fermentum sapien eget mi facilisis tincidunt. Mauris convallis erat ac metus venenatis maximus. 
+            In hac habitasse platea dictumst. Donec pharetra hendrerit lacinia. Cras vel orci nec risus interdum congue at in lectus. 
+            Fusce diam turpis, mattis vitae magna quis, molestie cursus tortor. Proin eu rhoncus turpis. 
+            Pellentesque pellentesque semper libero, et euismod orci tempus nec. Nunc eu justo faucibus augue iaculis bibendum.
+        </p>
+      </div>
+      <div class="c-donate-button">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="NH4P5J6DMFTUW">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
