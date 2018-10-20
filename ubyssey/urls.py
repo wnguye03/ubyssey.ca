@@ -74,8 +74,6 @@ urlpatterns += [
     # Podcasts
     url(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcasts'),
 
-    url(r'^donate/$', theme.donate, name='donate'),
-
     # Events
     url(r'^events/', include(events_urls)),
     url(r'^api/events/', include(event_api_urls)),
