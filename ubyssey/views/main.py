@@ -548,8 +548,4 @@ class UbysseyTheme(object):
             'episodes': episodes
         }
 
-        return render(request, 'podcasts/podcast.html', context)
-    
-    def donate(self, request):
-      return render(request, 'donate.html')
-        
+        return render(request, 'podcasts/podcast.html', context)  
