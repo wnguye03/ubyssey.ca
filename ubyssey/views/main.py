@@ -92,7 +92,7 @@ class UbysseyTheme(object):
 
         podcast_obj = None
         if podcast and episode_list:
-            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:]} }
+            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:4]} }
 
         context = {
             'title': title,
