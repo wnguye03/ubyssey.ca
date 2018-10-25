@@ -51,6 +51,9 @@ services:
       db:
         condition: service_healthy
     container_name: ubyssey-dev
+    stdin_open: true
+    tty: true
+
 
 volumes:
   data: {}
