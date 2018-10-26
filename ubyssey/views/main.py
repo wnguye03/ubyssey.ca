@@ -547,5 +547,4 @@ class UbysseyTheme(object):
             'episodes': episodes
         }
 
-        return render(request, 'podcasts/podcast.html', context)
-        
+        return render(request, 'podcasts/podcast.html', context)  
