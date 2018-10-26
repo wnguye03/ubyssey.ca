@@ -24,7 +24,6 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
-
 class UbysseyTheme(object):
 
     SITE_TITLE = 'The Ubyssey'
