@@ -16,7 +16,7 @@ from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -146,6 +146,12 @@ class UbysseyTheme(object):
                     temp[i]['featured_image'] = None
             article.timeline_articles = json.dumps(temp)
             article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+
+        if article.template == 'soccer-nationals':
+            # print(article.content)
+
+            teamData = []
+            teamData = NationalsHelper.prepare_data(teamData, article.content, article.template_fields['locations'])
 
 
         ref = request.GET.get('ref', None)

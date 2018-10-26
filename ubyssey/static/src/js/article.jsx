@@ -2,10 +2,11 @@ import React from 'react'
 import './modules/Youtube'
 import { ArticlesSuggested } from './components/Article'
 import { Poll } from './components/Poll'
-import Search from './components/Search.jsx';
+import Search from './components/Search.jsx'
 import AdblockSplash from './components/AdblockSplash.jsx'
 import { Galleries } from './components/Gallery'
 import Timeline from './components/Timeline.jsx'
+import Nationals from './components/Nationals.jsx'
 import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 import Episode from './components/Podcast/Episode.jsx'
 
@@ -37,7 +38,15 @@ $(function () {
             $(this).get(0)
         )
     })
-    
+    $('.c-soccer-nationals').each(function() {
+        React.render(
+            <Nationals  id={$(this).data('currentArticleId')}
+                        title={$(this).data('title')} 
+                        positions={$(this).data('positions')}
+                        blurbs={$(this).data('blurbs')} />,
+            $(this).get(0)
+        )
+    })
     $('.c-podcast-episode').each(function() {
         React.render(
             <Episode    author = {$(this).data('author')}

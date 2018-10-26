@@ -1,6 +1,8 @@
 import datetime
 from django.utils import timezone
 import pytz
+import copy
+import math
 from random import randint, choice
 
 from django.conf import settings
@@ -8,7 +10,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section, Subsection, Podcast
+from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
 
 from ubyssey.events.models import Event
 
@@ -346,4 +348,75 @@ class PodcastHelper(object):
     def get_podcast_url(id=None):
         """ Return the podcast url"""
         return "%spodcast/episodes" % (settings.BASE_URL)
+
+class NationalsHelper(object):
+
+    # class NationalsObj(dict)
+    #     pass
+
+    @staticmethod
+    def prepare_data(data, content, locations):
+        """ Add team/player blurb to dataObj"""
+        teamObj = {
+            'name': '',
+            'content': [],
+            'location': [],
+            'image': {
+                # 'thumbnail': '',
+                # 'medium': ''
+            },
+            'player': {
+                'name': '',
+                'content': [],
+                'image': {
+                    # 'thumbnail': '',
+                    # 'medium': ''
+                }
+            }
+        }
+
+        teamData = copy.deepcopy(teamObj)
+        for chunk in content:
+            print(chunk)
+            if chunk['type'] == 'header':
+                if teamData['name'] != '':
+                    data = data + [copy.deepcopy(teamData)]
+                    teamData = teamObj
+
+                names = list(map(lambda x: x.strip(), chunk['data']['content'].split(',')))
+                teamData['name'] = names[0]
+                teamData['player']['name'] = names[1]
+            elif chunk['type'] == 'paragraph':
+                if chunk['data'].find('<em>') > -1:
+                    teamData['player']['content'] = teamData['player']['content'] + [chunk['data'].replace('<em>', '').replace('</em>', '')]
+                else:
+                    teamData['content'] = teamData['content'] + [chunk['data']]
+            elif chunk['type'] == 'gallery':
+                gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
+                
+                data = data + [copy.deepcopy(teamData)]
+                for index, image in enumerate(gallery):
+                    print(index, image)
+                    if index%2 == 0:
+                        teamImage = {
+                            'thumbnail': image.image.get_thumbnail_url(),
+                            'medium': image.image.get_medium_url(),
+                        }
+                    else:
+                        playerImage = {
+                            'thumbnail': image.image.get_thumbnail_url(),
+                            'medium': image.image.get_medium_url(),
+                        }
+                        print(int(index/2))
+                        data[int(index/2)]['image'] = teamImage
+                        data[int(index/2)]['player']['image'] = playerImage
+
+        locations = locations.split(';')
+        for index, location in enumerate(locations):
+            if (location != ''):
+                data[index]['location'] = list(map(lambda x: int(x), location.split(',')))
+        import pprint
+
+        pprint.pprint(data)
+        return data
     
