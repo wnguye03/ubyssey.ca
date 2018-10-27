@@ -148,10 +148,13 @@ class UbysseyTheme(object):
             article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
 
         if article.template == 'soccer-nationals':
-            # print(article.content)
-
+            print(article.template)
             teamData = []
             teamData = NationalsHelper.prepare_data(teamData, article.content, article.template_fields['locations'])
+            article.team_data = json.dumps(teamData)
+            # article.team_data = teamData
+            # import pprint
+            # pprint.pprint(article.team_data)
 
 
         ref = request.GET.get('ref', None)

@@ -1,6 +1,5 @@
 import React from 'react'
-
-const desktopSize = 960;
+import { desktopSize } from '../utils'
 
 class Nationals extends React.Component {
   constructor(props){
@@ -12,33 +11,56 @@ class Nationals extends React.Component {
 
   componentDidMount() {
     console.log(this.props)
+    this.props.teamData.map((team) => {
+      console.log(team)
+    })
   }
 
-  prepareDescription(description) {
-    if (description) {
-      if (description.length > 500) {
-        return <p> {description.slice(0, 500).concat('...')} </p>
-      } else {
-        return <p> {description} </p>
-      }
-    } else {
-      return ''
-    }
+  renderTeam(name, content) {
+    return(
+      <div>
+        <h1>{name}</h1>
+        {content.map((paragraph) => {
+          <p>{paragraph}</p>
+        })}
+      </div>
+    )
+
+  }
+
+  renderPlayer(player) {
+    return (
+      <div>
+        <h3>{player.name}</h3>
+        <img src={player.image.medium}></img>
+        {player.content.map((paragraph) => {
+          <p>{paragraph}</p>
+        })}
+      </div>
+    )
   }
 
   render() {
-    // const winWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    // const winHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    // const mobileStyle = {
-    //   width: winWidth,
-    //   overflow: this.state.mobileShow ? 'scroll': 'visible',
-    //   marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : -80),
-    //   height: this.state.isMobile ? window.innerHeight - 54 : 80
-    // }
-
+    const mapStyle = {
+      backgroundImage: "url(" + this.props.map + ")",
+      height: '480px',
+      width: '640px'
+    }
     return (
       <div className={'c-nationals-container'}>
-        This is the nationals component
+        <div className='c-nationals-map'
+            style={mapStyle}>
+            {this.props.teamData.map((team) => {
+              <img src={team.image.thumbnail}
+                style={{position: 'relative', top: team.location[0], left: team.location[1]}}></img>
+            })}
+        </div>
+        {this.props.teamData.map((team) => {
+          <div className='c-nationals-team-container'>
+            {this.renderTeam(team.name, team.content)}
+            {this.renderPlayer(team.player)}
+          </div>
+        })}
       </div>
     )
   }

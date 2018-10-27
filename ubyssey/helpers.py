@@ -357,7 +357,7 @@ class NationalsHelper(object):
     @staticmethod
     def prepare_data(data, content, locations):
         """ Add team/player blurb to dataObj"""
-        teamObj = {
+        teamObjTemplate = {
             'name': '',
             'content': [],
             'location': [],
@@ -375,13 +375,12 @@ class NationalsHelper(object):
             }
         }
 
-        teamData = copy.deepcopy(teamObj)
+        teamData = copy.deepcopy(teamObjTemplate)
         for chunk in content:
-            print(chunk)
             if chunk['type'] == 'header':
                 if teamData['name'] != '':
                     data = data + [copy.deepcopy(teamData)]
-                    teamData = teamObj
+                    teamData = teamObjTemplate
 
                 names = list(map(lambda x: x.strip(), chunk['data']['content'].split(',')))
                 teamData['name'] = names[0]
@@ -396,7 +395,6 @@ class NationalsHelper(object):
                 
                 data = data + [copy.deepcopy(teamData)]
                 for index, image in enumerate(gallery):
-                    print(index, image)
                     if index%2 == 0:
                         teamImage = {
                             'thumbnail': image.image.get_thumbnail_url(),
@@ -407,7 +405,6 @@ class NationalsHelper(object):
                             'thumbnail': image.image.get_thumbnail_url(),
                             'medium': image.image.get_medium_url(),
                         }
-                        print(int(index/2))
                         data[int(index/2)]['image'] = teamImage
                         data[int(index/2)]['player']['image'] = playerImage
 
@@ -415,8 +412,6 @@ class NationalsHelper(object):
         for index, location in enumerate(locations):
             if (location != ''):
                 data[index]['location'] = list(map(lambda x: int(x), location.split(',')))
-        import pprint
 
-        pprint.pprint(data)
         return data
     

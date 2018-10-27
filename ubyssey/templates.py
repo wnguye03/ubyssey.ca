@@ -152,9 +152,9 @@ class SoccerNationals(Template):
                             '<b style="font-weight: bold;">"Team Name", "MVP Name"</b> (Note the comma!). '
                             'Next the team article should start on the next line under the team/player header and <b style="font-weight: bold;"> cannot contain italics</b>. '
                             'Then the mvp article should be written on the following line and must be entirely <b style="font-weight: bold;">italicised</b>. '
-                            'The last line of the article should be a gallery. '
-                            ' It is important that this gallery contain first the <b style="font-weight: bold;">map image</b>, '
-                            'then the <b style="font-weight: bold;">team logo and player logos ' 
+                            ' The <b style="font-weight: bold;">map should be the featured_image of the article.</b>'
+                            ' The last line of the article should be a gallery. '
+                            ' It is important that this gallery contain the <b style="font-weight: bold;">team logo and player logos ' 
                             'alternating in the same order as written in the article</b>.')
     INSTRUCTIONS = (
         ('instruction', instruction )

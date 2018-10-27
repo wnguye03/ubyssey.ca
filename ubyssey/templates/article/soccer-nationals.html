@@ -10,14 +10,22 @@
         {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=2 article=article.id %}
     {% endif %}
     {% endblock %}
-    <article class="c-article c-article--{{ article.template }} js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}" data-explicit="{{ explicit }}">
+    <article class="c-article c-article--{{ article.template }} js-article" 
+      {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} 
+      data-id="{{ article.parent_id }}" 
+      data-list="{{ reading_list.ids }}" 
+      data-list-name="{{ reading_list.name }}" 
+      data-headline="{{ article.headline }}" 
+      data-author="{{ authors_json }}" 
+      data-section="{{ article.section.slug }}" 
+      data-url="{{ article.get_absolute_url }}" 
+      data-explicit="{{ explicit }}">
     
     {% block banner %}
         <div class='c-soccer-nationals' 
                 data-current-article-id='{{article.parent_id}}' 
-                data-title='{{article.headline}}' 
-                data-locations='{{article.team_locations}}'
-                data-team-blurbs='{{article.team_blurbs}}'></div>
+                data-map='{{article.featured_image.image.get_absolute_url}}' 
+                data-team-data='{{article.team_data}}'></div>
     {% endblock %}
     </article>
 </main>

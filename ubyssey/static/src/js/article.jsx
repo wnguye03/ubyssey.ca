@@ -41,9 +41,8 @@ $(function () {
     $('.c-soccer-nationals').each(function() {
         React.render(
             <Nationals  id={$(this).data('currentArticleId')}
-                        title={$(this).data('title')} 
-                        positions={$(this).data('positions')}
-                        blurbs={$(this).data('blurbs')} />,
+                        map={$(this).data('map')} 
+                        teamData={$(this).data('teamData')} />,
             $(this).get(0)
         )
     })
