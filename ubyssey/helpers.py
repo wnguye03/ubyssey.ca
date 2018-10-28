@@ -351,9 +351,6 @@ class PodcastHelper(object):
 
 class NationalsHelper(object):
 
-    # class NationalsObj(dict)
-    #     pass
-
     @staticmethod
     def prepare_data(data, content, locations):
         """ Add team/player blurb to dataObj"""
@@ -380,7 +377,7 @@ class NationalsHelper(object):
             if chunk['type'] == 'header':
                 if teamData['name'] != '':
                     data = data + [copy.deepcopy(teamData)]
-                    teamData = teamObjTemplate
+                    teamData = copy.deepcopy(teamObjTemplate)
 
                 names = list(map(lambda x: x.strip(), chunk['data']['content'].split(',')))
                 teamData['name'] = names[0]

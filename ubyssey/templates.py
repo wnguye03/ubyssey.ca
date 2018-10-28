@@ -160,8 +160,7 @@ class SoccerNationals(Template):
         ('instruction', instruction )
     )
 
-
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
     locations = CharField('Top offset, Left offset; semi-colon delimited (px)') 
-    description = TextField('Description', required=True)
+    # description = TextField('Description', required=True)
     

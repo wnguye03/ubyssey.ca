@@ -21,7 +21,7 @@ class Nationals extends React.Component {
       <div>
         <h1>{name}</h1>
         {content.map((paragraph) => {
-          <p>{paragraph}</p>
+          return(<p>{paragraph}</p>)
         })}
       </div>
     )
@@ -34,7 +34,7 @@ class Nationals extends React.Component {
         <h3>{player.name}</h3>
         <img src={player.image.medium}></img>
         {player.content.map((paragraph) => {
-          <p>{paragraph}</p>
+          return(<p>{paragraph}</p>)
         })}
       </div>
     )
@@ -42,12 +42,16 @@ class Nationals extends React.Component {
 
   render() {
     const mapStyle = {
-      backgroundImage: "url(" + this.props.map + ")",
+      backgroundImage: "url('" + this.props.map + "')",
       height: '480px',
       width: '640px'
     }
     return (
       <div className={'c-nationals-container'}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820.45 376.23">
+          <title>Soccer Map</title>
+          {this.props.mapPath}
+        </svg>
         <div className='c-nationals-map'
             style={mapStyle}>
             {this.props.teamData.map((team) => {
@@ -56,10 +60,12 @@ class Nationals extends React.Component {
             })}
         </div>
         {this.props.teamData.map((team) => {
-          <div className='c-nationals-team-container'>
-            {this.renderTeam(team.name, team.content)}
-            {this.renderPlayer(team.player)}
-          </div>
+          return(
+            <div className='c-nationals-team-container'>
+              {this.renderTeam(team.name, team.content)}
+              {this.renderPlayer(team.player)}
+            </div>
+          )
         })}
       </div>
     )
