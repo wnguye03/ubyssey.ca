@@ -408,7 +408,7 @@ class NationalsHelper(object):
         locations = locations.split(';')
         for index, location in enumerate(locations):
             if (location != ''):
-                data[index]['location'] = list(map(lambda x: int(x), location.split(',')))
+                data[index]['location'] = list(map(lambda x: float(x), location.split(',')))
 
         return data
     

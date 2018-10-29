@@ -1,6 +1,26 @@
-.c-nationals-map {
-  position: relative;
-  height: 75vh;
-  width: auto;
-  margin: 2rem auto;
+.c-nationals-title {
+  margin: 0;
+  text-align: center;
 }
+
+#c-nationals-map {
+  position: relative;
+  // max-height: 75vh;
+  height: auto;
+  width: 75vw;
+  margin: 2rem auto;
+
+  .c-nationals-map-marker {
+    transition: width .3s, transform .3s;
+    height: 36px;
+    width: auto;
+    position: absolute;
+    transform: translate(-50%, 0%);
+    &:hover {
+      cursor: pointer;
+      height: 60px;
+      z-index: 1000;
+    }
+  }
+}
+

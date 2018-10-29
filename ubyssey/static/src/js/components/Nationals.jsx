@@ -13,15 +13,13 @@ class Nationals extends React.Component {
       viewPort: {
         height: null,
         width: null
-      }
+      },
+      selectedTeam: null
     }
   }
 
+  // probably wont need this
   componentDidMount() {
-    console.log(this.props)
-    this.props.teamData.map((team) => {
-      console.log(team)
-    })
     this.setState({
       viewPort: { 'height': window.innerHeight, width: window.innerWidth}
     }, () => {
@@ -29,14 +27,19 @@ class Nationals extends React.Component {
     }) 
   }
 
-  goToLocation(team) {
+  selectTeam(team) {
+    const mapWidth = document.getElementById('c-nationals-map').clientWidth
+    const mapHeight = document.getElementById('c-nationals-map').clientHeight
+    
     this.setState({
-      mapViewBox: team.location.concat(mapDefault.map((point) => {return(point/mapZoom)}))
+      // mapViewBox: [-mapWidth*team.location[0]/(100), mapHeight*team.location[1]/(100), mapDefault[0], mapDefault[1]],
+      selectedTeam: team.name
     })
   }
 
   resetMap() {
     this.setState({
+      selectedTeam: null,
       mapViewBox: [0, 0, 820, 376]
     })
   }
@@ -65,32 +68,57 @@ class Nationals extends React.Component {
     )
   }
 
+  logoStyle(team) {
+    let logoStyle = {}
+    if (this.state.selectedTeam && team.name !== this.state.selectedTeam) {
+      Object.assign(logoStyle, {display: 'none'})
+    } else if(this.state.selectedTeam) {
+      return(Object.assign(logoStyle, {height: '200px', top: '0', left: '50%'}))
+    }
+    return(Object.assign(logoStyle, styles.logo, {top: team.location[0] + '%', left: team.location[1] + '%'}))
+  }
+
+
+  renderDesktop() {
+
+  }
+
+  renderMobile() {
+
+  }
   render() {
     return (
       <div className={'c-nationals-container'}>
-        <div className='c-nationals-map' style={styles.map}>
+        <div className='c-nationals-title' style={styles.title}>
+          <h2>The Ubyssey Presents:</h2>
+          <h1>The 2018 Soccer Nationals</h1>
+        </div>
+
+        <div id='c-nationals-map' style={styles.map}>
           <svg xmlns="http://www.w3.org/2000/svg" 
-              viewBox={this.state.mapViewBox.join(' ')}
-              onClick={() => {this.resetMap()}}
-              dangerouslySetInnerHTML={{__html: mapPath}} />
+            style={styles.svgMap}
+            viewBox={this.state.mapViewBox.join(' ')}
+            onClick={() => {this.resetMap()}}
+            dangerouslySetInnerHTML={{__html: mapPath}} />
           {this.props.teamData.map((team) => {
-            let logoStyle = {}
-            Object.assign(logoStyle, styles.logo, {top: team.location[0], left: team.location[1]})
-            console.log(logoStyle)
             return(
-              <img src={team.image.thumbnail} 
-                onClick={() => {this.goToLocation(team)}}
-                style={logoStyle}/>
+              <img className='c-nationals-map-marker'
+                src={team.image.thumbnail} 
+                onClick={() => {this.selectTeam(team)}}
+                style={this.logoStyle(team)}/>
             )
           })}
         </div>
-        {this.props.teamData.map((team) => {
-          return(
-            <div className='c-nationals-team-container' >
-              {this.renderTeam(team.name, team.content)}
-              {this.renderPlayer(team.player)}
-            </div>
-          )
+        {this.state.selectedTeam && this.props.teamData.map((team) => {
+          if (team.name === this.state.selectedTeam) {
+            return(
+              <div className='c-nationals-team-container' >
+                {this.renderTeam(team.name, team.content)}
+                {this.renderPlayer(team.player)}
+              </div>
+            )
+          }
+          return
         })}
       </div>
     )
@@ -100,15 +128,22 @@ class Nationals extends React.Component {
 var styles = {
   map: {
     position: 'relative',
-    maxHeight: '75vh',
-    width: '80vw',
+    // maxHeight: '75vh',
+    height: 'auto',
+    width: '90vw',
     margin: '2rem auto',
   },
   logo: {
-    position: 'absolute',
-    width: '40px',
     top: '0',
-    left: '0'
+    left: '0',
+    transform: 'translate(-50%, 0%)',
+    transition: 'all 0.1s ease-out 0s'
+  },
+  title: {
+    fontSize: '1.8rem',
+    fontWeight: 400,
+    fontFamily: "'Roboto', Helvetica, Arial, sans-serif",
+    textAlign: 'center'
   }
 }
 
