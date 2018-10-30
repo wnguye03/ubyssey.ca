@@ -6,7 +6,7 @@ import Search from './components/Search.jsx'
 import AdblockSplash from './components/AdblockSplash.jsx'
 import { Galleries } from './components/Gallery'
 import Timeline from './components/Timeline.jsx'
-import Nationals from './components/Nationals.jsx'
+import { Nationals } from './components/Nationals'
 import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 import Episode from './components/Podcast/Episode.jsx'
 

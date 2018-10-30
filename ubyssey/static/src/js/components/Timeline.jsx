@@ -1,6 +1,8 @@
 import React from 'react'
 
-const desktopSize = 960;
+import { desktopSize } from '../utils'
+// const desktopSize = 960;
+
 
 class Timeline extends React.Component {
   constructor(props){
