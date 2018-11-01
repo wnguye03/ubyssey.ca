@@ -38,9 +38,9 @@ class Nationals extends React.Component {
               selectTeam={(team) => this.selectTeam(team)}/> 
             <Desktop team={this.state.selectedTeam} />
           </div>
-        }
-        { (window.innerWidth <= desktopSize) && 
-          <Mobile team={this.state.selectedTeam}/> 
+        }{ (window.innerWidth <= desktopSize) && 
+          <Mobile team={this.state.selectedTeam}
+            teamData={this.props.teamData}/> 
         }
       </div>
     )

@@ -1,68 +1,17 @@
 import React from 'react'
-import { desktopSize } from '../../utils'
-import { mapPath } from './utils'
-
-const mapZoom = 3
-const mapDefault = [820, 376]
+import Mvp from 'Mvp.jsx'
 
 class Mobile extends React.Component {
   constructor(props){
     super(props)
-    this.state = {
-      isMobile: window.innerWidth < desktopSize,
-      mapViewBox: [0, 0, 820, 376], // [0, 0, 820, 376] is default,
-      viewPort: {
-        height: null,
-        width: null
-      },
-      selectedTeam: null
-    }
   }
 
-  // // probably wont need this
-  // componentDidMount() {
-  //   this.setState({
-  //     viewPort: { 'height': window.innerHeight, width: window.innerWidth}
-  //   }, () => {
-  //     console.log(this.state.viewPort)
-  //   }) 
-  // }
-
-  // selectTeam(team) {
-  //   const mapWidth = document.getElementById('c-nationals-map').clientWidth
-  //   const mapHeight = document.getElementById('c-nationals-map').clientHeight
-    
-  //   this.setState({
-  //     // mapViewBox: [-mapWidth*team.location[0]/(100), mapHeight*team.location[1]/(100), mapDefault[0], mapDefault[1]],
-  //     selectedTeam: team.name
-  //   })
-  // }
-
-  resetMap() {
-    this.setState({
-      selectedTeam: null,
-      mapViewBox: [0, 0, 820, 376]
-    })
-  }
-
-  renderTeam(name, content) {
+  renderTeamHeader(name, image) {
     return(
       <div>
+        <div className={}style={{backgroundImage: 'url("' + image + '")'}} />
         <h1>{name}</h1>
         {content.map((paragraph) => {
-          return(<p>{paragraph}</p>)
-        })}
-      </div>
-    )
-
-  }
-
-  renderPlayer(player) {
-    return (
-      <div>
-        <h3>{player.name}</h3>
-        <img src={player.image.medium}></img>
-        {player.content.map((paragraph) => {
           return(<p>{paragraph}</p>)
         })}
       </div>
