@@ -21,7 +21,7 @@
                 </li><li {% if section == 'events' %}class="current"{% endif %}>
                     <a href="{% url 'events' %}">Events</a>
                 </li><li {% if section == 'podcast' %}class="current"{% endif %}>
-                    <a href="{% url 'podcasts' 'episodes' %}">Podcast</a>
+                    <a href="{% url 'podcasts' 'episodes' %}">Podcast <span class='upper-right-decorator'>New</span></a>
                 </li>
             </ul>
         </nav>

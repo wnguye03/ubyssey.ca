@@ -88,6 +88,14 @@ body, html, #page-wrapper {
   -webkit-overflow-scrolling: touch;
 }
 
+span.upper-right-decorator {
+  color: #006DCC;
+  font-size: .8em;
+  position: relative;
+  top: -.8em;
+  font-family: arial;
+  text-transform: capitalize;
+}
 div.image-container {
     height: 100%;
     display: table;
