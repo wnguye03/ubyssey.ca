@@ -8,14 +8,14 @@
         {% if articles.trending %}
           <div class="o-trending-article">
           {% with articles.trending as trending_article %}
-              <div>
-                <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
-                <font color="red"> <b> TRENDING <b> </font>
-              </div>
-              <article class="secondary padded">
-                  <h2 class="headline"><a href="{{ trending_article.get_absolute_url }}?ref=frontpage">{{ trending_article.headline|safe }}</a></h2>
-                  <p class="o-article__snippet"><span class="timestamp">{{ trending_article.published_at|naturaltime }}</span>{{ trending_article.snippet|safe }}</p>
-              </article>
+            <span>
+              <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
+              <b style="color: red">TRENDING</b>
+            </span>
+            <article class="secondary padded">
+                <h2 class="headline"><a href="{{ trending_article.get_absolute_url }}?ref=frontpage">{{ trending_article.headline|safe }}</a></h2>
+                <p class="o-article__snippet"><span class="timestamp">{{ trending_article.published_at|naturaltime }}</span>{{ trending_article.snippet|safe }}</p>
+            </article>
           {% endwith %}
           </div>
         {% else %}

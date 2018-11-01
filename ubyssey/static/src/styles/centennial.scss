@@ -197,6 +197,7 @@ a.c-button--white {
   margin-bottom: 2rem;
 }
 
+
 .c-date__left {
   flex: 2;
   text-align: center;
@@ -230,10 +231,26 @@ a.c-button--white {
   padding-bottom: 30px;
   background-color: $color-white;
   color: $color-secondary;
-
+  position: relative;
   p {
     font-size: 18px;
     text-shadow: none;
+  }
+  .c-date__sold_out {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #ffffffaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 3rem;
+    font-weight: 600;
   }
 }
 
@@ -244,10 +261,10 @@ a.c-button--white {
   margin-right: auto;
 
   margin-top: 3rem;
-  padding-bottom: 3rem;
-
+  &:last-child{
+    padding-bottom: 3rem;
+  }
   @media(min-width: 840px) {
     margin-top: 4rem;
-    padding-bottom: 3rem;
   }
 }

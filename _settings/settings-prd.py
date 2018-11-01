@@ -10,7 +10,7 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 SECRET_KEY = Secrets.get('SECRET_KEY')
 NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
-VERSION = '1.4.68'
+VERSION = '1.4.76' 
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -70,6 +70,7 @@ GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
+GS_QUERYSTRING_AUTH = False
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
