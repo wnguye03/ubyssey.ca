@@ -17,9 +17,12 @@ class Nationals extends React.Component {
   }
   
 
-  selectTeam(teamName) {
+  selectTeam(team) {
+    if (this.state.selectedTeam && this.state.selectedTeam.name === team.name) {
+      team = null
+    }
     this.setState({
-      selectedTeam: teamName
+      selectedTeam: team
     })
   }
   resetTeam() {

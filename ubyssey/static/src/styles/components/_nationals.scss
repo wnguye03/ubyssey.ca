@@ -84,8 +84,10 @@
 }
 
 .c-n-mobile-container {
-  padding: 1rem;
 
+  .c-n-headshot--image-container {
+    width: 60%;
+  }
   .c-n-team-container {
     margin: .25rem;
     .c-n-team-header {
@@ -93,12 +95,16 @@
       justify-content: space-between;
       align-items:center;
       width: 100%;
-      height: 80px;
+      height: 120px;
+      color: white;
   
       .c-n-image-container {
-        width: 40%;
+        width: 35%;
+        height: 100%;
+        display: flex;
+        align-items: center;
         .c-n-image {
-          height: 80%;
+          height: 65%;
           width: 100%;
           // BACKGROUND
           background-repeat: no-repeat;
@@ -110,10 +116,13 @@
       .c-n-title{
         font-size: 1.5rem;
         text-align: center;
-        width: 60%;
+        width: 65%;
       }
     }
 
+  }
+  .c-n-team-content {
+    padding: .5rem;
   }
 
 }

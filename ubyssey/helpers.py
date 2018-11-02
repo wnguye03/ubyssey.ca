@@ -352,12 +352,14 @@ class PodcastHelper(object):
 class NationalsHelper(object):
 
     @staticmethod
-    def prepare_data(data, content, locations):
+    def prepare_data(data, content, locations, colors, stats):
         """ Add team/player blurb to dataObj"""
         teamObjTemplate = {
             'name': '',
             'content': [],
             'location': [],
+            'colors': [],
+            'stats': [],
             'image': {
                 # 'thumbnail': '',
                 # 'medium': ''
@@ -411,6 +413,13 @@ class NationalsHelper(object):
         for index, location in enumerate(locations):
             if (location != ''):
                 data[index]['location'] = list(map(lambda x: float(x), location.split(',')))
-
+        colors = colors.split(';')
+        for index, color in enumerate(colors):
+            if (color != ''):
+                data[index]['colors'] = list(map(lambda x: x.strip(' '), color.split(',')))
+        stats = stats.split(';')
+        for index, stat in enumerate(stats):
+            if (stat != ''):
+                data[index]['stats'] = list(map(lambda x: int(x.strip(' ')), stat.split(',')))
         return data
     

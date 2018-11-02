@@ -161,6 +161,8 @@ class SoccerNationals(Template):
     )
 
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
-    locations = CharField('Top offset, Left offset; semi-colon delimited (css units are %)') 
+    locations = CharField('Logo Location: top, left; bracketless tuples, semi-colon delimited (css units are %)') 
+    colors = CharField('Team Colors: primary, secondary; bracketless tuples, semi-colon delimited (hex colors)')
+    stats = CharField('Win-Loss-Tie: w, l, t; bracketless tuples, semi-colon delimited')
     # description = TextField('Description', required=True)
     

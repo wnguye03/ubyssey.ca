@@ -9,6 +9,7 @@ class Mobile extends React.Component {
   renderTeamHeader(team) {
     return(
       <div className='c-n-team-header'
+        style={{backgroundColor: team.colors[0]}}
         onClick={() => {this.props.selectTeam(team)}}>
         <div className='c-n-image-container'>
           <div className='c-n-image' style={{backgroundImage: 'url("' + team.image.thumbnail + '")'}} />
@@ -20,7 +21,8 @@ class Mobile extends React.Component {
 
   renderTeamContent(team) {
     return(
-      <div>
+      <div className='c-n-team-content'>
+        <h4>Wins: {team.stats[0]} Losses: {team.stats[1]} Ties: {team.stats[2]}</h4>
         {team.content.map((paragraph) => {
           return(<p>{paragraph}</p>)
         })}
@@ -33,9 +35,10 @@ class Mobile extends React.Component {
     const {selectedTeam, teamData} = this.props
     return (
       <div className='c-n-mobile-container'>
+        <h2>The Ubyssey Presents</h2>
+        <h1>Canadian National Soccer Championships</h1>
+        <h3>Teams Competing</h3>
         {teamData.map((team) => {
-          console.log('team', team)
-          console.log('name-map', team.name)
           if (selectedTeam && team.name === selectedTeam.name) {
             return(
               <div className='c-n-team-container' >

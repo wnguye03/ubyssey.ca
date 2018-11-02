@@ -149,7 +149,12 @@ class UbysseyTheme(object):
 
         if article.template == 'soccer-nationals':
             teamData = []
-            teamData = NationalsHelper.prepare_data(teamData, article.content, article.template_fields['locations'])
+            teamData = NationalsHelper.prepare_data(
+                teamData, 
+                article.content, 
+                article.template_fields['locations'], 
+                article.template_fields['colors'],
+                article.template_fields['stats'])
             article.team_data = json.dumps(teamData)
 
 
