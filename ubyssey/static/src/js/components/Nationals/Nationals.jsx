@@ -15,6 +15,7 @@ class Nationals extends React.Component {
       selectedTeam: null
     }
   }
+  
 
   selectTeam(teamName) {
     this.setState({
@@ -39,8 +40,9 @@ class Nationals extends React.Component {
             <Desktop team={this.state.selectedTeam} />
           </div>
         }{ (window.innerWidth <= desktopSize) && 
-          <Mobile team={this.state.selectedTeam}
-            teamData={this.props.teamData}/> 
+          <Mobile selectedTeam={this.state.selectedTeam}
+            teamData={this.props.teamData}
+            selectTeam={(team) => this.selectTeam(team)}/> 
         }
       </div>
     )

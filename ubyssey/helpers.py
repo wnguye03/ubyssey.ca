@@ -391,7 +391,9 @@ class NationalsHelper(object):
                 gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
                 
                 data = data + [copy.deepcopy(teamData)]
+                print(data)
                 for index, image in enumerate(gallery):
+                    print(index, image.image.img)
                     if index%2 == 0:
                         teamImage = {
                             'thumbnail': image.image.get_thumbnail_url(),

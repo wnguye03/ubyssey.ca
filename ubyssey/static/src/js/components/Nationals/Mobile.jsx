@@ -1,57 +1,52 @@
 import React from 'react'
-import Mvp from 'Mvp.jsx'
+import Mvp from './Mvp.jsx'
 
 class Mobile extends React.Component {
   constructor(props){
     super(props)
   }
 
-  renderTeamHeader(name, image) {
+  renderTeamHeader(team) {
     return(
-      <div>
-        <div className={}style={{backgroundImage: 'url("' + image + '")'}} />
-        <h1>{name}</h1>
-        {content.map((paragraph) => {
-          return(<p>{paragraph}</p>)
-        })}
+      <div className='c-n-team-header'
+        onClick={() => {this.props.selectTeam(team)}}>
+        <div className='c-n-image-container'>
+          <div className='c-n-image' style={{backgroundImage: 'url("' + team.image.thumbnail + '")'}} />
+        </div> 
+        <span className='c-n-title'>{team.name}</span>
       </div>
     )
   }
 
-  logoStyle(team) {
-    let logoStyle = {}
-    if (this.state.selectedTeam && team.name !== this.state.selectedTeam) {
-      Object.assign(logoStyle, {display: 'none'})
-    } else if(this.state.selectedTeam) {
-      return(Object.assign(logoStyle, {height: '200px', top: '0', left: '50%'}))
-    }
-    return(Object.assign(logoStyle, styles.logo, {top: team.location[0] + '%', left: team.location[1] + '%'}))
+  renderTeamContent(team) {
+    return(
+      <div>
+        {team.content.map((paragraph) => {
+          return(<p>{paragraph}</p>)
+        })}
+        <Mvp player={team.player}/>
+      </div>
+    )
   }
 
   render() {
+    const {selectedTeam, teamData} = this.props
     return (
-      <div>
-        <div id='c-nationals-map' style={styles.map}>
-          <svg xmlns="http://www.w3.org/2000/svg" 
-            style={styles.svgMap}
-            viewBox={this.state.mapViewBox.join(' ')}
-            onClick={() => {this.resetMap()}}
-            dangerouslySetInnerHTML={{__html: mapPath}} />
-          {this.props.teamData.map((team) => {
+      <div className='c-n-mobile-container'>
+        {teamData.map((team) => {
+          console.log('team', team)
+          console.log('name-map', team.name)
+          if (selectedTeam && team.name === selectedTeam.name) {
             return(
-              <img className='c-nationals-map-marker'
-                src={team.image.thumbnail} 
-                onClick={() => {this.selectTeam(team)}}
-                style={this.logoStyle(team)}/>
+              <div className='c-n-team-container' >
+                {this.renderTeamHeader(team)}
+                {this.renderTeamContent(team)}
+              </div>
             )
-          })}
-        </div>
-        {this.state.selectedTeam && this.props.teamData.map((team) => {
-          if (team.name === this.state.selectedTeam) {
+          } else {
             return(
-              <div className='c-nationals-team-container' >
-                {this.renderTeam(team.name, team.content)}
-                {this.renderPlayer(team.player)}
+              <div className='c-n-team-container'>
+                {this.renderTeamHeader(team)}
               </div>
             )
           }

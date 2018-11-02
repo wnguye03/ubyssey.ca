@@ -44,7 +44,8 @@
 .c-n-headshot {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
+  align-items:center;
   .c-n-headshot--image-container {
     position: relative;
     width: 90%;
@@ -80,5 +81,40 @@
     width: 100%;
     margin-top: 1rem;
   }
+}
+
+.c-n-mobile-container {
+  padding: 1rem;
+
+  .c-n-team-container {
+    margin: .25rem;
+    .c-n-team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items:center;
+      width: 100%;
+      height: 80px;
+  
+      .c-n-image-container {
+        width: 40%;
+        .c-n-image {
+          height: 80%;
+          width: 100%;
+          // BACKGROUND
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+        }
+      }
+  
+      .c-n-title{
+        font-size: 1.5rem;
+        text-align: center;
+        width: 60%;
+      }
+    }
+
+  }
+
 }
 
