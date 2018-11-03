@@ -22,7 +22,11 @@ class Mobile extends React.Component {
   renderTeamContent(team) {
     return(
       <div className='c-n-team-content'>
-        <h4>Wins: {team.stats[0]} Losses: {team.stats[1]} Ties: {team.stats[2]}</h4>
+        <h4>
+          <span className='c-n-team-stat'>Wins: {team.stats[0]}</span>
+          <span className='c-n-team-stat'>Losses: {team.stats[1]}</span>
+          <span className='c-n-team-stat'>Ties: {team.stats[2]}</span>  
+        </h4>
         {team.content.map((paragraph) => {
           return(<p>{paragraph}</p>)
         })}
@@ -35,9 +39,6 @@ class Mobile extends React.Component {
     const {selectedTeam, teamData} = this.props
     return (
       <div className='c-n-mobile-container'>
-        <h2>The Ubyssey Presents</h2>
-        <h1>Canadian National Soccer Championships</h1>
-        <h3>Teams Competing</h3>
         {teamData.map((team) => {
           if (selectedTeam && team.name === selectedTeam.name) {
             return(

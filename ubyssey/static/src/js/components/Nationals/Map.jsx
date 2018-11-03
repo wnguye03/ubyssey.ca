@@ -18,13 +18,15 @@ class Map extends React.Component {
     let logoStyle = {}
 
     if (this.props.selectedTeam && team.name !== this.props.selectedTeam.name) {
-      Object.assign(logoStyle, {display: 'none'})
+      Object.assign(logoStyle, {opacity: '0'})
     } 
     else if (this.props.selectedTeam) {
-      Object.assign(logoStyle, {height: '200px', top: '0', left: '50%'})
+      Object.assign(logoStyle, {height: '200px', top: '0%', left: '50%'})
+    } else {
+      Object.assign(logoStyle, styles.logo, {top: team.location[0] + '%', left: team.location[1] + '%'})
     }
 
-    Object.assign(logoStyle, styles.logo, {top: team.location[0] + '%', left: team.location[1] + '%'})
+    
 
     return(
       <img className='c-nationals-map-marker'
@@ -44,7 +46,6 @@ class Map extends React.Component {
           dangerouslySetInnerHTML={{__html: mapPath}} />
 
         {this.props.teamData.map((team) => {
-          console.log('render logo for ', team)
           return(this.renderLogos(team))
         })}
       </div>
@@ -61,9 +62,9 @@ var styles = {
   },
   logo: {
     top: '0',
-    left: '0',
+    left: '50%',
     transform: 'translate(-50%, 0%)',
-    transition: 'all 0.1s ease-out 0s'
+    transition: 'all .2s ease-out 0s'
   },
 }
 

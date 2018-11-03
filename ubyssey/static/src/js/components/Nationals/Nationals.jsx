@@ -3,7 +3,6 @@ import Map from './Map.jsx'
 import Desktop from './Desktop.jsx'
 import Mobile from './Mobile.jsx'
 import { desktopSize } from '../../utils'
-import { mapPath } from './utils'
 
 const mapZoom = 3
 const mapDefault = [820, 376]
@@ -34,8 +33,10 @@ class Nationals extends React.Component {
   render() {
     return (
       <div className={'c-nationals-container'}>
+        <h4>The Ubyssey Presents:</h4>
+        <h1>The 2018 Canadian Soccer Nationals</h1>
         { (window.innerWidth > desktopSize) && 
-          <div>
+          <div style={{position: 'relative'}}>
             <Map teamData={this.props.teamData} 
               resetMap={() => {this.resetTeam()}}
               selectedTeam={this.state.selectedTeam}

@@ -1,3 +1,9 @@
+.c-nationals-container {
+  position:relative;
+  h1,h2,h3,h4 {
+    text-align: center;
+  }
+}
 .c-nationals-title {
   margin: 0;
   text-align: center;
@@ -23,21 +29,33 @@
     }
   }
 }
+.c-n-content-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+}
 
 .c-n-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  position: absolute;
+  top: 250px;
+  background-color: white;
+  max-width: 960px;
 
   .c-n-team {
-    width: 65%;
+    width: 45%;
     height: 100%;
     padding: 1rem;
   }
   
   .c-n-mvp {
-    width: 30%;
+    width: 35%;
     height: 100%;
     padding: 1rem;
+    margin:1rem;
+    margin-top:2rem;
   }
 }
 
@@ -48,7 +66,7 @@
   align-items:center;
   .c-n-headshot--image-container {
     position: relative;
-    width: 90%;
+    width: 50%;
 
     &::before {
       content: "";
@@ -67,9 +85,9 @@
       border-radius: 300px;
   
       // BACKGROUND
-      background-size: auto 100%;
+      background-size: 100% auto;
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: top;
     }
   }
 
@@ -123,7 +141,77 @@
   }
   .c-n-team-content {
     padding: .5rem;
+    h1, h2, h3, h4 {
+      text-align: center;
+      .c-n-team-stat {
+        padding-left: .25rem;
+        padding-right: .25rem;
+      }
+    }
   }
 
 }
+
+// RIBBONS
+.non-semantic-protector { 
+  position: relative; 
+  top: -3.5rem;
+  z-index: 1; 
+  display:flex;
+  justify-content: center;
+}
+
+.ribbon {
+  font-size: 16px !important;
+  /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+  // width: 50%;
+  position: absolute;
+  top: -.25rem;
+  left:2rem;
+  right:2rem;
+  // background: #ba89b6;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 2rem; /* Adjust to suit */
+  margin: 1rem auto 1rem; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px thremselves so we double it. */
+ }
+ .ribbon-before, .ribbon-after {
+ //  .ribbon:before, .ribbon:after {
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: -4.5rem;
+  border: 1.5rem solid #986794;
+  z-index: -1;
+ }
+ .ribbon-before{
+//  .ribbon:before {
+  // left: -2rem;
+  left:0;
+  border-right-width: 1.5rem;
+  border-left-color: transparent;
+ }
+ .ribbon-after{
+//  .ribbon:after {
+  // right: -2rem;
+  right: 0;
+  border-left-width: 1.5rem;
+  border-right-color: transparent;
+ }
+ .ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-style: solid;
+  border-color: #484848 transparent transparent transparent;
+  bottom: -.5rem;
+ }
+ .ribbon .ribbon-content:before {
+  left: 0;
+  border-width: .5rem 0 0 1rem;
+ }
+ .ribbon .ribbon-content:after {
+  right: 0;
+  border-width: .5rem 1rem 0 0;
+ }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import Mvp from './Mvp.jsx'
-import Team from './Team.jsx'
 
 class Desktop extends React.Component {
   constructor(props){
@@ -9,13 +8,17 @@ class Desktop extends React.Component {
 
   render() {
     const {team} = this.props
-    console.log(team)
     return (
-      <div  >
-        {(this.props.team !== null) && 
+      <div className='c-n-content-container'>
+        {(team !== null) && 
           <div className='c-n-content'>
-            <Mvp player={team.player} />
-            <Team team={team} />
+            <Mvp player={team.player} primaryColor={team.colors[0]}/>
+            <div className = 'c-n-team'>
+              <h1>{team.name}</h1>
+              {team.content.map((paragraph) => {
+                return(<p>{paragraph}</p>)
+              })}
+            </div>
           </div>
         }
       </div>
