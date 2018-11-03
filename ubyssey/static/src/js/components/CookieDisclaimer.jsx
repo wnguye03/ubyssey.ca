@@ -28,7 +28,7 @@ class CookieDisclaimer extends React.Component {
     Cookies.set(
       this.getCookieName(),
       {'accepted': value},
-      { path: '/' }
+      { expires: 365, path: '/' }
     )
   }
 
