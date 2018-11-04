@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Hind+Siliguri|Sanchez');
 
+
+.c-soccer-nationals {
+  overflow-x: hidden;
+}
+
 .c-n-container {
   position:relative;
   h1,h2,h3,h4 {
@@ -101,11 +106,20 @@
   }
 
     p{
-      padding: 0 .5rem;
+      // padding: 0 .5rem;
+    }
+    .c-n-content-box {
+      // padding: 1rem;
+      margin: 1rem;
     }
     .c-n-mvp {
-      padding: 2rem;
-      padding-top: 1rem;
+      padding: 1rem;
+    //   margin: 1rem;
+    }
+    div[id*=c-n-team-] {
+      overflow: hidden;
+      height: 0;
+      transition: all .25s ease-in-out;
     }
 }
 
@@ -118,6 +132,7 @@
   z-index: 1; 
   display:flex;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .ribbon {
@@ -200,20 +215,23 @@
       // background-color: white;
       // max-width: 960px;
       width:100%;
+      padding: 0 1rem;
 
       .c-n-content-box-container {
+        $contentWidth: 375px;
         transition: all .25s;
-        width: 350px;
+        width: $contentWidth;
         position: absolute;
         top: 2rem;
         margin: 1rem;
         background-color: white;
-        right: -366px;
+        right: calc(-100%);
         &:last-child{
-          left: -366px;
+          left: calc(-100%);
         }
-        .c-n-content-box{
+        .c-n-content-box {
           padding: 1rem;
+          margin: 0;
           border: .25rem solid #233b7c;
           border-radius: .5rem;
         }
@@ -228,10 +246,7 @@
           // width: 50%;
           h1, h2, h3, h4 {
             text-align: center;
-            .c-n-team-stat {
-              padding-left: .25rem;
-              padding-right: .25rem;
-            }
+ 
           }
         }
       }
@@ -268,6 +283,11 @@
   }
  }
 
+ span.c-n-team-stat {
+  padding-left: .25rem;
+  padding-right: .25rem;
+}
+
  #c-nationals-map {
   position: relative;
   height: auto;
@@ -281,37 +301,19 @@
       opacity: 0;
       animation-fill-mode: forwards !important;
     }
-    path:nth-child(2) {
-      animation: fade-in $time1 linear $time1;
-    }
-    path:nth-child(3) {
-      animation: fade-in $time1 linear $time1;
-    }
-    path:nth-child(4) {
-      animation: fade-in $time1 linear $time1;
-    }
-    path:nth-child(5) {
+    .c-n-path-red{
       animation: fade-in $time1 linear $time1;
     }
 
-    path:nth-child(6) {
+    path.c-n-path-green {
       animation: fade-in $time1 linear 2*$time1;
     }
 
-    path:nth-child(7) {
+    path.c-n-path-blue {
       animation: fade-in $time1 linear 3*$time1;
     }
     
-    path:nth-child(8) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
-    path:nth-child(9) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
-    path:nth-child(10) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
-    path:nth-child(11) {
+    path.c-n-path-purple {
       animation: fade-in $time1 linear 4*$time1;
     }
   }

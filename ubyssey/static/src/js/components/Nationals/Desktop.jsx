@@ -7,6 +7,7 @@ class Desktop extends React.Component {
     super(props)
   }
   
+  
   render() {
     // const {team, isDesktop} = this.props
     // return (
