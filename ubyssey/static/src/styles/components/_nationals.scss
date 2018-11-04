@@ -1,7 +1,9 @@
-.c-nationals-container {
+.c-n-container {
   position:relative;
   h1,h2,h3,h4 {
     text-align: center;
+    font-family: "ub-lft-etica", "LFT Etica", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-weight: 600;
   }
 }
 .c-nationals-title {
@@ -9,61 +11,12 @@
   text-align: center;
 }
 
-#c-nationals-map {
-  position: relative;
-  // max-height: 75vh;
-  height: auto;
-  width: 75vw;
-  margin: 2rem auto;
-
-  .c-nationals-map-marker {
-    transition: width .3s, transform .3s;
-    height: 36px;
-    width: auto;
-    position: absolute;
-    transform: translate(-50%, 0%);
-    &:hover {
-      cursor: pointer;
-      height: 60px;
-      z-index: 1000;
-    }
-  }
-}
-.c-n-content-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background-color: white;
-}
-
-.c-n-content {
-  display: flex;
-  justify-content: space-around;
-  position: absolute;
-  top: 250px;
-  background-color: white;
-  max-width: 960px;
-
-  .c-n-team {
-    width: 45%;
-    height: 100%;
-    padding: 1rem;
-  }
-  
-  .c-n-mvp {
-    width: 35%;
-    height: 100%;
-    padding: 1rem;
-    margin:1rem;
-    margin-top:2rem;
-  }
-}
-
 .c-n-headshot {
   display: flex;
   flex-direction: column;
   // justify-content: center;
   align-items:center;
+  margin-bottom: -2.5rem;
   .c-n-headshot--image-container {
     position: relative;
     width: 50%;
@@ -101,7 +54,7 @@
   }
 }
 
-.c-n-mobile-container {
+.c-n-content-container {
 
   .c-n-headshot--image-container {
     width: 60%;
@@ -139,23 +92,22 @@
     }
 
   }
-  .c-n-team-content {
-    padding: .5rem;
-    h1, h2, h3, h4 {
-      text-align: center;
-      .c-n-team-stat {
-        padding-left: .25rem;
-        padding-right: .25rem;
-      }
-    }
-  }
 
+    p{
+      padding: 0 .5rem;
+    }
+    .c-n-mvp {
+      padding: 2rem;
+      padding-top: 1rem;
+    }
 }
 
 // RIBBONS
 .non-semantic-protector { 
   position: relative; 
-  top: -3.5rem;
+  top: -2.5rem;
+  height: 5rem;
+  width: 100%;
   z-index: 1; 
   display:flex;
   justify-content: center;
@@ -180,7 +132,7 @@
   content: "";
   position: absolute;
   display: block;
-  bottom: -4.5rem;
+  bottom: 0.5rem;
   border: 1.5rem solid #986794;
   z-index: -1;
  }
@@ -215,3 +167,119 @@
   border-width: .5rem 1rem 0 0;
  }
 
+
+ @media (min-width: 960px) {
+  .c-n-content-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    height: 60vh;
+    position: absolute;
+
+    .c-n-content {
+      display: flex;
+      justify-content: space-around;
+      background-color: white;
+      max-width: 960px;
+      .c-n-mvp {
+        box-sizing: border-box;
+        width: 40%;
+        padding: 1rem;
+        margin: 1rem;
+      }
+      .c-n-team {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: .5rem;
+        width: 50%;
+        h1, h2, h3, h4 {
+          text-align: center;
+          .c-n-team-stat {
+            padding-left: .25rem;
+            padding-right: .25rem;
+          }
+        }
+      }
+    }
+  }
+ }
+
+ #c-nationals-map {
+  position: relative;
+  height: auto;
+  width: 95vw;
+  margin: 2rem auto;
+  .c-n-map {
+    $time1: .25s;
+    path {
+      opacity: 0;
+      animation-fill-mode: forwards !important;
+    }
+    path:nth-child(2) {
+      animation: fade-in $time1 linear;
+    }
+    path:nth-child(3) {
+      animation: fade-in $time1 linear;
+    }
+    path:nth-child(4) {
+      animation: fade-in $time1 linear;
+    }
+    path:nth-child(5) {
+      animation: fade-in $time1 linear;
+    }
+
+    path:nth-child(6) {
+      animation: fade-in $time1 linear 2*$time1;
+    }
+
+    path:nth-child(7) {
+      animation: fade-in $time1 linear 3*$time1;
+    }
+    
+    path:nth-child(8) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(9) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(7) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(8) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(9) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(10) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+    path:nth-child(11) {
+      animation: fade-in $time1 linear 4*$time1;
+    }
+  }
+  
+  .c-nationals-map-marker {
+    transition: all .3s;
+    height: 36px;
+    width: auto;
+    position: absolute;
+    transform: translate(-50%, 0%);
+    &:hover {
+      cursor: pointer;
+      height: 60px;
+      z-index: 1000;
+    }
+  }
+}
+
+
+
+
+@keyframes fade-in {
+  0%   {opacity: 0;}
+  100% {opacity: 1;}
+}

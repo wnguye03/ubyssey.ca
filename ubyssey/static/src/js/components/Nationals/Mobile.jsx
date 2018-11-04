@@ -1,5 +1,7 @@
 import React from 'react'
 import Mvp from './Mvp.jsx'
+import Ribbon from './Ribbon.jsx'
+import TeamContent from './TeamContent.jsx'
 
 class Mobile extends React.Component {
   constructor(props){
@@ -21,16 +23,11 @@ class Mobile extends React.Component {
 
   renderTeamContent(team) {
     return(
-      <div className='c-n-team-content'>
-        <h4>
-          <span className='c-n-team-stat'>Wins: {team.stats[0]}</span>
-          <span className='c-n-team-stat'>Losses: {team.stats[1]}</span>
-          <span className='c-n-team-stat'>Ties: {team.stats[2]}</span>  
-        </h4>
-        {team.content.map((paragraph) => {
-          return(<p>{paragraph}</p>)
-        })}
-        <Mvp player={team.player}/>
+      <div className='c-n-team'>
+        <TeamContent team={team} isDesktop={this.props.isDesktop} />
+        <Mvp player={team.player}
+          primaryColor={team.colors[0]}
+          isDesktop={this.props.isDesktop}/>
       </div>
     )
   }
@@ -38,7 +35,7 @@ class Mobile extends React.Component {
   render() {
     const {selectedTeam, teamData} = this.props
     return (
-      <div className='c-n-mobile-container'>
+      <div className='c-n-content-container'>
         {teamData.map((team) => {
           if (selectedTeam && team.name === selectedTeam.name) {
             return(
@@ -54,7 +51,6 @@ class Mobile extends React.Component {
               </div>
             )
           }
-          return
         })}
       </div>
     )
