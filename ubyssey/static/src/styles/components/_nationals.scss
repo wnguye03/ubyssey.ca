@@ -1,10 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Hind+Siliguri|Sanchez');
+
 .c-n-container {
   position:relative;
   h1,h2,h3,h4 {
     text-align: center;
-    font-family: "ub-lft-etica", "LFT Etica", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: 'Hind Siliguri', sans-serif;
     font-weight: 600;
   }
+  font-family: $font-body;
+}
+
+.c-n-title {
+  font-family: 'Sanchez', serif;
 }
 .c-nationals-title {
   margin: 0;
@@ -169,40 +176,93 @@
 
 
  @media (min-width: 960px) {
+  .c-n-desktop {
+    position:relative;
+    height: 95vh;
+    width: 100%;
+    display:flex;
+    align-items: center;
+  }
   .c-n-content-container {
     display: flex;
     justify-content: center;
-    width: 100%;
-    background-color: white;
-    height: 60vh;
+    // width: 100%;
     position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    // background-color: white;
+    // position: absolute;
 
     .c-n-content {
       display: flex;
-      justify-content: space-around;
-      background-color: white;
-      max-width: 960px;
-      .c-n-mvp {
-        box-sizing: border-box;
-        width: 40%;
-        padding: 1rem;
+      // justify-content: space-around;
+      // background-color: white;
+      // max-width: 960px;
+      width:100%;
+
+      .c-n-content-box-container {
+        width: 350px;
+        position: absolute;
+        top: 2rem;
         margin: 1rem;
-      }
-      .c-n-team {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding: .5rem;
-        width: 50%;
-        h1, h2, h3, h4 {
-          text-align: center;
-          .c-n-team-stat {
-            padding-left: .25rem;
-            padding-right: .25rem;
+        background-color: white;
+        right: 5%;
+        &:last-child{
+          left: 5%;
+        }
+        .c-n-content-box{
+          padding: 1rem;
+          border: .25rem solid #233b7c;
+          border-radius: .5rem;
+        }
+        .c-n-mvp {
+        }
+        .c-n-team {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          // padding: .5rem;
+          // width: 50%;
+          h1, h2, h3, h4 {
+            text-align: center;
+            .c-n-team-stat {
+              padding-left: .25rem;
+              padding-right: .25rem;
+            }
           }
         }
       }
+
+      // .c-n-mvp, .c-n-team {
+      //   width: 350px;
+      //   position: absolute;
+      //   top: 2rem;
+      // }
+      // .c-n-mvp {
+      //   box-sizing: border-box;
+      //   // width: 40%;
+      //   padding: 1rem;
+      //   margin: 1rem;
+      //   right: 5%;
+      // }
+      // .c-n-team {
+      //   display: flex;
+      //   flex-direction: column;
+      //   justify-content: flex-start;
+      //   align-items: center;
+      //   padding: .5rem;
+      //   // width: 50%;
+      //   left: 5%;
+      //   h1, h2, h3, h4 {
+      //     text-align: center;
+      //     .c-n-team-stat {
+      //       padding-left: .25rem;
+      //       padding-right: .25rem;
+      //     }
+      //   }
+      // }
     }
   }
  }
@@ -212,23 +272,25 @@
   height: auto;
   width: 95vw;
   margin: 2rem auto;
+  
+  $time1: .25s;
   .c-n-map {
-    $time1: .25s;
+    
     path {
       opacity: 0;
       animation-fill-mode: forwards !important;
     }
     path:nth-child(2) {
-      animation: fade-in $time1 linear;
+      animation: fade-in $time1 linear $time1;
     }
     path:nth-child(3) {
-      animation: fade-in $time1 linear;
+      animation: fade-in $time1 linear $time1;
     }
     path:nth-child(4) {
-      animation: fade-in $time1 linear;
+      animation: fade-in $time1 linear $time1;
     }
     path:nth-child(5) {
-      animation: fade-in $time1 linear;
+      animation: fade-in $time1 linear $time1;
     }
 
     path:nth-child(6) {
@@ -245,15 +307,6 @@
     path:nth-child(9) {
       animation: fade-in $time1 linear 4*$time1;
     }
-    path:nth-child(7) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
-    path:nth-child(8) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
-    path:nth-child(9) {
-      animation: fade-in $time1 linear 4*$time1;
-    }
     path:nth-child(10) {
       animation: fade-in $time1 linear 4*$time1;
     }
@@ -263,6 +316,8 @@
   }
   
   .c-nationals-map-marker {
+    opacity: 0;
+    animation: fade-in $time1 linear 5*$time1 forwards;
     transition: all .3s;
     height: 36px;
     width: auto;

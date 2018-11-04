@@ -34,10 +34,12 @@ class Nationals extends React.Component {
     const isDesktop = window.innerWidth > desktopSize ? true: false
     return (
       <div className={'c-n-container'}>
-        <h4>The Ubyssey Presents:</h4>
-        <h1>The 2018 Canadian Soccer Nationals</h1>
+        <div className='c-n-title'>
+          <div className='first'>The 2018</div>
+          Canadian Soccer Nationals
+        </div> 
         { isDesktop && 
-          <div style={{position: 'relative'}}>
+          <div className='c-n-desktop'>
             <Map teamData={this.props.teamData} 
               resetMap={() => {this.resetTeam()}}
               selectedTeam={this.state.selectedTeam}

@@ -16,12 +16,12 @@ class Map extends React.Component {
   }
 
   renderLogos(team) {
-    let logoStyle = {transform: 'translate(-50%, 0%)',}
+    let logoStyle = {transform: 'translate(-50%, -50%)',}
 
     if (this.props.selectedTeam && team.name === this.props.selectedTeam.name) {
-      Object.assign(logoStyle, {height: '200px', top: '0%', left: '50%'})
+      Object.assign(logoStyle, {height: '300px', top: '10%', left: '50%', zIndex: 10})
     } else if (this.props.selectedTeam) {
-      Object.assign(logoStyle, {opacity: '0', top: team.location[0] + '%', left: team.location[1] + '%'})
+      Object.assign(logoStyle, {zIndex: 0, top: team.location[0] + '%', left: team.location[1] + '%'})
     } else {
       Object.assign(logoStyle, {top: team.location[0] + '%', left: team.location[1] + '%'})
     }
