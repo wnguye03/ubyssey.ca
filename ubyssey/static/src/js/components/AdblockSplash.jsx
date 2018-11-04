@@ -28,7 +28,7 @@ class AdblockSplash extends React.Component {
     Cookies.set(
       this.getCookieName(),
       {'visitCount': visitCount, 'enableSplash': enableSplash},
-      { path: '/' }
+      { expires: 365, path: '/' }
     )
   }
 
