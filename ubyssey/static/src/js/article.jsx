@@ -3,10 +3,9 @@ import './modules/Youtube'
 import { ArticlesSuggested } from './components/Article'
 import { Poll } from './components/Poll'
 import Search from './components/Search.jsx';
-import AdblockSplash from './components/AdblockSplash.jsx'
+import { AdblockSplash, CookieDisclaimer } from './components/Cookies'
 import { Galleries } from './components/Gallery'
 import Timeline from './components/Timeline.jsx'
-import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 import Episode from './components/Podcast/Episode.jsx'
 
 window.articleHeader = false;
@@ -32,12 +31,12 @@ $(function () {
     $('.c-timeline').each(function() {
         React.render(
             <Timeline   id={$(this).data('currentArticleId')}
-                        title={$(this).data('timelineTitle')} 
+                        title={$(this).data('timelineTitle')}
                         nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })
-    
+
     $('.c-podcast-episode').each(function() {
         React.render(
             <Episode    author = {$(this).data('author')}
@@ -78,7 +77,7 @@ if ($('main.article').length) {
     };
 
     function stickyAds(scrollTop, stickyElements) {
-        
+
         const headerHeight = $('.topbar').outerHeight(true)
         const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
         if (headerHeight === null || typeof headerHeight === 'undefined') {
@@ -234,7 +233,7 @@ if ($('main.article').length) {
       ];
 
     var gallery = React.render(
-        <Galleries galleries={galleries} />, 
+        <Galleries galleries={galleries} />,
         document.getElementById('gallery')
     );
 }

@@ -8,6 +8,7 @@ class AdblockSplash extends React.Component {
       showSplash: true,
     }
   }
+
   getCookieName() {
     return 'ubyssey_site_visit'
   }

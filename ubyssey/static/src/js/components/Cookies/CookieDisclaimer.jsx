@@ -8,39 +8,28 @@ class CookieDisclaimer extends React.Component {
       showCookieDisclaimer: true,
     }
   }
+
   getCookieName() {
-    return 'cookie_disclaimer'
+    return 'ubyssey_cookie_disclaimer'
   }
 
-  getCookie(field) {
-    let cookie = Cookies.get(this.getCookieName())
-    if (typeof cookie === 'string' && cookie !== '') {
-      cookie = JSON.parse(cookie)
-      if (field) {
-        return cookie[field]
-      }
-      return cookie
-    }
-    return cookie
-  }
-
-  setCookie(value) {
+  setCookie() {
     Cookies.set(
       this.getCookieName(),
-      {'accepted': value},
+      'accepted',
       { expires: 365, path: '/' }
     )
   }
 
   disableCookieDisclaimer() {
-    this.setCookie(true)
+    this.setCookie()
     this.setState({
       showCookieDisclaimer: false
     })
   }
 
   componentDidMount() {
-    const accepted = this.getCookie('accepted')
+    const accepted = Cookies.get(this.getCookieName())
 
     if (!navigator.cookieEnabled || accepted) {
       this.setState({
