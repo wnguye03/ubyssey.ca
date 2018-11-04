@@ -44,8 +44,9 @@ class Nationals extends React.Component {
               resetMap={() => {this.resetTeam()}}
               selectedTeam={this.state.selectedTeam}
               selectTeam={(team) => this.selectTeam(team)}/> 
-            <Desktop team={this.state.selectedTeam} 
-              isDesktop={isDesktop}/>
+            <Desktop teamData={this.props.teamData} 
+              isDesktop={isDesktop}
+              selectedTeam={this.state.selectedTeam}/>
           </div>
         }{ !isDesktop && 
           <Mobile selectedTeam={this.state.selectedTeam}

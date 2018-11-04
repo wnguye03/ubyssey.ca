@@ -5,11 +5,11 @@ class Mvp extends React.Component {
 
 
   render() {
-    const {player, primaryColor} = this.props
+    const {player, primaryColor, isSelected} = this.props
     const playerImage = {backgroundImage: 'url("' + player.image.medium + '")'}
     const mvpStyle={backgroundColor: primaryColor + '30'}
     return(
-      <div className='c-n-content-box-container'>
+      <div className='c-n-content-box-container' style={isSelected ? {right: 0}: {}}>
         <div className='c-n-content-box c-n-mvp' style={mvpStyle}>
           <h1>Player To Watch</h1>
           <div className='c-n-headshot'>

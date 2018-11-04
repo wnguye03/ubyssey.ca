@@ -202,14 +202,15 @@
       width:100%;
 
       .c-n-content-box-container {
+        transition: all .25s;
         width: 350px;
         position: absolute;
         top: 2rem;
         margin: 1rem;
         background-color: white;
-        right: 5%;
+        right: -366px;
         &:last-child{
-          left: 5%;
+          left: -366px;
         }
         .c-n-content-box{
           padding: 1rem;
