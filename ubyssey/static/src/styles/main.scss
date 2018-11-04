@@ -89,11 +89,11 @@ body, html, #page-wrapper {
 }
 
 span.upper-right-decorator {
-  color: #006DCC;
+  color: $color-ub-blue-light;
   font-size: .8em;
   position: relative;
   top: -.8em;
-  font-family: arial;
+  font-family: $font-default;
   text-transform: capitalize;
 }
 div.image-container {
