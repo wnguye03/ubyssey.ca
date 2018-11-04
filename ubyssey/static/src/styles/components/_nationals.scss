@@ -7,20 +7,26 @@
 
 .c-n-container {
   position:relative;
+  display: flex;
+  justify-content: center;
   h1,h2,h3,h4 {
     text-align: center;
     font-family: 'Hind Siliguri', sans-serif;
     font-weight: 600;
+    margin-top: 0;
   }
   font-family: $font-body;
 }
 
 .c-n-title {
   font-family: 'Sanchez', serif;
-}
-.c-nationals-title {
-  margin: 0;
+  position: absolute;
+  top: 1.5rem;
   text-align: center;
+  font-size:2rem;
+  .first {
+    font-size: 1.5rem;
+  }
 }
 
 .c-n-headshot {
@@ -67,6 +73,8 @@
 }
 
 .c-n-content-container {
+  top: 6rem;
+  position: relative;
 
   .c-n-headshot--image-container {
     width: 60%;
@@ -80,6 +88,11 @@
       width: 100%;
       height: 120px;
       color: white;
+
+      .c-n-title {
+        position: relative;
+        top: 0;
+      }
   
       .c-n-image-container {
         width: 35%;
@@ -222,7 +235,7 @@
         transition: all .25s;
         width: $contentWidth;
         position: absolute;
-        top: 2rem;
+        top: 6rem;
         margin: 1rem;
         background-color: white;
         right: calc(-100%);
@@ -232,8 +245,8 @@
         .c-n-content-box {
           padding: 1rem;
           margin: 0;
-          border: .25rem solid #233b7c;
-          border-radius: .5rem;
+          border: .25rem solid black;
+          // border-radius: .5rem;
         }
         .c-n-mvp {
         }

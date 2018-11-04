@@ -11,7 +11,7 @@ class TeamContent extends React.Component {
     const ribbonStyle = this.props.isDesktop ? {width: '50%', minWidth: '20rem', top: 0}: {width: '100%', top: 0}
     return(
       <div className='c-n-content-box-container' style={this.props.isSelected ? {left: '0px'}: {}}>
-        <div className='c-n-content-box'>
+        <div className='c-n-content-box' style={{borderColor: this.props.team.colors[0]}}>
           <h1>{this.props.team.name}</h1>
           <Ribbon html={ribbonHtml} 
               style={ribbonStyle}
