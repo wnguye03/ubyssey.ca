@@ -4,6 +4,7 @@ django-gae-backends
 django-canonical-domain
 mysql-python
 django-phonenumber-field
+phonenumbers
 beautifulsoup4
 feedparser
 pyyaml
