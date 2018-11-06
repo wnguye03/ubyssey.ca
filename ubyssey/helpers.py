@@ -8,7 +8,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section, Subsection, Podcast
+from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
 
 from ubyssey.events.models import Event
 
@@ -346,4 +346,39 @@ class PodcastHelper(object):
     def get_podcast_url(id=None):
         """ Return the podcast url"""
         return "%spodcast/episodes" % (settings.BASE_URL)
+
+class NationalsHelper(object):
+
+    @staticmethod
+    def prepare_data(content):
+        """ Add team/player blurb to dataObj"""
+        import json
+        import math
+        result = {
+            "content": [],
+            "code": {}
+        }  
+        
+        for chunk in content:
+            if chunk['type'] == 'code':
+                result['code'] = json.loads(chunk['data']['content'])
+                
+            elif chunk['type'] == 'gallery':
+                gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
+                
+                for index, image in enumerate(gallery):
+                    if index % 2 == 0:
+                        result['code'][int(math.floor(index/2))]['image'] = {
+                            'thumbnail': image.image.get_thumbnail_url(),
+                            'medium': image.image.get_medium_url(),
+                        }
+                    else:
+                        result['code'][int(math.floor(index/2))]['player']['image'] = {
+                            'thumbnail': image.image.get_thumbnail_url(),
+                            'medium': image.image.get_medium_url(),
+                        }
+            else:
+                result['content'].append(chunk)
+        
+        return result
     

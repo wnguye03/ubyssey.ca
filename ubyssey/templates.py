@@ -142,4 +142,17 @@ class Timeline(Template):
     header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
     description = TextField('Description', required=True)
     timeline_date = DateTimeField('Timeline Date', required=True)
+
+@register.template
+class SoccerNationals(Template):
+    id = 'soccer-nationals'
+    name = 'Soccer Nationals'
+
+    instruction = (   '<p>json object to be added inside a code block. gallery with alternating team, player in same order as json object to be included at end of article<p>.')
+    INSTRUCTIONS = (
+        ('instruction', instruction )
+    )
+
+    instructions = InstructionField('Instructions', options=INSTRUCTIONS)
+    description = TextField('Description', required=True)
     
