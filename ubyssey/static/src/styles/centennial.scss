@@ -197,6 +197,7 @@ a.c-button--white {
   margin-bottom: 2rem;
 }
 
+
 .c-date__left {
   flex: 2;
   text-align: center;
@@ -260,10 +261,10 @@ a.c-button--white {
   margin-right: auto;
 
   margin-top: 3rem;
-  padding-bottom: 3rem;
-
+  &:last-child{
+    padding-bottom: 3rem;
+  }
   @media(min-width: 840px) {
     margin-top: 4rem;
-    padding-bottom: 3rem;
   }
 }

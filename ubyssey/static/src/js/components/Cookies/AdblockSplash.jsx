@@ -8,6 +8,7 @@ class AdblockSplash extends React.Component {
       showSplash: true,
     }
   }
+
   getCookieName() {
     return 'ubyssey_site_visit'
   }
@@ -28,7 +29,7 @@ class AdblockSplash extends React.Component {
     Cookies.set(
       this.getCookieName(),
       {'visitCount': visitCount, 'enableSplash': enableSplash},
-      { path: '/' }
+      { expires: 365, path: '/' }
     )
   }
 

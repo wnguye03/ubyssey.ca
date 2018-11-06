@@ -17,6 +17,9 @@ yarn.lock
 # Ignore Mac specific empty file
 .DS_Store
 
+# Ignore settings for vscode
+.vscode
+
 ubyssey/settings*.py
 
 # Client secret for Travis

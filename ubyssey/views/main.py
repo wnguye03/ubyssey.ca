@@ -130,7 +130,6 @@ class UbysseyTheme(object):
         if user_agent.is_mobile:
             article_type = 'mobile'
 
-
         if article.template == 'timeline':
             timeline_tag = article.tags.filter(name__icontains='timeline-')
             timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
@@ -554,5 +553,4 @@ class UbysseyTheme(object):
             'episodes': episodes
         }
 
-        return render(request, 'podcasts/podcast.html', context)
-        
+        return render(request, 'podcasts/podcast.html', context)  
