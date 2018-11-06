@@ -1,8 +1,6 @@
 import datetime
 from django.utils import timezone
 import pytz
-import copy
-import math
 from random import randint, choice
 
 from django.conf import settings

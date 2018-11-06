@@ -7,21 +7,7 @@ class Desktop extends React.Component {
     super(props)
   }
   
-  
   render() {
-    // const {team, isDesktop} = this.props
-    // return (
-    //   <div className='c-n-content-container'>
-    //     {(team !== null) && 
-    //       <div className='c-n-content'>
-    //         <Mvp player={team.player} 
-    //           primaryColor={team.colors[0]}
-    //           isDesktop={isDesktop}/>
-    //         <TeamContent team={team} isDesktop={isDesktop}/>
-    //       </div>
-    //     }
-    //   </div>
-    // )
     const {teamData, isDesktop, selectedTeam} = this.props
     
     return (
@@ -41,10 +27,8 @@ class Desktop extends React.Component {
               </div>
             </div>
           )
-
         })}
       </div>
-
     )
   }
 }

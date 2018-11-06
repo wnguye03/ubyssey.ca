@@ -148,21 +148,11 @@ class SoccerNationals(Template):
     id = 'soccer-nationals'
     name = 'Soccer Nationals'
 
-    instruction = (   '<p>In the editor, each team should have a header with the following syntax: '
-                            '<b style="font-weight: bold;">"Team Name", "MVP Name"</b> (Note the comma!). '
-                            'Next the team article should start on the next line under the team/player header and <b style="font-weight: bold;"> cannot contain italics</b>. '
-                            'Then the mvp article should be written on the following line and must be entirely <b style="font-weight: bold;">italicised</b>. '
-                            ' The <b style="font-weight: bold;">map should be the featured_image of the article.</b>'
-                            ' The last line of the article should be a gallery. '
-                            ' It is important that this gallery contain the <b style="font-weight: bold;">team logo and player logos ' 
-                            'alternating in the same order as written in the article</b>.')
+    instruction = (   '<p>json object to be added inside a code block. gallery with alternating team, player in same order as json object to be included at end of article<p>.')
     INSTRUCTIONS = (
         ('instruction', instruction )
     )
 
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
-    locations = CharField('Logo Location: top, left; bracketless tuples, semi-colon delimited (css units are %)') 
-    colors = CharField('Team Colors: primary, secondary; bracketless tuples, semi-colon delimited (hex colors)')
-    stats = CharField('Win-Loss-Tie: w, l, t; bracketless tuples, semi-colon delimited')
-    # description = TextField('Description', required=True)
+    description = TextField('Description', required=True)
     

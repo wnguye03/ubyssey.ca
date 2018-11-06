@@ -24,10 +24,8 @@ class TeamContent extends React.Component {
           })}
         </div>
       </div>
-
     )
   }
-
 }
 
 export default TeamContent

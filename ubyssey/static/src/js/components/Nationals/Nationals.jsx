@@ -22,6 +22,7 @@ class Nationals extends React.Component {
       selectedTeam: team
     })
   }
+  
   resetTeam() {
     this.setState({
       selectedTeam: null
@@ -32,10 +33,6 @@ class Nationals extends React.Component {
     const isDesktop = window.innerWidth > desktopSize ? true: false
     return (
       <div className={'c-n-container'}>
-        {/* <div className='c-n-title'>
-          <div>U Sports Men’s Soccer Championship</div>
-          <div style={{fontSize: '1.5rem', fontWeight: 600}}>Hosted by the UBC Thunderbirds: November 8-11</div>
-        </div>  */}
         { isDesktop && 
           <div className='c-n-desktop'>
             <Map teamData={this.props.teamData} 
