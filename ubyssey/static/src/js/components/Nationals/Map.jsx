@@ -19,7 +19,7 @@ class Map extends React.Component {
     let logoStyle = {transform: 'translate(-50%, -50%)',}
 
     if (this.props.selectedTeam && team.name === this.props.selectedTeam.name) {
-      Object.assign(logoStyle, {height: '300px', top: '20%', left: '50%', zIndex: 10})
+      Object.assign(logoStyle, {height: '60%', top: '30%', left: '50%', zIndex: 10})
     } else if (this.props.selectedTeam) {
       Object.assign(logoStyle, {zIndex: 0, top: team.location[0] + '%', left: team.location[1] + '%'})
     } else {

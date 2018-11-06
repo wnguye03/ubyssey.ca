@@ -352,72 +352,35 @@ class PodcastHelper(object):
 class NationalsHelper(object):
 
     @staticmethod
-    def prepare_data(data, content, locations, colors, stats):
+    def prepare_data(content):
         """ Add team/player blurb to dataObj"""
-        teamObjTemplate = {
-            'name': '',
-            'content': [],
-            'location': [],
-            'colors': [],
-            'stats': [],
-            'image': {
-                # 'thumbnail': '',
-                # 'medium': ''
-            },
-            'player': {
-                'name': '',
-                'content': [],
-                'image': {
-                    # 'thumbnail': '',
-                    # 'medium': ''
-                }
-            }
-        }
-
-        teamData = copy.deepcopy(teamObjTemplate)
+        import json
+        import math
+        result = {
+            "content": [],
+            "code": {}
+        }  
+        
         for chunk in content:
-            if chunk['type'] == 'header':
-                if teamData['name'] != '':
-                    data = data + [copy.deepcopy(teamData)]
-                    teamData = copy.deepcopy(teamObjTemplate)
-
-                names = list(map(lambda x: x.strip(), chunk['data']['content'].split(',')))
-                teamData['name'] = names[0]
-                teamData['player']['name'] = names[1]
-            elif chunk['type'] == 'paragraph':
-                if chunk['data'].find('<em>') > -1:
-                    teamData['player']['content'] = teamData['player']['content'] + [chunk['data'].replace('<em>', '').replace('</em>', '')]
-                else:
-                    teamData['content'] = teamData['content'] + [chunk['data']]
+            if chunk['type'] == 'code':
+                result['code'] = json.loads(chunk['data']['content'])
+                
             elif chunk['type'] == 'gallery':
                 gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
                 
-                data = data + [copy.deepcopy(teamData)]
                 for index, image in enumerate(gallery):
-                    if index%2 == 0:
-                        teamImage = {
+                    if index % 2 == 0:
+                        result['code'][int(math.floor(index/2))]['image'] = {
                             'thumbnail': image.image.get_thumbnail_url(),
                             'medium': image.image.get_medium_url(),
                         }
                     else:
-                        playerImage = {
+                        result['code'][int(math.floor(index/2))]['player']['image'] = {
                             'thumbnail': image.image.get_thumbnail_url(),
                             'medium': image.image.get_medium_url(),
                         }
-                        data[int(index/2)]['image'] = teamImage
-                        data[int(index/2)]['player']['image'] = playerImage
-
-        locations = locations.split(';')
-        for index, location in enumerate(locations):
-            if (location != ''):
-                data[index]['location'] = list(map(lambda x: float(x), location.split(',')))
-        colors = colors.split(';')
-        for index, color in enumerate(colors):
-            if (color != ''):
-                data[index]['colors'] = list(map(lambda x: x.strip(' '), color.split(',')))
-        stats = stats.split(';')
-        for index, stat in enumerate(stats):
-            if (stat != ''):
-                data[index]['stats'] = list(map(lambda x: int(x.strip(' ')), stat.split(',')))
-        return data
+            else:
+                result['content'].append(chunk)
+        
+        return result
     

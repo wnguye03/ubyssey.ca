@@ -1,8 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Hind+Siliguri|Sanchez');
 
+$mapWidth: 95vw;
+$mapHeight: 700px;
 
 .c-soccer-nationals {
   overflow-x: hidden;
+  position: relative;
+  z-index: 100;
+}
+.grey-border-top {
+  padding-top: 1rem;
+  border-top: 1px solid #E4E4E4;
+}
+.c-soccer-loading {
+  width: $mapWidth;
+  height: $mapHeight;
+  display: flex;
+  justify-content: center;
+  align-items:center;
 }
 
 .c-n-container {
@@ -16,6 +31,7 @@
     margin-top: 0;
   }
   font-family: $font-body;
+  color: #333;
 }
 
 .c-n-title {
@@ -73,7 +89,7 @@
 }
 
 .c-n-content-container {
-  top: 6rem;
+  // top: 6rem;
   position: relative;
 
   .c-n-headshot--image-container {
@@ -202,40 +218,39 @@
   border-width: .5rem 1rem 0 0;
  }
 
-
  @media (min-width: 960px) {
+   .c-soccer-nationals {
+    width: $mapWidth;
+    left: calc(-#{$mapWidth}/2 + 960px/2);
+   }
   .c-n-desktop {
     position:relative;
-    height: 95vh;
+    overflow: hidden;
     width: 100%;
+    min-height: $mapHeight;
     display:flex;
     align-items: center;
   }
   .c-n-content-container {
     display: flex;
     justify-content: center;
-    // width: 100%;
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    // background-color: white;
-    // position: absolute;
 
     .c-n-content {
       display: flex;
-      // justify-content: space-around;
-      // background-color: white;
-      // max-width: 960px;
       width:100%;
       padding: 0 1rem;
 
       .c-n-content-box-container {
-        $contentWidth: 375px;
+        width: 30%;
+        min-width: 375px;
+        max-width: 500px;
         transition: all .25s;
-        width: $contentWidth;
         position: absolute;
-        top: 6rem;
+        top: 0;
         margin: 1rem;
         background-color: white;
         right: calc(-100%);
@@ -246,52 +261,18 @@
           padding: 1rem;
           margin: 0;
           border: .25rem solid black;
-          // border-radius: .5rem;
-        }
-        .c-n-mvp {
         }
         .c-n-team {
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          // padding: .5rem;
-          // width: 50%;
           h1, h2, h3, h4 {
             text-align: center;
  
           }
         }
       }
-
-      // .c-n-mvp, .c-n-team {
-      //   width: 350px;
-      //   position: absolute;
-      //   top: 2rem;
-      // }
-      // .c-n-mvp {
-      //   box-sizing: border-box;
-      //   // width: 40%;
-      //   padding: 1rem;
-      //   margin: 1rem;
-      //   right: 5%;
-      // }
-      // .c-n-team {
-      //   display: flex;
-      //   flex-direction: column;
-      //   justify-content: flex-start;
-      //   align-items: center;
-      //   padding: .5rem;
-      //   // width: 50%;
-      //   left: 5%;
-      //   h1, h2, h3, h4 {
-      //     text-align: center;
-      //     .c-n-team-stat {
-      //       padding-left: .25rem;
-      //       padding-right: .25rem;
-      //     }
-      //   }
-      // }
     }
   }
  }
@@ -304,7 +285,7 @@
  #c-nationals-map {
   position: relative;
   height: auto;
-  width: 95vw;
+  width: 80%;
   margin: 2rem auto;
   
   $time1: .25s;
@@ -335,20 +316,17 @@
     opacity: 0;
     animation: fade-in $time1 linear 5*$time1 forwards;
     transition: all .3s;
-    height: 36px;
+    height: 60px;
     width: auto;
     position: absolute;
     transform: translate(-50%, 0%);
     &:hover {
       cursor: pointer;
-      height: 60px;
+      height: 80px;
       z-index: 1000;
     }
   }
 }
-
-
-
 
 @keyframes fade-in {
   0%   {opacity: 0;}
