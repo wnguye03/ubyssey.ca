@@ -36,17 +36,20 @@
         {% endblock %}
 
         <div class="fw-banner top-image grey-border-top">
-            {% if article.template_fields.description %}
-            <p class="fw-description">{{ article.template_fields.description }}</p>
-            {% endif %}
-            <div class="c-article__byline c-article__byline-center">
-                <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
-                <div class="c-article__byline__meta">
-                <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
-                {% if reading_time %}
-                <span> &nbsp;&middot;&nbsp; </span>
-                <span class="c-article__reading-time">{{ reading_time }} min read</span>
-                {% endif %}
+            <div class="header-container no-margin-top">
+                <div class="headline-container ">
+                    {% if article.template_fields.description %}
+                    <p class="nationals-description">{{ article.template_fields.description | safe }}</p>
+                    {% endif %}
+                    <div class="c-article__byline c-article__byline-center">
+                        <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+                        <div class="c-article__byline__meta">
+                        <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
+                        {% if reading_time %}
+                        <span> &nbsp;&middot;&nbsp; </span>
+                        <span class="c-article__reading-time">{{ reading_time }} min read</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
