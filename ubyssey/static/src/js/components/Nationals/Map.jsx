@@ -1,14 +1,9 @@
 import React from 'react'
-import { mapPath } from './mapPath.js'
 
-
-const mapZoom = 3
-const mapDefault = [820, 376]
 
 class Map extends React.Component {
   constructor(props){
     super(props)
-    this.mapViewBox = [0, 0, 820, 376]
   }
 
   resetMap() {
@@ -39,9 +34,9 @@ class Map extends React.Component {
       <div id='c-nationals-map' >
         <svg xmlns="http://www.w3.org/2000/svg" 
           className='c-n-map'
-          viewBox={this.mapViewBox.join(' ')}
+          viewBox={this.props.mapViewBox.join(' ')}
           onClick={() => {this.resetMap()}}
-          dangerouslySetInnerHTML={{__html: mapPath}} />
+          dangerouslySetInnerHTML={{__html: this.props.mapPath}} />
 
         {this.props.teamData.map((team) => {
           return(this.renderLogos(team))

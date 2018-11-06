@@ -9,6 +9,7 @@ $mapHeight: 700px;
   z-index: 100;
 }
 .grey-border-top {
+  margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #E4E4E4;
 }
@@ -40,6 +41,7 @@ $mapHeight: 700px;
   top: 1.5rem;
   text-align: center;
   font-size:2rem;
+  font-weight: 700;
   .first {
     font-size: 1.5rem;
   }
@@ -126,6 +128,7 @@ $mapHeight: 700px;
       }
   
       .c-n-title{
+        padding-right: 1rem;
         font-size: 1.5rem;
         text-align: center;
         width: 65%;

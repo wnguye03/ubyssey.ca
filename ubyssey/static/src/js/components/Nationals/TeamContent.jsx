@@ -9,7 +9,7 @@ class TeamContent extends React.Component {
     <span className='c-n-team-stat'>Ties: ${this.props.team.stats[2]}</span>  
     `
     const ribbonStyle = this.props.isDesktop ? {width: '50%', minWidth: '20rem', top: 0}: {width: '100%', top: 0}
-    const primaryColor = this.props.team.colors[0]
+    const primaryColor = this.props.isDesktop ? this.props.team.colors[0] : '#ffffff'
     return(
       <div className='c-n-content-box-container' style={this.props.isSelected ? {left: '0px'}: {}}>
         <div className='c-n-content-box' style={{backgroundColor: primaryColor + '30', borderColor: primaryColor}}>

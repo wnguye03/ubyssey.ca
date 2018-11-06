@@ -18,7 +18,6 @@ class Mobile extends React.Component {
       for (const element of document.getElementById('c-n-team-' + index).children) {
         temp += element.clientHeight + 32
       }
-      // return temp + 16
       return temp
     })
     console.log(newHeights)
@@ -61,22 +60,6 @@ class Mobile extends React.Component {
     const {selectedTeam, teamData} = this.props
     return (
       <div className='c-n-content-container'>
-        {/* {teamData.map((team) => {
-          if (selectedTeam && team.name === selectedTeam.name) {
-            return(
-              <div className='c-n-team-container' >
-                {this.renderTeamHeader(team)}
-                {this.renderTeamContent(team)}
-              </div>
-            )
-          } else {
-            return(
-              <div className='c-n-team-container'>
-                {this.renderTeamHeader(team)}
-              </div>
-            )
-          }
-        })} */}
         {teamData.map((team, index) => {
           return(
             <div className='c-n-team-container' >
@@ -93,7 +76,6 @@ class Mobile extends React.Component {
 var styles = {
   map: {
     position: 'relative',
-    // maxHeight: '75vh',
     height: 'auto',
     width: '90vw',
     margin: '2rem auto',
