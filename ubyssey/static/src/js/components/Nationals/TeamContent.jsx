@@ -4,9 +4,9 @@ import Ribbon from './Ribbon.jsx'
 class TeamContent extends React.Component {
   render() {
     const ribbonHtml = `        
-    <span className='c-n-team-stat'>Wins: ${this.props.team.stats[0]}</span>
-    <span className='c-n-team-stat'>Losses: ${this.props.team.stats[1]}</span>
-    <span className='c-n-team-stat'>Ties: ${this.props.team.stats[2]}</span>  
+    <span className='c-n-team-stat'>Win ${this.props.team.stats[0]} | </span>
+    <span className='c-n-team-stat'>Loss ${this.props.team.stats[1]} | </span>
+    <span className='c-n-team-stat'>Tie ${this.props.team.stats[2]}</span>  
     `
     const ribbonStyle = this.props.isDesktop ? {width: '50%', minWidth: '20rem', top: 0}: {width: '100%', top: 0}
     const primaryColor = this.props.isDesktop ? this.props.team.colors[0] : '#ffffff'
