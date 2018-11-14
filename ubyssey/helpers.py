@@ -249,8 +249,7 @@ class ArticleHelper(object):
         articles = Article.objects.filter(is_published=True)
 
         if dur in durations:
-            time_now = timezone.make_aware(timezone.now(), timezone.get_current_timezone(), is_dst=False)
-            end = time_now + datetime.timedelta(days=1)
+            end = datetime.datetime.now() + datetime.timedelta(days=1)
             start = end - datetime.timedelta(days=durations[dur])
             time_range = (start, end)
             articles = articles.filter(created_at__range=(time_range))
@@ -342,7 +341,7 @@ class PodcastHelper(object):
         """ Return the podcast episode url"""
         podcast = Podcast.objects.get(id=podcast_id)
         return "%spodcast/%s#%s" % (settings.BASE_URL, podcast.slug, id)
-
+    
     @staticmethod
     def get_podcast_url(id=None):
         """ Return the podcast url"""
@@ -358,15 +357,15 @@ class NationalsHelper(object):
         result = {
             "content": [],
             "code": {}
-        }
-
+        }  
+        
         for chunk in content:
             if chunk['type'] == 'code':
                 result['code'] = json.loads(chunk['data']['content'])
-
+                
             elif chunk['type'] == 'gallery':
                 gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
-
+                
                 for index, image in enumerate(gallery):
                     if index % 2 == 0:
                         result['code'][int(math.floor(index/2))]['image'] = {
@@ -380,6 +379,6 @@ class NationalsHelper(object):
                         }
             else:
                 result['content'].append(chunk)
-
+        
         return result
-
+    
