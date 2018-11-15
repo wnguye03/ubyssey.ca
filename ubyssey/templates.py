@@ -113,6 +113,25 @@ class OneYearLater(Template):
     about = TextField('About')
 
 @register.template
+class FoodInsecurity(Template):
+    id = 'food-insecurity'
+    name = 'Feature: Food Insecurity'
+
+    title = CharField('Title')
+    subtitle = CharField('Subtitle')
+    snippet = TextField('Snippet')
+    video_src = CharField('Video Source File')
+    next_article = ArticleField('Preview Article')
+    next_title = CharField('Preview Title')
+    next_snippet = TextField('Preview Snippet')
+
+    article_first = ArticleField('Then Article')
+    article_second = ArticleField('Now Article')
+    article_third = ArticleField('Next Article')
+
+    about = TextField('About')
+
+@register.template
 class Timeline(Template):
     id = 'timeline'
     name = 'Timeline'
