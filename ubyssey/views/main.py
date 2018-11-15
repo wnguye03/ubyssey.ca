@@ -426,7 +426,6 @@ class UbysseyTheme(object):
         return render(request, 'author.html', context)
 
     def archive(self, request):
-        
         years = ArticleHelper.get_years()
 
         sections = Section.objects.all()
@@ -459,7 +458,6 @@ class UbysseyTheme(object):
             person = Person.objects.get(full_name__icontains=query)
         except:
             person = None
-        
 
         if year:
             context['year'] = year
