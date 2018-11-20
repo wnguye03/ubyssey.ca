@@ -5,42 +5,36 @@ class Map extends React.Component {
     super(props)
   }
 
-  resetMap() {
-    this.props.resetMap()
-  }
-
-  handlePointClick(index) {
-    console.log(index)
-  }
-
-  renderPoints(location, index) {
-    let pointStyle = {top: location[0] + '%', left: location[1] + '%'}
-
-    // if (this.props.selectedTeam && team.name === this.props.selectedTeam.name) {
-    //   Object.assign(logoStyle, {height: '60%', top: '30%', left: '50%', zIndex: 10})
-    // } else if (this.props.selectedTeam) {
-    //   Object.assign(logoStyle, {zIndex: 0, top: team.location[0] + '%', left: team.location[1] + '%'})
-    // } else {
-    //   Object.assign(logoStyle, {top: team.location[0] + '%', left: team.location[1] + '%'})
-    // }
-
+  renderPoints(location, index, selected) {
+    const pointStyle = {top: location[0] + '%', left: location[1] + '%', transform: `translate(-50%, -50%) scale(${selected ? '1.2': '1'})`}
+    
     return(
       <div className='c-i-map__marker' 
         style={pointStyle}
-        onClick={() => {this.handlePointClick(index)}}>
+        onClick={() => {this.props.selectPoint(index)}}>
         <div className='c-i-map__marker-center'></div>
       </div>
     )
   }
 
   render() {
+    const currentPoint = this.props.currentPoint
+    const contenStyle = currentPoint ? {transform: 'translate(0)', width: '350px', opacity: 1}:{transform: 'translate(-350px)', width: 0, opacity: 0}
     return (
       <div className='c-i-map' >
         <div className='c-i-map__image-container'>
           <div className='c-i-map__image' style={{backgroundImage: 'url(' + this.props.mapImage + ')'}}>
           {this.props.pointData.map((point, index) => {
-            return(this.renderPoints(point.location, index))
+            return(this.renderPoints(point.location, index, (currentPoint ? point.name == currentPoint.name: false)))
           })}
+          </div>
+        </div>
+        <div className='c-i-map__content-container' style={contenStyle}>
+          <div className='c-i-map__content'>
+            <h2>{currentPoint && currentPoint.name}</h2>
+            {currentPoint && currentPoint.content.map((paragraph) => {
+              return <p>{paragraph}</p>
+            })}  
           </div>
         </div>
       </div>

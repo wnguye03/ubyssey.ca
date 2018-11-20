@@ -3,23 +3,43 @@
 $desktop-map-height: 500px;
 $map-marker-color: #333;
 
+h1, h2 {
+  text-align: center;
+}
+
 .c-i-desktop {
   width: 100%;
+  // display: flex;
+  // justify-content: center;
 }
 .c-i-container {
   max-width: 960px;
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin: 0 auto;
-  margin-top: 2rem;
+  padding-top: 1rem;
+  color: #333;
   .c-i-map {
     height: $desktop-map-height;
+    display: flex;
+    justify-content: center;
+    .c-i-map__content-container {
+      transition: all .25s;
+      border-left: 1px solid rgb(204, 204, 204);
+      padding-left: 2rem;
+      .c-i-map__content {
+        width: 350px;
+        // background-color: red;
+      }
+    }
     .c-i-map__image-container {
       padding-top: 100%;
       width: 50%;
-      margin: 0 auto;
+      margin: 0 2rem;
       position: relative;
+      z-index: 10;
     }
     .c-i-map__image {
       top: 0;

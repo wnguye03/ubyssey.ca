@@ -6,24 +6,25 @@ class FoodInsecurity extends React.Component {
   constructor(props){
     super(props)
 
-    this.mapViewBox = [0, 0, 820, 376]
     this.state = {
-      selectedTeam: null
+      currentPoint: null
     }
   }
 
-  selectPoint(team) {
-    if (this.state.selectedTeam && this.state.selectedTeam.name === team.name) {
-      team = null
+  selectPoint(point) {
+    const element = document.getElementsByClassName('food-insecurity')
+    console.log(element[0].getBoundingClientRect().top + document.documentElement.scrollTop)
+    const topOffset = element[0].getBoundingClientRect().top + document.documentElement.scrollTop
+    window.scroll({
+      top: topOffset - 48,
+      left: 0,
+      behavior: 'smooth'
+    });
+    if (this.state.currentPoint && this.state.currentPoint.name === this.props.pointData[point].name) {
+      point = null
     }
     this.setState({
-      selectedTeam: team
-    })
-  }
-  
-  resetPoints() {
-    this.setState({
-      selectedTeam: null
+      currentPoint: this.props.pointData[point]
     })
   }
 
@@ -31,14 +32,13 @@ class FoodInsecurity extends React.Component {
     const isDesktop = window.innerWidth > desktopSize ? true: false
     return (
       <div className={'c-i-container'}>
+        <h1>Campus Food Resources</h1>
         { isDesktop && 
           <div className='c-i-desktop'>
             <Map pointData={this.props.pointData} 
-              resetMap={() => {this.resetPoints()}}
-              selectedTeam={this.state.selectedTeam}
-              mapViewBox={this.mapViewBox}
               mapImage={this.props.map}
-              selectPoint={(team) => this.selectPoint(team)}/> 
+              currentPoint={this.state.currentPoint}
+              selectPoint={(point) => this.selectPoint(point)}/> 
           </div>
         }{ !isDesktop && 
           <div>
