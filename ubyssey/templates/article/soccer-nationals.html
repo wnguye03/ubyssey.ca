@@ -26,13 +26,13 @@
         
         {% block banner %}
             <div class='c-soccer-nationals' 
-                    data-current-article-id='{{article.parent_id}}' 
-                    data-map='{{article.featured_image.image.get_medium_url}}'
-                    data-team-data='{{article.team_data}}'>
-                    <div class='c-soccer-loading'>
-                        Loading Map...
-                    </div>
+                data-current-article-id='{{article.parent_id}}' 
+                data-map='{{article.featured_image.image.get_medium_url}}'
+                data-team-data='{{article.team_data}}'>
+                <div class='c-soccer-loading'>
+                    Loading Map...
                 </div>
+            </div>
         {% endblock %}
 
         <div class="fw-banner top-image grey-border-top">

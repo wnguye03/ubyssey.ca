@@ -348,7 +348,6 @@ class PodcastHelper(object):
         return "%spodcast/episodes" % (settings.BASE_URL)
 
 class NationalsHelper(object):
-
     @staticmethod
     def prepare_data(content):
         """ Add team/player blurb to dataObj"""
@@ -377,6 +376,37 @@ class NationalsHelper(object):
                             'thumbnail': image.image.get_thumbnail_url(),
                             'medium': image.image.get_medium_url(),
                         }
+            else:
+                result['content'].append(chunk)
+        
+        return result
+
+class FoodInsecurityHelper(object):
+    @staticmethod
+    def prepare_data(content):
+        """ Add team/player blurb to dataObj"""
+        import json
+        import math
+        result = {
+            "content": [],
+            "code": {},
+            "map": {}
+        }  
+        
+        for chunk in content:
+            if chunk['type'] == 'code':
+                result['code'] = json.loads(chunk['data']['content'])
+            elif chunk['type'] == 'image' and chunk['data']['caption'] == 'interactive-map':
+                image = Image.objects.get(id=chunk['data']['image_id'])
+                result['map'] = image.get_medium_url()
+            elif chunk['type'] == 'gallery':
+                gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
+                
+                for image in gallery:
+                    result['code']['image'] = {
+                        'thumbnail': image.image.get_thumbnail_url(),
+                        'medium': image.image.get_medium_url(),
+                    }
             else:
                 result['content'].append(chunk)
         
