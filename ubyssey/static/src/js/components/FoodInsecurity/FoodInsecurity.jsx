@@ -11,20 +11,22 @@ class FoodInsecurity extends React.Component {
     }
   }
 
+  resetPoint() {
+    this.setState({
+      currentPoint: null
+    })
+  }
+
   selectPoint(point) {
     const element = document.getElementsByClassName('food-insecurity')
-    console.log(element[0].getBoundingClientRect().top + document.documentElement.scrollTop)
     const topOffset = element[0].getBoundingClientRect().top + document.documentElement.scrollTop
     window.scroll({
       top: topOffset - 48,
       left: 0,
       behavior: 'smooth'
     });
-    if (this.state.currentPoint && this.state.currentPoint.name === this.props.pointData[point].name) {
-      point = null
-    }
     this.setState({
-      currentPoint: this.props.pointData[point]
+      currentPoint: point
     })
   }
 
@@ -32,19 +34,17 @@ class FoodInsecurity extends React.Component {
     const isDesktop = window.innerWidth > desktopSize ? true: false
     return (
       <div className={'c-i-container'}>
-        <h1>Campus Food Resources</h1>
-        { isDesktop && 
-          <div className='c-i-desktop'>
-            <Map pointData={this.props.pointData} 
-              mapImage={this.props.map}
-              currentPoint={this.state.currentPoint}
-              selectPoint={(point) => this.selectPoint(point)}/> 
-          </div>
-        }{ !isDesktop && 
-          <div>
-            mobile render
-          </div>
-        }
+        <span className='c-i-title'>Campus Food Resources</span>
+        <span className='c-i-subtitle'>Interactive Map</span>
+        <div className='c-i-desktop'>
+          <Map 
+            isDesktop = {isDesktop}
+            pointData={this.props.pointData} 
+            mapImage={this.props.map}
+            currentPoint={this.state.currentPoint}
+            resetPoint={() => this.resetPoint()}
+            selectPoint={(point) => this.selectPoint(point)}/> 
+        </div>
       </div>
     )
   }

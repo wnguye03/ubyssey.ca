@@ -1,7 +1,8 @@
 @import './modules/variables';
 
-$desktop-map-height: 500px;
+$desktop-map-height: 640px;
 $map-marker-color: #333;
+$map-marker-size: 20px;
 
 h1, h2 {
   text-align: center;
@@ -9,8 +10,6 @@ h1, h2 {
 
 .c-i-desktop {
   width: 100%;
-  // display: flex;
-  // justify-content: center;
 }
 .c-i-container {
   max-width: 960px;
@@ -19,8 +18,37 @@ h1, h2 {
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  padding-top: 1rem;
   color: #333;
+  padding-bottom: 1rem;
+
+  .c-i-map__instructions {
+    margin-top: .5rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .c-i-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #111;
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: .5rem;
+  }
+  .c-i-subtitle {
+    font-size: 1.2rem;
+    color: #333;
+    text-align:center;
+    margin-bottom: 1rem;
+  }
+  .c-i-map__content-title {
+    font-size: 1.5rem;
+    color: #111;
+    font-family: 'ub-avenir', Avenir, serif;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
   .c-i-map {
     height: $desktop-map-height;
     display: flex;
@@ -31,12 +59,9 @@ h1, h2 {
       padding-left: 2rem;
       .c-i-map__content {
         width: 350px;
-        // background-color: red;
       }
     }
     .c-i-map__image-container {
-      padding-top: 100%;
-      width: 50%;
       margin: 0 2rem;
       position: relative;
       z-index: 10;
@@ -48,31 +73,82 @@ h1, h2 {
       bottom: 0;
       position: absolute;
       max-height: $desktop-map-height;
-    }
-    .c-i-map__marker {
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      border: 5px solid $map-marker-color;
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transform: translate(-50%, -50%);
-      transition: transform .25s;
-
-      &:hover {
-        transform: translate(-50%, -50%) scale(1.2);
+      background-size: cover;
+      .c-i-map__marker-pointer-container {
+        height: 100%;
+        width: 1rem;
+        position: absolute;
+        right: 0;
+        transition: transform .25s;
+        .c-i-map__marker-pointer {
+          position: absolute;
+          top: -1rem;
+          right: 0;
+          
+  
+          width: 0; 
+          height: 0; 
+          border-top: 1rem solid transparent;
+          border-bottom: 1rem solid transparent; 
+          
+          border-right:1.5rem solid #333; 
+        }
       }
-      .c-i-map__marker-center {
-        height: 8px;
-        width: 8px;
-        border-radius: 8px;
-        background-color: $map-marker-color;
+    }
+  }
+  @media($bp-smaller-than-tablet)  {
+    .c-i-map {
+      height: 450px;
+      .c-i-map__image-container {
+        width: calc(100% - 2rem);
+      }
+      .c-i-map__content-container {
+        // transform: translate(15vw);
+        font-size: .9rem;
+        opacity: 1;
+        position: absolute;
+        right: 0;
+        padding: 1rem;
+        z-index: 100;
+        width: 75%;
+        height: 450px;
+        box-sizing: border-box;
+        background-color: white;
+        overflow: auto;
+        .c-i-map__content {
+          width: 100%;
+        }
       }
     }
   }
 }
 
+@media($bp-smaller-than-tablet)  {
+  .oyl-header__video.vertical {
+    width: 100%;
+    height: 100%;
+  }
+}
 
+// polygon {
+//   transition: transform .25s;
+// }
+
+.cls-5:hover {
+  // transform: scale(2);
+  stroke: white;
+  stroke-width:2px;
+  cursor: pointer;
+}
+
+.fa {
+  transition: all .25s;
+  cursor: pointer;
+}
+.fa:hover {
+  font-size: 1.1rem;
+}
+
+body {
+  overflow-x: hidden;
+}
