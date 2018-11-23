@@ -64,11 +64,11 @@
                 <h2 class="oyl-article__subtitle">{{ article.template_fields.subtitle }}</h2>
                 <h1 class="oyl-article__title">{{ article.template_fields.title }}</h1>
                 <p class="oyl-article__snippet">{{ article.template_fields.snippet }}</p>
-                <p class="oyl-article__byline">By Someone &nbsp;&middot;&nbsp; June 3, 2018</p>
+                <p class="oyl-article__byline">By {{ article.get_author_url|safe }} &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
               </div>
             </div>
             <div class="oyl-header__shadow"></div>
-            <video id="header-video" preload="yes" class="oyl-header__video" autoplay muted playsinline loop>
+            <video id="header-video" preload="yes" class="oyl-header__video" autoplay muted playsinline>
               <source src="{{ article.template_fields.video_src }}.mp4" type="video/mp4">
               <source src="{{ article.template_fields.video_src }}.ogg" type="video/ogg">
             </video>
@@ -82,23 +82,23 @@
           <ul class="oyl-nav__list">
             <li>
               {% if article.slug == article.template_fields.article_first.slug %}
-              <a class="is-selected" href="{{ article.template_fields.article_first.get_absolute_url }}">1. Then</a>
+              <a class="is-selected" href="{{ article.template_fields.article_first.get_absolute_url }}">{{article.template_fields.article_first_preview}}</a>
               {% else %}
-              <a href="{{ article.template_fields.article_first.get_absolute_url }}">1. Then</a>
+              <a href="{{ article.template_fields.article_first.get_absolute_url }}">{{article.template_fields.article_first_preview}}</a>
               {% endif %}
             </li>
             <li>
               {% if article.slug == article.template_fields.article_second.slug %}
-              <a class="is-selected" href="{{ article.template_fields.article_second.get_absolute_url }}">2. Now</a>
+              <a class="is-selected" href="{{ article.template_fields.article_second.get_absolute_url }}">{{article.template_fields.article_second_preview}}/a>
               {% else %}
-              <a href="{{ article.template_fields.article_second.get_absolute_url }}">2. Now</a>
+              <a href="{{ article.template_fields.article_second.get_absolute_url }}">{{article.template_fields.article_second_preview}}</a>
               {% endif %}
             </li>
             <li>
               {% if article.slug == article.template_fields.article_third.slug %}
-              <a class="is-selected" href="{{ article.template_fields.article_third.get_absolute_url }}">3. Next</a>
+              <a class="is-selected" href="{{ article.template_fields.article_third.get_absolute_url }}">{{article.template_fields.article_third_preview}}</a>
               {% else %}
-              <a href="{{ article.template_fields.article_third.get_absolute_url }}">3. Next</a>
+              <a href="{{ article.template_fields.article_third.get_absolute_url }}">{{article.template_fields.article_third_preview}}</a>
               {% endif %}
             </li>
           </ul>
@@ -108,7 +108,6 @@
       {% block banner %}
       <div class='food-insecurity' 
         data-current-article-id='{{article.parent_id}}' 
-        data-map='{{article.map}}'
         data-point-data='{{article.point_data}}'>
         <div class='loading'>
           Loading Map...
@@ -117,10 +116,10 @@
       {% endblock %}
 
       <div class="oyl-article__body">
-
         {{ article.html|safe }}
 
-        <a class="oyl-preview" href="{{ article.template_fields.next_article.get_absolute_url }}" style="background-image: url('{{ article.template_fields.next_article.featured_image.image.get_medium_url }}')">
+        {% if article.template_fields.next_article %}
+          <a class="oyl-preview" href="{{ article.template_fields.next_article.get_absolute_url }}" style="background-image: url('{{ article.template_fields.next_article.featured_image.image.get_medium_url }}')">
           <div class="oyl-preview__container">
             <h3>Up Next</h3>
             <h2>{{ article.template_fields.next_title }}</h2>
@@ -128,6 +127,7 @@
           </div>
           <div class="oyl-preview__overlay"></div>
         </a>
+        {% endif %}
       </div>
       <div class="oyl-about">
         <h3>About the series</h3>

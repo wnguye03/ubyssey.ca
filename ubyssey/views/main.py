@@ -154,7 +154,6 @@ class UbysseyTheme(object):
         if article.template == 'food-insecurity':
             data = FoodInsecurityHelper.prepare_data(article.content)
             article.content = data['content']
-            article.map = data['map']
             article.point_data = json.dumps(data['code'])
        
         ref = request.GET.get('ref', None)

@@ -125,9 +125,14 @@ class FoodInsecurity(Template):
     next_title = CharField('Preview Title')
     next_snippet = TextField('Preview Snippet')
 
-    article_first = ArticleField('Then Article')
-    article_second = ArticleField('Now Article')
-    article_third = ArticleField('Next Article')
+    article_first = ArticleField('First Article')
+    article_first_preview = CharField('First Article Preview')
+
+    article_second = ArticleField('Second Article')
+    article_second_preview = CharField('Second Article Preview')
+
+    article_third = ArticleField('Third Article')
+    article_third_preview = CharField('Third Article Preview')
 
     about = TextField('About')
 

@@ -18,6 +18,8 @@ class FoodInsecurity extends React.Component {
   }
 
   selectPoint(point) {
+    if(point.length === 0)
+      point = null
     const element = document.getElementsByClassName('food-insecurity')
     const topOffset = element[0].getBoundingClientRect().top + document.documentElement.scrollTop
     window.scroll({
@@ -30,12 +32,12 @@ class FoodInsecurity extends React.Component {
     })
   }
 
+
   render() {
     const isDesktop = window.innerWidth > desktopSize ? true: false
     return (
       <div className={'c-i-container'}>
-        <span className='c-i-title'>Campus Food Resources</span>
-        <span className='c-i-subtitle'>Interactive Map</span>
+        <span className='c-i-title'>Affordable Food Map</span>
         <div className='c-i-desktop'>
           <Map 
             isDesktop = {isDesktop}

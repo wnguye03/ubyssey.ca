@@ -4,7 +4,7 @@ import {defs, base, roads, locations} from './mapPath.js'
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.MAP_WIDTH = this.props.isDesktop ? 500 : (window.innerWidth - 32 || document.documentElement.clientWidth - 32)
+    this.MAP_WIDTH = this.props.isDesktop ? 500 : 320
     this.MAP_HEIGHT = this.props.isDesktop ? 640 : (640/500)*this.MAP_WIDTH
     this.viewBox = [0, 0, this.MAP_WIDTH/2, this.MAP_HEIGHT/2]
     this.myLatestTap = new Date().getTime();
@@ -36,22 +36,18 @@ class Map extends React.Component {
   zoomMap(e) {
     e.preventDefault()
     const map = document.getElementById('interactive-map')
-    const mX = e.clientX - map.getBoundingClientRect().left
-    const mY = e.clientY - map.getBoundingClientRect().top
+    let mX = e.clientX - map.getBoundingClientRect().left
+    let mY = e.clientY - map.getBoundingClientRect().top
 
     // get difference between click point and center of map
-    let zoomX = mX - this.MAP_WIDTH/2
-    let zoomY = mY - this.MAP_HEIGHT/2
+    mX = mX - this.MAP_WIDTH/2
+    mY = mY - this.MAP_HEIGHT/2
 
     //normalize click point to be centered in zoomed SVG
-    zoomX = (zoomX + (this.state.scale - 1)*this.viewBox[2]/this.state.scale)/2 
-    zoomY = (zoomY + (this.state.scale - 1)*this.viewBox[3]/this.state.scale)/2
+    mX = (mX + (this.state.scale - 1)*this.viewBox[2]/this.state.scale)/2 
+    mY = (mY + (this.state.scale - 1)*this.viewBox[3]/this.state.scale)/2
 
-
-
-
-
-    const newViewBox = [zoomX, zoomY, this.viewBox[2]/this.state.scale, this.viewBox[3]/this.state.scale]
+    const newViewBox = [mX, mY, this.viewBox[2]/this.state.scale, this.viewBox[3]/this.state.scale]
 
     if (!this.state.zoom) {
       this.setState({
@@ -74,8 +70,15 @@ class Map extends React.Component {
     this.props.selectPoint(point)
   }
 
-  renderMap() {
+  reset() {
+    this.setState({
+      viewBox: [0, 0, this.viewBox[2], this.viewBox[3]],
+      zoom: false
+    })
+    this.props.resetPoint()
+  }
 
+  renderMap() {
     return(
       <svg xmlns="http://www.w3.org/2000/svg" 
         className='c-i-map'
@@ -93,11 +96,11 @@ class Map extends React.Component {
         <g id="Base" dangerouslySetInnerHTML={{__html: base}}></g>
         <g id="Roads" dangerouslySetInnerHTML={{__html: roads}}></g>
         <g id="Locations">
-          {Object.keys(locations).map((name) => {
-            let point = null
+          {Object.keys(locations).map((location) => {
+            let point = []
             this.props.pointData.map((data) => {
-              if(data.name.split(' ').join('').toLowerCase() === name) {
-                point = data
+              if(data.location.split(' ').join('').toLowerCase() === location) {
+                point = point.concat(data)
               }
             })
             return(
@@ -106,7 +109,7 @@ class Map extends React.Component {
                 <title style={{textTransform: 'capitalize'}}>{point.name}</title>
                 <polygon className='cls-5' 
                   id={name}
-                  points={locations[name]} 
+                  points={locations[location]} 
                   onClick={(e) => {this.selectPoint(e, point)}}/>
               </svg>
             )
@@ -116,26 +119,72 @@ class Map extends React.Component {
     )
   }
 
-  render() {
-    const currentPoint = this.props.currentPoint
-    const desktopContentStyle = currentPoint ? {transform: 'translate(0)', width: '350px', opacity: 1}:{transform: 'translate(-350px)', width: 0, opacity: 0}
-    const mobileContentStyle = currentPoint ? {transform: 'translate(0)', opacity: 1}:{transform: 'translate(75%)', opacity: 0}
+  renderMobile(currentPoint) {
+    const contentStyle = currentPoint ? {transform: 'translateY(-350px)', opacity: 1}:{transform: 'translateY(0)'}
     return (
       <div className='c-i-map' height={this.MAP_HEIGHT}>
         <div className='c-i-map__image-container' style={{backgroundColor: '#292b71'}}>
           {this.renderMap()}
-          <div className='c-i-map__instructions'>Double {this.props.isDesktop ? 'Click': 'Tap' } to Zoom | {this.props.isDesktop ? 'Click': 'Tap' } to Select </div>
-        </div>
-        <div className='c-i-map__content-container' style={this.props.isDesktop ? desktopContentStyle : mobileContentStyle}>
-          <div className='c-i-map__content'>
-            <span className='c-i-map__content-title'>{currentPoint && currentPoint.name}</span>
-            {currentPoint && currentPoint.content.map((paragraph) => {
-              return <p>{paragraph}</p>
+          <div className='c-i-map__content-container' style={contentStyle}>
+            <span> <i className='fa fa-arrow-down' onClick={() => this.reset()}> Back </i> </span>
+
+            {currentPoint && currentPoint.map((point) => {
+              return(
+                <div className='c-i-map__content'>
+                  <div className='c-i-map__content-header'>
+                    <span className='c-i-map__content-title'>{point.name}</span> 
+                    
+                  </div>
+                  <div className='c-i-map__content-subtitle'>{point.location}</div>
+                  {point.content.map((paragraph) => {
+                    return <p>{paragraph}</p>
+                  })} 
+                </div>
+              )
             })} 
-            <i className={`fa ${this.props.isDesktop ? 'fa-arrow-left': 'fa-arrow-right'}`} onClick={() => this.props.resetPoint()}> Back </i>
           </div>
         </div>
       </div>
+    )
+  }
+
+  renderDesktop(currentPoint) {
+    const contentStyle = currentPoint ? {transform: 'translate(0)', width: '350px', opacity: 1}:{transform: 'translate(-350px)', width: 0}
+    return (
+      <div className='c-i-map' height={this.MAP_HEIGHT}>
+        <div className='c-i-map__image-container' style={{backgroundColor: '#292b71'}}>
+          {this.renderMap()}
+          <div className='c-i-map__instructions'>Double Click to Zoom | Click to Select</div>
+        </div>
+        <div className='c-i-map__content-container' style={contentStyle}>
+          {currentPoint && currentPoint.map((point) => {
+            return(
+              <div className='c-i-map__content'>
+                <span className='c-i-map__content-title'>{point.name}</span> 
+                <div className='c-i-map__content-subtitle'>{point.location}</div>
+                {point.content.map((paragraph) => {
+                  return <p>{paragraph}</p>
+                })} 
+                
+              </div>
+            )
+          })}
+          <i className='fa fa-arrow-left' onClick={() => this.reset()}> Back </i>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
+    const currentPoint = this.props.currentPoint
+    return (
+      <div>
+        {this.props.isDesktop && this.renderDesktop(currentPoint)}
+        {!this.props.isDesktop && this.renderMobile(currentPoint)}
+        {!this.props.isDesktop && <div className='c-i-map__instructions'>Double Tap to Zoom | Tap to Select </div> }
+      </div>
+      
+
     )
   }
 }
