@@ -13,21 +13,18 @@ class Mobile extends React.Component {
 
   componentDidMount() {
     let newHeights = this.state.heights.map((height, index) => {
-      console.log(this.preId + index)
       let temp = 0
       for (const element of document.getElementById('c-n-team-' + index).children) {
         temp += element.clientHeight + 32
       }
       return temp
     })
-    console.log(newHeights)
     this.setState({
       heights: newHeights
     })
   }
 
   renderTeamHeader(team) {
-    console.log(team)
     return(
       <div className='c-n-team-header'
         style={{backgroundColor: team.colors[0]}}
@@ -42,7 +39,6 @@ class Mobile extends React.Component {
 
   renderTeamContent(index, team, isSelected) {
     const teamId = this.preId + index
-    console.log(teamId)
     return(
       <div id={teamId} style={{height: isSelected ? this.state.heights[index]: 0}}>
         <TeamContent ref='teamContent' 
