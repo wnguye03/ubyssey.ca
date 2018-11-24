@@ -161,10 +161,6 @@ body {
   background-color: $primary-color;
 }
 
-.oyl-nav__list li a:hover {
-  border-color: $primary-color;
-}
-
 @media(min-width: 760px) {
   // Keeps images centered
   .oyl-article__body .image-attachment:nth-of-type(odd) {
@@ -210,4 +206,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.oyl-article__byline {
+  a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, .75);
+  }
+}
+
+.oyl-nav__list li a.is-selected, .oyl-nav__list li a:hover {
+  border-color: $color-primary;
 }
