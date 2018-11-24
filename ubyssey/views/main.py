@@ -16,7 +16,7 @@ from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -150,6 +150,11 @@ class UbysseyTheme(object):
             teamData = NationalsHelper.prepare_data(article.content)
             article.content = teamData['content']
             article.team_data = json.dumps(teamData['code'])
+
+        if article.template == 'food-insecurity':
+            data = FoodInsecurityHelper.prepare_data(article.content)
+            article.content = data['content']
+            article.point_data = json.dumps(data['code']) if data['code'] is not None else None
        
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
