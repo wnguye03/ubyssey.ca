@@ -105,7 +105,7 @@
         </nav>
       </header>
 
-      {% block banner %}
+      {% if article.point_data %}
       <div class='food-insecurity' 
         data-current-article-id='{{article.parent_id}}' 
         data-point-data='{{article.point_data}}'>
@@ -113,7 +113,7 @@
           Loading Map...
         </div>
       </div>
-      {% endblock %}
+      {%endif%}
 
       <div class="oyl-article__body">
         {{ article.html|safe }}

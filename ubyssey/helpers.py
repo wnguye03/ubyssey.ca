@@ -388,11 +388,10 @@ class FoodInsecurityHelper(object):
         import json
         result = {
             "content": [],
-            "code": {}
+            "code": None
         }  
         
         for chunk in content:
-            print(chunk)
             if chunk['type'] == 'code':
                 result['code'] = json.loads(chunk['data']['content'])
             else:
