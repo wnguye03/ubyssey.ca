@@ -154,7 +154,8 @@ class UbysseyTheme(object):
         if article.template == 'food-insecurity':
             data = FoodInsecurityHelper.prepare_data(article.content)
             article.content = data['content']
-            article.point_data = json.dumps(data['code'])
+            article.point_data = json.dumps(data['code']) if data['code'] is not None else None
+            print(article.point_data)
        
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
