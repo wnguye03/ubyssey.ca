@@ -89,7 +89,7 @@
             </li>
             <li>
               {% if article.slug == article.template_fields.article_second.slug %}
-              <a class="is-selected" href="{{ article.template_fields.article_second.get_absolute_url }}">{{article.template_fields.article_second_preview}}/a>
+              <a class="is-selected" href="{{ article.template_fields.article_second.get_absolute_url }}">{{article.template_fields.article_second_preview}}</a>
               {% else %}
               <a href="{{ article.template_fields.article_second.get_absolute_url }}">{{article.template_fields.article_second_preview}}</a>
               {% endif %}
