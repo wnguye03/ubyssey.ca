@@ -17,9 +17,11 @@ class EventManager(Manager):
     def get_random_event(self):
         queryset = self.filter(is_published=True, end_time__gt=datetime.date.today())
         count = queryset.aggregate(count=Count('id'))['count']
-        random_index = randint(0, count - 1)
-        return queryset[random_index]
-
+        if (count > 0):
+            random_index = randint(0, count - 1)
+            return queryset[random_index]
+        return None
+        
     def get_events_in_week(self, start_day):
         start = start_day
         end = start_day + datetime.timedelta(weeks=1)
