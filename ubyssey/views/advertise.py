@@ -47,4 +47,4 @@ class AdvertiseTheme(object):
                     fail_silently=True,
                 )
 
-        return render(request, 'advertise/index-new.html', {})
+        return render(request, 'advertise/index.html', {})
