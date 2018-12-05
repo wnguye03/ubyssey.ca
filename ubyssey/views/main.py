@@ -459,13 +459,18 @@ class UbysseyTheme(object):
 
         article_list = Article.objects.filter(is_published=True).order_by(order_by)
 
+        try:
+            person = Person.objects.get(full_name__icontains=query)
+        except:
+            person = None
+
         if year:
             context['year'] = year
             article_list = article_list.filter(published_at__icontains=str(year))
             filters.append('year=%s' % year)
 
         if query:
-            article_list = article_list.filter(headline__icontains=query)
+            article_list = article_list.filter(headline__icontains=query) | article_list.filter(authors__person=person) | article_list.filter(seo_keyword__icontains=query)
             context['q'] = query
             filters.append('q=%s' % query)
 
