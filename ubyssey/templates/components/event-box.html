@@ -1,3 +1,4 @@
+{%if event %}
 <a class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}" href="{% url 'event' event.pk.hex %}">
   {% if event.image and not hide_image %}
   <img class='c-event__image'  src='{{event.image.url}}' />
@@ -27,3 +28,4 @@
     </div>
   </div>
 </a>
+{%endif%}
