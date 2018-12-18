@@ -9,7 +9,7 @@ __pycache__/
 /ubyssey/static/dist/
 
 # local GAE
-/lib/   
+/lib/
 
 node_modules/
 yarn.lock
@@ -17,8 +17,9 @@ yarn.lock
 # Ignore Mac specific empty file
 .DS_Store
 
-# Ignore settings for vscode
+# Ignore settings for vscode except extensions.json
 .vscode
+!.vscode/extensions.json
 
 ubyssey/settings*.py
 
