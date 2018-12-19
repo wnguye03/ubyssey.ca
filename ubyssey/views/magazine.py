@@ -19,18 +19,25 @@ class MagazineTheme(object):
     def landing(self, request):
         """Magazine landing page view."""
 
-        # Get all 2018 magazine articles
-        articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2018').order_by('-importance')
+        # Get all 2019 magazine articles
+        articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2019').order_by('-importance')
+        reclaim = articles.filter(subsection__slug='reclaim')
+        resolve = articles.filter(subsection__slug='resolve')
+        redefine = articles.filter(subsection__slug='redefine')
 
         context = {
             'meta': {
-                'title': 'The Ubyssey Magazine - How we live',
-                'description': 'The February 2018 issue of the Ubyssey magazine.',
+                'title': 'The Ubyssey Magazine - Presence',
+                'description': 'The February 2019 issue of the Ubyssey magazine.',
                 'url': reverse('magazine-landing'),
                 'image': static('images/magazine/cover-social.jpg')
             },
             'cover': 'images/magazine/cover.jpg',
-            'articles': articles
+            'articles': {
+                'reclaim': reclaim,
+                'resolve': resolve,
+                'redefine': redefine
+            }
         }
 
         return render(request, 'magazine/landing.html', context)
@@ -75,3 +82,22 @@ class MagazineTheme(object):
         }
 
         return render(request, 'magazine/2017/landing.html', context)
+
+    def landing_2018(self, request):
+        """Magazine landing page view."""
+
+        # Get all 2018 magazine articles
+        articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2018').order_by('-importance')
+
+        context = {
+            'meta': {
+                'title': 'The Ubyssey Magazine - How we live',
+                'description': 'The February 2018 issue of the Ubyssey magazine.',
+                'url': reverse('magazine-landing'),
+                'image': static('images/magazine/cover-social.jpg')
+            },
+            'cover': 'images/magazine/cover.jpg',
+            'articles': articles
+        }
+
+        return render(request, 'magazine/2018/landing.html', context)
