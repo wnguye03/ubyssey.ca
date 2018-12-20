@@ -1,6 +1,7 @@
 from random import randint
+import json
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, JsonResponse, Http404
 from django.template import loader
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
@@ -21,10 +22,26 @@ class MagazineTheme(object):
 
         # Get all 2019 magazine articles
         articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2019').order_by('-importance')
-        reclaim = articles.filter(subsection__slug='reclaim')
-        resolve = articles.filter(subsection__slug='resolve')
-        redefine = articles.filter(subsection__slug='redefine')
+        reclaim = []
+        resolve = []
+        redefine = []
 
+        for article in articles:
+            featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
+            color = article.template_fields['color'] if 'color' in article.template_fields else None
+            temp = {
+                    'headline': article.headline,
+                    'url': article.get_absolute_url(),
+                    'featured_image': featuredImage,
+                    'color': color
+            }
+            if article.subsection.slug == 'reclaim':
+                reclaim.append(temp.copy())
+            elif article.subsection.slug == 'resolve':
+                resolve.append(temp.copy())
+            elif article.subsection.slug == 'redefine':
+                redefine.append(temp.copy())
+        
         context = {
             'meta': {
                 'title': 'The Ubyssey Magazine - Presence',
@@ -34,13 +51,14 @@ class MagazineTheme(object):
             },
             'cover': 'images/magazine/cover.jpg',
             'articles': {
-                'reclaim': reclaim,
-                'resolve': resolve,
-                'redefine': redefine
+                'reclaim': json.dumps(reclaim),
+                'resolve': json.dumps(resolve),
+                'redefine': json.dumps(redefine),
             }
         }
-
-        return render(request, 'magazine/landing.html', context)
+        t = loader.get_template('magazine/landing.html')
+        return HttpResponse(t.render(context))
+        # return render(request, 'magazine/landing.html', context)
 
     def article(self, request, slug=None):
         """Magazine article page view."""

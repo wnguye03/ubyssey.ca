@@ -3,7 +3,11 @@ import { Magazine } from './components/Magazine/2019'
 
 $(function () {
   React.render(
-    <Magazine  temp={$('#magazine-wrapper').data('temp')}/>,
+    <Magazine  
+      Reclaim={$('#magazine-wrapper').data('articlesReclaim')}
+      Resolve={$('#magazine-wrapper').data('articlesResolve')}
+      Redefine={$('#magazine-wrapper').data('articlesRedefine')}
+      />,
     $('#magazine-wrapper')[0]
   )
 });

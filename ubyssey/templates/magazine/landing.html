@@ -5,11 +5,15 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% add_version 'css/magazine-2018.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% add_version 'css/magazine-2019.css' %}" type="text/css" />
 
-
-<div id="magazine-wrapper" data-temp="TempData">
+<div id="magazine-wrapper" 
+  data-articles-reclaim='{{articles.reclaim}}'
+  data-articles-resolve='{{articles.resolve}}'
+  data-articles-redefine='{{articles.redefine}}'}>
 </div>
+
+{% include 'magazine/footer.html' %}
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="{% add_version 'js/magazine.js' %}" type="text/javascript"></script>
