@@ -1,14 +1,14 @@
-import React from 'react'
-import { Magazine } from './components/Magazine/2019'
+/** @format */
 
-$(function () {
+import React from "react"
+import { Magazine } from "./components/Magazine/2019"
+
+$(function() {
   React.render(
-    <Magazine  
-      Reclaim={$('#magazine-wrapper').data('articlesReclaim')}
-      Resolve={$('#magazine-wrapper').data('articlesResolve')}
-      Redefine={$('#magazine-wrapper').data('articlesRedefine')}
-      />,
-    $('#magazine-wrapper')[0]
+    <Magazine
+      articles={$("#magazine-wrapper").data("articles")}
+      cover={$("#magazine-wrapper").data("cover")}
+    />,
+    $("#magazine-wrapper")[0]
   )
-});
-
+})

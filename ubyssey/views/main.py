@@ -51,19 +51,19 @@ class UbysseyTheme(object):
             podcast = None
             podcast_url = None
 
-        episode_list = None    
+        episode_list = None
         episode_urls = []
         episodes = None
 
         if (podcast):
             try:
                 episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
-            except: 
+            except:
                 episode_list = None
-            if episode_list:    
+            if episode_list:
                 for episode in episode_list:
                     episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-            
+
             episodes = zip(episode_list, episode_urls)
 
         breaking = ArticleHelper.get_breaking_news().first()
@@ -155,7 +155,7 @@ class UbysseyTheme(object):
             data = FoodInsecurityHelper.prepare_data(article.content)
             article.content = data['content']
             article.point_data = json.dumps(data['code']) if data['code'] is not None else None
-       
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
@@ -282,7 +282,7 @@ class UbysseyTheme(object):
 
         featured_subsection = None
         featured_subsection_articles = None
-        
+
         if subsections:
             featured_subsection = subsections[0]
             featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
@@ -561,4 +561,4 @@ class UbysseyTheme(object):
             'episodes': episodes
         }
 
-        return render(request, 'podcasts/podcast.html', context)  
+        return render(request, 'podcasts/podcast.html', context)

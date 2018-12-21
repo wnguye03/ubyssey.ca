@@ -41,7 +41,13 @@ class MagazineTheme(object):
                 resolve.append(temp.copy())
             elif article.subsection.slug == 'redefine':
                 redefine.append(temp.copy())
-        
+
+        articles = json.dumps({
+                'reclaim': reclaim,
+                'resolve': resolve,
+                'redefine': redefine,
+            })
+
         context = {
             'meta': {
                 'title': 'The Ubyssey Magazine - Presence',
@@ -50,11 +56,7 @@ class MagazineTheme(object):
                 'image': static('images/magazine/cover-social.jpg')
             },
             'cover': 'images/magazine/cover.jpg',
-            'articles': {
-                'reclaim': json.dumps(reclaim),
-                'resolve': json.dumps(resolve),
-                'redefine': json.dumps(redefine),
-            }
+            'articles': articles
         }
         t = loader.get_template('magazine/landing.html')
         return HttpResponse(t.render(context))
@@ -114,7 +116,7 @@ class MagazineTheme(object):
                 'url': reverse('magazine-landing'),
                 'image': static('images/magazine/cover-social.jpg')
             },
-            'cover': 'images/magazine/cover.jpg',
+            'cover': 'images/magazine/2018/cover.jpg',
             'articles': articles
         }
 

@@ -1,30 +1,44 @@
-import React from 'react'
+/** @format */
+
+import React from "react"
 
 class Header extends React.Component {
+  renderSubsection(subsection) {
+    return (
+      <div
+        className={`subsection ${
+          this.props.selected === subsection ? "selected" : ""
+        }`}
+        onClick={() => this.props.selectSubsection(subsection)}>
+        <span>{subsection}</span>
+      </div>
+    )
+  }
+
   render() {
     return (
-      <div className='magazine-header'>
+      <div className="magazine-header">
         <div className="item left">
-          <a className="o-link">The Ubyssey Magazine</a>
+          <a
+            className="subsection"
+            onClick={() => {
+              this.props.selectSubsection()
+            }}>
+            The Ubyssey Magazine
+          </a>
         </div>
-        
+
         <div className="item center">
-          Presence
+          <h1>Presence</h1>
         </div>
-        
+
         <div className="item right">
-            <div className="item">
-              <h3>{this.subsections[0]}</h3>
-            </div>
-            <div className="item">
-              <h3>{this.subsections[1]}</h3>
-            </div>
-            <div className="item">
-              <h3>{this.subsections[2]}</h3>
-            </div>
+          {this.props.subsections.map((subsection) => {
+            return this.renderSubsection(subsection)
+          })}
         </div>
       </div>
-    ) 
+    )
   }
 }
 
