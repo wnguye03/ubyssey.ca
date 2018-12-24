@@ -22,31 +22,36 @@ class MagazineTheme(object):
 
         # Get all 2019 magazine articles
         articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2019').order_by('-importance')
-        reclaim = []
-        resolve = []
-        redefine = []
+        # reclaim = []
+        # resolve = []
+        # redefine = []
 
-        for article in articles:
-            featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-            color = article.template_fields['color'] if 'color' in article.template_fields else None
-            temp = {
-                    'headline': article.headline,
-                    'url': article.get_absolute_url(),
-                    'featured_image': featuredImage,
-                    'color': color
-            }
-            if article.subsection.slug == 'reclaim':
-                reclaim.append(temp.copy())
-            elif article.subsection.slug == 'resolve':
-                resolve.append(temp.copy())
-            elif article.subsection.slug == 'redefine':
-                redefine.append(temp.copy())
+        # for article in articles:
+        #     featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
+        #     color = article.template_fields['color'] if 'color' in article.template_fields else None
+        #     temp = {
+        #             'headline': article.headline,
+        #             'url': article.get_absolute_url(),
+        #             'featured_image': featuredImage,
+        #             'color': color
+        #     }
+        #     if article.subsection.slug == 'reclaim':
+        #         reclaim.append(temp.copy())
+        #     elif article.subsection.slug == 'resolve':
+        #         resolve.append(temp.copy())
+        #     elif article.subsection.slug == 'redefine':
+        #         redefine.append(temp.copy())
 
-        articles = json.dumps({
-                'reclaim': reclaim,
-                'resolve': resolve,
-                'redefine': redefine,
-            })
+        # articles = json.dumps({
+        #         'reclaim': reclaim,
+        #         'resolve': resolve,
+        #         'redefine': redefine,
+        #     })
+        # articles = {
+        #         'reclaim': reclaim,
+        #         'resolve': resolve,
+        #         'redefine': redefine,
+        #     }
 
         context = {
             'meta': {
