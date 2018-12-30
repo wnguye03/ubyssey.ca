@@ -158,6 +158,7 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):
+        articles = None
         if ref is not None:
             if ref == 'frontpage':
                 articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
@@ -341,7 +342,7 @@ class PodcastHelper(object):
         """ Return the podcast episode url"""
         podcast = Podcast.objects.get(id=podcast_id)
         return "%spodcast/%s#%s" % (settings.BASE_URL, podcast.slug, id)
-    
+
     @staticmethod
     def get_podcast_url(id=None):
         """ Return the podcast url"""
@@ -356,15 +357,15 @@ class NationalsHelper(object):
         result = {
             "content": [],
             "code": {}
-        }  
-        
+        }
+
         for chunk in content:
             if chunk['type'] == 'code':
                 result['code'] = json.loads(chunk['data']['content'])
-                
+
             elif chunk['type'] == 'gallery':
                 gallery = ImageAttachment.objects.all().filter(gallery__id=int(chunk['data']['id']))
-                
+
                 for index, image in enumerate(gallery):
                     if index % 2 == 0:
                         result['code'][int(math.floor(index/2))]['image'] = {
@@ -378,7 +379,7 @@ class NationalsHelper(object):
                         }
             else:
                 result['content'].append(chunk)
-        
+
         return result
 
 class FoodInsecurityHelper(object):
@@ -389,13 +390,12 @@ class FoodInsecurityHelper(object):
         result = {
             "content": [],
             "code": None
-        }  
-        
+        }
+
         for chunk in content:
             if chunk['type'] == 'code':
                 result['code'] = json.loads(chunk['data']['content'])
             else:
                 result['content'].append(chunk)
-        
+
         return result
-    

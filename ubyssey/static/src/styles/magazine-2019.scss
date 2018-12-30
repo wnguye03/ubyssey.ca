@@ -29,7 +29,8 @@ $time: 0.5s;
   font-weight: 500;
   font-size: font-size(32);
   position: absolute;
-  margin-top: 37%;
+  top: 0;
+  margin-top: 44%;
   width: 100%;
   text-align: center;
   color: #fff;
@@ -55,7 +56,6 @@ $time: 0.5s;
     width: 100%;
     display: flex;
     justify-content: center;
-    transition: all 0.25s;
     & > h3 {
       padding: 0.25rem;
       text-align: center;
@@ -72,122 +72,134 @@ h4 {
   font-weight: 300;
 }
 
-$headerHeight: 50px;
+$headerHeight: 60px;
+
+#magazine-title {
+  width: 100%;
+  height: $headerHeight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "ub-avenir", Avenir, serif;
+  text-transform: uppercase;
+  background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.5) 25%, rgba(0, 0, 0, 0) 100%);
+  color: white;
+}
 
 #magazine-header {
-  position: fixed;
-  top: 0;
-  right: 0;
   background-color: white;
-  width: 100%;
-  display: none;
-  justify-content: space-between;
-  align-items: center;
   height: $headerHeight;
   z-index: 100;
-  border-bottom: 1px solid $color-text-black;
   color: $color-text-black;
-  // opacity: 0;
+
+  position: absolute;
+  top: calc(100vh - #{$headerHeight});
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+
+  &.js-sticky--fixed {
+    // Structure
+    position: fixed;
+    top: 0;
+  }
 
   .item {
-    // width: 320px;
+    width: 320px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     font-family: "ub-avenir", Avenir, serif;
+    text-transform: uppercase;
+    position: absolute;
+    transition: transform $time, opacity $time;
+    opacity: 0;
+    visibility: hidden;
 
-    &.left,
-    &.right {
-      .subsection {
-        text-transform: uppercase;
-        margin: 0 0.5rem;
-        border-bottom: 2px solid transparent;
-        transition: all $time;
-
-        cursor: pointer;
-        &.selected,
-        &:hover {
-          border-color: $color-primary-1;
-        }
-      }
+    &.show {
+      opacity: 1;
+      visibility: visible;
     }
-    &.left,
+
+    &.left {
+      left: 0;
+    }
     &.center {
-      display: none;
-      & > h1 {
-        font-family: "ub-avenir-sans", Avenir, serif;
-        text-align: center;
-      }
-      @media ($bp-larger-than-mobile) {
-        display: block;
-        margin-left: 1rem;
-      }
+      left: 50%;
+      transform: translateX(-50%);
     }
     &.right {
-      justify-content: center;
-      @media ($bp-larger-than-mobile) {
-        justify-content: flex-end;
-        margin-right: 1rem;
+      right: 1rem;
+    }
+
+    .subsection {
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+      transition: border-color #{$time/2};
+      &.selected,
+      &:hover {
+        border-color: $color-primary-1;
       }
     }
   }
-}
-
-.show {
-  opacity: 1 !important;
 }
 
 .magazine-container {
   max-width: calc(960px + #{$spacing * 2});
   box-sizing: border-box;
-  margin-top: calc(#{$headerHeight} + 1rem);
-  min-height: 90vh;
-
-  //django
   margin-top: 0;
-  min-height: 100vh;
-  display: flex;
-  // align-items: center;
+  margin-bottom: $headerHeight;
+  min-height: 90vh;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  transition: opacity $time;
 
-  //react
-  // display: flex;
-  // justify-content: center;
+  &.show {
+    opacity: 1;
+  }
 
   #magainze-cover {
-    // opacity: 0;
     display: flex;
-  }
-  #magazine-article-grid {
-    // opacity: 0;
-    display: none;
   }
 
   @media ($bp-larger-than-mobile) {
     width: calc(100% - #{$spacing});
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
-  .cover-photo-container {
-    margin: 0 auto;
-    max-width: 700px;
+  .cover-photo-wrapper {
+    display: flex;
+    align-items: center;
     width: 100%;
-    align-self: center;
-    // react
-    // opacity: 0;
-    transition: opacity $time;
 
-    // &.show {
-    //   opacity: 1;
-    // }
+    .cover-photo-container {
+      margin: 0 auto;
+      max-width: 700px;
+      width: 100%;
+      height: calc(100vh - #{$headerHeight});
+      background-position: center;
+      background-size: cover;
+      box-shadow: none;
+
+      .cover-photo {
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+      }
+    }
   }
 
   .article-grid-container {
     display: flex;
     width: 100%;
-    flex-direction: row;
+    min-height: 100vh;
+    flex-direction: column;
     margin-top: calc(#{$headerHeight} + #{$spacing});
 
     @media ($bp-larger-than-mobile) {
       flex-wrap: wrap;
       align-items: stretch;
+      flex-direction: row;
     }
     // .article-grid--reclaim,
     // .article-grid--resolve,
@@ -196,27 +208,27 @@ $headerHeight: 50px;
     // }
     .article-grid {
       $gridSize: 240px;
-      display: none;
-      opacity: 0;
+      // display: none;
+      // opacity: 0;
 
       margin-bottom: $spacing;
 
       // transition: opacity $time;
 
-      // .o-article-box {
-      //   opacity: 0;
-      //   transition: opacity $time;
+      .o-article-box {
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transition: opacity $time;
+        &.show {
+          opacity: 1;
+        }
+      }
 
-      //   &.show {
-      //     opacity: 1;
-      //   }
-      // }
       @media ($bp-larger-than-mobile) {
         $gridSize: 320px;
-        &.hover {
-          &:hover {
-            opacity: 0.75;
-          }
+        transition: opacity #{$time/2};
+        &:hover {
+          opacity: 0.75;
         }
 
         &:nth-of-type(n) {
@@ -327,53 +339,3 @@ $headerHeight: 50px;
     }
   }
 }
-
-// // keyframes
-// @keyframes fadein {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
-
-// /* Firefox < 16 */
-// @-moz-keyframes fadein {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
-
-// /* Safari, Chrome and Opera > 12.1 */
-// @-webkit-keyframes fadein {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
-
-// /* Internet Explorer */
-// @-ms-keyframes fadein {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
-
-// /* Opera < 12.1 */
-// @-o-keyframes fadein {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }

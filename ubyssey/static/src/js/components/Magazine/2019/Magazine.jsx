@@ -11,10 +11,40 @@ class Magazine extends React.Component {
     super(props)
     this.subsections = Object.keys(this.props.articles)
     this.state = {
-      subsection: null,
+      subsection: this.subsections[0],
       nextSubsection: null,
       transition: false,
+      isDesktop: true,
+      show: false,
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", () => {
+      this.updateSize()
+    })
+    this.updateSize()
+  }
+
+  componentDidUpdate() {
+    if (!this.state.show) {
+      setTimeout(() => {
+        this.setState({
+          show: true,
+        })
+      }, 100)
+    }
+  }
+  componentWillUnmount() {
+    window.addEventListener("resize", () => {
+      this.updateSize()
+    })
+  }
+
+  updateSize() {
+    this.setState({
+      isDesktop: (window.screen.width || document.body.clientWidth) > 600,
+    })
   }
 
   selectSubsection(subsection) {
@@ -64,27 +94,36 @@ class Magazine extends React.Component {
   }
 
   renderMagazineLanding() {
+    const background = { backgroundImage: `url(${this.props.cover})` }
     return (
-      <div className={`cover-photo-container ${!this.state.transition ? "show" : ""}`}>
-        <h1 className="c-cover__logo">Presence</h1>
-        <img className="cover-photo" src={this.props.cover} />
+      <div className="cover-photo-wrapper">
+        <div className="cover-photo-container" style={background}>
+          <div id="magazine-title">The Ubyssey Magazine</div>
+          <h1 className="c-cover__logo">{this.props.title}</h1>
+          {/* <img className="cover-photo" src={this.props.cover} /> */}
+        </div>
       </div>
     )
   }
 
   render() {
+    const show = this.state.show ? "show" : ""
     return (
-      <div className="magazine-container">
+      <div className={`magazine-container ${show}`}>
+        {/* {!this.isDesktop && <div id="magazine-title">The Ubyssey Magazine</div>} */}
+
+        {this.renderMagazineLanding()}
+
         <Header
           subsections={this.subsections}
           selected={this.state.subsection}
-          selectSubsection={(subsection) => this.selectSubsection(subsection)}
+          title={this.props.title}
+          isDesktop={this.state.isDesktop}
+          fadeDelay={fadeDelay}
+          selectSubsection={(subsection, scrollTop) => this.selectSubsection(subsection, scrollTop)}
         />
 
-        <div style={{ width: "100%" }}>
-          {this.state.subsection && this.renderSubsection()}
-          {!this.state.subsection && this.renderMagazineLanding()}
-        </div>
+        {this.state.subsection && this.renderSubsection()}
       </div>
     )
   }

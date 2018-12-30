@@ -1,6 +1,8 @@
+
 {% extends 'magazine/base.html' %}
 
 {% block content %}
+  <link rel="stylesheet" href="{% add_version 'css/magazine-2019.css' %}" type="text/css"/>
   {% include 'magazine/header.html' with color=article.template_fields.color %}
 
   <article class="c-article c-article--{{ article.template_fields.color }} c-article--{{ article.subsection.slug }} c-article--{{ article.template_fields.display }}">

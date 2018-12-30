@@ -9,23 +9,23 @@
   type="text/css"
 />
 
-<!-- <div
+<div
   id="magazine-wrapper"
   data-articles="{{ articles }}"
   data-cover="{% static cover %}"
-  }
-></div> -->
+  data-title="Presence"
+></div>
 
-<div id="magazine-header">
+<!-- <div id="magazine-header">
   <div class="item left">
     <div class="subsection cover">
       The Ubyssey Magazine
     </div>
   </div>
-<!--
+
   <div class="item center">
     <h1>Presence</h1>
-  </div> -->
+  </div>
 
   <div class="item right">
     <div class="subsection reclaim" >
@@ -38,18 +38,18 @@
       <span>Redefine</span>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="magazine-container">
+<!-- <div class="magazine-container">
   <div id="magazine-cover"
     class="cover-photo-container">
     <h1 class="c-cover__logo">How we live</h1>
-    <div class="c-cover__option-list">
-      <div class="c-cover__option reclaim"><h3>Reclaim</h3></div>
-      <div class="c-cover__option resolve"><h3>Resolve</h3></div>
-      <div class="c-cover__option redefine"><h3>Redefine</h3></div>
-    </div>
     <img class="cover-photo" src="{% static cover %}" />
+  </div>
+  <div class="c-cover__option-list">
+    <div class="c-cover__option reclaim"><h3>Reclaim</h3></div>
+    <div class="c-cover__option resolve"><h3>Resolve</h3></div>
+    <div class="c-cover__option redefine"><h3>Redefine</h3></div>
   </div>
 
   <div id="magazine-article-grid"
@@ -63,7 +63,7 @@
     {% endfor %}
   </div>
 
-</div>
+</div> -->
 
 {% include 'magazine/footer.html' %}
 
@@ -75,5 +75,9 @@
   src="{% add_version 'js/magazine.js' %}"
   type="text/javascript"
 ></script>
+<!-- <script
+  src="{% add_version 'js/one-year-later.js' %}"
+  type="text/javascript"
+></script> -->
 
 {% endblock %}
