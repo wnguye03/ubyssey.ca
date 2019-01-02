@@ -486,10 +486,9 @@ class UbysseyTheme(object):
         else:
             query_string = ''
 
-        if article_list:
-            article_list.prefetch_related("authors")
+        article_list.prefetch_related("authors")
 
-        paginator = Paginator(article_list, 10) # Show 15 articles per page
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
 
         try:
