@@ -470,7 +470,7 @@ class UbysseyTheme(object):
             filters.append('year=%s' % year)
 
         if query:
-            article_list = article_list.filter(headline__icontains=query) | article_list.filter(authors__person=person) | article_list.filter(seo_keyword__icontains=query)
+            article_list = article_list.filter(headline__icontains=query) | article_list.filter(authors__person=person)
             context['q'] = query
             filters.append('q=%s' % query)
 
