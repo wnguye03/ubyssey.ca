@@ -460,18 +460,14 @@ class UbysseyTheme(object):
         article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
             'section', 'featured_image').filter(is_published=True).order_by(order_by)
 
-        try:
-            person_list = Person.objects.filter(full_name__icontains=query).values('id')
-        except:
-            person_list = None
-
         if year:
             context['year'] = year
             article_list = article_list.filter(published_at__icontains=str(year))
             filters.append('year=%s' % year)
 
         if query:
-            article_list = article_list.filter(headline__icontains=query) | article_list.filter(authors__person__in=person_list)
+            person_list = Person.objects.filter(full_name__icontains=query).values('id')
+            article_list = (article_list.filter(headline__icontains=query) | article_list.filter(authors__person__in=person_list)).distinct()
             context['q'] = query
             filters.append('q=%s' % query)
 
@@ -485,8 +481,6 @@ class UbysseyTheme(object):
             query_string = '?' + '&'.join(filters)
         else:
             query_string = ''
-
-        article_list.prefetch_related("authors")
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')
