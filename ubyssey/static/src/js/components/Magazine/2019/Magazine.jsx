@@ -11,7 +11,7 @@ class Magazine extends React.Component {
     super(props)
     this.subsections = Object.keys(this.props.articles)
     this.state = {
-      subsection: this.subsections[0],
+      subsection: null,
       nextSubsection: null,
       transition: false,
       isDesktop: true,
@@ -73,8 +73,19 @@ class Magazine extends React.Component {
   }
 
   renderSubsection() {
+    const slideUp = this.state.transition && !this.state.subsection ? "slide-up" : " "
+    console.log(slideUp)
     return (
-      <div className="article-grid-container">
+      <div className={`article-grid-container ${slideUp}`}>
+        <Header
+          subsections={this.subsections}
+          transition={this.state.transition}
+          selected={this.state.subsection}
+          title={this.props.title}
+          isDesktop={this.state.isDesktop}
+          fadeDelay={fadeDelay}
+          selectSubsection={(subsection) => this.selectSubsection(subsection)}
+        />
         {this.state.subsection &&
           this.props.articles[this.state.subsection].map((box, index) => {
             return (
@@ -93,7 +104,16 @@ class Magazine extends React.Component {
     )
   }
 
-  renderMagazineLanding() {
+  renderVideo() {
+    return (
+      <video preload="yes" autoplay muted lood playsinline id="magazine-video">
+        <source src={`${this.props.video}.mp4`} type="video/mp4" />
+        <source src={`${this.props.video}.ogg`} type="video/ogg" />
+      </video>
+    )
+  }
+
+  renderCover() {
     const background = { backgroundImage: `url(${this.props.cover})` }
     return (
       <div className="cover-photo-wrapper">
@@ -111,19 +131,10 @@ class Magazine extends React.Component {
     return (
       <div className={`magazine-container ${show}`}>
         {/* {!this.isDesktop && <div id="magazine-title">The Ubyssey Magazine</div>} */}
+        {this.renderVideo()}
+        {/* {this.renderCover()} */}
 
-        {this.renderMagazineLanding()}
-
-        <Header
-          subsections={this.subsections}
-          selected={this.state.subsection}
-          title={this.props.title}
-          isDesktop={this.state.isDesktop}
-          fadeDelay={fadeDelay}
-          selectSubsection={(subsection, scrollTop) => this.selectSubsection(subsection, scrollTop)}
-        />
-
-        {this.state.subsection && this.renderSubsection()}
+        {this.renderSubsection()}
       </div>
     )
   }

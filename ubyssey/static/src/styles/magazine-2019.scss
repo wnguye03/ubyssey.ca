@@ -86,16 +86,16 @@ $headerHeight: 60px;
   color: white;
 }
 
-#magazine-header {
+#magazine-nav {
   background-color: white;
   height: $headerHeight;
   z-index: 100;
   color: $color-text-black;
+  cursor: default;
 
-  position: absolute;
-  top: calc(100vh - #{$headerHeight});
-  left: 0;
-  right: 0;
+  // top: calc(100vh - #{$headerHeight});
+  // left: 0;
+  // right: 0;
   display: flex;
   align-items: center;
 
@@ -103,6 +103,8 @@ $headerHeight: 60px;
     // Structure
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
   }
 
   .item {
@@ -194,8 +196,17 @@ $headerHeight: 60px;
     width: 100%;
     min-height: 100vh;
     flex-direction: column;
-    margin-top: calc(#{$headerHeight} + #{$spacing});
+    position: absolute;
+    top: calc(100vh - 60px);
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    // margin-top: calc(#{$headerHeight} + #{$spacing});
+    transition: margin-top 5000;
 
+    &.slide-up {
+      margin-top: calc(100vh - #{headerHeight});
+    }
     @media ($bp-larger-than-mobile) {
       flex-wrap: wrap;
       align-items: stretch;
