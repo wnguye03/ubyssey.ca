@@ -56,7 +56,8 @@ class Header extends React.Component {
   }
 
   render() {
-    const show = this.props.selected && this.props.isDesktop ? "show" : ""
+    const show =
+      ((this.props.transition && !this.props.selected) || this.props.selected) && this.props.isDesktop ? "show" : ""
     const sticky = this.props.selected ? "js-sticky--fixed" : ""
     return (
       <div id="magazine-nav" className={sticky}>
@@ -73,7 +74,7 @@ class Header extends React.Component {
           <h1>{this.props.title}</h1>
         </div>
 
-        <div className={`item show ${this.props.selected && this.props.isDesktop ? "right" : "center"}`}>
+        <div className={`item show ${show ? "right" : "center"}`}>
           {this.props.subsections.map((subsection) => {
             return this.renderSubsection(subsection)
           })}

@@ -35,6 +35,7 @@ class Magazine extends React.Component {
       }, 100)
     }
   }
+
   componentWillUnmount() {
     window.addEventListener("resize", () => {
       this.updateSize()
@@ -73,8 +74,7 @@ class Magazine extends React.Component {
   }
 
   renderSubsection() {
-    const slideUp = this.state.transition && !this.state.subsection ? "slide-up" : " "
-    console.log(slideUp)
+    const slideUp = this.state.subsection ? "slide-up" : " "
     return (
       <div className={`article-grid-container ${slideUp}`}>
         <Header
@@ -120,7 +120,7 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          {/* <img className="cover-photo" src={this.props.cover} /> */}
+          <img className="cover-photo" src={this.props.cover} />
         </div>
       </div>
     )
@@ -130,7 +130,6 @@ class Magazine extends React.Component {
     const show = this.state.show ? "show" : ""
     return (
       <div className={`magazine-container ${show}`}>
-        {/* {!this.isDesktop && <div id="magazine-title">The Ubyssey Magazine</div>} */}
         {this.renderVideo()}
         {/* {this.renderCover()} */}
 

@@ -193,6 +193,8 @@ $headerHeight: 60px;
 
   .article-grid-container {
     display: flex;
+    max-width: calc(960px + 3rem);
+    margin: 0 auto;
     width: 100%;
     min-height: 100vh;
     flex-direction: column;
@@ -201,30 +203,22 @@ $headerHeight: 60px;
     left: 0;
     right: 0;
     margin-top: 0;
-    // margin-top: calc(#{$headerHeight} + #{$spacing});
-    transition: margin-top 5000;
+    background-color: white;
+    transition: margin $time;
 
     &.slide-up {
-      margin-top: calc(100vh - #{headerHeight});
+      margin-top: -100vh;
+      padding-top: $headerHeight;
     }
+
     @media ($bp-larger-than-mobile) {
       flex-wrap: wrap;
       align-items: stretch;
       flex-direction: row;
     }
-    // .article-grid--reclaim,
-    // .article-grid--resolve,
-    // .article-grid--redefine {
-    //   display: none;
-    // }
     .article-grid {
       $gridSize: 240px;
-      // display: none;
-      // opacity: 0;
-
-      margin-bottom: $spacing;
-
-      // transition: opacity $time;
+      margin-top: 1.5rem;
 
       .o-article-box {
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
@@ -260,29 +254,29 @@ $headerHeight: 60px;
           h2 {
             background: $color-accent-1;
           }
-          // &:nth-of-type(5n + 1) {
-          //   flex: 1 0 33.3%;
-          // }
+          &:nth-of-type(5n + 1) {
+            flex: 1 0 33.3%;
+          }
 
-          // &:nth-of-type(5n + 2) {
-          //   min-width: 66.7%;
-          //   flex: 1 0 66.7%;
-          // }
+          &:nth-of-type(5n + 2) {
+            min-width: 66.7%;
+            flex: 1 0 66.7%;
+          }
 
-          // &:nth-of-type(5n + 3) {
-          //   height: calc(#{$gridSize * 2} - #{$spacing});
-          //   min-width: 66.7%;
-          //   flex: 1 0 66.7%;
-          // }
+          &:nth-of-type(5n + 3) {
+            height: calc(#{$gridSize * 2} - #{$spacing});
+            min-width: 66.7%;
+            flex: 1 0 66.7%;
+          }
 
-          // &:nth-of-type(5n + 4) {
-          //   height: calc(#{$gridSize * 2} - #{$spacing});
-          //   flex: 1 0 33.3%;
-          // }
+          &:nth-of-type(5n + 4) {
+            height: calc(#{$gridSize * 2} - #{$spacing});
+            flex: 1 0 33.3%;
+          }
 
-          // &:nth-of-type(5n) {
-          //   flex: 1 0 100%;
-          // }
+          &:nth-of-type(5n) {
+            flex: 1 0 100%;
+          }
         }
         &.resolve {
           .o-article-box {
