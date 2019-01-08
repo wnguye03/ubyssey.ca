@@ -466,8 +466,8 @@ class UbysseyTheme(object):
             filters.append('year=%s' % year)
 
         if query:
-            person_list = Person.objects.filter(full_name__icontains=query).values('id')
-            article_list = article_list.filter(headline__icontains=query) #| article_list.filter(authors__person__in=person_list)).distinct()
+            temp =  article_list.filter(authors__person__full_name__icontains=query)
+            article_list = article_list.filter(headline__icontains=query).union(temp)
             context['q'] = query
             filters.append('q=%s' % query)
 
