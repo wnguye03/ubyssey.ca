@@ -74,39 +74,41 @@ class Magazine extends React.Component {
   }
 
   renderSubsection() {
-    const slideUp = this.state.subsection ? "slide-up" : " "
+    const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     return (
-      <div className={`article-grid-container ${slideUp}`}>
+      <div className={`article-grid-wrapper ${slideUp}`}>
         <Header
           subsections={this.subsections}
+          title={this.props.title}
+          nextSubsection={this.state.nextSubsection}
           transition={this.state.transition}
           selected={this.state.subsection}
-          title={this.props.title}
           isDesktop={this.state.isDesktop}
-          fadeDelay={fadeDelay}
           selectSubsection={(subsection) => this.selectSubsection(subsection)}
         />
-        {this.state.subsection &&
-          this.props.articles[this.state.subsection].map((box, index) => {
-            return (
-              <ArticleBox
-                color={box.color}
-                index={index}
-                subsection={this.state.subsection}
-                transition={this.state.transition}
-                url={box.url}
-                image={box.featured_image}
-                headline={box.headline}
-              />
-            )
-          })}
+        <div className="article-grid-container">
+          {this.state.subsection &&
+            this.props.articles[this.state.subsection].map((box, index) => {
+              return (
+                <ArticleBox
+                  color={box.color}
+                  index={index}
+                  subsection={this.state.subsection}
+                  transition={this.state.transition}
+                  url={box.url}
+                  image={box.featured_image}
+                  headline={box.headline}
+                />
+              )
+            })}
+        </div>
       </div>
     )
   }
 
   renderVideo() {
     return (
-      <video preload="yes" autoplay muted lood playsinline id="magazine-video">
+      <video preload="yes" autoPlay="true" muted="true" loop="true" playsInline="true" id="magazine-video">
         <source src={`${this.props.video}.mp4`} type="video/mp4" />
         <source src={`${this.props.video}.ogg`} type="video/ogg" />
       </video>

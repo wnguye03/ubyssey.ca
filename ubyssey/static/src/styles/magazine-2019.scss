@@ -24,6 +24,10 @@ $spacing: 1.5rem;
 
 $time: 0.5s;
 
+video {
+  width: 100%;
+}
+
 .c-cover__logo {
   font-family: "Georgia", Georgia, serif;
   font-weight: 500;
@@ -87,6 +91,7 @@ $headerHeight: 60px;
 }
 
 #magazine-nav {
+  width: 100%;
   background-color: white;
   height: $headerHeight;
   z-index: 100;
@@ -94,12 +99,13 @@ $headerHeight: 60px;
   cursor: default;
 
   // top: calc(100vh - #{$headerHeight});
-  // left: 0;
-  // right: 0;
+  position: relative;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
 
-  &.js-sticky--fixed {
+  &.show {
     // Structure
     position: fixed;
     top: 0;
@@ -191,13 +197,8 @@ $headerHeight: 60px;
     }
   }
 
-  .article-grid-container {
-    display: flex;
-    max-width: calc(960px + 3rem);
-    margin: 0 auto;
+  .article-grid-wrapper {
     width: 100%;
-    min-height: 100vh;
-    flex-direction: column;
     position: absolute;
     top: calc(100vh - 60px);
     left: 0;
@@ -210,11 +211,19 @@ $headerHeight: 60px;
       margin-top: -100vh;
       padding-top: $headerHeight;
     }
+  }
+  .article-grid-container {
+    display: flex;
+    max-width: calc(960px + 3rem);
+    margin: 0 auto;
+    min-height: 100vh;
+    flex-direction: column;
 
     @media ($bp-larger-than-mobile) {
       flex-wrap: wrap;
       align-items: stretch;
       flex-direction: row;
+      margin-top: $headerHeight;
     }
     .article-grid {
       $gridSize: 240px;
@@ -232,6 +241,7 @@ $headerHeight: 60px;
       @media ($bp-larger-than-mobile) {
         $gridSize: 320px;
         transition: opacity #{$time/2};
+
         &:hover {
           opacity: 0.75;
         }

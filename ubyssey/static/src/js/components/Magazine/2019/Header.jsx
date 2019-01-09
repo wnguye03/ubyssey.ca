@@ -3,48 +3,6 @@
 import React from "react"
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props)
-    // (this.scrollTop = 0),
-    //   (this.state = {
-    //     fixHeader: false,
-    //   })
-  }
-
-  // componentDidMount() {
-  //   document.addEventListener("scroll", () => {
-  //     this.updateHeader()
-  //   })
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener("scroll", () => {
-  //     this.updateHeader()
-  //   })
-  // }
-
-  updateHeader() {
-    // this.scrollTop = $(window).scrollTop()
-    // let element = $(".js-sticky")
-    // const elementHeight = element.height(),
-    //   elementOffset = $(window).height() - elementHeight,
-    //   parentHeight = element.parent().height()
-    // if (parentHeight <= elementHeight) {
-    //   return
-    // }
-    // const shouldStick = this.scrollTop > elementOffset
-    // if (shouldStick && !this.state.fixHeader) {
-    //   this.setState({
-    //     fixHeader: true,
-    //   })
-    // }
-    // if (!shouldStick && this.state.fixHeader) {
-    //   this.setState({
-    //     fixHeader: false,
-    //   })
-    // }
-  }
-
   renderSubsection(subsection) {
     return (
       <div
@@ -56,11 +14,15 @@ class Header extends React.Component {
   }
 
   render() {
-    const show =
-      ((this.props.transition && !this.props.selected) || this.props.selected) && this.props.isDesktop ? "show" : ""
-    const sticky = this.props.selected ? "js-sticky--fixed" : ""
+    const show = this.props.nextSubsection && this.props.selected && this.props.isDesktop ? "show" : ""
+    if (show || !this.props.isDesktop) {
+      document.body.style.overflow = "scroll"
+    } else {
+      document.body.style.overflow = "hidden"
+    }
+    // const sticky = (this.props.transition && !this.props.selected) || this.props.selected ? "js-sticky--fixed" : ""
     return (
-      <div id="magazine-nav" className={sticky}>
+      <div id="magazine-nav" className={show}>
         <div className={`item left ${show}`}>
           <a
             className="subsection"

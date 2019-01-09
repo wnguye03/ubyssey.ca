@@ -21,7 +21,7 @@ class MagazineTheme(object):
         """Magazine landing page view."""
 
         # Get all 2019 magazine articles
-        articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2019').order_by('-importance')
+        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='magazine', tags__name='2019').order_by('-importance')
         reclaim = []
         resolve = []
         redefine = []
@@ -47,11 +47,6 @@ class MagazineTheme(object):
                 'resolve': resolve,
                 'redefine': redefine,
             })
-        # articles = {
-        #         'reclaim': reclaim,
-        #         'resolve': resolve,
-        #         'redefine': redefine,
-        #     }
 
         context = {
             'meta': {
@@ -63,8 +58,6 @@ class MagazineTheme(object):
             'cover': 'images/magazine/cover.jpg',
             'articles': articles
         }
-        # t = loader.get_template('magazine/landing.html')
-        # return HttpResponse(t.render(context))
         return render(request, 'magazine/landing.html', context)
 
     def article(self, request, slug=None):
