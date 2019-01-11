@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
-from dispatch.models import Article
+from dispatch.models import Article, Tag
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper
@@ -58,7 +58,7 @@ class MagazineTheme(object):
             'cover': 'images/magazine/cover.jpg',
             'articles': articles
         }
-        return render(request, 'magazine/landing.html', context)
+        return render(request, 'magazine/2019/landing.html', context)
 
     def article(self, request, slug=None):
         """Magazine article page view."""
@@ -69,11 +69,13 @@ class MagazineTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
+        year = article.tags.filter(name__icontains="20").values_list("name")[0]
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
+            'year': year,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html'
         }
