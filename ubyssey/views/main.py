@@ -492,17 +492,17 @@ class UbysseyTheme(object):
         page = request.GET.get('page')
 
         try:
-            objects = paginator.page(page)
+            articles = paginator.page(page)
         except PageNotAnInteger:
-            objects = paginator.page(1)
+            articles = paginator.page(1)
         except EmptyPage:
-            objects = paginator.page(paginator.num_pages)
+            articles = paginator.page(paginator.num_pages)
 
         meta = {
             'title': 'Archive'
         }
 
-        context['objects'] = objects
+        context['articles'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
         context['query_string'] = query_string
