@@ -18,8 +18,8 @@
 
     <meta property="fb:pages" content="99164676792" />
 
-    <link rel="stylesheet" href="{% add_version 'css/magazine.css' %}" type="text/css" />
-
+    <link rel="stylesheet" href='{% add_version "css/magazine.css" %}' type="text/css" />
+    {% block css %}{% endblock %}
 
     <script>
       var googletag = googletag || {};
@@ -38,7 +38,6 @@
 
   </head>
   <body>
-
     {% block content %}{% endblock %}
 
     <script type="text/javascript">

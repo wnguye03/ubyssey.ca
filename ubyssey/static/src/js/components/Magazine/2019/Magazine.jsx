@@ -55,6 +55,9 @@ class Magazine extends React.Component {
         nextSubsection: subsection,
       },
       () => {
+        if (!this.state.nextSubsection) {
+          window.scrollTo(0, 0, "smooth")
+        }
         setTimeout(() => {
           this.setState(
             {

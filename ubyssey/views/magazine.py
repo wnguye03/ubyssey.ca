@@ -69,13 +69,14 @@ class MagazineTheme(object):
             raise Http404('Article could not be found.')
 
         article.add_view()
-        year = article.tags.filter(name__icontains="20").values_list("name")[0]
+        year = article.tags.get(name__icontains="20").name
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
-            'year': year,
+            'subsection': article.subsection.name.lower(),
+            'specific_css': 'css/magazine-' + year + '.css',
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html'
         }
@@ -113,7 +114,7 @@ class MagazineTheme(object):
             'meta': {
                 'title': 'The Ubyssey Magazine - How we live',
                 'description': 'The February 2018 issue of the Ubyssey magazine.',
-                'url': reverse('magazine-landing'),
+                'url': reverse('magazine-landing-2018'),
                 'image': static('images/magazine/cover-social.jpg')
             },
             'cover': 'images/magazine/2018/cover.jpg',
