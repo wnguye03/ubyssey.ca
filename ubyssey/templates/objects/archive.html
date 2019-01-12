@@ -148,7 +148,7 @@
 
       <div class="o-archive__header">
         <h3 class="o-archive__header__title">
-          {% if articles %} {{ articles.paginator.count }} RESULTS {% else %}NO RESULTS{% endif %}
+          {% if objects %} {{ objects.paginator.count }} RESULTS {% else %}NO RESULTS{% endif %}
           {% if q %} FOR "{{ q }}"{% endif %}
         </h3>
         <div class="o-archive__header__sort o-dropdown js-dropdown">
@@ -167,10 +167,27 @@
         </div>
       </div>
 
-      {% if articles|length > 0 %}
+      {% if objects|length > 0 %}
       <div class="o-archive__main__list">
-      {% for article in articles %}
-        {% include 'objects/articles/list.html' with article=article %}
+      {% for object in objects %}
+        {% if object == "articles" %}
+          <div class="o-archive__divider">
+            <div class="o-archive__line"></div>
+            <div class="o-archive__line_text">Articles</div>
+            <div class="o-archive__line"></div>
+          </div>
+          
+        {% elif object == "people" %}
+        <div class="o-archive__divider">
+            <div class="o-archive__line"></div>
+            <div class="o-archive__line_text">People</div>
+            <div class="o-archive__line"></div>
+          </div>
+        {% elif object.headline %}
+          {% include 'objects/articles/list.html' with article=object %}
+        {% else %}
+          {% include 'objects/author_list.html' with person=object %}
+        {% endif %}
       {% endfor %}
       </div>
 
