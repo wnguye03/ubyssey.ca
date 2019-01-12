@@ -192,16 +192,16 @@
       </div>
 
       <div class="o-archive__pagination">
-        {% if articles.has_previous %}
-        <a class="o-button o-archive__pagination__prev" href="{{ request.path }}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.previous_page_number }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Previous</a>
+        {% if objects.has_previous %}
+        <a class="o-button o-archive__pagination__prev" href="{{ request.path }}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ objects.previous_page_number }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Previous</a>
         {% endif %}
 
         <span class="o-archive__pagination__current" >
-          Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+          Page {{ objects.number }} of {{ objects.paginator.num_pages }}
         </span>
 
-        {% if articles.has_next %}
-          <a class="o-button o-archive__pagination__next" href="{{ request.path }}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ articles.next_page_number }}">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        {% if objects.has_next %}
+          <a class="o-button o-archive__pagination__next" href="{{ request.path }}{% if query_string %}{{ query_string }}&{% else %}?{% endif %}page={{ objects.next_page_number }}">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
         {% endif %}
       </div>
 

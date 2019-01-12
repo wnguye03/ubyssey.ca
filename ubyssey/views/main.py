@@ -461,6 +461,7 @@ class UbysseyTheme(object):
 
         article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
             'section', 'featured_image').filter(is_published=True).order_by(order_by)
+        person_list = None
 
         if year:
             context['year'] = year
@@ -484,7 +485,7 @@ class UbysseyTheme(object):
         else:
             query_string = ''
 
-        if (person_list.exists()):
+        if (person_list is not None and person_list.exists()):
             article_list = list(chain({'people': True}, person_list, {'articles': True}, article_list))
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
