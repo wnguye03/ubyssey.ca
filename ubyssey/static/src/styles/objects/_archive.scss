@@ -315,10 +315,11 @@ $search-bar-height: 46px;
 	
 	//Text
 	font-size: 2rem;
+	font-family: "ub-minion-pro", "Minion Pro", "Georgia", serif;
 
 	.o-archive__line {
 		// Structure
-		height: 4px;
+		height: 1px;
 		width: 100%;
 		background-color: #313131;
 		&:first-child {
