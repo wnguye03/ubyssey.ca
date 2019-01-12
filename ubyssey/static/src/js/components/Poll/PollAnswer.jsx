@@ -15,6 +15,9 @@ class PollAnswer extends React.Component {
     let buttonSelected = checkedAnswers.includes(index) ? 'poll-button-selected' : 'poll-button-not-selected'
     return(
       <label className={['poll-button-label', buttonStyle].join(' ')}>
+        <div className={'poll-result-bar'} style={{width: answerPercentage, opacity: showResult}}>
+        </div>
+        
         <input className={'poll-input'}
           name={'answer'}
           type={'radio'}
@@ -37,9 +40,6 @@ class PollAnswer extends React.Component {
           {answerPercentage}
         </span>
 
-        <div className={'poll-result-bar'} style={{width: answerPercentage, opacity: showResult}}>
-        </div>
-        
       </label>
     )
   }
