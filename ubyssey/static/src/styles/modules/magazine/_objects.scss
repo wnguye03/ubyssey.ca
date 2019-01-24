@@ -19,6 +19,27 @@
     background-color: $color-primary-3;
   }
 
+  &.redefine {
+    background-color: $color-primary-1;
+    & > h2 {
+      background: $color-primary-1;
+    }
+  }
+
+  &.resolve {
+    background-color: $color-primary-2;
+    & > h2 {
+      background: $color-primary-2;
+    }
+  }
+
+  &.reclaim {
+    background-color: $color-primary-3;
+    & > h2 {
+      background: $color-primary-3;
+    }
+  }
+
   // Extra
   transition: opacity 0.3s;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);

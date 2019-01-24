@@ -94,7 +94,6 @@ class Magazine extends React.Component {
             this.props.articles[this.state.subsection].map((box, index) => {
               return (
                 <ArticleBox
-                  color={box.color}
                   index={index}
                   subsection={this.state.subsection}
                   transition={this.state.transition}
@@ -125,7 +124,7 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          <img className="cover-photo" src={this.props.cover} />
+          {/* <img className="cover-photo" src={this.props.cover} /> */}
         </div>
       </div>
     )
@@ -135,8 +134,8 @@ class Magazine extends React.Component {
     const show = this.state.show ? "show" : ""
     return (
       <div className={`magazine-container ${show}`}>
-        {this.renderVideo()}
-        {/* {this.renderCover()} */}
+        {/* {this.renderVideo()} */}
+        {this.renderCover()}
 
         {this.renderSubsection()}
       </div>

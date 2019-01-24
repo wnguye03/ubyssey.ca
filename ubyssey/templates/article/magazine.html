@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block content %}
-  {% include 'magazine/header.html' with color=article.template_fields.color %}
+  {% include 'magazine/header.html' with color=article.template_fields.color subsection=subsection%}
 
-  <article class="c-article c-article--{{ article.template_fields.color }} c-article--{{ article.template_fields.display }}">
+  <article class="c-article c-article--{{ article.template_fields.color }} c-article--{{ article.template_fields.display }} c-article--{{ subsection }}">
     <div class="u-container u-container--small">
       <h1 class="c-article__headline"><span class="arrow--{{ article.template_fields.color }}"></span>{{ article.headline }}</h1>
       {% if article.template_fields.description %}

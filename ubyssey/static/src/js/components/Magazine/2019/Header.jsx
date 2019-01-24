@@ -2,6 +2,12 @@
 
 import React from "react"
 
+const colors = {
+  redefine: "#f8d839",
+  resolve: "#abcdbb",
+  reclaim: "#ae70af",
+}
+
 class Header extends React.Component {
   renderSubsection(subsection) {
     return (
@@ -20,9 +26,8 @@ class Header extends React.Component {
     } else {
       document.body.style.overflow = "hidden"
     }
-    // const sticky = (this.props.transition && !this.props.selected) || this.props.selected ? "js-sticky--fixed" : ""
     return (
-      <div id="magazine-nav" className={show}>
+      <div id="magazine-nav" className={show} style={{ backgroundColor: colors[this.props.selected] + "d9" }}>
         <div className={`item left ${show}`}>
           <a
             className="subsection"
