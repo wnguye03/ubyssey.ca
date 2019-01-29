@@ -41,6 +41,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+h2 {
+  font-weight: 400;
+}
+
 h1, h3, h3, h4 {
   // Structure
   margin: 0;
@@ -53,33 +57,36 @@ h1, h3, h3, h4 {
 	// Text
 	text-decoration: none;
   color: inherit;
-  padding: 0 .8rem;
+  margin: 0 .8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  transition: border .25s;
 
 	&:hover {
-		color: $color-primary-1;
+    color: #333;
+    border-color: #333;
 	}
 }
 
-.c-header--redefine {
-  .o-link {
-    &:hover {
-      color: $color-primary-1;
-    }
-  }
-}
+// .c-header--redefine {
+//   .o-link {
+//     &:hover {
+//       color: $color-primary-1;
+//     }
+//   }
+// }
 
-.c-header--resolve {
-  .o-link {
-    &:hover {
-      color: $color-primary-2;
-    }
-  }
-}
+// .c-header--resolve {
+//   .o-link {
+//     &:hover {
+//       color: $color-primary-2;
+//     }
+//   }
+// }
 
-.c-header--reclaim {
-  .o-link {
-    &:hover {
-      color: $color-primary-3;
-    }
-  }
-}
+// .c-header--reclaim {
+//   .o-link {
+//     &:hover {
+//       color: $color-primary-3;
+//     }
+//   }
+// }
