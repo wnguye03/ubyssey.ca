@@ -3,13 +3,14 @@
 import React from "react"
 import ArticleBox from "./ArticleBox.jsx"
 import Header from "./Header.jsx"
+import { editorial } from "./contents.js"
 
 const fadeDelay = 500
 
 class Magazine extends React.Component {
   constructor(props) {
     super(props)
-    this.subsections = Object.keys(this.props.articles)
+    this.subsections = ["editorial"].concat(Object.keys(this.props.articles))
     this.state = {
       subsection: null,
       nextSubsection: null,
@@ -90,7 +91,16 @@ class Magazine extends React.Component {
           selectSubsection={(subsection) => this.selectSubsection(subsection)}
         />
         <div className="article-grid-container">
+          {this.state.subsection && this.state.subsection == this.subsections[0] && (
+            <div className="editorial-container">
+              <div className="title">{editorial.title}</div>
+              {editorial.paragraphs.map((paragraph) => {
+                return <p>{paragraph}</p>
+              })}
+            </div>
+          )}
           {this.state.subsection &&
+            this.state.subsection != this.subsections[0] &&
             this.props.articles[this.state.subsection].map((box, index) => {
               return (
                 <ArticleBox
@@ -124,7 +134,20 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          {/* <img className="cover-photo" src={this.props.cover} /> */}
+          <div className="c-cover__content">
+            <h1>Editor-in-Chief</h1>
+            <li>Lucy Fox</li>
+            <h1>Written Content Editors</h1>
+            <li>Charlotte Alden</li>
+            <li>Mitchell Ballachay</li>
+            <li>Andrew Ha</li>
+            <li>Emma Livingstone</li>
+            <li>Riya Talitha</li>
+            <h1>Illustrations Editor</h1>
+            <li>Kristine Ho</li>
+            <h1>Design Editor</h1>
+            <li>Claire Lloyd</li>
+          </div>
         </div>
       </div>
     )
@@ -134,9 +157,7 @@ class Magazine extends React.Component {
     const show = this.state.show ? "show" : ""
     return (
       <div className={`magazine-container ${show}`}>
-        {/* {this.renderVideo()} */}
         {this.renderCover()}
-
         {this.renderSubsection()}
       </div>
     )

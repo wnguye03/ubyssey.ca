@@ -3,6 +3,7 @@
 import React from "react"
 
 const colors = {
+  editorial: "#ffffff",
   redefine: "#f8d839",
   resolve: "#abcdbb",
   reclaim: "#ae70af",

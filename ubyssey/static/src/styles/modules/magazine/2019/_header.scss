@@ -19,48 +19,30 @@
   z-index: 50;
 
   .c-header__logo {
-    padding: .5rem;
-    border: 1px solid #333;
-    &:hover {
-      color: #333;
-      background-color: #ffffff20;
+    margin: 0 auto;
+    @media($bp-larger-than-mobile) {
+      padding: .5rem;
+      border: 1px solid #333;
+      &:hover {
+        color: #333;
+        background-color: #ffffff20;
+      }
     }
   }
 
   &--redefine {
     // Background
     background-color: $color-primary-1 !important;
-
-    // @media($bp-larger-than-mobile) {
-    //   .c-header__logo {
-    //     // Border
-    //     border-bottom: 4px solid $color-primary-1;
-    //   }
-    // }
   }
 
   &--resolve {
     // Background
     background-color: $color-primary-2 !important;
-
-    // @media($bp-larger-than-mobile) {
-    //   .c-header__logo {
-    //     // Border
-    //     border-bottom: 4px solid $color-primary-2;
-    //   }
-    // }
   }
 
   &--reclaim {
     // Background
     background-color: $color-primary-3 !important;
-
-    // @media($bp-larger-than-mobile) {
-    //   .c-header__logo {
-    //     // Border
-    //     border-bottom: 4px solid $color-primary-3;
-    //   }
-    // }
   }
 
   .c-header__right {

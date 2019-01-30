@@ -25,29 +25,62 @@ $spacing: 1.5rem;
 
 $time: 0.5s;
 
+$headerHeight: 60px;
+
 video {
+  // Structure
   width: 100%;
 }
 
+.c-footer {
+  // Structure
+  padding-top: 4rem;
+}
+
 .c-cover__logo {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-  font-size: font-size(32);
+  // Structure
   position: absolute;
   top: 0;
   margin-top: 44%;
-  width: 100%;
+
+  // Text
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: font-size(32);
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-
   @media ($bp-larger-than-mobile) {
-    font-size: font-size(50);
+    // Structure
     margin-top: 36%;
+
+    // Text
+    font-size: font-size(50);
+  }
+}
+
+.c-cover__content {
+  // Structure
+  margin-top: 85%;
+  position: absolute;
+
+  // Text
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  color: white;
+
+  h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  li {
+    list-style: none;
+    text-align: center;
   }
 }
 
 .c-cover__option-list {
+  // Structure
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -57,15 +90,20 @@ video {
   position: absolute;
 
   .c-cover__option {
+    // Background
     background-color: #ffffff8f;
+
+    // Structure
     width: 100%;
     display: flex;
     justify-content: center;
     & > h3 {
       padding: 0.25rem;
+      // Text
       text-align: center;
     }
     &:hover {
+      // Background
       background-color: #fff;
     }
   }
@@ -73,16 +111,20 @@ video {
 
 h3,
 h4 {
+  // Text
   font-family: "ub-avenir", Avenir, serif;
   font-weight: 300;
 }
 
-$headerHeight: 60px;
-
 #magazine-title {
+  // Structure
   margin-top: 1rem;
   padding: 0.5rem;
+
+  // Border
   border: 1px solid white;
+
+  // Text
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -90,18 +132,21 @@ $headerHeight: 60px;
 }
 
 #magazine-nav {
+  // Structure
   width: 100%;
   height: $headerHeight;
   z-index: 100;
-  color: #333333;
-  cursor: default;
-
   position: relative;
   left: 0;
   right: 0;
   display: flex;
   align-items: center;
 
+  // Text
+  color: #333333;
+
+  // Other
+  cursor: default;
   transition: background-color $time;
 
   &.show {
@@ -113,23 +158,31 @@ $headerHeight: 60px;
   }
 
   .item {
+    // Structure
     width: 320px;
     display: flex;
     justify-content: space-around;
+    position: absolute;
+
+    // Text
     font-family: "Montserrat", sans-serif;
 
-    position: absolute;
+    // Other
     transition: transform $time, opacity $time;
     opacity: 0;
     visibility: hidden;
 
     &.show {
+      // Other
       opacity: 1;
       visibility: visible;
     }
 
     &.left {
+      // Structure
       left: 0;
+
+      // Text
       text-transform: uppercase;
       .subsection {
         padding: 0.5rem;
@@ -140,21 +193,30 @@ $headerHeight: 60px;
       }
     }
     &.center {
+      // Structure
       left: 50%;
       transform: translateX(-50%);
+
+      // Text
       text-transform: capitalize;
       h1 {
-        font-weight: 300;
+        // Text
+        font-weight: 400;
+        text-shadow: 1px 1px rgba(0, 0, 0, 0.30196078431372547);
         text-transform: capitalize;
         font-family: "Montserrat", sans-serif;
       }
     }
     &.right {
+      // Structure
       right: 1rem;
+
+      // Text
       text-transform: capitalize;
     }
 
     .subsection {
+      //Structure
       display: inline-block;
       border-bottom: 1px solid transparent;
       transition: border-color #{$time/2};
@@ -166,7 +228,29 @@ $headerHeight: 60px;
   }
 }
 
+.editorial-container {
+  // Structure
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  //Text
+  font-size: 1.1rem;
+
+  .title {
+    // Text
+    font-size: 2rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    @media ($bp-larger-than-mobile) {
+      // Structure
+      margin-top: 3rem;
+    }
+  }
+}
+
 .magazine-container {
+  //Structure
   max-width: calc(960px + #{$spacing * 2});
   box-sizing: border-box;
   margin-top: 0;
@@ -174,29 +258,34 @@ $headerHeight: 60px;
   min-height: 90vh;
   padding-left: 0;
   padding-right: 0;
+
+  // Other
   opacity: 0;
   transition: opacity $time;
-
   &.show {
     opacity: 1;
   }
 
   #magainze-cover {
+    // Structure
     display: flex;
   }
 
   @media ($bp-larger-than-mobile) {
+    // Structure
     width: calc(100% - #{$spacing});
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 
   .cover-photo-wrapper {
+    // Structure
     display: flex;
     align-items: center;
     width: 100%;
 
     .cover-photo-container {
+      // Structure
       margin: 0 auto;
       max-width: 700px;
       width: 100%;
@@ -204,6 +293,8 @@ $headerHeight: 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      // Background
       background-position: center;
       background-size: cover;
       box-shadow: none;
@@ -211,21 +302,28 @@ $headerHeight: 60px;
   }
 
   .article-grid-wrapper {
+    // Structure
     width: 100%;
     position: absolute;
     top: calc(100vh - 60px);
     left: 0;
     right: 0;
     margin-top: 0;
+
+    // Background
     background-color: white;
+
+    // Other
     transition: margin $time;
 
     &.slide-up {
+      // Structure
       margin-top: -100vh;
       padding-top: $headerHeight;
     }
   }
   .article-grid-container {
+    // Structure
     display: flex;
     max-width: calc(960px + 3rem);
     margin: 0 auto;
@@ -240,9 +338,12 @@ $headerHeight: 60px;
     }
     .article-grid {
       $gridSize: 240px;
+
+      // Structure
       margin-top: 1.5rem;
 
       .o-article-box {
+        // Other
         opacity: 0;
         transition: opacity $time;
         &.show {
@@ -250,6 +351,7 @@ $headerHeight: 60px;
         }
       }
 
+      // Background
       &.redefine {
         .o-article-box {
           background-color: $color-primary-1;
@@ -277,6 +379,8 @@ $headerHeight: 60px;
 
       @media ($bp-larger-than-mobile) {
         $gridSize: 320px;
+
+        // Other
         transition: opacity #{$time/2};
 
         &:hover {
@@ -284,16 +388,19 @@ $headerHeight: 60px;
         }
 
         &:nth-of-type(n) {
+          // Structure
           min-width: calc(#{$gridSize} - #{$spacing});
           height: calc(#{$gridSize} - #{$spacing});
           flex-grow: 1;
           flex-shrink: 0;
           .o-article-box {
+            // Structure
             margin-left: #{$spacing/2};
             margin-right: #{$spacing/2};
           }
         }
 
+        // Structure
         &:nth-of-type(5n + 1) {
           flex: 1 0 40%;
         }
@@ -317,8 +424,8 @@ $headerHeight: 60px;
         }
 
         &.resolve {
+          // Structure
           &:nth-of-type(5n + 1) {
-            // min-width: 60%;
             flex: 1 0 60%;
           }
 
@@ -328,13 +435,11 @@ $headerHeight: 60px;
           }
 
           &:nth-of-type(5n + 3) {
-            // height: calc(#{$gridSize * 2} - #{$spacing});
             min-width: 60%;
             flex: 1 0 60%;
           }
 
           &:nth-of-type(5n + 4) {
-            // height: calc(#{$gridSize * 2} - #{$spacing});
             flex: 1 0 40%;
           }
 
