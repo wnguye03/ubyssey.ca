@@ -90,18 +90,21 @@ class Magazine extends React.Component {
           isDesktop={this.state.isDesktop}
           selectSubsection={(subsection) => this.selectSubsection(subsection)}
         />
-        <div className="article-grid-container">
-          {this.state.subsection && this.state.subsection == this.subsections[0] && (
-            <div className="editorial-container">
+
+        {this.state.subsection && this.state.subsection == this.subsections[0] && (
+          <div className="editorial-container">
+            <div className="inside-cover" style={{ backgroundImage: `url(${this.props.insideCover})` }} />
+            <div className="editorial-content">
               <div className="title">{editorial.title}</div>
               {editorial.paragraphs.map((paragraph) => {
                 return <p>{paragraph}</p>
               })}
             </div>
-          )}
-          {this.state.subsection &&
-            this.state.subsection != this.subsections[0] &&
-            this.props.articles[this.state.subsection].map((box, index) => {
+          </div>
+        )}
+        {this.state.subsection && this.state.subsection != this.subsections[0] && (
+          <div className="article-grid-container">
+            {this.props.articles[this.state.subsection].map((box, index) => {
               return (
                 <ArticleBox
                   index={index}
@@ -113,7 +116,8 @@ class Magazine extends React.Component {
                 />
               )
             })}
-        </div>
+          </div>
+        )}
       </div>
     )
   }

@@ -56,6 +56,7 @@ class MagazineTheme(object):
                 'image': static('images/magazine/2019/cover.png')
             },
             'cover': 'images/magazine/2019/cover.png',
+            'insideCover': 'images/magazine/2019/insideCover.png',
             'articles': articles
         }
         return render(request, 'magazine/2019/landing.html', context)

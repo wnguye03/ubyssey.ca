@@ -8,7 +8,7 @@ $(function() {
     <Magazine
       articles={$("#magazine-wrapper").data("articles")}
       cover={$("#magazine-wrapper").data("cover")}
-      video={$("#magazine-wrapper").data("video")}
+      insideCover={$("#magazine-wrapper").data("insideCover")}
       title={$("#magazine-wrapper").data("title")}
     />,
     $("#magazine-wrapper")[0]

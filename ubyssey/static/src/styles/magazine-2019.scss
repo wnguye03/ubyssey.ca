@@ -61,8 +61,12 @@ video {
 
 .c-cover__content {
   // Structure
-  margin-top: 85%;
+  margin-top: 75%;
   position: absolute;
+
+  @media ($bp-larger-than-mobile) {
+    margin-top: 85%;
+  }
 
   // Text
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -227,12 +231,32 @@ h4 {
     }
   }
 }
-
 .editorial-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+
+  .inside-cover {
+    width: 100%;
+    height: 300px;
+    background-size: auto 150%;
+  }
+
+  @media ($bp-larger-than-mobile) {
+    flex-direction: row;
+    .inside-cover {
+      width: 50%;
+      height: 100vh;
+      background-size: auto 100%;
+    }
+  }
+}
+.editorial-content {
   // Structure
   max-width: 500px;
-  margin: 0 auto;
-  padding: 1rem;
+  // margin: 0 auto;
+  padding: 2rem;
 
   //Text
   font-size: 1.1rem;
@@ -309,6 +333,7 @@ h4 {
     left: 0;
     right: 0;
     margin-top: 0;
+    min-height: 100vh;
 
     // Background
     background-color: white;
