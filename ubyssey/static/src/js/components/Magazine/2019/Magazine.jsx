@@ -6,6 +6,7 @@ import Header from "./Header.jsx"
 import { editorial } from "./contents.js"
 
 const fadeDelay = 500
+const desktopSize = 768
 
 class Magazine extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class Magazine extends React.Component {
 
   updateSize() {
     this.setState({
-      isDesktop: (window.screen.width || document.body.clientWidth) > 600,
+      isDesktop: document.body.clientWidth > desktopSize,
     })
   }
 
@@ -94,7 +95,8 @@ class Magazine extends React.Component {
         {this.state.subsection && this.state.subsection == this.subsections[0] && (
           <div className="editorial-container">
             <div className="inside-cover" style={{ backgroundImage: `url(${this.props.insideCover})` }}>
-              {!this.state.isDesktop && this.renderCredits()}
+              {/* {!this.state.isDesktop && this.renderCredits()} */}
+              {this.renderCredits()}
             </div>
             <div className="editorial-content">
               <div className="title">{editorial.title}</div>
@@ -150,7 +152,7 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          {this.state.isDesktop && this.renderCredits()}
+          {/* {this.state.isDesktop && this.renderCredits()} */}
         </div>
       </div>
     )

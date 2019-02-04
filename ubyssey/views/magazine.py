@@ -78,11 +78,7 @@ class MagazineTheme(object):
         article.add_view()
         year = article.tags.get(name__icontains="20").name
 
-        print(year)
-
         magazine_title = self.mag_titles[year]
-
-        print(magazine_title)
 
         subsection = article.subsection.name.lower() if article.subsection else ""
 
@@ -126,7 +122,6 @@ class MagazineTheme(object):
         # Get all 2018 magazine articles
         articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2018').order_by('-importance')
 
-        print(list(articles))
         context = {
             'meta': {
                 'title': 'The Ubyssey Magazine - How we live',

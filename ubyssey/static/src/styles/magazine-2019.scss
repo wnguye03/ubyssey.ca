@@ -45,7 +45,7 @@ video {
   // Structure
   position: absolute;
   top: 0;
-  margin-top: 44%;
+  margin-top: 48%;
 
   // Text
   font-family: "Montserrat", sans-serif;
@@ -55,26 +55,33 @@ video {
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   @media ($bp-larger-than-mobile) {
+    // Text
+    font-size: font-size(64);
+    margin-top: 38%;
+  }
+  @media ($bp-larger-than-tablet) {
     // Structure
     margin-top: 36%;
-
-    // Text
-    font-size: font-size(50);
   }
 }
 
 .c-cover__credits {
   // Structure
   padding: 0.75rem;
-  position: absolute;
+  width: 250px;
+  color: white;
+  text-align: center;
 
-  @media ($bp-larger-than-mobile) {
+  @media ($bp-larger-than-tablet) {
     // Structure
-    margin-left: 50%;
-    margin-top: 55%;
-    min-width: 280px;
+    // margin-left: 42%;
+    // margin-top: 55%;
+    // position: absolute;
+    // right: 0;
+    padding: 2rem;
+
     // Text
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
     text-align: right;
   }
 
@@ -241,22 +248,29 @@ h4 {
   }
 }
 .editorial-container {
+  // Structure
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
 
   .inside-cover {
+    // Structure
     width: 100%;
     height: 400px;
     background-size: auto 150%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  @media ($bp-larger-than-mobile) {
+  @media ($bp-larger-than-tablet) {
     flex-direction: row;
     .inside-cover {
+      // Structure
       width: 50%;
       height: 100vh;
+      justify-content: flex-end;
       background-size: auto 120%;
     }
   }
@@ -264,18 +278,22 @@ h4 {
 .editorial-content {
   // Structure
   max-width: 500px;
-  // margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 
   //Text
   font-size: 1.1rem;
+  margin: 0 auto;
+
+  @media ($bp-larger-than-tablet) {
+    padding: 2rem;
+  }
 
   .title {
     // Text
     font-size: 2rem;
     font-family: "Montserrat", sans-serif;
     font-weight: 300;
-    @media ($bp-larger-than-mobile) {
+    @media ($bp-larger-than-tablet) {
       // Structure
       margin-top: 3rem;
     }
@@ -304,7 +322,7 @@ h4 {
     display: flex;
   }
 
-  @media ($bp-larger-than-mobile) {
+  @media ($bp-larger-than-tablet) {
     // Structure
     width: calc(100% - #{$spacing});
     padding-left: 1.5rem;
@@ -491,7 +509,7 @@ h4 {
     width: 100%;
   }
 
-  @media ($bp-larger-than-mobile) {
+  @media ($bp-larger-than-tablet) {
     &.right,
     &.left {
       height: auto;
