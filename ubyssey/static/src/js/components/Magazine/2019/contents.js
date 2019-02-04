@@ -1,5 +1,5 @@
 export const editorial = {
-  title: "A Letter from the Ubyssey",
+  title: "A Message from the Editor",
   paragraphs: [`We are a campus of over 60,000 people, all with different stories, backgrounds, trials and tribulations.
   How does UBC support or hinder those differences? How do we — as individuals, departments and
   communities at a university — claim our own space? How do we continue to evolve and grow when the campus

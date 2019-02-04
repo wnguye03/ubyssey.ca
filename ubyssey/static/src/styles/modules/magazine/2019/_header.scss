@@ -30,20 +30,20 @@
     }
   }
 
-  &--redefine {
-    // Background
-    background-color: $color-primary-1 !important;
-  }
+  // &--redefine {
+  //   // Background
+  //   background-color: $color-primary-1 !important;
+  // }
 
-  &--resolve {
-    // Background
-    background-color: $color-primary-2 !important;
-  }
+  // &--resolve {
+  //   // Background
+  //   background-color: $color-primary-2 !important;
+  // }
 
-  &--reclaim {
-    // Background
-    background-color: $color-primary-3 !important;
-  }
+  // &--reclaim {
+  //   // Background
+  //   background-color: $color-primary-3 !important;
+  // }
 
   .c-header__right {
     color: #333;
@@ -94,6 +94,12 @@
       // Structure
       padding-bottom: 0;
     }
+  }
+}
+
+.c-header--poetry {
+  .c-header__logo {
+    border-bottom: 1px solid #333;
   }
 }
 

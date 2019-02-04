@@ -6,7 +6,7 @@ const colors = {
   editorial: "#ffffff",
   redefine: "#f8d839",
   resolve: "#abcdbb",
-  reclaim: "#ae70af",
+  reclaim: "#bb99bb",
 }
 
 class Header extends React.Component {

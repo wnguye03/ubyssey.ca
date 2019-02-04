@@ -93,7 +93,9 @@ class Magazine extends React.Component {
 
         {this.state.subsection && this.state.subsection == this.subsections[0] && (
           <div className="editorial-container">
-            <div className="inside-cover" style={{ backgroundImage: `url(${this.props.insideCover})` }} />
+            <div className="inside-cover" style={{ backgroundImage: `url(${this.props.insideCover})` }}>
+              {!this.state.isDesktop && this.renderCredits()}
+            </div>
             <div className="editorial-content">
               <div className="title">{editorial.title}</div>
               {editorial.paragraphs.map((paragraph) => {
@@ -122,12 +124,22 @@ class Magazine extends React.Component {
     )
   }
 
-  renderVideo() {
+  renderCredits() {
     return (
-      <video preload="yes" autoPlay="true" muted="true" loop="true" playsInline="true" id="magazine-video">
-        <source src={`${this.props.video}.mp4`} type="video/mp4" />
-        <source src={`${this.props.video}.ogg`} type="video/ogg" />
-      </video>
+      <div className="c-cover__credits">
+        <h1>Editor-in-Chief</h1>
+        <h2>Lucy Fox</h2>
+        <h1>Written Content Editors</h1>
+        <h2>Charlotte Alden</h2>
+        <h2>Mitchell Ballachay</h2>
+        <h2>Andrew Ha</h2>
+        <h2>Emma Livingstone</h2>
+        <h2>Riya Talitha</h2>
+        <h1>Illustrations Editor</h1>
+        <h2>Kristine Ho</h2>
+        <h1>Design Editor</h1>
+        <h2>Claire Lloyd</h2>
+      </div>
     )
   }
 
@@ -138,20 +150,7 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          <div className="c-cover__content">
-            <h1>Editor-in-Chief</h1>
-            <li>Lucy Fox</li>
-            <h1>Written Content Editors</h1>
-            <li>Charlotte Alden</li>
-            <li>Mitchell Ballachay</li>
-            <li>Andrew Ha</li>
-            <li>Emma Livingstone</li>
-            <li>Riya Talitha</li>
-            <h1>Illustrations Editor</h1>
-            <li>Kristine Ho</li>
-            <h1>Design Editor</h1>
-            <li>Claire Lloyd</li>
-          </div>
+          {this.state.isDesktop && this.renderCredits()}
         </div>
       </div>
     )

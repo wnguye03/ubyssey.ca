@@ -23,15 +23,18 @@
 
 .c-article {
   .c-article__explore > a {
+    // Text
     font-weight: 400;
   }
 }
 
 .c-article:not(.c-article--basic).c-article--redefine {
   .c-article__explore > a {
+    // Background
     background-color: $color-primary-1;
   }
   .c-article__body {
+    // Text
     > p:first-child:first-letter {
       background-color: $color-primary-1;
     }
@@ -39,15 +42,18 @@
   }
 
   .c-article__snippet {
+    // Background
     background-color: $color-primary-1;
   }
 }
 
 .c-article:not(.c-article--basic).c-article--resolve {
   .c-article__explore > a {
+    // Background
     background-color: $color-primary-2;
   }
   .c-article__body {
+    // Text
     > p:first-child:first-letter {
       background-color: $color-primary-2;
     }
@@ -55,15 +61,18 @@
   }
 
   .c-article__snippet {
+    // Background
     background-color: $color-primary-2;
   }
 }
 
 .c-article:not(.c-article--basic).c-article--reclaim {
   .c-article__explore > a {
+    // Background
     background-color: $color-primary-3;
   }
   .c-article__body {
+    // Text
     > p:first-child:first-letter {
       background-color: $color-primary-3;
     }
@@ -71,6 +80,7 @@
   }
 
   .c-article__snippet {
+    // Background
     background-color: $color-primary-3;
   }
 }

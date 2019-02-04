@@ -17,6 +17,12 @@ class MagazineTheme(object):
 
     SITE_TITLE = 'The Ubyssey Magazine'
 
+    mag_titles = {
+        "2017": "Diversity",
+        "2018": "How we Live",
+        "2019": "Presence"
+    }
+
     def landing(self, request):
         """Magazine landing page view."""
 
@@ -72,14 +78,23 @@ class MagazineTheme(object):
         article.add_view()
         year = article.tags.get(name__icontains="20").name
 
+        print(year)
+
+        magazine_title = self.mag_titles[year]
+
+        print(magazine_title)
+
+        subsection = article.subsection.name.lower() if article.subsection else ""
+
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
-            'subsection': article.subsection.name.lower(),
+            'subsection': subsection,
             'specific_css': 'css/magazine-' + year + '.css',
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
-            'base_template': 'magazine/base.html'
+            'base_template': 'magazine/base.html',
+            'magazine_title': magazine_title
         }
 
         t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
@@ -111,6 +126,7 @@ class MagazineTheme(object):
         # Get all 2018 magazine articles
         articles = Article.objects.filter(is_published=True, section__slug='magazine', tags__name='2018').order_by('-importance')
 
+        print(list(articles))
         context = {
             'meta': {
                 'title': 'The Ubyssey Magazine - How we live',
