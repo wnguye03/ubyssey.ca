@@ -1,7 +1,7 @@
 from random import randint
 import json
 
-from django.http import HttpResponse, JsonResponse, Http404
+from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render
 from django.core.urlresolvers import reverse

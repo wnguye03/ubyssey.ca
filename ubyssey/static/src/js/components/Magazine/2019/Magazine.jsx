@@ -1,12 +1,12 @@
-/** @format */
-
 import React from "react"
 import ArticleBox from "./ArticleBox.jsx"
 import Header from "./Header.jsx"
 import { editorial } from "./contents.js"
 
+// should match with css transisitions (ms)
 const fadeDelay = 500
-const desktopSize = 768
+// view width (px)
+const desktopSize = 960
 
 class Magazine extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Magazine extends React.Component {
   }
 
   componentWillUnmount() {
-    window.addEventListener("resize", () => {
+    window.removeEventListener("resize", () => {
       this.updateSize()
     })
   }
@@ -170,3 +170,4 @@ class Magazine extends React.Component {
 }
 
 export default Magazine
+
