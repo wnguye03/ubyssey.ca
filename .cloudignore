@@ -1,0 +1,3 @@
+lib/PIL*
+node_modules/
+.git/
