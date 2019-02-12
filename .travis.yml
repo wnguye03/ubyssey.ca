@@ -26,7 +26,7 @@ after_success:
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
 - rm -rf .git/ ubyssey/static/
-- pip install google-cloud-storage -t lib/
+- pip install -I google-cloud-storage==1.13.2 -t lib/
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
