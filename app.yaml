@@ -29,3 +29,5 @@ libraries:
 skip_files:
     - lib/PIL*
     - .git
+    - venv
+    - .venv
