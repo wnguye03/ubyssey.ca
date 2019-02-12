@@ -1,4 +1,0 @@
-lib/PIL*
-sitepackages/PIL*
-node_modules/
-.git/
