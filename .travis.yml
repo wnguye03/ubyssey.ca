@@ -27,6 +27,7 @@ after_success:
 - mv _settings/settings-prd.py ubyssey/settings.py
 - rm -rf .git/ ubyssey/static/
 - pip install -I google-cloud-storage==1.13.2 -t lib/
+
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
@@ -38,6 +39,7 @@ deploy:
     local-dir: ${TRAVIS_BUILD_DIR}/gcs
     detect_encoding: true
     cache_control: "max-age=31536000"
+    verbosity: "debug"
     on:
       tags: true
   - provider: gae
@@ -46,5 +48,6 @@ deploy:
     default: true
     version: ubyssey-${TRAVIS_TAG//./-} # Replace periods with hyphens
     skip_cleanup: true
+    verbosity: "debug"
     on:
       tags: true
