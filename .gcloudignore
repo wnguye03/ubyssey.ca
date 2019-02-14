@@ -1,3 +1,4 @@
 lib/PIL*
 .git
+^(.*/)?.*\.pyc
 ubyssey/static/

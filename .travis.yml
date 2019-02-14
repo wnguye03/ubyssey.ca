@@ -25,13 +25,10 @@ after_success:
 # replace deploy settings with production settings
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
-- rm -rf .git/ ubyssey/static/
+- rm -rf .git/ ubyssey/static/ lib/^(.*/)?.*\.pyc
 - pip install -I google-cloud-storage==1.13.2 -t lib/
 - find lib/ -type f | wc -l
 - find . -type f | wc - l
-- ls
-- ls ubyssey/
-- ls lib/
 
 deploy:
   - provider: gcs
