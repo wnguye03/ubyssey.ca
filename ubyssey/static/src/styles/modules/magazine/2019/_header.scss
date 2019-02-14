@@ -18,6 +18,16 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
   z-index: 50;
 
+  &--redefine {
+    background-color: $color-primary-1;
+  }
+  &--resolve {
+    background-color: $color-primary-2;
+  }
+  &--reclaim {
+    background-color: $color-primary-3;
+  }
+
   .c-header__logo {
     margin: 0 auto;
     @media($bp-larger-than-mobile) {
