@@ -30,9 +30,16 @@ after_success:
 - find . -name "*.pyc" -exec rm -f {} \
 - pip install -I google-cloud-storage==1.13.2 -t lib/
 - find lib/ -type f | wc -l
+# List all dependency files num
 - cd lib/
 - du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
-- cd ..
+# List all django files num
+- cd django/
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+# List all django contrib
+- cd contrib
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+- cd ../../..
 - find . -type f | wc - l
 - ls
 - ls ubyssey/
