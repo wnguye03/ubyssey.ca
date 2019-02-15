@@ -40,7 +40,7 @@ after_success:
 - cd contrib
 - du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
 # Remove un-used contrib django apps
-- rm -rf admin admindocs flatpages gis postgres
+- rm -rf admin flatpages gis postgres
 - du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
 - cd ../../..
 - find . -type f | wc - l
