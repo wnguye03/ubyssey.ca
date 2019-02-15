@@ -30,9 +30,9 @@ after_success:
 - find . -name "*.pyc" -exec rm -f {} \
 - pip install -I google-cloud-storage==1.13.2 -t lib/
 - find lib/ -type f | wc -l
-- cd lib/python2.7
-- du --inodes -d 2
-- cd -
+- cd lib/
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+- cd ..
 - find . -type f | wc - l
 - ls
 - ls ubyssey/
