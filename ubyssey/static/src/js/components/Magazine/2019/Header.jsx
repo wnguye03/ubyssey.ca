@@ -26,7 +26,7 @@ class Header extends React.Component {
       document.body.style.overflow = "hidden"
     }
     return (
-      <div id="magazine-nav" className={show} style={{ backgroundColor: colors[this.props.selected] + "d9" }}>
+      <div id="magazine-nav" className={show} style={{ backgroundColor: colors[this.props.selected] }}>
         <div className={`item left ${show}`}>
           <a
             className="subsection"

@@ -13,11 +13,13 @@
   id="magazine-wrapper"
   data-articles="{{ articles }}"
   data-cover="{% static cover %}"
-  data-inside-cover="{% static insideCover %}"
+  data-reclaim-image = "{%static reclaimImage%}"
+  data-resolve-image = "{%static resolveImage%}"
+  data-redefine-image = "{%static redefineImage%}"
   data-title="Presence"
 ></div>
 
-{% include 'magazine/footer.html' %}
+<!-- {% include 'magazine/footer.html' %} -->
 
 <script
   src="https://code.jquery.com/jquery-2.1.4.min.js"

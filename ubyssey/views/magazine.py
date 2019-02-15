@@ -62,8 +62,12 @@ class MagazineTheme(object):
                 'image': static('images/magazine/2019/cover.png')
             },
             'cover': 'images/magazine/2019/cover.png',
-            'insideCover': 'images/magazine/2019/insideCover.png',
-            'articles': articles
+            'editorialImage': 'images/magazine/2019/inside-cover.png',
+            'reclaimImage': 'images/magazine/2019/subsection-reclaim.png',
+            'redefineImage': 'images/magazine/2019/subsection-redefine.png',
+            'resolveImage': 'images/magazine/2019/subsection-resolve.png',
+            'articles': articles,
+            'url': reverse('magazine-landing')
         }
         return render(request, 'magazine/2019/landing.html', context)
 

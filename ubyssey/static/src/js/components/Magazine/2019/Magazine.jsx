@@ -80,6 +80,11 @@ class Magazine extends React.Component {
 
   renderSubsection() {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
+    if(this.state.subsection === "editorial") this.image = this.props.editorialImage
+    if(this.state.subsection === "resolve") this.image = this.props.resolveImage
+    if(this.state.subsection === "redefine") this.image = this.props.redefineImage
+    if(this.state.subsection === "reclaim") this.image = this.props.reclaimImage
+    
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
         <Header
@@ -92,34 +97,45 @@ class Magazine extends React.Component {
           selectSubsection={(subsection) => this.selectSubsection(subsection)}
         />
 
-        {this.state.subsection && this.state.subsection == this.subsections[0] && (
-          <div className="editorial-container">
-            <div className="inside-cover" style={{ backgroundImage: `url(${this.props.insideCover})` }}>
-              {/* {!this.state.isDesktop && this.renderCredits()} */}
-              {this.renderCredits()}
+
+        {this.state.subsection && (
+          <div className="subsection-container">
+            <div className="subsection-image" style={{ backgroundImage: `url(${this.image})` }}>
+              {this.state.subsection === 'editorial' && this.renderCredits()}
+              {this.state.subsection !== 'editorial' && <div className="subsection-image-text"> {this.state.subsection}</div>}
             </div>
-            <div className="editorial-content">
-              <div className="title">{editorial.title}</div>
-              {editorial.paragraphs.map((paragraph) => {
-                return <p>{paragraph}</p>
-              })}
+
+            <div className="article-grid-scroll"> 
+            {this.state.subsection === 'editorial' && 
+              <div className="editorial-content">
+                <div className="title">{editorial.title}</div>
+                {editorial.paragraphs.map((paragraph) => {
+                  return <p>{paragraph}</p>
+                })}
+              </div>
+            }
+            {this.state.subsection !== 'editorial' && 
+              <div className="article-grid-container">
+                {this.state.subsection !== 'editorial' && this.props.articles[this.state.subsection].map((box, index) => {
+                  return (
+                    <ArticleBox
+                      index={index}
+                      subsection={this.state.subsection}
+                      transition={this.state.transition}
+                      url={box.url}
+                      image={box.featured_image}
+                      headline={box.headline}
+                    />
+                  )
+                })}
+              </div>
+              }
+              <footer className="c-footer u-container u-container--extra-large">
+                <div className="c-footer__left"><a className="o-link" href="">The Ubyssey Magazine</a></div>
+                <div className="c-footer__center">&copy; The Ubyssey</div>
+                <div className="c-footer__right"><a className="o-link" href="https://www.ubyssey.ca/">Back to ubyssey.ca</a></div>
+              </footer>
             </div>
-          </div>
-        )}
-        {this.state.subsection && this.state.subsection != this.subsections[0] && (
-          <div className="article-grid-container">
-            {this.props.articles[this.state.subsection].map((box, index) => {
-              return (
-                <ArticleBox
-                  index={index}
-                  subsection={this.state.subsection}
-                  transition={this.state.transition}
-                  url={box.url}
-                  image={box.featured_image}
-                  headline={box.headline}
-                />
-              )
-            })}
           </div>
         )}
       </div>
@@ -160,6 +176,7 @@ class Magazine extends React.Component {
 
   render() {
     const show = this.state.show ? "show" : ""
+    // const show = "show"
     return (
       <div className={`magazine-container ${show}`}>
         {this.renderCover()}
