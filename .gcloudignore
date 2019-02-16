@@ -1,5 +1,5 @@
 lib/PIL*
-lib/django*
+lib/django/
 .git
 ^(.*/)?.*\.pyc
 ubyssey/static/

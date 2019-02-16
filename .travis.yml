@@ -28,6 +28,8 @@ after_success:
 - mv _settings/settings-prd.py ubyssey/settings.py
 - rm -rf .git/ ubyssey/static/
 - pip install -I google-cloud-storage==1.13.2 -t lib/
+- ls lib/
+- ls lib/django/
 
 
 deploy:
