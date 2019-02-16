@@ -1,6 +1,6 @@
-$font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-$font-secondary: 'ub-gobold', 'Gobold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-$font-serif: Georgia;
+$font-default: "Montserrat", sans-serif;
+$font-secondary: $font-default;
+$font-serif: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 
 $font-size-base: 16;
 
@@ -27,18 +27,6 @@ $font-size-base: 16;
 	unicode-range: U+0020-25CA;
 }
 
-@font-face {
-	font-family:'ub-gobold';
-	src: url('../fonts/Gobold.eot');
-	src: url('../fonts/Gobold.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/Gobold.woff') format('woff'),
-		url('../fonts/Gobold.svg#Gobold') format('svg');
-	font-weight: 400;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+0020-25CA;
-}
-
 @function font-size($size) {
   $scaled-size: ($size / $font-size-base) + em;
   @return $scaled-size;
@@ -52,6 +40,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+h2 {
+  font-weight: 400;
+}
+
 h1, h3, h3, h4 {
   // Structure
   margin: 0;
@@ -63,9 +55,13 @@ h1, h3, h3, h4 {
 .o-link {
 	// Text
 	text-decoration: none;
-	color: inherit;
+  color: inherit;
+  margin: 0 .8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  transition: border .25s;
 
 	&:hover {
-		color: $color-primary-1;
+    color: #333;
+    border-color: #333;
 	}
 }

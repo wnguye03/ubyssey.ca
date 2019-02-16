@@ -6,9 +6,9 @@
   width: 100%;
   padding-left: 0;
   padding-right: 0;
-
-  // Background
-  background: $color-primary-1;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
 
   // Text
   text-align: center;
@@ -18,19 +18,31 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
   z-index: 50;
 
-  &--pink {
-    // Background
-    background: $color-primary-1;
+  &--redefine {
+    background-color: $color-primary-1;
+  }
+  &--resolve {
+    background-color: $color-primary-2;
+  }
+  &--reclaim {
+    background-color: $color-primary-3;
   }
 
-  &--green {
-    // Background
-    background: $color-primary-2;
+  .c-header__logo {
+    margin: 0 auto;
+    @media($bp-larger-than-mobile) {
+      padding: .5rem;
+      border: 1px solid #333;
+      &:hover {
+        color: #333;
+        background-color: #ffffff20;
+      }
+    }
   }
 
-  &--blue {
-    // Background
-    background: $color-primary-3;
+  .c-header__right {
+    // Text
+    color: #333;
   }
 
   &--poetry {
@@ -61,10 +73,7 @@
     display: flex;
     height: auto;
     width: auto;
-    padding-top: 2rem;
-    padding-bottom: 1.5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 1.5rem;
     margin-bottom: 0;
 
     // Background
@@ -81,6 +90,12 @@
       // Structure
       padding-bottom: 0;
     }
+  }
+}
+
+.c-header--poetry {
+  .c-header__logo {
+    border-bottom: 1px solid #333;
   }
 }
 
@@ -112,7 +127,7 @@
     border-bottom: 4px solid $color-primary-1;
 
     // Text
-    font-size: font-size(24);
+    font-size: font-size(18);
     color: $color-text-black;
 
     &:hover {
