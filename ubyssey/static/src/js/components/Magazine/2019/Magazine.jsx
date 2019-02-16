@@ -81,9 +81,12 @@ class Magazine extends React.Component {
   renderSubsection() {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     const show = this.state.show ? "show" : ""
+    if(this.state.subsection === "editorial") this.image = null
     if(this.state.subsection === "resolve") this.image = this.props.resolveImage
     if(this.state.subsection === "redefine") this.image = this.props.redefineImage
     if(this.state.subsection === "reclaim") this.image = this.props.reclaimImage
+
+    console.log(this.image)
     
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
