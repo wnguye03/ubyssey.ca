@@ -19,7 +19,7 @@ handlers:
   secure: always
 
 libraries:
-- name: Django
+- name: django
   version: 1.11
 - name: MySQLdb
   version: 1.2.5
