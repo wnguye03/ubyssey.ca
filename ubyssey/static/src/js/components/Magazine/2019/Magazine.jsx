@@ -80,6 +80,7 @@ class Magazine extends React.Component {
 
   renderSubsection() {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
+    const show = this.state.show ? "show" : ""
     if(this.state.subsection === "editorial") this.image = this.props.editorialImage
     if(this.state.subsection === "resolve") this.image = this.props.resolveImage
     if(this.state.subsection === "redefine") this.image = this.props.redefineImage
@@ -99,7 +100,7 @@ class Magazine extends React.Component {
 
 
         {this.state.subsection && (
-          <div className="subsection-container">
+          <div className={`subsection-container ${show}`}>
             <div className="subsection-image" style={{ backgroundImage: `url(${this.image})` }}>
               {this.state.subsection === 'editorial' && this.renderCredits()}
               {this.state.subsection !== 'editorial' && <div className="subsection-image-text"> {this.state.subsection}</div>}
@@ -157,6 +158,8 @@ class Magazine extends React.Component {
         <h2>Kristine Ho</h2>
         <h1>Design Editor</h1>
         <h2>Claire Lloyd</h2>
+        <h1>Web Design</h1>
+        <h2>Rowan Baker-French</h2>
       </div>
     )
   }

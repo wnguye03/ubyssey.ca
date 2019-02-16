@@ -37,6 +37,15 @@ video {
   width: 100%;
 }
 
+#magazine-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 .c-footer {
   // Structure
   padding-top: 4rem;
@@ -72,6 +81,7 @@ video {
   width: 250px;
   color: white;
   text-align: center;
+  font-size: 1rem;
 
   @media ($bp-larger-than-tablet) {
     // Structure
@@ -83,18 +93,17 @@ video {
   }
 
   // Text
-  // text-shadow: 1px 1px 1px black;
   color: white;
 
   h1 {
-    font-size: 1rem;
+    font-size: 1em;
     text-transform: uppercase;
     font-family: "montserrat";
-    font-weight: 400;
+    font-weight: 600;
   }
 
   h2 {
-    font-size: 1.1rem;
+    font-size: 1.1em;
     margin: 0.25rem;
     font-family: "montserrat";
     font-weight: 300;
@@ -163,7 +172,7 @@ h4 {
   right: 0;
   display: flex;
   align-items: center;
-  box-shadow: 1px 1px #5555;
+  box-shadow: 1px 1px rgba(0, 0, 0, .3);
 
   // Text
   color: #333333;
@@ -171,12 +180,6 @@ h4 {
   // Other
   cursor: default;
   transition: background-color $time;
-
-  &.show {
-    // Structure
-    position: fixed;
-    top: 0;
-  }
 
   .item {
     // Structure
@@ -189,7 +192,7 @@ h4 {
     font-family: "Montserrat", sans-serif;
 
     // Other
-    transition: transform $time, opacity $time;
+    transition: transition $time, opacity $time;
     opacity: 0;
     visibility: hidden;
 
@@ -258,14 +261,15 @@ h4 {
   @media ($bp-larger-than-tablet) {
     overflow-y: hidden;
     flex-direction: row;
-    margin-top: 60px;
+    margin-top: 0px;
+
   }
 }
 
 .subsection-image {
   // Structure
   width: 100%;
-  padding-top: 100%;
+  min-height: calc(100vh - 60px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,6 +296,7 @@ h4 {
 
   @media ($bp-larger-than-tablet) {
     flex-direction: row;
+    align-items: center;
     // Structure
     width: 34%;
     padding-top: 0;
@@ -309,34 +314,6 @@ h4 {
 
 }
 
-// .editorial-container {
-//   // Structure
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   min-height: 100vh;
-
-//   .subsection-image {
-//     // Structure
-//     width: 100%;
-//     height: 400px;
-//     background-size: auto 150%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//   }
-
-//   @media ($bp-larger-than-tablet) {
-//     flex-direction: row;
-//     .subsection-image {
-//       // Structure
-//       width: 50%;
-//       height: 100vh;
-//       justify-content: flex-end;
-//       background-size: auto 120%;
-//     }
-//   }
-// }
 .editorial-content {
   // Structure
   max-width: 500px;
@@ -435,7 +412,7 @@ h4 {
     left: 0;
     right: 0;
     margin-top: 0;
-    // min-height: 100vh;
+    min-height: 100vh;
 
     // Background
     background-color: white;
@@ -529,52 +506,23 @@ h4 {
         }
 
         // Structure
-        &:nth-of-type(5n + 1) {
-          flex: 1 0 40%;
+        &:nth-of-type(4n + 1) {
+          flex: 1 0 45%;
         }
 
-        &:nth-of-type(5n + 2) {
-          min-width: 60%;
-          flex: 1 0 60%;
+        &:nth-of-type(4n + 2) {
+          min-width: 55%;
+          flex: 1 0 55%;
         }
 
-        &:nth-of-type(5n + 4) {
-          min-width: 60%;
-          flex: 1 0 60%;
+        &:nth-of-type(4n + 3) {
+          min-width: 55%;
+          flex: 1 0 55%;
         }
 
-        &:nth-of-type(5n) {
-          flex: 1 0 40%;
+        &:nth-of-type(4n) {
+          flex: 1 0 45%;
         }
-
-        &:nth-of-type(5n + 3) {
-          flex: 1 0 100%;
-        }
-
-        // &.resolve {
-        //   // Structure
-        //   &:nth-of-type(5n + 1) {
-        //     flex: 1 0 60%;
-        //   }
-
-        //   &:nth-of-type(5n + 2) {
-        //     min-width: 40%;
-        //     flex: 1 0 40%;
-        //   }
-
-        //   &:nth-of-type(5n + 3) {
-        //     min-width: 60%;
-        //     flex: 1 0 60%;
-        //   }
-
-        //   &:nth-of-type(5n + 4) {
-        //     flex: 1 0 40%;
-        //   }
-
-        //   &:nth-of-type(5n) {
-        //     flex: 1 0 100%;
-        //   }
-        // }
       }
     }
   }
