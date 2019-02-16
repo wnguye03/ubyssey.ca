@@ -59,10 +59,9 @@ class MagazineTheme(object):
                 'title': 'The Ubyssey Magazine - Presence',
                 'description': 'The February 2019 issue of the Ubyssey magazine.',
                 'url': reverse('magazine-landing'),
-                'image': static('images/magazine/2019/cover.png')
+                'image': static('images/magazine/2019/cover.gif')
             },
-            'cover': 'images/magazine/2019/cover.png',
-            'editorialImage': 'images/magazine/2019/inside-cover.png',
+            'cover': 'images/magazine/2019/cover.gif',
             'reclaimImage': 'images/magazine/2019/subsection-reclaim.png',
             'redefineImage': 'images/magazine/2019/subsection-redefine.png',
             'resolveImage': 'images/magazine/2019/subsection-resolve.png',

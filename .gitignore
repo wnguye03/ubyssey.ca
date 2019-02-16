@@ -19,7 +19,6 @@ yarn.lock
 
 # Ignore settings for vscode except extensions.json
 .vscode
-!.vscode/extensions.json
 
 ubyssey/settings*.py
 
