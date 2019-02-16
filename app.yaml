@@ -19,6 +19,8 @@ handlers:
   secure: always
 
 libraries:
+- name: Django
+  version: 1.11
 - name: MySQLdb
   version: 1.2.5
 - name: PIL
