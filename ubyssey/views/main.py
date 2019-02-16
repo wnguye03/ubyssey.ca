@@ -2,6 +2,8 @@ from datetime import datetime
 import random
 import json
 
+from itertools import chain
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -457,12 +459,9 @@ class UbysseyTheme(object):
 
         year = parse_int_or_none(request.GET.get('year'))
 
-        article_list = Article.objects.filter(is_published=True).order_by(order_by)
-
-        try:
-            person = Person.objects.get(full_name__icontains=query)
-        except:
-            person = None
+        article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
+            'section', 'featured_image').filter(is_published=True).order_by(order_by)
+        person_list = None
 
         if year:
             context['year'] = year
@@ -470,7 +469,8 @@ class UbysseyTheme(object):
             filters.append('year=%s' % year)
 
         if query:
-            article_list = article_list.filter(headline__icontains=query) | article_list.filter(authors__person=person) | article_list.filter(seo_keyword__icontains=query)
+            person_list = Person.objects.filter(full_name__icontains=query)
+            article_list = article_list.filter(headline__icontains=query)
             context['q'] = query
             filters.append('q=%s' % query)
 
@@ -484,6 +484,9 @@ class UbysseyTheme(object):
             query_string = '?' + '&'.join(filters)
         else:
             query_string = ''
+
+        if (person_list is not None and person_list.exists()):
+            article_list = list(chain({'people': True}, person_list, {'articles': True}, article_list))
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
         page = request.GET.get('page')

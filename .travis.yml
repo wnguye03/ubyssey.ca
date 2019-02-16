@@ -12,6 +12,7 @@ install:
 - cd ubyssey/static
 - npm install -g gulp
 - npm install
+- npm ddp
 script:
 - gulp build
 after_success:
@@ -26,7 +27,26 @@ after_success:
 - rm ubyssey/settings.py ubyssey/settings.pyc
 - mv _settings/settings-prd.py ubyssey/settings.py
 - rm -rf .git/ ubyssey/static/
-- pip install google-cloud-storage -t lib/
+- find . -name "*.pyc" -exec rm -f {} \
+- pip install -I google-cloud-storage==1.13.2 -t lib/
+- find lib/ -type f | wc -l
+# List all dependency files num
+- cd lib/
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+# List all django files num
+- cd django/
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+# List all django contrib
+- cd contrib
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+# Remove un-used contrib django apps
+- rm -rf admin flatpages gis postgres
+- du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+- cd ../../..
+- find . -type f | wc - l
+- ls
+- ls ubyssey/
+
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
