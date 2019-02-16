@@ -81,7 +81,6 @@ class Magazine extends React.Component {
   renderSubsection() {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     const show = this.state.show ? "show" : ""
-    if(this.state.subsection === "editorial") this.image = this.props.editorialImage
     if(this.state.subsection === "resolve") this.image = this.props.resolveImage
     if(this.state.subsection === "redefine") this.image = this.props.redefineImage
     if(this.state.subsection === "reclaim") this.image = this.props.reclaimImage
@@ -171,7 +170,6 @@ class Magazine extends React.Component {
         <div className="cover-photo-container" style={background}>
           <div id="magazine-title">The Ubyssey Magazine</div>
           <h1 className="c-cover__logo">{this.props.title}</h1>
-          {/* {this.state.isDesktop && this.renderCredits()} */}
         </div>
       </div>
     )
@@ -179,7 +177,6 @@ class Magazine extends React.Component {
 
   render() {
     const show = this.state.show ? "show" : ""
-    // const show = "show"
     return (
       <div className={`magazine-container ${show}`}>
         {this.renderCover()}

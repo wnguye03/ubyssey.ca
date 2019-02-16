@@ -6,7 +6,6 @@ $(function() {
     <Magazine
       articles={$("#magazine-wrapper").data("articles")}
       cover={$("#magazine-wrapper").data("cover")}
-      editorialImage={$("#magazine-wrapper").data("editorialImage")}
       resolveImage={$("#magazine-wrapper").data("resolveImage")}
       redefineImage={$("#magazine-wrapper").data("redefineImage")}
       reclaimImage={$("#magazine-wrapper").data("reclaimImage")}
