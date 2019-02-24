@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GallerySlide = React.createClass({
+class GallerySlide extends React.Component {
   render() {
     const slideStyle = { width: this.props.width };
     const imageStyle = { backgroundImage: `url('${this.props.src}')` };
@@ -23,6 +23,6 @@ const GallerySlide = React.createClass({
       </li>
     );
   }
-});
+}
 
 export default GallerySlide;
