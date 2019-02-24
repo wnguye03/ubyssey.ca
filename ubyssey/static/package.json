@@ -27,6 +27,7 @@
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.5.0",
     "babel-register": "^6.22.0",
@@ -43,8 +44,8 @@
     "js-cookie": "^2.2.0",
     "keymaster": "^1.6.2",
     "lru-cache": "^2.7.0",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
     "react-textarea-autosize": "^2.5.1",
     "webpack": "^3.6.0"
   },

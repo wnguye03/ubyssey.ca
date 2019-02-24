@@ -17,13 +17,13 @@ class CommentsBar extends React.Component {
             this.loadComments(this.props.articleId);
         }
 
-        $(document).on('click', '.open-comments', function(e){
+        $(document).on('click', '.open-comments', (e) => {
             e.preventDefault();
             if (!this.initialized){
                 this.loadComments(this.props.articleId);
             }
             this.toggle(true);
-        }.bind(this));
+        });
 
     }
 
@@ -36,20 +36,20 @@ class CommentsBar extends React.Component {
 
     loadComments = (article_id) => {
         this.setState({ loading: true });
-        dispatch.articleComments(article_id, function(data){
+        dispatch.articleComments(article_id, (data) => {
             this.initialized = true;
             this.setState({
                 comments: data.results,
                 loading: false
             });
-        }.bind(this));
+        });
     };
 
     postComment = (content, callback) => {
-        dispatch.postComment(this.props.articleId, content, function(data){
+        dispatch.postComment(this.props.articleId, content, (data) => {
             this.loadComments();
             callback();
-        }.bind(this));
+        });
     };
 
     changeSort = (sort, event) => {
@@ -74,9 +74,9 @@ class CommentsBar extends React.Component {
     };
 
     render() {
-        var comments = this.state.comments.map(function(comment, i){
+        var comments = this.state.comments.map((comment, i) => {
             return (<Comment key={comment.id} comment={comment} />);
-        }.bind(this));
+        });
 
         return (
             <div id="comments-bar">
@@ -86,14 +86,14 @@ class CommentsBar extends React.Component {
                             <h3><i className="fa fa-comment"></i> {this.state.comments.length + " comments"}</h3>
                         </div>
                         <div className="u-pull-right">
-                            <button onClick={this.toggle.bind(this, false)}><i className="fa fa-close"></i></button>
+                            <button onClick={() => this.toggle(false)}><i className="fa fa-close"></i></button>
                         </div>
                     </div>
                     <CommentBox loggedIn={this.props.userId ? true : false} postHandler={this.postComment} />
                     <div className="sort">
-                        <a href="#" className={this.state.sort == 'recent' ? 'active' : ''} onClick={this.changeSort.bind(this, 'recent')}>Recent</a>
+                        <a href="#" className={this.state.sort == 'recent' ? 'active' : ''} onClick={() => this.changeSort('recent')}>Recent</a>
                         &middot;
-                        <a href="#" className={this.state.sort == 'top' ? 'active' : ''} onClick={this.changeSort.bind(this, 'top')}>Top</a>
+                        <a href="#" className={this.state.sort == 'top' ? 'active' : ''} onClick={() => this.changeSort('top')}>Top</a>
                     </div>
                     <div className="comments-list">
                         {this.state.loading ? this.renderSpinner() : comments}

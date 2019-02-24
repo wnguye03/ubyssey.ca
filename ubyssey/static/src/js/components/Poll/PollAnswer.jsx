@@ -3,7 +3,7 @@ import React from 'react';
 const COLOR_OPACITY = .8
 
 const PollAnswer = (props) => {
-  const { index, answer, hasVoted, showResults, checkedAnswers, answerPercentage } = this.props
+  const { index, answer, hasVoted, showResults, checkedAnswers, answerPercentage } = props
   const buttonStyle = hasVoted ? 'poll-button-voted': 'poll-button-no-vote'
   const showResult = showResults ? (hasVoted ? COLOR_OPACITY : 0) : 0
   const notShowResult = showResults ? (hasVoted ? 0 : COLOR_OPACITY) : COLOR_OPACITY
@@ -20,12 +20,12 @@ const PollAnswer = (props) => {
         value={answer}
         checked={props.checkedAnswers.includes(index)}
         onChange={(e) => props.changeAnswers(e, index)}>
-          <span className={'poll-answer-text'}>{answer}</span>
-          <div className={isSelected}>
-            <span className={'poll-checkmark'}></span>
-          </div>
       </input>
-
+      <span className={'poll-answer-text'}>{answer}</span>
+      <div className={isSelected}>
+        <span className={'poll-checkmark'}></span>
+      </div>
+      
       <span className={'poll-button'}
         style={{opacity: notShowResult}}>
         <span className={['poll-button-inner', buttonSelected].join(' ')} ></span>
