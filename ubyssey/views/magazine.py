@@ -6,6 +6,7 @@ from django.template import loader
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Tag
 
@@ -84,6 +85,15 @@ class MagazineTheme(object):
         magazine_title = self.mag_titles[year]
 
         subsection = article.subsection.name.lower() if article.subsection else ""
+
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
+
+        if not ArticleHelper.is_explicit(article):
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
