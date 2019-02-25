@@ -27,7 +27,7 @@ class CommentsBar extends React.Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.articleId != this.props.articleId){
             this.initialized = false;
             this.toggle(false);

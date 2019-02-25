@@ -19,7 +19,7 @@ class Gallery extends React.Component{
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.images = new LinkedList(this.props.images);
     }
 
