@@ -1,11 +1,5 @@
 import React from "react"
-
-const colors = {
-  editorial: "#ffffff",
-  redefine: "#f8d839",
-  resolve: "#abcdbb",
-  reclaim: "#bb99bb",
-}
+import {colors} from "./colors.js"
 
 class Header extends React.Component {
   renderSubsection(subsection) {

@@ -2,6 +2,7 @@ import React from "react"
 import ArticleBox from "./ArticleBox.jsx"
 import Header from "./Header.jsx"
 import { editorial } from "./contents.js"
+import {colors} from "./colors.js"
 
 // should match with css transisitions (ms)
 const fadeDelay = 500
@@ -86,8 +87,6 @@ class Magazine extends React.Component {
     if(this.state.subsection === "redefine") this.image = this.props.redefineImage
     if(this.state.subsection === "reclaim") this.image = this.props.reclaimImage
 
-    console.log(this.image)
-    
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
         <Header
@@ -100,12 +99,18 @@ class Magazine extends React.Component {
           selectSubsection={(subsection) => this.selectSubsection(subsection)}
         />
 
-
         {this.state.subsection && (
           <div className={`subsection-container ${show}`}>
             <div className="subsection-image" style={{ backgroundImage: `url(${this.image})` }}>
               {this.state.subsection === 'editorial' && this.renderCredits()}
-              {this.state.subsection !== 'editorial' && <div className="subsection-image-text"> {this.state.subsection}</div>}
+              {this.state.subsection !== 'editorial' && 
+                <div className={`subsection-image-text ${this.state.subsection}`}> 
+                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
+                  {this.state.subsection}
+                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
+                </div>
+              }
+              
             </div>
 
             <div className="article-grid-scroll"> 
