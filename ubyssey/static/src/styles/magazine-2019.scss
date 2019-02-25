@@ -285,13 +285,20 @@ h4 {
     // Text
     color: white;
     text-transform: uppercase;
-    font-size: 4rem;
-    text-shadow: 1px -1px 0px rgba(0, 0, 0, 0.6);
+    font-size: 3rem;
+    text-shadow: -1px 1px 0px rgba(0, 0, 0, 0.6);
     // Structure
     position: absolute;
     bottom: 0;
     transform: translate(0%, 22%);
     transform-origin: center;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+
+    @media (min-width: 600px) {
+      font-size: 6rem;
+    }
   }
 
   @media ($bp-larger-than-tablet) {
@@ -306,9 +313,20 @@ h4 {
       // Text
       font-size: 10rem;
       // Structure
-      right: 0;
-      transform: rotate(-90deg) translate(95%, -27%);
+      right: -114px;
+      transform: rotate(-90deg) translate(100%, -27%);
       transform-origin: right;
+      width: auto;
+      // Background
+      &.redefine {
+        color: $color-primary-1;
+      }
+      &.resolve {
+        color: $color-primary-2;
+      }
+      &.reclaim {
+        color: $color-primary-3;
+      }
     }
   }
 
@@ -402,6 +420,7 @@ h4 {
     @media ($bp-larger-than-tablet) {
       overflow-y: scroll;
       height: calc(100vh - 60px);
+      margin-left: 114px;
     }
   }
   .article-grid-wrapper {
@@ -440,6 +459,7 @@ h4 {
       flex-wrap: wrap;
       align-items: stretch;
       flex-direction: row;
+      margin-left: 3rem;
     }
     .article-grid {
       $gridSize: 240px;
@@ -567,4 +587,29 @@ h4 {
 
 .c-footer {
   font-size: .85rem;
+}
+
+.scroll-show {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  margin: 0 1rem 0.1rem 1rem;
+
+  @media(min-width: 600px) {
+    margin: 0 2rem 0.1rem 2rem;
+  }
+
+  i {
+    border: solid white;
+    border-width: 0 .05em .05em 0;
+    display: inline-block;
+    padding: .075em;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.6);
+    &.down {
+      transform: rotate(45deg);
+    }
+  }
+
+
 }
