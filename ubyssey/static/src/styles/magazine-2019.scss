@@ -46,11 +46,6 @@ video {
   overflow: hidden;
 }
 
-.c-footer {
-  // Structure
-  padding-top: 4rem;
-}
-
 .c-cover__logo {
   // Structure
   position: absolute;
@@ -586,7 +581,11 @@ h4 {
 }
 
 .c-footer {
-  font-size: .85rem;
+  // Structure
+  padding-top: 4rem;
+
+  // Text
+  font-size: .75rem;
 }
 
 .scroll-show {

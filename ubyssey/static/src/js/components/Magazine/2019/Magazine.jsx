@@ -108,7 +108,6 @@ class Magazine extends React.Component {
                   {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
                   {this.state.subsection}
                   {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
-                  {/* <div className="scroll-show"><i className="down"/><i className="down"/></div> */}
                 </div>
               }
               
