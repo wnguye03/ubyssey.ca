@@ -2,15 +2,14 @@ import React from 'react';
 var Comment = require('./Comment.jsx');
 var CommentBox = require('./CommentBox.jsx');
 
-var CommentsBar = React.createClass({
-    getInitialState: function(){
-        return {
-            comments: [],
-            sort: "recent",
-            active: false,
-        }
-    },
-    componentDidMount: function(){
+class CommentsBar extends React.Component {
+    state = {
+        comments: [],
+        sort: "recent",
+        active: false,
+    };
+
+    componentDidMount() {
 
         this.initialized = false;
 
@@ -26,14 +25,16 @@ var CommentsBar = React.createClass({
             this.toggle(true);
         }.bind(this));
 
-    },
-    componentWillReceiveProps: function(nextProps){
+    }
+
+    componentWillReceiveProps(nextProps) {
         if (nextProps.articleId != this.props.articleId){
             this.initialized = false;
             this.toggle(false);
         }
-    },
-    loadComments: function(article_id){
+    }
+
+    loadComments = (article_id) => {
         this.setState({ loading: true });
         dispatch.articleComments(article_id, function(data){
             this.initialized = true;
@@ -42,21 +43,25 @@ var CommentsBar = React.createClass({
                 loading: false
             });
         }.bind(this));
-    },
-    postComment: function(content, callback){
+    };
+
+    postComment = (content, callback) => {
         dispatch.postComment(this.props.articleId, content, function(data){
             this.loadComments();
             callback();
         }.bind(this));
-    },
-    changeSort: function(sort, event){
+    };
+
+    changeSort = (sort, event) => {
         event.preventDefault();
         this.setState({ sort: sort });
-    },
-    toggle: function(active){
+    };
+
+    toggle = (active) => {
         this.setState({ active: active });
-    },
-    renderSpinner: function(){
+    };
+
+    renderSpinner = () => {
         return (
             <div className="spinner">
               <div className="rect1"></div>
@@ -66,8 +71,9 @@ var CommentsBar = React.createClass({
               <div className="rect5"></div>
             </div>
             );
-    },
-    render: function(){
+    };
+
+    render() {
         var comments = this.state.comments.map(function(comment, i){
             return (<Comment key={comment.id} comment={comment} />);
         }.bind(this));
@@ -96,6 +102,6 @@ var CommentsBar = React.createClass({
             </div>
             );
     }
-});
+}
 
 module.exports = CommentsBar;
