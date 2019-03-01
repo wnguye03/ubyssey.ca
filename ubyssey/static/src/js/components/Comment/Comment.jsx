@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Comment = React.createClass({
+class Comment extends React.Component {
     render() {
         return (
             <div className="comment">
@@ -14,6 +14,6 @@ const Comment = React.createClass({
             </div>
             );
     }
-});
+}
 
 export default Comment;

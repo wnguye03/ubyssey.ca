@@ -1,8 +1,9 @@
 import React from "react"
+import ReactDOM from "react-dom"
 import { Magazine } from "./components/Magazine/2019"
 
 $(function() {
-  React.render(
+  ReactDOM.render(
     <Magazine
       articles={$("#magazine-wrapper").data("articles")}
       cover={$("#magazine-wrapper").data("cover")}
