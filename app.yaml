@@ -4,7 +4,7 @@ threadsafe: yes
 
 automatic_scaling:
   target_cpu_utilization: 0.65
-  max_instances: 10
+  max_instances: 30
   max_idle_instances: 1
 
 handlers:
