@@ -10,7 +10,7 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 SECRET_KEY = Secrets.get('SECRET_KEY')
 NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
-VERSION = '1.4.123'
+VERSION = '1.4.124'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
