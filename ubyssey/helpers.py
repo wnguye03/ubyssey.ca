@@ -159,7 +159,7 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):
-        articles = None
+        articles = []
         if ref is not None:
             if ref == 'frontpage':
                 articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
@@ -251,8 +251,8 @@ class ArticleHelper(object):
         articles = Article.objects.filter(is_published=True)
 
         if dur in durations:
-            end = datetime.datetime.now() + datetime.timedelta(days=1)
-            start = end - datetime.timedelta(days=durations[dur])
+            end = timezone.now() + timezone.timedelta(days=1)
+            start = end - timezone.timedelta(days=durations[dur])
             time_range = (start, end)
             articles = articles.filter(created_at__range=(time_range))
 
