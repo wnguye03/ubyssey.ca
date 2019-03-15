@@ -185,7 +185,7 @@ if ($('main.article').length) {
 
     articleAds()
 
-    var articleList = ReactDOM.render(
+    const articleList = ReactDOM.render(
         <ArticlesSuggested
           breakpoint={960}
           name={listName}
@@ -195,7 +195,7 @@ if ($('main.article').length) {
           document.getElementById('article-list')
     );
 
-    const gatherImages = function(gallery) {
+    const gatherImages = (gallery) => {
         var selector, trigger;
 
         if (gallery) {
@@ -232,16 +232,16 @@ if ($('main.article').length) {
           list: images,
           table: imagesTable,
         };
-      }.bind(this);
+      };
 
 
-    var galleries = [
+    const galleries = [
         gatherImages(),
         ...$(`#article-${articleId} .gallery-attachment`)
           .map((_, elem) => gatherImages(elem)).get()
       ];
 
-    var gallery = ReactDOM.render(
+    const gallery = ReactDOM.render(
         <Galleries galleries={galleries} />,
         document.getElementById('gallery')
     );

@@ -19,7 +19,7 @@ class Gallery extends React.Component{
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.images = new LinkedList(this.props.images);
     }
 
@@ -29,7 +29,7 @@ class Gallery extends React.Component{
         this.initSlider();
     }
 
-    initSlider() {
+    initSlider = () => {
 
         var element = findDOMNode(this.refs.gallery);
 
@@ -63,7 +63,7 @@ class Gallery extends React.Component{
             mc.on("panend pancancel panleft panright swipeleft swiperight", this.handleHammer);
 
             /* From Modernizr */
-            function whichTransitionEvent(){
+            const whichTransitionEvent = () => {
                 var t;
                 var el = document.createElement('fakeelement');
                 var transitions = {
@@ -84,17 +84,17 @@ class Gallery extends React.Component{
             var transitionEvent = whichTransitionEvent();
             transitionEvent && element.addEventListener(transitionEvent, function() {
                 //this.slideCallback();
-            }.bind(this));
+            });
         }
 
     }
 
-    setPaneDimensions() {
+    setPaneDimensions = () => {
         this.paneWidth = $(window).width();
         this.container.width(this.paneWidth*this.paneCount + this.paneCount*15);
     }
 
-    updatePaneDimensions() {
+    updatePaneDimensions = () => {
         this.container = $("ul.slides", this.element);
 
         this.panes = $("li.slide", this.element);
@@ -107,7 +107,7 @@ class Gallery extends React.Component{
         this.showPane(this.currentPane, false);
     }
 
-    showPane(index, animate) {
+    showPane = (index, animate) => {
         // between the bounds
         index = Math.max(0, Math.min(index, this.paneCount-1));
 
@@ -118,26 +118,26 @@ class Gallery extends React.Component{
         this.setContainerOffset(offset, true);
     }
 
-    setContainerOffset(percent, animate) {
+    setContainerOffset = (percent, animate) => {
 
         this.container.toggleClass('animate', animate);
         this.container.css('transform', `translate3d(${percent}%,0,0) scale3d(1,1,1)`);
 
     }
 
-    nextSlide() {
+    nextSlide = () => {
         if (this.state.active && this.state.active.next)
             this.setState({ active: this.state.active.next});
         return this.showPane(this.currentPane + 1, true);
     }
 
-    prevSlide() {
+    prevSlide = () => {
         if (this.state.active && this.state.active.prev)
             this.setState({ active: this.state.active.prev});
         return this.showPane(this.currentPane - 1, true);
     }
 
-    handleHammer(ev) {
+    handleHammer = (ev) => {
 
         // disable browser scrolling
         //ev.preventDefault();
@@ -179,7 +179,7 @@ class Gallery extends React.Component{
         }
     }
 
-    setupEventListeners() {
+    setupEventListeners = () => {
 
         // Keyboard controls
         key('left', this.prevSlide);
@@ -198,7 +198,7 @@ class Gallery extends React.Component{
         });
     }
 
-    addSlideTrigger(target) {
+    addSlideTrigger = (target) => {
         $(target).on('click', e => {
             e.preventDefault();
             const imageId = $(e.target).data('id');
@@ -211,7 +211,7 @@ class Gallery extends React.Component{
         });
     }
 
-    setIndex(index) {
+    setIndex = (index) => {
         const {url, caption} = this.props.images[index];
         this.setState({
             index,
@@ -220,12 +220,12 @@ class Gallery extends React.Component{
         });
     }
 
-    getImage(imageId) {
+    getImage = (imageId) => {
         const index = this.props.imagesTable[imageId];
         return this.props.images[index];
     }
 
-    getActiveImage(imageId) {
+    getActiveImage = (imageId) => {
         let active = this.images;
         while(active){
             if (active.data.id == imageId)
@@ -235,7 +235,7 @@ class Gallery extends React.Component{
         return null;
     }
 
-    getIndex(imageId, images) {
+    getIndex = (imageId, images) => {
         for (let i = 0; i < images.length; i++) {
             if (images[i].id == imageId)
                 return i;
@@ -243,37 +243,37 @@ class Gallery extends React.Component{
         return -1;
     }
 
-    setCurrentImage(imageId) {
+    setCurrentImage = (imageId) => {
         this.showPane(this.getIndex(imageId, this.props.images));
         this.setState({ active: this.getActiveImage(imageId)}, this.updatePaneDimensions);
     }
 
-    open(imageId) {
+    open = (imageId) => {
         this.setCurrentImage(imageId);
         this.setState({ visible: true });
         $('body').addClass('no-scroll');
     }
 
-    close() {
+    close = () => {
         this.setState({
             visible: false,
         });
         $('body').removeClass('no-scroll');
     }
 
-    previous(callback) {
+    previous = (callback) => {
         if (!this.state.active || !this.state.active.prev)
             return
         this.setState({ active: this.state.active.prev }, callback);
     }
 
-    next(callback) {
+    next = (callback) => {
         if (!this.state.active || !this.state.active.next)
             return
         this.setState({ active: this.state.active.next }, callback);
     }
 
-    renderImage() {
+    renderImage = () => {
         if (this.state.image){
             var imageStyle = { maxHeight: $(window).height() - 200 };
             return (
@@ -286,7 +286,7 @@ class Gallery extends React.Component{
         }
     }
 
-    renderControls() {
+    renderControls = () => {
         if (this.props.images.length > 1){
             return (
                 <div className="navigation">

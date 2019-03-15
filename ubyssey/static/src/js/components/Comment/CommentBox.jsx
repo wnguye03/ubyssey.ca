@@ -11,9 +11,9 @@ class CommentBox extends React.Component {
     };
 
     handlePost = () => {
-        this.props.postHandler(this.state.content, function(){
+        this.props.postHandler(this.state.content, () => {
             this.setState({ content: "" });
-        }.bind(this));
+        });
     };
 
     renderLogin = () => {

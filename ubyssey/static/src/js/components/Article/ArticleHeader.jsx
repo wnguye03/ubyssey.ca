@@ -1,7 +1,7 @@
 import React from 'react';
 
 class ArticleHeader extends React.Component {
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.logo = $('img.logo').attr('src');
         this.home = $('a.home-link').attr('href');
     }

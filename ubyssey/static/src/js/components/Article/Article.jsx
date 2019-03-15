@@ -68,7 +68,7 @@ class Article extends React.Component {
       }
   };
 
-  setupGalleries() {
+  setupGalleries = () => {
       const gatherImages = function(gallery) {
         var selector, trigger;
 
@@ -105,7 +105,7 @@ class Article extends React.Component {
           list: images,
           table: imagesTable,
         };
-      }.bind(this);
+      }
 
       return [
         gatherImages(),
