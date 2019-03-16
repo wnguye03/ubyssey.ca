@@ -3,7 +3,8 @@ api_version: 1
 threadsafe: yes
 
 automatic_scaling:
-  max_instances: 100
+  max_instances: 200
+  min_instances: 60
 
 handlers:
 - url: /robots.txt
