@@ -19,11 +19,8 @@ class Gallery extends React.Component{
         })
     }
 
-    UNSAFE_componentWillMount() {
-        this.images = new LinkedList(this.props.images);
-    }
-
     componentDidMount() {
+        this.images = new LinkedList(this.props.images);
         this.setupEventListeners();
         this.addSlideTrigger(this.props.trigger);
         this.initSlider();
@@ -60,7 +57,7 @@ class Gallery extends React.Component{
             mc.add( new Hammer.Pan( { threshold: 0, direction: Hammer.DIRECTION_HORIZONTAL }) );
             mc.add( new Hammer.Swipe( { threshold: 1 }) ).recognizeWith( mc.get('pan') );
 
-            mc.on("panend pancancel panleft panright swipeleft swiperight", this.handleHammer);
+            mc.on("panend pancancel panleft panright swipeleft swiperight", (e) => this.handleHammer(e));
 
             /* From Modernizr */
             const whichTransitionEvent = () => {
@@ -119,7 +116,6 @@ class Gallery extends React.Component{
     }
 
     setContainerOffset = (percent, animate) => {
-
         this.container.toggleClass('animate', animate);
         this.container.css('transform', `translate3d(${percent}%,0,0) scale3d(1,1,1)`);
 
@@ -182,9 +178,9 @@ class Gallery extends React.Component{
     setupEventListeners = () => {
 
         // Keyboard controls
-        key('left', this.prevSlide);
-        key('right', this.nextSlide);
-        key('esc', this.close);
+        key('left', () => this.prevSlide());
+        key('right', () => this.nextSlide());
+        key('esc', () => this.close());
 
         // Arrow buttons
         $(document).on('click', '.prev-slide', e => {
@@ -245,7 +241,7 @@ class Gallery extends React.Component{
 
     setCurrentImage = (imageId) => {
         this.showPane(this.getIndex(imageId, this.props.images));
-        this.setState({ active: this.getActiveImage(imageId)}, this.updatePaneDimensions);
+        this.setState({ active: this.getActiveImage(imageId)}, () => this.updatePaneDimensions());
     }
 
     open = (imageId) => {
@@ -255,22 +251,20 @@ class Gallery extends React.Component{
     }
 
     close = () => {
-        this.setState({
-            visible: false,
-        });
+        this.setState({ visible: false });
         $('body').removeClass('no-scroll');
     }
 
-    previous = (callback) => {
+    previous = () => {
         if (!this.state.active || !this.state.active.prev)
             return
-        this.setState({ active: this.state.active.prev }, callback);
+        this.setState({ active: this.state.active.prev });
     }
 
-    next = (callback) => {
+    next = () => {
         if (!this.state.active || !this.state.active.next)
             return
-        this.setState({ active: this.state.active.next }, callback);
+        this.setState({ active: this.state.active.next });
     }
 
     renderImage = () => {
@@ -305,13 +299,13 @@ class Gallery extends React.Component{
             <GallerySlide key={i} index={i} width={this.state.slideWidth} src={image.url} caption={image.caption} credit={image.credit} />
         ));
 
-        const prev = (<div onClick={this.prevSlide} className="prev"><div><i className="fa fa-chevron-left"></i></div></div>);
-        const next = (<div onClick={this.nextSlide} className="next"><div><i className="fa fa-chevron-right"></i></div></div>);
+        const prev = (<div onClick={() => this.prevSlide()} className="prev"><div><i className="fa fa-chevron-left"></i></div></div>);
+        const next = (<div onClick={() => this.nextSlide()} className="next"><div><i className="fa fa-chevron-right"></i></div></div>);
 
         return (
             <div className={'slideshow ' + visible}>
                 <div className="image-container" ref="gallery">
-                    <div onClick={this.close} className="close-slideshow"><i className="fa fa-times"></i></div>
+                    <div onClick={() => this.close()} className="close-slideshow"><i className="fa fa-times"></i></div>
                     <div className="gallery-container">
                         <ul className="slides" ref="slides">{slides}</ul>
                     </div>
