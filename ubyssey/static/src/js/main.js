@@ -76,11 +76,21 @@ function embedMargins() {
     return false;
   });
 
+  $('#sections-more-dropdown').click(function(e) {
+    e.stopPropagation();
+    $('.sections-more').show()
+  })
+
   $document.on('click', function(e){
     $('.dropdown .list').hide();
     $('.js-dropdown-list').hide();
+    if($('.sections-more').is(':visible')) {
+      $('.sections-more').hide();
+    }
     enableScroll($document);
   });
+
+
 
   var DROPDOWN_FADE_TIME = 100;
 
