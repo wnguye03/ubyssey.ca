@@ -18,6 +18,7 @@
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">
         <div class="sections">
+            {% include 'homepage/blocks/section_1.html' with section="whobyssey" articles=sections.whobyssey %}
             {% include 'homepage/blocks/section_1.html' with section="news" articles=sections.news %}
             {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
             {% include 'homepage/blocks/section_2.html' with section="sports" articles=sections.sports %}

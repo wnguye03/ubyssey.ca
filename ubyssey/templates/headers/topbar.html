@@ -4,6 +4,9 @@
         <a class="home-link" href="{% url 'home' %}"><img class="logo" src="{% static 'images/ubyssey-logo-small.svg' %}" /></a>
         <nav>
             <ul>
+                <li {% if section == 'whobyssey' %}class="current"{% endif %}>
+                    <a href="{% url 'page' 'whobyssey' %}">Who?byssey</a>
+                </li>
                 <li {% if section == 'news' %}class="current"{% endif %}>
                     <a href="{% url 'page' 'news' %}">News</a>
                 </li>
