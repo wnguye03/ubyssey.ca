@@ -90,8 +90,6 @@ function embedMargins() {
     enableScroll($document);
   });
 
-
-
   var DROPDOWN_FADE_TIME = 100;
 
   $('.js-dropdown > a').click(function(e) {
