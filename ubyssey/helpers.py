@@ -160,6 +160,7 @@ class ArticleHelper(object):
     @staticmethod
     def get_reading_list(article, ref=None, dur=None):
         articles = []
+        name = None
         if ref is not None:
             if ref == 'frontpage':
                 articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
