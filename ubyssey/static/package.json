@@ -47,7 +47,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-textarea-autosize": "^2.5.1",
-    "webpack": "^4.29.6"
+    "webpack": "^3.6.0"
   },
   "engines": {
     "node": ">=0.10"
