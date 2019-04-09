@@ -17,27 +17,27 @@ const fs = require('fs');
 const version = JSON.parse(fs.readFileSync('./package.json')).version;
 
 function cleanJsTask() {
-  return src('./dist/js/', {read: false})
+  return src('./dist/js/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanCssTask() {
-  return src('./dist/css/', {read: false})
+  return src('./dist/css/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanImagesTask() {
-  return src('./dist/images/', {read: false})
+  return src('./dist/images/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanVideosTask() {
-  return src('./dist/videos/', {read: false})
+  return src('./dist/videos/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanFontsTask() {
-  return src('./dist/fonts/', {read: false})
+  return src('./dist/fonts/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
