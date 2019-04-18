@@ -1,7 +1,8 @@
 require('babel-register'); // Pass require()s through babel (for running jasmine)
 
 const {series, parallel, src, dest, watch} = require('gulp');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
+const PluginError = require('plugin-error');
 const jasmine = require('gulp-jasmine');
 const clean = require('gulp-clean');
 const rename = require('gulp-rename');
@@ -44,10 +45,10 @@ function cleanFontsTask() {
 function webpackBuildTask(callback) {
   webpack(webpackProdConfig, function(err, stats) {
     if (err) {
-      throw new gutil.PluginError('webpackBuildTask', err);
+      throw new PluginError('webpackBuildTask', err);
     }
 
-    gutil.log('[webpackBuildTask]', stats.toString({ colors: true }));
+    log('[webpackBuildTask]', stats.toString({ colors: true }));
 
     callback();
   });
@@ -56,10 +57,10 @@ function webpackBuildTask(callback) {
 function webpackBuildDevTask(callback) {
   webpack(webpackDevConfig, function(err, stats) {
     if (err) {
-      throw new gutil.PluginError('webpackBuildDevTask', err);
+      throw new PluginError('webpackBuildDevTask', err);
     }
 
-    gutil.log('[webpackBuildDevTask]', stats.toString({ colors: true }));
+    log('[webpackBuildDevTask]', stats.toString({ colors: true }));
     
     callback();
   });
