@@ -1,8 +1,9 @@
-var webpack = require('webpack');
-var version = require('./package.json').version;
+const webpack = require('webpack');
+const version = require('./package.json').version;
 
 module.exports = {
-    entry: {
+  mode: 'production',
+  entry: {
         main:               './src/js/main.js',
         dfp:                './src/js/dfp.js',
         article:            './src/js/article.jsx',
@@ -19,19 +20,19 @@ module.exports = {
         filename: '[name]-' + version + '.js'
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
         }
       ]
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
+        'process.traceDeprecation': true
       }),
       new webpack.LoaderOptionsPlugin({
         minimize: true
