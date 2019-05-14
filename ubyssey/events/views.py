@@ -247,7 +247,7 @@ def upcoming_weeks(n):
 
     weeks = []
 
-    for i in range(n):
+    for i in xrange(n):
         start_day = start_monday + datetime.timedelta(weeks=i)
         week = []
 
