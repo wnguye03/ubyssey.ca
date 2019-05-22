@@ -1,6 +1,4 @@
 runtime: python37
-api_version: 1
-threadsafe: yes
 
 automatic_scaling:
   target_cpu_utilization: .65
@@ -15,15 +13,5 @@ handlers:
   static_files: service-workers/service-worker.js
   upload: service-workers/service-worker.js
 - url: .*
-  script: ubyssey.wsgi.application
+  script: auto
   secure: always
-
-libraries:
-- name: django
-  version: 1.11
-- name: MySQLdb
-  version: 1.2.5
-- name: PIL
-  version: 1.1.7
-- name: ssl
-  version: latest
