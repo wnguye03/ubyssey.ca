@@ -11,6 +11,3 @@ pyyaml
 ua-parser
 user-agents
 django-user-agents
-ssl
-PIL==1.1.6
-
