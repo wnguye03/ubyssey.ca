@@ -42,7 +42,7 @@ services:
     volumes:
       - ./dispatch/dispatch:/dispatch/dispatch
       - .:/ubyssey.ca
-    volumes_from:
+    volumes_from: 
       - gulp
       - yarn
     ports:
