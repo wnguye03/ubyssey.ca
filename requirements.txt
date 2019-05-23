@@ -1,4 +1,4 @@
-dispatch==0.6.0
+dispatch==0.6.1
 mysqlclient
 django-phonenumber-field==2.0.0
 phonenumbers

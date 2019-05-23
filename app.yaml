@@ -1,4 +1,7 @@
 runtime: python37
+entrypoint: gunicorn -b :$PORT /ubyssey/views/main.py:/ubyssey/wsgi.py
+env_variables:
+  PORT: "8000"
 
 automatic_scaling:
   target_cpu_utilization: .65
@@ -15,3 +18,4 @@ handlers:
 - url: .*
   script: auto
   secure: always
+

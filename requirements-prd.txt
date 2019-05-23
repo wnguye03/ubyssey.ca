@@ -1,4 +1,5 @@
-dispatch==0.6.0
+dispatch==0.6.1
+Django==1.11
 git+git://github.com/ubyssey/django-google-storage.git
 django-gae-backends
 django-canonical-domain
@@ -11,3 +12,5 @@ pyyaml
 ua-parser
 user-agents
 django-user-agents
+gunicorn
+Pillow
