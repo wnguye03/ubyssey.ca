@@ -12,5 +12,5 @@ pyyaml
 ua-parser
 user-agents
 django-user-agents
-gunicorn
+uwsgi
 Pillow
