@@ -1,6 +1,6 @@
 runtime: python37
 instance_class: F4
-entrypoint: uwsgi --http :$PORT --chdir /ubyssey/ --wsgi-file wsgi.py --master --processes 4 --threads 2
+entrypoint: uwsgi --http-socket :$PORT --chdir /ubyssey/ --wsgi-file wsgi.py --master --processes 4 --threads 2
 
 automatic_scaling:
   target_cpu_utilization: .65
@@ -14,7 +14,3 @@ handlers:
 - url: /service-worker.js
   static_files: service-workers/service-worker.js
   upload: service-workers/service-worker.js
-- url: .*
-  secure: always
-  redirect_http_response_code: 301
-  script: auto
