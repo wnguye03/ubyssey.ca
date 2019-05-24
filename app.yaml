@@ -1,7 +1,5 @@
 runtime: python37
-entrypoint: gunicorn -b :$PORT manage:app
-env_variables:
-   PORT: "8000"
+entrypoint: gunicorn -b :$PORT wsgi:manage
 
 automatic_scaling:
   target_cpu_utilization: .65
