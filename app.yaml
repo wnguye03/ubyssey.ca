@@ -1,6 +1,6 @@
 runtime: python37
 instance_class: F4
-entrypoint: uwsgi --http :$PORT --chdir /home/ubyssey.ca/ubyssey/ --wsgi-file ubyssey/wsgi.py --master --processes 4 --threads 2
+entrypoint: uwsgi --http :$PORT --chdir /ubyssey/ --wsgi-file ubyssey/wsgi.py --master --processes 4 --threads 2
 
 automatic_scaling:
   target_cpu_utilization: .65
