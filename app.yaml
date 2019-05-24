@@ -1,5 +1,5 @@
 runtime: python37
-entrypoint: gunicorn -b :$PORT /ubyssey/views/main.py:/ubyssey/wsgi.py
+entrypoint: gunicorn -b :$PORT ubyssey:/ubyssey/wsgi.py
 
 automatic_scaling:
   target_cpu_utilization: .65
