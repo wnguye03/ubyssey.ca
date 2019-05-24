@@ -1,6 +1,7 @@
 runtime: python37
-env: flex
 entrypoint: gunicorn -b :$PORT ubyssey:/ubyssey/wsgi.py
+env_variables:
+   PORT: "8000"
 
 automatic_scaling:
   target_cpu_utilization: .65
