@@ -1,5 +1,5 @@
 runtime: python37
-entrypoint: gunicorn -b :$PORT /ubyssey/wsgi:application
+entrypoint: gunicorn -b :$PORT manage:app
 env_variables:
    PORT: "8000"
 
