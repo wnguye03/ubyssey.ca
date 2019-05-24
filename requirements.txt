@@ -12,5 +12,6 @@ pyyaml
 ua-parser
 user-agents
 django-user-agents
-uwsgi
+gunicorn
 Pillow
+django-debug-toolbar
