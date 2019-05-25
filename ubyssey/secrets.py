@@ -1,8 +1,12 @@
-from google.appengine.ext import ndb
+import ndb_orm as ndb
+from google.cloud import datastore
+
+client = datastore.Client()
+ndb.enable_use_with_gcd(client.project)
 
 class Secrets(ndb.Model):
-    key = ndb.StringProperty()
-    value = ndb.StringProperty()
+    key = ndb.TextProperty(indexed=False)
+    value = ndb.TextProperty(indexed=False)
 
     @staticmethod
     def get(key):

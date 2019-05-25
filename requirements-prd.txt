@@ -14,4 +14,5 @@ user-agents
 django-user-agents
 gunicorn
 Pillow
-google
+ndb-orm
+google-cloud-datastore
