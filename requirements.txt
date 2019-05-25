@@ -15,5 +15,4 @@ django-user-agents
 gunicorn
 Pillow
 django-debug-toolbar
-ndb-orm
 google-cloud-datastore
