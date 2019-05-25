@@ -10,7 +10,7 @@ CANONICAL_DOMAIN = 'www.ubyssey.ca'
 SECRET_KEY = Secrets.get('SECRET_KEY')
 NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
-VERSION = '1.5.22'
+VERSION = '1.5.23'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -59,6 +59,7 @@ CACHES = {
 }
 
 MIDDLEWARE_CLASSES += [
+    'google.appengine.ext.ndb.django_middleware.NdbDjangoMiddleware',
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 
