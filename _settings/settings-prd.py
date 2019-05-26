@@ -1,18 +1,19 @@
 import os
-
-# from ubyssey.secrets import Secrets
+from dispatch.default_settings import *
 from google.cloud import datastore
 client = datastore.Client()
-
-from dispatch.default_settings import *
 
 BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
-SECRET_KEY = client.get(client.key('Secrets', 'SECRET_KEY'))
-NOTIFICATION_KEY = client.get(client.key('Secrets', 'NOTIFICATION_KEY'))
+query = client.query(kind='Secrets')
+query.add_filter('key', '=', 'SECRET_KEY')
+SECRET_KEY = list(query.fetch())[0].value
 
-VERSION = '1.5.28'
+query.add_filter('key', '=', 'NOTIFICATION_KEY')
+NOTIFICATION_KEY = list(query.fetch())[0].value
+
+VERSION = '1.5.29'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -32,13 +33,25 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
+query.add_filter('key', '=', 'SQL_HOST')
+DB_HOST = list(query.fetch())[0].value
+
+query.add_filter('key', '=', 'SQL_DATABASE')
+DB_NAME = list(query.fetch())[0].value
+
+query.add_filter('key', '=', 'SQL_USER')
+DB_USER = list(query.fetch())[0].value
+
+query.add_filter('key', '=', 'SQL_PASSWORD')
+DB_PASSWORD = list(query.fetch())[0].value
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': client.get(client.key('Secrets', 'SQL_HOST')),
-        'NAME': client.get(client.key('Secrets', 'SQL_DATABASE')),
-        'USER': client.get(client.key('Secrets', 'SQL_USER')),
-        'PASSWORD': client.get(client.key('Secrets', 'SQL_PASSWORD')),
+        'HOST': DB_HOST,
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
         'PORT': 3306,
     }
 }
@@ -67,8 +80,12 @@ MIDDLEWARE_CLASSES += [
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
-GS_ACCESS_KEY_ID = client.get(client.key('Secrets', 'GS_ACCESS_KEY_ID'))
-GS_SECRET_ACCESS_KEY = client.get(client.key('Secrets', 'GS_SECRET_ACCESS_KEY'))
+query.add_filter('key', '=', 'GS_ACCESS_KEY_ID')
+GS_ACCESS_KEY_ID = list(query.fetch())[0].value
+
+query.add_filter('key', '=', 'GS_SECRET_ACCESS_KEY')
+GS_SECRET_ACCESS_KEY = list(query.fetch())[0].value
+
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
@@ -82,16 +99,28 @@ STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
 # Facebook
-FACEBOOK_CLIENT_ID = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_ID'))
-FACEBOOK_CLIENT_SECRET = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_SECRET'))
+query.add_filter('key', '=', 'FACEBOOK_CLIENT_ID')
+FACEBOOK_CLIENT_ID = list(query.fetch())[0].value
 
-EMAIL_HOST = client.get(client.key('Secrets', 'EMAIL_HOST'))
+query.add_filter('key', '=', 'FACEBOOK_CLIENT_SECRET')
+FACEBOOK_CLIENT_SECRET = list(query.fetch())[0].value
+
+# Emails
+query.add_filter('key', '=', 'EMAIL_HOST')
+EMAIL_HOST = list(query.fetch())[0].value
+
 EMAIL_PORT = 465
-EMAIL_HOST_USER = client.get(client.key('Secrets', 'EMAIL_HOST_USER'))
-EMAIL_HOST_PASSWORD = client.get(client.key('Secrets', 'EMAIL_HOST_PASSWORD'))
+
+query.add_filter('key', '=', 'EMAIL_HOST_USER')
+EMAIL_HOST_USER = list(query.fetch())[0].value
+
+query.add_filter('key', '=', 'EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = list(query.fetch())[0].value
+
 EMAIL_USE_SSL = True
 
-UBYSSEY_ADVERTISING_EMAIL = client.get(client.key('Secrets', 'UBYSSEY_ADVERTISING_EMAIL'))
+query.add_filter('key', '=', 'UBYSSEY_ADVERTISING_EMAIL')
+UBYSSEY_ADVERTISING_EMAIL = list(query.fetch())[0].value
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
