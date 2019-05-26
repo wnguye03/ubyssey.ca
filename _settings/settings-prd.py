@@ -9,10 +9,10 @@ from dispatch.default_settings import *
 BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
-SECRET_KEY = client.get(client.key('Secrets', 'SECRET_KEY')).value
-NOTIFICATION_KEY = client.get(client.key('Secrets', 'NOTIFICATION_KEY')).value
+SECRET_KEY = client.get(client.key('Secrets', 'SECRET_KEY'))
+NOTIFICATION_KEY = client.get(client.key('Secrets', 'NOTIFICATION_KEY'))
 
-VERSION = '1.5.26'
+VERSION = '1.5.27'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -35,10 +35,10 @@ TIME_ZONE = 'America/Vancouver'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': client.get(client.key('Secrets', 'SQL_HOST')).value,
-        'NAME': client.get(client.key('Secrets', 'SQL_DATABASE')).value,
-        'USER': client.get(client.key('Secrets', 'SQL_USER')).value,
-        'PASSWORD': client.get(client.key('Secrets', 'SQL_PASSWORD')).value,
+        'HOST': client.get(client.key('Secrets', 'SQL_HOST')),
+        'NAME': client.get(client.key('Secrets', 'SQL_DATABASE')),
+        'USER': client.get(client.key('Secrets', 'SQL_USER')),
+        'PASSWORD': client.get(client.key('Secrets', 'SQL_PASSWORD')),
         'PORT': 3306,
     }
 }
@@ -68,8 +68,8 @@ MIDDLEWARE_CLASSES += [
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
-GS_ACCESS_KEY_ID = client.get(client.key('Secrets', 'GS_ACCESS_KEY_ID')).value
-GS_SECRET_ACCESS_KEY = client.get(client.key('Secrets', 'GS_SECRET_ACCESS_KEY')).value
+GS_ACCESS_KEY_ID = client.get(client.key('Secrets', 'GS_ACCESS_KEY_ID'))
+GS_SECRET_ACCESS_KEY = client.get(client.key('Secrets', 'GS_SECRET_ACCESS_KEY'))
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
@@ -83,16 +83,16 @@ STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
 # Facebook
-FACEBOOK_CLIENT_ID = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_ID')).value
-FACEBOOK_CLIENT_SECRET = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_SECRET')).value
+FACEBOOK_CLIENT_ID = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_ID'))
+FACEBOOK_CLIENT_SECRET = client.get(client.key('Secrets', 'FACEBOOK_CLIENT_SECRET'))
 
-EMAIL_HOST = client.get(client.key('Secrets', 'EMAIL_HOST')).value
+EMAIL_HOST = client.get(client.key('Secrets', 'EMAIL_HOST'))
 EMAIL_PORT = 465
-EMAIL_HOST_USER = client.get(client.key('Secrets', 'EMAIL_HOST_USER')).value
-EMAIL_HOST_PASSWORD = client.get(client.key('Secrets', 'EMAIL_HOST_PASSWORD')).value
+EMAIL_HOST_USER = client.get(client.key('Secrets', 'EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = client.get(client.key('Secrets', 'EMAIL_HOST_PASSWORD'))
 EMAIL_USE_SSL = True
 
-UBYSSEY_ADVERTISING_EMAIL = client.get(client.key('Secrets', 'UBYSSEY_ADVERTISING_EMAIL')).value
+UBYSSEY_ADVERTISING_EMAIL = client.get(client.key('Secrets', 'UBYSSEY_ADVERTISING_EMAIL'))
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
