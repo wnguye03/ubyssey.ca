@@ -1,7 +1,6 @@
 dispatch==0.6.1
 Django==1.11
 git+git://github.com/ubyssey/django-google-storage.git
-django-gae-backends
 django-canonical-domain
 mysqlclient
 django-phonenumber-field==2.0.0

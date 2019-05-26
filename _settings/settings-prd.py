@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.31'
+VERSION = '1.5.32'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -57,12 +57,12 @@ TEMPLATES += [
     }
 ]
 
-SESSION_ENGINE = 'gae_backends.sessions.cached_db'
-CACHES = {
-    'default': {
-        'BACKEND': 'gae_backends.memcache.MemcacheCache',
-    }
-}
+# SESSION_ENGINE = 'gae_backends.sessions.cached_db'
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'gae_backends.memcache.MemcacheCache',
+#     }
+# }
 
 MIDDLEWARE_CLASSES += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
