@@ -66,7 +66,7 @@ class UbysseyTheme(object):
                 for episode in episode_list:
                     episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
 
-            episodes = zip(episode_list, episode_urls)
+            episodes = list(zip(episode_list, episode_urls))
 
         breaking = ArticleHelper.get_breaking_news().first()
 
@@ -555,7 +555,7 @@ class UbysseyTheme(object):
         for episode in episode_list:
             episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
 
-        episodes = zip(episode_list, episode_urls)
+        episodes = list(zip(episode_list, episode_urls))
 
         url = PodcastHelper.get_podcast_url(id=podcast.id)
         context = {
