@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.33'
+VERSION = '1.5.34'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -32,6 +32,7 @@ INSTALLED_APPS += [
 
 ROOT_URLCONF = 'ubyssey.urls'
 
+DEBUG = True
 USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
