@@ -14,3 +14,4 @@ django-user-agents
 gunicorn
 Pillow
 google-cloud-datastore
+google-cloud-storage
