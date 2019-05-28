@@ -1,4 +1,4 @@
-var VERSION ='1.5.42'
+var VERSION ='1.5.43'
 var CACHE_NAME = 'ubyssey-cache-v' + VERSION;
 var urlsToCache = [
   // js files

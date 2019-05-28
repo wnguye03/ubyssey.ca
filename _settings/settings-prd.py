@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.42'
+VERSION = '1.5.43'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -28,7 +28,6 @@ INSTALLED_APPS += [
     'ubyssey',
     'ubyssey.events',
     'django_user_agents',
-    'django.contrib.sessions',
 ]
 
 ROOT_URLCONF = 'ubyssey.urls'
