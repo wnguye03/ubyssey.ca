@@ -15,4 +15,4 @@ gunicorn
 Pillow
 google-cloud-datastore
 google-cloud-storage
-python-memcached
+pymemcache
