@@ -15,4 +15,3 @@ gunicorn
 Pillow
 google-cloud-datastore
 google-cloud-storage
-django-gae-backends

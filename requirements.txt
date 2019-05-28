@@ -16,4 +16,3 @@ Pillow
 django-debug-toolbar
 google-cloud-datastore
 google-cloud-storage
-django-gae-backends

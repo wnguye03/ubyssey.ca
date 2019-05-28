@@ -1,4 +1,4 @@
-var VERSION ='1.5.38'
+var VERSION ='1.5.39'
 var CACHE_NAME = 'ubyssey-cache-v' + VERSION;
 var urlsToCache = [
   // js files
@@ -91,47 +91,47 @@ var urlsToCache = [
   '/static/fonts/MinionPro-Regular_gdi.woff',
 ];
 
-self.addEventListener('install', function(event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
+// self.addEventListener('install', function(event) {
+//   // Perform install steps
+//   event.waitUntil(
+//     caches.open(CACHE_NAME)
+//       .then(function(cache) {
+//         return cache.addAll(urlsToCache);
+//       })
+//   );
+// });
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
-});
+// self.addEventListener('fetch', function(event) {
+//   event.respondWith(
+//     caches.match(event.request)
+//       .then(function(response) {
+//         // Cache hit - return response
+//         if (response) {
+//           return response;
+//         }
+//         return fetch(event.request);
+//       }
+//     )
+//   );
+// });
 
 // Clear old cache
-self.addEventListener('activate', function(event) {
+// self.addEventListener('activate', function(event) {
 
-  var cacheWhitelist = [CACHE_NAME];
+//   var cacheWhitelist = [CACHE_NAME];
 
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});
+//   event.waitUntil(
+//     caches.keys().then(function(cacheNames) {
+//       return Promise.all(
+//         cacheNames.map(function(cacheName) {
+//           if (cacheWhitelist.indexOf(cacheName) === -1) {
+//             return caches.delete(cacheName);
+//           }
+//         })
+//       );
+//     })
+//   );
+// });
 
 
 self.addEventListener('push', function (event) {
