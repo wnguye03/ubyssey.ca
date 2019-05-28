@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.37'
+VERSION = '1.5.38'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
