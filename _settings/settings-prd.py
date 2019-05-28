@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.41'
+VERSION = '1.5.42'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -28,12 +28,12 @@ INSTALLED_APPS += [
     'ubyssey',
     'ubyssey.events',
     'django_user_agents',
+    'django.contrib.sessions',
 ]
 
 ROOT_URLCONF = 'ubyssey.urls'
 
 USE_TZ = True
-DEBUG=True
 
 TIME_ZONE = 'America/Vancouver'
 
@@ -62,6 +62,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
