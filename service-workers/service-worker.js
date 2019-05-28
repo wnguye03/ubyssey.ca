@@ -1,4 +1,4 @@
-var VERSION ='1.5.43'
+var VERSION ='1.5.44'
 var CACHE_NAME = 'ubyssey-cache-v' + VERSION;
 var urlsToCache = [
   // js files
@@ -115,7 +115,7 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-Clear old cache
+// Clear old cache
 self.addEventListener('activate', function(event) {
 
   var cacheWhitelist = [CACHE_NAME];
