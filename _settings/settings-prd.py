@@ -16,7 +16,7 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.5.39'
+VERSION = '1.5.40'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -58,12 +58,12 @@ TEMPLATES += [
     }
 ]
 
-# SESSION_ENGINE = 'gae_backends.sessions.cached_db'
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'gae_backends.memcache.MemcacheCache',
-#     }
-# }
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+    }
+}
 
 MIDDLEWARE_CLASSES += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
