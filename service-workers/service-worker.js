@@ -1,4 +1,4 @@
-var VERSION ='1.5.45'
+var VERSION ='1.5.46'
 var CACHE_NAME = 'ubyssey-cache-v' + VERSION;
 var urlsToCache = [
   // js files
@@ -46,8 +46,6 @@ var urlsToCache = [
   '/static/images/favicons/mstile-70x70.png',
 
   // Fonts
-  '/static/fonts/Gobold.svg',
-  '/static/fonts/Gobold.svg',
   '/static/fonts/Avenir-Bold.woff',
   '/static/fonts/Avenir-Bold.woff2',
   '/static/fonts/Avenir-It.woff',
