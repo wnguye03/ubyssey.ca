@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode
+from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video
 
 import ubyssey
 import ubyssey.cron
@@ -66,7 +66,7 @@ class UbysseyTheme(object):
                 for episode in episode_list:
                     episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
 
-            episodes = list(zip(episode_list, episode_urls))
+            episodes = zip(episode_list, episode_urls)
 
         breaking = ArticleHelper.get_breaking_news().first()
 
@@ -554,8 +554,8 @@ class UbysseyTheme(object):
         episode_urls = []
         for episode in episode_list:
             episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-        
-        episodes = list(zip(episode_list, episode_urls))
+
+        episodes = zip(episode_list, episode_urls)
 
         url = PodcastHelper.get_podcast_url(id=podcast.id)
         context = {
@@ -565,3 +565,28 @@ class UbysseyTheme(object):
         }
 
         return render(request, 'podcasts/podcast.html', context)
+
+    def video(self, request, slug=None):
+
+        videos = Video.objects.order_by('-created_at')
+        paginator = Paginator(videos, 5) # Show 5 videos per page
+        page = request.GET.get('page')
+
+        meta = {
+            'title': 'Videos'
+        }
+
+        try:
+            videos = paginator.page(page)
+        except PageNotAnInteger:
+            videos = paginator.page(1)
+        except EmptyPage:
+            videos = paginator.page(paginator.num_pages)
+
+        context = {
+            'videos': videos,
+            'count': paginator.count,
+            'meta': meta
+        }
+
+        return render(request, 'videos/videos.html', context)
