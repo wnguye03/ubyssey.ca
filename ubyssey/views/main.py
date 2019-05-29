@@ -554,11 +554,9 @@ class UbysseyTheme(object):
         episode_urls = []
         for episode in episode_list:
             episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-        print(episode_list)
-        print(episode_urls)
+        
         episodes = list(zip(episode_list, episode_urls))
 
-        print(episodes)
         url = PodcastHelper.get_podcast_url(id=podcast.id)
         context = {
             'podcast': podcast,
