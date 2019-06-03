@@ -573,7 +573,7 @@ class UbysseyTheme(object):
         page = request.GET.get('page')
 
         meta = {
-            'title': 'Videos'
+            'title': 'Video'
         }
 
         try:
