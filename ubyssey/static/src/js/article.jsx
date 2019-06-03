@@ -88,9 +88,12 @@ if ($('main.article').length) {
     function stickyAds(scrollTop, stickyElements) {
 
         const headerHeight = $('.topbar').outerHeight(true)
-        const sidebarOffset = $('.sidebar').offset().top + $('#content-wrapper').scrollTop()
-        if (headerHeight === null || typeof headerHeight === 'undefined') {
-            return null
+        var sidebar = $('.sidebar');
+        if (sidebar.length) {
+            const sidebarOffset = sidebar.offset().top + $('#content-wrapper').scrollTop()
+            if (headerHeight === null || typeof headerHeight === 'undefined') {
+                return null
+            }
         }
 
         stickyElements.map(element => {
