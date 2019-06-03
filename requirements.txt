@@ -5,12 +5,12 @@ django-canonical-domain
 mysqlclient
 django-phonenumber-field==2.0.0
 phonenumbers
-beautifulsoup4
+beautifulsoup4==4.7.1
 feedparser
 pyyaml
 ua-parser
 user-agents
-django-user-agents
+django-user_agents
 gunicorn
 Pillow
 django-debug-toolbar
