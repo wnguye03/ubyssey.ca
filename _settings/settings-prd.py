@@ -65,7 +65,7 @@ CACHES = {
     }
 }
 
-MIDDLEWARE_CLASSES += [
+MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 

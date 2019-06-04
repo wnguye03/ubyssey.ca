@@ -4,13 +4,12 @@ import json
 
 from itertools import chain
 
-from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 

@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from ubyssey.events.models import Event
 from dispatch.tests.cases import DispatchMediaTestMixin

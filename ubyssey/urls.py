@@ -1,7 +1,6 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.conf.urls.static import static
-from django.shortcuts import render_to_response
 from django.contrib.staticfiles.views import serve as serve_static
 
 from dispatch.urls import admin_urls, api_urls, podcasts_urls
@@ -31,58 +30,58 @@ urlpatterns = []
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
     ]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += [url(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
+    urlpatterns += [re_path(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
 
 urlpatterns += [
-    url(r'^admin', include(admin_urls)),
-    url(r'^api/', include(api_urls)),
-    url(r'^podcasts/', include(podcasts_urls)),
+    re_path(r'^admin', include(admin_urls)),
+    re_path(r'^api/', include(api_urls)),
+    re_path(r'^podcasts/', include(podcasts_urls)),
 
-    url(r'^$', theme.home, name='home'),
-    url(r'^search/$', theme.search, name='search'),
-    url(r'^archive/$', theme.archive, name='archive'),
-    url(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
+    re_path(r'^$', theme.home, name='home'),
+    re_path(r'^search/$', theme.search, name='search'),
+    re_path(r'^archive/$', theme.archive, name='archive'),
+    re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
 
-    url(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
-    url(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
-    url(r'^topic/(\d*)/$', theme.topic, name='topic'),
+    re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
+    re_path(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
+    re_path(r'^topic/(\d*)/$', theme.topic, name='topic'),
 
     # Guide to UBC
-    url(r'^guide/$', guide.landing, name='guide-landing'),
-    url(r'^guide/(?P<slug>[-\w]+)/$', guide.article, name='guide-article'),
+    re_path(r'^guide/$', guide.landing, name='guide-landing'),
+    re_path(r'^guide/(?P<slug>[-\w]+)/$', guide.article, name='guide-article'),
 
     # Magazine
-    url(r'^magazine/$', magazine.landing, name='magazine-landing'),
-    url(r'^magazine/2017/$', magazine.landing_2017, name='magazine-landing-2017'),
-    url(r'^magazine/2018/$', magazine.landing_2018, name='magazine-landing-2018'),
-    url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
+    re_path(r'^magazine/$', magazine.landing, name='magazine-landing'),
+    re_path(r'^magazine/2017/$', magazine.landing_2017, name='magazine-landing-2017'),
+    re_path(r'^magazine/2018/$', magazine.landing_2018, name='magazine-landing-2018'),
+    re_path(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     # Advertising
-    url(r'^advertise/$', advertise.new, name='advertise-new'),
+    re_path(r'^advertise/$', advertise.new, name='advertise-new'),
 
     # Elections
-    url(r'^elections/$', theme.elections, name='elections'),
+    re_path(r'^elections/$', theme.elections, name='elections'),
 
     # Centennial
-    url(r'^100/$', theme.centennial, name='centennial-landing'),
+    re_path(r'^100/$', theme.centennial, name='centennial-landing'),
 
     # Beta-features
-    # url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
+    # re_path(r'^beta/notifications/$', theme.notification, name='notification-beta'),
 
     # Podcasts
-    url(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcasts'),
+    re_path(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcasts'),
 
     # Events
-    url(r'^events/', include(events_urls)),
-    url(r'^api/events/', include(event_api_urls)),
+    re_path(r'^events/', include(events_urls)),
+    re_path(r'^api/events/', include(event_api_urls)),
 
     # Videos
-    url(r'^videos/', theme.video, name='videos'),
+    re_path(r'^videos/', theme.video, name='videos'),
 
-    url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
-    url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
-    url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
+    re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
+    re_path(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
+    re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
 ]
