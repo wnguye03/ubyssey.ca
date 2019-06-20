@@ -3,7 +3,7 @@ import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.conf import settings
