@@ -231,8 +231,8 @@ class UbysseyTheme(object):
             'page': page
         }
 
-        if page.get_template() != 'article/default.html':
-            templates = [page.get_template(), 'page/base.html']
+        if page.get_template_path() != 'article/default.html':
+            templates = [page.get_template_path(), 'page/base.html']
         else:
             templates = ['page/base.html']
 
