@@ -350,6 +350,23 @@ class PodcastHelper(object):
         """ Return the podcast url"""
         return "%spodcast/episodes" % (settings.BASE_URL)
 
+class VideoHelper(object):
+    @staticmethod
+    def get_video_url(video_id):
+        """ Return the video url"""
+        return "%svideos/#video-%s" % (settings.BASE_URL, video_id)
+
+    @staticmethod
+    def get_video_page_url():
+        """ Return the video page url"""
+        return "%svideos/" % (settings.BASE_URL)
+
+    @staticmethod
+    def get_video_author_url(person_slug):
+        """ Return the archive url for the video author"""
+        return "%sauthors/%s/" % (settings.BASE_URL, person_slug)
+
+
 class NationalsHelper(object):
     @staticmethod
     def prepare_data(content):

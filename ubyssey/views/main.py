@@ -13,11 +13,11 @@ from django.urls import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video
+from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author
 
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper
+from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
 
 def parse_int_or_none(maybe_int):
     try:
@@ -95,6 +95,29 @@ class UbysseyTheme(object):
         if podcast and episode_list:
             podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:4]} }
 
+        video_obj = { 'url': VideoHelper.get_video_page_url(), 'videos': {'first': [], 'rest':[]} }
+        video_list = None
+        video_urls = []
+        videos = None
+        
+        try:
+            video_list = Video.objects.order_by('-created_at')[:4]
+        except:
+            video_list = None
+        if video_list:
+            for index, video in enumerate(video_list):
+                video_list[index].videoAuthors = []
+                for author in video.authors.all():
+                    person_id = Author.objects.get(id=author.id).person_id
+                    person = Person.objects.get(id=person_id)
+                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_video_author_url(person.slug)})
+
+                video_list[index].youtube_slug = video.url.split('=')[1]
+                video_urls += [VideoHelper.get_video_url(video.id)]
+            videos = list(zip(video_list, video_urls))
+        
+            video_obj['videos'] =  { 'first': videos[0], 'rest': videos[1:4] } 
+
         context = {
             'title': title,
             'meta': {
@@ -106,6 +129,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'sections': sections,
             'podcast': podcast_obj,
+            'video': video_obj,
             'popular': popular,
             'breaking': breaking,
             'blog': blog,
