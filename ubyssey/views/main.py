@@ -112,6 +112,7 @@ class UbysseyTheme(object):
                     person = Person.objects.get(id=person_id)
                     video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_video_author_url(person.slug)})
 
+                video_list[index].numAuthors = len(video.videoAuthors)
                 video_list[index].youtube_slug = video.url.split('=')[1]
                 video_urls += [VideoHelper.get_video_url(video.id)]
             videos = list(zip(video_list, video_urls))
