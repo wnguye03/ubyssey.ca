@@ -1,4 +1,4 @@
-dispatch==0.7.1
+dispatch==0.7.2
 Django==2.2.2
 git+git://github.com/ubyssey/django-google-storage.git@v0.5.4#egg=django-google-storage-updated
 django-canonical-domain
