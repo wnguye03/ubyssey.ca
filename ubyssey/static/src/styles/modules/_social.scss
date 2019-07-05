@@ -115,6 +115,13 @@
   }
 }
 
+.o-social-icons__icon--reddit {
+  background-color: $color-social-reddit;
+  &:hover, &:focus {
+    background-color: $color-social-reddit-dark;
+  }
+}
+
 .o-snapchat-icon {
   // Extras
   cursor: pointer;
