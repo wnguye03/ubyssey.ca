@@ -1,23 +1,15 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
-<link rel="stylesheet" href="_social.scss">
-
-
-        <!-- Social Button HTML -->
-
-        <!-- Twitter -->
-        <a href="https://twitter.com/intent/tweet?text={{ article.headline }}&url={{ article.get_absolute_url }}" target="_blank" class="btn share-btn twitter">
-            <i class="fa fa-twitter"></i>
-        </a>
-
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ article.get_absolute_url }}" target="_blank" class="btn share-btn facebook">
-            <i class="fa fa-facebook"></i>
-        </a>
-
-        <!-- Reddit (url, title) -->
-        <a href="https://reddit.com/submit?url={{ article.get_absolute_url }}&title={{ article.headline }}" target="_blank" class="btn share-btn reddit">
-            <i class="fa fa-reddit"></i>
-        </a>
-
+<ul class="o-social-icons o-social-icons--{{ layout }}">
+  <li>
+    <a class="facebook o-social-icons__icon o-social-icons__icon--facebook" href="#" data-url="{{ article.get_absolute_url }}">
+      <i class="fa fa-facebook"></i><span>Share</span>
+    </a>
+  </li><li>
+    <a class="twitter o-social-icons__icon o-social-icons__icon--twitter" href="#" data-url="{{ article.get_absolute_url }}" data-title="{{ article.headline|safe }}">
+      <i class="fa fa-twitter"></i><span>Tweet</span>
+    </a>
+  </li><li>
+    <a class="reddit o-social-icons__icon o-social-icons__icon--reddit" href="#" data-url="{{ article.get_absolute_url }}" data-title="{{ article.headline|safe }}">
+      <i class="fa fa-reddit-alien"></i><span>Reddit</span>
+    </a>
+  </li>
+</ul>
