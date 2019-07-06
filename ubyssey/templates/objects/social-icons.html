@@ -1,56 +1,8 @@
-<html>
-    <head>
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-        <style>
-          .btn.share-btn {
-              border: medium none;
-              box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
-              color: #fff;
-              cursor: pointer;
-              display: inline-block;
-              font-size: 1.2em;
-              margin-top: 6px;
-              opacity: 0.9;
-              outline: medium none;
-              padding: 8px 16px;
-          }
-            .share-btn {
-                display: inline-block;
-                color: #ffffff;
-                border: none;
-                padding: 0.5em;
-                width: 4em;
-                opacity: 0.9;
-                box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-                outline: none;
-                text-align: center;
-            }
-            .share-btn:hover,
-            .share-btn:focus {
-              color: #eeeeee;
-            }
-            .share-btn:active {
-              position: relative;
-              top: 2px;
-              box-shadow: none;
-              color: #e2e2e2;
-              opacity: 1;
-              outline: medium none;
-              position: relative;
-              top: 2px;
-          }
-          .twitter {
-              background: #55acee none repeat scroll 0 0;
-          }
-          .facebook {
-              background: #3b5998 none repeat scroll 0 0;
-          }
-          .reddit {
-              background: #ff5700 none repeat scroll 0 0;
-          }
-        </style>
-    </head>
-    <body>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+<link rel="stylesheet" href="_social.scss">
+
 
         <!-- Social Button HTML -->
 
@@ -65,8 +17,7 @@
         </a>
 
         <!-- Reddit (url, title) -->
-        <a href="https://reddit.com/submit?url={{ article.get_absolute_url }}&title={{ article.headline }} target="_blank" class="btn share-btn reddit">
+        <a href="https://reddit.com/submit?url={{ article.get_absolute_url }}&title={{ article.headline }}" target="_blank" class="btn share-btn reddit">
             <i class="fa fa-reddit"></i>
         </a>
-    </body>
-</html>
+
