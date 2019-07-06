@@ -1,7 +1,6 @@
 @import 'modules/mixins';
 
 // Social/share icons
-
 .o-social-icons {
   margin: 0;
   padding: 0;
@@ -114,6 +113,14 @@
     background-color: $color-social-twitter-dark;
   }
 }
+
+.o-social-icons__icon--reddit {
+  background-color: $color-social-reddit;
+  &:hover, &:focus {
+    background-color: $color-social-reddit-dark;
+  }
+}
+
 
 .o-snapchat-icon {
   // Extras
