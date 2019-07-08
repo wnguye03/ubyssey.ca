@@ -57,6 +57,10 @@ class Article extends React.Component {
     $article.on('click', 'a.twitter', () => {
       mp.shareArticle('twitter', $article);
     });
+
+    $article.on('click', 'a.reddit', () => {
+      mp.shareArticle('reddit', $article);
+    });
   };
 
   executeAJAXLoadedScripts() {
