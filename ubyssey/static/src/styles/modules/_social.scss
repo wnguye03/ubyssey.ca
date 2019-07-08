@@ -1,6 +1,7 @@
 @import 'modules/mixins';
 
 // Social/share icons
+
 .o-social-icons {
   margin: 0;
   padding: 0;
@@ -45,6 +46,12 @@
 
     &:first-child {
       margin-left: 0;
+    }
+
+    a {
+      line-height: 1.75rem;
+      height: 1.75rem;
+      font-weight: 500;
     }
   }
 
@@ -120,7 +127,6 @@
     background-color: $color-social-reddit-dark;
   }
 }
-
 
 .o-snapchat-icon {
   // Extras
