@@ -184,7 +184,7 @@ function embedMargins() {
 
   $document.on('click', 'a.reddit', function(e){
     e.preventDefault();
-    window.open('http://www.reddit.com/submit?url=' + $(this).data('url') + '&amp;smid=re-share&amp;title=' + $(this).data('title'), 'redditwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+    window.open('http://www.reddit.com/submit?url=' + $(this).data('url') + '&title=' + $(this).data('title') + '&', 'redditwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
   });
   
   $document.on('touchstart', function () {});
