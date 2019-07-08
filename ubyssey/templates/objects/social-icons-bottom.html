@@ -4,6 +4,8 @@
   </li><li>
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ article.headline }}&url={{ article.get_absolute_url }}" data-size="large">Tweet</a>
   </li><li>
-    <a class="reddit-share-button" href="http://www.reddit.com/submit?url={{ article.get_absolute_url }}&amp;smid=re-share&amp;title={{ article.headline }}" data-size="large">Reddit</a>
+    <a class="reddit o-social-icons__icon o-social-icons__icon--reddit" href="#" data-url="{{ article.get_absolute_url }}" data-title="{{ article.headline|safe }}">
+      <i class="fa fa-reddit-alien"></i><span>Reddit</span>
+    </a>
   </li>
 </ul>

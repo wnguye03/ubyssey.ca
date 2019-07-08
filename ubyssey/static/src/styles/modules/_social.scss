@@ -47,6 +47,12 @@
     &:first-child {
       margin-left: 0;
     }
+
+    a {
+      line-height: 1.75rem;
+      height: 1.75rem;
+      font-weight: 500;
+    }
   }
 
   @media($bp-larger-than-phablet) {
