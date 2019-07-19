@@ -142,7 +142,7 @@ class Timeline(Template):
     id = 'timeline'
     name = 'Timeline'
 
-    instruction = (   '<p>To add this article to a timeline, you must include the relevant timeline'
+    instruction = (   '<p>To add this article or article-less node to a timeline, you must include the relevant timeline'
                             '<b style="font-weight: bold;">Tag</b> in the <b style="font-weight: bold;">Basic fields</b> tab. </p>'
                             '<p>If creating a new timeline, timeline tags must be prefixed with <b style="font-weight: bold;">"timeline-"</b>'
                             'and followed by the timeline title with each word separated by hyphen e.g. '
