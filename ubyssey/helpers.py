@@ -362,7 +362,7 @@ class VideoHelper(object):
         return "%svideos/" % (settings.BASE_URL)
 
     @staticmethod
-    def get_video_author_url(person_slug):
+    def get_media_author_url(person_slug):
         """ Return the archive url for the video author"""
         return "%sauthors/%s/" % (settings.BASE_URL, person_slug)
 
