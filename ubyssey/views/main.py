@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author
+from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
 
 import ubyssey
 import ubyssey.cron
@@ -110,7 +110,7 @@ class UbysseyTheme(object):
                 for author in video.authors.all():
                     person_id = Author.objects.get(id=author.id).person_id
                     person = Person.objects.get(id=person_id)
-                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_video_author_url(person.slug)})
+                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
 
                 video_list[index].numAuthors = len(video.videoAuthors)
                 video_list[index].youtube_slug = video.url.split('=')[1]
@@ -419,19 +419,59 @@ class UbysseyTheme(object):
         order = request.GET.get('order', 'newest')
 
         if order == 'newest':
-            order_by = '-published_at'
+            publishable_order_by = '-published_at'
+            media_order_by = '-created_at'
         else:
-            order_by = 'published_at'
+            publishable_order_by = 'published_at'
+            media_order_by = 'created_at'
 
         query = request.GET.get('q', False)
 
-        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(order_by)
+        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(publishable_order_by)
+        video_list = Video.objects.filter(authors__person=person).order_by(media_order_by)
+        image_list = Image.objects.filter(authors__person=person).order_by(media_order_by)
+        
+        podcast_list = Podcast.objects.filter(author=person.full_name)
+        podcast = Podcast.objects.all()[:1].get()
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id, author=person.full_name).order_by(publishable_order_by)
 
         if query:
             article_list = article_list.filter(headline__icontains=query)
+            video_list = video_list.filter(title__icontains=query)
+            image_list = image_list.filter(title__icontains=query)
+            podcast_list = podcast_list.filter(title__icontains=query)
+            episode_list = episode_list.filter(title__icontains=query)
+            
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+        
+        episodes = list(zip(episode_list, episode_urls))
+        podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
 
-        paginator = Paginator(article_list, 15) # Show 15 articles per page
+        for index, image in enumerate(image_list):
+            image_list[index].imageAuthors = []
+            for author in image.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                person = Person.objects.get(id=person_id)
+                image_list[index].imageAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
 
+            image_list[index].numAuthors = len(image.imageAuthors)
+
+        for index, video in enumerate(video_list):
+            video_list[index].videoAuthors = []
+            for author in video.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                person = Person.objects.get(id=person_id)
+                video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+
+            video_list[index].numAuthors = len(video.videoAuthors)
+            video_list[index].youtube_slug = video.url.split('=')[1]
+            video_list[index].video_url = VideoHelper.get_video_url(video.id)
+
+        object_list = list(chain(article_list, video_list, image_list, podcasts, episodes))
+        objects_per_page = 15
+        paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
         page = request.GET.get('page')
 
         try:
@@ -454,6 +494,26 @@ class UbysseyTheme(object):
             'q': query
         }
 
+        articles_start = 0 if article_list is not None and article_list.exists() else None
+        context['articles_start_page'] = articles_start // objects_per_page + 1 if articles_start is not None else None
+        context['articles_start_idx'] = articles_start % objects_per_page if articles_start is not None else None
+        
+        videos_start = len(article_list) if video_list is not None and video_list.exists() else None
+        context['videos_start_page'] = videos_start // objects_per_page + 1 if videos_start is not None else None
+        context['videos_start_idx'] = videos_start % objects_per_page if videos_start is not None else None
+        
+        images_start = len(article_list) + len(video_list) if image_list is not None and image_list.exists() else None
+        context['images_start_page'] = images_start // objects_per_page + 1 if images_start is not None else None
+        context['images_start_idx'] = images_start % objects_per_page if images_start is not None else None
+        
+        podcasts_start = len(article_list) + len(video_list) + len(image_list) if podcasts is not None and len(podcasts) > 0 else None
+        context['podcasts_start_page'] = podcasts_start // objects_per_page + 1 if podcasts_start is not None else None
+        context['podcasts_start_idx'] = podcasts_start % objects_per_page if podcasts_start is not None else None
+        
+        episodes_start = len(article_list) + len(video_list) + len(image_list) + len(podcasts) if episodes is not None and len(episodes) > 0 else None
+        context['episodes_start_page'] = episodes_start // objects_per_page + 1 if episodes_start is not None else None
+        context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
+
         return render(request, 'author.html', context)
 
     def archive(self, request):
@@ -470,7 +530,8 @@ class UbysseyTheme(object):
         if order == 'oldest':
             filters.append('order=%s' % order)
 
-        order_by = '-published_at' if order == 'newest' else 'published_at'
+        publishable_order_by = '-published_at' if order == 'newest' else 'published_at'
+        media_order_by = '-created_at' if order == 'newest' else 'created_at'
 
         context = {
             'sections': sections,
@@ -484,17 +545,30 @@ class UbysseyTheme(object):
         year = parse_int_or_none(request.GET.get('year'))
 
         article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
-            'section', 'featured_image').filter(is_published=True).order_by(order_by)
-        person_list = None
+            'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
+        person_list = Person.objects.all()
+        video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)
+        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)
+        
+        podcast_list = Podcast.objects.all()
+        podcast = podcast_list[:1].get()
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by(publishable_order_by)
 
         if year:
             context['year'] = year
             article_list = article_list.filter(published_at__icontains=str(year))
+            episode_list = episode_list.filter(published_at__icontains=str(year))
+            video_list = video_list.filter(created_at__icontains=str(year))
+            image_list = image_list.filter(created_at__icontains=str(year))
             filters.append('year=%s' % year)
 
         if query:
             person_list = Person.objects.filter(full_name__icontains=query)
             article_list = article_list.filter(headline__icontains=query)
+            video_list = video_list.filter(title__icontains=query)
+            image_list = image_list.filter(title__icontains=query)
+            podcast_list = podcast_list.filter(title__icontains=query)
+            episode_list = episode_list.filter(title__icontains=query)
             context['q'] = query
             filters.append('q=%s' % query)
 
@@ -509,10 +583,36 @@ class UbysseyTheme(object):
         else:
             query_string = ''
 
-        if (person_list is not None and person_list.exists()):
-            article_list = list(chain({'people': True}, person_list, {'articles': True}, article_list))
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+        
+        episodes = list(zip(episode_list, episode_urls))
+        podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
 
-        paginator = Paginator(article_list, 15) # Show 15 articles per page
+        for index, image in enumerate(image_list):
+            image_list[index].imageAuthors = []
+            for author in image.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                person = Person.objects.get(id=person_id)
+                image_list[index].imageAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+
+            image_list[index].numAuthors = len(image.imageAuthors)
+
+        for index, video in enumerate(video_list):
+            video_list[index].videoAuthors = []
+            for author in video.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                person = Person.objects.get(id=person_id)
+                video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+
+            video_list[index].numAuthors = len(video.videoAuthors)
+            video_list[index].youtube_slug = video.url.split('=')[1]
+            video_list[index].video_url = VideoHelper.get_video_url(video.id)
+
+        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))
+        objects_per_page = 15
+        paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
         page = request.GET.get('page')
 
         try:
@@ -530,6 +630,30 @@ class UbysseyTheme(object):
         context['count'] = paginator.count
         context['meta'] = meta
         context['query_string'] = query_string
+        
+        articles_start = 0 if article_list is not None and article_list.exists() else None
+        context['articles_start_page'] = articles_start // objects_per_page + 1 if articles_start is not None else None
+        context['articles_start_idx'] = articles_start % objects_per_page if articles_start is not None else None
+        
+        people_start = len(article_list) if person_list is not None and person_list.exists() else None
+        context['people_start_page'] = people_start // objects_per_page + 1 if people_start is not None else None
+        context['people_start_idx'] = people_start % objects_per_page if people_start is not None else None
+
+        videos_start = len(person_list) + len(article_list) if video_list is not None and video_list.exists() else None
+        context['videos_start_page'] = videos_start // objects_per_page + 1 if videos_start is not None else None
+        context['videos_start_idx'] = videos_start % objects_per_page if videos_start is not None else None
+        
+        images_start = len(person_list) + len(article_list) + len(video_list) if image_list is not None and image_list.exists() else None
+        context['images_start_page'] = images_start // objects_per_page + 1 if images_start is not None else None
+        context['images_start_idx'] = images_start % objects_per_page if images_start is not None else None
+        
+        podcasts_start = len(person_list) + len(article_list) + len(video_list) + len(image_list) if podcasts is not None and len(podcasts) > 0 else None
+        context['podcasts_start_page'] = podcasts_start // objects_per_page + 1 if podcasts_start is not None else None
+        context['podcasts_start_idx'] = podcasts_start % objects_per_page if podcasts_start is not None else None
+        
+        episodes_start = len(person_list) + len(article_list) + len(video_list) + len(image_list) + len(podcasts) if episodes is not None and len(episodes) > 0 else None
+        context['episodes_start_page'] = episodes_start // objects_per_page + 1 if episodes_start is not None else None
+        context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
 
         return render(request, 'archive.html', context)
 
