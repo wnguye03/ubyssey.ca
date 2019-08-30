@@ -7,7 +7,7 @@
           {% if article.featured_image %}
             <img src="{{ article.featured_image.image.get_thumbnail_url }}" />
           {% else %}
-            <img src="http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" />
+            <img src="https://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" />
           {% endif %}
         </a>
       </div>
