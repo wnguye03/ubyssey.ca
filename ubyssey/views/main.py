@@ -546,13 +546,13 @@ class UbysseyTheme(object):
 
         article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
             'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
-        person_list = Person.objects.all()
-        video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)
-        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)
+        person_list = Person.objects.all() if query else Person.objects.none()
+        video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Video.objects.none()
+        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Image.objects.none()
         
-        podcast_list = Podcast.objects.all()
-        podcast = podcast_list[:1].get()
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by(publishable_order_by)
+        podcast_list = Podcast.objects.all() if query else Podcast.objects.none()
+        podcast = Podcast.objects.all()[:1].get()
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by(publishable_order_by) if query else PodcastEpisode.objects.none()
 
         if year:
             context['year'] = year
