@@ -610,7 +610,7 @@ class UbysseyTheme(object):
             video_list[index].youtube_slug = video.url.split('=')[1]
             video_list[index].video_url = VideoHelper.get_video_url(video.id)
 
-        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))
+        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))[:3000] # Get first 3000 results
         objects_per_page = 15
         paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
         page = request.GET.get('page')
