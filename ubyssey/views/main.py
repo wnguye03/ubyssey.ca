@@ -548,7 +548,7 @@ class UbysseyTheme(object):
             'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
         person_list = Person.objects.all() if query else Person.objects.none()
         video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Video.objects.none()
-        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Image.objects.none()
+        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)[:2000] if query else Image.objects.none()
         
         podcast_list = Podcast.objects.all() if query else Podcast.objects.none()
         podcast = Podcast.objects.all()[:1].get()
@@ -610,7 +610,7 @@ class UbysseyTheme(object):
             video_list[index].youtube_slug = video.url.split('=')[1]
             video_list[index].video_url = VideoHelper.get_video_url(video.id)
 
-        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))[:3000] # Get first 3000 results
+        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))
         objects_per_page = 15
         paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
         page = request.GET.get('page')
