@@ -548,7 +548,7 @@ class UbysseyTheme(object):
             'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
         person_list = Person.objects.all() if query else Person.objects.none()
         video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Video.objects.none()
-        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by)[:2000] if query else Image.objects.none()
+        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Image.objects.none()
         
         podcast_list = Podcast.objects.all() if query else Podcast.objects.none()
         podcast = Podcast.objects.all()[:1].get()
@@ -583,10 +583,15 @@ class UbysseyTheme(object):
         else:
             query_string = ''
 
+        image_list = image_list[:1500]
+        video_list = video_list[:200]
+        article_list = article_list[:7000]
+        person_list = person_list[:2000]
+
         episode_urls = []
         for episode in episode_list:
             episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-        
+
         episodes = list(zip(episode_list, episode_urls))
         podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
 
