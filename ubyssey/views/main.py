@@ -453,8 +453,8 @@ class UbysseyTheme(object):
             image_list[index].imageAuthors = []
             for author in image.authors.all():
                 person_id = Author.objects.get(id=author.id).person_id
-                person = Person.objects.get(id=person_id)
-                image_list[index].imageAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+                author_person = Person.objects.get(id=person_id)
+                image_list[index].imageAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
 
             image_list[index].numAuthors = len(image.imageAuthors)
 
@@ -462,8 +462,8 @@ class UbysseyTheme(object):
             video_list[index].videoAuthors = []
             for author in video.authors.all():
                 person_id = Author.objects.get(id=author.id).person_id
-                person = Person.objects.get(id=person_id)
-                video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+                author_person = Person.objects.get(id=person_id)
+                video_list[index].videoAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
 
             video_list[index].numAuthors = len(video.videoAuthors)
             video_list[index].youtube_slug = video.url.split('=')[1]
