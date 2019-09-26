@@ -90,7 +90,7 @@ if ($('main.article').length) {
         const headerHeight = $('.topbar').outerHeight(true)
         var sidebar = $('.sidebar');
         if (sidebar.length) {
-            const sidebarOffset = sidebar.offset().top + $('#content-wrapper').scrollTop()
+            var sidebarOffset = sidebar.offset().top + $('#content-wrapper').scrollTop()
             if (headerHeight === null || typeof headerHeight === 'undefined') {
                 return null
             }
