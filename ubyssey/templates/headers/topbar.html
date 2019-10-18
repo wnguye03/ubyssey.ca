@@ -28,8 +28,8 @@
                 <li {% if section == 'videos' %}class="current"{% endif %}>
                     <a href="{% url 'page' 'videos' %}">Video</a>
                 </li>
-                <li {% if section in 'events,podcast,magazine' %}class="current"{% endif %} id="sections-more-dropdown">
-                    <a href="#">More <span class='upper-right-decorator'>New</span></a>
+                <!--<li {% if section in 'events,podcast,magazine,whobyssey' %}class="current"{% endif %} id="sections-more-dropdown">
+                    <a href="#">More</a>
                     <ul class="sections-more">
                         <li {% if section == 'events' %}class="current"{% endif %}>
                             <a href="{% url 'events' %}">Events</a>
@@ -38,13 +38,13 @@
                             <a href="{% url 'podcasts' 'episodes' %}">Podcast</a>
                         </li>
                         <li {% if section == 'magazine' %}class="current"{% endif %}>
-                            <a href="{% url 'magazine-landing' %}">Magazine<span class='upper-right-decorator'>New</span></a>
+                            <a href="{% url 'magazine-landing' %}">Magazine</a>
                         </li>
                         <li {% if section == 'whobyssey' %}class="current"{% endif %}>
                             <a href="{% url 'page' 'whobyssey' %}">Who?byssey</a>
                         </li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
         </nav>
         <a class="search" href="{% url 'search' %}"><i class="fa fa-search"></i></a>

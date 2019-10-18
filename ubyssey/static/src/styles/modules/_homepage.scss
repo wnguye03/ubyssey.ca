@@ -236,7 +236,7 @@ article.thumb {
 }
 
 article.thumb {
-  @media($bp-larger-than-phablet) {;
+  @media($bp-larger-than-phablet) {
     .o-article__snippet {
       display: none;
     }

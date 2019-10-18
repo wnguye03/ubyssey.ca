@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from dispatch.models import Article
+from dispatch.models import Article, Subsection, Video, Tag, Author, Person
 from dispatch.theme import register
 from dispatch.theme.widgets import Widget
 from dispatch.theme.zones import Embed
@@ -15,6 +15,7 @@ from ubyssey.zones import (
     WeeklyEvents, FrontPage, SiteBanner
 )
 from ubyssey.fields import EventField
+from ubyssey.helpers import VideoHelper
 
 @register.widget
 class EventWidget(Widget):
@@ -69,6 +70,83 @@ class UpcomingEventsWidget(Widget):
 
         result['upcoming'] = events
 
+        return result
+
+@register.widget
+class FeaturedSubsectionWidget(Widget):
+    id = 'featured-subsection'
+    name = 'Featured Subsection Widget'
+    template = 'widgets/featured-subsection.html'
+    zones = (HomePageSidebarBottom, )
+
+    featured_subsection = CharField('Featured Subsection')
+    number_of_articles = IntegerField('Number of articles', min_value=1)
+
+    def context(self, result):
+        """Override context to add the next N articles occuring to the context"""
+
+        num_articles = result['number_of_articles']
+        if num_articles is None:
+            num_articles = 5
+
+        subsection = []
+        if result['featured_subsection']:
+            subsection = Subsection.objects.filter(is_active=True).filter(name__icontains=result['featured_subsection'])[:1]
+            
+        if len(subsection) == 0:
+            subsection = Subsection.objects.filter(is_active=True)[:1]
+        
+        subsection = subsection.get()
+        articles = Article.objects.filter(is_published=True).filter(subsection_id=subsection.id).order_by('-published_at')[:num_articles]
+
+        result['articles'] = articles
+        result['subsection'] = subsection
+
+        return result
+
+@register.widget
+class FeaturedVideosWidget(Widget):
+    id = 'featured-videos'
+    name = 'Featured Videos Widget'
+    template = 'widgets/featured-videos.html'
+    zones = (HomePageSidebarBottom, )
+
+    featured_tag = CharField('Featured Tag')
+    number_of_videos = IntegerField('Number of videos', min_value=1)
+
+    def context(self, result):
+        """Override context to add the next N articles occuring to the context"""
+
+        num_videos = result['number_of_videos']
+        if num_videos is None:
+            num_videos = 5
+
+        tag = []
+        if result['featured_tag']:
+            tag = Tag.objects.filter(name=result['featured_tag'])[:1]
+
+        if len(tag) > 0:
+            video_list = Video.objects.filter(tags=tag.get()).order_by('-created_at')[:num_videos]
+        
+        if len(tag) == 0 or len(video_list) == 0:
+            video_list = Video.objects.all().order_by('-created_at')[:num_videos]
+
+        if video_list:
+            video_urls = []
+            for index, video in enumerate(video_list):
+                video_list[index].videoAuthors = []
+                for author in video.authors.all():
+                    person_id = Author.objects.get(id=author.id).person_id
+                    person = Person.objects.get(id=person_id)
+                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+
+                video_list[index].numAuthors = len(video.videoAuthors)
+                video_list[index].youtube_slug = video.url.split('=')[1]
+                video_urls.append(VideoHelper.get_video_url(video.id))
+            
+            videos = list(zip(video_list, video_urls))
+            result['videos'] = videos
+        
         return result
 
 @register.widget
@@ -158,7 +236,7 @@ class FrontPageDefault(Widget):
 
     # top_story is unused as of now
     top_story = WidgetField('Top Story', [TopStoryDefault, TopStoryLive], required=True)
-    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget, TwitterFrontPage], required=True)
+    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget, TwitterFrontPage, FeaturedSubsectionWidget, FeaturedVideosWidget], required=True)
 
 
 def in_date_range(start, end):
