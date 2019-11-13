@@ -34,11 +34,17 @@
   margin-bottom: 2rem;
   padding-left: 15px;
   padding-right: 15px;
+  text-align: center;
+
+  @media($bp-larger-than-mobile){
+    text-align: unset;
+  }
 
   li {
     display: inline-block;
     vertical-align: middle;
     margin-left: 4px;
+    margin-top: 10px;
 
     > * {
       vertical-align: middle;
