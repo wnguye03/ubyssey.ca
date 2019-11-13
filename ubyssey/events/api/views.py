@@ -17,7 +17,7 @@ class EventViewSet(DispatchModelViewSet):
 
     def get_queryset(self):
 
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             queryset = Event.objects.all()
         else:
             queryset = Event.objects.filter(
