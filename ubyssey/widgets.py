@@ -236,7 +236,8 @@ class FrontPageDefault(Widget):
 
     # top_story is unused as of now
     top_story = WidgetField('Top Story', [TopStoryDefault, TopStoryLive], required=True)
-    sidebar = WidgetField('Sidebar', [UpcomingEventsWidget, TwitterFrontPage, FeaturedSubsectionWidget, FeaturedVideosWidget], required=True)
+    sidebar = WidgetField('First Widget on Sidebar', [UpcomingEventsWidget, TwitterFrontPage, FeaturedSubsectionWidget, FeaturedVideosWidget], required=True)
+    sidebar2 = WidgetField('Second Widget on Sidebar', [UpcomingEventsWidget, TwitterFrontPage, FeaturedSubsectionWidget, FeaturedVideosWidget], required=False)
 
 
 def in_date_range(start, end):
