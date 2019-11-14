@@ -2,7 +2,7 @@
     "name": "The Ubyssey",
     "short_name": "The Ubyssey",
     "theme_color": "#0071c9",
-    "background_color": "#0071c9",
+    "background_color": "#ffffff",
     "description": "UBC’s student newspaper since 1918",
     "display": "fullscreen",
     "start_url": "/",
