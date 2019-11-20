@@ -30,3 +30,9 @@ class SiteBanner(Zone):
 class WeeklyEvents(Zone):
     id = 'weekly-events'
     name = 'Weekly Events'
+
+@register.zone
+class PlacesToGoBanner(Zone):
+    id = 'places-to-go-banner'
+    name = 'Places To Go Banner'
+
