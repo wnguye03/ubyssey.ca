@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
+{% load dispatch_tags %}
 {% block header %}
 {% include 'headers/topbar.html' with section=section.slug %}
 {% include 'headers/mobile.html' %}
@@ -17,8 +18,8 @@
     {% endif %}
 
     {% if subsection.slug == 'places-to-go' %}
-    {% zone 'places-to-go-banner' %}
-    {% else %}
+      {% zone 'places-to-go-banner' %}
+    {% endif %}
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
       <div class="c-section__featured__articles u-flex--tablet">
@@ -27,7 +28,6 @@
       {% endfor %}
       </div>
     </div>
-    {% endif %}
 
     <h3 class="c-page__section">Archive</h3>
     {% include 'objects/archive.html' %}
