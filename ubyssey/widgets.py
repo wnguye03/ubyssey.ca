@@ -6,13 +6,14 @@ from dispatch.theme.widgets import Widget
 from dispatch.theme.zones import Embed
 from dispatch.theme.fields import (
     ModelField, CharField, TextField, ArticleField, ImageField,
-    IntegerField, InvalidField, DateTimeField, BoolField, WidgetField, PollField
+    IntegerField, InvalidField, DateTimeField, BoolField, WidgetField,
+    PollField, InteractiveMapField
 )
 
 from ubyssey.events.models import Event
 from ubyssey.zones import (
     ArticleHorizontal, ArticleSidebar, HomePageSidebarBottom,
-    WeeklyEvents, FrontPage, SiteBanner
+    WeeklyEvents, FrontPage, SiteBanner, PlacesToGoBanner,
 )
 from ubyssey.fields import EventField
 from ubyssey.helpers import VideoHelper
@@ -163,6 +164,15 @@ class WeeklyEventsWidget(Widget):
             .order_by('start_time') \
             .filter(is_published=True)[:5]
         return data
+
+@register.widget
+class InteractiveMapWidget(Widget):
+    id = 'interactive-map'
+    name = 'Interactive Map'
+    template = 'widgets/interactive_map.html'
+    zones = (PlacesToGoBanner, Embed, )
+
+    the_map = InteractiveMapField('Interactive Map')
 
 @register.widget
 class UpcomingEventsHorizontalWidget(Widget):
