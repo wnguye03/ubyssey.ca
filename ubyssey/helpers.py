@@ -260,6 +260,16 @@ class ArticleHelper(object):
         return articles.order_by('-views')
 
     @staticmethod
+    def get_suggested(article):
+        """Returns the suggested articles for a current article"""
+        subsection = article.get_subsection()
+
+        if subsection:
+            return subsection.get_published_articles().exclude(id=article.id)
+
+        return Article.objects.filter(is_published=True).order_by('-published_at').exclude(id=article.id)
+        
+    @staticmethod
     def get_breaking_news():
         """Returns breaking news stories"""
         return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=timezone.now())

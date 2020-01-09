@@ -4,7 +4,16 @@
 {% block content %}
 <div class='bottom-banner-wrapper'>
   <div class='bottom-banner-container'>
-    <div id="article-list" class='area-1'></div>
+    <div class='area-1'>
+      <div class='sa-container-outer'>
+        <h2 class='bottom-banner__title'>Suggested Articles</h2>
+        <div class='sa-container-inner'>
+          {% for article in suggested %}
+            {% include 'objects/articles/suggested.html' with article=article %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
     <div class="popular sidebar-block area-2">
       <h2 class="bottom-banner__title">Most popular this week</h2>
       <ol class="article-list">
