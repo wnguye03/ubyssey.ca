@@ -373,6 +373,7 @@
 .o-article--suggested {
   // Structure
   margin-bottom: 1rem;
+  max-width: 50%;
 
   &:last-child {
     // Structure
@@ -405,11 +406,13 @@
       padding-right: 1rem;
     }
 
-    &:last-child {
+    &:last-child:not(:first-child) {
       // Structure
       padding-left: 1rem;
       padding-right: 0;
     }
+
+
   }
 
   .o-article__image {
