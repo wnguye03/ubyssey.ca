@@ -1,6 +1,6 @@
 {
   "name": "ubyssey",
-  "version": "1.6.19",
+  "version": "1.6.20",
   "description": "The Ubyssey's frontend framework.",
   "author": "Peter Siemens <peter@ubyssey.ca>",
   "homepage": "https://www.ubyssey.ca",
@@ -32,7 +32,7 @@
     "@babel/register": "^7.4.4",
     "babel-loader": "^8.0.0",
     "fancy-log": "^1.3.3",
-    "gulp": "^4.0.1",
+    "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-cli": "^2.2.0",
     "gulp-jasmine": "^4.0.0",
