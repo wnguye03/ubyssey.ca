@@ -189,6 +189,7 @@ class UbysseyTheme(object):
             article.content = ArticleHelper.insert_ads(article.content, article_type)
 
         popular = ArticleHelper.get_popular()[:5]
+        suggested = ArticleHelper.get_suggested(article)[:3]
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
@@ -198,6 +199,7 @@ class UbysseyTheme(object):
             # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
             'popular': popular,
+            'suggested': suggested,
             'reading_time': ArticleHelper.get_reading_time(article),
             'explicit': ArticleHelper.is_explicit(article),
             'breaking': breaking,

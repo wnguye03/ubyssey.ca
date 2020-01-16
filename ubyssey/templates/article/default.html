@@ -34,6 +34,12 @@
             <span> &nbsp;&middot;&nbsp; </span>
             <span class="c-article__reading-time">{{ reading_time }} min read</span>
             {% endif %}
+            {% if article.subsection  %}
+            <span> &nbsp;&middot;&nbsp; </span>
+            <a href="{{ article.subsection.get_absolute_url }}">
+              <span class="c-article__reading-time">{{ article.subsection.name }}</span>
+            </a>
+            {% endif %}
           </div>
         </div>
         {% include 'objects/social-icons.html' with article=article layout='top' %}
