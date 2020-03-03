@@ -280,7 +280,7 @@ h4 {
     // Text
     color: white;
     text-transform: uppercase;
-    font-size: 3rem;
+    font-size: 6rem;
     text-shadow: -1px 1px 0px rgba(0, 0, 0, 0.6);
     // Structure
     position: absolute;
@@ -306,20 +306,21 @@ h4 {
     background-position: right;
     .subsection-image-text {
       // Text
-      font-size: 8rem;
+      font-size: 5.5rem;
       // Structure
       right: -93px;
+      bottom: -40px;
       transform: rotate(-90deg) translate(100%, -27%);
       transform-origin: right;
       width: auto;
       // Background
-      &.redefine {
+      &.comesAround {
         color: $color-primary-1;
       }
-      &.resolve {
+      &.waysForward {
         color: $color-primary-2;
       }
-      &.reclaim {
+      &.goesAround {
         color: $color-primary-3;
       }
     }
@@ -472,7 +473,7 @@ h4 {
       }
 
       // Background
-      &.redefine {
+      &.comesAround {
         .o-article-box {
           background-color: $color-primary-1;
           > h2 {
@@ -481,7 +482,7 @@ h4 {
           }
         }
       }
-      &.resolve {
+      &.waysForward {
         .o-article-box {
           background-color: $color-primary-2;
           > h2 {
@@ -490,7 +491,7 @@ h4 {
           }
         }
       }
-      &.reclaim {
+      &.goesAround {
         .o-article-box {
           background-color: $color-primary-3;
           > h2 {

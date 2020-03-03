@@ -19,21 +19,21 @@
     background-color: $color-primary-3;
   }
 
-  &.redefine {
+  &.comesAround {
     background-color: $color-primary-1;
     & > h2 {
       background: $color-primary-1;
     }
   }
 
-  &.resolve {
+  &.waysForward {
     background-color: $color-primary-2;
     & > h2 {
       background: $color-primary-2;
     }
   }
 
-  &.reclaim {
+  &.goesAround {
     background-color: $color-primary-3;
     & > h2 {
       background: $color-primary-3;

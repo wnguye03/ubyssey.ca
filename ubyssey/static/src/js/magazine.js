@@ -7,9 +7,9 @@ $(function() {
     <Magazine
       articles={$("#magazine-wrapper").data("articles")}
       cover={$("#magazine-wrapper").data("cover")}
-      resolveImage={$("#magazine-wrapper").data("resolveImage")}
-      redefineImage={$("#magazine-wrapper").data("redefineImage")}
-      reclaimImage={$("#magazine-wrapper").data("reclaimImage")}
+      waysForwardImage={$("#magazine-wrapper").data("waysForwardImage")}
+      comesAroundImage={$("#magazine-wrapper").data("comesAroundImage")}
+      goesAroundImage={$("#magazine-wrapper").data("goesAroundImage")}
       title={$("#magazine-wrapper").data("title")}
     />,
     $("#magazine-wrapper")[0]

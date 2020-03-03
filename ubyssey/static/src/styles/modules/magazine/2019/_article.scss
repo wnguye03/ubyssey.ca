@@ -28,7 +28,7 @@
   }
 }
 
-.c-article:not(.c-article--basic).c-article--redefine {
+.c-article:not(.c-article--basic).c-article--comesAround {
   .c-article__explore > a {
     // Background
     background-color: $color-primary-1;
@@ -47,7 +47,7 @@
   }
 }
 
-.c-article:not(.c-article--basic).c-article--resolve {
+.c-article:not(.c-article--basic).c-article--waysForward {
   .c-article__explore > a {
     // Background
     background-color: $color-primary-2;
@@ -66,7 +66,7 @@
   }
 }
 
-.c-article:not(.c-article--basic).c-article--reclaim {
+.c-article:not(.c-article--basic).c-article--goesAround {
   .c-article__explore > a {
     // Background
     background-color: $color-primary-3;
