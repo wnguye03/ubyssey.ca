@@ -203,7 +203,7 @@ mag2020 = MagazineV2(
     'The Ubyssey Magazine - Hot Mess',
     'The February 2020 issue of the Ubyssey magazine.',
     'images/magazine/2020/cover.png',
-    'magazine/2019/landing.html',
+    'magazine/2020/landing.html',
     'images/magazine/2020/section1.png',
     'images/magazine/2020/section2.png',
     'images/magazine/2020/section3.png',
