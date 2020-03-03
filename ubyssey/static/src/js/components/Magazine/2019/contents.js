@@ -1,14 +1,7 @@
 export const editorial = {
   title: "A Message from the Editor",
-  paragraphs: [`We are a campus of over 60,000 people, all with different stories, backgrounds, trials and tribulations.
-  How does UBC support or hinder those differences? How do we — as individuals, departments and
-  communities at a university — claim our own space? How do we continue to evolve and grow when the campus
-  around us seems not to fit us? How do we stand up for our beliefs? How do we continue to be us and
-  celebrate our diversity?`, `In this year’s Ubyssey magazine, we opened the doors to the various cultures, stories, ways of life and
-  perspectives that make UBC the unique place it is today — and discussed how we make our presence known
-  on campus, be that through reclaiming and fighting for our space, holding our own or beginning to
-  include ourselves in the folds of UBC’s tapestry.`, `Thank you to all who helped write, illustrate, edit, produce and imagine the possibilities for this
-  magazine. You’ve created the beautiful building blocks for a little haven of support and celebration
-  within these pages and I am so proud of the work that you have produced. For those who shared your
-  stories, thank you for your courage, honesty and openness.`, `This magazine is just the beginning of all the incredible stories waiting to be told on our campus about how students, staff and faculty have shaped and continue to shape our university identity.`, `We hope it acts as a stepping stone for you to share yours.`]
+  paragraphs: [`While the title of this year’s magazine is more than a little tongue-in-cheek, the subject matter is serious.
+  The climate crisis is quickly becoming one of the defining issues of our time, and its importance will only continue to grow as its impacts become more severe and are felt in more places. It is a problem that political scientists love to call “super wicked” and that’s how it feels so much of the time, like something so big and complex that there’s nothing we as individuals can do. We think that’s part of where our tendency to make light of it comes from. When we joke about something it gives us a semblance of control.
+  We hope that by seeing a different side of the crisis and hearing about the ways — big and small — that people and institutions are trying to make change, you will be inspired to act, whether that means changing your consumption or just signing a petition.
+  Because at the end of the day, no matter how cheeky our discussion of the crisis is, it is here and happening now. And even if you’re not a policy-maker or a politician, we all need to have our eyes wide open when it comes to where our planet is headed.`]
 }
