@@ -210,7 +210,7 @@ mag2020 = MagazineV2(
     'magazine/2020/landing.html',
     'images/magazine/2020/section1.png',
     'images/magazine/2020/section2.png',
-    'images/magazine/2020/section3.png',
+    'images/magazine/2020/section3.jpg',
     'goesAround',
     'comesAround',
     'waysForward',
