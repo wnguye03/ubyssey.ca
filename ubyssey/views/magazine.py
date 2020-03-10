@@ -75,6 +75,7 @@ class Magazine(object):
             'article': article,
             'subsection': subsection,
             'specific_css': 'css/magazine-' + year + '.css',
+            'year': self.year,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html',
             'magazine_title': self.title,
