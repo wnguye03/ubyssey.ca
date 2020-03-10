@@ -1,7 +1,7 @@
 import React from "react"
 
 function ArticleBox(props) {
-  const background = props.image ? { "background-image": `url(${props.image})` } : null
+  const background = props.image ? { backgroundImage: `url(${props.image})` } : null
   const transition = { transitionDelay: `${props.index * 0.125}s` }
   const boxStyle = Object.assign({}, background, transition)
   return (

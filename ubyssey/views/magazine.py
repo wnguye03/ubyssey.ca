@@ -74,7 +74,8 @@ class Magazine(object):
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'subsection': subsection,
-            'specific_css': 'css/magazine-' + year + '.css',
+            'specific_css': 'css/magazine-' + self.year + '.css',
+            'year': self.year,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html',
             'magazine_title': self.title,
@@ -142,18 +143,21 @@ class MagazineV2(Magazine):
         for article in articles:
             featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
             color = article.template_fields['color'] if 'color' in article.template_fields else None
+            
             temp = {
-                    'headline': article.headline,
-                    'url': article.get_absolute_url(),
-                    'featured_image': featuredImage,
-                    'color': color
+                'headline': article.headline,
+                'url': article.get_absolute_url(),
+                'featured_image': featuredImage,
+                'color': color
             }
-            if article.subsection.slug == section1_name:
-                section1.append(temp.copy())
-            elif article.subsection.slug == section2_name:
-                section2.append(temp.copy())
-            elif article.subsection.slug == section3_name:
-                section3.append(temp.copy())
+
+            if article.subsection:
+                if article.subsection.slug == self.section1_name:
+                    section1.append(temp.copy())
+                elif article.subsection.slug == self.section2_name:
+                    section2.append(temp.copy())
+                elif article.subsection.slug == self.section3_name:
+                    section3.append(temp.copy())
 
         articles = json.dumps({
                 self.section1_name: section1,
@@ -206,7 +210,7 @@ mag2020 = MagazineV2(
     'magazine/2020/landing.html',
     'images/magazine/2020/section1.png',
     'images/magazine/2020/section2.png',
-    'images/magazine/2020/section3.png',
+    'images/magazine/2020/section3.jpg',
     'goesAround',
     'comesAround',
     'waysForward',
