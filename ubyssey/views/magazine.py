@@ -149,12 +149,14 @@ class MagazineV2(Magazine):
                     'featured_image': featuredImage,
                     'color': color
             }
-            if article.subsection.slug == section1_name:
-                section1.append(temp.copy())
-            elif article.subsection.slug == section2_name:
-                section2.append(temp.copy())
-            elif article.subsection.slug == section3_name:
-                section3.append(temp.copy())
+
+            if article.subsection:
+                if article.subsection.slug == self.section1_name:
+                    section1.append(temp.copy())
+                elif article.subsection.slug == self.section2_name:
+                    section2.append(temp.copy())
+                elif article.subsection.slug == self.section3_name:
+                    section3.append(temp.copy())
 
         articles = json.dumps({
                 self.section1_name: section1,
