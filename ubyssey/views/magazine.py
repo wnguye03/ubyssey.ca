@@ -143,11 +143,12 @@ class MagazineV2(Magazine):
         for article in articles:
             featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
             color = article.template_fields['color'] if 'color' in article.template_fields else None
+            
             temp = {
-                    'headline': article.headline,
-                    'url': article.get_absolute_url(),
-                    'featured_image': featuredImage,
-                    'color': color
+                'headline': article.headline,
+                'url': article.get_absolute_url(),
+                'featured_image': featuredImage,
+                'color': color
             }
 
             if article.subsection:
