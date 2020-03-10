@@ -74,7 +74,7 @@ class Magazine(object):
             'meta': ArticleHelper.get_meta(article, default_image=static('images/magazine/cover-social.png')),
             'article': article,
             'subsection': subsection,
-            'specific_css': 'css/magazine-' + year + '.css',
+            'specific_css': 'css/magazine-' + self.year + '.css',
             'year': self.year,
             'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
             'base_template': 'magazine/base.html',
