@@ -154,16 +154,29 @@ class Magazine extends React.Component {
       <div className="c-cover__credits">
         <h1>Editor-in-Chief</h1>
         <h2>Texas James</h2>
-        <h1>Written Content Editors</h1>
-        <h2>Charlotte Alden</h2>
-        <h2>Mitchell Ballachay</h2>
-        <h2>Andrew Ha</h2>
-        <h2>Emma Livingstone</h2>
-        <h2>Riya Talitha</h2>
-        <h1>Illustrations Editor</h1>
-        <h2>Kristine Ho</h2>
+        <h1>Visuals Editor</h1>
+        <h2>Alex Vanderput</h2>
+        <h1>Science Editor</h1>
+        <h2>Kevin Jiang</h2>
         <h1>Design Editor</h1>
         <h2>Lua Presidio</h2>
+        <h1>News Editor</h1>
+        <h2>Bailey Martens</h2>
+        <h1>Culture Editor</h1>
+        <h2>Riya Talitha</h2>
+        <h1>Layout Editor</h1>
+        <h2>Ella Chan</h2>
+        <h1>Recreation Editor</h1>
+        <h2>Sarah Zhao</h2>
+        <h1>Personal Essay Editor</h1>
+        <h2>Sonia Pathak</h2>
+        <h1>Written Content Editors</h1>
+        <h2>Kevin Jiang</h2>
+        <h2>Bailey Martens</h2>
+        <h2>Riya Talitha</h2>
+        <h2>Sarah Zhao</h2>
+        <h2>Kevin Jiang</h2>
+
         <h1>Web Design</h1>
         <h2>Amelia He</h2>
       </div>
