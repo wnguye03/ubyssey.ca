@@ -9,7 +9,7 @@ RUN apt-get update \
   && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
   && apt-get install -y nodejs \
   && nodejs -v \
-  && npm -v
+  && apt-get install -y npm
 COPY ./ubyssey.ca ./ubyssey.ca
 WORKDIR ./ubyssey.ca/
 RUN pip install -r requirements.txt
