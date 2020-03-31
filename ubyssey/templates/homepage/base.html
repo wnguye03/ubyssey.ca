@@ -18,6 +18,7 @@
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">
         <div class="sections">
+            {% include 'homepage/blocks/section_2.html' with section="themainmaller" articles=sections.themainmaller %}  
             {% include 'homepage/blocks/section_1.html' with section="news" articles=sections.news %}
             {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
             {% include 'homepage/blocks/section_2.html' with section="sports" articles=sections.sports %}
@@ -26,7 +27,7 @@
             {% include 'homepage/blocks/section_2.html' with section="science" articles=sections.science %}
             {% include 'homepage/blocks/section_videos.html' with section="videos" video=video %}
             <!-- {% include 'homepage/blocks/section_podcast.html' with section="podcast" podcast=podcast %}-->
-            {% include 'homepage/blocks/section_2.html' with section="magazine" articles=sections.magazine %} 
+            {% include 'homepage/blocks/section_2.html' with section="magazine" articles=sections.magazine %}
         </div>
         <div class="sidebar-home">
             <div class="sidebar-block sidebar-block--advertisement">

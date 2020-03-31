@@ -33,7 +33,7 @@ class UbysseyTheme(object):
 
     def home(self, request):
         frontpage = ArticleHelper.get_frontpage(
-            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'),
+            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science', 'themainmaller'),
             max_days=7
         )
 
