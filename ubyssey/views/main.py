@@ -172,7 +172,7 @@ class UbysseyTheme(object):
                 key=lambda a: a['template_data']['timeline_date']
             )
 
-            for i, a in enumerate(sorted_timeline_articles) :
+            for i, a in enumerate(sorted_timeline_articles):
                 try:
                     sorted_timeline_articles[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
                 except:
