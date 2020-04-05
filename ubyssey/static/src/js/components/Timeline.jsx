@@ -6,8 +6,14 @@ class Timeline extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      nodes: props.nodes.map((node)=>{
-        return {'headline': node.headline, 'id': node.parent_id, 'slug': node.slug, 'template_data': JSON.parse(node.template_data), 'featured_image': node.featured_image}
+      nodes: props.nodes.map((node) => {
+        return {
+          headline: node.headline, 
+          id: node.parent_id, 
+          slug: node.slug, 
+          template_data: node.template_data, 
+          featured_image: node.featured_image
+        }
       }),
       selectedNodeIndex: 0,
       isMobile: false,
