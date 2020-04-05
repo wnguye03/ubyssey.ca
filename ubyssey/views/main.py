@@ -158,18 +158,27 @@ class UbysseyTheme(object):
 
         if article.template == 'timeline':
             timeline_tag = article.tags.filter(name__icontains='timeline-')
-            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
-            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
-            try:
-                temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
-            except:
-                pass
-            for i, a in enumerate(timelineArticles) :
+            timeline_articles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+
+            timeline_articles = list(timeline_articles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            
+            for a in timeline_articles:
+                # convert JSON field from string to dict if needed
+                if isinstance(a['template_data'], str):
+                    a['template_data'] = json.loads(a['template_data'])
+               
+            sorted_timeline_articles = sorted(
+                timeline_articles,
+                key=lambda a: a['template_data']['timeline_date']
+            )
+
+            for i, a in enumerate(sorted_timeline_articles) :
                 try:
-                    temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+                    sorted_timeline_articles[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
                 except:
-                    temp[i]['featured_image'] = None
-            article.timeline_articles = json.dumps(temp)
+                    sorted_timeline_articles[i]['featured_image'] = None
+
+            article.timeline_articles = json.dumps(sorted_timeline_articles)
             article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
 
         if article.template == 'soccer-nationals':
