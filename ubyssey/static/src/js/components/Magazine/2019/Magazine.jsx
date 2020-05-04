@@ -83,9 +83,9 @@ class Magazine extends React.Component {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     const show = this.state.show ? "show" : ""
     if(this.state.subsection === "editorial") this.image = null
-    if(this.state.subsection === "resolve") this.image = this.props.resolveImage
-    if(this.state.subsection === "redefine") this.image = this.props.redefineImage
-    if(this.state.subsection === "reclaim") this.image = this.props.reclaimImage
+    if(this.state.subsection === "waysForward") this.image = this.props.waysForwardImage
+    if(this.state.subsection === "comesAround") this.image = this.props.comesAroundImage
+    if(this.state.subsection === "goesAround") this.image = this.props.goesAroundImage
 
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
@@ -153,19 +153,32 @@ class Magazine extends React.Component {
     return (
       <div className="c-cover__credits">
         <h1>Editor-in-Chief</h1>
-        <h2>Lucy Fox</h2>
-        <h1>Written Content Editors</h1>
-        <h2>Charlotte Alden</h2>
-        <h2>Mitchell Ballachay</h2>
-        <h2>Andrew Ha</h2>
-        <h2>Emma Livingstone</h2>
-        <h2>Riya Talitha</h2>
-        <h1>Illustrations Editor</h1>
-        <h2>Kristine Ho</h2>
+        <h2>Texas James</h2>
+        <h1>Visuals Editor</h1>
+        <h2>Alex Vanderput</h2>
+        <h1>Science Editor</h1>
+        <h2>Kevin Jiang</h2>
         <h1>Design Editor</h1>
-        <h2>Claire Lloyd</h2>
+        <h2>Lua Presidio</h2>
+        <h1>News Editor</h1>
+        <h2>Bailey Martens</h2>
+        <h1>Culture Editor</h1>
+        <h2>Riya Talitha</h2>
+        <h1>Layout Editor</h1>
+        <h2>Ella Chan</h2>
+        <h1>Recreation Editor</h1>
+        <h2>Sarah Zhao</h2>
+        <h1>Personal Essay Editor</h1>
+        <h2>Sonia Pathak</h2>
+        <h1>Written Content Editors</h1>
+        <h2>Kevin Jiang</h2>
+        <h2>Bailey Martens</h2>
+        <h2>Riya Talitha</h2>
+        <h2>Sarah Zhao</h2>
+        <h2>Kevin Jiang</h2>
+
         <h1>Web Design</h1>
-        <h2>Rowan Baker-French</h2>
+        <h2>Amelia He</h2>
       </div>
     )
   }
