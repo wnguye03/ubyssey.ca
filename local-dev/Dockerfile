@@ -6,8 +6,8 @@ RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
   && apt-get -y install build-essential curl \
   && apt-get -y install vim\ 
-  && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
   && apt-get install -y nodejs \
+  && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && nodejs -v \
   && apt-get install -y npm
   
