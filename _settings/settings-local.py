@@ -27,14 +27,6 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'ubyssey',
-    }
-}
-
-
 # ############### PY3 MYSQL ##################
 # import pymysql
 # pymysql.install_as_MySQLdb()
@@ -62,16 +54,16 @@ DATABASES = {
 # }
 
 ############## DOCKER MYSQL ###################
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ubyssey',
-#         'USER': 'root',
-#         'PASSWORD': 'ubyssey',
-#         'HOST': 'db',
-#         'PORT': '3306',
-#     },
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ubyssey',
+        'USER': 'root',
+        'PASSWORD': 'ubyssey',
+        'HOST': 'db',
+        'PORT': '3306',
+    },
+}
 ###############################################
 
 TEMPLATES += [
