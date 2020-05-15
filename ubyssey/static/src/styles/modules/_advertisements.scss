@@ -10,7 +10,7 @@ $adslots: (
 
 .adslot {
   display: block !important;
-  background-color: transparent;
+  background-color: black;
   background-clip: content-box !important;
 }
 
@@ -39,7 +39,7 @@ $adslots: (
     }
   }
 
-  @media(min-width: $width + 40) {
+  @media(min-width: $width) {
     display: flex;
     &.o-advertisement--homepage {
       display: flex;
