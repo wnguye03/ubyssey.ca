@@ -24,10 +24,13 @@ cd /workspaces/dispatch
 pip install -e .[dev]
 python setup.py develop
 cd /workspaces/dispatch/dispatch/static/manager
-#npm install -g yarn
+npm install -g yarn
 #aliased as "yarn setup" in /dispatch/dispatch/static/manager/
 ##yarn install --force
 #aliased as "yarn start"
 #webpack --watch --config webpack.dev.config.js
 #--Watch makes it hog a whole terminal
-webpack --config webpack.dev.config.js
+#webpack --config webpack.dev.config.js
+yarn setup
+yarn install
+yarn start-lite
