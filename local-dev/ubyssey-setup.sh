@@ -26,3 +26,5 @@ python setup.py develop
 cd /workspaces/dispatch/dispatch/static/manager
 npm install -g yarn
 yarn setup
+yarn install
+yarn start
