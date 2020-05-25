@@ -303,8 +303,8 @@ header.topbar {
   height: 54px;
   min-height: 54px;
   @media ($bp-larger-than-tablet) {
-    height: 48px;
-    min-height: 48px;
+    height: 0px;
+    min-height: 0px;
   }
 }
 
