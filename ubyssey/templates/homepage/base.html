@@ -4,7 +4,7 @@
 {% load dispatch_tags %}
 {% block header %}
 {% include 'headers/main.html' %}
-{% include 'headers/mobile.html' %}
+{% include 'headers/mobile.html' with class='homepage' %}
 {% endblock %}
 {% block content %}
 {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 class='homepage' %}
