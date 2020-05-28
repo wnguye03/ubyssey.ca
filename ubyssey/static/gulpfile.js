@@ -15,7 +15,7 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
 const fs = require('fs');
-const data = fs.readFileSync('../../version.txt', 'utf8');
+const data = fs.readFileSync('./../../version.txt', 'utf8');
 const version = data.toString();
 
 function cleanJsTask() {
