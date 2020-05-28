@@ -16,7 +16,9 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-VERSION = '1.6.32'
+# get version number from source-of-truth textfile
+f = open("../version.txt", "r")
+VERSION = f.readline()
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',

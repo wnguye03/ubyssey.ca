@@ -15,6 +15,11 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
 const fs = require('fs');
+//const VERSION = reader.readAsText(file);
+
+//TODO: replace with something that uses the fs?
+const file = new File("../../version.txt");
+const reader = new FileReader(file)
 const version = JSON.parse(fs.readFileSync('./package.json')).version;
 
 function cleanJsTask() {
