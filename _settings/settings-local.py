@@ -8,8 +8,9 @@ SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
 
 # get version number from source-of-truth textfile
-f = open("./../version.txt", "r")
-VERSION = f.readline()
+versionpath = os.path.join(os.path.dirname(__file__), "..")
+versionfile = open(os.path.join(versionpath, "version.txt"), "r")
+VERSION = versionfile.readline()
 
 ALLOWED_HOSTS = ['localhost', '*']
 
