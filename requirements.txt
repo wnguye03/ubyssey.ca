@@ -17,3 +17,4 @@ django-debug-toolbar
 google-cloud-datastore
 google-cloud-storage
 python-memcached
+google-python-cloud-debugger
