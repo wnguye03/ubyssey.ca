@@ -1,4 +1,10 @@
 import os
+try:
+  import googleclouddebugger
+  googleclouddebugger.enable()
+except ImportError:
+  pass
+
 from dispatch.default_settings import *
 from google.cloud import datastore
 client = datastore.Client()
