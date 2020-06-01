@@ -20,7 +20,7 @@ NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 # versionpath = os.path.join(os.path.dirname(__file__), "..")
 # versionfile = open(os.path.join(versionpath, "version.txt"), "r")
 # VERSION = versionfile.readline()
-VERSION = '1.6.34
+VERSION = '1.6.34'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
