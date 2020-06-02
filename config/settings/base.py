@@ -8,7 +8,7 @@ More Pythonic is: Explicit rather than implicit.
 
 import os
 import environ
-ROOT_DIR = environ.Path(__file__) - 3
+ROOT_DIR = (environ.Path(__file__) - 3)
 print("Root dir in the new settings files is: ")
 print(ROOT_DIR)
 
