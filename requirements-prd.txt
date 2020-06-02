@@ -16,3 +16,4 @@ Pillow
 google-cloud-datastore
 google-cloud-storage
 python-memcached
+django-environ
