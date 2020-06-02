@@ -93,3 +93,17 @@ footer {
     background-color: $color-ub-blue-light;
   }
 }
+
+.bottom-row{
+  .archive, .events{
+    @media (min-width: 1200px) {
+        display:none;
+    }
+  }
+  
+  .volunteer, .advice {
+    @media (min-width: 1060px) {
+      display:none;
+    }
+  }
+}
