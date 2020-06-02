@@ -1,8 +1,10 @@
 import os
+
+# Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
+# Therefore the below "import *" is correct
 from .base import *
 from google.cloud import datastore
 client = datastore.Client()
-
 
 BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
@@ -80,7 +82,6 @@ GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
 STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'

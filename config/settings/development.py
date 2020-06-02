@@ -1,5 +1,7 @@
 import os
 
+# Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
+# Therefore the below "import *" is correct
 from .base import *
 
 BASE_URL = 'http://localhost:8000/'
@@ -25,33 +27,6 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
-# ############### PY3 MYSQL ##################
-# import pymysql
-# pymysql.install_as_MySQLdb()
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ubyssey',
-#         'USER': 'root',
-#         'PASSWORD': 'ubyssey',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     },
-# }
-
-################ LOCAL MYSQL ##################
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ubyssey',
-#         'USER': 'root',
-#         'PASSWORD': 'ubyssey',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     },
-# }
-
-############## DOCKER MYSQL ###################
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -62,7 +37,6 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-###############################################
 
 TEMPLATES += [
  {
