@@ -1,16 +1,14 @@
 """
-Default "Dispatch" settings
+Default settings, originating from Dispatch module
 
 Having these imported from Dispatch is too "magical" to be desirable, even if Dispatch is an explict dependency.
-"Redundancy" isn't bad if it's accross what are nominally entirely different projects!
+Don't Repeat Yourself, yes, but "redundancy" isn't bad if it's accross what are nominally entirely different projects!
 More Pythonic is: Explicit rather than implicit.
 """
 
 import os
 import environ
 ROOT_DIR = (environ.Path(__file__) - 3)
-print("Root dir in the new settings files is: ")
-print(ROOT_DIR)
 
 ORGANIZATION_NAME = 'Dispatch'
 
