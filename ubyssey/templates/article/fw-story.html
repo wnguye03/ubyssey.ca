@@ -74,13 +74,19 @@
                             <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
                         </div>
                     </div>
+                    {% if article.featured_image.caption or article.featured_image.credit %}
+                        <div class="caption">
+                	        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                        </div>
+                    {% endif %}
                 </div>
-                {% if article.featured_image.caption or article.featured_image.credit %}
+                
+            </div>
+            <!-- {% if article.featured_image.caption or article.featured_image.credit %}
                 <div class="caption">
                 	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                 </div>
-                {% endif %}
-            </div>
+            {% endif %} -->
         {% endif %}
     </div>
     {% endwith %}
