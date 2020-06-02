@@ -5,7 +5,7 @@
 
 header.main, header.topbar {
   display: none;
-  @media($bp-smaller-than-tablet){
+  @media($bp-larger-than-tablet){
     display: block;
   }
 }
