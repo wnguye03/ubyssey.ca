@@ -8,11 +8,9 @@ More Pythonic is: Explicit rather than implicit.
 
 import os
 import environ
-import dispatch
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
-DISPATCH_DIR = environ.Path(dispatch.apps.DispatchConfig.path)
 
-ORGANIZATION_NAME = 'Dispatch'
+ORGANIZATION_NAME = 'Ubyssey'
 VERSION = '1.6.34'
 
 # Application definition
@@ -27,7 +25,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken'
 ]
-
 
 # Replace default user model
 AUTH_USER_MODEL = 'dispatch.User'
@@ -57,19 +54,12 @@ TEMPLATES = [
         'APP_DIRS': True,
     },
     {
-        'NAME': 'ubyssey',
+        'NAME': 'dispatch',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
 			PROJECT_DIR('ubyssey/templates/')
         ],
     },
-    {
-        'NAME': 'dispatch',
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            DISPATCH_DIR('templates')
-        ],
-    }
 ]
 
 # REST framework settings
@@ -100,7 +90,6 @@ MIDDLEWARE = [
 
 STATICFILES_DIRS = [
     PROJECT_DIR('ubyssey/static'),
-    DISPATCH_DIR('static')
 ]
 
 GS_LOCATION = None
