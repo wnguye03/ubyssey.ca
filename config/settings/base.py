@@ -8,7 +8,9 @@ More Pythonic is: Explicit rather than implicit.
 
 import os
 import environ
+from dispatch.apps import DispatchConfig
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
+DISPATCH_APP_DIR = DispatchConfig.path
 
 ORGANIZATION_NAME = 'Ubyssey'
 VERSION = '1.6.34'
@@ -57,7 +59,7 @@ TEMPLATES = [
         'NAME': 'dispatch',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-			PROJECT_DIR('ubyssey/templates/')
+			DISPATCH_APP_DIR('templates')
         ],
     },
 ]
@@ -90,6 +92,7 @@ MIDDLEWARE = [
 
 STATICFILES_DIRS = [
     PROJECT_DIR('ubyssey/static'),
+    DISPATCH_APP_DIR('static/manager/dist')
 ]
 
 GS_LOCATION = None
