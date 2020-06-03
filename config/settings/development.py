@@ -1,4 +1,4 @@
-import os
+# development.py, settings file
 
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
@@ -43,7 +43,7 @@ TEMPLATES += [
         'NAME': 'ubyssey',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(os.path.dirname(__file__), 'templates'),
+			PROJECT_DIR('ubyssey/templates/')
         ],
         'OPTIONS': {
             'context_processors': [
@@ -55,7 +55,7 @@ TEMPLATES += [
 
 STATICFILES_DIRS += [
     PROJECT_DIR('ubyssey/static/dist'),
-    PROJECT_DIR('service-workers')
+    PROJECT_DIR('service-workers'),
 ]
 
 STATIC_URL = '/static/'
@@ -65,7 +65,7 @@ GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 SERVICE_WORKER_URL = '/service-worker.js'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media')
+MEDIA_ROOT = PROJECT_DIR('media')
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]

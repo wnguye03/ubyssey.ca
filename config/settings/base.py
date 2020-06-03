@@ -1,5 +1,5 @@
 """
-Default settings, originating from Dispatch module
+base.py, default settings, originating from Dispatch module
 
 Having these imported from Dispatch is too "magical" to be desirable, even if Dispatch is an explict dependency.
 Don't Repeat Yourself, yes, but "redundancy" isn't bad if it's accross what are nominally entirely different projects!
@@ -12,8 +12,6 @@ PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
 
 ORGANIZATION_NAME = 'Dispatch'
 VERSION = '1.6.34'
-
-#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 INSTALLED_APPS = [
@@ -59,8 +57,7 @@ TEMPLATES = [
         'NAME': 'dispatch',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            #os.path.join(BASE_DIR, 'dispatch/templates'), # Originally from Dispatch version of this file
-			PROJECT_DIR + 'ubyssey/templates/'
+			PROJECT_DIR('ubyssey/templates/')
         ],
     }
 ]
@@ -92,7 +89,7 @@ MIDDLEWARE = [
 ]
 
 STATICFILES_DIRS = [
-    PROJECT_DIR('ubyssey/static')
+    PROJECT_DIR('ubyssey/static'),
 ]
 
 GS_LOCATION = None

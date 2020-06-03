@@ -1,6 +1,4 @@
-# Deployment settings
-
-import os
+# deployment.py, Django settings file
 
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
@@ -12,9 +10,9 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += ['ubyssey.events',]
 
-STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
-)
+STATICFILES_DIRS += [
+    PROJECT_DIR('ubyssey/static/dist'),
+]
 
 STATIC_ROOT = '/home/travis/build/ubyssey/ubyssey.ca/gcs/static'
 STATIC_URL = '/static/'

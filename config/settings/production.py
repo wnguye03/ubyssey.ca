@@ -1,5 +1,4 @@
-import os
-
+# production.py , Django settings file
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
 from .base import *
@@ -47,16 +46,6 @@ DATABASES = {
         'PORT': 3306,
     }
 }
-
-TEMPLATES += [
-    {
-        'NAME': 'ubyssey',
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(os.path.dirname(__file__), 'templates'),
-        ]
-    }
-]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
