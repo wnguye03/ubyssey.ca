@@ -59,7 +59,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             #os.path.join(BASE_DIR, 'dispatch/templates'), # Originally from Dispatch version of this file
-			(PROJECT_DIR + '/ubyssey/templates/')
+			(PROJECT_DIR + 'ubyssey/templates/')
         ],
     }
 ]
@@ -91,7 +91,7 @@ MIDDLEWARE = [
 ]
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'dispatch/static/manager/dist'),
+    # os.path.join(BASE_DIR, 'dispatch/static/manager/dist'),
 )
 
 GS_LOCATION = None
