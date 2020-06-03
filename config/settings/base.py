@@ -15,7 +15,7 @@ VERSION = '1.6.34'
 
 # Application definition
 INSTALLED_APPS = [
-    'dispatch',
+    'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
