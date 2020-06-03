@@ -14,9 +14,7 @@ RUN apt-get install -y nodejs
 # Install the Django app's dependencies
 RUN pip install -r requirements.txt
 
-# Select settings. This is quickly going to be obselete
-RUN cp _settings/settings-local.py ubyssey/settings.py
-
+# Set up static files
 WORKDIR /workspaces/ubyssey.ca/ubyssey/static/
 RUN rm -rf node_modules
 RUN npm install
