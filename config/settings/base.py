@@ -62,7 +62,7 @@ TEMPLATES = [
         'DIRS': [
 			PROJECT_DIR('ubyssey/templates/')
         ],
-    }
+    },
     {
         'NAME': 'dispatch',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
