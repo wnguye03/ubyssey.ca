@@ -8,11 +8,11 @@ More Pythonic is: Explicit rather than implicit.
 
 import os
 import environ
-ROOT_DIR = (environ.Path(__file__) - 3)
+PROJECT_DIR = (environ.Path(__file__) - 3) # i.e. the /ubyssey.ca directory
 
 ORGANIZATION_NAME = 'Dispatch'
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,7 +58,8 @@ TEMPLATES = [
         'NAME': 'dispatch',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'dispatch/templates'),
+            #os.path.join(BASE_DIR, 'dispatch/templates'), # Originally from Dispatch version of this file
+			(PROJECT_DIR + '/ubyssey/templates/')
         ],
     }
 ]
