@@ -11,6 +11,7 @@ import environ
 PROJECT_DIR = (environ.Path(__file__) - 3) # i.e. the /ubyssey.ca directory
 
 ORGANIZATION_NAME = 'Dispatch'
+VERSION = '1.6.34'
 
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
