@@ -17,19 +17,11 @@ RUN pip install -r requirements.txt
 # Select settings. This is quickly going to be obselete
 RUN cp _settings/settings-local.py ubyssey/settings.py
 
-
-ENTRYPOINT ["sleep", "180"]
-
-
-
-#WORKDIR /workspaces/ubyssey.ca/ubyssey/static/
-#RUN rm -rf node_modules
-#RUN npm install
-#RUN npm install -g gulp
-#RUN npm install -g gulp-cli
-#RUN npm rebuild node-sass
-#RUN gulp buildDev
-#WORKDIR /workspaces/ubyssey.ca/
-#RUN python manage.py migrate
-
-#ENTRYPOINT ["/workspaces/ubyssey.ca/manage.py", "runserver", "0.0.0.0:8000"]
+WORKDIR /workspaces/ubyssey.ca/ubyssey/static/
+RUN rm -rf node_modules
+RUN npm install
+RUN npm install -g gulp
+RUN npm audit fix
+RUN npm rebuild node-sass
+RUN gulp buildDev
+WORKDIR /workspaces/ubyssey.ca/
