@@ -80,23 +80,28 @@ $header-border: 1px solid #D3D3D3;
 @mixin sectionsMore {
   display:none;
   position: absolute;
-  margin-left: calc(-1rem - 10px);
-  width: 100px;
+  margin-left: -0.55rem;
+  width: 60px;
   background-color: white;
-  padding: 1rem;
+  padding: 0.5rem;
   z-index: 10000;
   border: 1px solid #D3D3D3;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
+
   li {
-    display: block;
-    float: left;
+    display: table;
+    margin: 0 auto 0 auto;
     clear: left;
+    line-height: 2;
+    padding: 0;
+    height:auto;
+    
     border-bottom: 3px solid transparent;
     &:hover {
-      border-bottom: 3px solid #3490d6;
+     border-bottom: 3px solid #3490d6;
     }
   }
 }
@@ -143,6 +148,7 @@ nav.main {
       width: 62%;
     }
   } 
+
 
   ul {
     list-style-type: none;
