@@ -54,7 +54,7 @@ TEMPLATES += [
 ]
 
 STATICFILES_DIRS += [
-    PROJECT_DIR('ubyssey/static/dist')
+    PROJECT_DIR('ubyssey/static/dist'),
     PROJECT_DIR('service-workers')
 ]
 
