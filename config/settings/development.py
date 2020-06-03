@@ -53,10 +53,10 @@ TEMPLATES += [
     }
 ]
 
-STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'service-workers')
-)
+STATICFILES_DIRS += [
+    PROJECT_DIR('ubyssey/static/dist')
+    PROJECT_DIR('service-workers')
+]
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
