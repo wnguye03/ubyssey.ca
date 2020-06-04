@@ -45,6 +45,7 @@ deploy:
     cache_control: "max-age=31536000"
     on:
       tags: true
+    edge: true
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd
@@ -53,3 +54,4 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
+    edge: true
