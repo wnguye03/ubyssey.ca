@@ -1,8 +1,8 @@
 sudo: true
 language: python
-dist: bionic
+dist: xenial
 python:
-- '3.8'
+- '3.7'
 before_install:
 - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
 - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
