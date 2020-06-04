@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
