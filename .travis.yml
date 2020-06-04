@@ -18,6 +18,7 @@ script:
 - gulp build
 after_success:
 # clean up node_modules
+- rm -rf node_modules
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
 - export DJANGO_SETTINGS_MODULE="config.settings.deployment"
