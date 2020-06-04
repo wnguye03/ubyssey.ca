@@ -1,5 +1,7 @@
-import os
-from dispatch.default_settings import *
+# production.py , Django settings file
+# Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
+# Therefore the below "import *" is correct
+from .base import *
 from google.cloud import datastore
 client = datastore.Client()
 
@@ -16,12 +18,6 @@ def getValue(theKey):
 SECRET_KEY = getValue('SECRET_KEY')
 NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
-# get version number from source-of-truth textfile
-# versionpath = os.path.join(os.path.dirname(__file__), "..")
-# versionfile = open(os.path.join(versionpath, "version.txt"), "r")
-# VERSION = versionfile.readline()
-VERSION = '1.6.34'
-
 ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
@@ -36,7 +32,6 @@ INSTALLED_APPS += [
 
 ROOT_URLCONF = 'ubyssey.urls'
 
-DEBUG = True
 USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
@@ -51,16 +46,6 @@ DATABASES = {
         'PORT': 3306,
     }
 }
-
-TEMPLATES += [
-    {
-        'NAME': 'ubyssey',
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(os.path.dirname(__file__), 'templates'),
-        ]
-    }
-]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
@@ -86,7 +71,6 @@ GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
 STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'

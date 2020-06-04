@@ -1,5 +1,5 @@
-dispatch==0.8.1
-Django==2.2.2
+dispatch==1.0.1
+Django==2.2.10
 git+git://github.com/ubyssey/django-google-storage.git@v0.5.4#egg=django-google-storage-updated
 django-canonical-domain
 mysqlclient
@@ -16,3 +16,4 @@ Pillow
 google-cloud-datastore
 google-cloud-storage
 python-memcached
+django-environ

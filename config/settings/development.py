@@ -1,17 +1,13 @@
-import os
+# development.py, settings file
 
-from dispatch.default_settings import *
+# Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
+# Therefore the below "import *" is correct
+from .base import *
 
 BASE_URL = 'http://localhost:8000/'
 
 SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
-
-# get version number from source-of-truth textfile
-# versionpath = os.path.join(os.path.dirname(__file__), "..")
-# versionfile = open(os.path.join(versionpath, "version.txt"), "r")
-# VERSION = versionfile.readline()
-VERSION = '1.6.34'
 
 ALLOWED_HOSTS = ['localhost', '*']
 
@@ -31,33 +27,6 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
-# ############### PY3 MYSQL ##################
-# import pymysql
-# pymysql.install_as_MySQLdb()
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ubyssey',
-#         'USER': 'root',
-#         'PASSWORD': 'ubyssey',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     },
-# }
-
-################ LOCAL MYSQL ##################
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ubyssey',
-#         'USER': 'root',
-#         'PASSWORD': 'ubyssey',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     },
-# }
-
-############## DOCKER MYSQL ###################
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -68,14 +37,13 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-###############################################
 
 TEMPLATES += [
  {
         'NAME': 'ubyssey',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(os.path.dirname(__file__), 'templates'),
+			PROJECT_DIR('ubyssey/templates/')
         ],
         'OPTIONS': {
             'context_processors': [
@@ -85,10 +53,10 @@ TEMPLATES += [
     }
 ]
 
-STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'service-workers')
-)
+STATICFILES_DIRS += [
+    PROJECT_DIR('ubyssey/static/dist'),
+    PROJECT_DIR('service-workers'),
+]
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -97,7 +65,7 @@ GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 SERVICE_WORKER_URL = '/service-worker.js'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media')
+MEDIA_ROOT = PROJECT_DIR('media')
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]

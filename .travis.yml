@@ -1,8 +1,8 @@
 sudo: true
 language: python
-dist: xenial
+dist: bionic
 python:
-- '3.7'
+- '3.8'
 before_install:
 - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
 - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
@@ -20,13 +20,12 @@ after_success:
 # clean up node_modules
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
-- mv _settings/settings-dpl.py ubyssey/settings.py
+- export DJANGO_SETTINGS_MODULE="config.settings.deployment"
 - python manage.py collectstatic --noinput
 # gzip static files
 - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
 # replace deploy settings with production settings
-- rm ubyssey/settings.py ubyssey/settings.pyc
-- mv _settings/settings-prd.py ubyssey/settings.py
+- export DJANGO_SETTINGS_MODULE="config.settings.production"
 - rm -rf .git/ ubyssey/static/
 - pip install -I google-cloud-storage==1.13.2 -t lib/
 - ls lib/
