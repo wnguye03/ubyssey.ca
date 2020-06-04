@@ -14,7 +14,6 @@ install:
 - npm install -g gulp
 - npm install
 - npm ddp
-- travis_wait mvn install
 script:
 - gulp build
 after_success:
