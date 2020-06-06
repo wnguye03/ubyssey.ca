@@ -4,7 +4,6 @@ WORKDIR /workspaces/ubyssey.ca/
 
 # Config stuff
 ENV DJANGO_SETTINGS_MODULE "config.settings.production"
-ENV PORT 8000
 
 # Installs some basics
 RUN apt-get update
