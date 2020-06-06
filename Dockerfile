@@ -28,3 +28,4 @@ RUN gulp buildDev
 RUN rm -rf node_modules
 
 WORKDIR /workspaces/ubyssey.ca/
+ENTRYPOINT ["gunicorn", "-b", ":$PORT", "--chdir", "ubyssey/", "wsgi:application"]
