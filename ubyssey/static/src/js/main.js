@@ -78,10 +78,12 @@ function embedMargins() {
 
   $('#sections-more-dropdown').hover(function(e) {
     e.stopPropagation();
+    $('.sections-more').finish();
     $('.sections-more').slideToggle(300);
   }, (function(e) {
     e.stopPropagation();
-    $('.sections-more').fadeOut(300);
+    $('.sections-more').finish();
+    $('.sections-more').slideToggle(300);
   })
   );
 
