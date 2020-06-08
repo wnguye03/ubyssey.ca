@@ -76,19 +76,23 @@ function embedMargins() {
     return false;
   });
 
-  $('#sections-more-dropdown').click(function(e) {
+  $('#sections-more-dropdown').hover(function(e) {
     e.stopPropagation();
-    $('.sections-more').show()
+    $('.sections-more').slideToggle(300);
+  }, (function(e) {
+    e.stopPropagation();
+    $('.sections-more').fadeOut(300);
   })
+  );
 
-  $document.on('click', function(e){
-    $('.dropdown .list').hide();
-    $('.js-dropdown-list').hide();
-    if($('.sections-more').is(':visible')) {
-      $('.sections-more').hide();
-    }
-    enableScroll($document);
-  });
+  // $document.on('click', function(e){
+  //   $('.dropdown .list').hide();
+  //   $('.js-dropdown-list').hide();
+  //   if($('.sections-more').is(':visible')) {
+  //     $('.sections-more').hide();
+  //   }
+  //   enableScroll($document);
+  // });
 
   var DROPDOWN_FADE_TIME = 100;
 

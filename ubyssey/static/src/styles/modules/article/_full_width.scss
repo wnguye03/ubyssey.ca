@@ -145,13 +145,25 @@
         span.author, span.published {
           font-weight: 300;
         }
+        .caption {
+          font-family: $font-headline;
+          font-size: 12.5px;
+          color: white;
+          line-height: 19px;
+          padding-left: 15px;
+          padding-right: 15px;
+
+          position: absolute; 
+          bottom: 5px;
+          right: 0;
+        }
       }
       @media($bp-larger-than-mobile) {
         div.banner-image {
           height: 500px;
         }
         .headline-container {
-          padding: 160px 0 70px 0;
+          padding: 160px 0 120px 0;
           h1.headline {
             font-size: 42px;
           }

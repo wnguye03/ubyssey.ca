@@ -31,22 +31,27 @@
                 <li {% if section == 'videos' %}class="current"{% endif %}>
                     <a href="{% url 'page' 'videos' %}">Video</a>
                 </li>
-                <li {% if section == 'magazine' %}class="current"{% endif %}>
-                    <a href="{% url 'magazine-landing' 2020 %}">Magazine</a>
-                </li>
-                <!--<li {% if section in 'events,podcast,magazine,whobyssey' %}class="current"{% endif %} id="sections-more-dropdown">
-                    <a href="#">More</a>
+                <li {% if section == 'magazine' %}class="current"{% endif %} id="sections-more-dropdown">
+                    <a>Magazine</a>
                     <ul class="sections-more">
-                        <li {% if section == 'events' %}class="current"{% endif %}>
-                            <a href="{% url 'events' %}">Events</a>
+                        <li>
+                            <a href="{% url 'magazine-landing' 2020 %}">2020</a>
                         </li>
-                        <li {% if section == 'podcast' %}class="current"{% endif %}>
-                            <a href="{% url 'podcasts' 'episodes' %}">Podcast</a>
-                        </li>
-                        <li {% if section == 'whobyssey' %}class="current"{% endif %}>
-                            <a href="{% url 'page' 'whobyssey' %}">Who?byssey</a>
+                        <!-- <li>
+                            <a href="{% url 'magazine-landing' 2019 %}">Magazine</a>
+                        </li> -->
+                        <li>
+                            <a href="{% url 'magazine-landing' 2018 %}">2018</a>
                         </li>
                     </ul>
+                </li>
+
+                <!--<li id="sections-more-dropdown"><a href="#">More</a>
+                <ul class="sections-more">
+                <li><a href="{% url 'events' %}">Events</a></li>
+                <li><a href="{% url 'podcasts' 'episodes' %}">Podcast</a></li>
+                <li><a href="{% url 'page' 'whobyssey' %}">Who?byssey</a></li>
+                </ul>
                 </li>-->
             </ul>
         </nav>

@@ -416,7 +416,7 @@
     // font-style: italic;
     // margin: 0;
 
-    font-family: "Times New Roman";
+    font-family: "Minion Pro";
     font-size: font-size(26);
     line-height: 1.5em;
     font-weight: bold;
@@ -435,4 +435,10 @@
     font-style: italic;
     font-size: 0.77em;
   }
+}
+
+hr.page-break{
+      display: flex;
+      max-width: 65%;
+      //border: 1px solid black;
 }
