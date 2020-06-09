@@ -256,7 +256,15 @@ article.thumb {
   article.secondary,
   article.thumb {
     h2.headline {
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow: hidden;
+      max-height: 4.708em;
+      line-height: 1.177em;
       margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;  
     }
     &:first-child {
       padding-top: 0;
