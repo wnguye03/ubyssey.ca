@@ -32,6 +32,7 @@ INSTALLED_APPS += [
 
 ROOT_URLCONF = 'ubyssey.urls'
 
+DEBUG = True
 USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
