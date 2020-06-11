@@ -1,8 +1,12 @@
 # development.py, settings file
+# see https://djangostars.com/blog/configuring-django-settings-best-practices/
 
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
 from .base import *
+
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
 BASE_URL = 'http://localhost:8000/'
 
@@ -27,16 +31,17 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ubyssey',
-        'USER': 'root',
-        'PASSWORD': 'ubyssey',
-        'HOST': 'db',
-        'PORT': '3306',
-    },
-}
+DATABASES = {'default': env.db('DATABASE_URL')}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'ubyssey',
+#        'USER': 'root',
+#        'PASSWORD': 'ubyssey',
+#        'HOST': 'db',
+#        'PORT': '3306',
+#    },
+#}
 
 TEMPLATES += [
  {
