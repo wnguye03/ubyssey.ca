@@ -5,13 +5,10 @@
 # Therefore the below "import *" is correct
 from .base import *
 
-env = environ.Env()
-environ.Env.read_env()  # reading .env file
-
 BASE_URL = 'http://localhost:8000/'
 
-SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
-NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
+SECRET_KEY = env('SECRET_KEY')
+NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 ALLOWED_HOSTS = ['localhost', '*']
 

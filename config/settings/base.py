@@ -11,9 +11,15 @@ import environ
 from dispatch.apps import DispatchConfig
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
+env = environ.Env(
+    #set casting and defaults for config vars which are to be read from environment
+    DEBUG=(bool,False),
+    VERSION=(str,'0.0.0'),
+)
+environ.Env.read_env()  # reading .env file
 
 ORGANIZATION_NAME = 'Ubyssey'
-VERSION = '1.9.0'
+VERSION = env('VERSION')
 
 # Application definition
 INSTALLED_APPS = [
