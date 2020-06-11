@@ -442,3 +442,12 @@ hr.page-break{
       max-width: 65%;
       //border: 1px solid black;
 }
+
+.drop-cap:first-letter {
+  font-size: 5.5em;
+  line-height: 2rem;
+  margin-top: 0.24em;
+  margin-right: 0.08em;
+  margin-bottom: 0.08em;
+  float: left;
+}
