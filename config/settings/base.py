@@ -45,8 +45,8 @@ env = environ.Env(
     ORGANIZATION_NAME = (str, 'Ubyssey'),
     DEBUG=(bool,False),
     VERSION=(str,'0.0.0'),
-    USE_TZ=(bool,True)
-    TIME_ZONE=(str,'America/Vancouver')
+    USE_TZ=(bool,True),
+    TIME_ZONE=(str,'America/Vancouver'),
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
 )
