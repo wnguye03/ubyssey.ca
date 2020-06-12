@@ -23,7 +23,6 @@ MIDDLEWARE = (
     'django_user_agents.middleware.UserAgentMiddleware',
 )
 
-DEBUG = True
 USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'

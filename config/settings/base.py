@@ -49,6 +49,7 @@ environ.Env.read_env(env_file)  # reading .env file
 
 ORGANIZATION_NAME = 'Ubyssey'
 VERSION = env('VERSION')
+DEBUG = env('DEBUG')
 
 # Application definition
 INSTALLED_APPS = [
