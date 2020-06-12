@@ -1,5 +1,9 @@
 """
-base.py, default settings, originating from Dispatch module
+base.py, default settings, originating from Dispatch module.
+Use: place .env file containing app configuration in /ubyssey.ca/
+
+Part of the 12factor app philosophy is to keep config seperate from code. Typically, the environment variables are used for the config.
+This code's primary job therefore ought to be retrieving the config from the environment rather than hardcoding in config settings.
 
 Having these imported from Dispatch is too "magical" to be desirable, even if Dispatch is an explict dependency.
 Don't Repeat Yourself, yes, but "redundancy" isn't bad if it's accross what are nominally entirely different projects!
@@ -49,6 +53,9 @@ env = environ.Env(
     TIME_ZONE=(str,'America/Vancouver'),
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
+    ROOT_URLCONF = (str,'ubyssey.urls')
+    DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey') # Toy "example" setting. Should only be used in dev environment, if anywhere
+
 )
 environ.Env.read_env(env_file)  # reading .env file.
 
@@ -60,7 +67,25 @@ USE_TZ = env('USE_TZ')
 TIME_ZONE = env('TIME_ZONE')
 STATIC_URL = env('STATIC_URL')
 MEDIA_URL = env('MEDIA_URL')
+ROOT_URLCONF = env('ROOT_URLCONF')
 
+# Initialize the databases
+DATABASES = {'default': env.db('DATABASE_URL')}
+# Note this use of the env object different from the other configs.
+# If we assume DATABASE_URL is the toy example URL set above,
+# env.db('DATABASE_URL') will parse it into a dictionary as illustrated below.
+# This line therefore abbreviates how you may see databases set up in other Django projects
+#
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'ubyssey',
+#        'USER': 'root',
+#        'PASSWORD': 'ubyssey',
+#        'HOST': 'db',
+#        'PORT': '3306',
+#    },
+#}
 
 # Application definition
 INSTALLED_APPS = [

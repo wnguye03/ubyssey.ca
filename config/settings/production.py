@@ -30,8 +30,6 @@ INSTALLED_APPS += [
     'django_user_agents',
 ]
 
-ROOT_URLCONF = 'ubyssey.urls'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

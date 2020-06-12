@@ -16,24 +16,10 @@ INSTALLED_APPS += ['ubyssey.events', 'django_user_agents', ]
 
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
-ROOT_URLCONF = 'ubyssey.urls'
-
 MIDDLEWARE = (
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
 )
-
-DATABASES = {'default': env.db('DATABASE_URL')}
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'ubyssey',
-#        'USER': 'root',
-#        'PASSWORD': 'ubyssey',
-#        'HOST': 'db',
-#        'PORT': '3306',
-#    },
-#}
 
 TEMPLATES += [
  {
