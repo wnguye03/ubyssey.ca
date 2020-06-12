@@ -42,14 +42,21 @@ if not os.path.isfile('.env'):
 # We now have an .env file, so we need to get 
 env = environ.Env(
     #set casting and defaults for config vars which are to be read from environment
+    ORGANIZATION_NAME = (str, 'Ubyssey'),
     DEBUG=(bool,False),
     VERSION=(str,'0.0.0'),
+    USE_TZ=(bool,True)
+    TIME_ZONE=(str,'America/Vancouver')
 )
-environ.Env.read_env(env_file)  # reading .env file
+environ.Env.read_env(env_file)  # reading .env file.
 
-ORGANIZATION_NAME = 'Ubyssey'
+# Setting Django's configs to the values taken from the .env file (or else to their defaults listed above)
+ORGANIZATION_NAME = env('ORGANIZATION_NAME')
 VERSION = env('VERSION')
 DEBUG = env('DEBUG')
+USE_TZ = env('USE_TZ')
+TIME_ZONE = env('TIME_ZONE')
+
 
 # Application definition
 INSTALLED_APPS = [

@@ -23,10 +23,6 @@ MIDDLEWARE = (
     'django_user_agents.middleware.UserAgentMiddleware',
 )
 
-USE_TZ = True
-
-TIME_ZONE = 'America/Vancouver'
-
 DATABASES = {'default': env.db('DATABASE_URL')}
 #DATABASES = {
 #    'default': {
