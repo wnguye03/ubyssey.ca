@@ -83,7 +83,7 @@ function embedMargins() {
   }, (function(e) {
     e.stopPropagation();
     $('.sections-more').finish();
-    $('.sections-more').slideToggle(300);
+    $('.sections-more').fadeOut(300);
   })
   );
 
