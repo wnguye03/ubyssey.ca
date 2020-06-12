@@ -4,19 +4,48 @@ base.py, default settings, originating from Dispatch module
 Having these imported from Dispatch is too "magical" to be desirable, even if Dispatch is an explict dependency.
 Don't Repeat Yourself, yes, but "redundancy" isn't bad if it's accross what are nominally entirely different projects!
 More Pythonic is: Explicit rather than implicit.
+
+Environment variable stuff is based on the following document from Google CodeLabs
+https://codelabs.developers.google.com/codelabs/cloud-run-django/index.html?index=..%2F..index#5
 """
 
 import os
+import sys
 import environ
 from dispatch.apps import DispatchConfig
+
+
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
+
+env_file = os.path.join(PROJECT_DIR, '.env') # Look for the environment variables file in the project directory
+
+#If we didn't find an .env file, we try to make one using values stored in Google Cloud project. This requires authentication.
+if not os.path.isfile('.env'):
+    import google.auth
+    from google.cloud import secretmanager as sm
+
+    try:
+        _, project = google.auth.default() #Will fail without GOOGLE_APPLICATION_CREDENTIALS
+
+        if project:
+            client = sm.SecretManagerServiceClient()
+            path = client.secret_version_path(project, "django_settings", "latest") #TODO: UPDATE THIS LINE!!! taken
+            payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+            with open(env_file, "w") as f:
+                f.write(payload)
+        else:
+            sys.stderr.write("Error: No .env file or Google application credentials found!")      
+    except Exception as e:       
+        sys.stderr.write("Error in trying to generate .env file using Google application credentials!")
+
+# We now have an .env file, so we need to get 
 env = environ.Env(
     #set casting and defaults for config vars which are to be read from environment
     DEBUG=(bool,False),
     VERSION=(str,'0.0.0'),
 )
-environ.Env.read_env()  # reading .env file
+environ.Env.read_env(env_file)  # reading .env file
 
 ORGANIZATION_NAME = 'Ubyssey'
 VERSION = env('VERSION')
