@@ -47,6 +47,8 @@ env = environ.Env(
     VERSION=(str,'0.0.0'),
     USE_TZ=(bool,True)
     TIME_ZONE=(str,'America/Vancouver')
+    STATIC_URL = (str,'/static/'),
+    MEDIA_URL = (str,'/media/'),
 )
 environ.Env.read_env(env_file)  # reading .env file.
 
@@ -56,6 +58,8 @@ VERSION = env('VERSION')
 DEBUG = env('DEBUG')
 USE_TZ = env('USE_TZ')
 TIME_ZONE = env('TIME_ZONE')
+STATIC_URL = env('STATIC_URL')
+MEDIA_URL = env('MEDIA_URL')
 
 
 # Application definition
