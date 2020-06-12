@@ -15,6 +15,7 @@ gunicorn
 Pillow
 google-cloud-datastore
 google-cloud-storage
+google-cloud-secret-manager
 python-memcached
 django-environ
 requests
