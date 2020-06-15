@@ -53,9 +53,8 @@ env = environ.Env(
     TIME_ZONE=(str,'America/Vancouver'),
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
-    ROOT_URLCONF = (str,'ubyssey.urls')
-    DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey') # Toy "example" setting. Should only be used in dev environment, if anywhere
-
+    ROOT_URLCONF = (str,'ubyssey.urls'),
+    DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey'), # Toy "example" setting. Should only be used in dev environment, if anywhere
 )
 environ.Env.read_env(env_file)  # reading .env file.
 
