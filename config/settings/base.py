@@ -25,7 +25,7 @@ DISPATCH_APP_DIR = DispatchConfig.path
 env_file = os.path.join(PROJECT_DIR, '.env') # Look for the environment variables file in the project directory
 
 #If we didn't find an .env file, we try to make one using values stored in Google Cloud project. This requires authentication.
-if not os.path.isfile('.env'):
+if not os.path.isfile('.env'): #TODO: does this ever return true?
     import google.auth
     from google.cloud import secretmanager as sm
 
