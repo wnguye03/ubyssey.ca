@@ -2,9 +2,6 @@ FROM python:3.8-buster
 COPY . ./workspaces/ubyssey.ca/
 WORKDIR /workspaces/ubyssey.ca/
 
-# Config stuff
-ENV DJANGO_SETTINGS_MODULE "config.settings.production"
-
 # Installs some basics
 RUN apt-get update
 RUN apt-get install -y git
@@ -28,4 +25,3 @@ RUN gulp buildDev
 RUN rm -rf node_modules
 
 WORKDIR /workspaces/ubyssey.ca/
-ENTRYPOINT ["gunicorn", "-b", ":$PORT", "--chdir", "ubyssey/", "wsgi:application"]

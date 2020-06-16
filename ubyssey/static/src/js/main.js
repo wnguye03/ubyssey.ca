@@ -83,10 +83,33 @@ function embedMargins() {
   }, (function(e) {
     e.stopPropagation();
     $('.sections-more').finish();
-    $('.sections-more').slideToggle(300);
+    $('.sections-more').fadeOut(300);
   })
   );
 
+  function issueParser() {
+    var req = new XMLHttpRequest();
+    req.open('GET', 'https://cors-anywhere.herokuapp.com/https://search.issuu.com/api/2_0/document?q=username%3Aubyssey&responseParams=title&sortBy=epoch&pageSize=4');
+    req.setRequestHeader('Ubyssey', 'XMLHttpRequest');
+    req.onload = function() {
+      var res = req.responseText;
+      var jsonQuery = '[' + res.split('[')[1].split(']')[0] + ']';
+      var issueArray = JSON.parse(jsonQuery);
+      for(var i = 0; i < issueArray.length; i++) {
+        var docName = issueArray[i].docname;
+        var docId = issueArray[i].documentId;
+        var title = issueArray[i].title;
+        var issueID = '#issue' + (i+1);
+        $(issueID).attr('href', 'https://issuu.com/ubyssey/docs/' + docName).text(title);
+        if(i == 0)
+        $(issueID).append('<img src="https://image.isu.pub/' + docId +'/jpg/page_1_thumb_large.jpg">');
+      }
+    };
+    req.send();
+  }
+
+  issueParser();
+  
   // $document.on('click', function(e){
   //   $('.dropdown .list').hide();
   //   $('.js-dropdown-list').hide();

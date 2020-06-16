@@ -5,13 +5,10 @@
 # Therefore the below "import *" is correct
 from .base import *
 
-env = environ.Env()
-environ.Env.read_env()  # reading .env file
-
 BASE_URL = 'http://localhost:8000/'
 
-SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
-NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
+SECRET_KEY = env('SECRET_KEY')
+NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 ALLOWED_HOSTS = ['localhost', '*']
 
@@ -19,29 +16,10 @@ INSTALLED_APPS += ['ubyssey.events', 'django_user_agents', ]
 
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
-ROOT_URLCONF = 'ubyssey.urls'
-
 MIDDLEWARE = (
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
 )
-
-DEBUG = True
-USE_TZ = True
-
-TIME_ZONE = 'America/Vancouver'
-
-DATABASES = {'default': env.db('DATABASE_URL')}
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'ubyssey',
-#        'USER': 'root',
-#        'PASSWORD': 'ubyssey',
-#        'HOST': 'db',
-#        'PORT': '3306',
-#    },
-#}
 
 TEMPLATES += [
  {
@@ -62,9 +40,6 @@ STATICFILES_DIRS += [
     PROJECT_DIR('ubyssey/static/dist'),
     PROJECT_DIR('service-workers'),
 ]
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 

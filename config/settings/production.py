@@ -30,12 +30,6 @@ INSTALLED_APPS += [
     'django_user_agents',
 ]
 
-ROOT_URLCONF = 'ubyssey.urls'
-
-USE_TZ = True
-
-TIME_ZONE = 'America/Vancouver'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
