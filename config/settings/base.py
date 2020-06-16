@@ -39,9 +39,9 @@ if not os.path.isfile('.env'): #TODO: does this ever return true?
             with open(env_file, "w") as f:
                 f.write(payload)
         else:
-            sys.stderr.write("Error: No .env file or Google application credentials found!")      
+            sys.stderr.write("Error: No .env file or Google application credentials found!\n")      
     except Exception as e:       
-        sys.stderr.write("Error in trying to generate .env file using Google application credentials!")
+        sys.stderr.write("Error in trying to generate .env file using Google application credentials!\n")
 
 # We now have an .env file, so we need to get 
 env = environ.Env(
