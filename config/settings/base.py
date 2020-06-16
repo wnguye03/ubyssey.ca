@@ -54,7 +54,12 @@ env = environ.Env(
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
     ROOT_URLCONF = (str,'ubyssey.urls'),
-    DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey'), # Toy "example" setting. Should only be used in dev environment, if anywhere
+    # DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey'), # Toy "example" setting. Should only be used in dev environment, if anywhere
+    # Database defaults:
+    SQL_HOST = (str, 'db')
+    SQL_DATABASE= (str, 'ubyssey')
+    SQL_USER = (str, 'root')
+    SQL_PASSWORD = (str, 'ubyssey')
 )
 environ.Env.read_env(env_file)  # reading .env file.
 
@@ -68,23 +73,20 @@ STATIC_URL = env('STATIC_URL')
 MEDIA_URL = env('MEDIA_URL')
 ROOT_URLCONF = env('ROOT_URLCONF')
 
-# Initialize the databases
-DATABASES = {'default': env.db('DATABASE_URL')}
-# Note this use of the env object different from the other configs.
-# If we assume DATABASE_URL is the toy example URL set above,
-# env.db('DATABASE_URL') will parse it into a dictionary as illustrated below.
-# This line therefore abbreviates how you may see databases set up in other Django projects
-#
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'ubyssey',
-#        'USER': 'root',
-#        'PASSWORD': 'ubyssey',
-#        'HOST': 'db',
-#        'PORT': '3306',
-#    },
-#}
+# Initialize the databases.
+# Note it should be possible to parse all this information in a single line:
+# DATABASES = {'default': env.db('DATABASE_URL')}
+# However, Google Cloud Services does not seem to like providing an easily parsable URL for such purposes
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': env('SQL_HOST'),
+        'NAME': env('SQL_DATABASE'),
+        'USER': env('SQL_USER'),
+        'PASSWORD': env('SQL_PASSWORD'),
+        'PORT': '3306',
+    },
+}
 
 # Application definition
 INSTALLED_APPS = [
