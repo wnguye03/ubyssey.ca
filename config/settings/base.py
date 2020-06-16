@@ -19,27 +19,27 @@ import environ
 from dispatch.apps import DispatchConfig
 
 
-PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
+PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
-env_file = os.path.join(PROJECT_DIR, '.env') # Look for the environment variables file in the project directory
+env_file = os.path.join(PROJECT_DIR, '.env') # Look for the environment variables file in the project root directory
 
 #If we didn't find an .env file, we try to make one using values stored in Google Cloud project. This requires authentication.
-if not os.path.isfile('.env'): #TODO: does this ever return true?
+if not os.path.isfile('.env'):
     import google.auth
     from google.cloud import secretmanager as sm
 
     try:
-        _, project = google.auth.default() #Will fail without GOOGLE_APPLICATION_CREDENTIALS
+        _, project = google.auth.default()
 
         if project:
             client = sm.SecretManagerServiceClient()
-            path = client.secret_version_path(project, "django_settings", "latest") #TODO: UPDATE THIS LINE!!! taken
+            path = client.secret_version_path(project, "ubyssey_env_configs", "latest")
             payload = client.access_secret_version(path).payload.data.decode("UTF-8")
             with open(env_file, "w") as f:
                 f.write(payload)
         else:
-            sys.stderr.write("Error: No .env file or Google application credentials found!\n")      
+            sys.stderr.write("Error: Unsuccessful attempt to get a project from google.auth!\n")      
     except Exception as e:       
         sys.stderr.write("Error in trying to generate .env file using Google application credentials!\n")
 
