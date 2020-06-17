@@ -8,6 +8,12 @@ __pycache__/
 /static/
 /ubyssey/static/dist/
 
+# env files
+*.env
+
+# developer-only file folders
+/localdev/
+
 # swap files
 *.swp
 
@@ -29,3 +35,4 @@ ubyssey/settings*.py
 client-secret.json
 # Keyfile for accessing gcs bucket
 gcs-local.json
+.gitignore

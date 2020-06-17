@@ -2,21 +2,9 @@
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
 from .base import *
-from google.cloud import datastore
-client = datastore.Client()
 
 BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
-
-def getValue(theKey):
-    query = client.query(kind='Secrets')
-    query.add_filter('key', '=', theKey)
-    key = client.key('Secrets', list(query.fetch())[0].id)
-    entity = client.get(key)
-    return entity['value']
-
-SECRET_KEY = getValue('SECRET_KEY')
-NOTIFICATION_KEY = getValue('NOTIFICATION_KEY')
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',
@@ -30,23 +18,6 @@ INSTALLED_APPS += [
     'django_user_agents',
 ]
 
-ROOT_URLCONF = 'ubyssey.urls'
-
-USE_TZ = True
-
-TIME_ZONE = 'America/Vancouver'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': getValue('SQL_HOST'),
-        'NAME': getValue('SQL_DATABASE'),
-        'USER': getValue('SQL_USER'),
-        'PASSWORD': getValue('SQL_PASSWORD'),
-        'PORT': 3306,
-    }
-}
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
     'default': {
@@ -59,11 +30,11 @@ MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 
-# GCS File Storage
+# GCS File Storage - Production Only
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
-GS_ACCESS_KEY_ID = getValue('GS_ACCESS_KEY_ID')
-GS_SECRET_ACCESS_KEY = getValue('GS_SECRET_ACCESS_KEY')
+GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
+GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 
 GS_STORAGE_BUCKET_NAME = 'ubyssey'
 GS_LOCATION = 'media'
@@ -76,17 +47,17 @@ STATICFILES_DIRS += (
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
-# Facebook
-FACEBOOK_CLIENT_ID = getValue('FACEBOOK_CLIENT_ID')
-FACEBOOK_CLIENT_SECRET = getValue('FACEBOOK_CLIENT_SECRET')
+# Facebook - Production Only
+FACEBOOK_CLIENT_ID = env('FACEBOOK_CLIENT_ID')
+FACEBOOK_CLIENT_SECRET = env('FACEBOOK_CLIENT_SECRET')
 
-# Emails
-EMAIL_HOST = getValue('EMAIL_HOST')
+# Emails - Production Only
+EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = 465
-EMAIL_HOST_USER = getValue('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = getValue('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
-UBYSSEY_ADVERTISING_EMAIL = getValue('UBYSSEY_ADVERTISING_EMAIL')
+UBYSSEY_ADVERTISING_EMAIL = env('UBYSSEY_ADVERTISING_EMAIL')
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]

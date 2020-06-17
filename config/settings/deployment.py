@@ -15,5 +15,3 @@ STATICFILES_DIRS += [
 ]
 
 STATIC_ROOT = '/home/travis/build/ubyssey/ubyssey.ca/gcs/static'
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
