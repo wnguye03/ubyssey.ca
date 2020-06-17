@@ -42,8 +42,9 @@ if not os.path.isfile('.env'):
                 f.write(payload)
         else:
             sys.stderr.write("\nError: Unsuccessful attempt to get a project from google.auth!\n")      
-    except Exception as e:       
+    except Exception as ex:       
         sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
+        raise ex
 
 # We now have an .env file.
 # An env object from environ library simplifies reading/writing env vars.
