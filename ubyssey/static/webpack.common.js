@@ -11,7 +11,8 @@ module.exports = {
       a_new:              './src/js/advertise_new.js',
       'one-year-later':   './src/js/one-year-later.js',
       'food-insecurity':  './src/js/food-insecurity.jsx',
-      'magazine':         './src/js/magazine.js',
+      'magazine-2019':    './src/js/magazine-2019.js',
+      'magazine-2020':    './src/js/magazine-2020.js',
       blockadblock:       './src/js/blockadblock.js'
   },
   output: {

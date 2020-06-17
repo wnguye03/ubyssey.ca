@@ -174,9 +174,9 @@ class MagazineV2(Magazine):
             },
             'cover': self.get_cover,
             'year': self.year,
-            'goesAroundImage': self.section1_img,
-            'comesAroundImage': self.section2_img,
-            'waysForwardImage': self.section3_img,
+            'section1Image': self.section1_img,
+            'section2Image': self.section2_img,
+            'section3Image': self.section3_img,
             'articles': articles
         }
         return render(request, self.template, context)
@@ -202,6 +202,20 @@ mag2018 = MagazineV1(
     'magazine/2018/landing.html',
 )
 
+mag2019 = MagazineV2(
+    2019,
+    'The Ubyssey Magazine - Presence',
+    'The February 2019 issue of the Ubyssey magazine.',
+    'images/magazine/2019/cover.gif',
+    'magazine/2019/landing.html',
+    'images/magazine/2019/subsection-reclaim.png',
+    'images/magazine/2019/subsection-redefine.png',
+    'images/magazine/2019/subsection-resolve.png',
+    'reclaim',
+    'redefine',
+    'resolve',
+)
+
 mag2020 = MagazineV2(
     2020,
     'The Ubyssey Magazine - Hot Mess',
@@ -215,34 +229,8 @@ mag2020 = MagazineV2(
     'comesAround',
     'waysForward',
 )
-# mag2019 = MagazineV2(
-#     2019,
-#     'The Ubyssey Magazine - Hot Mess',
-#     'The February 2020 issue of the Ubyssey magazine.',
-#     'images/magazine/2020/cover.png',
-#     'magazine/2019/landing.html',
-#     'images/magazine/2019/subsection-reclaim.png',
-#     'images/magazine/2019/subsection-redefine.png',
-#     'images/magazine/2019/subsection-resolve.png',
-#     'reclaim',
-#     'redefine',
-#     'resolve',
-# )
-# mag2020 = MagazineV2(
-#     2020,
-#     'The Ubyssey Magazine - Presence',
-#     'The February 2019 issue of the Ubyssey magazine.',
-#     'images/magazine/2018/cover-social.jpg',
-#     'images/magazine/2019/subsection-reclaim.png',
-#     'images/magazine/2019/subsection-redefine.png',
-#     'images/magazine/2019/subsection-resolve.png',
-#     'reclaim',
-#     'redefine',
-#     'resolve',
-#     'magazine/2019/landing.html',
-# )
-# return render(request, 'magazine/2018/landing.html', context)
+
 theme.add_magazine(mag2017)
 theme.add_magazine(mag2018)
-# theme.add_magazine(mag2019)
+theme.add_magazine(mag2019)
 theme.add_magazine(mag2020)
