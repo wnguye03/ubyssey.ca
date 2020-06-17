@@ -45,7 +45,7 @@ if not os.path.isfile('.env'):
     except Exception as ex:       
         sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
         # TODO: Very ugly hacky line - refactor ASAP
-        if not os.environ('DJANGO_SETTINGS_MODULE') == 'config.settings.deployment':
+        if not os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.deployment':
             raise ex
 
 # We now have an .env file.
