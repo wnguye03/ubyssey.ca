@@ -23,6 +23,11 @@ DISPATCH_APP_DIR = DispatchConfig.path
 
 VERSION = '1.9.2'
 
+# If we don't have app credentials, grab them
+if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
+    # We deal with this one environment variable without using the environ library, because we need it to be set prior to initializing the env object 
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
+
 # Look for the environment variables file in the project root directory
 env_file = os.path.join(PROJECT_DIR, '.env')
 
@@ -50,7 +55,7 @@ if not os.path.isfile('.env'):
 
 # We now have an .env file.
 # An env object from environ library simplifies reading/writing env vars.
-# We intialize this object,
+# We intialize this object, setting castings and defaults (an advantage of the environ library over simply using the os library)
 env = environ.Env(
     #set casting and defaults for config vars which are to be read from environment
 
