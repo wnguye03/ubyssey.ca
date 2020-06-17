@@ -3,6 +3,10 @@
 # Therefore the below "import *" is correct
 from .base import *
 
+import environ
+
+env = environ.Env() #Scope issues without this line?
+
 BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
