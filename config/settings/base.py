@@ -44,7 +44,9 @@ if not os.path.isfile('.env'):
             sys.stderr.write("\nError: Unsuccessful attempt to get a project from google.auth!\n")      
     except Exception as ex:       
         sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
-        raise ex
+        # TODO: Very ugly hacky line - refactor ASAP
+        if not os.environ('DJANGO_SETTINGS_MODULE') == 'config.settings.deployment':
+            raise ex
 
 # We now have an .env file.
 # An env object from environ library simplifies reading/writing env vars.
