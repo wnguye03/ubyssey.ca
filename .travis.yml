@@ -22,7 +22,7 @@ after_success:
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
 - export DJANGO_SETTINGS_MODULE="config.settings.deployment"
-- python manage.py collectstatic --noinput
+- travis_wait python manage.py collectstatic --noinput
 # gzip static files
 - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
 # replace deploy settings with production settings
