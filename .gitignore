@@ -13,6 +13,7 @@ __pycache__/
 
 # developer-only file folders
 /localdev/
+/tmp/
 
 # swap files
 *.swp
