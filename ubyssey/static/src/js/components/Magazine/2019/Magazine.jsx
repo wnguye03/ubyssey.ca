@@ -83,9 +83,9 @@ class Magazine extends React.Component {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     const show = this.state.show ? "show" : ""
     if(this.state.subsection === "editorial") this.image = null
-    if(this.state.subsection === "waysForward") this.image = this.props.waysForwardImage
-    if(this.state.subsection === "comesAround") this.image = this.props.comesAroundImage
-    if(this.state.subsection === "goesAround") this.image = this.props.goesAroundImage
+    if(this.state.subsection === "reclaim") this.image = this.props.section1Image
+    if(this.state.subsection === "redefine") this.image = this.props.section2Image
+    if(this.state.subsection === "resolve") this.image = this.props.section3Image
 
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
@@ -175,6 +175,8 @@ class Magazine extends React.Component {
         <h2>Andrew Ha</h2>
         <h2>Emma Livingstone</h2>
         <h2>Riya Talitha</h2>
+        <h1>Web Design</h1>
+        <h2>Rowan BakerFrench</h2>
       </div>
     )
   }

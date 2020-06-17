@@ -174,9 +174,9 @@ class MagazineV2(Magazine):
             },
             'cover': self.get_cover,
             'year': self.year,
-            'goesAroundImage': self.section1_img,
-            'comesAroundImage': self.section2_img,
-            'waysForwardImage': self.section3_img,
+            'section1Image': self.section1_img,
+            'section2Image': self.section2_img,
+            'section3Image': self.section3_img,
             'articles': articles
         }
         return render(request, self.template, context)

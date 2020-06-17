@@ -1,6 +1,6 @@
 export const colors = {
   editorial: "#ffffff",
-  comesAround: "#e8c26f",
-  waysForward: "#368795",
-  goesAround: "#678c6f",
+  reclaim: "#f8d839",
+  redefine: "#abcdbb",
+  resolve: "#bb99bb",
 }

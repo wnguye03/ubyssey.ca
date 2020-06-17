@@ -5,7 +5,7 @@
 
 <link
   rel="stylesheet"
-  href="{% add_version 'css/magazine-2019.css' %}"
+  href="{% add_version 'css/magazine-2019-2020.css' %}"
   type="text/css"
 />
 
@@ -13,9 +13,9 @@
   id="magazine-wrapper"
   data-articles="{{ articles }}"
   data-cover="{% static cover %}"
-  data-goesAround-image = "{%static goesAroundImage%}"
-  data-waysForward-image = "{%static waysForwardImage%}"
-  data-comesAround-image = "{%static comesAroundImage%}"
+  data-reclaim-image = "{%static section1Image%}"
+  data-redefine-image = "{%static section2Image%}"
+  data-resolve-image = "{%static section3Image%}"
   data-title="Presence"
 ></div>
 
@@ -31,3 +31,9 @@
 ></script>
 
 {% endblock %}
+
+
+
+data-reclaim-image = "{%static section1Image%}"
+data-redefine-image = "{%static section2Image%}"
+data-resolve-image = "{%static section3Image%}"
