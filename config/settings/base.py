@@ -18,13 +18,15 @@ import sys
 import environ
 from dispatch.apps import DispatchConfig
 
-
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
-env_file = os.path.join(PROJECT_DIR, '.env') # Look for the environment variables file in the project root directory
+VERSION = '1.9.2'
 
-#If we didn't find an .env file, we try to make one using values stored in Google Cloud project. This requires authentication.
+# Look for the environment variables file in the project root directory
+env_file = os.path.join(PROJECT_DIR, '.env')
+
+#If we didn't find an .env file, we try to get one from Google Cloud. This requires authentication.
 if not os.path.isfile('.env'):
     import google.auth
     from google.cloud import secretmanager as sm
@@ -39,36 +41,53 @@ if not os.path.isfile('.env'):
             with open(env_file, "w") as f:
                 f.write(payload)
         else:
-            sys.stderr.write("Error: Unsuccessful attempt to get a project from google.auth!\n")      
+            sys.stderr.write("\nError: Unsuccessful attempt to get a project from google.auth!\n")      
     except Exception as e:       
-        sys.stderr.write("Error in trying to generate .env file using Google application credentials!\n")
+        sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
 
-# We now have an .env file, so we need to get 
+# We now have an .env file.
+# An env object from environ library simplifies reading/writing env vars.
+# We intialize this object,
 env = environ.Env(
     #set casting and defaults for config vars which are to be read from environment
-    ORGANIZATION_NAME = (str, 'Ubyssey'),
+
+    # Development defaults
+    # VERSION=(str,'0.0.0'),
     DEBUG=(bool,False),
-    VERSION=(str,'0.0.0'),
-    USE_TZ=(bool,True),
-    TIME_ZONE=(str,'America/Vancouver'),
+    ORGANIZATION_NAME = (str, 'Ubyssey'),
+    
+    # URL defaults
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
     ROOT_URLCONF = (str,'ubyssey.urls'),
-    # DATABASE_URL = (str, 'mysql://root:ubyssey@db:3306/ubyssey'), # Toy "example" setting. Should only be used in dev environment, if anywhere
-    # Database defaults:
-    SQL_HOST = (str, 'db')
-    SQL_DATABASE= (str, 'ubyssey')
-    SQL_USER = (str, 'root')
-    SQL_PASSWORD = (str, 'ubyssey')
-)
-environ.Env.read_env(env_file)  # reading .env file.
 
-# Setting Django's configs to the values taken from the .env file (or else to their defaults listed above)
+    # Time zone defaults
+    USE_TZ=(bool,True),
+    TIME_ZONE=(str,'America/Vancouver'),
+
+    # Database defaults:
+    SQL_HOST = (str, 'db'),
+    SQL_DATABASE= (str, 'ubyssey'),
+    SQL_USER = (str, 'root'),
+    SQL_PASSWORD = (str, 'ubyssey'),
+
+    # Keys
+    SECRET_KEY = (str, 'thisisakey'),
+    NOTIFICATION_KEY= (str, 'thisisakeytoo'),
+)
+
+# Read the .env file into os.environ.
+environ.Env.read_env(env_file)
+
+# Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
+
 ORGANIZATION_NAME = env('ORGANIZATION_NAME')
-VERSION = env('VERSION')
+# VERSION = env('VERSION')
 DEBUG = env('DEBUG')
+
 USE_TZ = env('USE_TZ')
 TIME_ZONE = env('TIME_ZONE')
+
 STATIC_URL = env('STATIC_URL')
 MEDIA_URL = env('MEDIA_URL')
 ROOT_URLCONF = env('ROOT_URLCONF')
@@ -87,6 +106,10 @@ DATABASES = {
         'PORT': '3306',
     },
 }
+
+# Set secret keys
+SECRET_KEY = env('SECRET_KEY')
+NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 # Application definition
 INSTALLED_APPS = [

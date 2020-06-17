@@ -7,9 +7,6 @@ from .base import *
 
 BASE_URL = 'http://localhost:8000/'
 
-SECRET_KEY = env('SECRET_KEY')
-NOTIFICATION_KEY = env('NOTIFICATION_KEY')
-
 ALLOWED_HOSTS = ['localhost', '*']
 
 INSTALLED_APPS += ['ubyssey.events', 'django_user_agents', ]
@@ -21,6 +18,8 @@ MIDDLEWARE = (
     'django_user_agents.middleware.UserAgentMiddleware',
 )
 
+
+# TODO: Figure out why this is development only!
 TEMPLATES += [
  {
         'NAME': 'ubyssey',
@@ -36,17 +35,22 @@ TEMPLATES += [
     }
 ]
 
+# TODO: Figure out why this is development only!
 STATICFILES_DIRS += [
     PROJECT_DIR('ubyssey/static/dist'),
     PROJECT_DIR('service-workers'),
 ]
 
+# TODO: Figure out why this is development only!
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
+# TODO: Figure out why this is development only!
 SERVICE_WORKER_URL = '/service-worker.js'
 
+# TODO: Figure out why this is development only!
 MEDIA_ROOT = PROJECT_DIR('media')
 
+# TODO: Figure out why this is NOT in deployment!
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440
