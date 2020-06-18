@@ -24,4 +24,3 @@ RUN gulp buildDev
 RUN rm -rf node_modules
 
 WORKDIR /ubyssey.ca/
-ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]
