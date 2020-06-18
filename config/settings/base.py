@@ -28,14 +28,16 @@ if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
     # We deal with this one environment variable without using the environ library, because we need it to be set prior to initializing the env object 
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
 
-# Look for the environment variables file in the root directory
-# Absolute rather than relative path here, to play nice with Google App Engine
-env_file = os.path.join('/tmp/.env')
+# Look for the environment variables file in the project directory
+env_file = os.path.join(PROJECT_DIR,'tmp/.env')
 
 #If we didn't find an .env file, we try to get one from Google Cloud. This requires authentication.
 if not os.path.isfile(env_file):
     import google.auth
     from google.cloud import secretmanager as sm
+
+    #Since we're going to be reading/writing the .env file, put it where it will be cleaned up later
+    env_file = os.path.join('/tmp/.env')
 
     try:
         _, project = google.auth.default()
