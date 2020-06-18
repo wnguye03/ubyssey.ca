@@ -13,7 +13,7 @@ PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
 ORGANIZATION_NAME = 'Ubyssey'
-VERSION = '1.9.3'
+VERSION = '1.9.6'
 
 # Application definition
 INSTALLED_APPS = [
