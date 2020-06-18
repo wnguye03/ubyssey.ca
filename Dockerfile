@@ -19,11 +19,8 @@ WORKDIR /ubyssey.ca/ubyssey/static/
 RUN rm -rf node_modules
 RUN npm install
 RUN npm install -g gulp
-RUN npm audit fix
 RUN npm rebuild node-sass
 RUN gulp buildDev
 RUN rm -rf node_modules
 
 WORKDIR /ubyssey.ca/
-
-ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]

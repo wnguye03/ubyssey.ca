@@ -23,7 +23,7 @@ $spacing: 1.5rem;
 
 $time: 0.5s;
 
-$headerHeight: 60px;
+$headerHeight: 65px;
 
 html {
   overflow-x: hidden;
@@ -48,25 +48,27 @@ video {
 
 .c-cover__logo {
   // Structure
-  position: absolute;
-  top: 0;
-  margin-top: 25%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  min-height: 3em;
 
   // Text
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: font-size(32);
+  font-size: font-size(40);
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   @media ($bp-larger-than-mobile) {
-    // Text
     font-size: font-size(64);
-    margin-top: 25%;
-  }
-  @media ($bp-larger-than-tablet) {
-    // Structure
-    margin-top: 12%;
   }
 }
 
@@ -168,7 +170,6 @@ h4 {
   display: flex;
   align-items: center;
   box-shadow: 1px 1px rgba(0, 0, 0, .3);
-
   // Text
   color: #333333;
 
@@ -178,7 +179,8 @@ h4 {
 
   .item {
     // Structure
-    width: 320px;
+    max-width: 500px;
+    margin: auto;
     display: flex;
     justify-content: space-around;
     position: absolute;
@@ -199,7 +201,7 @@ h4 {
 
     &.left {
       // Structure
-      left: 0;
+      left: 10px;
 
       // Text
       text-transform: uppercase;
@@ -237,11 +239,17 @@ h4 {
     .subsection {
       //Structure
       display: inline-block;
+      margin-right: 0.7rem;
       border-bottom: 1px solid transparent;
+      border-color: #333333;
       transition: border-color #{$time/2};
+      font-size: 1.15rem;
       &.selected,
       &:hover {
-        border-color: #333333;
+        border-color: #000000;
+      }
+      :hover {
+        font-size: 1.2rem;
       }
     }
   }
@@ -251,7 +259,7 @@ h4 {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 65px);
 
   @media ($bp-larger-than-tablet) {
     overflow-y: hidden;
@@ -264,7 +272,7 @@ h4 {
 .subsection-image {
   // Structure
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 65px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,7 +403,7 @@ h4 {
       top: 0;
       left: 0;
       right: 0;
-      bottom: 60px;
+      bottom: 65px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -415,7 +423,7 @@ h4 {
     width: 100%;
     @media ($bp-larger-than-tablet) {
       overflow-y: scroll;
-      height: calc(100vh - 60px);
+      height: calc(100vh -65px);
       margin-left: 114px;
     }
   }
@@ -423,7 +431,7 @@ h4 {
     // Structure
     width: 100%;
     position: absolute;
-    top: calc(100vh - 60px);
+    top: calc(100vh - 65px);
     left: 0;
     right: 0;
     margin-top: 0;

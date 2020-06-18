@@ -21,7 +21,8 @@ from dispatch.apps import DispatchConfig
 PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
-VERSION = '1.9.4'
+ORGANIZATION_NAME = 'Ubyssey'
+VERSION = '1.9.6'
 
 # If we don't have app credentials, grab them
 if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
