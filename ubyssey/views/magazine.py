@@ -181,8 +181,7 @@ class MagazineV2(Magazine):
         }
         return render(request, self.template, context)
 
-
-theme = MagazineTheme()
+magazine = MagazineTheme()
 
 mag2017 = MagazineV1(
     2017,
@@ -230,7 +229,7 @@ mag2020 = MagazineV2(
     'waysForward',
 )
 
-theme.add_magazine(mag2017)
-theme.add_magazine(mag2018)
-theme.add_magazine(mag2019)
-theme.add_magazine(mag2020)
+magazine.add_magazine(mag2017)
+magazine.add_magazine(mag2018)
+magazine.add_magazine(mag2019)
+magazine.add_magazine(mag2020)
