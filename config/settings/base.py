@@ -1,19 +1,127 @@
 """
-base.py, default settings, originating from Dispatch module
+base.py, default settings, originating from Dispatch module.
+Use: place .env file containing app configuration in /ubyssey.ca/
+
+Part of the 12factor app philosophy is to keep config seperate from code. Typically, the environment variables are used for the config.
+This code's primary job therefore ought to be retrieving the config from the environment rather than hardcoding in config settings.
 
 Having these imported from Dispatch is too "magical" to be desirable, even if Dispatch is an explict dependency.
 Don't Repeat Yourself, yes, but "redundancy" isn't bad if it's accross what are nominally entirely different projects!
 More Pythonic is: Explicit rather than implicit.
+
+Environment variable stuff is based on the following document from Google CodeLabs
+https://codelabs.developers.google.com/codelabs/cloud-run-django/index.html?index=..%2F..index#5
 """
 
 import os
+import sys
 import environ
 from dispatch.apps import DispatchConfig
-PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the /ubyssey.ca directory
+
+PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
 ORGANIZATION_NAME = 'Ubyssey'
 VERSION = '1.9.6'
+
+# If we don't have app credentials, grab them
+if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
+    # We deal with this one environment variable without using the environ library, because we need it to be set prior to initializing the env object 
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
+
+# Look for the environment variables file in the project directory
+env_file = os.path.join(PROJECT_DIR,'tmp/.env')
+
+#If we didn't find an .env file, we try to get one from Google Cloud. This requires authentication.
+if not os.path.isfile(env_file):
+    import google.auth
+    from google.cloud import secretmanager as sm
+
+    #Since we're going to be reading/writing the .env file, put it where it will be cleaned up later
+    env_file = os.path.join('/tmp/.env')
+
+    try:
+        _, project = google.auth.default()
+
+        if project:
+            client = sm.SecretManagerServiceClient()
+            path = client.secret_version_path(project, "ubyssey_env_configs", "latest")
+            payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+            with open(env_file, "w") as f:
+                f.write(payload)
+        else:
+            sys.stderr.write("\nError: Unsuccessful attempt to get a project from google.auth!\n")      
+    except Exception as ex:       
+        sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
+        # TODO: Very ugly hacky line - refactor ASAP
+        if not os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.deployment':
+            raise ex
+
+# We now have an .env file.
+# An env object from environ library simplifies reading/writing env vars.
+# We intialize this object, setting castings and defaults (an advantage of the environ library over simply using the os library)
+env = environ.Env(
+    #set casting and defaults for config vars which are to be read from environment
+
+    # Development defaults
+    # VERSION=(str,'0.0.0'),
+    DEBUG=(bool,False),
+    ORGANIZATION_NAME = (str, 'Ubyssey'),
+    
+    # URL defaults
+    STATIC_URL = (str,'/static/'),
+    MEDIA_URL = (str,'/media/'),
+    ROOT_URLCONF = (str,'ubyssey.urls'),
+
+    # Time zone defaults
+    USE_TZ=(bool,True),
+    TIME_ZONE=(str,'America/Vancouver'),
+
+    # Database defaults:
+    SQL_HOST = (str, 'db'),
+    SQL_DATABASE= (str, 'ubyssey'),
+    SQL_USER = (str, 'root'),
+    SQL_PASSWORD = (str, 'ubyssey'),
+
+    # Keys
+    SECRET_KEY = (str, 'thisisakey'),
+    NOTIFICATION_KEY= (str, 'thisisakeytoo'),
+)
+
+# Read the .env file into os.environ.
+environ.Env.read_env(env_file)
+
+# Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
+
+ORGANIZATION_NAME = env('ORGANIZATION_NAME')
+# VERSION = env('VERSION')
+DEBUG = env('DEBUG')
+
+USE_TZ = env('USE_TZ')
+TIME_ZONE = env('TIME_ZONE')
+
+STATIC_URL = env('STATIC_URL')
+MEDIA_URL = env('MEDIA_URL')
+ROOT_URLCONF = env('ROOT_URLCONF')
+
+# Initialize the databases.
+# Note it should be possible to parse all this information in a single line:
+# DATABASES = {'default': env.db('DATABASE_URL')}
+# However, Google Cloud Services does not seem to like providing an easily parsable URL for such purposes
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': env('SQL_HOST'),
+        'NAME': env('SQL_DATABASE'),
+        'USER': env('SQL_USER'),
+        'PASSWORD': env('SQL_PASSWORD'),
+        'PORT': '3306',
+    },
+}
+
+# Set secret keys
+SECRET_KEY = env('SECRET_KEY')
+NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 # Application definition
 INSTALLED_APPS = [
