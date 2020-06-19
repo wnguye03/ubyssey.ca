@@ -7,9 +7,14 @@ from ubyssey.helpers import ArticleHelper
 class GuideTheme(object):
     """Theme for the 2016 Ubyssey Guide to UBC."""
 
-    def landing(self, request):
+    def __init__(self, year, title): 
+        self.year = str(year)
+        self.title = title
+
+    def landing(self, request, year = None):
         """The Guide to UBC landing page."""
-        return render(request, 'guide/index.html', {})
+        landing_page = 'guide/' + year + '/index.html'
+        return render(request, landing_page, {})
 
     def article(self, request, slug=None):
         """Guide article page."""
@@ -38,5 +43,7 @@ class GuideTheme(object):
             'article': article,
             'next': [next_a, next_b]
         }
+        article_page = 'guide/' + year + 'article.html'
+        return render(request, article_page , context)
 
-        return render(request, 'guide/article.html', context)
+guide = GuideTheme(2016, "Guide")
