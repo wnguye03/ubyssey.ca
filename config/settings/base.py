@@ -23,22 +23,23 @@ DISPATCH_APP_DIR = DispatchConfig.path
 
 ORGANIZATION_NAME = 'Ubyssey'
 VERSION = '1.9.7'
+env = environ.Env() # will reinitialize later once "earliest" configs have been set
+FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=False)
 
-# If we don't have app credentials, grab them
+# If we don't have Google app credentials, grab them
 if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
-    # We deal with this one environment variable without using the environ library, because we need it to be set prior to initializing the env object 
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
 
-# Look for the environment variables file in the project directory
-env_file = os.path.join(PROJECT_DIR,'tmp/.env')
+# Look for the environment variables file in the root directory
+# Absolute rather than relative path here, to play nice with Google App Engine
+env_file = os.path.join(PROJECT_DIR, 'tmp/.env')
 
-#If we didn't find an .env file, we try to get one from Google Cloud. This requires authentication.
-if not os.path.isfile(env_file):
+# In production we can get .envfrom Google Cloud if we don't have it. This requires authentication.
+# Set FORCE_GOOGLE_AUTHENTICATION
+if FORCE_GOOGLE_AUTHENTICATION or (os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.production' and not os.path.isfile(env_file)):
     import google.auth
     from google.cloud import secretmanager as sm
-
-    #Since we're going to be reading/writing the .env file, put it where it will be cleaned up later
-    env_file = os.path.join('/tmp/.env')
+    env_file = os.path.join('tmp/.env')
 
     try:
         _, project = google.auth.default()
@@ -53,9 +54,7 @@ if not os.path.isfile(env_file):
             sys.stderr.write("\nError: Unsuccessful attempt to get a project from google.auth!\n")      
     except Exception as ex:       
         sys.stderr.write("\nError in trying to generate .env file using Google application credentials!\n")
-        # TODO: Very ugly hacky line - refactor ASAP
-        if not os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.deployment':
-            raise ex
+        raise ex
 
 # We now have an .env file.
 # An env object from environ library simplifies reading/writing env vars.
