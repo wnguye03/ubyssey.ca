@@ -39,7 +39,7 @@ env_file = os.path.join(PROJECT_DIR, 'tmp/.env')
 if FORCE_GOOGLE_AUTHENTICATION or (os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.production' and not os.path.isfile(env_file)):
     import google.auth
     from google.cloud import secretmanager as sm
-    env_file = os.path.join('tmp/.env')
+    env_file = os.path.join('/tmp/.env')
 
     try:
         _, project = google.auth.default()
