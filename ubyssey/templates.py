@@ -95,6 +95,18 @@ class VoteCompass(Template):
     js = CharField('JavaScript')
 
 @register.template
+class Covid311(Template):
+    id = 'covid-311'
+    name = 'Covid-311'
+
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+
+@register.template
 class OneYearLater(Template):
     id = 'one-year-later'
     name = 'Feature: One Year Later'
