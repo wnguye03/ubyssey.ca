@@ -1,4 +1,3 @@
-
 //Covid data
 const covid_data = [
     ['Access to Food Inquiry', 0, 9],
@@ -170,13 +169,13 @@ for (var i = 0; i < covid_data.length; i++) {
 // Visualization 2 of 2: the different trends in the data based off of keyword filters
 
 // Create the title of the graph
-d3.select("#mar_apr_comp_chart2")
+d3.select("#covid_call_types_chart2")
     .select("#chart_title")
     .append("h3")
     .text("Vancouver 311 interactions by keyword: Mar/Apr 2019 and Mar/Apr 2020");
 
 // Create the keyword
-d3.select("#mar_apr_comp_chart2")
+d3.select("#covid_call_types_chart2")
     .select("#chart_keyword")
     .append("h4")
     .text("Total interactions");
@@ -193,7 +192,7 @@ var height = 300,
     };
 
 // Create the graph element
-var graph2 = d3.select("#mar_apr_comp_chart2")
+var graph2 = d3.select("#covid_call_types_chart2")
     .select("#chart_body")
     .append("svg")
     .attr("width", (barWidth * calls_1920_data['Total'].length) + yearSpace)
@@ -243,6 +242,7 @@ for (let i=0; i<4; i++) {
 
 // functions for updating the graph
 function updateChart2Height(key) {
+    console.log('check');
     graph2.selectAll("g").each(function(d, i) {
         // update the top corners of the bars
         var dataPoint = calls_1920_data[key][i];
@@ -274,7 +274,7 @@ function updateChart2Height(key) {
     });
 
     // Update the keyword label
-    d3.select("#mar_apr_comp_chart2")
+    d3.select("#covid_call_types_chart2")
         .select("#chart_keyword")
         .select("h4")
         .text(function() {
@@ -287,7 +287,7 @@ function updateChart2Height(key) {
 }
 
 // Write the month labels
-var axis = d3.select("#mar_apr_comp_chart2")
+var axis = d3.select("#covid_call_types_chart2")
     .select("#chart_labels")
     .append("svg")
     .attr("width", graph2.attr("width"))
@@ -313,3 +313,42 @@ graph2.selectAll("g").each(function(d, i) {
         .style("fill", 'black')
         .style("font", "12px sans-serif");
 })
+
+function setButton2OnClick(button) {
+    button.addEventListener('click', function(){
+        updateChart2Height(button.id);
+    });
+}
+
+var button1 = document.getElementById('Total');
+var button2 = document.getElementById('Complaint');
+var button3 = document.getElementById('Event');
+var button4 = document.getElementById('Film');
+var button5 = document.getElementById('Traffic');
+var button6 = document.getElementById('Noise complaint');
+var button7 = document.getElementById('Homelessness');
+var button8 = document.getElementById('Donation');
+var button9 = document.getElementById('Volunteer');
+var button10 = document.getElementById('March2020');
+var button11 = document.getElementById('April2020');
+setButton2OnClick(button1);
+setButton2OnClick(button2);
+setButton2OnClick(button3);
+setButton2OnClick(button4);
+setButton2OnClick(button5);
+setButton2OnClick(button6);
+setButton2OnClick(button7);
+setButton2OnClick(button8);
+setButton2OnClick(button9);
+
+button10.addEventListener('click', function(){
+    updateChart1Height(1);
+});
+
+button11.addEventListener('click', function(){
+    updateChart1Height(2);
+});
+
+
+
+
