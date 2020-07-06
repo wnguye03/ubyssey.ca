@@ -331,6 +331,7 @@ var button8 = document.getElementById('Donation');
 var button9 = document.getElementById('Volunteer');
 var button10 = document.getElementById('March2020');
 var button11 = document.getElementById('April2020');
+var button12 = document.getElementById('Transit');
 setButton2OnClick(button1);
 setButton2OnClick(button2);
 setButton2OnClick(button3);
@@ -340,6 +341,7 @@ setButton2OnClick(button6);
 setButton2OnClick(button7);
 setButton2OnClick(button8);
 setButton2OnClick(button9);
+setButton2OnClick(button12);
 
 button10.addEventListener('click', function(){
     updateChart1Height(1);

@@ -97,8 +97,7 @@
 {% endif %}
 
 {% block pre-content %}
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <div id="covid_call_types_chart1" style="background-color: white;">
+  <div id="covid_call_types_chart1" style="background-color: white; text-align: center;">
       <div id="chart_title"></div>
       <div id="chart_body"></div>
       <div id="chart_labels"></div>
@@ -108,7 +107,7 @@
 {% endblock %}
 
 {% block post-content %}
-<div id="covid_call_types_chart2" style="background-color: white;">
+<div id="covid_call_types_chart2" style="background-color: white; text-align: center;">
   <div id="chart_title"></div>
   <div id="chart_keyword"></div>
   <div id="chart_body"></div>
@@ -119,7 +118,7 @@
   <button id='Film'>Film</button>
   <button id='Traffic'>Traffic</button>
   <br>
-  <button id='Transit'>Transit</button>
+  <button id='Transit'> Transit</button>
   <button id='Noise complaint'>Noise complaint</button>
   <button id='Homelessness'>Homelessness</button>
   <button id='Donation'>Donation</button>
@@ -147,5 +146,6 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="{% add_version 'js/covid-311.js' %}"></script>
 {% endblock %}
