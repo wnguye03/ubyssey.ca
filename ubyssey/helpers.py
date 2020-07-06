@@ -7,6 +7,7 @@ from random import randint, choice
 from django.conf import settings
 from django.http import Http404
 from django.db import connection
+from django.db.models import F
 from django.db.models.aggregates import Count
 
 from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
@@ -107,9 +108,12 @@ class ArticleHelper(object):
         # https://docs.djangoproject.com/en/3.0/topics/db/queries/
         # articles = Article.annotate(
         #   age = F(published-at) - F(SOMETHING OR OTHER), 
+        # # "now" will depend on pytz, which is already dependency, and it's time zone options
+        # # https://stackoverflow.com/questions/8809765/need-to-convert-utc-aws-ec2-to-pst-in-python
         #   reading = 
         #   age_deadline = 
         # )
+        #
         query = """
             SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
             CASE reading_time
