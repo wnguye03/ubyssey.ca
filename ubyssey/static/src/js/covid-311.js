@@ -160,7 +160,7 @@ for (var i = 0; i < covid_data.length; i++) {
         .attr('y', 10)
         .text(covid_data[i][0])
         .style("text-anchor", "end")
-        .style("font", "10px sans-serif")
+        .style("font", "12px sans-serif")
         .attr("dx", "-1em")
         .attr("dy", (linearScale(i) / 10) + "em")
         .attr("transform", "rotate(-90)");
