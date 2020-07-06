@@ -1,8 +1,10 @@
 <header class = "c-header">
     <ul class = "c-nav-bar">
-        <li class="c-nav-ubyssey">
-            <a href="https://www.ubyssey.ca">The Ubyssey</a>
+    {% if next.0 %}
+        <li class="c-nav-prev">
+            <a href="{% url 'guide-article' 2020 next.0.slug %}"> {{ next.0.headline }} </a>
         </li>
+    {% endif %}
     <li id="c-nav-home">
       <a class="o-logo--small" href="{% url 'guide-landing' 2020 %}"></a>
         <ul class = c-home-more>
@@ -18,8 +20,10 @@
         {% endif %}
         </ul>
     </li>
-        <li class="c-nav-current">
+    {% if next.1 %}
+        <li class="c-nav-next">
             <a href="{% url 'guide-article' 2020 next.1.slug %}"> {{ next.1.headline }} </a>
         </li>
+    {% endif %}
     </ul>
 </header>
