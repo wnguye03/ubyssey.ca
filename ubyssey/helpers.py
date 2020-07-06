@@ -103,6 +103,7 @@ class ArticleHelper(object):
 
         context.update(reading_times)
 
+        # Article.objects.all().annotate(...something...)
         query = """
             SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
             CASE reading_time
@@ -130,11 +131,13 @@ class ArticleHelper(object):
         elif sections:
             query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
+        # Should correspond to:
+        # .order_by()
         query += query_where + """
             ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
-
+        
         return list(Article.objects.raw(query, context))
 
     @staticmethod
