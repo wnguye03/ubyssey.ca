@@ -103,7 +103,11 @@ class ArticleHelper(object):
 
         context.update(reading_times)
 
-        # Article.objects.all().annotate(...something...)
+        # articles = Article.annotate(
+        #   age =
+        #   reading = 
+        #   age_deadline = 
+        # )
         query = """
             SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
             CASE reading_time
@@ -115,7 +119,7 @@ class ArticleHelper(object):
             TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
             FROM dispatch_article
         """
-
+        # articles = articles.filter()
         query_where = """
             WHERE head = 1 AND
             is_published = %(is_published)s AND
@@ -132,7 +136,7 @@ class ArticleHelper(object):
             query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
         # Should correspond to:
-        # .order_by()
+        # articles = articles.order_by()
         query += query_where + """
             ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
