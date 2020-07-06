@@ -103,8 +103,10 @@ class ArticleHelper(object):
 
         context.update(reading_times)
 
+
+        # https://docs.djangoproject.com/en/3.0/topics/db/queries/
         # articles = Article.annotate(
-        #   age =
+        #   age = F(published-at) - F(SOMETHING OR OTHER), 
         #   reading = 
         #   age_deadline = 
         # )
