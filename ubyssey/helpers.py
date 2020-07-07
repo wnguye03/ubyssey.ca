@@ -127,6 +127,7 @@ class ArticleHelper(object):
                     then=1.0 if (
                         timezone.now().time() >= datetime.strptime(reading_times['midday_start'],timeformat).time() and timezone.now().time() < datetime.strptime(reading_times['midday_start'],timeformat).time()
                     )  else 0.0),
+                When(reading_time='evening', then=1.0 if timezone.now().time() <= datetime.strptime(reading_times['evening_start'],timeformat).time() else 0.0),
                 default = Value(0.5),
                 output_field=FloatField()
             ),
