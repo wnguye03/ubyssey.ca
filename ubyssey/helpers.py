@@ -1,4 +1,5 @@
 import datetime
+from datetime import datetime
 
 from django.utils import timezone
 import pytz
@@ -7,7 +8,8 @@ from random import randint, choice
 from django.conf import settings
 from django.http import Http404
 from django.db import connection
-from django.db.models import ExpressionWrapper, DurationField, F
+import django.db.models
+from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, Value, When
 from django.db.models.aggregates import Count
 
 from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
@@ -91,7 +93,7 @@ class ArticleHelper(object):
                 'midday_end': '16:00:00',
                 'evening_start': '16:00:00',
             }
-
+        timeformat = '%H:%M:%S'
         context = {
             'section': section,
             'section_id': section_id,
@@ -114,13 +116,24 @@ class ArticleHelper(object):
         #   age_deadline = 
         # )
         #
-
         articles = Article.objects.annotate(
             age = ExpressionWrapper(
                 F('published_at') - timezone.now(),
                 output_field=DurationField()
             ),
-            # reading =
+            reading = Case( 
+                When(reading_time='morning', then=1.0 if timezone.now().time() < datetime.strptime(reading_times['morning_start'],timeformat).time() else 0.0),
+                When(reading_time='midday', 
+                    then=1.0 if (
+                        timezone.now().time() >= datetime.strptime(reading_times['midday_start'],timeformat).time() and timezone.now().time() < datetime.strptime(reading_times['midday_start'],timeformat).time()
+                    )  else 0.0),
+                default = Value(0.5),
+                output_field=FloatField()
+            ),
+            #time_past_age_deadline = ExpressionWrapper(
+            #    F('published_at') - timezone.now(),
+            #    output_field=DurationField()
+            #),
         )
 
 
@@ -136,6 +149,10 @@ class ArticleHelper(object):
             FROM dispatch_article
         """
         # articles = articles.filter()
+        articles = articles.filter(
+            head=1,
+            is_published=1
+        )
         query_where = """
             WHERE head = 1 AND
             is_published = %(is_published)s AND
