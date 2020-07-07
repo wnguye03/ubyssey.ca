@@ -3,7 +3,7 @@
     width: 100%;
     height: 50px;
     top: 0;
-    background-color: rgba(0,0,0,0.9);
+    background-color: $color-ubc;
     z-index: 100;
 
     a {
@@ -18,18 +18,25 @@
     }
 
     .c-nav-ubyssey{
-        width: 140px;
+        width: 145px;
         left: 0;
         text-align: left;
         margin: auto 0 auto 0.8rem;
+        height: 26px;
         &:hover{
             a{
-                color:blue;
+                font-weight: bold;
             }
+        }
+        @media($bp-smaller-than-mobile) {
+            display:none;
         }
     }
     .c-nav-current{
-        width: 140px;
+        @media($bp-smaller-than-mobile) {
+            display:none;
+        }
+        width: 145px;
         right: 0;
         text-align: right;
         margin: auto 0.8rem auto 0;
@@ -38,7 +45,6 @@
                 color:blue;
             }
         }
-        
     }
 
     #c-nav-home{
@@ -48,27 +54,44 @@
         .c-home-more{
             display:none;
             position: absolute;
-            width: 162px;
+            width: 166px;
             background-color: rgba(0,0,0,0.9);
             z-index: 10000;
-            border: 2px solid #fff;
+            // border: 2px solid #fff;
             
             li {
-              display: table;
+              display: block;
               margin: 0 auto 0 auto;
               clear: left;
-              line-height: 2;
+              line-height: 1.8;
               padding: 0;
-              height:auto;
               width:100%;
               text-align: center;
               &:hover {
-               font-size: 1.05em;
-              }
+                font-weight: bold;
+                font-size: 1.05em;
+              } 
+              a{
+                height:40px;
+                display: block;
+               }
             }
-            .c-prev {
-                border-bottom: 2px solid #fff;
+            #academics{
+                background-color: $color-academics;
             }
+            #ubc{
+                background-color: $color-ubc;
+            }
+            #adulting{
+                background-color: $color-adulting;
+            }
+            #sdp{
+                background-color: $color-sdp;
+            }
+            #vancouver{
+                background-color: $color-vancouver;
+            }
+            
         }
     }
 

@@ -4,22 +4,29 @@
             <a href="https://www.ubyssey.ca">The Ubyssey</a>
         </li>
     <li id="c-nav-home">
-      <a class="o-logo--small" href="{% url 'guide-landing' 2020 %}"></a>
+      <a class="o-logo--small"></a>
         <ul class = c-home-more>
-        {% if next.0 %}
-        <li class = c-prev>
-            <a href="{% url 'guide-article' 2020 next.0.slug %}"> {{ next.0.headline }} </a>
-        </li>
-        {% endif %}
-        {% if next.1 %}
-        <li>
-            <a href="{% url 'guide-article' 2020 next.1.slug %}"> {{ next.1.headline }} </a>
-        </li>
-        {% endif %}
+            <li>
+                <a id="home" href="{% url 'guide-landing' 2020 %}">Home</a>
+            </li>
+            <li>
+                <a id="academics" href="{% url 'guide-landing' 2020 %}">Academics</a>
+            </li>
+            <li>
+                <a id="ubc" href="{% url 'guide-landing' 2020 %}">UBC</a>
+            </li>
+            <li>
+                <a id="adulting" href="{% url 'guide-landing' 2020 %}">Adulting</a>
+            </li>
+            <li>
+                <a id="sdp" href="{% url 'guide-landing' 2020 %}">S.D.P</a>
+            </li>
+            <li>
+                <a id="vancouver" href="{% url 'guide-landing' 2020 %}">Vancouver</a>
+            </li>
         </ul>
     </li>
         <li class="c-nav-current">
-            <a href="{% url 'guide-article' 2020 next.1.slug %}"> {{ next.1.headline }} </a>
         </li>
     </ul>
 </header>

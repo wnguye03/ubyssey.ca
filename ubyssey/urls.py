@@ -7,7 +7,8 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
-from ubyssey.views.guide import guide
+from ubyssey.views.guide import guide2016, guide2020
+
 from ubyssey.views.advertise import AdvertiseTheme
 from ubyssey.views.magazine import magazine
 
@@ -48,8 +49,11 @@ urlpatterns += [
     re_path(r'^topic/(\d*)/$', theme.topic, name='topic'),
 
     # Guide to UBC
-    re_path(r'^guide/(?P<year>[0-9]{4})/$', guide.landing, name='guide-landing'),
-    re_path(r'^guide/(?P<year>[0-9]{4})/(?P<slug>[-\w]+)/$', guide.article, name='guide-article'),
+    re_path(r'^guide/2016/$', guide2016.landing, name='guide-landing-2016'),
+    re_path(r'^guide/2016/(?P<slug>[-\w]+)/$', guide2016.article, name='guide-article-2016'),
+
+    re_path(r'^guide/(?P<year>[0-9]{4})/$', guide2020.landing, name='guide-landing'),
+    re_path(r'^guide/(?P<year>[0-9]{4})/(?P<slug>[-\w]+)/$', guide2020.article, name='guide-article'),
 
     # Magazine
     re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),

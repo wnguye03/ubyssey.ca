@@ -1,4 +1,31 @@
 .c-footer {
-  background: #1F1F1F;
-  padding: 50px 0;
+  background-color: $color-ubc;
+  padding-top: 35px;
+  &__copyright{
+    color: white;
+    line-height: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 0;
+  }
+
+  .c-nav-social{
+    ul{
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    li{
+      display: inline-block;
+      margin: 35px auto 0 auto;
+      font-size: 1.4em
+    }
+    a{
+      display: block;
+      color: white;
+      margin: 0 6px;
+      text-decoration: none;
+    }
+  }
 }
