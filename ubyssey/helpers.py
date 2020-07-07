@@ -113,7 +113,7 @@ class ArticleHelper(object):
         # # "now" will depend on pytz, which is already dependency, and its time zone options
         # # https://stackoverflow.com/questions/8809765/need-to-convert-utc-aws-ec2-to-pst-in-python
         #   reading = 
-        #   age_deadline = 
+        #   is_recent_article = 
         # )
         #
         articles = Article.objects.annotate(
@@ -131,10 +131,11 @@ class ArticleHelper(object):
                 default = Value(0.5),
                 output_field=FloatField()
             ),
-            #time_past_age_deadline = ExpressionWrapper(
-            #    F('published_at') - timezone.now(),
-            #    output_field=DurationField()
+            #is_recent_article = ExpressionWrapper(
+            #    (F('published_at') - (timezone.now() - timedelta(days=max_days))) > 0
+            #    output_field=BooleanField()
             #),
+            #articles = articles.annotate(is_recent_article=Case(When(F('published_at') > max_days_ago, then=Value(true)),default=Value(false)))
         )
 
 
@@ -146,7 +147,7 @@ class ArticleHelper(object):
                  WHEN 'evening' THEN IF( CURTIME() >= %(evening_start)s, 1, 0 )
                  ELSE 0.5
             END as reading,
-            TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as age_deadline
+            TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as is_recent_article
             FROM dispatch_article
         """
         # articles = articles.filter()
@@ -172,7 +173,7 @@ class ArticleHelper(object):
         # Should correspond to:
         # articles = articles.order_by()
         query += query_where + """
-            ORDER BY age_deadline DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
+            ORDER BY is_recent_article DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
             LIMIT %(limit)s
         """
         
