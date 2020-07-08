@@ -130,7 +130,14 @@ class ArticleHelper(object):
                 default = Value(0.5),
                 output_field=FloatField()
             ),
-        )
+        ).filter(
+            head=1,
+            is_published=1
+        ).exclude(
+            parent_id__in=exclude
+        ).order_by(
+            '-published_at'
+        )[:limit]
         
         return list(articles)
 
