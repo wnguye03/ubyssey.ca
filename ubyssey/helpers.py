@@ -81,9 +81,9 @@ class ArticleHelper(object):
     @staticmethod
     def tmp_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
         if is_published:
-            is_published = 1
+            _is_published = 1
         else:
-            is_published = 0
+            _is_published = 0
 
         if reading_times is None:
             reading_times = {
@@ -132,7 +132,7 @@ class ArticleHelper(object):
             ),
         ).filter(
             head=1,
-            is_published=1
+            is_published=_is_published
         ).exclude(
             parent_id__in=exclude
         ).order_by(
