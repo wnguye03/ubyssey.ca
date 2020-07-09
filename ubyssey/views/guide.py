@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 import json
+from django.utils.safestring import SafeString
 from dispatch.models import Article, Tag
 from django.urls import reverse
 import ubyssey
@@ -61,7 +62,13 @@ class Guide2020(object):
         self.section5_name = section5_name
 
     def landing(self, request, year):
-        # Get all 2019 magazine articles
+
+        """The Guide to UBC landing page."""
+        landing_page = 'guide/' + year + '/index.html'
+        return render(request, landing_page, {})
+    
+    def landing_sub(self, request, year, subsection=None):
+
         articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-importance')
         section1 = [] 
         section2 = [] 
@@ -99,19 +106,34 @@ class Guide2020(object):
                 self.section5_name: section5,
             })
 
+        articles_parse = json.loads(articles)
+        academics = articles_parse["academics"]
+        ubc = articles_parse["ubc"]
+        adulting = articles_parse["adulting"]
+        sdp = articles_parse["sex, drugs, party"]
+        vancouver = articles_parse["vancouver"]
+        
         context = {
             'meta': {
                 'title': self.title,
                 'url': reverse('guide-landing', kwargs={'year': self.year}),
             },
             'year': self.year,
-            'articles': articles
+            'articles': {
+                
+                'academics': academics,
+                'ubc': ubc,
+                'adulting': adulting,
+                'sdp': sdp,
+                'vancouver': vancouver
+            }
+
         }
         """The Guide to UBC landing page."""
-        landing_page = 'guide/' + year + '/index.html'
+        landing_page = 'guide/' + year + '/section.html'
         return render(request, landing_page, context)
 
-    def article(self, request, year=None, slug=None):
+    def article(self, request, year=None, subsection=None, slug=None):
         """Guide article page."""
         try:
             article = ArticleHelper.get_article(request, slug)
@@ -135,6 +157,7 @@ class Guide2020(object):
         context = {
             'title': article.headline,
             'meta': ArticleHelper.get_meta(article),
+            'subsection': subsection,
             'article': article,
             'next': [next_a, next_b]
         }

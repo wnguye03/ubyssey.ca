@@ -1,6 +1,7 @@
 .c-footer {
-  background-color: $color-ubc;
-  padding-top: 35px;
+  background-color: $color-home;
+  padding-top: 3%;
+  margin-top: 5%;
   &__copyright{
     color: white;
     line-height: 2.5em;
@@ -8,8 +9,7 @@
     letter-spacing: 0.05em;
     padding: 8px 0;
   }
-
-  .c-nav-social{
+  &__social{
     ul{
       list-style-type: none;
       margin: 0;

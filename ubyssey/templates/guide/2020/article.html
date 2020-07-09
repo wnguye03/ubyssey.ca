@@ -45,7 +45,7 @@
   </div>
   <div class="c-tiles">
     {% for a in next %}
-      {% include 'guide/2020/tile.html' with type='3' title=a.headline slug=a.slug image=a.featured_image.image.get_absolute_url %}
+      {% include 'guide/2020/tile.html' with type='3' title=a.headline subsection=subsection slug=a.slug image=a.featured_image.image.get_absolute_url %}
     {% endfor %}
   </div>
 </main>

@@ -1,4 +1,4 @@
-<header class = "c-header">
+<header id = "c-header">
     <ul class = "c-nav-bar">
         <li class="c-nav-ubyssey">
             <a href="https://www.ubyssey.ca">The Ubyssey</a>
@@ -7,22 +7,22 @@
       <a class="o-logo--small"></a>
         <ul class = c-home-more>
             <li>
-                <a id="home" href="{% url 'guide-landing' 2020 %}">Home</a>
+                <a id="home" class="header-button" href="{% url 'guide-landing' 2020 %}">Home</a>
             </li>
             <li>
-                <a id="academics" href="{% url 'guide-landing' 2020 %}">Academics</a>
+                <a id="academics" class="header-button" href="{% url 'guide-landing-sub' 2020 'academics' %}">Academics</a>
             </li>
             <li>
-                <a id="ubc" href="{% url 'guide-landing' 2020 %}">UBC</a>
+                <a id="ubc" class="header-button" href="{% url 'guide-landing-sub' 2020 'ubc' %}">UBC</a>
             </li>
             <li>
-                <a id="adulting" href="{% url 'guide-landing' 2020 %}">Adulting</a>
+                <a id="adulting" class="header-button" href="{% url 'guide-landing-sub' 2020 'adulting' %}">Adulting</a>
             </li>
             <li>
-                <a id="sdp" href="{% url 'guide-landing' 2020 %}">S.D.P</a>
+                <a id="sdp" class="header-button" href="{% url 'guide-landing-sub' 2020 'sdp' %}">S.D.P</a>
             </li>
             <li>
-                <a id="vancouver" href="{% url 'guide-landing' 2020 %}">Vancouver</a>
+                <a id="vancouver" class="header-button" href="{% url 'guide-landing-sub' 2020 'vancouver' %}">Vancouver</a>
             </li>
         </ul>
     </li>

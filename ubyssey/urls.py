@@ -53,7 +53,8 @@ urlpatterns += [
     re_path(r'^guide/2016/(?P<slug>[-\w]+)/$', guide2016.article, name='guide-article-2016'),
 
     re_path(r'^guide/(?P<year>[0-9]{4})/$', guide2020.landing, name='guide-landing'),
-    re_path(r'^guide/(?P<year>[0-9]{4})/(?P<slug>[-\w]+)/$', guide2020.article, name='guide-article'),
+    re_path(r'^guide/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/$', guide2020.landing_sub, name='guide-landing-sub'),
+    re_path(r'^guide/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/(?P<slug>[-\w]+)/$', guide2020.article, name='guide-article'),
 
     # Magazine
     re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),
