@@ -143,7 +143,7 @@ class ArticleHelper(object):
 
 
     @staticmethod
-    def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+    def get_frontpage(reading_times=None, section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
             is_published = 1
@@ -160,7 +160,6 @@ class ArticleHelper(object):
         timeformat = '%H:%M:%S'
         context = {
             'section': section,
-            'section_id': section_id,
             'excluded': ",".join(map(str, exclude)),
             'sections': ",".join(sections),
             'limit': limit,
@@ -229,8 +228,6 @@ class ArticleHelper(object):
             query += """
                 INNER JOIN dispatch_section on dispatch_article.section_id = dispatch_section.id AND dispatch_section.slug = %(section)s
             """
-        elif section_id is not None:
-            query_where += " AND section_id = %(section_id)s "
         elif sections:
             query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
 
