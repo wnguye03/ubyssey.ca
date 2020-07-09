@@ -1,159 +1,244 @@
 .home-content-container{
-  @media($bp-larger-than-phablet) {
-    .editorial{
-      &-container{
-        display: flex;
-        overflow: hidden;
-      }
-
-      &__credits-{
-        &container{
-          width: 35%;
-          background-color: $color-academics;
-        }
-        &content{
-          padding: 15% 20%;
-          letter-spacing: 1px;
-          h1{
-            text-transform: uppercase;
-            text-align: right;
-          }
-          h2{
-            font-weight: 300;
-            text-align: right;
-          }
-        }
-      }
-      &__note-{
-        &container{
-          position: relative;
-          width: 65%;
-        }
-      }
-      &__.home-content{
-        padding: 8% 15%;
-        &__nav{
-          position: absolute;
-          right: 0;
-          bottom: 5px;
-          padding-right: 15%;
-        }
+  .editorial{
+    &-container{
+      display: flex;
+      overflow: hidden;
+      @media($bp-smaller-than-tablet) {
+        display: block;
       }
     }
 
-    .who{
-      &-container{
-        position: relative;
-        margin-left: 10%;
-        margin-right: 25%;
+    &__credits-{
+      &container{
+        width: 35%;
+        background-color: $color-academics;
+        @media($bp-smaller-than-tablet) {
+          width: 100%;
+        }
       }
-      &__.home-content{
-        padding: 8%;
-
-        &__nav{
-          position: absolute;
-          left: 20%;
-          bottom: 5px;
+      &content{
+        padding: 15% 20%;
+        letter-spacing: 1px;
+        h1{
+          text-transform: uppercase;
+          text-align: right;
+        }
+        h2{
+          font-weight: 300;
+          text-align: right;
         }
       }
     }
-
-    .involved{
-      &-container{
+    &__note-{
+      &container{
         position: relative;
-        margin-right: 10%;
-        margin-left: 30%;
+        width: 65%;
+        @media($bp-smaller-than-tablet) {
+          width: 100%;
+        }
       }
-      &__.home-content{
+    }
+    &__.home-content{
+      padding: 8% 15%;
+      @media($bp-smaller-than-tablet) {
         padding: 8% 5%;
-
-        &__nav{
-          position: absolute;
-          left: 18%;
-          bottom: 5px;
-        }
       }
-    }
-
-    .panel-quote{
-      margin-top: 5%;
-      &.__1-{
-        &container{
-          background-color: $color-vancouver;
-          width: 45%;
-          margin-left: 55%;
-          height: 260px;
-          position: relative;
+      &__nav{
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+        padding-right: 15%;
+        @media($bp-smaller-than-tablet){
+          bottom: 20px;
         }
-        &content{
-          height:55%;
-          overflow: hidden;
-          padding: 5% 15%;
-          &__quote{
-
-          }
-          &__source{
-            position: absolute;
-            bottom: 15%;
-            right: 10%;
-          }
-        }
-      }
-
-      &.__2-{
-        &container{
-          background-color: $color-adulting;
-          width: 65%;
-          margin-right: 35%;
-          height: 200px;
-          position: relative;
-        }
-        &content{
-          height: 50%;
-          overflow: hidden;
-          padding: 3% 5%;
-          &__quote{
-
-          }
-          &__source{
-            position: absolute;
-            bottom: 10%;
-            right: 10%;
-          }
-        }
-      }
-    }
-
-    .home-content{
-      .title{
-        text-align: center;
-        text-transform: uppercase;
-        font-size: 3.5em;
-        font-weight: bold;
-      }
-      p{
-        padding: 5% 15%;
       }
     }
   }
 
-  .section-grid-container{
-    #section--{
-      &academics{
-        display: none;
+  .who{
+    &-container{
+      position: relative;
+      margin-left: 10%;
+      margin-right: 25%;
+      @media($bp-smaller-than-tablet) {
+        margin-left: 0;
+        margin-right: 0;
       }
-      &ubc{
-        display: none;
+    }
+    &__.home-content{
+      padding: 8%;
+
+      &__nav{
+        position: absolute;
+        left: 20%;
+        bottom: 5px;
+        @media($bp-smaller-than-tablet){
+          position: absolute;
+          right: 0;
+          bottom: 20px;
+          padding-right: 20%;
+        }
       }
-      &adulting{
-        display: none;
+    }
+  }
+
+  .involved{
+    &-container{
+      position: relative;
+      margin-left: 30%;
+      margin-right: 10%;
+      @media($bp-smaller-than-tablet) {
+        margin-left: 0;
+        margin-right: 0;
       }
-      &sdp{
-        display: none;
+    }
+    &__.home-content{
+      padding: 8% 5%;
+
+      &__nav{
+        position: absolute;
+        left: 18%;
+        bottom: 5px;
+        @media($bp-smaller-than-tablet){
+          position: absolute;
+          right: 0;
+          bottom: 20px;
+          padding-right: 20%;
+        }
       }
-      &vancouver{
-        display: none;
+    }
+  }
+
+  .panel-quote{
+    margin-top: 5%;
+    &.__1-{
+      &container{
+        &-text{
+          background-color: $color-vancouver;
+          width: 55%;
+          margin-left: 45%;
+          height: 260px;
+          position: relative;
+          @media($bp-smaller-than-tablet) {
+            margin-left: 40%;
+          }
+        }
+        &-image{
+          position: absolute;
+          margin-top: -200px;
+          left: -45%;
+          z-index: 100;
+          width: 50%;
+          img{
+            height: 400px;
+            width: 100%;
+          }
+          @media($bp-smaller-than-tablet) {
+            margin-left: -22%;
+          }
+        }
       }
+      &text{
+        height:55%;
+        overflow: hidden;
+        padding: 5% 15%;
+        &__source{
+          position: absolute;
+          bottom: 15%;
+          right: 10%;
+        }
+      }    
+    }
+
+    &.__2-{
+      &container{
+        &-text{
+          background-color: $color-adulting;
+          width: 70%;
+          height: 200px;
+          position: relative;
+        }
+        &-image{
+          position: absolute;
+          margin-top: -350px;
+          right: -37%;
+          z-index: 100;
+          width: 40%;
+          img{
+            height: 500px;
+            width: 100%;
+          }
+          @media($bp-smaller-than-tablet) {
+            margin-right: -30%;
+          }
+        }
+      }
+      &text{
+        height: 50%;
+        overflow: hidden;
+        padding: 3% 5%;
+        &__quote{
+
+        }
+        &__source{
+          position: absolute;
+          bottom: 10%;
+          right: 10%;
+        }
+      }
+    }
+
+    @media($bp-smaller-than-tablet){
+      &.__1-, &.__2-{
+        &container{
+          &-text{
+            width: 60%;
+            height: 300px;
+          }
+          &-image{
+            margin-top: 0;
+            width: 67%;
+            img{
+              height: 300px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .home-content{
+    .title{
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 3.5em;
+      font-weight: bold;
+      @media($bp-smaller-than-tablet){
+        font-size: 2.5em;
+      }
+    }
+    p{
+      padding: 5% 15%;
+    }
+  }
+}
+
+.section-grid-container{
+  #section--{
+    &academics{
+      display: none;
+    }
+    &ubc{
+      display: none;
+    }
+    &adulting{
+      display: none;
+    }
+    &sdp{
+      display: none;
+    }
+    &vancouver{
+      display: none;
     }
   }
 }

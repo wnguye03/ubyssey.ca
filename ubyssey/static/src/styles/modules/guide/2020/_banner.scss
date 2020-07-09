@@ -42,7 +42,7 @@
   }
 
   &:after {
-    padding-top: 140%;
+    padding-top: 80%;
 
     @media($bp-larger-than-mobile) {
       padding-top: 55%;
@@ -73,6 +73,9 @@
   color: $color-white;
   letter-spacing: 0.48px;
   margin-bottom: 1em;
+  @media (max-width: 600px) {
+    font-size: 1.1em;
+  }
 }
 
 .c-banner--welcome__snippet {
@@ -82,6 +85,9 @@
   color: $color-white;
   letter-spacing: 0.36px;
   line-height: 22px;
+  @media (max-width: 600px) {
+    font-size: 2.5em;
+  }
 }
 
 .c-banner--article__inner {
