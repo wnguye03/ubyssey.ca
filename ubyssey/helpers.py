@@ -79,42 +79,14 @@ class ArticleHelper(object):
         return ad_placements
 
     @staticmethod
-    def tmp_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
-        if is_published:
-            _is_published = 1
-        else:
-            _is_published = 0
-
-        if reading_times is None:
-            reading_times = {
-                'morning_start': '9:00:00',
-                'midday_start': '11:00:00',
-                'midday_end': '16:00:00',
-                'evening_start': '16:00:00',
-            }
-        timeformat = '%H:%M:%S'
-        context = {
-            'section': section,
-            'section_id': section_id,
-            'excluded': ",".join(map(str, exclude)),
-            'sections': ",".join(sections),
-            'limit': limit,
-            'is_published': is_published,
-            'max_days': max_days
+    def tmp_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+        reading_times = {
+            'morning_start': '9:00:00',
+            'midday_start': '11:00:00',
+            'midday_end': '16:00:00',
+            'evening_start': '16:00:00',
         }
-
-        context.update(reading_times)
-
-
-        # https://docs.djangoproject.com/en/3.0/topics/db/queries/
-        # articles = Article.objects.annotate(
-        #   age = F(published-at) - F(SOMETHING OR OTHER), 
-        # # "now" will depend on pytz, which is already dependency, and its time zone options
-        # # https://stackoverflow.com/questions/8809765/need-to-convert-utc-aws-ec2-to-pst-in-python
-        #   reading = 
-        #   is_recent_article = 
-        # )
-        #
+        timeformat = '%H:%M:%S'
         articles = Article.objects.annotate(
             age = ExpressionWrapper(
                 F('published_at') - timezone.now(),
@@ -132,7 +104,7 @@ class ArticleHelper(object):
             ),
         ).filter(
             head=1,
-            is_published=_is_published
+            is_published=is_published
         ).exclude(
             parent_id__in=exclude
         ).order_by(
@@ -143,20 +115,19 @@ class ArticleHelper(object):
 
 
     @staticmethod
-    def get_frontpage(reading_times=None, section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+    def get_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         if is_published:
             is_published = 1
         else:
             is_published = 0
 
-        if reading_times is None:
-            reading_times = {
-                'morning_start': '9:00:00',
-                'midday_start': '11:00:00',
-                'midday_end': '16:00:00',
-                'evening_start': '16:00:00',
-            }
+        reading_times = {
+           'morning_start': '9:00:00',
+           'midday_start': '11:00:00',
+           'midday_end': '16:00:00',
+           'evening_start': '16:00:00',
+        }
         timeformat = '%H:%M:%S'
         context = {
             'section': section,
