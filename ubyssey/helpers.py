@@ -104,7 +104,9 @@ class ArticleHelper(object):
             ),
         ).filter(
             head=1,
-            is_published=is_published
+            is_published=is_published,
+            # See this link for why you can do this instead of SQL joining: https://docs.djangoproject.com/en/3.0/topics/db/queries/#lookups-that-span-relationships
+            # section__slug=
         ).exclude(
             parent_id__in=exclude
         ).order_by(
