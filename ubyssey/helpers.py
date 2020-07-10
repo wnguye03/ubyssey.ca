@@ -314,6 +314,8 @@ class SubsectionHelper(object):
         #Subsection.object.annotate(
         #    published_at=
         #).filter(
+        #).order_by(
+        #   'published_at'
         #)
 
         query = """
