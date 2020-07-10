@@ -74,7 +74,7 @@ env = environ.Env(
 
     # Time zone defaults
     USE_TZ=(bool,True),
-    TIME_ZONE=(str,'America/Vancouver'),
+    TIME_ZONE=(str,'Canada/Pacific'),
 
     # Database defaults:
     SQL_HOST = (str, 'db'),
