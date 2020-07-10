@@ -312,10 +312,13 @@ class SubsectionHelper(object):
         }
 
         #Subsection.object.annotate(
-        #    published_at=
+        #    published_at=Max(published_at)
         #).filter(
+        #    is_active=1,
+        #    section_id=1,    
+        #    article__is_published=1
         #).order_by(
-        #   'published_at'
+        #    'published_at'
         #)
 
         query = """
