@@ -311,6 +311,11 @@ class SubsectionHelper(object):
             'section_id': section.id
         }
 
+        #Subsection.object.annotate(
+        #    published_at=
+        #).filter(
+        #)
+
         query = """
             SELECT dispatch_subsection.id, MAX(dispatch_article.published_at) as published_at
             FROM dispatch_subsection
