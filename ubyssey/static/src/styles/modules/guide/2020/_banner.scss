@@ -68,25 +68,27 @@
 }
 
 .c-banner--welcome__intro {
-  font-size: 1.5em;
-  text-transform: uppercase;
   color: $color-white;
-  letter-spacing: 0.48px;
+  font-family: $header-font;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
   margin-bottom: 1em;
   @media (max-width: 600px) {
-    font-size: 1.1em;
+    //font-size: 1.1em;
   }
 }
 
 .c-banner--welcome__snippet {
-  font-style: italic;
-  margin-top: 10%;
-  font-size: 4em;
   color: $color-white;
-  letter-spacing: 0.36px;
-  line-height: 22px;
+  font-family: $accent-font;
+  margin-top: 5%;
+  font-size: 72px;
+  line-height: 77px;
+  text-transform: uppercase;
   @media (max-width: 600px) {
-    font-size: 2.5em;
+    //font-size: 2.5em;
   }
 }
 

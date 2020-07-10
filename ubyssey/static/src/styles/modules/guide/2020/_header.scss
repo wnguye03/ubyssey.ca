@@ -19,14 +19,19 @@
     }
 
     .c-nav-ubyssey{
-        width: 145px;
+        width: 166px;
         left: 0;
         text-align: left;
-        margin: auto 0 auto 0.8rem;
+        margin: auto 0 auto 2rem;
+        text-transform: uppercase;
         height: 26px;
+        font-family: Montserrat;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
         &:hover{
             a{
-                font-weight: bold;
+                font-size: 22px;
             }
         }
         @media($bp-smaller-than-mobile) {
@@ -49,7 +54,7 @@
     }
 
     #c-nav-home{
-        margin:auto;
+        margin: auto 0 auto 78%;
         display: inline-block;
         position:relative;
         .c-home-more{

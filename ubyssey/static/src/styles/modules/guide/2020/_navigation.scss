@@ -2,6 +2,9 @@
   margin-top: 30px;
 
     display: flex;
+    @media ($bp-smaller-than-mobile) {
+      display: block;
+    }
     flex-wrap: wrap;
     align-items: stretch;
 }
@@ -24,10 +27,22 @@
     line-height: 26px;
     text-transform: uppercase;
     margin-bottom: 5px;
+    @media ($bp-smaller-than-mobile) {
+      font-size: 1.4em;
+    }
+    @media ($bp-smaller-than-tablet) {
+      font-size: 1.2em;
+    }
   }
 
   li {
     line-height: 1.2em;
+    @media ($bp-smaller-than-mobile) {
+      font-size: 1.7em;
+    }
+    @media ($bp-smaller-than-tablet) {
+      font-size: 1.3em;
+    }
     a {
       color: $color-white;
       text-decoration: none;
