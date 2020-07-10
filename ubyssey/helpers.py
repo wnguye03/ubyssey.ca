@@ -79,7 +79,11 @@ class ArticleHelper(object):
         return ad_placements
 
     @staticmethod
-    def tmp_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+    def get_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+
+        if section is not None:
+            sections.append(section)
+
         reading_times = {
             'morning_start': '9:00:00',
             'midday_start': '11:00:00',
@@ -105,8 +109,7 @@ class ArticleHelper(object):
         ).filter(
             head=1,
             is_published=is_published,
-            # See this link for why you can do this instead of SQL joining: https://docs.djangoproject.com/en/3.0/topics/db/queries/#lookups-that-span-relationships
-            # section__slug=
+            section__slug__in=sections # See this link for why you can do this instead of SQL joining: https://docs.djangoproject.com/en/3.0/topics/db/queries/#lookups-that-span-relationships
         ).exclude(
             parent_id__in=exclude
         ).order_by(
@@ -114,104 +117,6 @@ class ArticleHelper(object):
         )[:limit]
         
         return list(articles)
-
-
-    @staticmethod
-    def get_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
-
-        if is_published:
-            is_published = 1
-        else:
-            is_published = 0
-
-        reading_times = {
-           'morning_start': '9:00:00',
-           'midday_start': '11:00:00',
-           'midday_end': '16:00:00',
-           'evening_start': '16:00:00',
-        }
-        timeformat = '%H:%M:%S'
-        context = {
-            'section': section,
-            'excluded': ",".join(map(str, exclude)),
-            'sections': ",".join(sections),
-            'limit': limit,
-            'is_published': is_published,
-            'max_days': max_days
-        }
-
-        context.update(reading_times)
-
-
-        # https://docs.djangoproject.com/en/3.0/topics/db/queries/
-        # articles = Article.objects.annotate(
-        #   age = F(published-at) - F(SOMETHING OR OTHER), 
-        # # "now" will depend on pytz, which is already dependency, and its time zone options
-        # # https://stackoverflow.com/questions/8809765/need-to-convert-utc-aws-ec2-to-pst-in-python
-        #   reading = 
-        #   is_recent_article = 
-        # )
-        #
-        articles = Article.objects.annotate(
-            age = ExpressionWrapper(
-                F('published_at') - timezone.now(),
-                output_field=DurationField()
-            ),
-            reading = Case( 
-                When(reading_time='morning', then=1.0 if timezone.now().time() < datetime.strptime(reading_times['morning_start'],timeformat).time() else 0.0),
-                When(reading_time='midday', 
-                    then=1.0 if (
-                        timezone.now().time() >= datetime.strptime(reading_times['midday_start'],timeformat).time() and timezone.now().time() < datetime.strptime(reading_times['midday_start'],timeformat).time()
-                    )  else 0.0),
-                When(reading_time='evening', then=1.0 if timezone.now().time() <= datetime.strptime(reading_times['evening_start'],timeformat).time() else 0.0),
-                default = Value(0.5),
-                output_field=FloatField()
-            ),
-            #is_recent_article = ExpressionWrapper(
-            #    (F('published_at') - (timezone.now() - timedelta(days=max_days))) > 0
-            #    output_field=BooleanField()
-            #),
-            #articles = articles.annotate(is_recent_article=Case(When(F('published_at') > max_days_ago, then=Value(true)),default=Value(false)))
-        )
-
-
-        query = """
-            SELECT *, TIMESTAMPDIFF(SECOND, published_at, NOW()) as age,
-            CASE reading_time
-                 WHEN 'morning' THEN IF( CURTIME() < %(morning_start)s, 1, 0 )
-                 WHEN 'midday'  THEN IF( CURTIME() >= %(midday_start)s AND CURTIME() < %(midday_end)s, 1, 0 )
-                 WHEN 'evening' THEN IF( CURTIME() >= %(evening_start)s, 1, 0 )
-                 ELSE 0.5
-            END as reading,
-            TIMESTAMPDIFF(DAY, published_at, NOW()) <= %(max_days)s as is_recent_article
-            FROM dispatch_article
-        """
-        # articles = articles.filter()
-        articles = articles.filter(
-            head=1,
-            is_published=1
-        )
-        query_where = """
-            WHERE head = 1 AND
-            is_published = %(is_published)s AND
-            parent_id NOT IN (%(excluded)s)
-        """
-
-        if section is not None:
-            query += """
-                INNER JOIN dispatch_section on dispatch_article.section_id = dispatch_section.id AND dispatch_section.slug = %(section)s
-            """
-        elif sections:
-            query_where += "AND section_id in (SELECT id FROM dispatch_section WHERE FIND_IN_SET(slug,%(sections)s))"
-
-        # Should correspond to:
-        # articles = articles.order_by()
-        query += query_where + """
-            ORDER BY is_recent_article DESC, reading DESC, ( age * ( 1 / ( 4 * importance ) ) ) ASC
-            LIMIT %(limit)s
-        """
-        
-        return list(Article.objects.raw(query, context))
 
     @staticmethod
     def get_frontpage_sections(exclude=None):
