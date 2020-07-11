@@ -118,9 +118,9 @@ class Guide2020(object):
                 'title': self.title,
                 'url': reverse('guide-landing', kwargs={'year': self.year}),
             },
+            'subsection': subsection,
             'year': self.year,
             'articles': {
-                
                 'academics': academics,
                 'ubc': ubc,
                 'adulting': adulting,

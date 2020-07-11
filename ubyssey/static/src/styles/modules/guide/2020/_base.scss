@@ -10,3 +10,29 @@ body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
 }
+
+.quote{
+  color: $color-white;
+  font-family: $quote-font;
+  font-size: $quote-size;
+  font-weight: $quote-weight;
+  line-height: 29px;
+
+  @media($bp-smaller-than-mobile) {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+
+.source{
+  color: $color-white;
+  font-family: $credit-font;
+  font-style: $credit-style;
+  font-size: $credit-size;
+  line-height: 24px;
+  @media($bp-smaller-than-mobile) {
+    font-size: 10px;
+    line-height: 13px;
+  }
+}

@@ -1,41 +1,41 @@
-<footer id="c-footer">
+<footer class="c-footer{% if subsection %} __{{ subsection }}{% endif %}">
   <div class="o-container">
     <div class="o-wrapper">
       <a class="o-logo--small" href="{% url 'guide-landing' 2020 %}"></a>
       <nav class="c-nav-footer">
-        <div class="c-nav-footer__column">
+        <div class="c-nav-footer__column" id="footer-academics">
           <h2>Academics</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'Academics' 'ams' %}">ams</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Academics' 'clubs' %}">clubs</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Academics' 'greek-life' %}">fraternities &amp; sororities</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Academics' 'traditions' %}">ubc traditions</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Academics' 'sports' %}">sports</a></li>
+            <li><a href="{% url 'guide-article' 2020 'academics' 'ams' %}">ams</a></li>
+            <li><a href="{% url 'guide-article' 2020 'academics' 'clubs' %}">clubs</a></li>
+            <li><a href="{% url 'guide-article' 2020 'academics' 'greek-life' %}">fraternities &amp; sororities</a></li>
+            <li><a href="{% url 'guide-article' 2020 'academics' 'traditions' %}">ubc traditions</a></li>
+            <li><a href="{% url 'guide-article' 2020 'academics' 'sports' %}">sports</a></li>
           </ul>
         </div>
-        <div class="c-nav-footer__column">
+        <div class="c-nav-footer__column" id="footer-ubc">
           <h2>UBC</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'UBC' 'study-tips' %}">study tips</a></li>
-            <li><a href="{% url 'guide-article' 2020 'UBC' 'professors' %}">professors</a></li>
-            <li><a href="{% url 'guide-article' 2020 'UBC' 'the-basics' %}">the basics</a></li>
-            <li><a href="{% url 'guide-article' 2020 'UBC' 'studying-abroad' %}">studying abroad</a></li>
-            <li><a href="{% url 'guide-article' 2020 'UBC' 'dates' %}">dates to know</a></li>
+            <li><a href="{% url 'guide-article' 2020 'ubc' 'study-tips' %}">study tips</a></li>
+            <li><a href="{% url 'guide-article' 2020 'ubc' 'professors' %}">professors</a></li>
+            <li><a href="{% url 'guide-article' 2020 'ubc' 'the-basics' %}">the basics</a></li>
+            <li><a href="{% url 'guide-article' 2020 'ubc' 'studying-abroad' %}">studying abroad</a></li>
+            <li><a href="{% url 'guide-article' 2020 'ubc' 'dates' %}">dates to know</a></li>
           </ul>
         </div>
-        <div class="c-nav-footer__column">
+        <div class="c-nav-footer__column" id="footer-adulting">
           <h2>Adulting</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'finding-a-job' %}">finding a job</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'friends' %}">friends</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'love-and-sex' %}">love &amp; sex</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'exercising' %}">exercising</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'finding-a-roomie' %}">finding a roommate</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'financial-tips' %}">financial tips</a></li>
-            <li><a href="{% url 'guide-article' 2020 'Adulting' 'cooking-at-home' %}">cooking at home</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'finding-a-job' %}">finding a job</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'friends' %}">friends</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'love-and-sex' %}">love &amp; sex</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'exercising' %}">exercising</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'finding-a-roomie' %}">finding a roommate</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'financial-tips' %}">financial tips</a></li>
+            <li><a href="{% url 'guide-article' 2020 'adulting' 'cooking-at-home' %}">cooking at home</a></li>
           </ul>
         </div>
-        <div class="c-nav-footer__column">
+        <div class="c-nav-footer__column" id="footer-sdp">
           <h2>Sex, Drugs, Party</h2>
           <ul>
             <li><a href="{% url 'guide-article' 2020 'sdp' 'greater-vancouver' %}">greater vancouver</a></li>
@@ -45,21 +45,21 @@
             <li><a href="{% url 'guide-article' 2020 'sdp' 'drugs' %}">drugs</a></li>
           </ul>
         </div>
-        <div class="c-nav-footer__column">
+        <div class="c-nav-footer__column" id="footer-vancouver">
           <h2>Vancouver</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'Vancouver' 'ubyssey' %}">about us</a></li>
+            <li><a href="{% url 'guide-article' 2020 'vancouver' 'ubyssey' %}">about us</a></li>
           </ul>
         </div>
       </nav>
-      <div id="c-footer__social">
+      <div class="c-footer__social">
         <ul>
           <li><a class = "facebook-icon" href="https://www.facebook.com/ubyssey" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
           <li><a class = "instagram-icon" href="https://www.instagram.com/ubyssey/" target="_blank"><i class="fa fa-instagram"></i></a></li>
           <li><a class = "twitter-icon" href="https://twitter.com/Ubyssey" target="_blank"><i class="fa fa-twitter"></i></a></li>
         </ul>
       </div>
-      <div id="c-footer__copyright">© The Ubyssey</div>
+      <div class="c-footer__copyright">© The Ubyssey</div>
     </div>
   </div>
 </footer>

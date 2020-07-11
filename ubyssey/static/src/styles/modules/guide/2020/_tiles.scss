@@ -7,9 +7,12 @@
 }
 
 .c-tile {
+  &.c-tile--3{
+    margin: 20px;
+  }
   flex: 1 0;
   display: block;
-
+  //margin: 20px;
   background-position: center;
   background-size: cover;
 
@@ -80,8 +83,7 @@
     }
 
     &--3 {
-      flex-basis: 50%;
-
+      
       .c-tile__container {
         align-items: center;
         margin: 0 auto;

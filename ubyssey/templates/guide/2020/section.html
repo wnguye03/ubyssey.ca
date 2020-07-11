@@ -5,38 +5,44 @@
 <div class="c-banner c-banner--welcome">
     <div class="c-banner__container">
       <div class="c-banner--welcome__inner">
-        <h2 class="c-banner--welcome__intro">The Ubyssey presents</h2>
-        <p class="c-banner--welcome__snippet">Guide To UBC</p>
+        <h2 class="c-banner--welcome__intro">Welcome To</h2>
+        <p class="c-banner--welcome__snippet">{{ subsection }}</p>
       </div>
     </div>
   </div>
 
 <main class="section-grid-container">
-  <div id="section--academics">
-    {% for article in articles.academics %}
-      {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
-    {% endfor %}
-  </div>
-  <div id="section--ubc">
-    {% for article in articles.ubc %}
-      {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
-    {% endfor %}
-  </div>
-  <div id="section--adulting">
-    {% for article in articles.adulting %}
-      {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
-    {% endfor %}
-  </div>
-  <div id="section--sdp">
-    {% for article in articles.sdp %}
-      {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
-    {% endfor %}
-  </div>
-  <div id="section--vancouver">
-    {% for article in articles.vancouver %}
-      {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
-    {% endfor %}
-  </div>
+  {% if subsection == 'academics' %}
+    <div id="section--academics">
+      {% for article in articles.academics %}
+        {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
+      {% endfor %}
+    </div>
+  {% elif subsection == 'ubc' %}
+    <div id="section--ubc">
+      {% for article in articles.ubc %}
+        {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
+      {% endfor %}
+    </div>
+  {% elif subsection == 'adulting' %}
+    <div id="section--adulting">
+      {% for article in articles.adulting %}
+        {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
+      {% endfor %}
+    </div>
+  {% elif subsection == 'sdp' %}
+    <div id="section--sdp">
+      {% for article in articles.sdp %}
+        {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
+      {% endfor %}
+    </div>
+  {% elif subsection == 'vancouver' %}
+    <div id="section--vancouver">
+      {% for article in articles.vancouver %}
+        {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
+      {% endfor %}
+    </div>
+  {% endif %}
 </main>
 
 {% endblock %}

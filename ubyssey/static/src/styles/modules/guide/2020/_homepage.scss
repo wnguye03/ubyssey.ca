@@ -21,11 +21,14 @@
         letter-spacing: 1px;
         h1{
           text-transform: uppercase;
+          font-weight: medium;
+          font-family: $header-font;
           text-align: right;
         }
         h2{
           font-weight: 300;
           text-align: right;
+          font-family: roboto, sans-serif;
         }
       }
     }
@@ -42,6 +45,9 @@
       padding: 8% 18%;
       @media($bp-smaller-than-tablet) {
         padding: 8% 5%;
+      }
+      p{
+        padding: 5% 18%;
       }
       &__nav{
         position: absolute;
@@ -109,99 +115,135 @@
     }
   }
 
-  .panel-quote{
-    margin-top: 5%;
-    @media ($bp-smaller-than-mobile){
-      margin-bottom: 5%;
-    }
-    &.__1-{
-      &container{
-        &-text{
-          background-color: $color-vancouver;
-          width: 55%;
-          margin-left: 45%;
-          height: 260px;
-          position: relative;
-          @media($bp-smaller-than-tablet) {
-            margin-left: 40%;
-          }
-        }
-        &-image{
-          position: absolute;
-          margin-top: -200px;
-          left: -45%;
-          z-index: 100;
-          width: 50%;
-          img{
-            height: 400px;
-            width: 100%;
-          }
-          @media($bp-smaller-than-tablet) {
-            margin-left: -22%;
-          }
-        }
-      }
-      &text{
-        height:55%;
-        overflow: hidden;
-        padding: 5% 15%;
-        &__source{
-          position: absolute;
-          bottom: 15%;
-          right: 10%;
-        }
-      }    
-    }
-
-    &.__2-{
-      &container{
-        &-text{
-          background-color: $color-adulting;
-          width: 70%;
-          height: 200px;
-          position: relative;
-        }
-        &-image{
-          position: absolute;
-          margin-top: -350px;
-          right: -37%;
-          z-index: 100;
-          width: 40%;
-          img{
-            height: 500px;
-            width: 100%;
-          }
-          @media($bp-smaller-than-tablet) {
-            margin-right: -30%;
-          }
-        }
-      }
-      &text{
-        height: 50%;
-        overflow: hidden;
-        padding: 3% 5%;
-        &__quote{
-          color: $color-white;
-          font-family: $quote-font;
-          font-size: $quote-size;
-          font-weight: $quote-weight;
-          line-height: 29px;
-        }
-        &__source{
-          color: $color-white;
-          font-family: $credit-font;
-          font-style: $credit-style;
-          font-size: $credit-size;
-          line-height: 24px;
-          position: absolute;
-          bottom: 10%;
-          right: 10%;
-        }
-      }
-    }
-
+.home-content{
+  .title{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: $header-size;
+    font-family: $header-font;
+    font-weight: $header-weight;
+    line-height: 68px;
     @media($bp-smaller-than-tablet){
-      &.__1-, &.__2-{
+      font-size: 2.5em;
+    }
+  }
+  p{
+    padding: 5% 15%;
+    line-height: 23px;
+    font-family: $text-font;
+    font-size: $text-size;
+    @media($bp-smaller-than-mobile){
+      margin-bottom: 50px;
+    }
+  }
+  &__nav{
+    font-family: $accent-font;
+    font-size: $accent-size;
+    line-height: 26px;
+    text-transform: lowercase;
+    text-decoration: none!important;
+    color: black;
+    transition: 0.1s;
+    &:hover{
+      font-weight: bold;
+      font-size: $accent-size + 1;
+    }
+  }
+}
+
+.panel-quote{
+  margin-top: 5%;
+  @media ($bp-smaller-than-mobile){
+    margin-bottom: 5%;
+  }
+  &.__1-{
+    &container{
+      &-text{
+        background-color: $color-vancouver;
+        width: 55%;
+        margin-left: 45%;
+        height: 260px;
+        position: relative;
+        @media($bp-smaller-than-tablet) {
+          margin-left: 40%;
+        }
+      }
+      &-image{
+        position: absolute;
+        margin-top: -200px;
+        left: -45%;
+        z-index: 100;
+        width: 50%;
+        margin-bottom: 7%;
+        img{
+          height: auto;
+          width: 100%;
+        }
+        @media($bp-smaller-than-tablet) {
+          margin-left: -22%;
+        }
+      }
+    }
+    &text{
+      height:55%;
+      overflow: hidden;
+      padding: 5% 15%;
+      &__.source{
+        position: absolute;
+        bottom: 15%;
+        right: 10%;
+      }
+    }    
+  }
+
+  &.__2-{
+    &container{
+      &-text{
+        background-color: $color-adulting;
+        width: 70%;
+        height: 200px;
+        position: relative;
+      }
+      &-image{
+        position: absolute;
+        right: -37%;
+        z-index: 100;
+        width: 40%;
+        margin-bottom: 5%;
+        img{
+          height: auto;
+          width: 100%;
+        }
+        @media($bp-smaller-than-tablet) {
+          margin-right: -30%;
+        }
+      }
+    }
+    &text{
+      height: 50%;
+      overflow: hidden;
+      padding: 3% 5%;
+      &__.quote{
+        margin-top: 0;
+      }
+      &__.source{
+        position: absolute;
+        bottom: 10%;
+        right: 10%;
+      }
+    }
+  }
+
+    &.__1-, &.__2-{
+      @media($bp-larger-than-tablet){
+        &container{
+          &-image{
+            top: auto;
+            bottom: 0;
+          }
+        }
+      }
+      @media($bp-smaller-than-tablet){
         &container{
           &-text{
             width: 60%;
@@ -216,10 +258,8 @@
           }
         }
       }
-    }
 
-    @media($bp-smaller-than-mobile){
-      &.__1-, &.__2-{
+      @media($bp-smaller-than-phablet){
         &container{
           &-text{
             width: 100%;
@@ -231,53 +271,7 @@
           }
         }
       }
-    }
 
-  }
-
-  .home-content{
-    .title{
-      text-align: center;
-      text-transform: uppercase;
-      font-size: $header-size;
-      font-family: $header-font;
-      font-weight: $header-weight;
-      line-height: 68px;
-      @media($bp-smaller-than-tablet){
-        font-size: 2.5em;
-      }
-    }
-    p{
-      padding: 5% 15%;
-      line-height: 23px;
-      font-family: $text-font;
-      font-size: $text-size;
-    }
-    &__nav{
-      font-family: $accent-font;
-      font-size: $accent-size;
-      line-height: 26px;
-      text-transform: lowercase;
-    }
-  }
-}
-
-.section-grid-container{
-  #section--{
-    &academics{
-      display: none;
-    }
-    &ubc{
-      display: none;
-    }
-    &adulting{
-      display: none;
-    }
-    &sdp{
-      display: none;
-    }
-    &vancouver{
-      display: none;
     }
   }
 }

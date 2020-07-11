@@ -1,5 +1,5 @@
-#c-footer {
-  display: none;
+.c-footer {
+  display: flex;
   background-color: $color-home;
   padding-top: 3%;
   margin-top: 5%;
@@ -34,4 +34,86 @@
       text-decoration: none;
     }
   }
+
+  &.__academics{
+    background-color: $color-academics;
+  }
+  &.__vancouver{
+      background-color: $color-vancouver;
+  }
+  &.__sdp{
+      background-color: $color-sdp;
+  }
+  &.__adulting{
+      background-color: $color-adulting;
+  }
+  &.__ubc{
+      background-color: $color-ubc;
+  }
 }
+
+.c-nav-footer {
+  margin-top: 30px;
+
+    display: flex;
+    @media ($bp-smaller-than-mobile) {
+      display: block;
+    }
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.c-nav-footer__column {
+  flex-basis: 50%;
+  margin-bottom: 30px;
+
+  @media($bp-larger-than-tablet) {
+    flex: 1;
+    flex-basis: auto;
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-white;
+    letter-spacing: 0.45px;
+    line-height: 26px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    @media ($bp-smaller-than-mobile) {
+      font-size: 1.4em;
+    }
+    @media ($bp-smaller-than-tablet) {
+      font-size: 1.2em;
+    }
+  }
+
+  li {
+    line-height: 1.2em;
+    @media ($bp-smaller-than-mobile) {
+      font-size: 1.7em;
+    }
+    @media ($bp-smaller-than-tablet) {
+      font-size: 1.3em;
+    }
+    a {
+      color: $color-white;
+      text-decoration: none;
+      font-size: 0.8em;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media($bp-smaller-than-mobile) {
+    &#footer-{
+      &academics,&vancouver,&adulting,&sdp,&ubc{
+        display: none;
+      }
+    }
+  }
+}
+
