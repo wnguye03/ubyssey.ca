@@ -12,7 +12,13 @@
   </div>
 
 <main class="section-grid-container">
-  {% if subsection == 'academics' %}
+    <!-- {% include 'guide/2020/box.html' with type=1 where=left title=article.headline url=article.url image=article.featured_image %} -->
+    {% include 'guide/2020/box.html' with type=1 title='Title' url=article.url image='https://lh6.ggpht.com/HlgucZ0ylJAfZgusynnUwxNIgIp5htNhShF559x3dRXiuy_UdP3UQVLYW6c' %}
+    <div class="section-title"><p>What are you looking for ?</p></div>
+    {% include 'guide/2020/box.html' with type=2 title='Title' url=article.url image='https://lh6.ggpht.com/HlgucZ0ylJAfZgusynnUwxNIgIp5htNhShF559x3dRXiuy_UdP3UQVLYW6c' %}
+    {% include 'guide/2020/box.html' with type=3 title='Title' url=article.url image='https://lh6.ggpht.com/HlgucZ0ylJAfZgusynnUwxNIgIp5htNhShF559x3dRXiuy_UdP3UQVLYW6c' %}
+    
+  <!-- {% if subsection == 'academics' %}
     <div id="section--academics">
       {% for article in articles.academics %}
         {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
@@ -42,7 +48,7 @@
         {% include 'guide/2020/block.html' with title=article.headline url=article.url image=article.featured_image highlight=True %}
       {% endfor %}
     </div>
-  {% endif %}
+  {% endif %} -->
 </main>
 
 {% endblock %}
