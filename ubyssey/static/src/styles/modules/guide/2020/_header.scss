@@ -22,20 +22,19 @@
         position: absolute;
         width: 166px;
         left: 40px;
-        top: 14px;
+        top: 1em;
         text-align: center;
         text-transform: uppercase;
         height: 26px;
-        font-family: Montserrat;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 22px;
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
         a{
             transition: 0.1s;
         }
         &:hover{
             a{
-                font-size: 22px;
+                font-size: 1.1rem;
             }
         }
         @media($bp-smaller-than-mobile) {
@@ -63,17 +62,23 @@
               display: block;
               margin: 0 auto 0 auto;
               clear: left;
-              line-height: 1.8;
+              line-height: 2;
               padding: 0;
               width:100%;
               text-align: center;
-              &:hover {
-                font-weight: bold;
-                font-size: 1.05em;
-              } 
+              @media($bp-smaller-than-mobile){
+                  line-height: 2.5;
+              }
+              
               a{
                 height:40px;
                 display: block;
+                font-family: $accent-font;
+                font-size: $accent-size;
+                &:hover {
+                    font-weight: bold;
+                    font-size: 1.05em;
+                  } 
                }
             }
             #academics{

@@ -71,32 +71,28 @@
   color: $color-white;
   font-family: $header-font;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 1rem;
+  line-height: 1.2rem;
   text-transform: uppercase;
   margin-bottom: 1em;
-  @media ($bp-smaller-than-mobile) {
-    font-size: 14px;
-    line-height: 30px;
-  }
 }
 
 .c-banner--welcome__snippet {
   color: $color-white;
   font-family: $accent-font;
   margin-top: 5%;
-  font-size: 72px;
-  line-height: 77px;
+  font-size: 4rem;
+  line-height: 4.3rem;
   text-transform: uppercase;
-  @media ($bp-smaller-than-tablet) {
-    font-size: 40px;
-    line-height: 26px;
-    margin-top: 10%;
-  }
+  // @media ($bp-smaller-than-tablet) {
+  //   font-size: 40px;
+  //   line-height: 26px;
+  //   margin-top: 10%;
+  // }
   @media ($bp-smaller-than-mobile) {
     margin-top: 5%;
-    font-size: 40px;
-    line-height: 26px;
+    font-size: 3rem;
+    line-height: 3rem;
   }
 }
 

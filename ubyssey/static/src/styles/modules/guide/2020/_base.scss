@@ -1,11 +1,15 @@
 html, body {
   padding: 0;
   margin: 0;
+  font-size: 18px;
+  @media($bp-smaller-than-mobile) {
+    font-size: 14px;
+  }
 }
 
 body {
   font-family: $font-secondary;
-  font-size: 18px;
+  font-size: 1rem;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
@@ -16,12 +20,7 @@ body {
   font-family: $quote-font;
   font-size: $quote-size;
   font-weight: $quote-weight;
-  line-height: 29px;
-
-  @media($bp-smaller-than-mobile) {
-    font-size: 12px;
-    line-height: 15px;
-  }
+  line-height: 1.6rem;
 }
 
 
@@ -30,9 +29,5 @@ body {
   font-family: $credit-font;
   font-style: $credit-style;
   font-size: $credit-size;
-  line-height: 24px;
-  @media($bp-smaller-than-mobile) {
-    font-size: 10px;
-    line-height: 13px;
-  }
+  line-height: 1.3rem;
 }

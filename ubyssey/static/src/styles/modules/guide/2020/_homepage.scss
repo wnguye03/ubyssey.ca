@@ -122,31 +122,29 @@
     font-size: $header-size;
     font-family: $header-font;
     font-weight: $header-weight;
-    line-height: 68px;
-    @media($bp-smaller-than-tablet){
-      font-size: 2.5em;
-    }
+    line-height: 3.8rem;
   }
   p{
     padding: 5% 15%;
-    line-height: 23px;
+    line-height: 1.3rem;
     font-family: $text-font;
     font-size: $text-size;
     @media($bp-smaller-than-mobile){
       margin-bottom: 50px;
+      padding: 5% 15%;
     }
   }
   &__nav{
     font-family: $accent-font;
     font-size: $accent-size;
-    line-height: 26px;
+    line-height: 1.4rem;
     text-transform: lowercase;
     text-decoration: none!important;
     color: black;
     transition: 0.1s;
     &:hover{
       font-weight: bold;
-      font-size: $accent-size + 1;
+      font-size: $accent-size + 0.1rem;
     }
   }
 }

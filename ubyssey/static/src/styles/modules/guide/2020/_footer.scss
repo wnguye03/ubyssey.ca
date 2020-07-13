@@ -74,11 +74,11 @@
   }
 
   h2 {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: bold;
     color: $color-white;
     letter-spacing: 0.45px;
-    line-height: 26px;
+    line-height: 1.4rem;
     text-transform: uppercase;
     margin-bottom: 5px;
     @media ($bp-smaller-than-mobile) {
