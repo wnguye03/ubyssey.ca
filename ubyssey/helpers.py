@@ -79,10 +79,7 @@ class ArticleHelper(object):
         return ad_placements
 
     @staticmethod
-    def get_frontpage(section=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
-
-        if section is not None:
-            sections.append(section)
+    def get_frontpage(sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         reading_times = {
             'morning_start': '9:00:00',
