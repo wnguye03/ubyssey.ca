@@ -21,14 +21,13 @@
         letter-spacing: 1px;
         h1{
           text-transform: uppercase;
-          font-weight: medium;
           font-family: $header-font;
           text-align: right;
         }
         h2{
           font-weight: 300;
           text-align: right;
-          font-family: roboto, sans-serif;
+          font-family: $header-font;
         }
       }
     }

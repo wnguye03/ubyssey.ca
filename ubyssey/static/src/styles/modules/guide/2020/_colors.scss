@@ -4,7 +4,9 @@ $color-academics: #FBCC80;
 $color-sdp: #E2BEB0;
 $color-vancouver: #EA8392;
 $color-ubc: #002145;
-
+.__home{
+    background-color: $color-home;
+}
 .__academics{
     background-color: $color-academics;
 }
