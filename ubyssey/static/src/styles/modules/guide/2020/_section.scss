@@ -23,21 +23,21 @@ $row-height400-end: 10;
 $row-height450-end: 11;
 
 $margin-size: 10px;
+@media($bp-smaller-than-tablet){
+    $margin-size: 5px;
+}
 
-.section-grid-container{
-    //display: flex;
+.section-grid-container {
     .section-title{
         width: 100%;
         font-family: $header-font;
         font-weight: $header-weight;
         text-transform: uppercase;
-        font-size: 4vw;
-        line-height: 5vw;
     }
-    .quote-box{
+
+    .quote-box-content{
         &.-container{
             width: 100%;
-            height: 200px;
             margin: 0;
             position: relative;
         }
@@ -49,66 +49,12 @@ $margin-size: 10px;
         
         &.source{
             position: absolute;
-            bottom: 0;
+            bottom: 10%;
             right: 5%;
         }
     }
-
-    .article-box{
-
-    }
-    .article-box{
-        &-container{
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        
-        &-gradient{
-            &:before{
-                content: '';
-                width: 100%;
-                position: absolute;
-                bottom: 0;
-                top: 0;
-                z-index: 10;
-                pointer-events: none;
-                background-image: linear-gradient(-180deg, transparent 0%, rgba(0, 0, 0, 0.3) 99%);
-            }
-            &:after{
-                content: '';
-                display: block;
-            }
-        }
-        &__nav-content{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            text-align: center;
-            font-family: $accent-font;
-            font-size: 2.5rem;
-            line-height: 1em;
-            letter-spacing: 0.2rem;
-            text-transform: lowercase;
-            text-decoration: none!important;
-            color: white;
-            transition: 0.1s;
-            
-            p{
-                text-align: center;
-                position: absolute;
-                top: 45%;
-                width: 100%;
-            }
-
-            &:hover{
-                font-weight: bold;
-                font-size: 2.5 + 0.1rem;
-            }
-        }
-    }
 }
+
 @media($bp-larger-than-tablet){
     .section-grid-container {
         display: grid;
@@ -217,19 +163,14 @@ $margin-size: 10px;
 
         .quote-box{
             margin: $margin-size;
-            &.-container{
-                width: 100%;
-                height: 95%;
-                margin: 0;
-                position: relative;
+            &-content{
+                &.-container{
+                    width: 100%;
+                    height: 95%;
+                    margin: 0;
+                    position: relative;
+                }
             }
-            
-            &.source{
-                position: absolute;
-                bottom: 0;
-                right: 5%;
-            }
-
             &.__type-{
                 &1{
                     grid-column-start: $normal-column-right-start;
@@ -237,7 +178,6 @@ $margin-size: 10px;
 
                     &.quote{
                         height: 70%;
-                        padding: 3% 3%;
                     }
                 }
                 &2{
@@ -252,7 +192,7 @@ $margin-size: 10px;
                     grid-column-start: $normal-column-left-start;
                     grid-column-end: $normal-column-left-end;
                 }
-                
+                    
 
                 &1{
                     grid-row-start: 12;
@@ -287,3 +227,41 @@ $margin-size: 10px;
     }
 }
 
+@media($bp-smaller-than-tablet){
+    .section-grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: minmax(3.5vw, auto);
+        .section-title{
+            height: 20vw;
+            grid-column: 1 / 3;
+            font-size: 5vw;
+            line-height: 5vw;
+            p{
+                text-align: center;
+                margin-top: 9%;
+            }
+        }
+        .article-box{
+            margin: $margin-size;
+            height: 40vw;
+            &.__type-{
+                &1,&4,&9,&14,&17{
+                    grid-column: 1 / 3;
+                }
+                &2,&5,&7,&10,&12,&15{
+                    grid-column: 1;
+                }
+                &3,&6,&8,&11,&13,&16{
+                    grid-column: 2;
+                }
+            }
+        }
+
+        .quote-box{
+            height: 30vw;
+            margin: $margin-size;
+            grid-column: 1 / 3;
+        }
+    }
+}

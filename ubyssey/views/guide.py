@@ -78,10 +78,13 @@ class Guide2020(object):
 
         for article in articles:
             featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-            
+            url_absolute = article.get_absolute_url()
+            string_to_find = 'guide/'
+            index = url_absolute.find(string_to_find) + len(string_to_find)
+            slug = url_absolute[index: len(url_absolute)-1]
             temp = {
                 'headline': article.headline,
-                'url': article.get_absolute_url(),
+                'slug': slug,
                 'featured_image': featuredImage,
             }
 
@@ -114,12 +117,7 @@ class Guide2020(object):
         vancouver = articles_parse["vancouver"]
         
         context = {
-            'meta': {
-                'title': self.title,
-                'url': reverse('guide-landing', kwargs={'year': self.year}),
-            },
             'subsection': subsection,
-            'year': self.year,
             'articles': {
                 'academics': academics,
                 'ubc': ubc,

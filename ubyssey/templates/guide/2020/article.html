@@ -39,9 +39,9 @@
     <div class="c-up-next__text">What's next?</div>
     <div class="c-up-next__arrow c-up-next__arrow--right"></div>
   </div>
-  <div class="c-tiles">
+  <div class="article-boxes">
     {% for a in next %}
-      {% include 'guide/2020/tile.html' with type='3' title=a.headline subsection=subsection slug=a.slug image=a.featured_image.image.get_absolute_url %}
+      {% include 'guide/2020/article-box.html' with style='article' title=a.headline subsection=subsection slug=a.slug  image=a.featured_image.image.get_absolute_url %}
     {% endfor %}
   </div>
 </main>

@@ -14,14 +14,14 @@
 .c-article__intro{
   &__subheading {
     font-family: $header-font;
-    font-size: $header-size;
+    font-size: 2.5rem;
     font-weight: $header-weight;
     text-transform: uppercase;
-    line-height: 3.8rem;
+    line-height: 3rem;
     letter-spacing: 0.5px;
     margin: 2em 0 1em 0;
     @media($bp-smaller-than-desktop){
-      margin-top: 0;
+      margin: 0.5em;
     }
   }
   &__text{
