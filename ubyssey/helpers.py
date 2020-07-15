@@ -8,8 +8,7 @@ from random import randint, choice
 from django.conf import settings
 from django.http import Http404
 from django.db import connection
-import django.db.models
-from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, Value, When
+from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Subquery, Value, When 
 from django.db.models.aggregates import Count
 
 from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
@@ -304,32 +303,21 @@ class SubsectionHelper(object):
 
     @staticmethod
     def get_subsections(section):
-        context = {
-            'section_id': section.id
-        }
-
-        #Subsection.object.annotate(
-        #    published_at=Max(published_at)
-        #).filter(
-        #    is_active=1,
-        #    section_id=1,    
-        #    article__is_published=1
-        #).order_by(
-        #    'published_at'
-        #)
-
-        query = """
-            SELECT dispatch_subsection.id, MAX(dispatch_article.published_at) as published_at
-            FROM dispatch_subsection
-            INNER JOIN dispatch_article on dispatch_article.subsection_id = dispatch_subsection.id
-            WHERE dispatch_subsection.is_active = 1
-            AND dispatch_subsection.section_id = %(section_id)s
-            AND dispatch_article.is_published = 1
-            GROUP BY dispatch_subsection.id
-            ORDER BY published_at DESC
-        """
-
-        return list(Subsection.objects.raw(query, context))
+        article_query = Article.objects.filter(
+           subsection_id=OuterRef("id"),
+           is_published=True
+        ).order_by(
+            F('published_at').desc(nulls_last=True)
+        )
+        subsection_query = Subsection.objects.annotate(
+            published_at=Subquery(
+                article_query.values('published_at')[:1]
+            )
+        ).filter(
+            is_active=True,
+            section_id=section.id
+        )
+        return list(subsection_query)
 
     @staticmethod
     def get_featured_subsection_articles(subsection, featured_articles):
