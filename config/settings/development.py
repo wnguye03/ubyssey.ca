@@ -38,7 +38,6 @@ TEMPLATES += [
 # TODO: Figure out why this is development only!
 STATICFILES_DIRS += [
     PROJECT_DIR('ubyssey/static/dist'),
-    PROJECT_DIR('service-workers'),
 ]
 
 # TODO: Figure out why this is development only!
