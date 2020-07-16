@@ -28,9 +28,9 @@
     <meta property="fb:pages" content="99164676792" />
     
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% add_version 'css/one-year-later.css' %}" />
-    <link rel="stylesheet" href="{% add_version 'css/food-insecurity.css' %}" />
-    <link rel="stylesheet" href="{% add_version 'css/interactive-map.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/one-year-later.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/food-insecurity.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/interactive-map.css' %}" />
 
     <link rel="canonical" href="{{ meta.url }}">
     <meta name="description" content="{{ meta.description }}" />
@@ -146,7 +146,7 @@
       ga('create', 'UA-2313592-2', 'auto');
       ga('send', 'pageview');
     </script>
-    <script src="{% add_version 'js/one-year-later.js' %}" type="text/javascript"></script>
-    <script src="{% add_version 'js/food-insecurity.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/one-year-later.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/food-insecurity.js' %}" type="text/javascript"></script>
   </body>
 </html>
