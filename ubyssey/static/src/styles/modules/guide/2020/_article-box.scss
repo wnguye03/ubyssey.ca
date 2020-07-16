@@ -55,6 +55,7 @@
       text-decoration: none;
       width: 50%;
       height: 30vw;
+      max-height: 400px;
       @media($bp-smaller-than-tablet){
         width: 95%;
         height: 35vw;
