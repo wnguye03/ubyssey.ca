@@ -44,7 +44,7 @@ class FullWidth(Template):
 class Guide(Template):
     id = 'guide-to-ubc'
     name = 'Guide to UBC'
-    banner_quote = CharField('Banner-quote')
+    banner_quote = CharField('Banner Quote')
     banner_quote_source = CharField('Banner-quote-source')
     subheading = CharField('Sub-heading')
     intro = TextField('Intro text')
@@ -181,4 +181,3 @@ class SoccerNationals(Template):
 
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
     description = TextField('Description', required=True)
-
