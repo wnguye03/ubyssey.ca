@@ -62,8 +62,6 @@ class Guide2020(object):
         self.section5_name = section5_name
 
     def landing(self, request, year):
-
-        """The Guide to UBC landing page."""
         landing_page = 'guide/' + year + '/index.html'
         return render(request, landing_page, {})
     
