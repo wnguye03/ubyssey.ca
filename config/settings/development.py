@@ -39,6 +39,7 @@ TEMPLATES += [
 STATICFILES_DIRS += [
     PROJECT_DIR('ubyssey/static/dist'),
 ]
+STATIC_ROOT = '/workspaces/static'
 
 # TODO: Figure out why this is development only!
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
