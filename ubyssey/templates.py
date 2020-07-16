@@ -44,11 +44,12 @@ class FullWidth(Template):
 class Guide(Template):
     id = 'guide-to-ubc'
     name = 'Guide to UBC'
-
+    banner_quote = CharField('Banner Quote')
+    banner_quote_source = CharField('Banner Quote Source')
     subheading = CharField('Sub-heading')
     intro = TextField('Intro text')
-    next_a = CharField('Up next A')
-    next_b = CharField('Up next B')
+    next_a = CharField('Up next A', required=True)
+    next_b = CharField('Up next B', required=True)
 
 @register.template
 class Magazine(Template):
@@ -200,4 +201,3 @@ class SoccerNationals(Template):
 
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
     description = TextField('Description', required=True)
-

@@ -1,0 +1,32 @@
+<header class = "c-header{% if subsection %} __{{ subsection }}{% else %} __home{% endif %}">
+    <ul class = "c-nav-bar">
+        <li class="c-nav-ubyssey">
+            <a href="https://www.ubyssey.ca">The Ubyssey</a>
+        </li>
+    <li id="c-nav-home">
+      <a class="o-logo--small"></a>
+        <ul class = c-home-more>
+            <li>
+                <a class="header-button __home" href="{% url 'guide-landing' 2020 %}">Home</a>
+            </li>
+            <li>
+                <a class="header-button __academics" href="{% url 'guide-landing-sub' 2020 'academics' %}">Academics</a>
+            </li>
+            <li>
+                <a class="header-button __ubc" href="{% url 'guide-landing-sub' 2020 'ubc' %}">UBC</a>
+            </li>
+            <li>
+                <a class="header-button __adulting" href="{% url 'guide-landing-sub' 2020 'adulting' %}">Adulting</a>
+            </li>
+            <li>
+                <a class="header-button __sdp" href="{% url 'guide-landing-sub' 2020 'sdp' %}">S.D.P</a>
+            </li>
+            <li>
+                <a class="header-button __vancouver" href="{% url 'guide-landing-sub' 2020 'vancouver' %}">Vancouver</a>
+            </li>
+        </ul>
+    </li>
+        <li class="c-nav-current">
+        </li>
+    </ul>
+</header>
