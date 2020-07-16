@@ -1,0 +1,44 @@
+.c-weekly-events {
+  // Structure
+  display: flex;
+
+  @media($bp-smaller-than-phablet){
+    // Structure
+    display: block;
+  }
+}
+
+.c-weekly-events__event {
+  // Structure
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+  
+  @media($bp-smaller-than-phablet) {
+      margin-bottom: 1rem;
+  }
+}
+
+.c-weekly-events__event__day {
+  // Structure
+  padding-bottom: 0.75rem;
+
+  // Text
+  font-size: font-size(14);
+  font-weight: $font-weight-semi-bold;
+  color: $color-text-gray-light;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.5px;
+}

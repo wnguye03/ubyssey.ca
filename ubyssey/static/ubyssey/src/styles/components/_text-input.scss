@@ -1,0 +1,41 @@
+.c-text-input,
+.c-form__input > input[type='text'],
+.c-form__input > input[type='email'],
+.c-form__input > input[type='tel'],
+.c-form__input > textarea {
+  // Structure
+  height: 45px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+
+  // Border
+  border: 1px solid $color-border-gray;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+
+  // Text
+  line-height: 1.5rem;
+  font-size: font-size(16);
+  color: $color-text-black;
+
+  // Extra
+  transition: border-color 0.4s;
+
+  &:focus {
+    // Border
+    border-color: #86c5f9;
+
+    // Extra
+    box-shadow: 0 0 2px 0px rgba(134, 197, 249, 0.15);
+    outline: none;
+  }
+}
+
+.c-form__input > textarea {
+  height: initial;
+}

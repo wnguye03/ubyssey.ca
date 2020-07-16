@@ -1,0 +1,318 @@
+@import '../modules/variables';
+
+$scaleModifier: 1.6;
+$nodeRadius: 10px;
+$nodeThickness: 1px;
+$infoBoxHeight: 200px;
+$infoBoxWidth: 250px;
+$bannerHeight: 80px;
+
+$backgroundColor: rgba(0, 47, 84, 0.89);
+$colorPrimary: white;
+$colorSecondary: black;
+
+.timeline-banner {
+  @media($bp-larger-than-tablet) {
+    padding-top: $bannerHeight;
+  }
+}
+
+.c-timeline {
+  position: fixed;
+  transform: translate3d(0,0,0);
+  left: 0;
+  width: 1px;
+  z-index: 100;
+
+  .t-container {
+    position: relative;
+    top: -$bannerHeight;
+    top: 0;
+    background-color: $colorPrimary;
+    transition: margin .2s;
+    color: $colorPrimary;
+
+    &:hover {
+      margin-left: 0;
+    }
+
+    .t-title {
+      height: 54px;
+      width: 100%;
+      background-color: $backgroundColor;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      .t-bars {
+        width: 100%;
+        height: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .t-bar {
+          width: 20px;
+          height: 2px;
+          border-radius: 1px;
+          background-color: black;
+        }
+      }
+    }
+
+    h3 {
+      font-size: .9rem;
+    }
+    .t-tree-container {
+      overflow: scroll;
+      background-color: white;
+      .t-node-container {
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        background-color: white;
+        border-top: 1px solid white;
+
+        .t-node-mobile-box {
+          display: flex;
+          flex: 1.1;
+          justify-content: center;
+          align-items:center;
+          height: 100%;
+          background-color: $backgroundColor;
+          .c-button{
+            background-color: transparent;
+            min-width: auto;
+          }
+          &:first-child {
+            flex: 3;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0 0px;
+            height: 100%;
+            background-color: white;
+            color: black;
+            box-sizing: content-box;
+          }
+          &:last-child {
+            color: $colorPrimary;
+            font-size: 0.8rem;
+          }
+        }
+
+        .t-node-info {
+          position: relative;
+          padding: 0 10px;
+        }
+        .t-node-date {
+          display: flex;
+          justify-content: center;
+          color: $colorPrimary;
+          margin-bottom: 5px;
+          text-align: left;
+          font-size: 18px;
+          padding: 5px;
+          font-weight: 600;
+          transition: margin .25s;
+          width: 100%;
+          background-color: $backgroundColor;
+        }
+        .t-node-hover {
+          display: none;
+          height: 0px;
+          width: 100%;
+          transition: height .25s;
+        }
+      }
+    }
+  }
+
+  @media($bp-larger-than-tablet) {
+    width: 100%;
+    margin-left: 0px;
+    .t-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      height: $bannerHeight;
+      background: $backgroundColor;
+
+      left: 0;
+
+      .t-title {
+        height: auto;
+        width: auto;
+        background-color: transparent;
+        h1 {
+          position: relative;
+          margin-left: 0;
+        }
+      }
+
+      .t-tree-container {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: visible;
+        position: relative;
+        background-color: transparent;
+
+        .t-tree-branch {
+          width: 83%;
+          right: 1%;
+          position: absolute;
+          height: $nodeThickness;
+          background-color: $colorPrimary;
+        }
+        .t-tree {
+          display: flex;
+          position: relative;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 85%;
+
+
+          .t-node-container {
+            height: $nodeRadius*$scaleModifier + 2*$nodeThickness;
+            width: $nodeRadius*$scaleModifier  + 2*$nodeThickness;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0;
+            border-top: 0px solid transparent;
+            background-color:transparent;
+
+            .t-node {
+              border-radius: $nodeRadius;
+              background-color: rgb(245, 245, 245);
+              height: $nodeRadius;
+              width: $nodeRadius;
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              transition: border-width 0.25s, transform 0.25s;
+              -webkit-transition: border-width 0.25s, transform 0.25s;
+              -moz-transition: border-width 0.25s, transform 0.25s;
+
+            }
+            &.t-node-selected {
+              .t-node {
+                transform: scale($scaleModifier, $scaleModifier);
+              }
+              .t-node-date {
+                margin-top: 0 !important;
+              }
+            }
+
+            .t-node-hover {
+              display: none;
+            }
+            .t-node-date {
+              margin-bottom: 0;
+              width: 75px;
+              text-align: center;
+              position: absolute;
+              background-color: transparent;
+              font-size: 13px;
+            }
+
+            .t-node-solid {
+              border-radius: $nodeRadius;
+              background-color: $colorSecondary;
+              width: 2*$nodeThickness;
+              height: 2*$nodeThickness;
+            }
+            &:hover{
+              .t-node{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: scale($scaleModifier, $scaleModifier);
+              }
+              .t-node-hover {
+                display: block;
+                border-radius: $nodeRadius;
+                background-color: black;
+                width: $nodeThickness*2;
+                height: $nodeThickness*2;
+                opacity: 0;
+                animation: fadeIn .25s linear forwards;
+                @keyframes fadeIn {
+                  to {
+                    opacity: 1;
+                  }
+                }
+              }
+              .t-node-info {
+                background: transparent;
+                width: 60px;
+                height: $infoBoxHeight + $bannerHeight/2 + 10;
+                position: relative;
+                opacity: 1;
+                font-size: 12px;
+
+                left: -28px;
+                top: -8px;
+                display: flex;
+                justify-content: center;
+
+                .t-node-bar {
+                  width: $nodeThickness;
+                  position: relative;
+                  top: 12px;
+                  height: 30px;
+                  background-color: black;
+                }
+
+                .t-node-info-text {
+                  position: absolute;
+                  width: $infoBoxWidth - 34;
+                  height: auto;
+                  top: 52px;
+                  background-color: $backgroundColor;
+                  padding: 15px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+
+                  .o-headline {
+                    background-color: transparent;
+                    height: auto;
+                    margin-bottom: 3px;
+                  }
+
+                  .t-node-info-carret {
+                    position: absolute;
+                    left: 8%;
+                    top: 0;
+                    transition: left 0.5s;
+                    &:before {
+                      border-color: rgba(194,225,245,0);
+                      border-bottom-color: #d2d2d2;
+                      border-width: 17px;
+                      margin-left: -17px;
+                    }
+                    &:after {
+                      border-color: rgba(194,225,245,0);
+                      border-bottom-color: #d2d2d2;
+                      border-width: 17px;
+                      margin-left: -17px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

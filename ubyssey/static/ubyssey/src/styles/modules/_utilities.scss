@@ -1,0 +1,10 @@
+.u-no-scroll {
+  // Func: Disable scrolling
+  overflow-y: hidden;
+}
+
+.u-flex--tablet {
+  @media($bp-larger-than-phablet) {
+    display: flex;
+  }
+}

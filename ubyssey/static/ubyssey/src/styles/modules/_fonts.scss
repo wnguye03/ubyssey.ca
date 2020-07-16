@@ -1,0 +1,28 @@
+// Font families
+$font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-secondary: $font-default;
+$font-headline: 'ub-minion-pro', 'Minion Pro', 'Georgia', serif;
+$font-body: 'Georgia', serif;
+
+$font-size-base: 16;
+
+@function font-size($size) {
+  $scaled-size: ($size / $font-size-base) + em;
+  @return $scaled-size;
+}
+
+// Font sizes
+$font-size-11px:  0.688em;
+$font-size-14px:  0.875em;
+$font-size-145px: 0.906em;
+$font-size-15px:  0.938em;
+$font-size-18px:  1.125em;
+$font-size-21px:  1.313em;
+$font-size-24px:  1.500em;
+$font-size-26px:  1.625em;
+$font-size-36px:  2.250em;
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 800;

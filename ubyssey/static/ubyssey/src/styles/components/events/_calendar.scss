@@ -1,0 +1,224 @@
+$color-today: #ff5555;
+
+.c-calendar__banner {
+  // Background
+  background-image: url('../images/banners/events.svg');
+}
+
+.c-calendar__container {
+  // Structure
+  margin-top: 1.5rem;
+}
+
+.c-calendar__navigation {
+  // Structure
+  display: flex;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.c-calendar__weeks {
+  // Structure
+  flex: 1;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    padding-right: 2rem;
+  }
+}
+
+.c-calendar__weeks__table {
+  // Structure
+  display: table;
+  width: 100%;
+}
+
+.c-calendar__weeks__labels,
+.c-calendar__weeks__week {
+  // Structure
+  display: table-row;
+}
+
+.c-calendar__weeks__label,
+.c-calendar__weeks__month,
+.c-calendar__weeks__day {
+  // Structure
+  display: table-cell;
+  height: 30px;
+  line-height: 30px;
+
+  // Text
+  font-size: font-size(14);
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: $font-weight-semi-bold;
+}
+
+.c-calendar__weeks__label {
+  // Text
+  letter-spacing: 0.75px;
+  color: $color-text-gray-light;
+}
+
+.c-calendar__weeks__month {
+  // Structure
+  width: 1px;
+  padding-right: 1rem;
+
+  // Text
+  text-align: left;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.75px;
+}
+
+.c-calendar__weeks__day {
+  // Background
+  background: #F2F2F2;
+
+  // Text
+  color: $color-text-gray;
+}
+
+.c-calendar__weeks__day,
+.c-calendar__weeks__month {
+  // Structure
+  border-bottom: 3px solid white;
+}
+
+.c-calendar__weeks__week:hover {
+  .c-calendar__weeks__month {
+    // Text
+    color: $color-text-black;
+  }
+
+  .c-calendar__weeks__day {
+    // Background
+    background: transparentize($color-ub-blue-light, 0.25);
+
+    // Text
+    color: $color-white;
+  }
+
+  .c-calendar__weeks__day--selected {
+    // Background
+    background: $color-today;
+  }
+}
+
+.c-calendar__weeks__week:active,
+.c-calendar__weeks__week--selected {
+
+  .c-calendar__weeks__day {
+    // Background
+    background: $color-ub-blue-light;
+
+    // Text
+    color: $color-white;
+  }
+
+  .c-calendar__weeks__day--selected {
+    // Background
+    background: $color-today;
+  }
+}
+
+
+.c-calendar__weeks__day--selected {
+  // Background
+  background: $color-today;
+
+  // Text
+  color: $color-white;
+}
+
+.c-calendar__info {
+  // Structure
+  display: none;
+
+  @media($bp-larger-than-tablet) {
+    // Structure
+    display: block;
+  }
+}
+
+.c-calendar__results {
+  // Structure
+  margin-bottom: 0.5rem;
+}
+
+.c-calendar__results__header {
+  // Structure
+  border-bottom: 1px solid $color-border-gray-light;
+  margin-bottom: 1.5rem;
+
+  .c-heading {
+    // Structure
+    margin-bottom: 0.75rem;
+  }
+}
+
+.c-calendar__results__list {
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+}
+
+.c-calendar__results__event {
+  // Structure
+  padding-bottom: 1.5rem;
+
+  @media($bp-larger-than-phablet) {
+    width: 50%;
+  }
+
+  @media($bp-larger-than-tablet) {
+    width: 33.33%;
+  }
+}
+
+.c-calendar__results__event__inner {
+  // Structure
+  @media($bp-larger-than-phablet) {
+    height: 100%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .c-event {
+    // Structure
+    height: 100%;
+  }
+}
+
+@media($bp-larger-than-phablet) {
+  .c-calendar__results__event:nth-child(2n+1) .c-calendar__results__event__inner {
+    padding-left: 0;
+    padding-right: 0.75rem;
+  }
+
+  .c-calendar__results__event:nth-child(2n+2) .c-calendar__results__event__inner {
+    padding-right: 0;
+    padding-left: 0.75rem;
+  }
+}
+
+@media($bp-larger-than-tablet) {
+  .c-calendar__results__event:nth-child(2n+1) .c-calendar__results__event__inner,
+  .c-calendar__results__event:nth-child(2n+2) .c-calendar__results__event__inner {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .c-calendar__results__event:nth-child(3n+1) .c-calendar__results__event__inner {
+    padding-left: 0;
+    padding-right: 1rem;
+  }
+
+  .c-calendar__results__event:nth-child(3n+3) .c-calendar__results__event__inner {
+    padding-right: 0;
+    padding-left: 1rem;
+  }
+}
