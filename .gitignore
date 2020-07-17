@@ -36,4 +36,3 @@ ubyssey/settings*.py
 client-secret.json
 # Keyfile for accessing gcs bucket
 gcs-local.json
-.gitignore
