@@ -189,6 +189,8 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['iso-8601']
 }
 
+STATICFILES_DIRS = []
+
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -197,12 +199,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
-
-#STATICFILES_DIRS = [
-#    PROJECT_DIR('ubyssey/static'),
-#    DISPATCH_APP_DIR('static/manager/dist')
-#]
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 GS_LOCATION = None
 GS_STORAGE_BUCKET_NAME = None

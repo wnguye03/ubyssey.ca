@@ -35,17 +35,12 @@ TEMPLATES += [
     }
 ]
 
-# TODO: Figure out why this is development only!
-#STATICFILES_DIRS += [
-#    PROJECT_DIR('ubyssey/static/dist'),
-#]
-STATIC_ROOT = '/workspaces/static'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATIC_URL = '/static/'
+STATIC_ROOT = PROJECT_DIR('static')
 
 # TODO: Figure out why this is development only!
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
-
-# TODO: Figure out why this is development only!
-SERVICE_WORKER_URL = '/service-worker.js'
 
 # TODO: Figure out why this is development only!
 MEDIA_ROOT = PROJECT_DIR('media')
