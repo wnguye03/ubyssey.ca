@@ -73,14 +73,9 @@ function jasmineTask() {
     .pipe(jasmine({verbose: true}));
 }
 
-function renameFunc(path) {
-  path.basename += '-' + version;
-}
-
 function sassBuildTask() {
   return src('./src/styles/**/*.scss')
       .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-      .pipe(rename(renameFunc))
       .pipe(dest('./dist/css/'));
 }
 
@@ -88,7 +83,6 @@ function sassBuildDevTask(){
   return src('./src/styles/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(rename(renameFunc))
     .pipe(sourcemaps.write())
     .pipe(dest('./dist/css/'));
 }

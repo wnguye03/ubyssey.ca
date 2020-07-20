@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const version = require('./package.json').version;
 
 module.exports = {
   entry: {
@@ -19,7 +18,7 @@ module.exports = {
   },
   output: {
       path: __dirname + '/dist/js',
-      filename: '[name]-' + version + '.js'
+      filename: '[name].js'
   },
   module: {
     rules: [

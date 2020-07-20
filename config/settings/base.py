@@ -132,7 +132,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'ubyssey'
 ]
 
 # Replace default user model
@@ -188,6 +189,8 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['iso-8601']
 }
 
+STATICFILES_DIRS = []
+
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -195,11 +198,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
-]
-
-STATICFILES_DIRS = [
-    PROJECT_DIR('ubyssey/static'),
-    DISPATCH_APP_DIR('static/manager/dist')
 ]
 
 GS_LOCATION = None

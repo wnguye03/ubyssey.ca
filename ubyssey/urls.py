@@ -32,7 +32,6 @@ if settings.DEBUG:
         re_path(r'^__debug__/', include(debug_toolbar.urls)),
     ]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += [re_path(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]
 
 urlpatterns += [
     re_path(r'^admin', include(admin_urls)),

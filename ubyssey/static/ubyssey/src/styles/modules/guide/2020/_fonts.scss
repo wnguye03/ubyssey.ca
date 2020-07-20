@@ -21,9 +21,7 @@ $accent-size: 1.3rem;
 
 @font-face {
 	font-family: 'dk-saffron-walden';
-	src: url('../fonts/DKSaffronWalden.eot');
-	src: url('../fonts/DKSaffronWalden.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/DKSaffronWalden.woff') format('woff');
+	src: url('../fonts/DKSaffronWalden.woff');
 	font-weight: normal;
 	font-style: normal;
 }

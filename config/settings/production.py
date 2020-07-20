@@ -17,7 +17,6 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS += [
-    'ubyssey',
     'ubyssey.events',
     'django_user_agents',
 ]
@@ -45,10 +44,9 @@ GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
-STATICFILES_DIRS += (
-)
-
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
 # Facebook - Production Only
