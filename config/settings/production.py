@@ -33,7 +33,7 @@ MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 
-# GCS File Storage - Production Only
+GCS File Storage - Production Only
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
@@ -45,6 +45,7 @@ GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
+STATIC_ROOT = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
