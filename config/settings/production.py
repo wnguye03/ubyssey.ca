@@ -33,7 +33,7 @@ MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 
-GCS File Storage - Production Only
+# GCS File Storage - Production Only
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
