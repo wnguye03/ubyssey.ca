@@ -122,6 +122,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 # Application definition
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
