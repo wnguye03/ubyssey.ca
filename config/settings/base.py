@@ -187,8 +187,6 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['iso-8601']
 }
 
-STATICFILES_DIRS = []
-
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

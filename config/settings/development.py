@@ -33,9 +33,12 @@ TEMPLATES += [
     }
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
-STATIC_ROOT = '/static/'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# STATIC_URL = '/statictatjalsitdjasildfjasdil;jf/'
+STATIC_ROOT = os.path.join(PROJECT_DIR,'/static/')
+STATICFILES_DIRS = [
+    '/workspaces/ubyssey.ca/static/'
+]
 
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
