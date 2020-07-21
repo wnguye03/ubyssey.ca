@@ -46,7 +46,7 @@ GS_QUERYSTRING_AUTH = False
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 STATIC_ROOT = '/static/'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
