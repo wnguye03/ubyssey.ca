@@ -19,4 +19,4 @@ google-cloud-secret-manager
 python-memcached
 django-environ
 requests
-whitenoise
+whitenoise==5.1.0
