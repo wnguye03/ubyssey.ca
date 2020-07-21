@@ -17,7 +17,7 @@ module.exports = {
       blockadblock:       './src/js/blockadblock.js'
   },
   output: {
-      path: __dirname + '/dist/js',
+      path: '../static/ubyssey/js',
       filename: '[name].js'
   },
   module: {
