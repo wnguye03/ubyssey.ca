@@ -21,6 +21,8 @@ from dispatch.apps import DispatchConfig
 BASE_DIR = environ.Path(__file__) - 3
 DISPATCH_APP_DIR = DispatchConfig.path
 
+ORGANIZATION_NAME = 'Ubyssey'
+VERSION = '1.11.1'
 env = environ.Env() # will reinitialize later once "earliest" configs have been set
 FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=False)
 
