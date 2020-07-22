@@ -7,8 +7,7 @@ __pycache__/
 /gcs/
 /media/
 /static/
-/ubyssey/static/dist/
-/ubyssey/static/ubyssey/dist/
+/ubyssey/static/
 
 # env files
 *.env
