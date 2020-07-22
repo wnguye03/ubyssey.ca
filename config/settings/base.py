@@ -21,8 +21,6 @@ from dispatch.apps import DispatchConfig
 BASE_DIR = environ.Path(__file__) - 3
 DISPATCH_APP_DIR = DispatchConfig.path
 
-ORGANIZATION_NAME = 'Ubyssey'
-VERSION = '1.11.1'
 env = environ.Env() # will reinitialize later once "earliest" configs have been set
 FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=False)
 
@@ -91,9 +89,7 @@ env = environ.Env(
 environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
-
-ORGANIZATION_NAME = env('ORGANIZATION_NAME')
-# VERSION = env('VERSION')
+ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation in admin
 DEBUG = env('DEBUG')
 
 USE_TZ = env('USE_TZ')
