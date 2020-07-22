@@ -37,13 +37,11 @@ TEMPLATES += [
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# TODO: Figure out why this is development only!
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
-# TODO: Figure out why this is development only!
-MEDIA_ROOT = BASE_DIR('media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # TODO: Figure out why this is NOT in deployment!
 # Use in-memory file handler on Google App Engine
