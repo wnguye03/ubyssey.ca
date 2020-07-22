@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   entry: {
@@ -17,7 +18,7 @@ module.exports = {
       blockadblock:       './src/js/blockadblock.js'
   },
   output: {
-      path: '../static/ubyssey/js',
+      path: path.join(__dirname, '..', 'static/ubyssey/js'),
       filename: '[name].js'
   },
   module: {
