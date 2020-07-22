@@ -89,7 +89,7 @@ env = environ.Env(
 environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
-ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation in admin
+ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
 DEBUG = env('DEBUG')
 
 USE_TZ = env('USE_TZ')
@@ -120,7 +120,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 # Application definition
 INSTALLED_APPS = [
-    'ubyssey',
+    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
