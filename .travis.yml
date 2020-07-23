@@ -23,8 +23,8 @@ after_success:
 # use deploy settings
 - export DJANGO_SETTINGS_MODULE="config.settings.deployment"
 - travis_wait python manage.py collectstatic --noinput
-# gzip static files
-- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+# gzip static files - Unnecessary due to Whitenoise
+# - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
 # replace deploy settings with production settings
 - export DJANGO_SETTINGS_MODULE="config.settings.production"
 - rm -rf .git/ ubyssey/static/
