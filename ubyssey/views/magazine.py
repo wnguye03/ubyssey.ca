@@ -69,9 +69,10 @@ class Magazine(object):
         if not ArticleHelper.is_explicit(article):
             article.content = ArticleHelper.insert_ads(article.content, article_type)
 
+        #TODO: Fix hardcoding on default_image; no good available default
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/cover-social.png')),
+            'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
             'article': article,
             'subsection': subsection,
             'specific_css': 'ubyssey/css/magazine-' + self.year + '.css',
