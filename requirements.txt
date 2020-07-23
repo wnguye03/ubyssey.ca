@@ -21,3 +21,4 @@ django-environ
 requests
 django-debug-toolbar
 pylint
+whitenoise==5.1.0

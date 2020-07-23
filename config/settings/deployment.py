@@ -11,4 +11,4 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS += ['ubyssey.events',]
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-STATIC_ROOT = '/home/travis/build/ubyssey/ubyssey.ca/gcs/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'gcs/static')

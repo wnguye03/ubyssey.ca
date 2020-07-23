@@ -46,7 +46,7 @@ GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS += [
     os.path.join(BASE_DIR, 'gcs/static')
 ]
