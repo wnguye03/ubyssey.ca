@@ -4,7 +4,6 @@
 from .base import *
 
 import environ
-import config.base.
 
 env = environ.Env() #Scope issues without this line?
 
