@@ -71,7 +71,7 @@ class Magazine(object):
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/cover-social.png')),
+            'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
             'article': article,
             'subsection': subsection,
             'specific_css': 'ubyssey/css/magazine-' + self.year + '.css',
