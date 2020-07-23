@@ -10,5 +10,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += ['ubyssey.events',]
 
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'gcs/static')
