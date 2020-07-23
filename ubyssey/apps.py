@@ -3,4 +3,4 @@ import environ
 
 class UbysseyConfig(AppConfig):
     name = 'ubyssey'
-    path = environ.Path(__file__)
+    path = environ.Path(__file__) - 1

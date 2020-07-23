@@ -20,27 +20,27 @@ const fs = require('fs');
 const version = JSON.parse(fs.readFileSync('./package.json')).version;
 
 function cleanJsTask() {
-  return src('./dist/js/', {read: false, allowEmpty: true})
+  return src('../static/ubyssey/js/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanCssTask() {
-  return src('./dist/css/', {read: false, allowEmpty: true})
+  return src('../static/ubyssey/css/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanImagesTask() {
-  return src('./dist/images/', {read: false, allowEmpty: true})
+  return src('../static/ubyssey/images/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanVideosTask() {
-  return src('./dist/videos/', {read: false, allowEmpty: true})
+  return src('../static/ubyssey/videos/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
 function cleanFontsTask() {
-  return src('./dist/fonts/', {read: false, allowEmpty: true})
+  return src('../static/ubyssey/fonts/', {read: false, allowEmpty: true})
     .pipe(clean());
 }
 
@@ -76,7 +76,7 @@ function jasmineTask() {
 function sassBuildTask() {
   return src('./src/styles/**/*.scss')
       .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-      .pipe(dest('./dist/css/'));
+      .pipe(dest('../static/ubyssey/css/'));
 }
 
 function sassBuildDevTask(){
@@ -84,22 +84,22 @@ function sassBuildDevTask(){
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(dest('./dist/css/'));
+    .pipe(dest('../static/ubyssey/css/'));
 }
 
 function copyImagesTask() {
   return src('./src/images/**/*')
-    .pipe(dest('./dist/images/'));
+    .pipe(dest('../static/ubyssey/images/'));
 }
 
 function copyVideosTask() {
   return src('./src/videos/**/*')
-    .pipe(dest('./dist/videos/'));
+    .pipe(dest('../static/ubyssey/videos/'));
 }
 
 function copyFontsTask() {
   return src('./src/fonts/**/*')
-    .pipe(dest('./dist/fonts/'));
+    .pipe(dest('../static/ubyssey/fonts/'));
 }
 
 function watchTask() { 

@@ -19,7 +19,7 @@ MIDDLEWARE = (
 )
 
 TEMPLATES += [
- {
+{
         'NAME': 'ubyssey',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
@@ -33,14 +33,15 @@ TEMPLATES += [
     }
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
