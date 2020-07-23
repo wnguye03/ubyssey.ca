@@ -18,7 +18,7 @@ import sys
 import environ
 from dispatch.apps import DispatchConfig
 
-PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
+BASE_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
 DISPATCH_APP_DIR = DispatchConfig.path
 
 ORGANIZATION_NAME = 'Ubyssey'
@@ -28,11 +28,11 @@ FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=Fa
 
 # If we don't have Google app credentials, grab them
 if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(BASE_DIR, 'client-secret.json')
 
 # Look for the environment variables file in the root directory
 # Absolute rather than relative path here, to play nice with Google App Engine
-env_file = os.path.join(PROJECT_DIR, 'tmp/.env')
+env_file = os.path.join(BASE_DIR, 'tmp/.env')
 
 # In production we can get .envfrom Google Cloud if we don't have it. This requires authentication.
 # Set FORCE_GOOGLE_AUTHENTICATION
@@ -124,6 +124,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 
 # Application definition
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'ubyssey',
     'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
@@ -192,6 +193,7 @@ REST_FRAMEWORK = {
 STATICFILES_DIRS = []
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
