@@ -18,7 +18,7 @@ import sys
 import environ
 from dispatch.apps import DispatchConfig
 
-PROJECT_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
+BASE_DIR = environ.Path(__file__) - 3
 DISPATCH_APP_DIR = DispatchConfig.path
 
 env = environ.Env() # will reinitialize later once "earliest" configs have been set
@@ -26,11 +26,11 @@ FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=Fa
 
 # If we don't have Google app credentials, grab them
 if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(PROJECT_DIR, 'client-secret.json')
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(BASE_DIR, 'client-secret.json')
 
 # Look for the environment variables file in the root directory
 # Absolute rather than relative path here, to play nice with Google App Engine
-env_file = os.path.join(PROJECT_DIR, 'tmp/.env')
+env_file = os.path.join(BASE_DIR, 'tmp/.env')
 
 # In production we can get .envfrom Google Cloud if we don't have it. This requires authentication.
 # Set FORCE_GOOGLE_AUTHENTICATION
@@ -89,9 +89,7 @@ env = environ.Env(
 environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
-
-ORGANIZATION_NAME = env('ORGANIZATION_NAME')
-# VERSION = env('VERSION')
+ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
 DEBUG = env('DEBUG')
 
 USE_TZ = env('USE_TZ')
@@ -123,6 +121,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 # Application definition
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
+    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,7 +131,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'rest_framework',
     'rest_framework.authtoken',
-    'ubyssey'
 ]
 
 # Replace default user model
@@ -187,6 +185,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DATETIME_INPUT_FORMATS': ['iso-8601']
 }
+
+STATICFILES_DIRS = []
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

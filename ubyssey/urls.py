@@ -85,4 +85,4 @@ urlpatterns += [
     re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     re_path(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
     re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

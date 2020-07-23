@@ -46,6 +46,9 @@ GS_QUERYSTRING_AUTH = False
 
 STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS += [
+    os.path.join(BASE_DIR, 'gcs/static')
+]
 
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
