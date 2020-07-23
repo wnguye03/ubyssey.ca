@@ -18,8 +18,6 @@ MIDDLEWARE = (
     'django_user_agents.middleware.UserAgentMiddleware',
 )
 
-
-# TODO: Figure out why this is development only!
 TEMPLATES += [
  {
         'NAME': 'ubyssey',
@@ -40,13 +38,10 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# TODO: Figure out why this is development only!
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
-# TODO: Figure out why this is development only!
-MEDIA_ROOT = BASE_DIR('media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# TODO: Figure out why this is NOT in deployment!
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440

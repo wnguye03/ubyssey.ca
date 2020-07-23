@@ -18,11 +18,9 @@ import sys
 import environ
 from dispatch.apps import DispatchConfig
 
-BASE_DIR = environ.Path(__file__) - 3 # i.e. the "project root" or /ubyssey.ca directory
+BASE_DIR = environ.Path(__file__) - 3
 DISPATCH_APP_DIR = DispatchConfig.path
 
-ORGANIZATION_NAME = 'Ubyssey'
-VERSION = '1.11.1'
 env = environ.Env() # will reinitialize later once "earliest" configs have been set
 FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=False)
 
@@ -91,9 +89,7 @@ env = environ.Env(
 environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
-
-ORGANIZATION_NAME = env('ORGANIZATION_NAME')
-# VERSION = env('VERSION')
+ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
 DEBUG = env('DEBUG')
 
 USE_TZ = env('USE_TZ')
@@ -125,7 +121,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 # Application definition
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
-    'ubyssey',
+    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
