@@ -64,13 +64,13 @@
 <body>
   <div class="u-container">
     <header class="c-header">
-      <img class="c-header__logo" src="{% static 'ubyssey/images/breitbarf.png' %}" />
+      <img class="c-header__logo" src="{% static 'ubyssey/images/breitbarf.png' %}" alt=""/>
     </header>
     <div class="c-content">
       <div class="c-content__left">
         <article class="c-article">
           <h1 class="c-article__headline">{{ article.headline }}</h1>
-          <img class="c-article__image" src="{{ article.featured_image.image.get_medium_url }}"></img>
+          <img class="c-article__image" src="{{ article.featured_image.image.get_medium_url }}" alt=""></img>
           <div class="c-article__byline">By {{ article.get_author_string_type }} | {{ article.published_at|date:'N j, Y' }}</div>
           <div class="c-article__content">{{ article.html|safe }}</div>
         </article>
@@ -80,7 +80,7 @@
         <h2>More fake news</h2>
         {% for a in suggested %}
         <article class="o-article">
-          <a href="{{ a.get_absolute_url }}"><img class="o-article__image" src="{{ a.featured_image.image.get_medium_url }}"></img></a>
+          <a href="{{ a.get_absolute_url }}"><img class="o-article__image" src="{{ a.featured_image.image.get_medium_url }}" alt="to suggested article"></img></a>
           <h3 class="o-article__headline"><a href="{{ a.get_absolute_url }}">{{ a.headline }}</a></h3>
           <div class="o-article__byline">By {{ a.get_author_string_type }} | {{ a.published_at|date:'N j, Y' }}</div>
         </article>
