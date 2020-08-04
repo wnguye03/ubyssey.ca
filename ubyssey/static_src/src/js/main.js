@@ -107,8 +107,6 @@ function embedMargins() {
     };
     req.send();
   }
-
-  issueParser();
   
   // $document.on('click', function(e){
   //   $('.dropdown .list').hide();
@@ -227,6 +225,8 @@ function embedMargins() {
   }
 
   $document.ready(embedMargins())
+  if(window.location.pathname === '/')
+    issueParser();
 
   // register widgets
   upcomingEvents();
