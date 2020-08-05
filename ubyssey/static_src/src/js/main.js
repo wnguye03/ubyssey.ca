@@ -232,11 +232,12 @@ function issueParser() {
     mp.pageView();
   }
 
+  let isUpcomingEventsCreated = false;
+  
   $( document ).ready(function() {
     embedMargins();
     fullWidthStory();
     // register widgets
-    let isUpcomingEventsCreated = false;
     if(!isUpcomingEventsCreated && $(this).width() >= 1200) {
       isUpcomingEventsCreated = true;
       upcomingEvents();
