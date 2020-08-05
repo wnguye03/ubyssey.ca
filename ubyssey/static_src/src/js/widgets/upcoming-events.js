@@ -21,7 +21,6 @@ function registerWidget() {
       item.css('display', 'block');
       item.slideIndex = i;
       carousel.slides.push(item);
-      console.log(item.outerHeight());
       containerHeight = Math.max(containerHeight, item.outerHeight());
       containerWidth = item.outerWidth();
       if(containerHeight == 0) { containerHeight = 150; }
