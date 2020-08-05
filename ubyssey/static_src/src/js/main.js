@@ -228,7 +228,14 @@ function embedMargins() {
   if(window.location.pathname === '/')
     issueParser();
 
+  let isUpcomingEventsCreated = false;
+  $(window).resize(function() {
+    if(!isUpcomingEventsCreated && $(this).width() >= 1200) {
+      isUpcomingEventsCreated = true;
+      upcomingEvents();
+    }
+  });
   // register widgets
-  upcomingEvents();
+  
 
 })();
