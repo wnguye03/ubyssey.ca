@@ -30,7 +30,119 @@ def parse_int_or_none(maybe_int):
 
 class UbysseyHomePageView(TemplateView):
     template_name = 'homepage/base.html'
-    pass
+
+    def get_context_data(self, **kwargs):
+                frontpage = ArticleHelper.get_frontpage(
+            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science', 'themainmaller'),
+            max_days=7
+        )
+
+        trending_article = ArticleHelper.get_trending()
+
+        #elections = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
+
+        frontpage_ids = [int(a.id) for a in frontpage[:2]]
+
+        sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
+
+        try:
+            podcast = Podcast.objects.all()[:1].get()
+            podcast_url = PodcastHelper.get_podcast_url(podcast.id)
+        except:
+            podcast = None
+            podcast_url = None
+
+        episode_list = None
+        episode_urls = []
+        episodes = None
+
+        if (podcast):
+            try:
+                episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
+            except:
+                episode_list = None
+            if episode_list:
+                for episode in episode_list:
+                    episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+
+            episodes = list(zip(episode_list, episode_urls))
+
+        breaking = ArticleHelper.get_breaking_news().first()
+
+        # determine if user is viewing from mobile
+        user_agent = get_user_agent(request)
+
+        try:
+            articles = {
+                'primary': frontpage[0],
+                'secondary': frontpage[1],
+                'thumbs': frontpage[2:4],
+                'bullets': frontpage[4:6],
+                # Get random trending article
+                'trending': trending_article,
+                'breaking': breaking
+             }
+        except IndexError:
+            raise Exception('Not enough articles to populate the frontpage!')
+
+        popular = ArticleHelper.get_popular()[:5]
+
+        blog = ArticleHelper.get_frontpage(sections=['blog'], limit=5)
+
+        title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
+
+        podcast_obj = None
+        if podcast and episode_list:
+            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:4]} }
+
+        video_obj = { 'url': VideoHelper.get_video_page_url(), 'videos': {'first': [], 'rest':[]} }
+        video_list = None
+        video_urls = []
+        videos = None
+        
+        try:
+            video_list = Video.objects.order_by('-created_at')[:4]
+        except:
+            video_list = None
+        if video_list:
+            for index, video in enumerate(video_list):
+                video_list[index].videoAuthors = []
+                for author in video.authors.all():
+                    person_id = Author.objects.get(id=author.id).person_id
+                    person = Person.objects.get(id=person_id)
+                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
+
+                match = UbysseyTheme.youtube_regex.match(video.url)
+                if match:
+                    video_list[index].youtube_slug = match.group('id')
+                else:
+                    UbysseyTheme.logger.warning("Could not parse youtube slug from given url: %s", video.url)
+                video_list[index].numAuthors = len(video.videoAuthors)
+                video_urls += [VideoHelper.get_video_url(video.id)]
+            videos = list(zip(video_list, video_urls))
+        
+            video_obj['videos'] =  { 'first': videos[0], 'rest': videos[1:4] } 
+
+        context = {
+            'title': title,
+            'meta': {
+                'title': title,
+                'description': 'Weekly student newspaper of the University of British Columbia.',
+                'url': self.SITE_URL
+            },
+            'title': '%s - UBC\'s official student newspaper' % self.SITE_TITLE,
+            'articles': articles,
+            'sections': sections,
+            'podcast': podcast_obj,
+            'video': video_obj,
+            'popular': popular,
+            'breaking': breaking,
+            'blog': blog,
+            'day_of_week': datetime.now().weekday(),
+            'is_mobile': user_agent.is_mobile
+        }
+        return context
+
 
 class UbysseyTheme(object):
 
