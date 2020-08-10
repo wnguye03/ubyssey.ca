@@ -20,5 +20,6 @@ python-memcached
 django-environ
 requests
 django-debug-toolbar
-pylint
+pylint==2.5.3
+pylint-django==2.3.0
 whitenoise==5.1.0
