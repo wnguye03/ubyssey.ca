@@ -21,6 +21,7 @@ from django.views.generic.base import TemplateView
 import ubyssey
 import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
+from ubyssey.mixins import ArticleMixin
 
 def parse_int_or_none(maybe_int):
     try:
@@ -28,23 +29,44 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
-class UbysseyHomePageView(TemplateView):
+class UbysseyHomePageView(ArticleMixin, TemplateView):
     template_name = 'homepage/base.html'
 
     def get_context_data(self, **kwargs):
-                frontpage = ArticleHelper.get_frontpage(
+        context = super().get_context_data(**kwargs)
+
+        #set 'articles' section of context
+        frontpage = self.get_frontpage(
             sections=('news', 'culture', 'opinion', 'sports', 'features', 'science', 'themainmaller'),
             max_days=7
         )
+        trending_article = self.get_trending()
+        try:
+            #TODO: fail more gracefully!
+            articles = {
+                'primary': frontpage[0],
+                'secondary': frontpage[1],
+                'thumbs': frontpage[2:4],
+                'bullets': frontpage[4:6],
+                # Get random trending article
+                'trending': trending_article,
+                'breaking': context['breaking']
+             }
+        except IndexError:
+            raise Exception('Not enough articles to populate the frontpage!')
+        context['articles'] = articles
 
-        trending_article = ArticleHelper.get_trending()
+        #context['elections'] = self.get_topic('AMS Elections').order_by('-published_at')
 
-        #elections = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
-
+        #set 'sections' entry of context
         frontpage_ids = [int(a.id) for a in frontpage[:2]]
+        context['sections'] = self.get_frontpage_sections(exclude=frontpage_ids)
+               
+        #set 'is_mobile' entry of context
+        user_agent = get_user_agent(request)        
+        context['is_mobile'] = user_agent.is_mobile
 
-        sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
-
+        #set 'podcast' entry of context
         try:
             podcast = Podcast.objects.all()[:1].get()
             podcast_url = PodcastHelper.get_podcast_url(podcast.id)
@@ -67,34 +89,12 @@ class UbysseyHomePageView(TemplateView):
 
             episodes = list(zip(episode_list, episode_urls))
 
-        breaking = ArticleHelper.get_breaking_news().first()
-
-        # determine if user is viewing from mobile
-        user_agent = get_user_agent(request)
-
-        try:
-            articles = {
-                'primary': frontpage[0],
-                'secondary': frontpage[1],
-                'thumbs': frontpage[2:4],
-                'bullets': frontpage[4:6],
-                # Get random trending article
-                'trending': trending_article,
-                'breaking': breaking
-             }
-        except IndexError:
-            raise Exception('Not enough articles to populate the frontpage!')
-
-        popular = ArticleHelper.get_popular()[:5]
-
-        blog = ArticleHelper.get_frontpage(sections=['blog'], limit=5)
-
-        title = '%s - UBC\'s official student newspaper' % self.SITE_TITLE
-
         podcast_obj = None
         if podcast and episode_list:
             podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:4]} }
+        context['podcast'] = podcast_obj
 
+        #set 'video' entry of context
         video_obj = { 'url': VideoHelper.get_video_page_url(), 'videos': {'first': [], 'rest':[]} }
         video_list = None
         video_urls = []
@@ -120,27 +120,22 @@ class UbysseyHomePageView(TemplateView):
                 video_list[index].numAuthors = len(video.videoAuthors)
                 video_urls += [VideoHelper.get_video_url(video.id)]
             videos = list(zip(video_list, video_urls))
-        
             video_obj['videos'] =  { 'first': videos[0], 'rest': videos[1:4] } 
+        context['video'] = video_obj
 
-        context = {
-            'title': title,
-            'meta': {
-                'title': title,
+        #set 'meta' entry of context
+        context['meta'] = {
+                'title': context['title'],
                 'description': 'Weekly student newspaper of the University of British Columbia.',
-                'url': self.SITE_URL
-            },
-            'title': '%s - UBC\'s official student newspaper' % self.SITE_TITLE,
-            'articles': articles,
-            'sections': sections,
-            'podcast': podcast_obj,
-            'video': video_obj,
-            'popular': popular,
-            'breaking': breaking,
-            'blog': blog,
-            'day_of_week': datetime.now().weekday(),
-            'is_mobile': user_agent.is_mobile
+                'url': settings.SITE_URL
         }
+
+        #set all the parts of the context that only need a single line
+        context['breaking'] = self.get_breaking_news().first()
+        context['popular'] = self.get_popular()[:5]
+        context['blog'] = self.get_frontpage(sections=['blog'], limit=5)
+        context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
+        context['day_of_week'] = datetime.now().weekday()
         return context
 
 
