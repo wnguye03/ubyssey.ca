@@ -64,7 +64,6 @@ env = environ.Env(
     # VERSION=(str,'0.0.0'),
     DEBUG=(bool,False),
     ORGANIZATION_NAME = (str, 'Ubyssey'),
-    SITE_TITLE = (str, 'The Ubyssey'),
     
     # URL defaults
     STATIC_URL = (str,'/static/'),
@@ -91,7 +90,6 @@ environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
 ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
-SITE_TITLE = env('SITE_TITLE')
 DEBUG = env('DEBUG')
 
 USE_TZ = env('USE_TZ')
