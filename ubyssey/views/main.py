@@ -31,9 +31,22 @@ def parse_int_or_none(maybe_int):
 
 class UbysseyHomePageView(ArticleMixin, TemplateView):
     template_name = 'homepage/base.html'
+    is_mobile = True
 
-    def get_context_data(self, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
+        """
+        'dispatch' is a class view method in Django, and has nothing to do with the app also called Dispatch
+        """
+        user_agent = get_user_agent(request)        
+        self.is_mobile = user_agent.is_mobile
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):        
         context = super().get_context_data(**kwargs)
+
+        #set context stuff that will be used for other context stuff as we go
+        context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
+        context['breaking'] = self.get_breaking_news().first()
 
         #set 'articles' section of context
         frontpage = self.get_frontpage(
@@ -63,8 +76,7 @@ class UbysseyHomePageView(ArticleMixin, TemplateView):
         context['sections'] = self.get_frontpage_sections(exclude=frontpage_ids)
                
         #set 'is_mobile' entry of context
-        user_agent = get_user_agent(request)        
-        context['is_mobile'] = user_agent.is_mobile
+        context['is_mobile'] = self.is_mobile
 
         #set 'podcast' entry of context
         try:
@@ -127,17 +139,14 @@ class UbysseyHomePageView(ArticleMixin, TemplateView):
         context['meta'] = {
                 'title': context['title'],
                 'description': 'Weekly student newspaper of the University of British Columbia.',
-                'url': settings.SITE_URL
+                'url': settings.BASE_URL
         }
 
         #set all the parts of the context that only need a single line
-        context['breaking'] = self.get_breaking_news().first()
         context['popular'] = self.get_popular()[:5]
         context['blog'] = self.get_frontpage(sections=['blog'], limit=5)
-        context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
         context['day_of_week'] = datetime.now().weekday()
         return context
-
 
 class UbysseyTheme(object):
 

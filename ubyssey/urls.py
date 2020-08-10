@@ -6,7 +6,7 @@ from django.contrib.staticfiles.views import serve as serve_static
 from dispatch.urls import admin_urls, api_urls, podcasts_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme
+from ubyssey.views.main import UbysseyTheme, UbysseyHomePageView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -39,7 +39,7 @@ urlpatterns += [
     re_path(r'^api/', include(api_urls)),
     re_path(r'^podcasts/', include(podcasts_urls)),
 
-    re_path(r'^$', theme.home, name='home'),
+    re_path(r'^$', UbysseyHomePageView.as_view(), name='home'),
     re_path(r'^search/$', theme.search, name='search'),
     re_path(r'^archive/$', theme.archive, name='archive'),
     re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
