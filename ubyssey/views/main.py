@@ -16,6 +16,7 @@ from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
+from django.views.generic.base import TemplateView
 
 import ubyssey
 import ubyssey.cron
@@ -27,6 +28,9 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
+class UbysseyHomePageView(TemplateView):
+    template_name = 'homepage/base.html'
+    pass
 
 class UbysseyTheme(object):
 
