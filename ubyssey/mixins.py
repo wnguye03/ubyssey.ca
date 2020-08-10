@@ -18,9 +18,6 @@ from ubyssey.events.models import Event
 
 class ArticleMixin(object):
 
-    def __init__(self):
-        pass
-
     def get_article(self, request, slug):
         """If the url requested includes the querystring parameters 'version' and 'preview_id',
         get the article with the specified version and preview_id.
