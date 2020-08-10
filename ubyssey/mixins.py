@@ -10,6 +10,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Subquery, Value, When 
 from django.db.models.aggregates import Count
+from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
 
@@ -17,6 +18,21 @@ from ubyssey.events.models import Event
 
 
 class ArticleMixin(object):
+
+    def __init__(self):        
+        self.is_mobile = True
+
+    def setup(self, request, *args, **kwargs):
+        """
+        Overrides class view setup.
+
+        According to official Django documentation:
+        'Overriding this method allows mixins to setup instance attributes for reuse in child classes. When overriding this method, you must call super().'
+        https://docs.djangoproject.com/en/3.0/ref/class-based-views/base/#django.views.generic.base.View.setup
+        """
+        user_agent = get_user_agent(request)
+        self.is_mobile = user_agent.is_mobile
+        return super().setup(request, *args, **kwargs)        
 
     def get_article(self, request, slug):
         """If the url requested includes the querystring parameters 'version' and 'preview_id',
