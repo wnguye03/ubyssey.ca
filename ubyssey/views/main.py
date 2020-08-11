@@ -166,7 +166,7 @@ class ArticleView(ArticleMixin, DetailView):
         """
 
         object_section_slug = str(self.object.section.slug)
-        object_template = str(self.object.template)
+        object_template = str(self.object.get_template_path())
 
         template_names = []
         if self.object:
@@ -249,91 +249,12 @@ class ArticleView(ArticleMixin, DetailView):
         self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
         return super().render_to_response(context, **response_kwargs)
 
-
 class UbysseyTheme(object):
 
     SITE_TITLE = 'The Ubyssey'
     SITE_URL = settings.BASE_URL
     logger = logging.getLogger(__name__)
     youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
-
-    def article(self, request, section=None, slug=None):
-        try:
-            article = ArticleHelper.get_article(request, slug)
-        except:
-            raise Http404('Article could not be found.')
-
-        article.add_view()
-
-        breaking = ArticleHelper.get_breaking_news().exclude(id=article.id).first()
-
-        # determine if user is viewing from mobile
-        article_type = 'desktop'
-        user_agent = get_user_agent(request)
-        if user_agent.is_mobile:
-            article_type = 'mobile'
-
-        if article.template == 'timeline':
-            timeline_tag = article.tags.filter(name__icontains='timeline-')
-            timeline_articles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
-
-            timeline_articles = list(timeline_articles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
-            
-            for a in timeline_articles:
-                # convert JSON field from string to dict if needed
-                if isinstance(a['template_data'], str):
-                    a['template_data'] = json.loads(a['template_data'])
-               
-            sorted_timeline_articles = sorted(
-                timeline_articles,
-                key=lambda a: a['template_data']['timeline_date']
-            )
-
-            for i, a in enumerate(sorted_timeline_articles):
-                try:
-                    sorted_timeline_articles[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
-                except:
-                    sorted_timeline_articles[i]['featured_image'] = None
-
-            article.timeline_articles = json.dumps(sorted_timeline_articles)
-            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
-
-        if article.template == 'soccer-nationals':
-            teamData = NationalsHelper.prepare_data(article.content)
-            article.content = teamData['content']
-            article.team_data = json.dumps(teamData['code'])
-
-        if article.template == 'food-insecurity':
-            data = FoodInsecurityHelper.prepare_data(article.content)
-            article.content = data['content']
-            article.point_data = json.dumps(data['code']) if data['code'] is not None else None
-
-        ref = request.GET.get('ref', None)
-        dur = request.GET.get('dur', None)
-
-        if not ArticleHelper.is_explicit(article):
-            article.content = ArticleHelper.insert_ads(article.content, article_type)
-
-        popular = ArticleHelper.get_popular()[:5]
-        suggested = ArticleHelper.get_suggested(article)[:3]
-
-        context = {
-            'title': '%s - %s' % (article.headline, self.SITE_TITLE),
-            'meta': ArticleHelper.get_meta(article),
-            'article': article,
-            'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
-            'base_template': 'base.html',
-            'popular': popular,
-            'suggested': suggested,
-            'reading_time': ArticleHelper.get_reading_time(article),
-            'explicit': ArticleHelper.is_explicit(article),
-            'breaking': breaking,
-        }
-
-        template = article.get_template_path()
-        t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
-        return HttpResponse(t.render(context))
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
