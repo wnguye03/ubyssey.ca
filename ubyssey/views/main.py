@@ -240,9 +240,6 @@ class ArticleView(ArticleMixin, DetailView):
         context['base_template'] = 'base.html'
         context['reading_time'] = self.get_reading_time(self.object)
         # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
-
-        template = self.object.get_template_path()
-
         return context
 
     def render_to_response(self, context, **response_kwargs):
