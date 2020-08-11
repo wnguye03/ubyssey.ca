@@ -17,6 +17,7 @@ from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 
 import ubyssey
 import ubyssey.cron
@@ -29,18 +30,9 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
-class UbysseyHomePageView(ArticleMixin, TemplateView):
+class HomePageView(ArticleMixin, TemplateView):
     template_name = 'homepage/base.html'
-    is_mobile = True
     youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
-
-    def dispatch(self, request, *args, **kwargs):
-        """
-        'dispatch' is a class view method in Django, and has nothing to do with the app also called Dispatch
-        """
-        user_agent = get_user_agent(request)        
-        self.is_mobile = user_agent.is_mobile
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):        
         context = super().get_context_data(**kwargs)
@@ -148,6 +140,115 @@ class UbysseyHomePageView(ArticleMixin, TemplateView):
         context['blog'] = self.get_frontpage(sections=['blog'], limit=5)
         context['day_of_week'] = datetime.now().weekday()
         return context
+
+class ArticleView(ArticleMixin, DetailView):
+    """
+    Please consult official Django documentation on DetailView
+    https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView
+    """
+    model = Article #is queried by section and slug
+    
+    def setup(self, request, *args, **kwargs):
+        """
+        Overrides class view setup.
+
+        According to official Django documentation:
+        'Overriding this method allows mixins to setup instance attributes for reuse in child classes. When overriding this method, you must call super().'
+        https://docs.djangoproject.com/en/3.0/ref/class-based-views/base/#django.views.generic.base.View.setup
+        """
+        self.ref = request.GET.get('ref', None)
+        self.dur = request.GET.get('dur', None)
+        return super().setup(request, *args, **kwargs)        
+
+    def get_template_names(self):
+        """
+        Because this is called during render_to_response(), but also apparently earlier in the DetailView flowchart, we use an if conditional
+        """
+
+        object_section_slug = str(self.object.section.slug)
+        object_template = str(self.object.template)
+
+        template_names = []
+        if self.object:
+            template_names += ['%s/%s' % (object_section_slug, object_template), object_template, 'article/default.html'] 
+        template_names += super().get_template_names()
+        return template_names
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=True)    
+
+    def get_context_data(self, **kwargs):
+        """
+        We're overriding the defaults listed here:
+        https://docs.djangoproject.com/en/3.0/ref/class-based-views/mixins-single-object/
+        """        
+        context = super().get_context_data(**kwargs)
+        article = self.object
+        context['title'] = '%s - The Ubyssey' % (article.headline)
+        context['breaking'] = self.get_breaking_news().exclude(id=article.id).first()
+
+        # determine if user is viewing from mobile
+        article_type = 'mobile' if self.is_mobile else 'desktop'
+
+        # add a few fields to the article if it happens to have a "special" template
+        if self.object.template == 'timeline':
+            timeline_tag = article.tags.filter(name__icontains='timeline-')
+            timeline_articles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+
+            timeline_articles = list(timeline_articles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            
+            for a in timeline_articles:
+                # convert JSON field from string to dict if needed
+                if isinstance(a['template_data'], str):
+                    a['template_data'] = json.loads(a['template_data'])
+               
+            sorted_timeline_articles = sorted(
+                timeline_articles,
+                key=lambda a: a['template_data']['timeline_date']
+            )
+
+            for i, a in enumerate(sorted_timeline_articles):
+                try:
+                    sorted_timeline_articles[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+                except:
+                    sorted_timeline_articles[i]['featured_image'] = None
+
+            article.timeline_articles = json.dumps(sorted_timeline_articles)
+            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+
+        if self.object.template == 'soccer-nationals':
+            teamData = NationalsHelper.prepare_data(self.object.content)
+            self.object.content = teamData['content']
+            self.object.team_data = json.dumps(teamData['code'])
+
+        if self.object.template == 'food-insecurity':
+            data = FoodInsecurityHelper.prepare_data(article.content)
+            article.content = data['content']
+            article.point_data = json.dumps(data['code']) if data['code'] is not None else None
+
+        # set explicit status (SIDE EFFECT: inserting ads!)
+        context['explicit'] = self.is_explicit(self.object)        
+        if not context['explicit']:
+            self.object.content = self.insert_ads(self.object.content, article_type)
+
+        context['popular'] = self.get_popular()[:5]
+        context['suggested'] = self.get_suggested(self.object)[:3]
+        context['meta'] = self.get_meta(self.object)
+        context['article'] = self.object
+
+        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur)
+        context['base_template'] = 'base.html'
+        context['reading_time'] = self.get_reading_time(self.object)
+        # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+
+        template = self.object.get_template_path()
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
+        return super().render_to_response(context, **response_kwargs)
+
 
 class UbysseyTheme(object):
 
