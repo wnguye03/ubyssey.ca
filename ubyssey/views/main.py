@@ -18,7 +18,7 @@ from django_user_agents.utils import get_user_agent
 from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-
+from django.views.generic.list import ListView
 import ubyssey
 import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
@@ -143,6 +143,8 @@ class HomePageView(ArticleMixin, TemplateView):
 
 class ArticleView(ArticleMixin, DetailView):
     """
+    Initializes attributes from URL: section, slug
+
     Please consult official Django documentation on DetailView
     https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView
     """
@@ -162,19 +164,21 @@ class ArticleView(ArticleMixin, DetailView):
 
     def get_template_names(self):
         """
-        Because this is called during render_to_response(), but also apparently earlier in the DetailView flowchart, we use an if conditional
+        Because this is called during render_to_response(), but also appears earlier than get_queryset in the DetailView flowchart,
+        we use an if conditional to confirm whether the object has been queried and set
         """
-
-        object_section_slug = str(self.object.section.slug)
-        object_template = str(self.object.get_template_path())
-
         template_names = []
         if self.object:
+            object_section_slug = str(self.object.section.slug)
+            object_template = str(self.object.get_template_path())
             template_names += ['%s/%s' % (object_section_slug, object_template), object_template, 'article/default.html'] 
         template_names += super().get_template_names()
         return template_names
 
     def get_queryset(self):
+        """
+        Because slugs pick multiple revisions of the same article, we filter the default by is_published=True
+        """
         return super().get_queryset().filter(is_published=True)    
 
     def get_context_data(self, **kwargs):
@@ -226,25 +230,93 @@ class ArticleView(ArticleMixin, DetailView):
             article.content = data['content']
             article.point_data = json.dumps(data['code']) if data['code'] is not None else None
 
-        # set explicit status (SIDE EFFECT: inserting ads!)
+        # set explicit status (TODO: ADDRESS SIDE EFFECT: inserting ads!)
         context['explicit'] = self.is_explicit(self.object)        
         if not context['explicit']:
             self.object.content = self.insert_ads(self.object.content, article_type)
 
-        context['popular'] = self.get_popular()[:5]
-        context['suggested'] = self.get_suggested(self.object)[:3]
-        context['meta'] = self.get_meta(self.object)
+        # set the rest of the context
         context['article'] = self.object
-
-        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur)
         context['base_template'] = 'base.html'
+        context['meta'] = self.get_meta(self.object)
+        context['popular'] = self.get_popular()[:5]
+        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur)
         context['reading_time'] = self.get_reading_time(self.object)
+        context['suggested'] = self.get_suggested(self.object)[:3]
         # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+
         return context
 
     def render_to_response(self, context, **response_kwargs):
         self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
         return super().render_to_response(context, **response_kwargs)
+
+class SectionView(ListView):
+    """
+    For rendering the list of articles corresponding to a _section_
+    Could have been designed as a DetailView on the "Section" model
+    Expects gets Section slug from URL and raises Http404 if not present
+    """
+    model = Article
+    paginate_by = 15 # automatically adds a paginator and page_obj to the context, see https://docs.djangoproject.com/en/3.0/topics/pagination/#using-paginator-in-view
+
+    def setup(self, request, *args, **kwargs):
+        try:
+            self.section = Section.objects.get(slug=kwargs['slug']) 
+        except Section.DoesNotExist:
+            raise Http404() #TODO: figure out if 404 handling is consistent throughout our app!
+
+        self.order = request.GET.get('order', 'newest')
+        self.query = request.GET.get('q', False)
+
+        return super().setup(request, *args, **kwargs)
+
+    def get_template_names(self):
+        template_names = []        
+        if self.section:
+            template_names += ['%s/%s' % (self.section.slug, 'section.html'), 'section.html']
+        template_names += super().get_template_names()
+        return template_names
+
+    def get_queryset(self):
+        if self.order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+        article_list = super().get_queryset().filter(section=self.section, is_published=True).order_by(order_by)
+        if self.query:
+            article_list = article_list.filter(headline__icontains=self.query)
+        return article_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        featured_articles = Article.objects.filter(section=self.section, is_published=True).order_by('-published_at')
+        featured_subsection = None
+        featured_subsection_articles = None
+
+        context['subsections'] = SubsectionHelper.get_subsections(self.section)
+        if context['subsections']:
+            featured_subsection = subsections[0]
+            featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
+        
+        context['featured_subsection'] = {
+            'subsection': featured_subsection,
+            'articles' : featured_subsection_articles
+        }
+        context['meta'] = {
+            'title': self.section.name,
+        }
+        context['section'] = self.section
+        context['type'] = 'section'
+        context['featured_articles'] = {
+            'first': featured_articles[0],
+            'rest': featured_articles[1:4]
+        }
+        context['order'] = self.order
+        context['query'] = self.query
+
+        return context
 
 class UbysseyTheme(object):
 
@@ -280,6 +352,9 @@ class UbysseyTheme(object):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     def page(self, request, slug=None):
+        """
+        Seems to be used for the 404 page? but unclear. TODO: CONFIRM
+        """
         try:
             page = PageHelper.get_page(request, slug)
         except:
@@ -392,7 +467,7 @@ class UbysseyTheme(object):
                 'first': featured_articles[0],
                 'rest': featured_articles[1:4]
             },
-            'articles': articles,
+            'page_obj': articles,
             'order': order,
             'q': query
         }
@@ -427,16 +502,16 @@ class UbysseyTheme(object):
 
         paginator = Paginator(article_list, 15) # Show 15 articles per page
 
-        page = request.GET.get('page')
+        page_number = request.GET.get('page')
 
         try:
-            articles = paginator.page(page)
+            page_obj = paginator.page(page_number)
         except PageNotAnInteger:
             # If page is not an integer, deliver first page.
-            articles = paginator.page(1)
+            page_obj = paginator.page(1)
         except EmptyPage:
             # If page is out of range, deliver last page of results.
-            articles = paginator.page(paginator.num_pages)
+            page_obj = paginator.page(paginator.num_pages)
 
         context = {
             'meta': {
@@ -448,7 +523,7 @@ class UbysseyTheme(object):
                 'first': featured_articles[0],
                 'rest': featured_articles[1:4]
             },
-            'articles': articles,
+            'page_obj': page_obj,
             'order': order,
             'q': query
         }
@@ -457,6 +532,7 @@ class UbysseyTheme(object):
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):
+        #TODO: fix podcast bug
         try:
             person = Person.objects.get(slug=slug)
         except:
@@ -539,7 +615,7 @@ class UbysseyTheme(object):
                 'image': person.get_image_url if person.image is not None else None,
             },
             'person': person,
-            'articles': articles,
+            'page_obj': articles,
             'order': order,
             'q': query
         }
@@ -685,7 +761,7 @@ class UbysseyTheme(object):
             'title': 'Archive'
         }
 
-        context['articles'] = articles
+        context['page_obj'] = articles
         context['count'] = paginator.count
         context['meta'] = meta
         context['query_string'] = query_string
@@ -733,7 +809,7 @@ class UbysseyTheme(object):
             },
             'section': topic,
             'type': 'topic',
-            'articles': {
+            'articles': { #TODO: FIGURE OUT IF SHOULD BE page_obj
                 'first': articles[0] if articles else None,
                 'rest': articles[1:9]
             }
