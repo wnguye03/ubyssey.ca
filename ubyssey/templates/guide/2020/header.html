@@ -108,14 +108,42 @@
         <li class='c-nav-current'>
             {% if subsection %}{{ subsection }}{% else %}Home{% endif %}
             <ul class="c-section-more{% if subsection %} __{{ subsection }}{% else %} __home{% endif %}" id='c-section-more--current'>
-                <li>
-                    <a class="header-button" href="{% url 'guide-landing-sub' 2020 'academics' %}">Home</a>
-                </li>
-                {% for article in articles.academics %}
+                {% if subsection %}
                     <li>
-                        <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        <a class="header-button" href="{% url 'guide-landing-sub' 2020 'academics' %}">Home</a>
                     </li>
-                {% endfor %}
+                {% endif %}
+                {% if subsection == 'academics' %}
+                    {% for article in articles.academics %}
+                        <li>
+                            <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        </li>
+                    {% endfor %}
+                {% elif subsection == 'ubc' %}
+                    {% for article in articles.ubc %}
+                        <li>
+                            <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        </li>
+                    {% endfor %}
+                {% elif subsection == 'adulting' %}
+                    {% for article in articles.adulting %}
+                        <li>
+                            <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        </li>
+                    {% endfor %}
+                {% elif subsection == 'sdp' %}
+                    {% for article in articles.sdp %}
+                        <li>
+                            <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        </li>
+                    {% endfor %}
+                {% elif subsection == 'vancouver' %}
+                    {% for article in articles.vancouver %}
+                        <li>
+                            <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </li>
     </ul>
