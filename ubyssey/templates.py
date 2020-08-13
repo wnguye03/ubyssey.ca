@@ -45,7 +45,7 @@ class Guide(Template):
     id = 'guide-to-ubc'
     name = 'Guide to UBC'
     banner_quote = CharField('Banner Quote')
-    banner_quote_source = CharField('Banner Quote Source')
+    banner_quote_source = CharField('Banner Quote Source',required=False)
     subheading = CharField('Sub-heading')
     intro = TextField('Intro text')
     next_a = CharField('Up next A', required=True)
@@ -86,34 +86,6 @@ class MagazinePoem(Template):
     text_color_a = CharField('Text Color A')
     text_color_b = CharField('Text Color B')
     offset = CharField('Top Offset')
-
-@register.template
-class VoteCompass(Template):
-    id = 'vote-compass'
-    name = 'Vote Compass'
-
-    css = CharField('CSS')
-    js = CharField('JavaScript')
-
-@register.template
-class Covid311(Template):
-    id = 'covid-311'
-    name = 'Covid-311'
-
-    IMAGE_SIZE_OPTIONS = (
-        ('default', 'Default'),
-        ('full', 'Full')
-    )
-
-    HEADER_LAYOUT_OPTIONS = (
-        ('right-image', 'Right Image'),
-        ('top-image', 'Top Image'),
-        ('banner-image', 'Banner Image')
-    )
-
-    description = TextField('Description', required=True)
-    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
-    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
 
 @register.template
 class OneYearLater(Template):
