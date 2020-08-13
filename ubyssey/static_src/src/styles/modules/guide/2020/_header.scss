@@ -214,6 +214,8 @@
     top: 30px;
     margin-left: -25px;
     z-index: 10000;
+    max-height: 205px;
+    overflow: scroll;
     
     li {
       display: block;

@@ -61,11 +61,35 @@ class Guide2020(object):
         self.section4_name = section4_name
         self.section5_name = section5_name
 
-    def landing(self, request, year):
+    def landing(self, request, year, subsection=None):
         landing_page = 'guide/' + year + '/index.html'
-        return render(request, landing_page, {})
+        return render(request, landing_page, helper_subsection(self, subsection))
     
     def landing_sub(self, request, year, subsection=None):
+        landing_page = 'guide/' + year + '/section.html'
+        return render(request, landing_page, helper_subsection(self, subsection))
+
+    def article(self, request, year=None, subsection=None, slug=None):
+        
+        """Guide article page."""
+        try:
+            article = ArticleHelper.get_article(request, slug)
+        except:
+            raise Http404('Article could not be found.')
+
+        template_fields = article.template_fields
+
+        try:
+            next_a = ArticleHelper.get_article(request, template_fields['next_a'])
+        except:
+            next_a = None
+
+        try:
+            next_b = ArticleHelper.get_article(request, template_fields['next_b'])
+        except:
+            next_b = None
+
+        article.add_view()
 
         articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-importance')
         section1 = [] 
@@ -97,7 +121,7 @@ class Guide2020(object):
                     section4.append(temp.copy())
                 elif article.subsection.slug == self.section5_name:
                     section5.append(temp.copy())
-                
+            
 
         articles = json.dumps({
                 self.section1_name: section1,
@@ -111,51 +135,22 @@ class Guide2020(object):
         academics = articles_parse["academics"]
         ubc = articles_parse["ubc"]
         adulting = articles_parse["adulting"]
-        sdp = articles_parse["sex, drugs, party"]
+        sdp = articles_parse["sdp"]
         vancouver = articles_parse["vancouver"]
-        
-        context = {
-            'subsection': subsection,
-            'articles': {
-                'academics': academics,
-                'ubc': ubc,
-                'adulting': adulting,
-                'sdp': sdp,
-                'vancouver': vancouver
-            }
-
-        }
-        """The Guide to UBC landing page."""
-        landing_page = 'guide/' + year + '/section.html'
-        return render(request, landing_page, context)
-
-    def article(self, request, year=None, subsection=None, slug=None):
-        """Guide article page."""
-        try:
-            article = ArticleHelper.get_article(request, slug)
-        except:
-            raise Http404('Article could not be found.')
-
-        template_fields = article.template_fields
-
-        try:
-            next_a = ArticleHelper.get_article(request, template_fields['next_a'])
-        except:
-            next_a = None
-
-        try:
-            next_b = ArticleHelper.get_article(request, template_fields['next_b'])
-        except:
-            next_b = None
-
-        article.add_view()
 
         context = {
             'title': article.headline,
             'meta': ArticleHelper.get_meta(article),
             'subsection': subsection,
             'article': article,
-            'next': [next_a, next_b]
+            'next': [next_a, next_b],
+            'articles': {
+            'academics': academics,
+            'ubc': ubc,
+            'adulting': adulting,
+            'sdp': sdp,
+            'vancouver': vancouver
+            }
         }
         article_page = 'guide/' + year + '/article.html'
         return render(request, article_page , context)
@@ -163,4 +158,65 @@ class Guide2020(object):
 
 
 guide2016 = Guide2016("Guide")
-guide2020 = Guide2020(2020, "Guide", "academics", "ubc", "adulting", "sex, drugs, party", "vancouver")
+guide2020 = Guide2020(2020, "Guide", "academics", "ubc", "adulting", "sdp", "vancouver")
+
+def helper_subsection(page, subsection):
+    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('-importance')
+    section1 = [] 
+    section2 = [] 
+    section3 = []
+    section4 = []
+    section5 = []
+
+    for article in articles:
+        featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
+        url_absolute = article.get_absolute_url()
+        string_to_find = 'guide/'
+        index = url_absolute.find(string_to_find) + len(string_to_find)
+        slug = url_absolute[index: len(url_absolute)-1]
+        temp = {
+            'headline': article.headline,
+            'slug': slug,
+            'featured_image': featuredImage,
+        }
+
+        if article.subsection:
+            if article.subsection.slug == page.section1_name:
+                section1.append(temp.copy())
+            elif article.subsection.slug == page.section2_name:
+                section2.append(temp.copy())
+            elif article.subsection.slug == page.section3_name:
+                section3.append(temp.copy())
+            elif article.subsection.slug == page.section4_name:
+                section4.append(temp.copy())
+            elif article.subsection.slug == page.section5_name:
+                section5.append(temp.copy())
+            
+
+    articles = json.dumps({
+            page.section1_name: section1,
+            page.section2_name: section2,
+            page.section3_name: section3,
+            page.section4_name: section4,
+            page.section5_name: section5,
+        })
+
+    articles_parse = json.loads(articles)
+    academics = articles_parse["academics"]
+    ubc = articles_parse["ubc"]
+    adulting = articles_parse["adulting"]
+    sdp = articles_parse["sdp"]
+    vancouver = articles_parse["vancouver"]
+    
+    context = {
+        'subsection': subsection,
+        'articles': {
+            'academics': academics,
+            'ubc': ubc,
+            'adulting': adulting,
+            'sdp': sdp,
+            'vancouver': vancouver
+        }
+    }
+
+    return context
