@@ -10,24 +10,23 @@ install:
 - pip install -r requirements-prd.txt -t lib/
 - pip install requests --upgrade -t lib/
 - sudo apt-get install -qq libexempi3
-- cd ubyssey/static
+- cd ubyssey/static_src
 - npm install -g gulp
 - npm install
 - npm ddp
 script:
 - gulp build
 after_success:
-# clean up node_modules
+- rm -rf node_modules
 - cd ${TRAVIS_BUILD_DIR}
 # use deploy settings
-- mv _settings/settings-dpl.py ubyssey/settings.py
-- python manage.py collectstatic --noinput
-# gzip static files
-- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+- export DJANGO_SETTINGS_MODULE="config.settings.deployment"
+- travis_wait python manage.py collectstatic --noinput
+# gzip static files - Unnecessary due to Whitenoise
+# - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
 # replace deploy settings with production settings
-- rm ubyssey/settings.py ubyssey/settings.pyc
-- mv _settings/settings-prd.py ubyssey/settings.py
-- rm -rf .git/ ubyssey/static/
+- export DJANGO_SETTINGS_MODULE="config.settings.production"
+- rm -rf .git/ ubyssey/static_src/
 - pip install -I google-cloud-storage==1.13.2 -t lib/
 - ls lib/
 - ls lib/django/
@@ -46,6 +45,7 @@ deploy:
     cache_control: "max-age=31536000"
     on:
       tags: true
+    edge: true
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd

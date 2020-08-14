@@ -1,0 +1,201 @@
+$adslots: (
+  billboard: (970px, 250px),
+  large-leaderboard: (760px, 90px),
+  leaderboard: (759px, 90px),
+  banner: (468px, 60px),
+  large-skyscraper: (300px, 600px),
+  box: (300px, 250px),
+  mobile-leaderboard: (300px, 50px)
+);
+
+.adslot {
+  display: block !important;
+  background-color: transparent;
+  background-clip: content-box !important;
+}
+
+// Desktop leaderboard ad
+.o-advertisement--leaderboard {
+  $width: nth(map-get($adslots, leaderboard), 1);
+  $height: nth(map-get($adslots, leaderboard), 2);
+
+  display: flex;
+
+  .adslot {
+    margin-left: auto;
+    margin-right: auto;
+    min-width: $width;
+    height: $height;
+    padding-top: 1.5rem;
+  }
+
+  &.o-advertisement--homepage {
+    .adslot {
+      padding-top: 1rem;
+    }
+
+    &.o-advertisement--leaderboard {
+      padding-bottom: 0rem;
+    }
+  }
+
+  @media(max-width: $width) {
+    display: none;
+    &.o-advertisement--homepage {
+      display: none;
+    }
+  }
+
+  @media( min-width: 1010px ){
+    .adslot {
+      min-width: nth(map-get($adslots, leaderboard), 1);
+      max-width: nth(map-get($adslots, large-leaderboard), 1);
+      height: $height;
+    }
+  }
+
+  @media($bp-larger-than-tablet){
+    &.o-advertisement--homepage {
+      display: flex;
+    }
+  }
+}
+
+#article-list {
+  .o-advertisement--leaderboard {
+    @media( min-width: 1010px ){
+      $width: nth(map-get($adslots, billboard), 1);
+      $height: nth(map-get($adslots, billboard), 2);
+
+      .adslot {
+        width: $width;
+        height: $height;
+      }
+    }
+  }
+}
+
+main.article .o-advertisement--leaderboard {
+  padding-top: 1rem;
+  .adslot {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.article-slide .o-advertisement--leaderboard,
+.article-slide .o-advertisement--mobile-leaderboard {
+  background: #F5F5F5;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #DADADA;
+}
+
+.article-slide .o-advertisement--leaderboard {
+  margin-bottom: 1rem;
+}
+
+.article-slide .o-advertisement--mobile-leaderboard {
+  margin-bottom: 0.5rem;
+}
+
+
+// Mobile leaderboard ad
+.o-advertisement--mobile-leaderboard {
+  $width: nth(map-get($adslots, mobile-leaderboard), 1);
+  $height: nth(map-get($adslots, mobile-leaderboard), 2);
+
+  $desktop-width: nth(map-get($adslots, leaderboard), 1);
+
+  .adslot {
+    display:flex;
+    width: $width;
+    height: $height;
+    padding-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media(min-width: $desktop-width) {
+    display: none;
+  }
+}
+
+.o-advertisement--mobile-frontpage-box {
+  // Structure
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  // Border
+  border-bottom: thin dotted #C8C8C8;
+
+  @media($bp-larger-than-phablet) {
+    // Structure
+    display: none;
+  }
+}
+
+.o-advertisement--banner {
+  $width: nth(map-get($adslots, banner), 1);
+  $height: nth(map-get($adslots, banner), 2);
+
+  .adslot {
+    width: $width;
+    height: $height;
+  }
+}
+
+.o-advertisement--box {
+  $width: nth(map-get($adslots, box), 1);
+  $height: nth(map-get($adslots, box), 2);
+
+  .adslot {
+    width: $width;
+    height: $height;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1.5rem;
+  }
+}
+
+// Desktop skyscraper ad
+.o-advertisement--skyscraper {
+  $width: nth(map-get($adslots, box), 1);
+  $height: nth(map-get($adslots, box), 2);
+
+  display: none;
+
+  .adslot {
+    margin-left: auto;
+    margin-right: auto;
+    width: $width;
+    min-height: $height;
+    padding-top: 1.5rem;
+  }
+
+  &.o-advertisement--homepage {
+    .adslot {
+      padding-top: 1.5rem;
+    }
+  }
+
+  @media(min-width: $width + 40) {
+    display: block;
+    z-index: -1;
+    &.o-advertisement--homepage {
+      display: none;
+    }
+  }
+
+  @media($bp-larger-than-tablet){
+    &.o-advertisement--homepage {
+      display: block;
+    }
+  }
+}
+
+// Hide ads when printed
+.o-advertisement {
+  @media print {
+    display: none;
+  }
+}

@@ -1,0 +1,226 @@
+import * as mp from './modules/Mixpanel';
+import upcomingEvents from './widgets/upcoming-events';
+
+function disableScroll($document) {
+  $document.on('touchmove', function(e) {
+    e.preventDefault();
+  });
+  $('body').addClass('u-no-scroll');
+}
+
+function enableScroll($document) {
+  $document.off('touchmove');
+  $('body').removeClass('u-no-scroll');
+}
+
+function embedMargins() {
+  const marginLeft = $('.article-content > p:first-child').css('marginLeft')
+  const marginRight = $('.article-content > p:first-child').css('marginRight')
+  $('.image-attachment.left').css('marginLeft', marginLeft)
+  $('.image-attachment.right').css('marginRight', marginRight)
+}
+
+function fullWidthStory(){
+  if($('.fw-banner banner-image') !== undefined) {
+    let bannerHeight = $('.banner-image').height();
+    let captionHeight = $('.caption').height();
+    let headlineHeight = $('.headline-container').height();
+    let minimumHeight = captionHeight+headlineHeight+30;
+    if(bannerHeight < minimumHeight) {
+      $('.banner-image').height(minimumHeight);
+    }
+  }
+}
+
+function issueParser() {
+  var req = new XMLHttpRequest();
+  req.open('GET', 'https://cors-anywhere.herokuapp.com/https://search.issuu.com/api/2_0/document?q=username%3Aubyssey&responseParams=title&sortBy=epoch&pageSize=4');
+  req.setRequestHeader('Ubyssey', 'XMLHttpRequest');
+  req.onload = function() {
+    var res = req.responseText;
+    var jsonQuery = '[' + res.split('[')[1].split(']')[0] + ']';
+    var issueArray = JSON.parse(jsonQuery);
+    for(var i = 0; i < issueArray.length; i++) {
+      var docName = issueArray[i].docname;
+      var docId = issueArray[i].documentId;
+      var title = issueArray[i].title;
+      var issueID = '#issue' + (i+1);
+      $(issueID).attr('href', 'https://issuu.com/ubyssey/docs/' + docName).text(title);
+      if(i == 0)
+        $(issueID).append('<img src="https://image.isu.pub/' + docId +'/jpg/page_1_thumb_large.jpg">');
+    }
+  };
+  req.send();
+}
+
+(function() {
+  var $searchform = $('#search-form'),
+      $document = $(document);
+
+  $('.dropdown > a').click(function(e){
+    e.preventDefault();
+    var dropdown = $(this).parent().find('.list');
+    if (dropdown.is(':visible')){
+      dropdown.hide();
+    } else {
+      dropdown.show();
+    }
+    return false;
+  });
+
+  $('#sections-more-dropdown').hover(function(e) {
+    e.stopPropagation();
+    $('.sections-more').finish();
+    $('.sections-more').slideToggle(300);
+  }, (function(e) {
+    e.stopPropagation();
+    $('.sections-more').finish();
+    $('.sections-more').fadeOut(300);
+  })
+  );
+  
+  // $document.on('click', function(e){
+  //   $('.dropdown .list').hide();
+  //   $('.js-dropdown-list').hide();
+  //   if($('.sections-more').is(':visible')) {
+  //     $('.sections-more').hide();
+  //   }
+  //   enableScroll($document);
+  // });
+
+  var DROPDOWN_FADE_TIME = 100;
+
+  $('.js-dropdown > a').click(function(e) {
+    e.preventDefault();
+    var dropdown = $(this).parent().find('.js-dropdown-list');
+    if (dropdown.is(':visible')){
+      dropdown.fadeOut(DROPDOWN_FADE_TIME);
+      enableScroll($document);
+    } else {
+      dropdown.fadeIn(DROPDOWN_FADE_TIME);
+      if ($(this).hasClass('js-disable-scroll')) {
+        disableScroll($document);
+      }
+    }
+    return false;
+  });
+
+  $('.js-dropdown-list a').click(function(e) {
+    e.stopPropagation();
+  });
+
+  $('.js-dropdown-container').click(function(e) {
+    e.preventDefault();
+    var dropdown = $(this).parent();
+    dropdown.fadeOut(DROPDOWN_FADE_TIME);
+    enableScroll($document);
+    return false;
+  });
+
+  $('a.menu').click(function(e){
+    e.preventDefault();
+    if ($('nav.mobile').is(':visible')){
+      $('nav.mobile').hide();
+      $(this).removeClass('active');
+    } else {
+      if ($searchform.is(':visible')){
+        $searchform.hide();
+        $('a.search').removeClass('active');
+      }
+      $('nav.mobile').show();
+      $(this).addClass('active');
+    }
+  });
+
+  $document.on('keyup', function(e) {
+    var ESCAPE = 27;
+    if (e.keyCode == ESCAPE) {
+      $searchform.is(':visible') && $searchform.hide();
+    }
+  });
+
+  $(document).click(function() {
+    $searchform.hide();
+  });
+
+  $(document).on('click', '#search-form > .u-container', function(e){
+    e.stopPropagation();
+  });
+
+  $(document).on('click', 'a.search', function(e){
+    e.preventDefault();
+    if ($searchform.is(':visible')){
+      $searchform.hide();
+      $(this).removeClass('active');
+    } else {
+      if ($('nav.mobile').is(':visible')){
+        $('nav.mobile').hide();
+        $('a.menu').removeClass('active');
+      }
+      $searchform.show();
+      $('#search-bar').focus();
+      $(this).addClass('active');
+    }
+    e.stopPropagation();
+  });
+
+  $document.on('click', 'a.facebook', function(e){
+    e.preventDefault();
+    FB.ui({
+      method: 'share_open_graph',
+      action_type: 'og.likes',
+      action_properties: JSON.stringify({
+        object: $(this).data('url'),
+      })
+    }, function(response){});
+  });
+
+  $document.on('click', 'a.twitter', function(e){
+    e.preventDefault();
+    window.open('http://twitter.com/share?url=' + $(this).data('url') + '&text=' + $(this).data('title') + '&', 'twitterwindow', 
+    'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+  });
+
+  $document.on('click', 'a.reddit', function(e){
+    e.preventDefault();
+    window.open('http://www.reddit.com/submit?url=' + $(this).data('url') + '&title=' + $(this).data('title') + '&', 'redditwindow', 
+    'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+($(window).width()/2 - 225) +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+  });
+  
+  $document.on('touchstart', function () {});
+
+  var $article = $('.js-article');
+
+  if ($article.length) {
+    mp.pageView('article', $article, 1)
+  } else {
+    mp.pageView();
+  }
+
+  let isUpcomingEventsCreated = false;
+
+  $(document).ready(function() {
+    embedMargins();
+    if($(window).width() <= 500)
+      fullWidthStory();
+    // register widgets
+    if(!isUpcomingEventsCreated && $(window).width() >= 1200) {
+      isUpcomingEventsCreated = true;
+      upcomingEvents();
+    }
+    if(window.location.pathname === '/'){ issueParser(); }
+    
+  }); 
+  
+  $(window).resize(function() {
+    if(!isUpcomingEventsCreated && $(window).width() >= 1200) {
+      isUpcomingEventsCreated = true;
+      upcomingEvents();
+    }
+    if($(window).width() <= 500)
+      fullWidthStory();
+  });
+  
+  
+
+})();

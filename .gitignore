@@ -4,9 +4,17 @@ __pycache__/
 *$py.class
 
 # Static file folders
+/gcs/
 /media/
 /static/
-/ubyssey/static/dist/
+/ubyssey/static/
+
+# env files
+*.env
+
+# developer-only file folders
+/localdev/
+/tmp/
 
 # swap files
 *.swp

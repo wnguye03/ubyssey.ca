@@ -1,7 +1,7 @@
 {% load static %}
 <header class="mobile">
     <a class="menu left" href="#"><i class="fa fa-bars"></i></a>
-    <a class="logo" href="{% url 'home' %}"><img src="{% static 'images/ubyssey-logo-small.svg' %}" type="text/css"/></a>
+    <a class="logo" href="{% url 'home' %}"><img src="{% static 'ubyssey/images/ubyssey-logo-small.svg' %}" alt=""></a>
     <a class="search right" href="{% url 'search' %}"><i class="fa fa-search"></i></a>
 </header>
 <div id='header-mobile-spacer{% if class %}--{{ class }}{% endif %}'></div>
@@ -18,6 +18,18 @@
             <li><a href="{% url 'page' 'blog' %}">Blog</a></li>
             <li><a href="{% url 'page' 'science'%}">Science</a></li>
             <li><a href="{% url 'page' 'videos'%}">Video<!--<span class='upper-right-decorator'>New</span>--></a></li>
+            <li>
+                <a href="{% url 'magazine-landing' 2020 %}">Hot Mess 2020</a>
+            </li>
+            <li>
+                <a href="{% url 'magazine-landing' 2019 %}">Presence 2019</a>
+            </li>
+            <li>
+                <a href="{% url 'magazine-landing' 2018 %}">How We Live 2018</a>
+            </li>
+            <li>
+                <a href="{% url 'magazine-landing' 2017 %}">Diversity 2017</a>
+            </li>
             <li><a href="{% url 'events' %}">Events</a></li>
             <li><a href="{% url 'page' 'whobyssey' %}">Who?byssey</a></li> -->
             
