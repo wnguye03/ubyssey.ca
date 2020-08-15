@@ -29,7 +29,6 @@
 }
 
 .c-banner--welcome {
-  background-image: url('https://s3-us-west-1.amazonaws.com/ubyssey/media/guide/banner.jpg');
   align-items: center;
 
   .c-banner__container {
@@ -65,6 +64,10 @@
   position: absolute;
   left: 5%;
   bottom: 10%;
+  width: 90%;
+  @media($bp-larger-than-desktop){
+    width: calc(90% - 450px);
+  }
 }
 
 .c-banner--welcome__intro {
@@ -81,16 +84,10 @@
   color: $color-white;
   font-family: $accent-font;
   margin-top: 5%;
-  font-size: 4rem;
-  line-height: 4.3rem;
+  font-size: 3.5rem;
+  line-height: 4rem;
   text-transform: uppercase;
-  // @media ($bp-smaller-than-tablet) {
-  //   font-size: 40px;
-  //   line-height: 26px;
-  //   margin-top: 10%;
-  // }
   @media ($bp-smaller-than-mobile) {
-    margin-top: 5%;
     font-size: 3rem;
     line-height: 3rem;
   }
