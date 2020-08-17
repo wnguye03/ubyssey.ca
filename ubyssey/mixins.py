@@ -296,8 +296,8 @@ class ArticleMixin(object):
 
 class DispatchPublishableMixin(object):
     """
-    Abstracts out typical function overrides when dealing with a Publishable object from the Dispatch app (i.e. and Article or a Page).
-    This logic was originally in the Ubyssey app, but because it deals with Dispatch models, it may be desirable to move it
+    Abstracts out typical function overrides when dealing with a Publishable object from the Dispatch app (i.e. and Article or a Page). Most commonly, this is to append .filter(is_published=True) to the queryset a class uses to account for non-unique slugs.
+    This logic was originally in the Ubyssey app, but because it deals with Dispatch models, it may be desirable to move it 
     """
     # def setup(self, request, *args, **kwargs):
     #     pass
