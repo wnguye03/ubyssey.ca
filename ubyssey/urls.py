@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -48,7 +48,7 @@ urlpatterns += [
 
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     re_path(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
-    re_path(r'^topic/(\d*)/$', theme.topic, name='topic'),
+    re_path(r'^topic/(\d*)/$', theme.topic, name='topic'), #TODO: fairly undercooked and seems redundant with subsections, conceptually. Consider permanently removing from project
 
     # Guide to UBC
     re_path(r'^guide/2016/$', guide2016.landing, name='guide-landing-2016'),
@@ -82,7 +82,7 @@ urlpatterns += [
     re_path(r'^api/events/', include(event_api_urls)),
 
     # Videos
-    re_path(r'^videos/', theme.video, name='videos'),
+    re_path(r'^videos/', VideoView.as_view(), name='videos'),
 
     re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', ArticleView.as_view(), name='article'),
     re_path(r'^(?P<slug>[-\w]+)/$', SectionView.as_view(), name='page'),

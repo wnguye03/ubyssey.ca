@@ -15,14 +15,14 @@ from django.urls import reverse
 from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Subsection, Topic, Person, Podcast, PodcastEpisode, Video, Author, Image
+from dispatch.models import Article, Section, Subsection, Topic, Page, Person, Podcast, PodcastEpisode, Video, Author, Image
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 import ubyssey
 import ubyssey.cron
-from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
-from ubyssey.mixins import ArticleMixin, SubsectionMixin
+from ubyssey.helpers import ArticleHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
+from ubyssey.mixins import ArticleMixin, DispatchPublishableMixin, SubsectionMixin
 
 def parse_int_or_none(maybe_int):
     try:
@@ -141,7 +141,7 @@ class HomePageView(ArticleMixin, TemplateView):
         context['day_of_week'] = datetime.now().weekday()
         return context
 
-class ArticleView(ArticleMixin, DetailView):
+class ArticleView(DispatchPublishableMixin, ArticleMixin, DetailView):
     """
     Initializes attributes from URL: section, slug
 
@@ -174,12 +174,6 @@ class ArticleView(ArticleMixin, DetailView):
             template_names += ['%s/%s' % (object_section_slug, object_template), object_template, 'article/default.html'] 
         template_names += super().get_template_names()
         return template_names
-
-    def get_queryset(self):
-        """
-        Because slugs pick multiple revisions of the same article, we filter the default by is_published=True
-        """
-        return super().get_queryset().filter(is_published=True)    
 
     def get_context_data(self, **kwargs):
         """
@@ -246,10 +240,6 @@ class ArticleView(ArticleMixin, DetailView):
         # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
 
         return context
-
-    def render_to_response(self, context, **response_kwargs):
-        self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
-        return super().render_to_response(context, **response_kwargs)
 
 class SectionView(SubsectionMixin, ListView):
     """
@@ -321,6 +311,52 @@ class SectionView(SubsectionMixin, ListView):
 
         return context
 
+class PageView(DispatchPublishableMixin, DetailView):
+    """
+    Shares with the Section view the problem that its original counterpart had weird "except" logic to allow several views to share a url pattern
+    """
+    model = Page
+  
+    def get_template_names(self):
+        template_names = []
+        template_path = self.object.get_template_path()
+        if template_path != 'article/default.html':
+            template_names = [template_path, 'page/base.html']
+        else:
+            template_names = ['page/base.html']
+        return template_names
+
+    def get_context_data(self, **kwargs):
+        try:
+            image = self.object.featured_image.image.get_medium_url()
+        except:
+            image = None
+
+        context = {
+            'meta': {
+                'title': self.object.title,
+                'image': image,
+                'url': settings.BASE_URL[:-1] + reverse('page', args=[self.object.slug]),
+                'description': self.object.snippet if self.object.snippet else ''
+            },
+            'page': self.object
+        }
+        return context
+
+class VideoView(ListView):
+    model = Video
+    paginate_by = 5
+    def get_template_names(self):
+        return ['videos/videos.html']
+    def get_queryset(self):
+        return super().get_queryset().order_by('-created_at')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['meta'] = {
+            'title': 'Video'
+        }
+        return context
+
 class UbysseyTheme(object):
 
     SITE_TITLE = 'The Ubyssey'
@@ -353,40 +389,6 @@ class UbysseyTheme(object):
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
-
-    def page(self, request, slug=None):
-        """
-        Seems to be used for the 404 page? but unclear. TODO: CONFIRM
-        """
-        try:
-            page = PageHelper.get_page(request, slug)
-        except:
-            return self.subsection(request, slug)
-
-        page.add_view()
-
-        try:
-            image = page.featured_image.image.get_medium_url()
-        except:
-            image = None
-
-        context = {
-            'meta': {
-                'title': page.title,
-                'image': image,
-                'url': settings.BASE_URL[:-1] + reverse('page', args=[page.slug]),
-                'description': page.snippet if page.snippet else ''
-            },
-            'page': page
-        }
-
-        if page.get_template_path() != 'article/default.html':
-            templates = [page.get_template_path(), 'page/base.html']
-        else:
-            templates = ['page/base.html']
-
-        t = loader.select_template(templates)
-        return HttpResponse(t.render(context))
 
     def elections(self, request):
         articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
@@ -783,28 +785,3 @@ class UbysseyTheme(object):
         }
 
         return render(request, 'podcasts/podcast.html', context)
-
-    def video(self, request, slug=None):
-
-        videos = Video.objects.order_by('-created_at')
-        paginator = Paginator(videos, 5) # Show 5 videos per page
-        page = request.GET.get('page')
-
-        meta = {
-            'title': 'Video'
-        }
-
-        try:
-            videos = paginator.page(page)
-        except PageNotAnInteger:
-            videos = paginator.page(1)
-        except EmptyPage:
-            videos = paginator.page(paginator.num_pages)
-
-        context = {
-            'videos': videos,
-            'count': paginator.count,
-            'meta': meta
-        }
-
-        return render(request, 'videos/videos.html', context)
