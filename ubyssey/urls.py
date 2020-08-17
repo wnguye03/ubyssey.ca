@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -75,7 +75,7 @@ urlpatterns += [
     # re_path(r'^beta/notifications/$', theme.notification, name='notification-beta'),
 
     # Podcasts
-    re_path(r'^podcast/(?P<slug>[-\w]+)', theme.podcast, name='podcasts'),
+    re_path(r'^podcast/(?P<slug>[-\w]+)', PodcastView.as_view(), name='podcasts'),
 
     # Events
     re_path(r'^events/', include(events_urls)),

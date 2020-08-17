@@ -343,6 +343,34 @@ class PageView(DispatchPublishableMixin, DetailView):
         }
         return context
 
+class PodcastView(DetailView):
+    """
+    DetailView. Expects to get slug from URL
+    """
+    model = Podcast
+
+    def get_template_names(self):
+        return ['podcasts/podcast.html']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        podcast_id = self.object.id
+        podcast_slug = self.object.slug
+
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast_id).order_by('-published_at')
+
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += "%spodcast/%s#%s" % (settings.BASE_URL, podcast_slug, episode.id)
+            
+        episodes = list(zip(episode_list, episode_urls))
+
+        url = "%spodcast/episodes" % (settings.BASE_URL)
+        context['podcast'] = self.object
+        context['url'] = url
+        context['episodes'] = episodes
+        return context
+
 class VideoView(ListView):
     model = Video
     paginate_by = 5
@@ -762,26 +790,3 @@ class UbysseyTheme(object):
 
     def notification(self, request):
         return render(request, 'notification_signup.html', {})
-
-    def podcast(self, request, slug=None):
-        try:
-            podcast = Podcast.objects.all()[:1].get()
-        except:
-            raise Http404('We could not find the podcast')
-
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
-
-        episode_urls = []
-        for episode in episode_list:
-            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-
-        episodes = list(zip(episode_list, episode_urls))
-
-        url = PodcastHelper.get_podcast_url(id=podcast.id)
-        context = {
-            'podcast': podcast,
-            'url': url,
-            'episodes': episodes
-        }
-
-        return render(request, 'podcasts/podcast.html', context)
