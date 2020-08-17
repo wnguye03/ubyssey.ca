@@ -12,7 +12,7 @@ from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatFie
 from django.db.models.aggregates import Count
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Page, Section, Subsection, Podcast, Image, ImageAttachment
+from dispatch.models import Article, Page, Publishable, Section, Subsection, Podcast, Image, ImageAttachment
 
 from ubyssey.events.models import Event
 
@@ -293,6 +293,25 @@ class ArticleMixin(object):
             'image': image,
             'author': article.get_author_type_string()
         }
+
+class DispatchPublishableMixin(object):
+    """
+    Abstracts out typical function overrides when dealing with a Publishable object from the Dispatch app (i.e. and Article or a Page).
+    This logic was originally in the Ubyssey app, but because it deals with Dispatch models, it may be desirable to move it
+    """
+    # def setup(self, request, *args, **kwargs):
+    #     pass
+    # TODO: check that this mixin is being used with a compatable class
+
+    def get_queryset(self):
+        """
+        Because in Dispatch, slugs pick multiple revisions of the same article, we filter the default by is_published=True
+        """
+        return super().get_queryset().filter(is_published=True)
+    
+    def render_to_response(self, context, **response_kwargs):
+        self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
+        return super().render_to_response(context, **response_kwargs)
 
 class SubsectionMixin(object):
     """
