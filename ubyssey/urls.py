@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -86,5 +86,5 @@ urlpatterns += [
 
     re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', ArticleView.as_view(), name='article'),
     re_path(r'^(?P<slug>[-\w]+)/$', SectionView.as_view(), name='page'),
-    re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
+    re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', ArticleAjaxView.as_view(), name='article-ajax'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

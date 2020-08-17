@@ -385,23 +385,29 @@ class VideoView(ListView):
         }
         return context
 
-class UbysseyTheme(object):
+class ArticleAjaxView(DispatchPublishableMixin, DetailView):
+    model = Article
 
-    SITE_TITLE = 'The Ubyssey'
-    SITE_URL = settings.BASE_URL
-    logger = logging.getLogger(__name__)
-    youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+    def setup(self, *args, **kwargs):
+        article = Article.objects.get(id=kwargs['pk'])
+        authors = article.authors.all()
+        self.authors_json = [a.person.full_name for a in authors]
+        return super().setup(*args, **kwargs)
 
-    def article_ajax(self, request, pk=None):
-        article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = [a.person.full_name for a in article.authors.all()]
-
+    def get_context_data(self, **kwargs):
+        """
+        Possibly rendered useless by overriding render_to_response in such a way that does not use this. 
+        Was originally part of the pre-refactored version. Preserved here anyways.
+        """
         context = {
-            'article': article,
-            'authors_json': authors_json,
+            'article': self.object,
+            'authors_json': self.authors_json,
             'base_template': 'blank.html'
         }
+        return context
 
+    def render_to_response(self, context, **response_kwargs):
+        article = self.object
         try:
             featured_image = article.featured_image.image.get_thumbnail_url()
         except:
@@ -411,12 +417,20 @@ class UbysseyTheme(object):
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'authors': authors_json,
+            'authors': self.authors_json,
             'published_at': str(article.published_at),
             'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+class UbysseyTheme(object):
+
+    SITE_TITLE = 'The Ubyssey'
+    SITE_URL = settings.BASE_URL
+    logger = logging.getLogger(__name__)
+    youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
 
     def elections(self, request):
         articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
