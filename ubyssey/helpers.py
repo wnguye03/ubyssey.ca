@@ -288,17 +288,6 @@ class ArticleHelper(object):
             'author': article.get_author_type_string()
         }
 
-class PageHelper(object):
-    @staticmethod
-    def get_page(request, slug):
-        """If the url requested includes the querystring parameters 'version' and 'preview_id',
-        get the page with the specified version and preview_id.
-
-        Otherwise, get the published version of the page.
-        """
-
-        return Page.objects.get(request=request, slug=slug, is_published=True)
-
 class SubsectionHelper(object):
 
     @staticmethod
