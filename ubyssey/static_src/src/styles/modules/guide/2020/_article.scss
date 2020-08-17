@@ -1,16 +1,3 @@
-.c-article {
-
-  padding-top: 60px;
-  .o-wrapper{
-    position: relative;
-    @media($bp-smaller-than-desktop) {
-      margin-bottom: 170px;
-    }
-  }
-}
-
-  
-
 .c-article__intro{
   &__subheading {
     font-family: $header-font;
@@ -132,36 +119,31 @@ p{
 
 
 .c-welcome-article{
-
   position: absolute;
+  display: none;
+  bottom: 999999px;
+  left: auto;
+  right: 5%;
+  z-index: 1000;
+
+  width: 450px;
+  height: auto;
+
   font-family: $font-default;
   color: #ffffff;
-  z-index: 1000;
-  left: 0;
-  bottom: -170px;
-  width: 100%;
-  height: 150px;
+  
   @media($bp-larger-than-desktop) {
-    left: auto;
-    top: -270px;
-    right: -10%;
-    width: 450px;
-    height: 200px;
+    display: block;
   }
+
   &__.quote{
-    position: relative;
     width: 100%;
     height: 100%;
     text-align: left;
     p{
-      @media($bp-larger-than-desktop) {
-        height: 70%;
-        margin: 5% 10%;
-        width: 80%;
-      }
-      height: 65%;
-      margin: 2% 5%;
-      width: 90%;
+      padding: 35px 0;
+      margin: 0 10%;
+      width: 80%;
     }
   }
   &__.source{
@@ -170,8 +152,32 @@ p{
     bottom: 10px;
     text-transform: uppercase;
     text-align: right;
-    @media($bp-smaller-than-desktop) {
-      right: 30px;
+  }
+}
+
+.c-welcome-article-bottom{
+  position: relative;
+  font-family: $font-default;
+  color: #ffffff;
+  z-index: 1000;
+  display: block;
+  @media($bp-larger-than-desktop) {
+    display: none;
+  }
+  &__.quote{
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    p{
+      padding: 30px 0;
+      margin: 0% 5%;
     }
+  }
+  &__.source{
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    text-transform: uppercase;
+    text-align: right;
   }
 }

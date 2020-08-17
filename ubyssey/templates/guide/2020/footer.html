@@ -7,49 +7,51 @@
         <div class="c-nav-footer__column" id="footer-academics">
           <h2>Academics</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'academics' 'ams' %}">ams</a></li>
-            <li><a href="{% url 'guide-article' 2020 'academics' 'clubs' %}">clubs</a></li>
-            <li><a href="{% url 'guide-article' 2020 'academics' 'greek-life' %}">fraternities &amp; sororities</a></li>
-            <li><a href="{% url 'guide-article' 2020 'academics' 'traditions' %}">ubc traditions</a></li>
-            <li><a href="{% url 'guide-article' 2020 'academics' 'sports' %}">sports</a></li>
+            {% for article in articles.academics %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'academics' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-ubc">
           <h2>UBC</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'ubc' 'study-tips' %}">study tips</a></li>
-            <li><a href="{% url 'guide-article' 2020 'ubc' 'professors' %}">professors</a></li>
-            <li><a href="{% url 'guide-article' 2020 'ubc' 'the-basics' %}">the basics</a></li>
-            <li><a href="{% url 'guide-article' 2020 'ubc' 'studying-abroad' %}">studying abroad</a></li>
-            <li><a href="{% url 'guide-article' 2020 'ubc' 'dates' %}">dates to know</a></li>
+            {% for article in articles.ubc %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'ubc' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-adulting">
           <h2>Adulting</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'finding-a-job' %}">finding a job</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'friends' %}">friends</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'love-and-sex' %}">love &amp; sex</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'exercising' %}">exercising</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'finding-a-roomie' %}">finding a roommate</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'financial-tips' %}">financial tips</a></li>
-            <li><a href="{% url 'guide-article' 2020 'adulting' 'cooking-at-home' %}">cooking at home</a></li>
+            {% for article in articles.adulting %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'adulting' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-sdp">
           <h2>Sex, Drugs, Party</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'sdp' 'greater-vancouver' %}">greater vancouver</a></li>
-            <li><a href="{% url 'guide-article' 2020 'sdp' 'what-to-do-in-vancouver' %}">what to do in vancouver</a></li>
-            <li><a href="{% url 'guide-article' 2020 'sdp' 'campus-eats' %}">campus eats</a></li>
-            <li><a href="{% url 'guide-article' 2020 'sdp' 'travel-tips' %}">travel tips</a></li>
-            <li><a href="{% url 'guide-article' 2020 'sdp' 'drugs' %}">drugs</a></li>
+            {% for article in articles.sdp %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'sdp' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-vancouver">
           <h2>Vancouver</h2>
           <ul>
-            <li><a href="{% url 'guide-article' 2020 'vancouver' 'ubyssey' %}">about us</a></li>
+            {% for article in articles.vancouver %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'vancouver' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
       </nav>

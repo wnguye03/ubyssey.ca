@@ -98,20 +98,20 @@ class Guide2020(object):
         section4 = []
         section5 = []
 
-        for article in articles:
-            featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-            url_absolute = article.get_absolute_url()
+        for a in articles:
+            featuredImage = a.featured_image.image.get_medium_url() if a.featured_image is not None else None
+            url_absolute = a.get_absolute_url()
             string_to_find = 'guide/'
             index = url_absolute.find(string_to_find) + len(string_to_find)
             slug = url_absolute[index: len(url_absolute)-1]
             temp = {
-                'headline': article.headline,
+                'headline': a.headline,
                 'slug': slug,
                 'featured_image': featuredImage,
             }
 
-            if article.subsection:
-                if article.subsection.slug == self.section1_name:
+            if a.subsection:
+                if a.subsection.slug == self.section1_name:
                     section1.append(temp.copy())
                 elif article.subsection.slug == self.section2_name:
                     section2.append(temp.copy())
@@ -145,11 +145,11 @@ class Guide2020(object):
             'article': article,
             'next': [next_a, next_b],
             'articles': {
-            'academics': academics,
-            'ubc': ubc,
-            'adulting': adulting,
-            'sdp': sdp,
-            'vancouver': vancouver
+                'academics': academics,
+                'ubc': ubc,
+                'adulting': adulting,
+                'sdp': sdp,
+                'vancouver': vancouver
             }
         }
         article_page = 'guide/' + year + '/article.html'

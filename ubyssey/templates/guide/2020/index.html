@@ -1,8 +1,8 @@
 {% extends 'guide/2020/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<div class="c-banner c-banner--welcome">
+<div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover.jpg' %})">
   <div class="c-banner__container">
     <div class="c-banner--welcome__inner">
       <h2 class="c-banner--welcome__intro">The Ubyssey presents</h2>
@@ -63,7 +63,7 @@
       <div class="panel-quote __1-container">
         <div class="panel-quote __1-container-text">
           <div class="panel-quote __1-container-image">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" alt="Girl in a jacket">
+            <img src="{% static 'ubyssey/images/guide/guide-2020-cover-1.jpg' %}" alt="cover">
           </div>
           <div class="panel-quote __1-text">
             <div class="panel-quote __1-text__ quote">
@@ -128,7 +128,7 @@
     <div class="panel-quote __2-container">
       <div class="panel-quote __2-container-text">
         <div class="panel-quote __2-container-image">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" alt="Girl in a jacket">
+          <img src="{% static 'ubyssey/images/guide/guide-2020-cover-2.jpg' %}" alt="cover">
         </div>
         <div class="panel-quote __2-text">
           <div class="panel-quote __2-text__ quote">

@@ -99,7 +99,7 @@
               display: block;
               margin: 0 auto 0 auto;
               clear: left;
-              line-height: 2.5;
+              line-height: 2;
               padding: 0;
               width:100%;
               text-align: center;
@@ -227,12 +227,12 @@
       text-align: center;
       border-bottom: 1px solid #fff;
       a{
-        height:40px;
+        height: auto;
+        text-transform: capitalize;
+        font-size: 0.9rem;
+        padding: 0 10px;
+        letter-spacing: -0.5px;
         display: block;
-        &:hover {
-            font-weight: bold;
-            font-size: 1.05em;
-          } 
        }
     }   
 }

@@ -44,8 +44,8 @@ class FullWidth(Template):
 class Guide(Template):
     id = 'guide-to-ubc'
     name = 'Guide to UBC'
-    banner_quote = CharField('Banner Quote')
-    banner_quote_source = CharField('Banner Quote Source',required=False)
+    banner_quote = TextField('Banner Quote')
+    banner_quote_source = CharField('Banner Quote Source')
     subheading = CharField('Sub-heading')
     intro = TextField('Intro text')
     next_a = CharField('Up next A', required=True)
