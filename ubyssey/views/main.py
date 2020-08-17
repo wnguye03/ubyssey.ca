@@ -441,6 +441,9 @@ class AuthorView(DetailView):
         return super().setup(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        """
+        TODO: the logic in get_context_data in AuthorView and ArchiveView is very similar and very bloated. Abstract it out.
+        """
         person = self.object
         order = self.order
         page = self.page
