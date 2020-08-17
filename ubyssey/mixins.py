@@ -18,7 +18,10 @@ from ubyssey.events.models import Event
 
 
 class ArticleMixin(object):
-
+    """
+    Refactor of ArticleHelper. Largely exists to preserve identical reusable functionality in a more Django-like way than "helper classes"
+    @TODO: deprecate and redesign
+    """
     def __init__(self):        
         self.is_mobile = True
 
@@ -290,3 +293,31 @@ class ArticleMixin(object):
             'image': image,
             'author': article.get_author_type_string()
         }
+
+class SubsectionMixin(object):
+    """
+    Refactor of SubsectionHelper. Largely exists to preserve identical reusable functionality in a more Django-like way than "helper classes".
+    Used by Section view.
+    @TODO: Deprecate in favour of e.g. fatter Section model in Dispatch
+    """
+
+    def get_subsections(self, section):
+        article_query = Article.objects.filter(
+           subsection_id=OuterRef("id"),
+           is_published=True
+        ).order_by(
+            F('published_at').desc(nulls_last=True)
+        )
+        subsection_query = Subsection.objects.annotate(
+            published_at=Subquery(
+                article_query.values('published_at')[:1]
+            )
+        ).filter(
+            is_active=True,
+            section_id=section.id
+        )
+        return list(subsection_query)
+
+    def get_featured_subsection_articles(self, subsection, featured_articles):
+        featured_articles_ids = list(featured_articles.values_list('id', flat=True)[0:4])
+        return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3] if subsection.get_published_articles().exclude(id__in=featured_articles_ids).exists() else subsection.get_published_articles()[0:3]

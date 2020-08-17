@@ -22,7 +22,7 @@ from django.views.generic.list import ListView
 import ubyssey
 import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
-from ubyssey.mixins import ArticleMixin
+from ubyssey.mixins import ArticleMixin, SubsectionMixin
 
 def parse_int_or_none(maybe_int):
     try:
@@ -251,13 +251,16 @@ class ArticleView(ArticleMixin, DetailView):
         self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
         return super().render_to_response(context, **response_kwargs)
 
-class SectionView(ListView):
+class SectionView(SubsectionMixin, ListView):
     """
-    For rendering the list of articles corresponding to a _section_
-    Could have been designed as a DetailView on the "Section" model
-    Expects gets Section slug from URL and raises Http404 if not present
+    For rendering the list of articles corresponding to a section.
+    NOT a DetailView of the "Section" model.
+
+    TODO: This is basically a refactor of the section() view, with the exception that there is no "reasonable" way to handle the noodle of the section/page/subsection using three views, suggesting the pattern itself is unreasonable
+    
+    Expects to get Section slug from URL and raises Http404 if not present
     """
-    model = Article
+    model = Article # Object corresponds to the _list_ in "List" View, not the _template_ the view renders, which is where we get "Section" View from
     paginate_by = 15 # automatically adds a paginator and page_obj to the context, see https://docs.djangoproject.com/en/3.0/topics/pagination/#using-paginator-in-view
 
     def setup(self, request, *args, **kwargs):
@@ -295,10 +298,10 @@ class SectionView(ListView):
         featured_subsection = None
         featured_subsection_articles = None
 
-        context['subsections'] = SubsectionHelper.get_subsections(self.section)
+        context['subsections'] = self.get_subsections(self.section)
         if context['subsections']:
-            featured_subsection = subsections[0]
-            featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
+            featured_subsection = context['subsections'][0]
+            featured_subsection_articles = self.get_featured_subsection_articles(featured_subsection, featured_articles)
         
         context['featured_subsection'] = {
             'subsection': featured_subsection,
@@ -407,74 +410,6 @@ class UbysseyTheme(object):
         }
 
         return render(request, 'section.html', context)
-
-    def section(self, request, slug=None):
-        try:
-            section = Section.objects.get(slug=slug)
-        except:
-            return self.page(request, slug)
-
-        order = request.GET.get('order', 'newest')
-
-        if order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
-
-        query = request.GET.get('q', False)
-
-        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
-
-        subsections = SubsectionHelper.get_subsections(section)
-
-        featured_subsection = None
-        featured_subsection_articles = None
-
-        if subsections:
-            featured_subsection = subsections[0]
-            featured_subsection_articles = SubsectionHelper.get_featured_subsection_articles(featured_subsection, featured_articles)
-
-        article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
-
-        if query:
-            article_list = article_list.filter(headline__icontains=query)
-
-        paginator = Paginator(article_list, 15) # Show 15 articles per page
-
-        page = request.GET.get('page')
-
-        try:
-            articles = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            articles = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            articles = paginator.page(paginator.num_pages)
-
-        context = {
-            'meta': {
-                'title': section.name,
-            },
-            'section': section,
-            'subsections': subsections,
-            'featured_subsection': {
-                'subsection': featured_subsection,
-                'articles' : featured_subsection_articles
-            },
-            'type': 'section',
-            'featured_articles': {
-                'first': featured_articles[0],
-                'rest': featured_articles[1:4]
-            },
-            'page_obj': articles,
-            'order': order,
-            'q': query
-        }
-
-        t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
-        return HttpResponse(t.render(context))
-
     def subsection(self, request, slug=None):
         try:
             subsection = Subsection.objects.get(slug=slug, is_active=True)
