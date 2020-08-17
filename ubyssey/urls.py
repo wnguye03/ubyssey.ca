@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView, AuthorView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -47,7 +47,7 @@ urlpatterns += [
     re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
 
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
-    re_path(r'^authors/(?P<slug>[-\w]+)/$', theme.author, name='author'),
+    re_path(r'^authors/(?P<slug>[-\w]+)/$', AuthorView.as_view(), name='author'),
     re_path(r'^topic/(\d*)/$', theme.topic, name='topic'), #TODO: fairly undercooked and seems redundant with subsections, conceptually. Consider permanently removing from project
 
     # Guide to UBC

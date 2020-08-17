@@ -31,6 +31,9 @@ def parse_int_or_none(maybe_int):
         return None
 
 class HomePageView(ArticleMixin, TemplateView):
+    """
+    View logic for the page the reader first sees upon going to https://ubyssey.ca/
+    """
     template_name = 'homepage/base.html'
     youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
 
@@ -143,9 +146,9 @@ class HomePageView(ArticleMixin, TemplateView):
 
 class ArticleView(DispatchPublishableMixin, ArticleMixin, DetailView):
     """
-    Initializes attributes from URL: section, slug
+    Initializes attributes from URL: section, slug/
 
-    Please consult official Django documentation on DetailView
+    Please consult official Django documentation on DetailView: 
     https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView
     """
     model = Article #is queried by section and slug
@@ -388,11 +391,13 @@ class VideoView(ListView):
 class ArticleAjaxView(DispatchPublishableMixin, DetailView):
     model = Article
 
-    def setup(self, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):
         article = Article.objects.get(id=kwargs['pk'])
         authors = article.authors.all()
         self.authors_json = [a.person.full_name for a in authors]
-        return super().setup(*args, **kwargs)
+        return super().setup(request, *args, **kwargs)
+    def get_template_names(self):
+        return ['author.html']
 
     def get_context_data(self, **kwargs):
         """
@@ -424,6 +429,122 @@ class ArticleAjaxView(DispatchPublishableMixin, DetailView):
 
         return HttpResponse(json.dumps(data), content_type='application/json')
 
+class AuthorView(DetailView):
+    model = Person
+    
+    def setup(self, request, *args, **kwargs):
+        self.order = request.GET.get('order', 'newest')
+        self.page = request.GET.get('page')
+        self.query = request.GET.get('q', False)
+        self.youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+
+        return super().setup(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        person = self.object
+        order = self.order
+        page = self.page
+        query = self.query
+        context = super().get_context_data(**kwargs)
+
+        if order == 'newest':
+            publishable_order_by = '-published_at'
+            media_order_by = '-created_at'
+        else:
+            publishable_order_by = 'published_at'
+            media_order_by = 'created_at'
+
+        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(publishable_order_by)
+        video_list = Video.objects.filter(authors__person=person).order_by(media_order_by)
+        image_list = Image.objects.filter(authors__person=person).order_by(media_order_by)
+        
+        podcast_list = Podcast.objects.filter(author=person.full_name)
+        podcast = Podcast.objects.all()[:1].get()
+        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id, author=person.full_name).order_by(publishable_order_by)
+
+        if query:
+            article_list = article_list.filter(headline__icontains=query)
+            video_list = video_list.filter(title__icontains=query)
+            image_list = image_list.filter(title__icontains=query)
+            podcast_list = podcast_list.filter(title__icontains=query)
+            episode_list = episode_list.filter(title__icontains=query)
+            
+        episode_urls = []
+        for episode in episode_list:
+            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
+        
+        episodes = list(zip(episode_list, episode_urls))
+        podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
+
+        for index, image in enumerate(image_list):
+            image_list[index].imageAuthors = []
+            for author in image.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                author_person = Person.objects.get(id=person_id)
+                image_list[index].imageAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
+
+            image_list[index].numAuthors = len(image.imageAuthors)
+
+        for index, video in enumerate(video_list):
+            video_list[index].videoAuthors = []
+            for author in video.authors.all():
+                person_id = Author.objects.get(id=author.id).person_id
+                author_person = Person.objects.get(id=person_id)
+                video_list[index].videoAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
+
+            match = self.youtube_regex.match(video.url)
+            if match:
+                video_list[index].youtube_slug = match.group('id')
+            else:
+                UbysseyTheme.logger.warning("Could not parse youtube slug from given url: %s", video.url)
+            video_list[index].numAuthors = len(video.videoAuthors)
+            video_list[index].video_url = VideoHelper.get_video_url(video.id)
+
+        object_list = list(chain(article_list, video_list, image_list, podcasts, episodes))
+        objects_per_page = 15
+        paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
+
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+
+        context = {
+            'meta': {
+                'title': person.full_name,
+                'image': person.get_image_url if person.image is not None else None,
+            },
+            'person': person,
+            'page_obj': articles,
+            'order': order,
+            'q': query
+        }
+
+        articles_start = 0 if article_list is not None and article_list.exists() else None
+        context['articles_start_page'] = articles_start // objects_per_page + 1 if articles_start is not None else None
+        context['articles_start_idx'] = articles_start % objects_per_page if articles_start is not None else None
+        
+        videos_start = len(article_list) if video_list is not None and video_list.exists() else None
+        context['videos_start_page'] = videos_start // objects_per_page + 1 if videos_start is not None else None
+        context['videos_start_idx'] = videos_start % objects_per_page if videos_start is not None else None
+        
+        images_start = len(article_list) + len(video_list) if image_list is not None and image_list.exists() else None
+        context['images_start_page'] = images_start // objects_per_page + 1 if images_start is not None else None
+        context['images_start_idx'] = images_start % objects_per_page if images_start is not None else None
+        
+        podcasts_start = len(article_list) + len(video_list) + len(image_list) if podcasts is not None and len(podcasts) > 0 else None
+        context['podcasts_start_page'] = podcasts_start // objects_per_page + 1 if podcasts_start is not None else None
+        context['podcasts_start_idx'] = podcasts_start % objects_per_page if podcasts_start is not None else None
+        
+        episodes_start = len(article_list) + len(video_list) + len(image_list) + len(podcasts) if episodes is not None and len(episodes) > 0 else None
+        context['episodes_start_page'] = episodes_start // objects_per_page + 1 if episodes_start is not None else None
+        context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
+
+        return context
 
 class UbysseyTheme(object):
 
@@ -509,117 +630,6 @@ class UbysseyTheme(object):
 
         t = loader.select_template(['%s/%s' % (subsection.slug, 'subsection.html'), 'subsection.html'])
         return HttpResponse(t.render(context))
-
-    def author(self, request, slug=None):
-        #TODO: fix podcast bug
-        try:
-            person = Person.objects.get(slug=slug)
-        except:
-            raise Http404('Author could not be found.')
-
-        order = request.GET.get('order', 'newest')
-
-        if order == 'newest':
-            publishable_order_by = '-published_at'
-            media_order_by = '-created_at'
-        else:
-            publishable_order_by = 'published_at'
-            media_order_by = 'created_at'
-
-        query = request.GET.get('q', False)
-
-        article_list = Article.objects.filter(authors__person=person, is_published=True).order_by(publishable_order_by)
-        video_list = Video.objects.filter(authors__person=person).order_by(media_order_by)
-        image_list = Image.objects.filter(authors__person=person).order_by(media_order_by)
-        
-        podcast_list = Podcast.objects.filter(author=person.full_name)
-        podcast = Podcast.objects.all()[:1].get()
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id, author=person.full_name).order_by(publishable_order_by)
-
-        if query:
-            article_list = article_list.filter(headline__icontains=query)
-            video_list = video_list.filter(title__icontains=query)
-            image_list = image_list.filter(title__icontains=query)
-            podcast_list = podcast_list.filter(title__icontains=query)
-            episode_list = episode_list.filter(title__icontains=query)
-            
-        episode_urls = []
-        for episode in episode_list:
-            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-        
-        episodes = list(zip(episode_list, episode_urls))
-        podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
-
-        for index, image in enumerate(image_list):
-            image_list[index].imageAuthors = []
-            for author in image.authors.all():
-                person_id = Author.objects.get(id=author.id).person_id
-                author_person = Person.objects.get(id=person_id)
-                image_list[index].imageAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
-
-            image_list[index].numAuthors = len(image.imageAuthors)
-
-        for index, video in enumerate(video_list):
-            video_list[index].videoAuthors = []
-            for author in video.authors.all():
-                person_id = Author.objects.get(id=author.id).person_id
-                author_person = Person.objects.get(id=person_id)
-                video_list[index].videoAuthors.append({'name': author_person.full_name, 'link': VideoHelper.get_media_author_url(author_person.slug)})
-
-            match = self.youtube_regex.match(video.url)
-            if match:
-                video_list[index].youtube_slug = match.group('id')
-            else:
-                UbysseyTheme.logger.warning("Could not parse youtube slug from given url: %s", video.url)
-            video_list[index].numAuthors = len(video.videoAuthors)
-            video_list[index].video_url = VideoHelper.get_video_url(video.id)
-
-        object_list = list(chain(article_list, video_list, image_list, podcasts, episodes))
-        objects_per_page = 15
-        paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
-        page = request.GET.get('page')
-
-        try:
-            articles = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            articles = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            articles = paginator.page(paginator.num_pages)
-
-        context = {
-            'meta': {
-                'title': person.full_name,
-                'image': person.get_image_url if person.image is not None else None,
-            },
-            'person': person,
-            'page_obj': articles,
-            'order': order,
-            'q': query
-        }
-
-        articles_start = 0 if article_list is not None and article_list.exists() else None
-        context['articles_start_page'] = articles_start // objects_per_page + 1 if articles_start is not None else None
-        context['articles_start_idx'] = articles_start % objects_per_page if articles_start is not None else None
-        
-        videos_start = len(article_list) if video_list is not None and video_list.exists() else None
-        context['videos_start_page'] = videos_start // objects_per_page + 1 if videos_start is not None else None
-        context['videos_start_idx'] = videos_start % objects_per_page if videos_start is not None else None
-        
-        images_start = len(article_list) + len(video_list) if image_list is not None and image_list.exists() else None
-        context['images_start_page'] = images_start // objects_per_page + 1 if images_start is not None else None
-        context['images_start_idx'] = images_start % objects_per_page if images_start is not None else None
-        
-        podcasts_start = len(article_list) + len(video_list) + len(image_list) if podcasts is not None and len(podcasts) > 0 else None
-        context['podcasts_start_page'] = podcasts_start // objects_per_page + 1 if podcasts_start is not None else None
-        context['podcasts_start_idx'] = podcasts_start % objects_per_page if podcasts_start is not None else None
-        
-        episodes_start = len(article_list) + len(video_list) + len(image_list) + len(podcasts) if episodes is not None and len(episodes) > 0 else None
-        context['episodes_start_page'] = episodes_start // objects_per_page + 1 if episodes_start is not None else None
-        context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
-
-        return render(request, 'author.html', context)
 
     def archive(self, request):
         years = ArticleHelper.get_years()
