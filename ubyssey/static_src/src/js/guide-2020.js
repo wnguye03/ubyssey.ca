@@ -28,11 +28,11 @@ function dropDownHeader(dropDownParentName, dropDownName) {
   $(dropDownParentName).hover(function(e) {
     e.stopPropagation();
     $(dropDownName).finish();
-    $(dropDownName).slideToggle(300);
+    $(dropDownName).slideToggle(200);
     }, (function(e) {
       e.stopPropagation();
       $(dropDownName).finish();
-      $(dropDownName).fadeOut(300);
+      $(dropDownName).hide();
     })
   );
 }

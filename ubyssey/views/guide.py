@@ -50,7 +50,7 @@ class Guide2016(object):
 
 
 class Guide2020(object):
-    """Theme for the 2016 Ubyssey Guide to UBC."""
+    """Theme for the 2020 Ubyssey Guide to UBC."""
 
     def __init__(self, year, title, section1_name, section2_name, section3_name, section4_name, section5_name): 
         self.year = str(year)
@@ -69,8 +69,7 @@ class Guide2020(object):
         landing_page = 'guide/' + year + '/section.html'
         return render(request, landing_page, helper_subsection(self, subsection))
 
-    def article(self, request, year=None, subsection=None, slug=None):
-        
+    def article(self, request, year, subsection=None, slug=None):
         """Guide article page."""
         try:
             article = ArticleHelper.get_article(request, slug)
@@ -91,7 +90,8 @@ class Guide2020(object):
 
         article.add_view()
 
-        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-importance')
+        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-published_at')
+
         section1 = [] 
         section2 = [] 
         section3 = []
@@ -113,16 +113,15 @@ class Guide2020(object):
             if a.subsection:
                 if a.subsection.slug == self.section1_name:
                     section1.append(temp.copy())
-                elif article.subsection.slug == self.section2_name:
+                elif a.subsection.slug == self.section2_name:
                     section2.append(temp.copy())
-                elif article.subsection.slug == self.section3_name:
+                elif a.subsection.slug == self.section3_name:
                     section3.append(temp.copy())
-                elif article.subsection.slug == self.section4_name:
+                elif a.subsection.slug == self.section4_name:
                     section4.append(temp.copy())
-                elif article.subsection.slug == self.section5_name:
+                elif a.subsection.slug == self.section5_name:
                     section5.append(temp.copy())
             
-
         articles = json.dumps({
                 self.section1_name: section1,
                 self.section2_name: section2,
@@ -130,7 +129,7 @@ class Guide2020(object):
                 self.section4_name: section4,
                 self.section5_name: section5,
             })
-
+        
         articles_parse = json.loads(articles)
         academics = articles_parse["academics"]
         ubc = articles_parse["ubc"]
@@ -161,7 +160,7 @@ guide2016 = Guide2016("Guide")
 guide2020 = Guide2020(2020, "Guide", "academics", "ubc", "adulting", "sdp", "vancouver")
 
 def helper_subsection(page, subsection):
-    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('-importance')
+    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('-published_at')
     section1 = [] 
     section2 = [] 
     section3 = []
