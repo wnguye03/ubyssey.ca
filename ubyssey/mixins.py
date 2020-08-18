@@ -1,7 +1,9 @@
+import re
 import datetime
 from datetime import datetime
 
 from django.utils import timezone
+from itertools import chain
 import pytz
 from random import randint, choice
 
@@ -11,10 +13,13 @@ from django.db import connection
 from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Subquery, Value, When 
 from django.db.models.aggregates import Count
 from django_user_agents.utils import get_user_agent
+from django.views.generic.list import ListView
 
-from dispatch.models import Article, Page, Publishable, Section, Subsection, Podcast, Image, ImageAttachment
+
+from dispatch.models import Author, Article, Page, Publishable, Section, Subsection, Podcast, PodcastEpisode, Person, Image, ImageAttachment
 
 from ubyssey.events.models import Event
+
 
 
 class ArticleMixin(object):
@@ -169,15 +174,6 @@ class ArticleMixin(object):
             'name': name
         }
 
-    def get_years(self):
-        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
-        years = []
-
-        for publish_date in publish_dates:
-            years.append(publish_date.year)
-
-        return years
-
     def get_topic(self, topic_name):
 
         return Article.objects.filter(
@@ -294,7 +290,7 @@ class ArticleMixin(object):
             'author': article.get_author_type_string()
         }
 
-class DispatchPublishableMixin(object):
+class DispatchPublishableViewMixin(object):
     """
     Abstracts out typical function overrides when dealing with a Publishable object from the Dispatch app (i.e. and Article or a Page). Most commonly, this is to append .filter(is_published=True) to the queryset a class uses to account for non-unique slugs.
     This logic was originally in the Ubyssey app, but because it deals with Dispatch models, it may be desirable to move it 
@@ -340,3 +336,102 @@ class SubsectionMixin(object):
     def get_featured_subsection_articles(self, subsection, featured_articles):
         featured_articles_ids = list(featured_articles.values_list('id', flat=True)[0:4])
         return subsection.get_published_articles().exclude(id__in=featured_articles_ids)[0:3] if subsection.get_published_articles().exclude(id__in=featured_articles_ids).exists() else subsection.get_published_articles()[0:3]
+
+class ArchiveListViewMixin(object):
+    """
+    Designed so that one can include objects/archive.html to the template corresponding to a view, 
+    without having to add much to e.g. the context data structure to get it working.
+    Mix in with a ListView
+    """
+    paginate_by = 15
+
+    def __parse_int_or_none(self, maybe_int):
+        """
+        Private helper that enforces stricter discipline on section id and year values in request headers.
+        
+        Returns:
+            maybe_int cast to an integer or None if the cast fails. 
+        """
+        try:
+            return int(maybe_int)
+        except (TypeError, ValueError):
+            return None
+
+    def __get_years(self):
+        """
+        Returns:
+            list of years such that there is an article published at that year
+        """
+        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
+        years = []
+
+        for publish_date in publish_dates:
+            years.append(publish_date.year)
+
+        return years
+
+    def setup(self, request, *args, **kwargs):
+        # These are common to the Author and Article views
+        self.order = request.GET.get('order', 'newest')
+        self.page = request.GET.get('page')
+        self.query = request.GET.get('q', False)
+        self.youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+        return super().setup(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        if self.order == 'oldest':
+            publishable_order_by = 'published_at'
+        else:
+            publishable_order_by = '-published_at'
+
+        article_qs = Article.objects.prefetch_related('authors', 'authors__person').select_related(
+            'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
+        if self.query:         
+            article_qs = article_qs.filter(headline__icontains=self.query)
+        if self.year:
+            article_qs = article_qs.filter(published_at__icontains=str(self.year))
+        if self.section_id:
+            article_qs = article_qs.filter(section=self.section_id)
+        article_qs = article_qs[:7000]
+        self.article_qs_exists = article_qs.exists()
+
+
+        return article_qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['sections'] = Section.objects.all()
+        context['order'] = self.order
+        context['years'] = self.__get_years()
+        context['q'] = self.query
+        context['section_id'] = self.section_id
+        context['section_name'] = Section.objects.get(id=self.section_id)
+        context['meta'] = { 'title': 'Archive' }
+
+        filters = []
+        if self.order == 'oldest':
+            filters.append('order=%s' % self.order)
+        if self.year is not None:
+            filters.append('year=%s' % self.year)
+        if self.query:
+            filters.append('q=%s' % self.query)
+        if self.section_id:
+            filters.append('section_id=%s' % self.section_id)
+        if filters:
+            query_string = '?' + '&'.join(filters)
+        else:
+            query_string = ''
+        context['query_string'] = query_string
+
+        # Articles
+        # Note part of this design is an artefact of having non-Article items appearing in the archive 
+        articles_start = None
+        context['articles_start_page'] = None
+        context['articles_start_idx'] = None
+        if self.article_qs_exists:
+            articles_start = 0
+            context['articles_start_page'] = articles_start // self.paginate_by + 1
+            context['articles_start_idx'] = articles_start % self.paginate_by
+
+        return context

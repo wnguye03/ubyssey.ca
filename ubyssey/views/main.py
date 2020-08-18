@@ -22,7 +22,7 @@ from django.views.generic.list import ListView
 import ubyssey
 import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
-from ubyssey.mixins import ArticleMixin, DispatchPublishableMixin, SubsectionMixin
+from ubyssey.mixins import ArticleMixin, ArchiveListViewMixin, DispatchPublishableViewMixin, SubsectionMixin
 
 def parse_int_or_none(maybe_int):
     try:
@@ -144,7 +144,7 @@ class HomePageView(ArticleMixin, TemplateView):
         context['day_of_week'] = datetime.now().weekday()
         return context
 
-class ArticleView(DispatchPublishableMixin, ArticleMixin, DetailView):
+class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
     """
     Initializes attributes from URL: section, slug/
 
@@ -314,7 +314,7 @@ class SectionView(SubsectionMixin, ListView):
 
         return context
 
-class PageView(DispatchPublishableMixin, DetailView):
+class PageView(DispatchPublishableViewMixin, DetailView):
     """
     Shares with the Section view the problem that its original counterpart had weird "except" logic to allow several views to share a url pattern
     """
@@ -388,7 +388,7 @@ class VideoView(ListView):
         }
         return context
 
-class ArticleAjaxView(DispatchPublishableMixin, DetailView):
+class ArticleAjaxView(DispatchPublishableViewMixin, DetailView):
     model = Article
 
     def setup(self, request, *args, **kwargs):
@@ -548,6 +548,15 @@ class AuthorView(DetailView):
         context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
 
         return context
+
+
+class ArchiveView(ArchiveListViewMixin, ListView):
+    def setup(self, request, *args, **kwargs):
+        self.section_id = self.__parse_int_or_none(request.GET.get('section_id'))
+        self.year = self.__parse_int_or_none(request.GET.get('year'))
+        return super().setup(request, *args, **kwargs)
+
+
 
 class UbysseyTheme(object):
 
