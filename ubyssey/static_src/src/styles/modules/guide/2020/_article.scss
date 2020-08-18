@@ -1,3 +1,6 @@
+.c-article{
+  padding: 3em 0;
+}
 .c-article__intro{
   &__subheading {
     font-family: $header-font;
@@ -20,7 +23,6 @@
 }
 
 .c-article__content {
-
   h1, h2, h3 {
     text-align: left;
     font-family: $header-font;
@@ -43,25 +45,6 @@
 
   b {
     font-weight: 800;
-  }
-
-  .image-attachment {
-    margin-bottom: 1.5rem;
-    width: 100%;
-    max-width: 600px;
-
-    @media($bp-larger-than-desktop) {
-      max-width: 700px;
-      margin-left: -100px;
-    }
-
-    img {
-      width: 100%;
-    }
-
-    .caption {
-      display: none;
-    }
   }
 
   .advertisement, .pull-quote {
@@ -180,4 +163,10 @@ p{
     text-transform: uppercase;
     text-align: right;
   }
+}
+
+.article .o-article-embed{
+  margin: 0;
+  max-width: 600px;
+  display: block;
 }
