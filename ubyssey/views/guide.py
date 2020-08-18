@@ -90,7 +90,7 @@ class Guide2020(object):
 
         article.add_view()
 
-        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-published_at')
+        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('published_at')
 
         section1 = [] 
         section2 = [] 
@@ -160,7 +160,7 @@ guide2016 = Guide2016("Guide")
 guide2020 = Guide2020(2020, "Guide", "academics", "ubc", "adulting", "sdp", "vancouver")
 
 def helper_subsection(page, subsection):
-    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('-published_at')
+    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('published_at')
     section1 = [] 
     section2 = [] 
     section3 = []
