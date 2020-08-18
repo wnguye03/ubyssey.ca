@@ -1,3 +1,6 @@
+.c-article{
+  padding-top: 3em 0;
+}
 .c-article__intro{
   &__subheading {
     font-family: $header-font;
@@ -20,7 +23,6 @@
 }
 
 .c-article__content {
-
   h1, h2, h3 {
     text-align: left;
     font-family: $header-font;
