@@ -66,6 +66,7 @@ class Guide2020(object):
         return render(request, landing_page, helper_subsection(self, subsection))
     
     def landing_sub(self, request, year, subsection=None):
+        print(subsection)
         landing_page = 'guide/' + year + '/section.html'
         return render(request, landing_page, helper_subsection(self, subsection))
 
@@ -91,7 +92,7 @@ class Guide2020(object):
         article.add_view()
 
         articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('-published_at')
-
+        
         section1 = [] 
         section2 = [] 
         section3 = []
