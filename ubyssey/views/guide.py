@@ -66,7 +66,6 @@ class Guide2020(object):
         return render(request, landing_page, helper_subsection(self, subsection))
     
     def landing_sub(self, request, year, subsection=None):
-        print(subsection)
         landing_page = 'guide/' + year + '/section.html'
         return render(request, landing_page, helper_subsection(self, subsection))
 
