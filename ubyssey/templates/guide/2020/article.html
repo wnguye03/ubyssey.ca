@@ -12,14 +12,16 @@
     </div>
     {% if article.template_fields.banner_quote and article.template_fields.banner_quote != ' ' %}
     <div id='quote-top' class="c-welcome-article __{{ subsection }}">
-      <div class="c-welcome-article__ quote">
-        <p>{{ article.template_fields.banner_quote }}</p>
-      </div>
-      {% if article.template_fields.banner_quote_source and article.template_fields.banner_quote_source != ' ' %}
-        <div class="c-welcome-article__ source">
-          {{ article.template_fields.banner_quote_source }}
+      <div class='quote-content--container'>
+        <div class="c-welcome-article__ quote">
+          <p>{{ article.template_fields.banner_quote }}</p>
         </div>
-      {% endif %}
+        {% if article.template_fields.banner_quote_source and article.template_fields.banner_quote_source != ' ' %}
+          <div class="c-welcome-article__ source">
+            {{ article.template_fields.banner_quote_source }}
+          </div>
+        {% endif %}
+      </div>
     </div>
     {% endif %}
   </div>
@@ -40,14 +42,16 @@
   </div>
   {% if article.template_fields.banner_quote and article.template_fields.banner_quote != ' ' %}
   <div id='quote-bottom' class="c-welcome-article-bottom __{{ subsection }}">
-    <div class="c-welcome-article-bottom__ quote">
-      <p>{{ article.template_fields.banner_quote }}</p>
-    </div>
-    {% if article.template_fields.banner_quote_source and article.template_fields.banner_quote_source != ' ' %}
-      <div class="c-welcome-article-bottom__ source">
-        {{ article.template_fields.banner_quote_source }}
+    <div class='quote-content--container'>
+      <div class="c-welcome-article-bottom__ quote">
+        <p>{{ article.template_fields.banner_quote }}</p>
       </div>
-    {% endif %}
+      {% if article.template_fields.banner_quote_source and article.template_fields.banner_quote_source != ' ' %}
+        <div class="c-welcome-article-bottom__ source">
+          {{ article.template_fields.banner_quote_source }}
+        </div>
+      {% endif %}
+    </div>
   </div>
   {% endif %}
   <div class="c-up-next">

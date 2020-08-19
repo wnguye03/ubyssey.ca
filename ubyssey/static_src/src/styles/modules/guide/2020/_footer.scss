@@ -79,6 +79,7 @@
   li {
     line-height: 1.2em;
     padding: 0 10px;
+    text-transform: lowercase;
     @media ($bp-smaller-than-mobile) {
       font-size: 1.7em;
     }
