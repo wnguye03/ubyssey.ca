@@ -306,8 +306,26 @@ class DispatchPublishableViewMixin(object):
         return super().get_queryset().filter(is_published=True)
     
     def render_to_response(self, context, **response_kwargs):
+        """
+        Adds to the view counter before rendering the page. We do this as late as possible to try to prevent adding to the view counter in the event of errors
+        """
         self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
         return super().render_to_response(context, **response_kwargs)
+
+    def get_meta(self, default_image=None):
+        try:
+            image = self.object.featured_image.image.get_medium_url()
+        except:
+            image = default_image
+
+        return {
+            'title': self.object.headline,
+            'description': self.object.seo_description if self.object.seo_description is not None else self.object.snippet,
+            'url': self.object.get_absolute_url,
+            'image': image,
+            'author': self.object.get_author_type_string()
+        }
+
 
 class SubsectionMixin(object):
     """
