@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView, AuthorView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView, AuthorView, ArchiveView
 from ubyssey.views.guide import guide2016, guide2020
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -43,7 +43,7 @@ urlpatterns += [
 
     re_path(r'^$', HomePageView.as_view(), name='home'),
     re_path(r'^search/$', theme.search, name='search'),
-    re_path(r'^archive/$', theme.archive, name='archive'),
+    re_path(r'^archive/$', ArchiveView.as_view(), name='archive'),
     re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
 
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),

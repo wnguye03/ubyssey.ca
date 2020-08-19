@@ -345,18 +345,6 @@ class ArchiveListViewMixin(object):
     """
     paginate_by = 15
 
-    def __parse_int_or_none(self, maybe_int):
-        """
-        Private helper that enforces stricter discipline on section id and year values in request headers.
-        
-        Returns:
-            maybe_int cast to an integer or None if the cast fails. 
-        """
-        try:
-            return int(maybe_int)
-        except (TypeError, ValueError):
-            return None
-
     def __get_years(self):
         """
         Returns:
@@ -371,7 +359,9 @@ class ArchiveListViewMixin(object):
         return years
 
     def setup(self, request, *args, **kwargs):
-        # These are common to the Author and Article views
+        """
+        Sets order, page, query, youtube_regex attributes
+        """
         self.order = request.GET.get('order', 'newest')
         self.page = request.GET.get('page')
         self.query = request.GET.get('q', False)
@@ -379,6 +369,10 @@ class ArchiveListViewMixin(object):
         return super().setup(request, *args, **kwargs)
     
     def get_queryset(self):
+        """
+        Custom queryset, because the original code this was refactored from did a tremendous amount of stuff 
+        in putting together a queryset 
+        """
         if self.order == 'oldest':
             publishable_order_by = 'published_at'
         else:
@@ -395,7 +389,6 @@ class ArchiveListViewMixin(object):
         article_qs = article_qs[:7000]
         self.article_qs_exists = article_qs.exists()
 
-
         return article_qs
 
     def get_context_data(self, **kwargs):
@@ -405,9 +398,11 @@ class ArchiveListViewMixin(object):
         context['order'] = self.order
         context['years'] = self.__get_years()
         context['q'] = self.query
-        context['section_id'] = self.section_id
-        context['section_name'] = Section.objects.get(id=self.section_id)
         context['meta'] = { 'title': 'Archive' }
+
+        if self.section_id:
+            context['section_id'] = self.section_id
+            context['section_name'] = Section.objects.get(id=self.section_id)
 
         filters = []
         if self.order == 'oldest':

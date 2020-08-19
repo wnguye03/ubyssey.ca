@@ -551,12 +551,36 @@ class AuthorView(DetailView):
 
 
 class ArchiveView(ArchiveListViewMixin, ListView):
+    """
+    View for http://ubyssey.ca/archive/
+
+    Bugs:
+        Cannot click on "All years" or "All sections" once you have selected a particular year or section
+    """
+
+    def __parse_int_or_none(self, maybe_int):
+        """
+        Private helper that enforces stricter discipline on section id and year values in request headers.
+        
+        Returns:
+            maybe_int cast to an integer or None if the cast fails. 
+        """
+        try:
+            return int(maybe_int)
+        except (TypeError, ValueError):
+            return None
+
     def setup(self, request, *args, **kwargs):
+        """
+        Sets self.section_id and self.year variables. These variables are optional for a ArchiveListViewMixin, 
+        but it will add features to the archive page if they are present.
+        """        
         self.section_id = self.__parse_int_or_none(request.GET.get('section_id'))
         self.year = self.__parse_int_or_none(request.GET.get('year'))
         return super().setup(request, *args, **kwargs)
-
-
+    
+    def get_template_names(self):
+        return ['archive.html']
 
 class UbysseyTheme(object):
 
