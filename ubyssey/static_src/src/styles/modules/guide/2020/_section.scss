@@ -175,6 +175,9 @@ $margin-size: 10px;
 
         .quote-box{
             margin: $margin-size;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             &-content{
                 &.-container{
                     width: 100%;
