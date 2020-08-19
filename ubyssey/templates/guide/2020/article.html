@@ -61,9 +61,7 @@
   </div>
   <div class="article-boxes">
     {% for a in next %}
-      {% if a.slug %}
-        {% include 'guide/2020/article-box.html' with style='article' title=a.headline subsection=subsection slug=a.slug  image=a.featured_image.image.get_absolute_url %}
-      {% endif %}
+      {% include 'guide/2020/article-box.html' with style='article' title=a.headline subsection=subsection slug=a.slug  image=a.featured_image.image.get_absolute_url %}
     {% endfor %}
   </div>
 </main>
