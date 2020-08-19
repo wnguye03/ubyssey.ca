@@ -29,7 +29,11 @@
     font-size: 1.3rem;
     line-height: 1.6rem;
     font-weight: 500;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+  }
+  h1{
+    font-size: 1.45rem;
+    margin-bottom: 1.5em;
   }
 
   > p, ul {
@@ -45,6 +49,10 @@
 
   b {
     font-weight: 800;
+  }
+
+  em {
+    font-style: italic;
   }
 
   .advertisement, .pull-quote {
@@ -119,21 +127,18 @@ p{
     display: block;
   }
 
+  .quote-content--container{
+    padding: 30px 5%;
+  }
+
   &__.quote{
     width: 100%;
     height: 100%;
     text-align: left;
-    p{
-      padding: 35px 0;
-      margin: 0 10%;
-      width: 80%;
-    }
   }
   &__.source{
-    position: absolute;
-    right: 15px;
-    bottom: 10px;
-    text-transform: uppercase;
+    padding-top: 20px;
+    text-transform: capitalize;
     text-align: right;
   }
 }
@@ -147,20 +152,18 @@ p{
   @media($bp-larger-than-desktop) {
     display: none;
   }
+  .quote-content--container{
+    padding: 30px 0;
+    margin: 0% 5%;
+  }
   &__.quote{
     width: 100%;
     height: 100%;
     text-align: left;
-    p{
-      padding: 30px 0;
-      margin: 0% 5%;
-    }
   }
   &__.source{
-    position: absolute;
-    right: 30px;
-    bottom: 10px;
-    text-transform: uppercase;
+    padding-top: 20px;
+    text-transform: capitalize;
     text-align: right;
   }
 }

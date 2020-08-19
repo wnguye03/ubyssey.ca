@@ -45,12 +45,10 @@ $margin-size: 10px;
 
         &.quote{
             padding: 5%;
-        }
-        
-        &.source{
-            position: absolute;
-            bottom: 20px;
-            right: 5%;
+            .source{
+                text-align: right;
+                padding-top: 20px;
+            }
         }
     }
 }
