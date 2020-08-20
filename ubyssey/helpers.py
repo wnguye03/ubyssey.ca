@@ -165,14 +165,6 @@ class ArticleHelper(object):
         return years
 
     @staticmethod
-    def get_topic(topic_name):
-
-        return Article.objects.filter(
-            is_published=True,
-            topic__name=topic_name
-        )
-
-    @staticmethod
     def is_explicit(article):
         explicit_tags = ['sex', 'explicit']
         tags = article.tags.all().values_list('name', flat=True)

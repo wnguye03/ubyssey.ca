@@ -174,13 +174,6 @@ class ArticleMixin(object):
             'name': name
         }
 
-    def get_topic(self, topic_name):
-
-        return Article.objects.filter(
-            is_published=True,
-            topic__name=topic_name
-        )
-
     def is_explicit(self, article):
         explicit_tags = ['sex', 'explicit']
         tags = article.tags.all().values_list('name', flat=True)
