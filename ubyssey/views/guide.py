@@ -72,7 +72,7 @@ class GuideArticleView(DispatchPublishableViewMixin, GuideViewMixin, DetailView)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['meta']: self.get_meta(self.object)
+        context['meta']: self.get_article_meta(self.object)
         return context
 
 class GuideLandingView(GuideViewMixin, TemplateView):
