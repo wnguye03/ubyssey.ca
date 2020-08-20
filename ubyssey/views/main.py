@@ -284,6 +284,9 @@ class SectionView(SectionMixin, ListView):
         return context
 
 class SubsectionView(SectionMixin, ListView):
+    """
+    For subsection views. Largely the same in functionality to SectionView, but subsections don't have any polymorphism with Sections, unfortunately.
+    """
     def setup(self, request, *args, **kwargs):
         self.default_template = 'subsection.html'
         try:
@@ -365,6 +368,9 @@ class PodcastView(DetailView):
         return context
 
 class VideoView(ListView):
+    """
+    ListView. Gets slug from URL
+    """
     model = Video
     paginate_by = 5
     def get_template_names(self):
@@ -420,6 +426,11 @@ class ArticleAjaxView(DispatchPublishableViewMixin, DetailView):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 class AuthorView(DetailView):
+    """
+    DetailView. Shares a lot of expected behaviour with ArchiveView.
+    TODO: rework to use ArchiveListViewMixin
+    """
+
     model = Person
     
     def setup(self, request, *args, **kwargs):
@@ -539,7 +550,6 @@ class AuthorView(DetailView):
 
         return context
 
-
 class ArchiveView(ArchiveListViewMixin, ListView):
     """
     View for http://ubyssey.ca/archive/
@@ -601,211 +611,6 @@ class UbysseyTheme(object):
         }
 
         return render(request, 'section.html', context)
-    def subsection(self, request, slug=None):
-        try:
-            subsection = Subsection.objects.get(slug=slug, is_active=True)
-        except:
-            raise Http404('Page could not be found')
-
-        if not subsection.get_published_articles().exists():
-            raise Http404('Page could not be found')
-
-        order = request.GET.get('order', 'newest')
-
-        if order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
-
-        query = request.GET.get('q', False)
-
-        featured_articles = Article.objects.filter(subsection=subsection, is_published=True).order_by('-published_at')
-
-        article_list = Article.objects.filter(subsection=subsection, is_published=True).order_by(order_by)
-
-        if query:
-            article_list = article_list.filter(headline__icontains=query)
-
-        paginator = Paginator(article_list, 15) # Show 15 articles per page
-
-        page_number = request.GET.get('page')
-
-        try:
-            page_obj = paginator.page(page_number)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range, deliver last page of results.
-            page_obj = paginator.page(paginator.num_pages)
-
-        context = {
-            'meta': {
-                'title': subsection.name
-            },
-            'subsection': subsection,
-            'type': 'subsection',
-            'featured_articles': {
-                'first': featured_articles[0],
-                'rest': featured_articles[1:4]
-            },
-            'page_obj': page_obj,
-            'order': order,
-            'q': query
-        }
-
-        t = loader.select_template(['%s/%s' % (subsection.slug, 'subsection.html'), 'subsection.html'])
-        return HttpResponse(t.render(context))
-
-    def archive(self, request):
-        years = ArticleHelper.get_years()
-
-        sections = Section.objects.all()
-
-        order = request.GET.get('order')
-        if order != 'oldest':
-            order = 'newest'
-
-        filters = []
-
-        if order == 'oldest':
-            filters.append('order=%s' % order)
-
-        publishable_order_by = '-published_at' if order == 'newest' else 'published_at'
-        media_order_by = '-created_at' if order == 'newest' else 'created_at'
-
-        context = {
-            'sections': sections,
-            'years': years,
-            'order': order
-        }
-
-        query = request.GET.get('q', '').strip() or None
-        section_id = parse_int_or_none(request.GET.get('section_id'))
-
-        year = parse_int_or_none(request.GET.get('year'))
-
-        article_list = Article.objects.prefetch_related('authors', 'authors__person').select_related(
-            'section', 'featured_image').filter(is_published=True).order_by(publishable_order_by)
-        person_list = Person.objects.all() if query else Person.objects.none()
-        video_list = Video.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Video.objects.none()
-        image_list = Image.objects.prefetch_related('authors', 'authors__person').order_by(media_order_by) if query else Image.objects.none()
-        
-        podcast_list = Podcast.objects.all() if query else Podcast.objects.none()
-        podcast = Podcast.objects.all()[:1].get()
-        episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by(publishable_order_by) if query else PodcastEpisode.objects.none()
-
-        if year:
-            context['year'] = year
-            article_list = article_list.filter(published_at__icontains=str(year))
-            episode_list = episode_list.filter(published_at__icontains=str(year))
-            video_list = video_list.filter(created_at__icontains=str(year))
-            image_list = image_list.filter(created_at__icontains=str(year))
-            filters.append('year=%s' % year)
-
-        if query:
-            person_list = Person.objects.filter(full_name__icontains=query)
-            article_list = article_list.filter(headline__icontains=query)
-            video_list = video_list.filter(title__icontains=query)
-            image_list = image_list.filter(title__icontains=query)
-            podcast_list = podcast_list.filter(title__icontains=query)
-            episode_list = episode_list.filter(title__icontains=query)
-            context['q'] = query
-            filters.append('q=%s' % query)
-
-        if section_id:
-            article_list = article_list.filter(section=section_id)
-            context['section_id'] = section_id
-            context['section_name'] = Section.objects.get(id=section_id)
-            filters.append('section_id=%s' % section_id)
-
-        if filters:
-            query_string = '?' + '&'.join(filters)
-        else:
-            query_string = ''
-
-        image_list = image_list[:1500]
-        video_list = video_list[:200]
-        article_list = article_list[:7000]
-        person_list = person_list[:2000]
-
-        episode_urls = []
-        for episode in episode_list:
-            episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-
-        episodes = list(zip(episode_list, episode_urls))
-        podcasts = list(zip([podcast], [PodcastHelper.get_podcast_url(id=podcast.id)])) if podcast_list is not None and podcast_list.exists() else []
-
-        for index, image in enumerate(image_list):
-            image_list[index].imageAuthors = []
-            for author in image.authors.all():
-                person_id = Author.objects.get(id=author.id).person_id
-                person = Person.objects.get(id=person_id)
-                image_list[index].imageAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
-
-            image_list[index].numAuthors = len(image.imageAuthors)
-
-        for index, video in enumerate(video_list):
-            video_list[index].videoAuthors = []
-            for author in video.authors.all():
-                person_id = Author.objects.get(id=author.id).person_id
-                person = Person.objects.get(id=person_id)
-                video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
-
-            match = self.youtube_regex.match(video.url)
-            if match:
-                video_list[index].youtube_slug = match.group('id')
-            else:
-                UbysseyTheme.logger.warning("Could not parse youtube slug from given url: %s", video.url)
-            video_list[index].numAuthors = len(video.videoAuthors)
-            video_list[index].video_url = VideoHelper.get_video_url(video.id)
-
-        object_list = list(chain(article_list, person_list, video_list, image_list, podcasts, episodes))
-        objects_per_page = 15
-        paginator = Paginator(object_list, objects_per_page) # Show 15 objects per page
-        page = request.GET.get('page')
-
-        try:
-            articles = paginator.page(page)
-        except PageNotAnInteger:
-            articles = paginator.page(1)
-        except EmptyPage:
-            articles = paginator.page(paginator.num_pages)
-
-        meta = {
-            'title': 'Archive'
-        }
-
-        context['page_obj'] = articles
-        context['count'] = paginator.count
-        context['meta'] = meta
-        context['query_string'] = query_string
-        
-        articles_start = 0 if article_list is not None and article_list.exists() else None
-        context['articles_start_page'] = articles_start // objects_per_page + 1 if articles_start is not None else None
-        context['articles_start_idx'] = articles_start % objects_per_page if articles_start is not None else None
-        
-        people_start = len(article_list) if person_list is not None and person_list.exists() else None
-        context['people_start_page'] = people_start // objects_per_page + 1 if people_start is not None else None
-        context['people_start_idx'] = people_start % objects_per_page if people_start is not None else None
-
-        videos_start = len(person_list) + len(article_list) if video_list is not None and video_list.exists() else None
-        context['videos_start_page'] = videos_start // objects_per_page + 1 if videos_start is not None else None
-        context['videos_start_idx'] = videos_start % objects_per_page if videos_start is not None else None
-        
-        images_start = len(person_list) + len(article_list) + len(video_list) if image_list is not None and image_list.exists() else None
-        context['images_start_page'] = images_start // objects_per_page + 1 if images_start is not None else None
-        context['images_start_idx'] = images_start % objects_per_page if images_start is not None else None
-        
-        podcasts_start = len(person_list) + len(article_list) + len(video_list) + len(image_list) if podcasts is not None and len(podcasts) > 0 else None
-        context['podcasts_start_page'] = podcasts_start // objects_per_page + 1 if podcasts_start is not None else None
-        context['podcasts_start_idx'] = podcasts_start % objects_per_page if podcasts_start is not None else None
-        
-        episodes_start = len(person_list) + len(article_list) + len(video_list) + len(image_list) + len(podcasts) if episodes is not None and len(episodes) > 0 else None
-        context['episodes_start_page'] = episodes_start // objects_per_page + 1 if episodes_start is not None else None
-        context['episodes_start_idx'] = episodes_start % objects_per_page if episodes_start is not None else None
-
-        return render(request, 'archive.html', context)
 
     def search(self, request):
         return redirect(self.archive)
