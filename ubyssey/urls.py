@@ -52,6 +52,9 @@ urlpatterns += [
     re_path(r'^(?P<slug>advice)/$', PageView.as_view(), name='advice'),
     re_path(r'^(?P<slug>submit-an-opinion)/$', PageView.as_view(), name='submit-an-opinion'),
 
+    # Other pages
+    re_path(r'^page/(?P<slug>[-\w]+)/$', PageView.as_view(), name='page'),
+
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     re_path(r'^authors/(?P<slug>[-\w]+)/$', AuthorView.as_view(), name='author'),
     re_path(r'^topic/(\d*)/$', theme.topic, name='topic'), #TODO: fairly undercooked and seems redundant with subsections, conceptually. Consider permanently removing from project
@@ -91,6 +94,6 @@ urlpatterns += [
     re_path(r'^videos/', VideoView.as_view(), name='videos'),
 
     re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', ArticleView.as_view(), name='article'),
-    re_path(r'^(?P<slug>[-\w]+)/$', SectionView.as_view(), name='page'),
+    re_path(r'^(?P<slug>[-\w]+)/$', SectionView.as_view(), name='section'),
     re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', ArticleAjaxView.as_view(), name='article-ajax'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
