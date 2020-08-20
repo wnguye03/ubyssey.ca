@@ -122,3 +122,19 @@
 
   text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
 }
+
+.c-banner-credits{
+  font-size: 0.8rem;
+  font-family: $credit-font;
+  font-style: $credit-style;
+  z-index: 11;
+  color: white;
+  position: absolute;
+  right: 10px;
+  text-align: right;
+  bottom: 5px;
+  &.inside-quote{
+    top: -1em;
+    right: 5px;
+  }
+}
