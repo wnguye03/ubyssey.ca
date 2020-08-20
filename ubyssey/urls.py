@@ -57,7 +57,6 @@ urlpatterns += [
 
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     re_path(r'^authors/(?P<slug>[-\w]+)/$', AuthorView.as_view(), name='author'),
-    re_path(r'^topic/(\d*)/$', theme.topic, name='topic'), #TODO: fairly undercooked and seems redundant with subsections, conceptually. Consider permanently removing from project
 
     # Guide to UBC
     re_path(r'^guide/2016/$', guide2016.landing, name='guide-landing-2016'),
