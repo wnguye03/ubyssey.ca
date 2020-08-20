@@ -22,7 +22,7 @@ from django.views.generic.list import ListView
 import ubyssey
 import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
-from ubyssey.mixins import ArticleMixin, ArchiveListViewMixin, DispatchPublishableViewMixin, SubsectionMixin
+from ubyssey.mixins import ArticleMixin, ArchiveListViewMixin, DispatchPublishableViewMixin, SectionMixin, SubsectionMixin
 
 def parse_int_or_none(maybe_int):
     try:
@@ -244,79 +244,68 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
 
         return context
 
-class SectionView(SubsectionMixin, ListView):
+class SectionView(SectionMixin, ListView):
     """
     For rendering the list of articles corresponding to a section.
     NOT a DetailView of the "Section" model.
-
-    TODO: This is basically a refactor of the section() view, with the exception that there is no "reasonable" way to handle the noodle of the section/page/subsection using three views, suggesting the pattern itself is unreasonable
     
     Expects to get Section slug from URL and raises Http404 if not present
     """
-    model = Article # Object corresponds to the _list_ in "List" View, not the _template_ the view renders, which is where we get "Section" View from
-    paginate_by = 15 # automatically adds a paginator and page_obj to the context, see https://docs.djangoproject.com/en/3.0/topics/pagination/#using-paginator-in-view
 
     def setup(self, request, *args, **kwargs):
+        self.default_template = 'section.html'
         try:
             self.section = Section.objects.get(slug=kwargs['slug']) 
         except Section.DoesNotExist:
             raise Http404() #TODO: figure out if 404 handling is consistent throughout our app!
 
-        self.order = request.GET.get('order', 'newest')
-        self.query = request.GET.get('q', False)
-
         return super().setup(request, *args, **kwargs)
 
-    def get_template_names(self):
-        template_names = []        
-        if self.section:
-            template_names += ['%s/%s' % (self.section.slug, 'section.html'), 'section.html']
-        template_names += super().get_template_names()
-        return template_names
-
     def get_queryset(self):
-        if self.order == 'newest':
-            order_by = '-published_at'
-        else:
-            order_by = 'published_at'
-        article_list = super().get_queryset().filter(section=self.section, is_published=True).order_by(order_by)
-        if self.query:
-            article_list = article_list.filter(headline__icontains=self.query)
-        return article_list
+        return super().get_queryset().filter(section=self.section)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        featured_articles = Article.objects.filter(section=self.section, is_published=True).order_by('-published_at')
         featured_subsection = None
         featured_subsection_articles = None
 
         context['subsections'] = self.get_subsections(self.section)
         if context['subsections']:
             featured_subsection = context['subsections'][0]
-            featured_subsection_articles = self.get_featured_subsection_articles(featured_subsection, featured_articles)
+            featured_subsection_articles = self.get_featured_subsection_articles(featured_subsection, self.featured_articles)
         
         context['featured_subsection'] = {
             'subsection': featured_subsection,
             'articles' : featured_subsection_articles
         }
-        context['meta'] = {
-            'title': self.section.name,
-        }
+
         context['section'] = self.section
         context['type'] = 'section'
-        context['featured_articles'] = {
-            'first': featured_articles[0],
-            'rest': featured_articles[1:4]
-        }
-        context['order'] = self.order
-        context['query'] = self.query
+        return context
 
+class SubsectionView(SectionMixin, ListView):
+    def setup(self, request, *args, **kwargs):
+        self.default_template = 'subsection.html'
+        try:
+            self.section = Subsection.objects.get(slug=kwargs['slug']) 
+        except:
+            raise Http404()
+        return super().setup(request, *args, **kwargs)
+    def get_queryset(self):
+        return super().get_queryset().filter(subsection=self.section)
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subsection'] = self.section
+        context['type'] = 'subsection'
+        
         return context
 
 class PageView(DispatchPublishableViewMixin, DetailView):
     """
-    Shares with the Section view the problem that its original counterpart had weird "except" logic to allow several views to share a url pattern
+    For special pages such as "About", "Volunteer", etc.
+    Occasionally called by "legacy" URLs which otherwise share a pattern with Section URLs.
+    This is due to the need to maintain permalinks after correcting a design flaw from an earlier version of this app.
     """
     model = Page
   
