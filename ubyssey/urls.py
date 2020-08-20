@@ -22,7 +22,6 @@ from ubyssey.events.urls import urlpatterns as events_urls
 
 from django.views.generic import TemplateView
 
-theme = UbysseyTheme()
 advertise = AdvertiseTheme()
 
 urlpatterns = []
@@ -42,7 +41,7 @@ urlpatterns += [
     re_path(r'^newsletter/', include(newsletter_urls)),
 
     re_path(r'^$', HomePageView.as_view(), name='home'),
-    re_path(r'^search/$', theme.search, name='search'),
+    re_path(r'^search/$', ArchiveView.as_view(), name='search'), #to preserve URL but get rid of tiny redirect view
     re_path(r'^archive/$', ArchiveView.as_view(), name='archive'),
     re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
 
@@ -74,7 +73,7 @@ urlpatterns += [
     re_path(r'^advertise/$', advertise.new, name='advertise-new'),
 
     # Centennial
-    re_path(r'^100/$', theme.centennial, name='centennial-landing'),
+    re_path(r'^100/$', UbysseyTheme.centennial, name='centennial-landing'), #was for special 2018 event. Consider removing.
 
     # Beta-features
     # re_path(r'^beta/notifications/$', theme.notification, name='notification-beta'),

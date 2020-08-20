@@ -636,24 +636,9 @@ class TopicView(DetailView):
                 'rest': articles[1:9]
             }
         }
+        return context
 
-
-
-class UbysseyTheme(object):
-
-    SITE_TITLE = 'The Ubyssey'
-    SITE_URL = settings.BASE_URL
-    logger = logging.getLogger(__name__)
-    youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
-
-    def search(self, request):
-        return redirect(self.archive)
-
-    def newsletter(self, request):
-        return render(request, 'objects/newsletter.html', {})
-
-    def centennial(self, request):
+class UbysseyTheme:
+    @staticmethod
+    def centennial(request):
         return render(request, 'centennial.html', {})
-
-    def notification(self, request):
-        return render(request, 'notification_signup.html', {})
