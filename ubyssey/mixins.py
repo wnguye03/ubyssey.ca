@@ -2,7 +2,6 @@ import re
 import datetime
 from datetime import datetime
 
-from django.utils import timezone
 from itertools import chain
 import pytz
 from random import randint, choice
@@ -12,15 +11,12 @@ from django.http import Http404, HttpResponseServerError
 from django.db import connection
 from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Q, Subquery, Value, When
 from django.db.models.aggregates import Count
+from django.utils import timezone
 from django_user_agents.utils import get_user_agent
 from django.views.generic.list import ListView
 
-
 from dispatch.models import Author, Article, Page, Publishable, Section, Subsection, Podcast, PodcastEpisode, Person, Image, ImageAttachment
-
 from ubyssey.events.models import Event
-
-
 
 class ArticleMixin(object):
     """
