@@ -235,7 +235,7 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
         # set the rest of the context
         context['article'] = self.object
         context['base_template'] = 'base.html'
-        context['meta'] = self.get_meta(self.object)
+        context['meta'] = self.get_article_meta()
         context['popular'] = self.get_popular()[:5]
         context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur)
         context['reading_time'] = self.get_reading_time(self.object)
@@ -339,11 +339,12 @@ class PageView(DispatchPublishableViewMixin, DetailView):
             'meta': {
                 'title': self.object.title,
                 'image': image,
-                'url': settings.BASE_URL[:-1] + reverse('page', args=[self.object.slug]),
+                'url': settings.BASE_URL[:-1] + reverse('page', args=[self.object.slug]), #TODO: double check this
                 'description': self.object.snippet if self.object.snippet else ''
             },
             'page': self.object
         }
+        # assert False
         return context
 
 class PodcastView(DetailView):
