@@ -18,20 +18,24 @@
             <li><a href="{% url 'page' 'blog' %}">Blog</a></li>
             <li><a href="{% url 'page' 'science'%}">Science</a></li>
             <li><a href="{% url 'page' 'videos'%}">Video<!--<span class='upper-right-decorator'>New</span>--></a></li>
-            <li>
-                <a href="{% url 'magazine-landing' 2020 %}">Hot Mess 2020</a>
+            <li id='magazine-mobile'>
+                <a>Magazine</a>
             </li>
-            <li>
-                <a href="{% url 'magazine-landing' 2019 %}">Presence 2019</a>
-            </li>
-            <li>
-                <a href="{% url 'magazine-landing' 2018 %}">How We Live 2018</a>
-            </li>
-            <li>
-                <a href="{% url 'magazine-landing' 2017 %}">Diversity 2017</a>
-            </li>
-            <li><a href="{% url 'events' %}">Events</a></li>
-            <li><a href="{% url 'page' 'whobyssey' %}">Who?byssey</a></li> -->
+            <div id='magazine-more'>
+                <li>
+                    <a href="{% url 'magazine-landing' 2020 %}">Hot Mess 2020</a>
+                </li>
+                <li>
+                    <a href="{% url 'magazine-landing' 2019 %}">Presence 2019</a>
+                </li>
+                <li>
+                    <a href="{% url 'magazine-landing' 2018 %}">How We Live 2018</a>
+                </li>
+                <li>
+                    <a href="{% url 'magazine-landing' 2017 %}">Diversity 2017</a>
+                </li>
+            </div>
+            <li><a href="{% url 'guide-landing' 2020 %}">Guide</a></li>
             
             <!-- <li><a href="{% url 'podcasts' 'episodes' %}">Podcast</a></li>
             <li><a href="{% url 'page' 'whobyssey' %}">Who?byssey</a></li> -->
@@ -40,6 +44,7 @@
     <div class="right">
         <h3>Links</h3>
         <ul class="links">
+            <li><a href="{% url 'newsletter' %}">Newsletter</a></li>
             <li><a href="{% url 'page' 'volunteer' %}">Volunteer</a></li>
             <li><a href="{% url 'page' 'about' %}">About</a></li>
             <li><a href="{% url 'page' 'contact' %}">Contact</a></li>
