@@ -10,7 +10,7 @@ from random import randint, choice
 from django.conf import settings
 from django.http import Http404, HttpResponseServerError
 from django.db import connection
-from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Subquery, Value, When 
+from django.db.models import Case, ExpressionWrapper, DurationField, F, FloatField, OuterRef, Q, Subquery, Value, When
 from django.db.models.aggregates import Count
 from django_user_agents.utils import get_user_agent
 from django.views.generic.list import ListView
@@ -403,16 +403,11 @@ class SectionMixin(SubsectionMixin, object):
     def setup(self, request, *args, **kwargs):
         self.order = request.GET.get('order', 'newest')
         self.query = request.GET.get('q', False)
-
         try:
-            self.featured_articles = Article.objects.filter(is_published=True).order_by('-published_at')
-
-            if type(self.section) == Subsection:
-                self.featured_articles.filter(subsection=self.section)
-            else:
-                self.featured_articles.filter(section=self.section)
+            filter_id = self.section.id
+            self.featured_articles = Article.objects.filter(is_published=True).filter(Q(subsection_id=filter_id)|Q(section_id=filter_id)).order_by('-published_at')
         except AttributeError:
-            return HttpResponseServerError()
+            return HttpResponseServerError("Check SectionMixin useage!")
         return super().setup(request, *args, **kwargs)
 
     def get_template_names(self):
