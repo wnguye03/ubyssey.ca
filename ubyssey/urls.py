@@ -7,7 +7,7 @@ from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
-from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PodcastView, ArticleAjaxView, AuthorView, ArchiveView
+from ubyssey.views.main import UbysseyTheme, HomePageView, ArticleView, SectionView, VideoView, PageView, PodcastView, ArticleAjaxView, AuthorView, ArchiveView
 from ubyssey.views.guide import guide2016, GuideArticleView, GuideLandingView
 
 from ubyssey.views.advertise import AdvertiseTheme
@@ -45,6 +45,12 @@ urlpatterns += [
     re_path(r'^search/$', theme.search, name='search'),
     re_path(r'^archive/$', ArchiveView.as_view(), name='archive'),
     re_path(r'^rss/$', FrontpageFeed(), name='frontpage-feed'),
+
+    # Page views that have been grandfathered in to having special URLs as permalink
+    re_path(r'^(?P<slug>about)/$', PageView.as_view(), name='about'),
+    re_path(r'^(?P<slug>volunteer)/$', PageView.as_view(), name='volunteer'),
+    re_path(r'^(?P<slug>advice)/$', PageView.as_view(), name='advice'),
+    re_path(r'^(?P<slug>submit-an-opinion)/$', PageView.as_view(), name='submit-an-opinion'),
 
     re_path(r'^(?P<slug>[-\w]+)/rss/$', SectionFeed(), name='section-feed'),
     re_path(r'^authors/(?P<slug>[-\w]+)/$', AuthorView.as_view(), name='author'),
