@@ -6,7 +6,7 @@ from dispatch.models import Article, Tag
 from django.urls import reverse
 import ubyssey
 from ubyssey.helpers import ArticleHelper
-from ubyssey.mixins import DispatchPublishableViewMixin
+from ubyssey.mixins import DispatchPublishableViewMixin, GuideViewMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 
@@ -52,336 +52,46 @@ class Guide2016(object):
         article_page = 'guide/2016/article.html'
         return render(request, article_page , context)
 
-
-class GuideArticleView(DispatchPublishableViewMixin, DetailView):
+class GuideArticleView(DispatchPublishableViewMixin, GuideViewMixin, DetailView):
+    """
+    Attributes:
+        subsection: Slug of Subsection model from Dispatch. Input in URL.
+        year:       Should be input in the URL.
+                    Tries to default to 2020 if it somehow can't be initialized during setup
+    """
     model = Article
 
     def setup(self, request, *args, **kwargs):
-        """
-        Defaults to using the 2020 as year if year was somehow not specified
-        """
         self.subsection = kwargs['subsection']
-        self.year = kwargs['year']
-        self.slug = kwargs['slug']
-
-        template_fields = self.object.template_fields
-        try:
-            self.next_a = Article.objects.get(request=request, slug=template_fields['next_a'], is_published=True)
-        except:
-            self.next_a = None
-        try:
-            self.next_b = Article.objects.get(request=request, slug=template_fields['next_a'], is_published=True)
-        except:
-            self.next_b = None
+        self.year = kwargs['year'] if kwargs['year'] is not None else 2020
         return super().setup(request, *args, **kwargs)
+    
     def get_template_names(self):
-        """
-        Defaults to using the 2020 template if year was somehow not specified
-        """
         template_name = 'guide/' + self.year + '/article.html'
         return [template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        articles = Article.objects.filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('published_at').select_related('section', 'subsection')
-
-        section1 = [] 
-        section2 = [] 
-        section3 = []
-        section4 = []
-        section5 = []
-
-        for article in articles:
-            featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-            url_absolute = article.get_absolute_url()
-            string_to_find = 'guide/'
-            index = url_absolute.find(string_to_find) + len(string_to_find)
-            slug = url_absolute[index: len(url_absolute)-1]
-            temp = {
-                'headline': article.headline,
-                'slug': slug,
-                'featured_image': featuredImage,
-            }
-
-            if article.subsection:
-                if article.subsection.slug == self.section1_name:
-                    section1.append(temp.copy())
-                elif article.subsection.slug == self.section2_name:
-                    section2.append(temp.copy())
-                elif article.subsection.slug == self.section3_name:
-                    section3.append(temp.copy())
-                elif article.subsection.slug == self.section4_name:
-                    section4.append(temp.copy())
-                elif article.subsection.slug == self.section5_name:
-                    section5.append(temp.copy())
-            
-            articles = json.dumps({
-                self.section1_name: section1,
-                self.section2_name: section2,
-                self.section3_name: section3,
-                self.section4_name: section4,
-                self.section5_name: section5,
-            })
-        
-        articles_parse = json.loads(articles)
-        academics = articles_parse["academics"]
-        ubc = articles_parse["ubc"]
-        adulting = articles_parse["adulting"]
-        sdp = articles_parse["sdp"]
-        vancouver = articles_parse["vancouver"]
-
-        context = {
-            'title': self.object.headline,
-            'meta': ArticleHelper.get_meta(self.object),
-            'subsection': self.subsection,
-            'article': self.object,
-            'next': [self.next_a, self.next_b],
-
-            #'articles' context variable is used for the header and footer
-            'articles': {
-                'academics': academics,
-                'ubc': ubc,
-                'adulting': adulting,
-                'sdp': sdp,
-                'vancouver': vancouver
-            }
-        }
-
+        context['meta']: self.get_meta(self.object)
         return context
 
-class GuideLandingView(TemplateView):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('published_at')
-        section1 = [] 
-        section2 = [] 
-        section3 = []
-        section4 = []
-        section5 = []
-
-        for article in articles:
-            featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-            url_absolute = article.get_absolute_url()
-            string_to_find = 'guide/'
-            index = url_absolute.find(string_to_find) + len(string_to_find)
-            slug = url_absolute[index: len(url_absolute)-1]
-            temp = {
-                'headline': article.headline,
-                'slug': slug,
-                'featured_image': featuredImage,
-            }
-
-            if article.subsection:
-                if article.subsection.slug == page.section1_name:
-                    section1.append(temp.copy())
-                elif article.subsection.slug == page.section2_name:
-                    section2.append(temp.copy())
-                elif article.subsection.slug == page.section3_name:
-                    section3.append(temp.copy())
-                elif article.subsection.slug == page.section4_name:
-                    section4.append(temp.copy())
-                elif article.subsection.slug == page.section5_name:
-                    section5.append(temp.copy())
-                
-
-        articles = json.dumps({
-                page.section1_name: section1,
-                page.section2_name: section2,
-                page.section3_name: section3,
-                page.section4_name: section4,
-                page.section5_name: section5,
-            })
-
-        articles_parse = json.loads(articles)
-        academics = articles_parse["academics"]
-        ubc = articles_parse["ubc"]
-        adulting = articles_parse["adulting"]
-        sdp = articles_parse["sdp"]
-        vancouver = articles_parse["vancouver"]
+class GuideLandingView(GuideViewMixin, TemplateView):
+    """
+    Attributes:
+        year:       Should be input in the URL.
+                    Tries to default to 2020 if it somehow can't be initialized during setup
+    """
+    def setup(self, request, *args, **kwargs):
+        try:
+            self.year = kwargs['year']
+        except KeyError:
+            self.year = 2000
         
-        context = {
-            'subsection': subsection,
-            'articles': {
-                'academics': academics,
-                'ubc': ubc,
-                'adulting': adulting,
-                'sdp': sdp,
-                'vancouver': vancouver
-            }
-        }
+        if 'subsection' in kwargs:
+            self.template_name = 'guide/' + self.year + '/section.html'
+        else:
+            self.template_name = 'guide/' + self.year + '/index.html'
 
-        return context
-
-
-class Guide2020(object):
-    """Theme for the 2020 Ubyssey Guide to UBC."""
-
-    def __init__(self, year, title, section1_name, section2_name, section3_name, section4_name, section5_name): 
-        self.year = str(year)
-        self.title = title
-        self.section1_name = section1_name
-        self.section2_name = section2_name
-        self.section3_name = section3_name
-        self.section4_name = section4_name
-        self.section5_name = section5_name
-
-    def landing(self, request, year, subsection=None):
-        landing_page = 'guide/' + year + '/index.html'
-        return render(request, landing_page, helper_subsection(self, subsection))
-    
-    def landing_sub(self, request, year, subsection=None):
-        landing_page = 'guide/' + year + '/section.html'
-        return render(request, landing_page, helper_subsection(self, subsection))
-
-    def article(self, request, year, subsection=None, slug=None):
-        """Guide article page."""
-        try:
-            article = ArticleHelper.get_article(request, slug)
-        except:
-            raise Http404('Article could not be found.')
-
-        template_fields = article.template_fields
-
-        try:
-            next_a = ArticleHelper.get_article(request, template_fields['next_a'])
-        except:
-            next_a = None
-
-        try:
-            next_b = ArticleHelper.get_article(request, template_fields['next_b'])
-        except:
-            next_b = None
-
-        article.add_view()
-
-        articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('published_at')
-
-        section1 = [] 
-        section2 = [] 
-        section3 = []
-        section4 = []
-        section5 = []
-
-        for a in articles:
-            featuredImage = a.featured_image.image.get_medium_url() if a.featured_image is not None else None
-            url_absolute = a.get_absolute_url()
-            string_to_find = 'guide/'
-            index = url_absolute.find(string_to_find) + len(string_to_find)
-            slug = url_absolute[index: len(url_absolute)-1]
-            temp = {
-                'headline': a.headline,
-                'slug': slug,
-                'featured_image': featuredImage,
-            }
-
-            if a.subsection:
-                if a.subsection.slug == self.section1_name:
-                    section1.append(temp.copy())
-                elif a.subsection.slug == self.section2_name:
-                    section2.append(temp.copy())
-                elif a.subsection.slug == self.section3_name:
-                    section3.append(temp.copy())
-                elif a.subsection.slug == self.section4_name:
-                    section4.append(temp.copy())
-                elif a.subsection.slug == self.section5_name:
-                    section5.append(temp.copy())
-            
-        articles = json.dumps({
-                self.section1_name: section1,
-                self.section2_name: section2,
-                self.section3_name: section3,
-                self.section4_name: section4,
-                self.section5_name: section5,
-            })
-        
-        articles_parse = json.loads(articles)
-        academics = articles_parse["academics"]
-        ubc = articles_parse["ubc"]
-        adulting = articles_parse["adulting"]
-        sdp = articles_parse["sdp"]
-        vancouver = articles_parse["vancouver"]
-
-        context = {
-            'title': article.headline,
-            'meta': ArticleHelper.get_meta(article),
-            'subsection': subsection,
-            'article': article,
-            'next': [next_a, next_b],
-            'articles': {
-                'academics': academics,
-                'ubc': ubc,
-                'adulting': adulting,
-                'sdp': sdp,
-                'vancouver': vancouver
-            }
-        }
-        article_page = 'guide/' + year + '/article.html'
-        return render(request, article_page , context)
-
-
+        return super().setup(request, *args, **kwargs)
 
 guide2016 = Guide2016("Guide")
-guide2020 = Guide2020(2020, "Guide", "academics", "ubc", "adulting", "sdp", "vancouver")
-
-def helper_subsection(page, subsection):
-    articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='guide', tags__name=page.year).order_by('published_at')
-    section1 = [] 
-    section2 = [] 
-    section3 = []
-    section4 = []
-    section5 = []
-
-    for article in articles:
-        featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
-        url_absolute = article.get_absolute_url()
-        string_to_find = 'guide/'
-        index = url_absolute.find(string_to_find) + len(string_to_find)
-        slug = url_absolute[index: len(url_absolute)-1]
-        temp = {
-            'headline': article.headline,
-            'slug': slug,
-            'featured_image': featuredImage,
-        }
-
-        if article.subsection:
-            if article.subsection.slug == page.section1_name:
-                section1.append(temp.copy())
-            elif article.subsection.slug == page.section2_name:
-                section2.append(temp.copy())
-            elif article.subsection.slug == page.section3_name:
-                section3.append(temp.copy())
-            elif article.subsection.slug == page.section4_name:
-                section4.append(temp.copy())
-            elif article.subsection.slug == page.section5_name:
-                section5.append(temp.copy())
-            
-
-    articles = json.dumps({
-            page.section1_name: section1,
-            page.section2_name: section2,
-            page.section3_name: section3,
-            page.section4_name: section4,
-            page.section5_name: section5,
-        })
-
-    articles_parse = json.loads(articles)
-    academics = articles_parse["academics"]
-    ubc = articles_parse["ubc"]
-    adulting = articles_parse["adulting"]
-    sdp = articles_parse["sdp"]
-    vancouver = articles_parse["vancouver"]
-    
-    context = {
-        'subsection': subsection,
-        'articles': {
-            'academics': academics,
-            'ubc': ubc,
-            'adulting': adulting,
-            'sdp': sdp,
-            'vancouver': vancouver
-        }
-    }
-
-    return context

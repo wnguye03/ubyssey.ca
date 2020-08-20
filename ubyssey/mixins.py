@@ -313,6 +313,9 @@ class DispatchPublishableViewMixin(object):
         return super().render_to_response(context, **response_kwargs)
 
     def get_meta(self, default_image=None):
+        """
+        Quick meta defaults if you happen to be working with a Guide or Magazine article
+        """
         try:
             image = self.object.featured_image.image.get_medium_url()
         except:
@@ -326,6 +329,48 @@ class DispatchPublishableViewMixin(object):
             'author': self.object.get_author_type_string()
         }
 
+class GuideViewMixin(object):
+    """
+    Mixes in common context data used in most Guide templates.
+    """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        articles = Article.objects.filter(is_published=True, section__slug='guide', tags__name=self.year).order_by('published_at').select_related('subsection')
+        
+        academics = list(articles.filter(subsection__slug='academics'))
+        ubc = list(articles.filter(subsection__slug='ubc'))
+        adulting = list(articles.filter(subsection__slug='adulting'))
+        sdp = list(articles.filter(subsection__slug='sdp'))
+        vancouver = list(articles.filter(subsection__slug='vancouver'))
+
+        if hasattr(self, 'object'):
+            context['title'] = self.object.headline
+            context['article'] = self.object
+            try:
+                next_a = articles.get(slug=self.object.template_fields['next_a'], is_published=True)
+            except:
+                next_a = None
+            try:
+                next_b = articles.get(slug=self.object.template_fields['next_b'], is_published=True)
+            except:
+                next_b = None
+            context['next'] = [next_a, next_b]
+
+        if hasattr(self, 'subsection'):
+            context['subsection'] = self.subsection
+
+        # 'articles' context variable is used for the header and footer and ought to be on every guide page
+
+        context['articles'] = {
+            'academics': academics,
+            'ubc': ubc,
+            'adulting': adulting,
+            'sdp': sdp,
+            'vancouver': vancouver
+        }
+
+        return context
 
 class SubsectionMixin(object):
     """
