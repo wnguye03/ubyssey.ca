@@ -73,9 +73,6 @@ urlpatterns += [
     # Advertising
     re_path(r'^advertise/$', advertise.new, name='advertise-new'),
 
-    # Elections
-    re_path(r'^elections/$', theme.elections, name='elections'),
-
     # Centennial
     re_path(r'^100/$', theme.centennial, name='centennial-landing'),
 

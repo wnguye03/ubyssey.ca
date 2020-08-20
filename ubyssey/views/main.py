@@ -582,16 +582,15 @@ class ArchiveView(ArchiveListViewMixin, ListView):
     def get_template_names(self):
         return ['archive.html']
 
-class UbysseyTheme(object):
+class ElectionsView(TemplateView):
+    """
+    Currently unused, minimally refactored from its function view form.
+    Preserved at the moment for possible future use.
+    """
+    template_name = 'section.html'
 
-    SITE_TITLE = 'The Ubyssey'
-    SITE_URL = settings.BASE_URL
-    logger = logging.getLogger(__name__)
-    youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
-
-    def elections(self, request):
-        articles = ArticleHelper.get_topic('AMS Elections').order_by('-published_at')
-
+    def get_context_data(self, **kwargs):
+        articles = Article.objects.filter(is_published=True, topic__name='AMS Elections').order_by('-published_at')
         topic = Topic.objects.filter(name='AMS Elections')[0]
 
         context = {
@@ -610,17 +609,20 @@ class UbysseyTheme(object):
             }
         }
 
-        return render(request, 'section.html', context)
+        return context
 
-    def search(self, request):
-        return redirect(self.archive)
+class TopicView(DetailView):
+    """
+    Currently unused, minimally refactored from its function view form.
+    Preserved at the moment for possible future use.
+    """
+    model = Topic
 
-    def topic(self, request, pk=None):
-        try:
-            topic = Topic.objects.get(id=pk)
-        except Topic.DoesNotExist:
-            raise Http404('Topic does not exist.')
+    def get_template_names(self):
+        return ['section.html']
 
+    def get_context_data(self, **kwargs):
+        topic = self.object
         articles = Article.objects.filter(topic=topic, is_published=True).order_by('-published_at')
 
         context = {
@@ -635,7 +637,17 @@ class UbysseyTheme(object):
             }
         }
 
-        return render(request, 'section.html', context)
+
+
+class UbysseyTheme(object):
+
+    SITE_TITLE = 'The Ubyssey'
+    SITE_URL = settings.BASE_URL
+    logger = logging.getLogger(__name__)
+    youtube_regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+
+    def search(self, request):
+        return redirect(self.archive)
 
     def newsletter(self, request):
         return render(request, 'objects/newsletter.html', {})
