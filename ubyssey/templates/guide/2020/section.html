@@ -1,14 +1,25 @@
 {% extends 'guide/2020/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<div class="c-banner c-banner--welcome">
+{% if subsection == 'academics' %}
+  <div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover-academics.jpg' %})">
+{% elif subsection == 'ubc' %}
+  <div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover-ubc.jpg' %})">
+{% elif subsection == 'adulting' %}
+  <div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover-adulting.jpg' %})">
+{% elif subsection == 'sdp' %}
+  <div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover-sdp.jpg' %})">
+{% elif subsection == 'vancouver' %}
+  <div class="c-banner c-banner--welcome" style="background-image: url({% static 'ubyssey/images/guide/guide-2020-cover-vancouver.jpg' %})">
+{% endif %}
     <div class="c-banner__container">
       <div class="c-banner--welcome__inner">
         <h2 class="c-banner--welcome__intro">Welcome To</h2>
         <p class="c-banner--welcome__snippet">{% if subsection == 'sdp' %}Sex, Drugs, Party{% else %}{{ subsection }}{% endif %}</p>
       </div>
     </div>
+    <div class="c-banner-credits">{% if subsection == 'vancouver' %}Theresa Wong{% else %}Zubair Hirji{% endif %}</div>
   </div>
 
   <main class="section-grid-container">
