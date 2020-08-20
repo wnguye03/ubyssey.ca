@@ -11,7 +11,7 @@ function quoteBoxResize(){
   let quote = $('#quote-top');
   let article = $('.c-article');
   console.log(quote.height())
-  if(quote != undefined && $(window).width() >= 1200) {
+  if(quote.height() != undefined && $(window).width() >= 1200) {
     if(quote.height() >= 250) {
       quote.hide();
       $('#quote-bottom').show();
