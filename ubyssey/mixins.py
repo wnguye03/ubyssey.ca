@@ -276,20 +276,6 @@ class ArticleMixin(object):
 
         return trending_article
 
-    def get_meta(self, article, default_image=None):
-        try:
-            image = article.featured_image.image.get_medium_url()
-        except:
-            image = default_image
-
-        return {
-            'title': article.headline,
-            'description': article.seo_description if article.seo_description is not None else article.snippet,
-            'url': article.get_absolute_url,
-            'image': image,
-            'author': article.get_author_type_string()
-        }
-
 class DispatchPublishableViewMixin(object):
     """
     Abstracts out typical function overrides when dealing with a Publishable object from the Dispatch app (i.e. and Article or a Page). Most commonly, this is to append .filter(is_published=True) to the queryset a class uses to account for non-unique slugs.
@@ -312,22 +298,29 @@ class DispatchPublishableViewMixin(object):
         self.object.add_view() # We call this at the last possible second once everything has been done correctly so that we only count successful attempts to read the article
         return super().render_to_response(context, **response_kwargs)
 
-    def get_meta(self, default_image=None):
+    def get_article_meta(self, default_image=None):
         """
-        Quick meta defaults if you happen to be working with a Guide or Magazine article
+        Only works with Article objects, but put here because there seems to have been
+        some conflicting ideas about what can be assumed about an Article object at some point
+
+        TODO: design a general get_meta that should work with every Publishable object.
+        Then re-implement this, perhaps in ArticleMixin once that class's tangle has been tamed.
+        Deprecate this method if this has been done.
         """
         try:
-            image = self.object.featured_image.image.get_medium_url()
+            meta = super().get_article_meta(default_image)
         except:
-            image = default_image
+            meta = []
+        try:
+            meta['image'] = self.object.featured_image.image.get_medium_url()
+        except:
+            meta['image'] = default_image
 
-        return {
-            'title': self.object.headline,
-            'description': self.object.seo_description if self.object.seo_description is not None else self.object.snippet,
-            'url': self.object.get_absolute_url,
-            'image': image,
-            'author': self.object.get_author_type_string()
-        }
+        meta['title'] = self.object.headline
+        meta['description'] = self.object.seo_description if self.object.seo_description is not None else self.object.snippet
+        meta['url'] = self.object.get_absolute_url
+        meta['author'] = self.object.get_author_type_string()
+        return meta
 
 class GuideViewMixin(object):
     """
