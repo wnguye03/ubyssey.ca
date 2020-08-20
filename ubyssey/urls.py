@@ -93,6 +93,9 @@ urlpatterns += [
     # Videos
     re_path(r'^videos/', VideoView.as_view(), name='videos'),
 
+    # Subsections
+    re_path(r'^subsection/(?P<slug>[-\w]+)/$', theme.subsection, name='subsection'),
+    
     re_path(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', ArticleView.as_view(), name='article'),
     re_path(r'^(?P<slug>[-\w]+)/$', SectionView.as_view(), name='section'),
     re_path(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', ArticleAjaxView.as_view(), name='article-ajax'),
