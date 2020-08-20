@@ -310,7 +310,7 @@ class DispatchPublishableViewMixin(object):
         try:
             meta = super().get_article_meta(default_image)
         except:
-            meta = []
+            meta = {}
         try:
             meta['image'] = self.object.featured_image.image.get_medium_url()
         except:
