@@ -18,9 +18,11 @@ function quoteBoxResize(){
     } else {
       quote.css('bottom', -quote.height()/2);
       article.css('padding-top', quote.height()*0.66);
+      $('.c-banner-credits.article').hide();
     }
   } else {
     article.removeAttr('style');
+    $('.c-banner-credits.article').show();
   }
 }
 
