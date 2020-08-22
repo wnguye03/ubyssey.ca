@@ -32,7 +32,7 @@
             {% elif forloop.counter == 5 %}
               {% include 'guide/2020/quote-box.html' with quote='"Don\'t be afraid to advocate for yourself. If you are struggling with material, reach out to your professors in office hours. If you need accommodations, reach out to academic advising. There are supports that exist to help you through, but only if you have the courage to reach out."' source='Julia Burnham' type=2 %}
             {% endif %}
-            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %} 
+            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%} 
       {% endfor %}
       {% elif subsection == 'ubc' %}
           {% for article in articles.ubc %}
@@ -51,7 +51,7 @@
             {% elif forloop.counter == 17 %}
               {% include 'guide/2020/quote-box.html' with quote='"Join at least one club. Could be a sports team, could be the musical theatre troupe, could even be the Ubyssey. Participate in club activity, they\'re the best way for you to find friends outside of class and they\'re also a great way for you to have experiences that you wouldn\'t normally get from your academic courses."' source='Zhi Wen Teh' type=7 %}
             {% endif %}
-            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
           {% endfor %}
       {% elif subsection == 'adulting' %}
           {% for article in articles.adulting %}
@@ -70,7 +70,7 @@
             {% elif forloop.counter == 17 %}
               {% include 'guide/2020/quote-box.html' with quote='"Be respectful of shared spaces, and listen to your roommates. Communication is really important, so make sure you establish a healthy relationship with them!"' source='Ioana David' type=7 %}
             {% endif %}
-            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
           {% endfor %}
       {% elif subsection == 'sdp' %}
           {% for article in articles.sdp %}
@@ -81,7 +81,7 @@
             {% elif forloop.counter == 7 %}
               {% include 'guide/2020/quote-box.html' with quote='"Do what feels right, and listen to your gut. If the person you’re with can’t respect that, they’re not worth your time."' source='Ioana David' type=3 %}
             {% endif %}
-            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
           {% endfor %}
       {% elif subsection == 'vancouver' %}
           {% for article in articles.vancouver %}
@@ -90,36 +90,36 @@
             {% elif forloop.counter == 5 %}
               {% include 'guide/2020/quote-box.html' with quote='"EAT. There is so much good food. So much bubble tea, ramen, sushi. Granville Island is great to start – they have a lot of variety, so you can literally eat as much as you want. And take advantage of the mountains – I’m not a big fan of hikes, but I’ve fallen in love with the views you get once you reach the top. I\'m definitely becoming a true Vancouverite."' source='Ioana David' type=2 %}
             {% endif %}
-            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+            {% include 'guide/2020/article-box.html' with type=forloop.counter title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
           {% endfor %}
       {% endif %}
 
       
     {% comment %}
-      {% include 'guide/2020/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=1 %}
-      {% include 'guide/2020/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=3 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=4 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=3 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=4 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=2 %}
-      {% include 'guide/2020/article-box.html' with type=5 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=6 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=5 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=6 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=3 %}
-      {% include 'guide/2020/article-box.html' with type=7 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=8 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=9 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=7 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=8 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=9 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=4 %}
-      {% include 'guide/2020/article-box.html' with type=10 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=11 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=10 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=11 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=5 %}
-      {% include 'guide/2020/article-box.html' with type=12 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=13 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=14 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=12 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=13 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=14 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=6 %}
-      {% include 'guide/2020/article-box.html' with type=15 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
-      {% include 'guide/2020/article-box.html' with type=16 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=15 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+      {% include 'guide/2020/article-box.html' with type=16 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
       {% include 'guide/2020/quote-box.html' with type=7 %}
-      {% include 'guide/2020/article-box.html' with type=17 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image %}
+      {% include 'guide/2020/article-box.html' with type=17 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
     {% endcomment %}
 
 </main>
