@@ -68,6 +68,7 @@ env = environ.Env(
     # URL defaults
     STATIC_URL = (str,'/static/'),
     MEDIA_URL = (str,'/media/'),
+    ADS_TXT_URL = (str, 'https://ubyssey.storage.googleapis.com/ads.txt'),
     ROOT_URLCONF = (str,'ubyssey.urls'),
 
     # Time zone defaults
@@ -97,6 +98,7 @@ TIME_ZONE = env('TIME_ZONE')
 
 STATIC_URL = env('STATIC_URL')
 MEDIA_URL = env('MEDIA_URL')
+ADS_TXT_URL = env('ADS_TXT_URL')
 ROOT_URLCONF = env('ROOT_URLCONF')
 
 # Initialize the databases.
