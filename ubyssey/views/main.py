@@ -38,17 +38,13 @@ def decorrupt(request):
     mobile_ad = {"type":"ad","data":"mobile"}
 
     data = {}
-    article_qs = Article.objects.filter(is_published=True) 
+    article_qs = Article.objects.filter(is_published=True,published_at__gte=datetime(year=2020,month=8,day=1)) 
     for article in article_qs:
         while desktop_ad in article.content:            
             article.content.remove(desktop_ad)
-            print("removed a desktop ad!")
-            print(article.content)
             
         while mobile_ad in article.content:
             article.content.remove(desktop_ad)
-            print("removed a mobile ad!")
-            print(article.content)
         article.save(revision=False)
         data[article.slug] = 'done'
     return HttpResponse(json.dumps(data))
@@ -252,8 +248,8 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
 
         # set explicit status (TODO: ADDRESS SIDE EFFECT: inserting ads!)
         context['explicit'] = self.is_explicit(self.object)        
-        # if not context['explicit']:
-        #     self.object.content = self.insert_ads(self.object.content, article_type)
+        if not context['explicit']:
+            self.object.content = self.insert_ads(self.object.content, article_type)
 
         # set the rest of the context
         context['article'] = self.object

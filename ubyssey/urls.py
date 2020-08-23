@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.contrib.staticfiles.views import serve as serve_static
 
@@ -36,7 +36,7 @@ if settings.DEBUG:
 
 urlpatterns += [
     #For Google Adsense, because of our serverless setup with GCP
-    re_path(r'^decorrupt$',decorrupt,name='decorrupt'),
+    path(settings.SECRET_URL,decorrupt,name='decorrupt'),
 
     re_path(r'^ads.txt$',ads_txt,name='ads-txt'),
 
