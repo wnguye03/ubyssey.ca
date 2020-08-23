@@ -44,7 +44,7 @@ def decorrupt(request):
             article.content.remove(desktop_ad)
             
         while mobile_ad in article.content:
-            article.content.remove(desktop_ad)
+            article.content.remove(mobile_ad)
         article.save(revision=False)
         data[article.slug] = 'done'
     return HttpResponse(json.dumps(data))
