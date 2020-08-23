@@ -30,6 +30,9 @@ def parse_int_or_none(maybe_int):
     except (TypeError, ValueError):
         return None
 
+def ads_txt(request):
+    return redirect(settings.ADS_TXT_URL)
+
 class HomePageView(ArticleMixin, TemplateView):
     """
     View logic for the page the reader first sees upon going to https://ubyssey.ca/
@@ -229,8 +232,8 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
 
         # set explicit status (TODO: ADDRESS SIDE EFFECT: inserting ads!)
         context['explicit'] = self.is_explicit(self.object)        
-        if not context['explicit']:
-            self.object.content = self.insert_ads(self.object.content, article_type)
+        # if not context['explicit']:
+        #     self.object.content = self.insert_ads(self.object.content, article_type)
 
         # set the rest of the context
         context['article'] = self.object
