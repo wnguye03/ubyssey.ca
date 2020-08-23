@@ -33,17 +33,6 @@ def parse_int_or_none(maybe_int):
 def ads_txt(request):
     return redirect(settings.ADS_TXT_URL)
 
-def adfinder(request):
-    desktop_ad = {"type":"ad","data":"desktop"}
-    mobile_ad = {"type":"ad","data":"mobile"}
-    article_qs = Article.objects.filter(is_published=True) 
-    for article in article_qs:
-        print(article.slug)
-        print("Has desktop ads?: ")
-        print(desktop_ad in article.content)
-        print("Has mobile ads?: ")
-        print(mobile_ad in article.content)
-
 def decorrupt(request):
     desktop_ad = {"type":"ad","data":"desktop"}
     mobile_ad = {"type":"ad","data":"mobile"}
@@ -60,7 +49,7 @@ def decorrupt(request):
             article.content.remove(desktop_ad)
             print("removed a mobile ad!")
             print(article.content)
-        article.save()
+        article.save(revision=False)
         data[article.slug] = 'done'
     return HttpResponse(json.dumps(data))
 
