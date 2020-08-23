@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
+from django.db.models import F
 
 from dispatch.models import Article, Tag
 
@@ -38,7 +39,7 @@ class MagazineTheme(object):
         except:
             raise Http404('Article could not be found.')
 
-        article.add_view()
+        article.update(views=F('views')+1)
 
         year = article.tags.get(name__icontains="20").name
 

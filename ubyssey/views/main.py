@@ -33,6 +33,22 @@ def parse_int_or_none(maybe_int):
 def ads_txt(request):
     return redirect(settings.ADS_TXT_URL)
 
+def decorrupt(request):
+    desktop_ad = {"type":"ad","data":"desktop"}
+    mobile_ad = {"type":"ad","data":"mobile"}
+
+    data = {}
+    article_qs = Article.objects.filter(is_published=True,published_at__gte=datetime(year=2020,month=8,day=1)) 
+    for article in article_qs:
+        while desktop_ad in article.content:            
+            article.content.remove(desktop_ad)
+            
+        while mobile_ad in article.content:
+            article.content.remove(desktop_ad)
+        article.save(revision=False)
+        data[article.slug] = 'done'
+    return HttpResponse(json.dumps(data))
+
 class HomePageView(ArticleMixin, TemplateView):
     """
     View logic for the page the reader first sees upon going to https://ubyssey.ca/
@@ -232,8 +248,8 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
 
         # set explicit status (TODO: ADDRESS SIDE EFFECT: inserting ads!)
         context['explicit'] = self.is_explicit(self.object)        
-        # if not context['explicit']:
-        #     self.object.content = self.insert_ads(self.object.content, article_type)
+        if not context['explicit']:
+            self.object.content = self.insert_ads(self.object.content, article_type)
 
         # set the rest of the context
         context['article'] = self.object

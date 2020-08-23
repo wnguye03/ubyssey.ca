@@ -9,6 +9,7 @@ from ubyssey.helpers import ArticleHelper
 from ubyssey.mixins import DispatchPublishableViewMixin, GuideViewMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
+from django.db.models import F
 
 
 class Guide2016(object):
@@ -41,7 +42,7 @@ class Guide2016(object):
         except:
             next_b = None
 
-        article.add_view()
+        article.update(views=F('views')+1)
 
         context = {
             'title': article.headline,
