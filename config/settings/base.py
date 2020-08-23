@@ -84,6 +84,9 @@ env = environ.Env(
     # Keys
     SECRET_KEY = (str, 'thisisakey'),
     NOTIFICATION_KEY= (str, 'thisisakeytoo'),
+
+    # delete me
+    SECRET_URL = (str, 'somethingsilly')
 )
 
 # Read the .env file into os.environ.
