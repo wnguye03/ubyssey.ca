@@ -40,13 +40,21 @@ def decorrupt(request):
     data = {}
     article_qs = Article.objects.filter(is_published=True,published_at__gte=datetime(year=2020,month=8,day=1)) 
     for article in article_qs:
-        while desktop_ad in article.content:            
-            article.content.remove(desktop_ad)
-            
+        while desktop_ad in article.content:
+            try:
+                article.content.remove(desktop_ad)
+            except ValueError:
+                data[article.slug] = 'ValueError'
+                break            
         while mobile_ad in article.content:
-            article.content.remove(mobile_ad)
+            try:
+                article.content.remove(mobile_ad)
+            except ValueError:
+                data[article.slug] = 'ValueError'
+                break
         article.save(revision=False)
-        data[article.slug] = 'done'
+        if not article.slug in data:
+            data[article.slug] = 'Done error free!'
     return HttpResponse(json.dumps(data))
 
 class HomePageView(ArticleMixin, TemplateView):
