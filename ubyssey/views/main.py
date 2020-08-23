@@ -33,6 +33,37 @@ def parse_int_or_none(maybe_int):
 def ads_txt(request):
     return redirect(settings.ADS_TXT_URL)
 
+def adfinder(request):
+    desktop_ad = {"type":"ad","data":"desktop"}
+    mobile_ad = {"type":"ad","data":"mobile"}
+    article_qs = Article.objects.filter(is_published=True) 
+    for article in article_qs:
+        print(article.slug)
+        print("Has desktop ads?: ")
+        print(desktop_ad in article.content)
+        print("Has mobile ads?: ")
+        print(mobile_ad in article.content)
+
+def decorrupt(request):
+    desktop_ad = {"type":"ad","data":"desktop"}
+    mobile_ad = {"type":"ad","data":"mobile"}
+
+    data = {}
+    article_qs = Article.objects.filter(is_published=True) 
+    for article in article_qs:
+        while desktop_ad in article.content:            
+            article.content.remove(desktop_ad)
+            print("removed a desktop ad!")
+            print(article.content)
+            
+        while mobile_ad in article.content:
+            article.content.remove(desktop_ad)
+            print("removed a mobile ad!")
+            print(article.content)
+        article.save()
+        data[article.slug] = 'done'
+    return HttpResponse(json.dumps(data))
+
 class HomePageView(ArticleMixin, TemplateView):
     """
     View logic for the page the reader first sees upon going to https://ubyssey.ca/
