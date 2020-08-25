@@ -38,7 +38,7 @@ def decorrupt(request):
     mobile_ad = {"type":"ad","data":"mobile"}
 
     data = {}
-    article_qs = Article.objects.filter(is_published=True,published_at__gte=datetime(year=2020,month=8,day=1)) 
+    article_qs = Article.objects.filter(is_published=True) 
     for article in article_qs:
         while desktop_ad in article.content:
             try:
