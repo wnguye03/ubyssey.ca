@@ -227,7 +227,7 @@ class ArticleMixin(object):
             end = timezone.now() + timezone.timedelta(days=1)
             start = end - timezone.timedelta(days=durations[dur])
             time_range = (start, end)
-            articles = articles.filter(created_at__range=(time_range))
+            articles = articles.filter(published_at__range=(time_range))
 
         return articles.order_by('-views')
 
