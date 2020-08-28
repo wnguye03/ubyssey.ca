@@ -280,6 +280,7 @@ class DispatchPublishableViewMixin(object):
         # Both attributes should usually be None!
         self.preview_id = request.GET.get('preview_id', None)
         self.version = request.GET.get('version', None)
+        return super().setup(request, *args, **kwargs)        
     
     def get_queryset(self):
         """If the url requested includes the querystring parameters 'version' and 'preview_id',
