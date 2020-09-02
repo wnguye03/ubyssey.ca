@@ -10,6 +10,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
+from django.core.exceptions import FieldError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from django.templatetags.static import static
@@ -158,7 +159,7 @@ class HomePageView(ArticleMixin, TemplateView):
                 if match:
                     video_list[index].youtube_slug = match.group('id')
                 else:
-                    UbysseyTheme.logger.warning("Could not parse youtube slug from given url: %s", video.url)
+                    raise FieldError("Could not parse youtube slug from given url: %s", video.url)
                 video_list[index].numAuthors = len(video.videoAuthors)
                 video_urls += [VideoHelper.get_video_url(video.id)]
             videos = list(zip(video_list, video_urls))
@@ -174,7 +175,7 @@ class HomePageView(ArticleMixin, TemplateView):
 
         #set all the parts of the context that only need a single line
         context['popular'] = self.get_popular()[:5]
-        context['blog'] = self.get_frontpage_qs(sections=['blog'], limit=5)
+        context['blog'] = list(self.get_frontpage_qs(sections=['blog'], limit=5))
         context['day_of_week'] = datetime.now().weekday()
         return context
 
