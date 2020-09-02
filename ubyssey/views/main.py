@@ -195,8 +195,10 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
 
     def get_template_names(self):
         """
+        Returns a LIST of strings that represent template files (almost always HTML)
+
         Because this is called during render_to_response(), but also appears earlier than get_queryset in the DetailView flowchart,
-        we use an if conditional to confirm whether the object has been queried and set
+        we use an if conditional to confirm whether the Article object has been queried and set
         """
         template_names = []
         if self.object:
