@@ -96,7 +96,7 @@ class ArticleMixin(object):
 
         return ad_placements
 
-    def get_frontpage(self, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
+    def get_frontpage_qs(self, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
         reading_times = {
             'morning_start': '9:00:00',
@@ -130,7 +130,7 @@ class ArticleMixin(object):
             '-published_at'
         )[:limit]
         
-        return list(articles)
+        return articles
 
     def get_frontpage_sections(self, exclude=None):
 

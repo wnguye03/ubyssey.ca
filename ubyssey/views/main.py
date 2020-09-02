@@ -72,11 +72,17 @@ class HomePageView(ArticleMixin, TemplateView):
         context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
         context['breaking'] = self.get_breaking_news().first()
 
-        #set 'articles' section of context
-        frontpage = self.get_frontpage(
+        #set 'articles' section of context. Do some speed optimization for getting sections later
+        frontpage = self.get_frontpage_qs(
             sections=('news', 'culture', 'opinion', 'sports', 'features', 'science', 'themainmaller'),
             max_days=7
+        ).select_related(
+            'section'
+        ).prefetch_related(
+            'authors', 'authors__person'
         )
+        frontpage = list(frontpage)
+
         trending_article = self.get_trending()
         try:
             #TODO: fail more gracefully!
@@ -137,13 +143,13 @@ class HomePageView(ArticleMixin, TemplateView):
         videos = None
         
         try:
-            video_list = Video.objects.order_by('-created_at')[:4]
+            video_list = Video.objects.prefetch_related('authors').order_by('-created_at')[:4]
         except:
             video_list = None
         if video_list:
             for index, video in enumerate(video_list):
                 video_list[index].videoAuthors = []
-                for author in video.authors.all():
+                for author in video.authors.select_related('person').all():
                     person_id = Author.objects.get(id=author.id).person_id
                     person = Person.objects.get(id=person_id)
                     video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
@@ -168,7 +174,7 @@ class HomePageView(ArticleMixin, TemplateView):
 
         #set all the parts of the context that only need a single line
         context['popular'] = self.get_popular()[:5]
-        context['blog'] = self.get_frontpage(sections=['blog'], limit=5)
+        context['blog'] = self.get_frontpage_qs(sections=['blog'], limit=5)
         context['day_of_week'] = datetime.now().weekday()
         return context
 
@@ -267,7 +273,7 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
         context['base_template'] = 'base.html'
         context['meta'] = self.get_article_meta()
         context['popular'] = self.get_popular()[:5]
-        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur)
+        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur) # Dependent on get_frontpage, get_popular, get_related 
         context['reading_time'] = self.get_reading_time(self.object)
         context['suggested'] = self.get_suggested(self.object)[:3]
         # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
