@@ -156,7 +156,7 @@ class ArticleMixin(object):
         name = None
         if ref is not None:
             if ref == 'frontpage':
-                articles = self.get_frontpage(exclude=[article.parent_id])
+                articles = list(self.get_frontpage_qs(exclude=[article.parent_id]))
                 name = 'Top Stories'
             elif ref == 'popular':
                 articles = self.get_popular(dur=dur).exclude(pk=article.id)[:5]
