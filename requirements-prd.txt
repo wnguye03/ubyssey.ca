@@ -20,4 +20,3 @@ python-memcached
 django-environ
 requests
 whitenoise==5.1.0
-brotli==1.0.9

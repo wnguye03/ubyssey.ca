@@ -23,4 +23,3 @@ django-debug-toolbar
 pylint==2.5.3
 pylint-django==2.3.0
 whitenoise==5.1.0
-brotli==1.0.9
