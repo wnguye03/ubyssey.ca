@@ -49,11 +49,6 @@ GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 GS_USE_SIGNED_URLS = True #@TODO check if still needed
 GS_QUERYSTRING_AUTH = False #@TODO check if still needed
 
-# Set as per http://whitenoise.evans.io/en/stable/ 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-
 MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 ADS_TXT_URL = 'https://ubyssey.storage.googleapis.com/ads.txt'
 
