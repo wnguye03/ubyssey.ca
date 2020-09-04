@@ -34,16 +34,22 @@ MIDDLEWARE += [
 ]
 
 # GCS File Storage - Production Only
-DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
+# Set as per https://django-storages.readthedocs.io/en/latest/
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME  = 'ubyssey'
+GS_LOCATION = 'media'
+GS_CACHE_CONTROL = 'public, max-age=604800' # set media uploads to browser-cache for 1 week
+
+# Need checking but probably are used
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 
-GS_STORAGE_BUCKET_NAME = 'ubyssey'
-GS_LOCATION = 'media'
-GS_USE_SIGNED_URLS = True
-GS_QUERYSTRING_AUTH = False
+# Need checking but probably are NOT used
+GS_USE_SIGNED_URLS = True #@TODO check if still needed
+GS_QUERYSTRING_AUTH = False #@TODO check if still needed
 
+# Set as per http://whitenoise.evans.io/en/stable/ 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
