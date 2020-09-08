@@ -29,3 +29,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install Python packages and dependencies
+        run: |
+          pip install -r requirements-prd.txt -t lib
+          pip install requests --upgrade -t lib
+          sudo apt-get install -qq libexempi3
