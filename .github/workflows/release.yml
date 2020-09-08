@@ -34,3 +34,13 @@ jobs:
           pip install -r requirements-prd.txt -t lib
           pip install requests --upgrade -t lib
           sudo apt-get install -qq libexempi3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: 14.x  
+      - name: Run gulp to ready frontend static files for production
+        run: |
+          cd ubyssey/static_src
+          npm install -g gulp
+          npm install
+          npm ddp
