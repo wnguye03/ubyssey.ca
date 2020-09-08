@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Release and Deploy
 
 # Controls when the action will run. Triggers the workflow on push or pull request
@@ -31,8 +29,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Python packages and dependencies
         run: |
-          pip install -r requirements-prd.txt -t lib
-          pip install requests --upgrade -t lib
+          pip install -r requirements-prd.txt -t lib/
+          pip install requests --upgrade -t lib/
           sudo apt-get install -qq libexempi3
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.3
