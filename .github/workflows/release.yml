@@ -44,3 +44,16 @@ jobs:
           npm install -g gulp
           npm install
           npm ddp
+          gulp build
+          rm -rf node_modules
+          cd ../../
+      - name: Collect static files
+        run: |
+          export DJANGO_SETTINGS_MODULE="config.settings.production"
+          python manage.py collectstatic --noinput
+          rm -rf .git/ ubyssey/static_src/
+      - name: Final prep for deploy
+        run: |
+          pip install -I google-cloud-storage==1.13.2 -t lib/
+          ls lib/
+          ls lib/django/
