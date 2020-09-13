@@ -59,5 +59,3 @@ jobs:
         run: |
           export DJANGO_SETTINGS_MODULE="config.settings.production"
           pip install -I google-cloud-storage==1.13.2 -t lib/
-          ls lib/
-          ls lib/django/
