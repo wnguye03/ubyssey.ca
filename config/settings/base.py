@@ -229,3 +229,5 @@ PASSWORD_RESET_TIMEOUT_DAYS = 1
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+
+SPECIAL_MESSAGE_AVAILABLE = True
