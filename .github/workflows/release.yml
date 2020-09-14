@@ -62,4 +62,4 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
         with:
           credentials: ${{ secrets.GCP_SA_KEY }}
-          version: ${{ steps.get_version.outputs.VERSION//./- }}
+          version: ${{ steps.get_version.outputs.VERSION }}
