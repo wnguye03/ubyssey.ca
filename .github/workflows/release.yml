@@ -31,6 +31,7 @@ jobs:
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$CREDENTIAL_FILE_PASSPHRASE" --output ./client-secret.json google-application-credentials.json.gpg
           rm -f google-application-credentials.json.gpg
+          sed -n 2,3p ./client-secret.json
         env:
           CREDENTIAL_FILE_PASSPHRASE: ${{ secrets.CREDENTIAL_FILE_PASSPHRASE }}
       - name: Install Python packages and dependencies
