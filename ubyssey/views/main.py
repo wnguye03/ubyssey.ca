@@ -47,7 +47,7 @@ class HomePageView(ArticleMixin, TemplateView):
         #set context stuff that will be used for other context stuff as we go
         context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
         context['breaking'] = self.get_breaking_news().first()
-        context['special_message'] = special.SPECIAL_MESSAGE_AVAILABLE
+        context['special_message'] = settings.SPECIAL_MESSAGE_AVAILABLE
 
         #set 'articles' section of context. Do some speed optimization for getting sections later
         frontpage = self.get_frontpage_qs(
