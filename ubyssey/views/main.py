@@ -48,6 +48,8 @@ class HomePageView(ArticleMixin, TemplateView):
         context['title'] = 'The Ubyssey - UBC\'s official student newspaper'
         context['breaking'] = self.get_breaking_news().first()
         context['special_message'] = settings.SPECIAL_MESSAGE_AVAILABLE
+        
+        context['subsection_banner_message'] = Subsection.objects.first().description
 
         #set 'articles' section of context. Do some speed optimization for getting sections later
         frontpage = self.get_frontpage_qs(

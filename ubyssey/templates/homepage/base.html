@@ -15,9 +15,12 @@
       <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
     </a>
     {% endif %}
-    {% if special_message %}
-
+    {% if subsection_banner_message %}
+      <a class="o-subsection-banner" href="ubyssey.ca">
+        <h3>BREAKING: {{ subsection_banner_message }}</h3>
+      </a>
     {% endif %}
+
     {% zone 'frontpage' articles=articles %}
     <div class="homepage-section row">
         <div class="sections">  
