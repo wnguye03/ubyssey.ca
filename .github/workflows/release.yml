@@ -49,7 +49,7 @@ jobs:
           cd ../../
       - name: Collect static files
         run: |
-          export DJANGO_SETTINGS_MODULE="config.settings.develop"
+          export DJANGO_SETTINGS_MODULE="config.settings.development"
           python manage.py collectstatic --noinput
           rm -rf .git/ ubyssey/static_src/
       - name: Make final preparations before deployment to Google App Engine
