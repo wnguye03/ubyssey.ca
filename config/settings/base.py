@@ -132,6 +132,22 @@ INSTALLED_APPS = [
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'newsletter.apps.NewsletterConfig',
+
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+
+    'taggit',
+    'modelcluster',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
