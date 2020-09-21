@@ -145,6 +145,11 @@ INSTALLED_APPS = [
     'django_user_agents',
 ]
 
+if DEBUG:
+	INSTALLED_APPS += [
+		'debug_toolbar'
+	]
+
 # Replace default user model
 AUTH_USER_MODEL = 'dispatch.User'
 
