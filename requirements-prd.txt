@@ -14,9 +14,9 @@ user-agents
 django-user_agents
 gunicorn
 Pillow
-google-cloud-datastore
-google-cloud-storage
-google-cloud-secret-manager
+google-cloud-datastore==1.15.0
+google-cloud-storage==1.31.0
+google-cloud-secret-manager==1.0.0
 python-memcached
 django-environ
 requests
