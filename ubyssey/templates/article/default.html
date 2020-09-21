@@ -23,8 +23,10 @@
       </a>
     </div>
     {% endif %}
-    {% if special_message %}
-    
+    {% if special_message and article.section.slug == "science" %}
+    <a class="o-breaking-news" href="{% url 'subsection' 'science-literacy-week' %}" style="background-color: green;">
+		  <h3>Click here for Science Literacy Week 2020!</h3>
+		</a>
     {% endif %}
     <div class="u-container u-container--content u-container--padded">
       <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
