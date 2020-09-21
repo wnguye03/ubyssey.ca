@@ -51,9 +51,6 @@ jobs:
         run: |
           python manage.py collectstatic --noinput
           rm -rf .git/ ubyssey/static_src/
-      - name: Get the version from the github tag
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Make final preparations before deployment to Google App Engine
         run: |
           export DJANGO_SETTINGS_MODULE="config.settings.production"
@@ -62,4 +59,3 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
         with:
           credentials: ${{ secrets.GCP_SA_KEY }}
-          version: ${{ steps.get_version.outputs.VERSION }}
