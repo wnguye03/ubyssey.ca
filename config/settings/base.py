@@ -22,7 +22,6 @@ BASE_DIR = environ.Path(__file__) - 3
 DISPATCH_APP_DIR = DispatchConfig.path
 
 env = environ.Env() # will reinitialize later once "earliest" configs have been set
-FORCE_GOOGLE_AUTHENTICATION = env.bool("FORCE_GOOGLE_AUTHENTICATION", default=False)
 
 # If we don't have Google app credentials, grab them
 if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
@@ -34,7 +33,7 @@ env_file = os.path.join(BASE_DIR, 'tmp/.env')
 
 # In production we can get .envfrom Google Cloud if we don't have it. This requires authentication.
 # Set FORCE_GOOGLE_AUTHENTICATION
-if FORCE_GOOGLE_AUTHENTICATION or (os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.production' and not os.path.isfile(env_file)):
+if os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.production' and not os.path.isfile(env_file):
     import google.auth
     from google.cloud import secretmanager as sm
     env_file = os.path.join('/tmp/.env')
