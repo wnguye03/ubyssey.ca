@@ -64,6 +64,9 @@ env = environ.Env(
     # VERSION=(str,'0.0.0'),
     DEBUG=(bool,False),
     ORGANIZATION_NAME = (str, 'Ubyssey'),
+
+    # Temporary
+    SPECIAL_MESSAGE_AVAILABLE = (bool,False),
     
     # URL defaults
     STATIC_URL = (str,'/static/'),
@@ -95,6 +98,8 @@ environ.Env.read_env(env_file)
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
 ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
 DEBUG = env('DEBUG')
+
+SPECIAL_MESSAGE_AVAILABLE = env('SPECIAL_MESSAGE_AVAILABLE')
 
 USE_TZ = env('USE_TZ')
 TIME_ZONE = env('TIME_ZONE')
@@ -230,4 +235,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
-SPECIAL_MESSAGE_AVAILABLE = True
