@@ -15,10 +15,11 @@
       <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
     </a>
     {% endif %}
-    {% if subsection_banner_message %}
-      <a class="o-subsection-banner" href="ubyssey.ca">
-        <h3>BREAKING: {{ subsection_banner_message }}</h3>
-      </a>
+    {% if special_message %}
+	    {% comment %} temporary science-fair banner {% endcomment %}
+		<a class="o-breaking-news" href="{% url 'subsection' 'science-literacy-week' %}" style="background-color: green;">
+		  <h3>Click here for Science Literacy Week 2020!</h3>
+		</a>
     {% endif %}
 
     {% zone 'frontpage' articles=articles %}
