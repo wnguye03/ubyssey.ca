@@ -31,7 +31,10 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       - name: Get .env file
         run: |
-          echo $DEPLOYMENT_ENV_VARS > tmp/.env
+          mkdir tmp
+          cd tmp
+          echo $DEPLOYMENT_ENV_VARS > .env
+          cd ../
         env:
           DEPLOYMENT_ENV_VARS: ${{ secrets.DEPLOYMENT_ENV_VARS }}
       - name: Install Python packages and dependencies
@@ -59,6 +62,7 @@ jobs:
           rm -rf .git/ ubyssey/static_src/
       - name: Make final preparations before deployment to Google App Engine
         run: |
+          rm -rf tmp/
           export DJANGO_SETTINGS_MODULE="config.settings.production"
           pip install -I google-cloud-storage==1.13.2 -t lib/
       - name: Deploy to Google App Engine
