@@ -32,7 +32,6 @@ if not "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
 env_file = os.path.join(BASE_DIR, 'tmp/.env')
 
 # In production we can get .envfrom Google Cloud if we don't have it. This requires authentication.
-# Set FORCE_GOOGLE_AUTHENTICATION
 if os.environ['DJANGO_SETTINGS_MODULE'] == 'config.settings.production' and not os.path.isfile(env_file):
     import google.auth
     from google.cloud import secretmanager as sm
@@ -223,6 +222,8 @@ MIDDLEWARE += [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 GS_LOCATION = None
