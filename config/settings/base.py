@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'newsletter.apps.NewsletterConfig',
+    'dispatchusers.apps.DispatchusersConfig',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -261,3 +262,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
+WAGTAIL_SITE_NAME = 'The Ubyssey'
+WAGTAIL_USER_EDIT_FORM = 'dispatchusers.forms.DispatchUserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'dispatchusers.forms.DispatchUserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['person', 'is_active']
