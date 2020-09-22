@@ -42,9 +42,9 @@ urlpatterns += [
     re_path(r'^ads.txt$',ads_txt,name='ads-txt'),
 
     # Wagtail
-    path('cms/', include(wagtailadmin_urls)),
-    path('documents/', include(wagtaildocs_urls)),
-    path('pages/', include(wagtail_urls)),
+    path('beta/wagtail/', include(wagtailadmin_urls)),
+    path('beta/documents/', include(wagtaildocs_urls)),
+    path('beta/', include(wagtail_urls)),
 
     re_path(r'^admin', include(admin_urls)),
     re_path(r'^api/', include(api_urls)),
