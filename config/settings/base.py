@@ -133,20 +133,20 @@ INSTALLED_APPS = [
     'dispatch.apps.DispatchConfig',
     'newsletter.apps.NewsletterConfig',
 
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
+    # 'wagtail.contrib.forms',
+    # 'wagtail.contrib.redirects',
+    # 'wagtail.embeds',
+    # 'wagtail.sites',
+    # 'wagtail.users',
+    # 'wagtail.snippets',
+    # 'wagtail.documents',
+    # 'wagtail.images',
+    # 'wagtail.search',
+    # 'wagtail.admin',
+    # 'wagtail.core',
 
-    'taggit',
-    'modelcluster',
+    # 'taggit',
+    # 'modelcluster',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -244,7 +244,7 @@ MIDDLEWARE += [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    # 'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 GS_LOCATION = None
