@@ -125,6 +125,9 @@ html, body {
 
   .oyl-nav__list {
     right: 160px;
+    &.sport-series{
+      right: 300px;
+    }
   }
 
   .oyl-nav__logo {
@@ -196,6 +199,10 @@ html, body {
     right: 50%;
     width: 320px;
     margin-right: -160px;
+    &.sport-series{
+      width: 600px;
+      margin-right: -300px;
+    }
   }
 
   li {
