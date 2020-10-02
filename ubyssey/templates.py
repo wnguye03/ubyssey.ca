@@ -107,6 +107,26 @@ class OneYearLater(Template):
     about = TextField('About')
 
 @register.template
+class SportFourSeries(Template):
+    id = 'sport-four-series'
+    name = 'Feature: Sport Four Series'
+
+    title = CharField('Title')
+    subtitle = CharField('Subtitle')
+    snippet = TextField('Snippet')
+    video_src = CharField('Video Source File')
+    next_article = ArticleField('Preview Article')
+    next_title = CharField('Preview Title')
+    next_snippet = TextField('Preview Snippet')
+
+    article_september = ArticleField('September Article')
+    article_october = ArticleField('October Article')
+    article_november = ArticleField('November Article')
+    article_december = ArticleField('December Article')
+
+    about = TextField('About')
+
+@register.template
 class FoodInsecurity(Template):
     id = 'food-insecurity'
     name = 'Feature: Food Insecurity'
