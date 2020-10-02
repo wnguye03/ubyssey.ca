@@ -1,20 +1,15 @@
 .poll-wrapper {
   // Structure
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 15px;
 
   @media($bp-larger-than-phablet) {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
   }
 }
 
 .poll-inner-container {
   // Structure
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: .5rem;
 }
 
 .poll-answer-form {
@@ -29,7 +24,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin: 5px 0px;
+  margin: 5px 0;
   padding: 8px;
 
   // Text
@@ -96,8 +91,7 @@
 
   h1 {
     // Structure
-    margin-top: 0;
-    margin-bottom: 0.75rem;
+    margin: 0 0 .75em 0;
 
     // Text
     color: $color-text-black;
@@ -117,8 +111,7 @@
 
 .poll-total {
   // Structure
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin: .75em 0;
 
   // Text
   font-size: font-size(15);

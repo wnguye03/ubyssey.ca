@@ -1,11 +1,9 @@
 .c-heading {
   // Structure
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;
 
   // Text
-  font-family: $font-default;
-  font-weight: $font-weight-bold;
+  font: $font-weight-bold 1em $font-default;
   color: $color-text-black;
 }
 

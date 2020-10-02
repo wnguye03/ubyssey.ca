@@ -13,10 +13,7 @@
 
   // Border
   border: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
+  border-radius: 2px;
 
   // Text
   color: $color-white;
@@ -50,8 +47,7 @@
   // Structure
   height: 36px;
   line-height: 36px;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+  padding: 0 0.75rem;
 
   // Text
   font-size: font-size(14);

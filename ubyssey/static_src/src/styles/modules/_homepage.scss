@@ -538,7 +538,7 @@ ul.article-list, ol.article-list {
       border-bottom: none;
 
       .o-article {
-        margin-bottom: 0rem;
+        margin-bottom: 0;
       }
     }
 
@@ -635,7 +635,7 @@ ol.article-list {
     @media($bp-smaller-than-phablet){
       margin-left: 15px;
       margin-top: 15px;
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
 }

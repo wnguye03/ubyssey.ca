@@ -1,9 +1,7 @@
 .c-elections-sidebar__header {
   // Structure
-  margin-top: 0;
-  padding-top: 0.65rem;
-  padding-bottom: 0.8rem;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;
+  padding: 0.65rem 0 0.8rem 0;
 
   // Border
   border-bottom: thin dotted $color-border-gray-dark;
@@ -47,19 +45,15 @@
   margin-bottom: 0.15rem;
 
   // Text
-  font-family: $font-default;
-  font-size: font-size(10);
+  font-size: $font-weight-semi-bold .625em $font-default;
   letter-spacing: 0.05em;
-  font-weight: $font-weight-semi-bold;
   color: $color-red;
   text-transform: uppercase;
 }
 
 .c-elections-sidebar__compass {
   // Structure
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 1rem;
+  padding: 0 15px 1rem 15px;
   margin-bottom: 0.5rem;
 
   // Border

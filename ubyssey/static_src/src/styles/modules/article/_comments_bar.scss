@@ -12,7 +12,7 @@ $bp-comments-bar: "min-width: 960px" !default;
     padding-right: 20px;
   }
 
-  @media($bp-comments-bar){
+  @media($bp-comments-bar) {
     position: fixed;
     top: 49px;
     bottom: 0;

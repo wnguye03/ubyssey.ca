@@ -7,12 +7,12 @@
     max-width: 585px;
   }
 }
+
 .page {
   .o-article-embed {
     margin: 30px 0;
   }
 }
-
 
 .o-article-embed--advertisement {
   text-align: center;
@@ -194,8 +194,8 @@
   top: 45%;
   left: 50%;
   margin-top: -35px;
-  margin-right: 0px;
-  margin-bottom: 0px;
+  margin-right: 0;
+  margin-bottom: 0;
   margin-left: -35px;
 
   // Background
@@ -206,9 +206,9 @@
   border: 5px solid #fff;
 
   // Extras
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 2;
   cursor: pointer;
 
@@ -237,8 +237,8 @@
   top: 50%;
   left: 50%;
   margin-top: -20px;
-  margin-right: 0px;
-  margin-bottom: 0px;
+  margin-right: 0;
+  margin-bottom: 0;
   margin-left: -10px;
 
   // Border
@@ -247,7 +247,7 @@
   border-color: transparent transparent transparent #fff;
 
   // Extras
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
   z-index: 2;
 }
 
@@ -264,7 +264,7 @@
   font-weight: 600;
   text-align: center;
   vertical-align: middle;
-  text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
   line-height: 30px;
 
   // Background
@@ -275,9 +275,9 @@
   border: 2px solid #fff;
 
   // Extras
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 2;
   cursor: pointer;
 
@@ -410,19 +410,8 @@
 
 .pull-quote {
   p.quote {
-    // font-family: $font-body;
-    // font-size: 24px;
-    // line-height: 1.5em;
-    // font-style: italic;
-    // margin: 0;
-
-    font-family: "Minion Pro";
-    font-size: font-size(26);
-    line-height: 1.5em;
-    font-weight: bold;
+    font: bold 1.625em/1.5em 'Minion Pro';
     text-align: center;
-
-    
   }
   p.source {
     margin-top: 10px;
