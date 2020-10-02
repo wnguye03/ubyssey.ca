@@ -2,6 +2,7 @@ function updateHeader() {
   const scrollTop = $(window).scrollTop();
 
   let element = $('.js-sticky')
+  let headerList = $('.oyl-nav__list.sport-series');
   const
     elementHeight = element.height(),
     elementOffset = $(window).height() - elementHeight,
@@ -22,9 +23,12 @@ function updateHeader() {
       element.removeClass('js-sticky--frozen');
       element.addClass('js-sticky--fixed');
       element.css('top', element.data('offset') + 'px');
+      headerList.removeAttr('style');
     }
   } else if (hasClass) {
     element.removeClass('js-sticky--fixed');
+    var margin = -headerList.width()/2;
+    headerList.css('margin-right', margin);
   }
 }
 
@@ -40,6 +44,10 @@ function updateVideo() {
 $(function() {
   updateVideo();
   updateHeader();
+
+  var headerListWidth = $('.oyl-nav__list.sport-series').width();
+  var margin = -headerListWidth/2;
+  $('.oyl-nav__list.sport-series').css('margin-right', margin);
 
   var vid = document.getElementById('header-video');
 

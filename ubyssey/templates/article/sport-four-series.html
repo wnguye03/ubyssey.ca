@@ -82,17 +82,17 @@
           {% endcomment %}
           <ul class="oyl-nav__list sport-series">
             {% if article.template_fields.article_september %} 
-            <li>
+            <li class="sport-series">
               {% if article.slug == article.template_fields.article_september.slug %}
               <a class="is-selected" href="{{ article.template_fields.article_september.get_absolute_url }}">1. September</a>
               {% else %}
               <a href="{{ article.template_fields.article_september.get_absolute_url }}">1. September</a>
               {% endif %}
-            </li>
+            </li class="sport-series">
             {% endif %}
 
             {% if article.template_fields.article_october %} 
-            <li>
+            <li class="sport-series">
               {% if article.slug == article.template_fields.article_october.slug %}
               <a class="is-selected" href="{{ article.template_fields.article_october.get_absolute_url }}">2. October</a>
               {% else %}
@@ -102,17 +102,17 @@
             {% endif %}
 
             {% if article.template_fields.article_november %} 
-            <li>
+            <li class="sport-series">
               {% if article.slug == article.template_fields.article_november.slug %}
               <a class="is-selected" href="{{ article.template_fields.article_november.get_absolute_url }}">3. November</a>
               {% else %}
               <a href="{{ article.template_fields.article_november.get_absolute_url }}">3. November</a>
               {% endif %}
-            </li>
+            </li class="sport-series">
             {% endif %}
 
             {% if article.template_fields.article_december %} 
-            <li>
+            <li class="sport-series">
               {% if article.slug == article.template_fields.article_december.slug %}
               <a class="is-selected" href="{{ article.template_fields.article_december.get_absolute_url }}">4. December</a>
               {% else %}
