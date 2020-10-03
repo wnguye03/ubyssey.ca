@@ -91,7 +91,7 @@ $colorSecondary: black;
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            padding: 0 0px;
+            padding: 0;
             height: 100%;
             background-color: white;
             color: black;
@@ -122,7 +122,7 @@ $colorSecondary: black;
         }
         .t-node-hover {
           display: none;
-          height: 0px;
+          height: 0;
           width: 100%;
           transition: height .25s;
         }
@@ -132,7 +132,7 @@ $colorSecondary: black;
 
   @media($bp-larger-than-tablet) {
     width: 100%;
-    margin-left: 0px;
+    margin-left: 0;
     .t-container {
       display: flex;
       justify-content: center;
@@ -186,7 +186,7 @@ $colorSecondary: black;
             align-items: center;
             position: relative;
             padding: 0;
-            border-top: 0px solid transparent;
+            border-top: 0 solid transparent;
             background-color:transparent;
 
             .t-node {

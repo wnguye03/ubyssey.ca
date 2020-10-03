@@ -15,8 +15,7 @@ $adslots: (
   display: none;
 
   .replacement {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     width: $width;
     height: $height;
     padding-top: 1.5rem;
@@ -57,8 +56,7 @@ $adslots: (
   $height: nth(map-get($adslots, banner), 2);
 
   .replacement {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     width: $width;
     height: $height;
     padding-top: 1.5rem;
@@ -72,8 +70,7 @@ main.article .o-replacement--leaderboard {
   }
 }
 
-.article-slide .o-replacement--leaderboard,
-.article-slide .o-replacement--mobile-leaderboard {
+.article-slide .o-replacement--leaderboard, .article-slide .o-replacement--mobile-leaderboard {
   background: #F5F5F5;
   padding-bottom: 1rem;
   border-bottom: 1px solid #DADADA;
@@ -99,8 +96,7 @@ main.article .o-replacement--leaderboard {
     width: $width;
     height: $height;
     padding-top: 1rem;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 
   @media(min-width: $desktop-width) {
@@ -111,8 +107,7 @@ main.article .o-replacement--leaderboard {
 // Box
 .o-replacement--mobile-frontpage-box {
   // Structure
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
 
   // Border
   border-bottom: thin dotted #C8C8C8;
@@ -129,8 +124,7 @@ main.article .o-replacement--leaderboard {
 
   width: $width;
   min-height: $height;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   background-size: 100% 100%;
 }
 

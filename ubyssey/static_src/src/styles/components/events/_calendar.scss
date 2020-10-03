@@ -2,7 +2,7 @@ $color-today: #ff5555;
 
 .c-calendar__banner {
   // Background
-  background-image: url('../images/banners/events.svg');
+  background-image: url(../images/banners/events.svg);
 }
 
 .c-calendar__container {
@@ -33,15 +33,12 @@ $color-today: #ff5555;
   width: 100%;
 }
 
-.c-calendar__weeks__labels,
-.c-calendar__weeks__week {
+.c-calendar__weeks__labels, .c-calendar__weeks__week {
   // Structure
   display: table-row;
 }
 
-.c-calendar__weeks__label,
-.c-calendar__weeks__month,
-.c-calendar__weeks__day {
+.c-calendar__weeks__label, .c-calendar__weeks__month, .c-calendar__weeks__day {
   // Structure
   display: table-cell;
   height: 30px;
@@ -79,8 +76,7 @@ $color-today: #ff5555;
   color: $color-text-gray;
 }
 
-.c-calendar__weeks__day,
-.c-calendar__weeks__month {
+.c-calendar__weeks__day, .c-calendar__weeks__month {
   // Structure
   border-bottom: 3px solid white;
 }
@@ -105,8 +101,7 @@ $color-today: #ff5555;
   }
 }
 
-.c-calendar__weeks__week:active,
-.c-calendar__weeks__week--selected {
+.c-calendar__weeks__week:active, .c-calendar__weeks__week--selected {
 
   .c-calendar__weeks__day {
     // Background
@@ -183,8 +178,7 @@ $color-today: #ff5555;
   // Structure
   @media($bp-larger-than-phablet) {
     height: 100%;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding: 0 0.5rem;
   }
 
   .c-event {
@@ -195,29 +189,26 @@ $color-today: #ff5555;
 
 @media($bp-larger-than-phablet) {
   .c-calendar__results__event:nth-child(2n+1) .c-calendar__results__event__inner {
-    padding-left: 0;
-    padding-right: 0.75rem;
+    padding: 0 0.75rem 0 0;
   }
 
   .c-calendar__results__event:nth-child(2n+2) .c-calendar__results__event__inner {
-    padding-right: 0;
-    padding-left: 0.75rem;
+    padding: 0 0 0 0.75rem;
   }
 }
 
 @media($bp-larger-than-tablet) {
   .c-calendar__results__event:nth-child(2n+1) .c-calendar__results__event__inner,
   .c-calendar__results__event:nth-child(2n+2) .c-calendar__results__event__inner {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0.5rem;
   }
 
   .c-calendar__results__event:nth-child(3n+1) .c-calendar__results__event__inner {
-    padding-left: 0;
-    padding-right: 1rem;
+    padding: 0 1rem 0 0;
   }
 
   .c-calendar__results__event:nth-child(3n+3) .c-calendar__results__event__inner {
+    padding: 0 0 0 1rem;
     padding-right: 0;
     padding-left: 1rem;
   }
