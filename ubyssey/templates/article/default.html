@@ -23,10 +23,8 @@
       </a>
     </div>
     {% endif %}
-    {% if special_message and article.section.slug == "science" %}
-    <a class="o-breaking-news" href="{% url 'subsection' 'science-literacy-week' %}" style="background-color: green; max-width: 960px; margin:auto; margin-top: 16px;">
-		  <h3>Science Literacy Week 2020 is here! Click to read more.</h3>
-		</a>
+    {% if special_message %}
+      {% comment %} If there are any special Banner message needed {% endcomment %}
     {% endif %}
     <div class="u-container u-container--content u-container--padded">
       <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>

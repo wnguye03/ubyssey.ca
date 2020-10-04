@@ -78,6 +78,7 @@ html, body {
   margin: 0;
   background: #fff;
   -webkit-font-smoothing: antialiased;
+  min-width: 300px;
 }
 
 .oyl-header {
@@ -108,7 +109,7 @@ html, body {
 .oyl-nav {
   height: 50px;
   width: 100%;
-  background: #000;
+  background: #FFC300;
   position: relative;
   z-index: 400;
 
@@ -124,7 +125,7 @@ html, body {
   }
 
   .oyl-nav__list {
-    right: 160px;
+    right: 100px;
   }
 
   .oyl-nav__logo {
@@ -163,7 +164,7 @@ html, body {
 .oyl-nav__title {
   font-family: 'ub-avenir', Avenir, serif;
   font-size: 16px;
-  color: #F5A623;
+  color: black;
   line-height: 50px;
   margin-left: 1.5rem;
   letter-spacing: 1px;
@@ -194,32 +195,25 @@ html, body {
     position: absolute;
 
     right: 50%;
-    width: 320px;
-    margin-right: -160px;
+    margin-right: -100px;
+    width: fit-content;
   }
 
   li {
     display: inline-block;
-    line-height: 50px;
-    margin-left: 1.15rem;
-    margin-right: 1.15rem;
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
 
     a {
-      color: #fff;
-      font-family: 'ub-avenir', Avenir, serif;
-      font-weight: bold;
-      font-size: 18px;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.23);
-      border-width: 0 0 3px 0;
-      border-style: solid;
-      border-color: transparent;
+      display: block;
       text-decoration: none;
-
-      transition: border-color 0.25s;
-
-      &.is-selected, &:hover {
-        border-color: #f3a633;
-      }
+      width: 50px;
+      height: 50px;
     }
   }
 }
@@ -490,7 +484,7 @@ html, body {
   max-width: 585px;
   min-height: 225px;
   padding-top: 22%;
-  background: black;
+  background: #000;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;

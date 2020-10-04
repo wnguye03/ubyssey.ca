@@ -108,8 +108,8 @@ class OneYearLater(Template):
 
 @register.template
 class SportFourSeries(Template):
-    id = 'sport-four-series'
-    name = 'Feature: Sport Four Series'
+    id = 'sport-series'
+    name = 'Feature: Sport Series'
 
     title = CharField('Title')
     subtitle = CharField('Subtitle')

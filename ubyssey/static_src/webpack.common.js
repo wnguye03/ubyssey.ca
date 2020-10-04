@@ -10,6 +10,7 @@ module.exports = {
       a:                  './src/js/advertise.js',
       a_new:              './src/js/advertise_new.js',
       'one-year-later':   './src/js/one-year-later.js',
+      'sport-series':   './src/js/sport-series.js',
       'food-insecurity':  './src/js/food-insecurity.jsx',
       'guide-2020':       './src/js/guide-2020.js',
       'magazine-2019':    './src/js/magazine-2019.js',
