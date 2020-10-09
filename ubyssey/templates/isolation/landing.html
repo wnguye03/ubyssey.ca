@@ -1,0 +1,31 @@
+{% extends 'isolation/base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="section-grid-container">
+    <div class="row 1">
+        {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
+        {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    </div>
+    <div class="row 2">
+        {% include 'isolation/article-box.html' with type=3 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+        {% include 'isolation/article-box.html' with type=4 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    </div>
+    <div class="row 3">
+        {% include 'isolation/article-box.html' with type=5 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    {% include 'isolation/article-box.html' with type=6 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    </div>
+    <div class="row 4">
+        {% include 'isolation/article-box.html' with type=7 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+        {% include 'isolation/article-box.html' with type=8 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    </div>
+    <div class="row 5">
+        {% include 'isolation/article-box.html' with type=9 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+    </div>
+    
+    
+    
+    
+</main>
+
+{% endblock %}

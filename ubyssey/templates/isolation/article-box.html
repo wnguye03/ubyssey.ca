@@ -1,0 +1,20 @@
+
+<div class="article-box{% if style %}--{{ style }}{% endif %}{% if type %} __type-{{ type }}{% endif %}" style="background-image: black;">
+    <nav class="article-box{% if style %}--{{ style }}{% endif %}-container">
+        <a class="article-box--nav" href="#">
+            <p>Temperature Checks, Animal Crossing and Tracking Apps: Finding my new normal in quarantine by Blossom Cheng</p>
+            <div class="article-box-gradient"></div>
+        </a> 
+    </nav>
+</div>
+
+{% comment %}
+<div class="article-box{% if style %}--{{ style }}{% endif %}{% if type %} __type-{{ type }}{% endif %}" style="background-image: url('{{ image }}');">
+    <nav class="article-box{% if style %}--{{ style }}{% endif %}-container">
+        <a class="article-box--nav" href="{% if slug %}{% url 'guide-article' 2020 subsection slug %}{% else %}#{%endif%}">
+            <p>{{ title }}</p>
+            <div class="article-box-gradient"></div>
+        </a> 
+    </nav>
+</div>
+{% endcomment %}
