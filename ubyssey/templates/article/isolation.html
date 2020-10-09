@@ -1,0 +1,42 @@
+{% extends 'article/default.html' %}
+{% block content %}
+<main id="article-{{ article.parent_id }}" class="article">
+
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 article=article.id %}
+  {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=2 article=article.id %}
+
+<div class="c-banner c-banner--welcome" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');">
+  <div class="c-banner__container">
+    <div class="c-banner--welcome__inner">
+        <p class="c-banner--welcome__snippet">{{ article.headline }}</p>
+    </div>
+    <div class="c-banner-credits article">{{ article.featured_image.credit }}</div>
+  </div>
+</div>
+
+<main class="c-article">
+  <div class="o-container">
+    <div class="o-wrapper">
+      {% if article.template_fields.subheading and article.template_fields.subheading != ' ' %}<p class="c-article__intro__subheading">{{ article.template_fields.subheading }}</p>{% endif %}
+      {% if article.template_fields.intro and article.template_fields.intro != ' ' %}<p class="c-article__intro__text">{{ article.template_fields.intro }}</p>{% endif %}
+      <div class="c-article__content">
+        <div class="advertisement box sidebar">
+          {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+        </div>
+        {{ article.html|safe }}
+      </div>
+    </div>
+  </div>
+  <div class="c-up-next">
+    <div class="c-up-next__arrow"></div>
+    <div class="c-up-next__text">What's next?</div>
+    <div class="c-up-next__arrow c-up-next__arrow--right"></div>
+  </div>
+  <div class="article-boxes">
+    {% for a in next %}
+      {% include 'isolation/article-box.html' with style='article' title=a.headline subsection=subsection slug=a.slug  image=a.featured_image.image.get_absolute_url %}
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}
+</main>

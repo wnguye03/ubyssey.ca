@@ -52,6 +52,15 @@ class Guide(Template):
     next_b = CharField('Up next B', required=True)
 
 @register.template
+class Isolation(Template):
+    id = 'isolation'
+    name = 'Feature - Isolation'
+    subheading = CharField('Sub-heading')
+    intro = TextField('Intro text')
+    next_a = CharField('Up next A', required=True)
+    next_b = CharField('Up next B', required=True)
+
+@register.template
 class Magazine(Template):
     id = 'magazine'
     name = 'Magazine - Article'

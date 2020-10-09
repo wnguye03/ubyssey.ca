@@ -55,7 +55,6 @@ $margin-size: 10px;
 @media($bp-smaller-than-tablet){
     .section-grid-container {
         .article-box{
-            margin: $margin-size;
             width: 100%;
             height: 400px;
         }
