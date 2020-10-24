@@ -26,9 +26,9 @@
                 <div class="right">
                     <div class="full-width featured-media">
                         <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
-                        {% if article.featured_image.caption %}
+                        {% if article.featured_image.caption or article.featured_image.credit %}
                         <div class="caption">
-                          {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                            {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}{% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
                         </div>
                         {% endif %}
                     </div>
@@ -40,7 +40,7 @@
                     <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
                     {% if article.featured_image.caption or article.featured_image.credit %}
                     <div class="caption">
-                      {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
+                      {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}{% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -76,8 +76,8 @@
                     </div>
                     {% if article.featured_image.caption or article.featured_image.credit %}
                         <div class="caption">
-                	        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
-                        </div>
+                        {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}{% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
+                      </div>
                     {% endif %}
                 </div>
                 
