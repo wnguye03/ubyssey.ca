@@ -19,6 +19,14 @@ $credit-size: 1rem;
 $accent-font: 'dk-saffron-walden', serif;
 $accent-size: 1.3rem;
 
+h1 {
+	font-weight: 600;
+	font-size: 1.75em;
+	line-height: 1.25;
+	font-family: 'Dancing Script', serif;
+    font-style: italic;
+}
+
 @font-face {
 	font-family: 'dk-saffron-walden';
 	src: url('../fonts/DKSaffronWalden.woff');
