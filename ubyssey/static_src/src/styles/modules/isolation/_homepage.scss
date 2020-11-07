@@ -1,58 +1,76 @@
-$more-column-left-start: 2;
-$more-column-left-end: 8;
-
-$more-column-right-start: 6;
-$more-column-right-end: 12;
-
-$normal-column-left-start: 2;
-$normal-column-left-end: 7;
-
-$normal-column-right-start: 7;
-$normal-column-right-end: 12;
-
-$less-column-left-start: 2;
-$less-column-left-end: 6;
-
-$less-column-right-start: 8;
-$less-column-right-end: 12;
-
-$row-start: 2;
-$row-height300-end: 8;
-$row-height350-end: 9;
-$row-height400-end: 10;
-$row-height450-end: 11;
-
-$margin-size: 10px;
-
 .page {
-    //background: black;
+    background-color: #ecbcbc;
+    position: relative;
+    .grass {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 10;
+        pointer-events: none;
+    }
 }
 
-@media($bp-smaller-than-tablet){
-    $margin-size: 5px;
-}
-
-.section-grid-container {
+.section-flex-container {
     height: 100%;
     width: 100%;
 }
 
+.house{
+    display: flex;
+    flex-direction: column;
+}
+.roof{
+    position: relative;
+    display: flex;
+    background-size: 100%;
+    width: fit-content;
+    height: fit-content;
+}
+.roof-image{
+    width: 95%;
+    margin: 0 2.5%;
+}
+.roof-headline{
+    position: absolute;
+    bottom: 20%;
+    width: 400px;
+    right: calc(50% - 200px);
+    text-align: center;
+
+    font-family: "Dancing Script", serif;
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.section-flex-container {
+    display: block;
+    height: 100%;
+    width: 65%;
+    margin: auto;
+    padding: 0 12.5% 100px 12.5%;
+    background: #efdcc5;
+    position: relative;
+    .isolation-row {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 0;
+    }
+
+    .article-box{
+        margin: 10px;
+        background-position: center;
+        background-size: cover;
+        height: 300px;
+        width: 100%;
+    }
+}
+
 @media($bp-larger-than-tablet){
-    .section-grid-container {
-        display: block;
-        height: 100%;
-        width: 75%;
-        margin: auto;
-        .isolation-row{
-            display: flex;
+    .section-flex-container {
+        .isolation-row {
             flex-direction: row;
-            flex-grow: 0;
         }
         .article-box{
-            margin: $margin-size;
-            background-position: center;
-            background-size: cover;
-            height: 300px;
             &.type-1{
                 width: 40%;
             }
@@ -63,12 +81,14 @@ $margin-size: 10px;
     }
 }
 
-@media($bp-smaller-than-tablet){
-    .section-grid-container {
-        .article-box{
-            margin: auto;
-            width: 70%;
-            height: 300px;
-        }
+@media($bp-smaller-than-mobile){
+    .roof-headline {
+        bottom: 0;
+        width: 200px;
+        right: calc(50% - 100px);
+    }
+    .section-flex-container {
+        width: 75%;
+        padding: 0 7.5% 100px 7.5%;
     }
 }

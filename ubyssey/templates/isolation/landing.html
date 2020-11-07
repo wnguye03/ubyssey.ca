@@ -1,23 +1,31 @@
 {% extends 'isolation/base.html' %}
 {% load static %}
 {% block innerContent %}
-<main class="section-grid-container">
-    <div class="isolation-row">
-        {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
+<div class="house">
+    <div class="roof" style="background-image:url({% static 'ubyssey/images/isolation/moon.png' %});">
+        <img class="roof-image" src="{% static 'ubyssey/images/isolation/dollhouseroof.png' %}"/>
+        <div class="roof-headline">Stories from self-isolation</div>
+    </div>
+    
+    <main class="section-flex-container">
+        <div class="isolation-row">
+            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+        </div>
+        <div class="isolation-row">
+            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+        </div>
+        <div class="isolation-row">
+            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
         {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-    </div>
-    <div class="isolation-row">
-        {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-        {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-    </div>
-    <div class="isolation-row">
-        {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-    {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-    </div>
-    <div class="isolation-row">
-        {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-        {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-    </div>
-</main>
+        </div>
+        <div class="isolation-row">
+            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+        </div>
+    </main>
+     
+</div>
 
 {% endblock %}
