@@ -57,8 +57,8 @@ class Isolation(Template):
     name = 'Feature - Isolation'
     subheading = CharField('Sub-heading')
     intro = TextField('Intro text')
-    next_a = CharField('Up next A', required=True)
-    next_b = CharField('Up next B', required=True)
+    article_prev = ArticleField('Previous Article')
+    article_next = ArticleField('Next Article')
 
 @register.template
 class Magazine(Template):
