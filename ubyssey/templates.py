@@ -59,6 +59,16 @@ class Isolation(Template):
     intro = TextField('Intro text')
     article_prev = ArticleField('Previous Article')
     article_next = ArticleField('Next Article')
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    HEADER_LAYOUT_OPTIONS = (
+        ('right-image', 'Right Image'),
+        ('top-image', 'Top Image'),
+        ('banner-image', 'Banner Image')
+    )
+    
 
 @register.template
 class Magazine(Template):
