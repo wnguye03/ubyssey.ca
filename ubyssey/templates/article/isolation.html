@@ -2,30 +2,125 @@
 {% load static %}
 {% load dispatch_tags %}
 
-{% block banner %}
-<div class="fw-banner banner-image"></div>
-    <div class="banner-image">
-        <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
-        <div class="headline-container">
-            <div class="u-container u-container--padded">
-                <h1 class="headline">{{ article.headline|safe }}</h1>
-                <div class="article-byline c-article__byline-center">
-                    <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
-                </div>
-            </div>
-            {% if article.featured_image.caption or article.featured_image.credit %}
-                <div class="caption">
-                {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}{% if article.featured_image.credit %} <span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-  </div>
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'ubyssey/css/isolation.css' %}" type="text/css"/>
 {% endblock %}
 
+
+{% block banner %}
+    <div class="isolation-header">
+        <div class="isolation-header--container">
+            <a class="isolation-header--nav left" href="ubyssey.ca">Stories from self isolation</a>
+            <a class="isolation-header--nav right" href="ubyssey.ca"></a>
+        </div>
+    </div>
+    {% with article.template_fields.header_layout as header_layout %}
+    <div class="fw-banner {{ header_layout }}">
+        {% if header_layout == 'right-image' %}
+            <div class="header-container">
+                <div class="headline-container left">
+                    <h1 class="headline">{{ article.headline|safe }}</h1>
+                    {% if article.template_fields.description %}
+                    <p class="fw-description">{{ article.template_fields.description }}</p>
+                    {% endif %}
+                    <div class="c-article__byline c-article__byline-center">
+                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+                      <div class="c-article__byline__meta">
+                        <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
+                        {% if reading_time %}
+                        <span> &nbsp;&middot;&nbsp; </span>
+                        <span class="c-article__reading-time">{{ reading_time }} min read</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="full-width featured-media">
+                        <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
+                        {% if article.featured_image.caption %}
+                        <div class="caption">
+                          {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% elif header_layout == 'top-image' %}
+            <div class="header-container">
+                <div class="featured-media">
+                    <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
+                    {% if article.featured_image.caption or article.featured_image.credit %}
+                    <div class="caption">
+                      {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="headline-container">
+                    <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
+                    {% if article.template_fields.description %}
+                    <p class="fw-description">{{ article.template_fields.description }}</p>
+                    {% endif %}
+                    <div class="c-article__byline c-article__byline-center">
+                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
+                      <div class="c-article__byline__meta">
+                        <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
+                        {% if reading_time %}
+                        <span> &nbsp;&middot;&nbsp; </span>
+                        <span class="c-article__reading-time">{{ reading_time }} min read</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        {% elif header_layout == 'banner-image' %}
+            <div class="banner-image">
+                <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
+                <div class="headline-container">
+                    <div class="u-container u-container--padded">
+                        <h1 class="headline">{{ article.headline|safe }}</h1>
+                        {% if article.template_fields.description %}
+                        <p class="fw-description">{{ article.template_fields.description }}</p>
+                        {% endif %}
+                        <div class="article-byline c-article__byline-center">
+                            <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
+                        </div>
+                    </div>
+                    {% if article.featured_image.caption or article.featured_image.credit %}
+                        <div class="caption">
+                	        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <!-- {% if article.featured_image.caption or article.featured_image.credit %}
+                <div class="caption">
+                	{{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                </div>
+            {% endif %} -->
+        {% endif %}
+    </div>
+    {% endwith %}
+
+    <div class="isolation--nav__list">
+        <div class="isolation--nav__list--container">
+            <a class="article--nav previous" href="{{ article.template_fields.article_prev.get_absolute_url }}">
+                {{ article.template_fields.article_prev.title }}
+            </a>
+            <a class="article--nav next" href="{{ article.template_fields.article_next.get_absolute_url }}">
+                {{ article.template_fields.article_next.title }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% if article.template_fields.header_layout == 'banner-image' %}
 {% block banner_ad %}{% endblock %}
+{% endif %}
 
 {% block pre-content %}
+      {% if article.template_fields.subheading and article.template_fields.subheading != ' ' %}<div class="c-article--isolation__subheading">{{ article.template_fields.subheading }}</div>{% endif %}
+      {% if article.template_fields.intro and article.template_fields.intro != ' ' %}<div class="c-article--isolation__intro">{{ article.template_fields.intro }}</div>{% endif %}
 {% endblock %}
 
 {% block right-column %}
