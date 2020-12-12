@@ -76,15 +76,6 @@
             <div class="banner-image">
                 <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
                 <div class="headline-container">
-                    <div class="u-container u-container--padded">
-                        <h1 class="headline">{{ article.headline|safe }}</h1>
-                        {% if article.template_fields.description %}
-                        <p class="fw-description">{{ article.template_fields.description }}</p>
-                        {% endif %}
-                        <div class="article-byline c-article__byline-center">
-                            <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
-                        </div>
-                    </div>
                     {% if article.featured_image.caption or article.featured_image.credit %}
                         <div class="caption">
                 	        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
@@ -119,8 +110,8 @@
 {% endif %}
 
 {% block pre-content %}
-      {% if article.template_fields.subheading and article.template_fields.subheading != ' ' %}<div class="c-article--isolation__subheading">{{ article.template_fields.subheading }}</div>{% endif %}
-      {% if article.template_fields.intro and article.template_fields.intro != ' ' %}<div class="c-article--isolation__intro">{{ article.template_fields.intro }}</div>{% endif %}
+<h1 class="headline">{{ article.headline|safe }}</h1>
+<p class="author">By {{ article.get_author_url|safe }}</p> &nbsp;&middot;&nbsp; <p class="published">{{ article.published_at }}</p>
 {% endblock %}
 
 {% block right-column %}

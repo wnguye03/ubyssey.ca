@@ -10,11 +10,6 @@
     }
 }
 
-.section-flex-container {
-    height: 100%;
-    width: 100%;
-}
-
 .house{
     display: flex;
     flex-direction: column;
@@ -47,9 +42,20 @@
     height: 100%;
     width: 65%;
     margin: auto;
-    padding: 0 12.5% 100px 12.5%;
-    background: #efdcc5;
+    padding: 0 12.5% 325px 12.5%;
+    @media ($bp-smaller-than-desktop){
+        padding-bottom: 20%;
+    }
+    background: #F0E0CE;
     position: relative;
+    .isolation-description {
+        font-weight: 300;
+        margin-bottom: 1em;
+        line-height: 1em;
+        width: 70%;
+        margin-left: 10px;
+        font-size: 0.8rem;
+    }
     .isolation-row {
         display: flex;
         flex-direction: column;

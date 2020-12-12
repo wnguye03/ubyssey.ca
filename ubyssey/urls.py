@@ -46,7 +46,7 @@ urlpatterns += [
     # path('documents/', include(wagtaildocs_urls)),
     # path('pages/', include(wagtail_urls)),
 
-    re_path(r'^isolation/', IsolationView.as_view(), name='isolation'),
+    re_path(r'^self-isolation/', IsolationView.as_view(), name='isolation'),
 
     re_path(r'^admin', include(admin_urls)),
     re_path(r'^api/', include(api_urls)),
