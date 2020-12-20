@@ -55,8 +55,6 @@ class Guide(Template):
 class Isolation(Template):
     id = 'isolation'
     name = 'Feature - Isolation'
-    subheading = CharField('Sub-heading')
-    intro = TextField('Intro text')
     article_prev = ArticleField('Previous Article')
     article_next = ArticleField('Next Article')
     IMAGE_SIZE_OPTIONS = (

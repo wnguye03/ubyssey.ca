@@ -111,7 +111,10 @@
 
 {% block pre-content %}
 <h1 class="headline">{{ article.headline|safe }}</h1>
-<p class="author">By {{ article.get_author_url|safe }}</p> &nbsp;&middot;&nbsp; <p class="published">{{ article.published_at }}</p>
+{% endblock %}
+
+{% block post-content %}
+<div class="author">By {{ article.get_author_url|safe }} <div class="published">{{ article.published_at }}</div></div>
 {% endblock %}
 
 {% block right-column %}
