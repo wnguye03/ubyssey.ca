@@ -44,6 +44,8 @@ jobs:
           sudo apt-get install -qq libexempi3
       - name: Set up Node.js environment
         uses: actions/setup-node@v1.4.3
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMAND: true
         with:
           node-version: 14.x  
       - name: Run gulp to ready frontend static files for production
@@ -55,8 +57,6 @@ jobs:
           gulp build
           rm -rf node_modules
           cd ../../
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMAND: true
       - name: Collect static files
         run: |
           export DJANGO_SETTINGS_MODULE="config.settings.development"
