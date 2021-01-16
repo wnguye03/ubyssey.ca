@@ -43,9 +43,7 @@ jobs:
           pip install requests --upgrade
           sudo apt-get install -qq libexempi3
       - name: Set up Node.js environment
-        uses: actions/setup-node@v1.4.3
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMAND: true
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x  
       - name: Run gulp to ready frontend static files for production
