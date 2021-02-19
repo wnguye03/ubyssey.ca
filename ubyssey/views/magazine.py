@@ -8,11 +8,17 @@ from django.urls import reverse
 from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
 from django.db.models import F
+from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 
 from dispatch.models import Article, Tag
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper
+
+class MagazineArticleView(DetailView):
+
+class MagazineLandingView(TemplateView):
 
 class MagazineTheme(object):
 
