@@ -17,8 +17,10 @@ import ubyssey
 from ubyssey.helpers import ArticleHelper
 
 class MagazineArticleView(DetailView):
+    pass
 
 class MagazineLandingView(TemplateView):
+    pass
 
 class MagazineTheme(object):
 
