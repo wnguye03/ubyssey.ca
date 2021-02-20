@@ -15,9 +15,18 @@ from dispatch.models import Article, Tag
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper
+from ubyssey.mixins import DispatchPublishableViewMixin
 
-class MagazineArticleView(DetailView):
-    pass
+class MagazineArticleView(DispatchPublishableViewMixin, DetailView):
+    model = Article
+
+    def setup(self, request, *args, **kwargs):
+        
+        self.year = kwargs['year'] if kwargs['year'] is not None else 2021
+        return super().setup(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
 class MagazineLandingView(TemplateView):
     pass
