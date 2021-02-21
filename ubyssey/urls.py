@@ -79,7 +79,7 @@ urlpatterns += [
     # Magazine
     # TODO: REFACTOR THESE VIEWS, figure out where there are broken URLs
     re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),
-    re_path(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
+    re_path(r'^magazine/(?P<slug>[-\w]+)/$', MagazineArticleView.as_view(), name='magazine-article'),
 
     # Magazine new
     re_path(r'^newmagazine/(?P<year>[0-9]{4})/$', MagazineLandingView.as_view(), name='magazine-landing'),

@@ -23,8 +23,15 @@ class MagazineArticleView(DispatchPublishableViewMixin, DetailView):
     model = Article
 
     def setup(self, request, *args, **kwargs):
-        self.year = kwargs['year'] if kwargs['year'] is not None else 2021
-        self.title = kwargs['title'] if kwargs['title'] is not None else "Ubyssey Magazine"
+        if 'year' in kwargs:
+            self.year = kwargs['year']
+        else:
+            self.year = 2020
+        
+        if 'title' in kwargs:
+            self.title = kwargs['title']
+        else:
+            self.title = "Ubyssey Magazine"
         return super().setup(request, *args, **kwargs)
 
     def get_template_names(self):
@@ -46,19 +53,20 @@ class MagazineArticleView(DispatchPublishableViewMixin, DetailView):
         return template_names
 
     def get_context_data(self, **kwargs):
+        #init context with super()
         context = super().get_context_data(**kwargs)
+
+        #specific values for context
+        context['title'] = '%s - %s' % (self.object.headline, self.SITE_TITLE)
+        # context['meta'] = self.object.get_meta(self.object, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
+        context['article'] = self.object
         subsection = self.object.subsection.name.lower() if self.object.subsection else ""
-        context += {
-            'title': '%s - %s' % (self.object.headline, self.SITE_TITLE),
-            'meta': self.object.get_meta(self.object, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
-            'article': self.object,
-            'subsection': subsection,
-            'specific_css': 'ubyssey/css/magazine-' + self.year + '.css',
-            'year': self.year,
-            'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=self.object.id),
-            'base_template': 'magazine/base.html',
-            'magazine_title': self.title,
-        }
+        context['subsection'] = 'subsection'
+        context['specific_css'] = 'ubyssey/css/magazine-' + str(self.year) + '.css'
+        context['year'] = self.year
+        context['suggested'] = ArticleHelper.get_random_articles(2, 'magazine', exclude=self.object.id)
+        context['base_template'] = 'magazine/base.html'
+        context['magazine_title'] = self.title
         return context
 
 class MagazineLandingView(ListView):
@@ -191,8 +199,6 @@ class MagazineTheme(object):
             article = ArticleHelper.get_article(request, slug)
         except:
             raise Http404('Article could not be found.')
-
-        Article.objects.filter(slug=slug, is_published=True).update(views=F('views')+1) #Not great, but this whole view is bad and is mostly sloppy legacy code
 
         year = article.tags.get(name__icontains="20").name
 
