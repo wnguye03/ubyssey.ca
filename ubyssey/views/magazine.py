@@ -16,18 +16,18 @@ from dispatch.models import Article, Tag
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper
-from ubyssey.mixins import DispatchPublishableViewMixin
+from ubyssey.mixins import DispatchPublishableViewMixin,ArticleMixin
 
-class MagazineArticleView(DispatchPublishableViewMixin, DetailView):
+class MagazineArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
     SITE_TITLE = 'The Ubyssey Magazine'
     model = Article
 
     def setup(self, request, *args, **kwargs):
-        if 'year' in kwargs:
-            self.year = kwargs['year']
-        else:
-            self.year = 2020
-        
+        try:
+            self.year = self.object.tags.get(name__icontains="20").name
+        except:
+            self.year = 2017
+
         if 'title' in kwargs:
             self.title = kwargs['title']
         else:
@@ -172,8 +172,6 @@ class MagazineLandingView(ListView):
     def get_queryset(self):
         return super().get_queryset().filter(is_published=True, section__slug='magazine', tags__name=self.year).order_by('-importance')
 
-    
-
 class MagazineTheme(object):
 
     def __init__(self): 
@@ -245,7 +243,6 @@ class Magazine(object):
         t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
 
         return HttpResponse(t.render(context))
-
 
 class MagazineV1(Magazine):
     """View type 1 for The Ubyssey Magazine 2017 2018 microsite."""
