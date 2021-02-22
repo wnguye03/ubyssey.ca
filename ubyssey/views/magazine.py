@@ -24,14 +24,19 @@ class MagazineArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView
 
     def setup(self, request, *args, **kwargs):
         try:
-            self.year = self.object.tags.get(name__icontains="20").name
+            self.year = self.object.first().tags.get(name__icontains="20").name #Remember, self.object is still a queryset. ".first()" gets the only thing in it
         except:
             self.year = 2017
 
-        if 'title' in kwargs:
-            self.title = kwargs['title']
+        # Stupid magic hardcoding. But more readable hardcoding than what was happening here before
+        if year == 2018:
+            self.title = 'The Ubyssey Magazine - How we live'
+        elif year == 2019:
+            self.title = 'The Ubyssey Magazine - Presence'
+        elif year == 2020:
+            self.title = 'The Ubyssey Magazine - Hot Mess'
         else:
-            self.title = "Ubyssey Magazine"
+            self.title = "The Ubyssey Magazine"
         return super().setup(request, *args, **kwargs)
 
     def get_template_names(self):
@@ -194,9 +199,9 @@ class MagazineTheme(object):
     def article(self, request, slug=None):
         #TODO: tidy these remaining views up
         try:
-            article = ArticleHelper.get_article(request, slug)
+            article = Article.objects.filter(slug=slug, is_published=True).first()
         except:
-            raise Http404('Article could not be found.')
+            raise Http404('Article could not be found. Keegan wuz here')
 
         year = article.tags.get(name__icontains="20").name
 
@@ -219,6 +224,7 @@ class Magazine(object):
         subsection = article.subsection.name.lower() if article.subsection else ""
 
         # determine if user is viewing from mobile
+        # Also handled by ArticleView in get context. Thus we can and should remove it
         article_type = 'desktop'
         user_agent = get_user_agent(request)
         if user_agent.is_mobile:
@@ -229,7 +235,7 @@ class Magazine(object):
 
         #TODO: Fix hardcoding on default_image; no good available default
         context = {
-            'title': '%s - %s' % (article.headline, self.SITE_TITLE),
+            'title': '%s - %s' % (article.headline, self.SITE_TITLE), # normal stuff, replicated just fine
             'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
             'article': article,
             'subsection': subsection,
