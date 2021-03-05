@@ -380,7 +380,23 @@ mag2020 = MagazineV2(
     'waysForward',
 )
 
+mag2021 = MagazineV2(
+    2021,
+    'The Ubyssey Magazine - Hot Mess',
+    'The February 2020 issue of the Ubyssey magazine.',
+    'ubyssey/images/magazine/2020/cover.png',
+    'magazine/2021/landing.html',
+    'ubyssey/images/magazine/2020/section1.png',
+    'ubyssey/images/magazine/2020/section2.png',
+    'ubyssey/images/magazine/2020/section3.jpg',
+    'goesAround',
+    'comesAround',
+    'waysForward',
+)
+
+
 magazine.add_magazine(mag2017)
 magazine.add_magazine(mag2018)
 magazine.add_magazine(mag2019)
 magazine.add_magazine(mag2020)
+magazine.add_magazine(mag2021)
