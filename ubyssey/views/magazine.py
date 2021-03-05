@@ -23,20 +23,6 @@ class MagazineArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView
     model = Article
 
     def setup(self, request, *args, **kwargs):
-        try:
-            self.year = self.object.first().tags.get(name__icontains="20").name #Remember, self.object is still a queryset. ".first()" gets the only thing in it
-        except:
-            self.year = 2017
-
-        # Stupid magic hardcoding. But more readable hardcoding than what was happening here before
-        if year == 2018:
-            self.title = 'The Ubyssey Magazine - How we live'
-        elif year == 2019:
-            self.title = 'The Ubyssey Magazine - Presence'
-        elif year == 2020:
-            self.title = 'The Ubyssey Magazine - Hot Mess'
-        else:
-            self.title = "The Ubyssey Magazine"
         return super().setup(request, *args, **kwargs)
 
     def get_template_names(self):
@@ -149,24 +135,25 @@ class MagazineLandingView(ListView):
     def setup(self, request, *args, **kwargs):
         # Parent class version
         self.year = kwargs['year'] if kwargs['year'] is not None else 2021
-        self.title = kwargs['title'] if kwargs['title'] is not None else "Ubyssey Magazine"
+        # self.title = kwargs['title'] if kwargs['title'] is not None else "Ubyssey Magazine"
 
         # Mag v1 version
         #self.description = description
         #self.get_cover = get_cover
-        self.social_cover = social_cover
+        # self.social_cover = social_cover
         #self.template = template
 
         # Mag v2 version
-        self.description = kwargs['description'] if kwargs['description'] is not None else "Default description"
-        self.get_cover = kwargs['get_cover'] if kwargs['get_cover'] is not None else "ubyssey/images/magazine/2020/cover.png"
+        # self.description = kwargs['description'] if kwargs['description'] is not None else "Default description"
+        # self.get_cover = kwargs['get_cover'] if kwargs['get_cover'] is not None else "ubyssey/images/magazine/2020/cover.png"
         # self.template = kwargs['template'] if kwargs['template'] is not None else
-        self.section1_name = section1_name
-        self.section2_name = section2_name
-        self.section3_name = section3_name
-        self.section1_img = section1_img
-        self.section2_img = section2_img
-        self.section3_img = section3_img
+        # self.section1_name = section1_name
+        # self.section2_name = section2_name
+        # self.section3_name = section3_name
+        # self.section1_img = section1_img
+        # self.section2_img = section2_img
+        # self.section3_img = section3_img
+        return super().setup(request, *args, **kwargs)        
 
     def get_template_names(self):        
         template_name = 'magazine/' + self.year + '/landing.html' # self.year should have defaulted to 2021
