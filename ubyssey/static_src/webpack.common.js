@@ -15,7 +15,8 @@ module.exports = {
       'guide-2020':       './src/js/guide-2020.js',
       'magazine-2019':    './src/js/magazine-2019.js',
       'magazine-2020':    './src/js/magazine-2020.js',
-      blockadblock:       './src/js/blockadblock.js'
+      'magazine-2021':    './src/js/magazine-2021.js',      
+      blockadblock:       './src/js/blockadblock.js'      
   },
   output: {
       path: path.join(__dirname, '..', 'static/ubyssey/js'),
