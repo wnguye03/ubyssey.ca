@@ -2,7 +2,7 @@ import React from "react"
 import ArticleBox from "./ArticleBox.jsx"
 import Header from "./Header.jsx"
 import { editorial } from "./contents.js"
-import {colors} from "./colors.js"
+import { colors } from "./colors.js"
 
 // should match with css transisitions (ms)
 const fadeDelay = 500
@@ -82,10 +82,10 @@ class Magazine extends React.Component {
   renderSubsection() {
     const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
     const show = this.state.show ? "show" : ""
-    if(this.state.subsection === "editorial") this.image = null
-    if(this.state.subsection === "goesAround") this.image = this.props.section1Image
-    if(this.state.subsection === "comesAround") this.image = this.props.section2Image
-    if(this.state.subsection === "waysForward") this.image = this.props.section3Image
+    if (this.state.subsection === "editorial") this.image = null
+    if (this.state.subsection === "goesAround") this.image = this.props.section1Image
+    if (this.state.subsection === "comesAround") this.image = this.props.section2Image
+    if (this.state.subsection === "waysForward") this.image = this.props.section3Image
 
     return (
       <div className={`article-grid-wrapper ${slideUp}`}>
@@ -103,39 +103,39 @@ class Magazine extends React.Component {
           <div className={`subsection-container ${show}`}>
             <div className="subsection-image" style={{ backgroundImage: `url(${this.image})` }}>
               {this.state.subsection === 'editorial' && this.renderCredits()}
-              {this.state.subsection !== 'editorial' && 
-                <div className={`subsection-image-text ${this.state.subsection}`}> 
-                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
+              {this.state.subsection !== 'editorial' &&
+                <div className={`subsection-image-text ${this.state.subsection}`}>
+                  {!this.state.isDesktop && <div className="scroll-show"><i className="down" /><i className="down" /></div>}
                   {this.state.subsection}
-                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
+                  {!this.state.isDesktop && <div className="scroll-show"><i className="down" /><i className="down" /></div>}
                 </div>
               }
             </div>
 
-            <div className="article-grid-scroll"> 
-            {this.state.subsection === 'editorial' && 
-              <div className="editorial-content">
-                <div className="title">{editorial.title}</div>
-                {editorial.paragraphs.map((paragraph) => {
-                  return <p>{paragraph}</p>
-                })}
-              </div>
-            }
-            {this.state.subsection !== 'editorial' && 
-              <div className="article-grid-container">
-                {this.state.subsection !== 'editorial' && this.props.articles[this.state.subsection].map((box, index) => {
-                  return (
-                    <ArticleBox
-                      index={index}
-                      subsection={this.state.subsection}
-                      transition={this.state.transition}
-                      url={box.url}
-                      image={box.featured_image}
-                      headline={box.headline}
-                    />
-                  )
-                })}
-              </div>
+            <div className="article-grid-scroll">
+              {this.state.subsection === 'editorial' &&
+                <div className="editorial-content">
+                  <div className="title">{editorial.title}</div>
+                  {editorial.paragraphs.map((paragraph) => {
+                    return <p>{paragraph}</p>
+                  })}
+                </div>
+              }
+              {this.state.subsection !== 'editorial' &&
+                <div className="article-grid-container">
+                  {this.state.subsection !== 'editorial' && this.props.articles[this.state.subsection].map((box, index) => {
+                    return (
+                      <ArticleBox
+                        index={index}
+                        subsection={this.state.subsection}
+                        transition={this.state.transition}
+                        url={box.url}
+                        image={box.featured_image}
+                        headline={box.headline}
+                      />
+                    )
+                  })}
+                </div>
               }
               <footer className="c-footer u-container u-container--extra-large">
                 <div className="c-footer__left"><a className="o-link" href="">The Ubyssey Magazine</a></div>
