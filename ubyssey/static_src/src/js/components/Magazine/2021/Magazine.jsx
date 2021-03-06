@@ -1,210 +1,348 @@
-import React from "react"
-import ArticleBox from "./ArticleBox.jsx"
-import Header from "./Header.jsx"
-import { editorial } from "./contents.js"
-import {colors} from "./colors.js"
+import React, { Component } from 'react'
+import SideBar from './sideBar'
+import Editorial from './editorial'
+import MemoryLeak from './memoryLeak'
+import SegFault from './segFault'
+import SystemFailure from './systemFailure'
 
-// should match with css transisitions (ms)
-const fadeDelay = 500
-// view width (px)
-const desktopSize = 960
+export default class Magazine extends Component {
+    state = {
+        menu_clicked: false,
+        section: "editorial",
+        section_display: "Editorial",
+        memoryLeak_right: true,
+        segFault_right: true,
+        systemFailure_right: true,
 
-class Magazine extends React.Component {
-  constructor(props) {
-    super(props)
-    this.subsections = ["editorial"].concat(Object.keys(this.props.articles))
-    this.state = {
-      subsection: null,
-      nextSubsection: null,
-      transition: false,
-      isDesktop: true,
-      show: false,
+
+        pre_memoryLeak_right: '',
+        pre_segFault_right: '',
+        pre_systemFailure_right: '',
+
     }
-  }
 
-  componentDidMount() {
-    window.addEventListener("resize", () => {
-      this.updateSize()
-    })
-    this.updateSize()
-  }
 
-  componentDidUpdate() {
-    if (!this.state.show) {
-      setTimeout(() => {
-        this.setState({
-          show: true,
-        })
-      }, 100)
+    menu_clicked = () => {
+        this.setState({ menu_clicked: !this.state.menu_clicked })
     }
-  }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", () => {
-      this.updateSize()
-    })
-  }
+    dropdown_clicked = (section_display) => {
+        this.setState({ section_display: section_display })
+    }
 
-  updateSize() {
-    this.setState({
-      isDesktop: document.body.clientWidth > desktopSize,
-    })
-  }
 
-  selectSubsection(subsection) {
-    this.setState(
-      {
-        transition: true, //hide
-        nextSubsection: subsection,
-      },
-      () => {
-        if (!this.state.nextSubsection) {
-          window.scrollTo(0, 0, "smooth")
+    nav_clicked = (section) => {
+        if (section === 'System_failure') {
+
+            if (!this.state.memoryLeak_right && this.state.systemFailure_right) {
+
+                //moving 'System_failure' nav to the left will show System failure section
+                this.setState(prevState => ({
+                    section_display: 'System_failure',
+                    section: section,
+                    systemFailure_right: false,
+                    segFault_right: false,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+
+                }))
+            } else if (!this.state.segFault_right && this.state.systemFailure_right) {
+
+                //moving 'System_failure' nav to the left will show System failure section
+                this.setState(prevState => ({
+                    section_display: 'System_failure',
+                    section: section,
+                    systemFailure_right: false,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            } else if (!this.state.systemFailure_right && !this.state.memoryLeak_right && !this.state.segFault_right) {
+
+                //moving 'System_failure' nav to the right will show Seg Fault section
+                this.setState(prevState => ({
+                    section_display: 'Seg_fault',
+                    section: section,
+                    systemFailure_right: true,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+            }
+            else {
+                //moving all navs to the left
+                this.setState(prevState => ({
+                    section_display: 'System_failure',
+                    section: section,
+                    systemFailure_right: false,
+                    segFault_right: false,
+                    memoryLeak_right: false,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+            }
+
+        } else if (section === 'Seg_fault') {
+            if (this.state.segFault_right & this.state.memoryLeak_right & this.state.systemFailure_right) {
+
+                //Moving 'Seg_fault' from the right to the left will show 'Seg_fault'
+                this.setState(prevState => ({
+                    section_display: 'Seg_fault',
+                    section: section,
+                    segFault_right: !this.state.segFault_right,
+                    memoryLeak_right: !this.state.memoryLeak_right,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+            }
+
+            else if (this.state.segFault_right & !this.state.memoryLeak_right) {
+                //Moving 'Seg_fault' from the right to the left will show 'Seg_fault'
+                this.setState(prevState => ({
+                    section_display: 'Seg_fault',
+                    section: section,
+                    segFault_right: !this.state.segFault_right,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+            }
+            else if (!this.state.segFault_right && this.state.systemFailure_right) {
+
+                //Moving 'Seg_fault' from the left to the right will show 'Memory Leak'
+                this.setState(prevState => ({
+                    section_display: 'Memory_leak',
+                    section: section,
+                    segFault_right: !this.state.segFault_right,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            } else if (!this.state.segFault_right && !this.state.systemFailure_right) {
+                //Moving 'Seg_fault' from the left to the right will show 'Memory Leak'
+                this.setState(prevState => ({
+                    section_display: 'Memory_leak',
+                    section: section,
+                    segFault_right: !this.state.segFault_right,
+                    systemFailure_right: !this.state.systemFailure_right,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            }
+
+        } else if (section === 'Memory_leak') {
+            if (this.state.memoryLeak_right) {
+                //Moving 'Memory leak' from the right to the left will show 'Memory Leak'
+                this.setState(prevState => ({
+                    section_display: 'Memory_leak',
+                    section: section,
+                    memoryLeak_right: false,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            } else if (this.state.segFault_right && this.state.systemFailure_right) {
+                //Moving 'Memory leak' from the left to the right will show 'Editorial'
+                this.setState(prevState => ({
+                    section_display: 'Editorial',
+                    section: section,
+                    memoryLeak_right: true,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            } else if (this.state.systemFailure_right) {
+                //Moving 'Memory leak' from the left to the right will show 'Editorial'
+                this.setState(prevState => ({
+                    section_display: 'Editorial',
+                    section: section,
+                    memoryLeak_right: true,
+                    segFault_right: true,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            }
+            else {
+                //Moving all nav from the left to the right will show 'Editorial'
+                this.setState(prevState => ({
+                    section_display: 'Editorial',
+                    section: section,
+                    systemFailure_right: !this.state.systemFailure_right,
+                    segFault_right: !this.state.segFault_right,
+                    memoryLeak_right: !this.state.memoryLeak_right,
+                    pre_memoryLeak_right: prevState.memoryLeak_right,
+                    pre_segFault_right: prevState.segFault_right,
+                    pre_systemFailure_right: prevState.systemFailure_right,
+                }))
+
+            }
+
         }
-        setTimeout(() => {
-          this.setState(
-            {
-              subsection: this.state.nextSubsection,
-            },
-            () => {
-              setTimeout(() => {
-                this.setState({
-                  transition: false, //show
-                })
-              }, 10)
+
+    }
+
+    nav_position = (animation1, animation2, animation3, nav1, nav2, nav3) => {
+        return (
+            <ul className="nav">
+
+                <li className={`${nav1} ${animation1}`} onClick={() => this.nav_clicked('Memory_leak')} style={{ color: 'white' }}> <h3>MEMORY LEAK</h3></li>
+
+                <li className={`${nav2} ${animation2}`} onClick={() => this.nav_clicked('Seg_fault')} style={{ color: 'white' }}> <h3>SEG FAULT </h3> </li>
+
+                <li className={`${nav3} ${animation3}`} onClick={() => this.nav_clicked('System_failure')} style={{ color: 'white' }}> <h3>SYSTEM FAILURE</h3></li>
+
+            </ul>
+        )
+
+    }
+
+
+    nav_render = () => {
+
+        if (this.state.section === 'editorial') {
+            return (
+                this.nav_position(" ", " ", " ", "nav1_right", "nav2_right", "nav3_right")
+            )
+        }
+
+        if (this.state.section === 'editorial2') {
+            return (
+                this.nav_position("animation_right1 ", "animation_right2", "animation_right3", "nav1_left", "nav2_left", "nav3_left")
+            )
+        }
+
+
+        if (this.state.section === 'System_failure') {
+
+            if (!this.state.systemFailure_right) {
+
+                if (this.state.pre_memoryLeak_right && this.state.pre_segFault_right && this.state.pre_systemFailure_right) {
+                    return (
+                        this.nav_position("animation_left1", "animation_left2", "animation_left3", "nav1_right", "nav2_right", "nav3_right")
+                    )
+                } else if (this.state.pre_segFault_right && this.state.pre_systemFailure_right) {
+                    return (
+                        this.nav_position(" ", "animation_left2", "animation_left3", "nav1_left", "nav2_right", "nav3_right")
+                    )
+                } else if (this.state.pre_systemFailure_right) {
+                    return (
+                        this.nav_position(" ", " ", "animation_left3", "nav1_left", "nav2_left", "nav3_right")
+                    )
+
+                }
             }
-          )
-        }, fadeDelay)
-      }
-    )
-  }
-
-  renderSubsection() {
-    const slideUp = (this.state.transition && !this.state.subsection) || this.state.subsection ? "slide-up" : " "
-    const show = this.state.show ? "show" : ""
-    if(this.state.subsection === "editorial") this.image = null
-    if(this.state.subsection === "goesAround") this.image = this.props.section1Image
-    if(this.state.subsection === "comesAround") this.image = this.props.section2Image
-    if(this.state.subsection === "waysForward") this.image = this.props.section3Image
-
-    return (
-      <div className={`article-grid-wrapper ${slideUp}`}>
-        <Header
-          subsections={this.subsections}
-          title={this.props.title}
-          nextSubsection={this.state.nextSubsection}
-          transition={this.state.transition}
-          selected={this.state.subsection}
-          isDesktop={this.state.isDesktop}
-          selectSubsection={(subsection) => this.selectSubsection(subsection)}
-        />
-
-        {this.state.subsection && (
-          <div className={`subsection-container ${show}`}>
-            <div className="subsection-image" style={{ backgroundImage: `url(${this.image})` }}>
-              {this.state.subsection === 'editorial' && this.renderCredits()}
-              {this.state.subsection !== 'editorial' && 
-                <div className={`subsection-image-text ${this.state.subsection}`}> 
-                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
-                  {this.state.subsection}
-                  {!this.state.isDesktop && <div className="scroll-show"><i className="down"/><i className="down"/></div>}
-                </div>
-              }
-            </div>
-
-            <div className="article-grid-scroll"> 
-            {this.state.subsection === 'editorial' && 
-              <div className="editorial-content">
-                <div className="title">{editorial.title}</div>
-                {editorial.paragraphs.map((paragraph) => {
-                  return <p>{paragraph}</p>
-                })}
-              </div>
+            if (this.state.systemFailure_right) {
+                return (
+                    this.nav_position("", "", "animation_right3", "nav1_left", "nav2_left", "nav3_left")
+                )
             }
-            {this.state.subsection !== 'editorial' && 
-              <div className="article-grid-container">
-                {this.state.subsection !== 'editorial' && this.props.articles[this.state.subsection].map((box, index) => {
-                  return (
-                    <ArticleBox
-                      index={index}
-                      subsection={this.state.subsection}
-                      transition={this.state.transition}
-                      url={box.url}
-                      image={box.featured_image}
-                      headline={box.headline}
-                    />
-                  )
-                })}
-              </div>
-              }
-              <footer className="c-footer u-container u-container--extra-large">
-                <div className="c-footer__left"><a className="o-link" href="">The Ubyssey Magazine</a></div>
-                <div className="c-footer__center">&copy; The Ubyssey</div>
-                <div className="c-footer__right"><a className="o-link" href="https://www.ubyssey.ca/">Back to ubyssey.ca</a></div>
-              </footer>
+
+        }
+
+
+
+
+        else if (this.state.section === 'Seg_fault') {
+
+            if (!this.state.segFault_right) {
+                if (this.state.pre_memoryLeak_right && this.state.pre_systemFailure_right && this.state.pre_segFault_right) {
+
+                    return (this.nav_position("animation_left1", "animation_left2", " ", "nav1_right", "nav2_right", "nav3_right"))
+                }
+                else {
+                    return (
+                        this.nav_position(" ", "animation_left2", "", "nav1_left", "nav2_right", "nav3_right")
+                    )
+                }
+            }
+
+            if (this.state.segFault_right) {
+                if (!this.state.pre_memoryLeak_right && !this.state.pre_systemFailure_right && !this.state.pre_systemFailure_right) {
+                    return (this.nav_position(" ", "animation_right2", "animation_right3", "nav1_left", "nav2_left", "nav3_right"))
+                } else {
+                    return (
+                        this.nav_position(" ", "animation_right2", "", "nav1_left", "nav2_left", "nav3_right")
+                    )
+                }
+
+            }
+        }
+
+
+        else if (this.state.section === 'Memory_leak') {
+
+            if (!this.state.memoryLeak_right) {
+                return (
+                    this.nav_position("animation_left1", "", "", "nav1_right", "nav2_right", "nav3_right")
+                )
+            }
+
+
+            else if (this.state.memoryLeak_right) {
+
+                if (!this.state.pre_memoryLeak_right && !this.state.pre_segFault_right && !this.state.pre_systemFailure_right) {
+
+                    return (this.nav_position("animation_right1 ", "animation_right2", "animation_right3", "nav1_left", "nav2_left", "nav3_left"))
+
+                } else if (!this.state.pre_memoryLeak_right && !this.state.pre_segFault_right) {
+
+                    return (this.nav_position("animation_right1", "animation_right2", " ", "nav1_left", "nav2_left", "nav3_right"))
+
+                } else if (!this.state.pre_memoryLeak_right) {
+
+                    return (this.nav_position("animation_right1", " ", "", "nav1_left", "nav2_right", "nav3_right"))
+                }
+
+            }
+        }
+
+
+    }
+
+
+    render() {
+
+        const nav = this.nav_render()
+
+        return (
+
+            <div>
+                <h1 className="mag_title" style={{ color: 'white', fontSize: '70px' }}>SYSTEM REBOOT REQUIRED.</h1>
+
+                <div className="horizontal_line"></div>
+
+                <button className="menu_button" onClick={() => this.menu_clicked()}>Menu</button>
+
+                <SideBar click={this.state.menu_clicked} menu_clicked={this.menu_clicked} dropdown_clicked={this.dropdown_clicked} />
+
+                {nav}
+
+                {this.state.section_display === "Editorial" && <Editorial />}
+                {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} />}
+                {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} />}
+                {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} />}
+
+
+
             </div>
-          </div>
-        )}
-      </div>
-    )
-  }
+        )
+    }
 
-  renderCredits() {
-    return (
-      <div className="c-cover__credits">
-        <h1>Editor-in-Chief</h1>
-        <h2>Texas James</h2>
-        <h1>Visuals Editor</h1>
-        <h2>Alex Vanderput</h2>
-        <h1>Science Editor</h1>
-        <h2>Kevin Jiang</h2>
-        <h1>Design Editor</h1>
-        <h2>Lua Presidio</h2>
-        <h1>News Editor</h1>
-        <h2>Bailey Martens</h2>
-        <h1>Culture Editor</h1>
-        <h2>Riya Talitha</h2>
-        <h1>Layout Editor</h1>
-        <h2>Ella Chan</h2>
-        <h1>Recreation Editor</h1>
-        <h2>Sarah Zhao</h2>
-        <h1>Personal Essay Editor</h1>
-        <h2>Sonia Pathak</h2>
-        <h1>Written Content Editors</h1>
-        <h2>Kevin Jiang</h2>
-        <h2>Bailey Martens</h2>
-        <h2>Riya Talitha</h2>
-        <h2>Sarah Zhao</h2>
-        <h2>Kevin Jiang</h2>
 
-        <h1>Web Design</h1>
-        <h2>Amelia He</h2>
-      </div>
-    )
-  }
 
-  renderCover() {
-    const background = { backgroundImage: `url(${this.props.cover})` }
-    return (
-      <div className="cover-photo-wrapper">
-        <div className="cover-photo-container" style={background}>
-          <div id="magazine-title">The Ubyssey Magazine</div>
-          <h1 className="c-cover__logo">{this.props.title}</h1>
-        </div>
-      </div>
-    )
-  }
 
-  render() {
-    const show = this.state.show ? "show" : ""
-    return (
-      <div className={`magazine-container ${show}`}>
-        {this.renderCover()}
-        {this.renderSubsection()}
-      </div>
-    )
-  }
+
+
+
 }
-
-export default Magazine
-

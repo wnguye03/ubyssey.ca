@@ -1,0 +1,232 @@
+.nav {
+    -webkit-writing-mode: vertical-rl;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  .nav li {
+    width: 2.5em;
+    z-index: 100;
+  }
+  
+  .nav li:hover {
+    cursor: default;
+  }
+  
+  .nav1_right {
+    position: fixed;
+    top: 200px;
+    left: 91%;
+    bottom: 0;
+    background-color: #ff534a;
+  }
+  
+  .nav2_right {
+    background-color: #a39ef8;
+    position: fixed;
+    top: 200px;
+    left: 94.5%;
+    bottom: 0;
+  }
+  
+  .nav3_right {
+    background-color: #2b806e;
+    position: fixed;
+    top: 200px;
+    left: 98%;
+    bottom: 0;
+  }
+  
+  .nav1_left {
+    position: fixed;
+    top: 200px;
+    left: 0%;
+    bottom: 0;
+    background-color: #ff534a;
+  }
+  
+  .nav2_left {
+    background-color: #a39ef8;
+    position: fixed;
+    top: 200px;
+    left: 3.2%;
+    bottom: 0;
+  }
+  
+  .nav3_left {
+    background-color: #2b806e;
+    position: fixed;
+    top: 200px;
+    left: 6.4%;
+    bottom: 0;
+  }
+  
+  .animation_left1 {
+    animation: sampleanimation_l1 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_l1 {
+    0% {
+      left: 91%;
+      top: 200px;
+    }
+    25% {
+      left: 1000px;
+      top: 200px;
+    }
+    50% {
+      left: 700px;
+      top: 200px;
+    }
+    75% {
+      left: 400px;
+      top: 200px;
+    }
+    100% {
+      left: 0%;
+      top: 200px;
+    }
+  }
+  
+  .animation_left2 {
+    animation: sampleanimation_l2 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_l2 {
+    0% {
+      left: 94.5%;
+      top: 200px;
+    }
+    25% {
+      left: 1040px;
+      top: 200px;
+    }
+    50% {
+      left: 740px;
+      top: 200px;
+    }
+    75% {
+      left: 440px;
+      top: 200px;
+    }
+    100% {
+      left: 3.2%;
+      top: 200px;
+    }
+  }
+  
+  .animation_left3 {
+    animation: sampleanimation_l3 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_l3 {
+    0% {
+      left: 98%;
+      top: 200px;
+    }
+    25% {
+      left: 1080px;
+      top: 200px;
+    }
+    50% {
+      left: 780px;
+      top: 200px;
+    }
+    75% {
+      left: 480px;
+      top: 200px;
+    }
+    100% {
+      left: 6.4%;
+      top: 200px;
+    }
+  }
+  
+  .animation_right1 {
+    animation: sampleanimation_r1 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_r1 {
+    0% {
+      left: 50px;
+      top: 200px;
+    }
+    25% {
+      left: 400px;
+      top: 200px;
+    }
+    50% {
+      left: 700px;
+      top: 200px;
+    }
+    75% {
+      left: 1000px;
+      top: 200px;
+    }
+    100% {
+      left: 91%;
+      top: 200px;
+    }
+  }
+  
+  .animation_right2 {
+    animation: sampleanimation_r2 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_r2 {
+    0% {
+      left: 90px;
+      top: 200px;
+    }
+    25% {
+      left: 440px;
+      top: 200px;
+    }
+    50% {
+      left: 740px;
+      top: 200px;
+    }
+    75% {
+      left: 1040px;
+      top: 200px;
+    }
+    100% {
+      left: 94.5%;
+      top: 200px;
+    }
+  }
+  
+  .animation_right3 {
+    animation: sampleanimation_r3 linear 0.65s forwards;
+  }
+  
+  @keyframes sampleanimation_r3 {
+    0% {
+      left: 130px;
+      top: 200px;
+    }
+    25% {
+      left: 480px;
+      top: 200px;
+    }
+    50% {
+      left: 780px;
+      top: 200px;
+    }
+    75% {
+      left: 1080px;
+      top: 200px;
+    }
+    100% {
+      left: 98%;
+      top: 200px;
+    }
+  }
+  
+  @media only screen and (max-width: 1050px) {
+    .nav {
+      display: none;
+    }
+  }
