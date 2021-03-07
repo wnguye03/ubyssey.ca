@@ -12,7 +12,7 @@ from ubyssey.views.main import ads_txt, UbysseyTheme, HomePageView, ArticleView,
 from ubyssey.views.guide import guide2016, GuideArticleView, GuideLandingView
 
 from ubyssey.views.advertise import AdvertiseTheme
-from ubyssey.views.magazine import magazine
+from ubyssey.views.magazine import magazine, MagazineLandingView, MagazineArticleView
 
 from ubyssey.zones import *
 from ubyssey.widgets import *
@@ -78,9 +78,13 @@ urlpatterns += [
     re_path(r'^guide/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/(?P<slug>[-\w]+)/$', GuideArticleView.as_view(), name='guide-article'),
 
     # Magazine
-    # TODO: REFACTOR THESE VIEWS, figure out where there are broken URLs
     re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),
     re_path(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
+
+    # Magazine new
+    re_path(r'^mag/(?P<year>[0-9]{4})/$', MagazineLandingView.as_view(), name='mag-landing'),
+    re_path(r'^mag/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/$', MagazineLandingView.as_view(), name='mag-landing-sub'),
+    re_path(r'^mag/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/(?P<slug>[-\w]+)/$', MagazineArticleView.as_view(), name='mag-article'),
 
     # Advertising
     re_path(r'^advertise/$', advertise.new, name='advertise-new'),
