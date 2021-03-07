@@ -158,6 +158,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'ubyssey.events',
     'django_user_agents',
+    'django.contrib.admin',
 ]
 
 if DEBUG:
