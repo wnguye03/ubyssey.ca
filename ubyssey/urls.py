@@ -46,7 +46,7 @@ urlpatterns += [
     # path('cms/', include(wagtailadmin_urls)),
     # path('documents/', include(wagtaildocs_urls)),
     # path('pages/', include(wagtail_urls)),
-    re_path(r'^djadmin', admin.site.urls),
+    re_path(r'^djadmin/', admin.site.urls),
     re_path(r'^admin', include(admin_urls)),
     re_path(r'^api/', include(api_urls)),
     re_path(r'^podcasts/', include(podcasts_urls)),
