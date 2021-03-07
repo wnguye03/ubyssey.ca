@@ -4,9 +4,11 @@ import Editorial from './editorial'
 import MemoryLeak from './memoryLeak'
 import SegFault from './segFault'
 import SystemFailure from './systemFailure'
+import Loading from './loading'
 
 export default class Magazine extends Component {
     state = {
+        isloading: true,
         menu_clicked: false,
         section: "editorial",
         section_display: "Editorial",
@@ -18,6 +20,18 @@ export default class Magazine extends Component {
         pre_memoryLeak_right: '',
         pre_segFault_right: '',
         pre_systemFailure_right: '',
+
+    }
+
+    componentDidMount() {
+
+        setTimeout(
+            function () {
+                this.setState({ isloading: false });
+            }
+                .bind(this),
+            2000
+        );
 
     }
 
@@ -316,26 +330,27 @@ export default class Magazine extends Component {
         const nav = this.nav_render()
 
         return (
+            this.state.isloading ? <Loading /> :
 
-            <div>
-                <h1 className="mag_title" style={{ color: 'white', fontSize: '70px' }}>SYSTEM REBOOT REQUIRED.</h1>
+                <div>
+                    <h1 className="mag_title" style={{ color: 'white', fontSize: '70px' }}>SYSTEM REBOOT REQUIRED.</h1>
 
-                <div className="horizontal_line"></div>
+                    <div className="horizontal_line"></div>
 
-                <button className="menu_button" onClick={() => this.menu_clicked()}>Menu</button>
+                    <button className="menu_button" onClick={() => this.menu_clicked()}>Menu</button>
 
-                <SideBar click={this.state.menu_clicked} menu_clicked={this.menu_clicked} dropdown_clicked={this.dropdown_clicked} />
+                    <SideBar click={this.state.menu_clicked} menu_clicked={this.menu_clicked} dropdown_clicked={this.dropdown_clicked} />
 
-                {nav}
+                    {nav}
 
-                {this.state.section_display === "Editorial" && <Editorial />}
-                {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} />}
-                {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} />}
-                {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} />}
+                    {this.state.section_display === "Editorial" && <Editorial />}
+                    {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} />}
+                    {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} />}
+                    {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} />}
 
 
 
-            </div>
+                </div>
         )
     }
 

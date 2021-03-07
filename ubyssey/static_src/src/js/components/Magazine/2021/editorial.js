@@ -12,7 +12,7 @@ export default class editorial extends Component {
 
                         <div className="box1" >
 
-                            {/*<img  src={Dog}/> */}
+                            <img src={'https://storage.googleapis.com/ubyssey/images/Memory_Leak_Move.gif'} />
 
 
                         </div>
@@ -84,7 +84,7 @@ export default class editorial extends Component {
 
                         <div className="box4">
 
-                            {/*<img  src={Dog}/> */}
+                            <img src={'https://storage.googleapis.com/ubyssey/images/Untitled_Artwork.gif'} />
 
 
                         </div>

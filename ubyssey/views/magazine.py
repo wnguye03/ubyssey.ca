@@ -57,6 +57,7 @@ class Magazine(object):
     
     def article(self, request, article):
         """Magazine article page view."""
+       
 
         subsection = article.subsection.name.lower() if article.subsection else ""
 
@@ -133,10 +134,12 @@ class MagazineV2(Magazine):
         self.section3_img = section3_img
 
     def landing(self, request, year=None):
-        """Magazine landing page view."""
 
+        """Magazine landing page view."""
+        print(self.year)
         # Get all 2019 magazine articles
         articles = Article.objects.select_related('section', 'subsection').filter(is_published=True, section__slug='magazine', tags__name=self.year).order_by('-importance')
+        print(articles)
         section1 = [] 
         section2 = [] 
         section3 = []
@@ -152,6 +155,8 @@ class MagazineV2(Magazine):
                 'color': color
             }
 
+            print(article.subsection)
+
             if article.subsection:
                 if article.subsection.slug == self.section1_name:
                     section1.append(temp.copy())
@@ -165,6 +170,8 @@ class MagazineV2(Magazine):
                 self.section2_name: section2,
                 self.section3_name: section3,
             })
+
+        print(articles)
 
         context = {
             'meta': {
@@ -239,9 +246,9 @@ mag2021 = MagazineV2(
     'ubyssey/images/magazine/2020/section1.png',
     'ubyssey/images/magazine/2020/section2.png',
     'ubyssey/images/magazine/2020/section3.jpg',
-    'hello',
-    'comesAround',
-    'waysForward',
+    'memory_leak',
+    'seg_fault',
+    'system_failure',
 )
 
 magazine.add_magazine(mag2017)

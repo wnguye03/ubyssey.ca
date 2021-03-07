@@ -145,11 +145,11 @@ $margin-size: 10px;
     grid-auto-rows: minmax(1.5vw, auto);
     grid-gap: 1.5em;
     margin-top: 50px;
-    margin-right: 100px;
+    margin-right: 80px;
   }
 
   .box1 {
-    grid-column-start: $normal-column-left-start + 1;
+    grid-column-start: $normal-column-left-start;
     grid-column-end: $normal-column-left-end;
     grid-row-start: $row-start;
     grid-row-end: $row-height300-end + 8;
