@@ -12,7 +12,7 @@ export default class systemFailure extends Component {
 
                         <div className="header_photo nested">
                             <div>
-                                <img className="photo_vertical" src={'https://storage.googleapis.com/ubyssey/images/Memory_Leak_Move.gif'} />
+                                <img className="photo_vertical" src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/Untitled_Artwork%203.gif'} />
                             </div>
                             <div className="overlay">
                                 <span> <h1>SYSTEM FAILURE </h1> </span>

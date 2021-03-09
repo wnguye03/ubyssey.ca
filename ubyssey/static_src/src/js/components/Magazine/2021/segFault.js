@@ -12,7 +12,7 @@ export default class segFault extends Component {
 
                         <div className="header_photo nested">
                             <div>
-                                <img className="photo_vertical" src={'https://storage.googleapis.com/ubyssey/images/Memory_Leak_Move.gif'} />
+                                <img className="photo_vertical" src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/untitled_artwork.gif'} />
                             </div>
                             <div className="overlay">
                                 <span> <h1>SEG FAULT </h1> </span>

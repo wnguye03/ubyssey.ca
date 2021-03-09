@@ -30,7 +30,7 @@ export default class Magazine extends Component {
                 this.setState({ isloading: false });
             }
                 .bind(this),
-            4000
+            1500
         );
 
     }

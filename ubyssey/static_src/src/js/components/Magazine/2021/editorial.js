@@ -12,7 +12,7 @@ export default class editorial extends Component {
 
                         <div className="box1" >
 
-                            <img src={'https://storage.googleapis.com/ubyssey/images/Memory_Leak_Move.gif'} />
+                            <img src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/CoverHome_Moving.gif'} />
 
 
                         </div>
@@ -92,7 +92,7 @@ export default class editorial extends Component {
 
                         <div className="box4">
 
-                            <img src={'https://storage.googleapis.com/ubyssey/images/Untitled_Artwork.gif'} />
+                            <img src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/Untitled_Artwork%202.gif'} />
 
 
                         </div>
