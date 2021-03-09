@@ -8,92 +8,27 @@ export default class segFault extends Component {
                 <div className="wrapper">
 
                     <div className="grid_container fade-in">
+                        {this.props.articles.map((article, index) => {
 
-                        <h1 style={{ color: 'white' }}>{this.props.title}</h1>
+                            return (
 
-                        <div className="article_1 nested one">
+                                <div className={`article_${index} nested one`}>
 
-                            <div>
-                                {/* <img className="photo_vertical" src={Dog} /> */}
+                                    <div>
+                                        <img className="photo_vertical" src={article.featured_image} />
 
-                            </div>
-                            <div> </div>
-                            <div className="card__overlay"> <span>Read More</span> </div>
-                        </div>
-
-                        <div className="article_2 nested two">
-
-
-                            <div className="img__wrap">
-                                {/* <img className="photo_vertical" src={Dog} /> */}
-
-                            </div>
+                                    </div>
+                                    <div> <h2 style={{ color: 'white' }}>{article.headline}</h2></div>
+                                    <div className="card__overlay"> <a href={article.url}> <span> Read More </span></a> </div>
+                                </div>
+                            )
 
 
-                            <div> </div>
-                            <div className="card__overlay"> <span>Read More</span> </div>
 
-                        </div>
-
-                        <div className="article_3 nested three">
-                            <div>
-                                {/* <img className="photo_vertical" src={Dog} /> */}
-
-                            </div>
-
-
-                            <div> </div>
-                            <div className="card__overlay"> <span>Read More</span> </div>
-
-
-                        </div>
-
-                        <div className="article_4 nested four">
-
-
-                            <div>
-                                {/* <img className="photo_vertical" src={Dog} /> */}
-
-                            </div>
-
-
-                            <div> </div>
-                            <div className="card__overlay"> <span>Read More</span> </div>
-                        </div>
-
-                        <div className="article_5 nested five">
-
-
-                            <div>
-                                {/* <img className="photo_vertical" src={Dog} /> */}
-
-                            </div>
-
-
-                            <div> </div>
-
-                            <div className="card__overlay"> <span>Read More</span> </div>
-
-                        </div>
-
-                        <div className="article_6 nested six">
-
-
-                            <div>
-                                {/* <img className="photo_vertical" src={Dog} /> */}
-
-                            </div>
-
-
-                            <div> </div>
-                            <div className="card__overlay"> <span>Read More</span> </div>
-
-
-                        </div>
-
-
+                        })}
 
                     </div>
+
                 </div>
 
 

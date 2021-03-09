@@ -23,9 +23,43 @@ $row-height400-end: 10;
 $row-height450-end: 11;
 
 $margin-size: 10px;
+
+
 @media (max-width: 760px) {
   $margin-size: 5px;
 }
+
+@font-face {
+  font-family: Azonix;
+  src: url("Azonix.otf");
+}
+
+h1 {
+  font-family: Azonix;
+}
+
+.mag_title{
+  margin-left: 0;
+}
+
+.editor_title h1{
+  margin-left: 0;
+}
+
+.editors p{
+  margin-top: 0;
+}
+
+.editor_name p{
+  margin-top: 0;
+
+}
+
+.editor_name h4{
+  margin-bottom: 0;
+
+}
+
 
 .home_wrapper {
   z-index: 1;

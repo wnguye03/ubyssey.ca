@@ -30,7 +30,7 @@ export default class Magazine extends Component {
                 this.setState({ isloading: false });
             }
                 .bind(this),
-            2000
+            4000
         );
 
     }
@@ -333,7 +333,7 @@ export default class Magazine extends Component {
             this.state.isloading ? <Loading /> :
 
                 <div>
-                    <h1 className="mag_title" style={{ color: 'white', fontSize: '70px' }}>SYSTEM REBOOT REQUIRED.</h1>
+                    <h1 className="mag_title" style={{ color: 'white', fontSize: '70px' }}>SYSTEM REBOOT REQUIRED. </h1>
 
                     <div className="horizontal_line"></div>
 
@@ -344,9 +344,14 @@ export default class Magazine extends Component {
                     {nav}
 
                     {this.state.section_display === "Editorial" && <Editorial />}
-                    {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} />}
-                    {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} />}
-                    {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} />}
+                    {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} articles={this.props.articles['memory_leak']} />}
+                    {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} articles={this.props.articles['seg_fault']} />}
+                    {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} articles={this.props.articles['system_failure']} />}
+
+
+                    <footer className="footer">
+                        <a style={{ color: 'white' }} href='https://www.ubyssey.ca/'> BACK TO UBYSSEY.CA</a>
+                    </footer>
 
 
 

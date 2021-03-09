@@ -26,17 +26,16 @@ export default class editorial extends Component {
                             </div>
 
                             <div className="editor_note">
-                                Lorem ipsum odor amet, consectetuer adipiscing elit. Penatibus arcu purus integer est gravida porta.
-                                Curabitur venenatis eleifend; netus pharetra conubia imperdiet. Fames leo vestibulum pellentesque congue tristique
-                                quam ligula ridiculus pharetra. Metus magnis tortor ultrices interdum consequat venenatis gravida. Inceptos parturient
-                                duis dapibus purus scelerisque. Vitae aptent dui ut vivamus eros. Conubia phasellus elementum justo nullam turpis est et.
 
-                                Lorem ipsum odor amet, consectetuer adipiscing elit. Hac semper ultrices eros ex ridiculus
-                                luctus magnis. Fames nisl venenatis consectetur lacus aliquet magna elit amet? Ut eu mattis
-                                sapien dictum volutpat. At gravida at parturient habitasse litora porttitor luctus velit. Enim ac
-                                commodo quam donec orci aenean parturient. Erat eget fringilla tempor, faucibus ad netus sagittis.
-                                Suscipit adipiscing eleifend eu maximus facilisi turpis elementum. Vulputate molestie ac dis faucibus
-                                sapien proin nisl in.
+                                <p>	The last year has been like no other. <br />Twelve months ago, when we left our classes, we didn’t know that we wouldn’t be returning.
+                                    The halls of our classes, the places we studied, partied and made memories — those places are empty. We’ve been spaced out, distanced and masked.  </p>
+                                <p> 	While the word ‘unprecedented’ may feel overused, the effects of COVID-19 have brought with it a litany of
+                                    seemingly unanswerable questions. What does it mean to be safe? What does it mean to be connected? Who is essential?</p>
+                                <p> 	Frankly, this year has given us more time to reflect on the truths that we hold to be self-evident, not just for ourselves but the systems that we live in.
+                                    But as we’ve held these truths up to a microscope for further examination, it hasn’t been pretty. There are more than just a few glitches in our system. </p>
+                                <p>This magazine will attempt to locate the bugs and attempt to answer the unanswerable. We’ll go back to the past,
+                                    take an uncomfortable seat in the present and even discuss what we need to create a better future. </p>
+                                <p> Creating systemic change is never easy. But in a year like this one, where we’ve all been affected and need a break from being online... maybe it’s a system reboot that’s required.</p>
 
                             </div>
 
@@ -55,28 +54,37 @@ export default class editorial extends Component {
 
                         <div className="box3">
                             <div className="editors">
+
                                 <h4>LUA PRESIDIO</h4>
-                                <p>design editor</p>
+                                <p>Visuals Coordinator</p>
+
                                 <h4>ELIZABETH WANG</h4>
-                                <p>visuals editor</p>
-                                <h4>RISSA CHUA</h4>
-                                <p>layout editor</p>
-                                <h4>OWEN GIBBS</h4>
-                                <p>policy and governance editor</p>
-                                <h4>SHEREEN LEE</h4>
-                                <p>policy and governance editor</p>
-                                <h4>ISAAC YOU</h4>
-                                <p>personal essay editor</p>
+                                <p>Visuals editor</p>
+
+                                <h4>RISSA KEI CHUA</h4>
+                                <p>Layout editor</p>
+
+                                <h4>TIANNE JENSEN-DESJARDINS</h4>
+                                <p>Culture and diversity</p>
+
                                 <h4>SOPHIA RUSSO</h4>
-                                <p>health editor</p>
-                                <h4>TIANNE JENSEN-DESJARDINS</h4>
-                                <p>culture and diversity</p>
-                                <h4>TIANNE JENSEN-DESJARDINS</h4>
-                                <p>culture and diversity</p>
+                                <p>Health editor</p>
+
+                                <h4>OWEN GIBBS</h4>
+                                <p>Policy and governance editor</p>
+
+                                <h4>SHEREEN LEE</h4>
+                                <p>Policy and governance editor</p>
+
+                                <h4>ISAAC YOU</h4>
+                                <p>Personal essay editor</p>
+
                                 <h4>SAMUEL LIN</h4>
-                                <p>web developer</p>
+                                <p>Web developer</p>
+
                                 <h4>KEEGAN L</h4>
-                                <p>web developer</p>
+                                <p>Web developer</p>
+
                             </div>
 
 

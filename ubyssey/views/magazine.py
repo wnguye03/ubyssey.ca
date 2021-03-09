@@ -295,6 +295,7 @@ class MagazineV2(Magazine):
         section3 = []
 
         for article in articles:
+            print(article)
             featuredImage = article.featured_image.image.get_medium_url() if article.featured_image is not None else None
             color = article.template_fields['color'] if 'color' in article.template_fields else None
             
@@ -305,7 +306,7 @@ class MagazineV2(Magazine):
                 'color': color
             }
 
-            print(article.subsection)
+           
 
             if article.subsection:
                 if article.subsection.slug == self.section1_name:
@@ -389,7 +390,7 @@ mag2020 = MagazineV2(
 
 mag2021 = MagazineV2(
     2021,
-    'The Ubyssey Magazine - Hot Mess',
+    'The Ubyssey Magazine - System Reboot Required',
 
     'The February 2021 issue of the Ubyssey magazine.',
     'ubyssey/images/magazine/2020/cover.png',
