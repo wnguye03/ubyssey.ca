@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'dispatch.apps.DispatchConfig',
     'newsletter.apps.NewsletterConfig',
+    'magazine.apps.MagazineConfig',
 
     # 'wagtail.contrib.forms',
     # 'wagtail.contrib.redirects',
@@ -158,6 +159,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'ubyssey.events',
     'django_user_agents',
+    'django.contrib.admin',
 ]
 
 if DEBUG:
@@ -194,6 +196,8 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },

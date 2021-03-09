@@ -8,11 +8,79 @@ from django.urls import reverse
 from django.templatetags.static import static
 from django_user_agents.utils import get_user_agent
 from django.db.models import F
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 
 from dispatch.models import Article, Tag
 
 import ubyssey
 from ubyssey.helpers import ArticleHelper
+from ubyssey.mixins import DispatchPublishableViewMixin,ArticleMixin
+
+class MagazineArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
+    SITE_TITLE = 'The Ubyssey Magazine'
+    model = Article
+
+    def setup(self, request, *args, **kwargs):
+        return super().setup(request, *args, **kwargs)
+
+    def get_template_names(self):
+        """
+        Lazily stolen from ArticleView in main.py
+        Returns a LIST of strings that represent template files (almost always HTML)
+
+        Because this is called during render_to_response(), but also appears earlier than get_queryset in the DetailView flowchart,
+        we use an if conditional to confirm whether the Article object has been queried and set
+        """
+        # This should be imitating and expanding upon the functionality that was here before:
+        #        t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
+        template_names = []
+        if self.object:
+            object_section_slug = str(self.object.section.slug)
+            object_template = str(self.object.get_template_path())
+            template_names += ['%s/%s' % (object_section_slug, object_template), object_template, 'article/default.html'] 
+        template_names += super().get_template_names()
+        return template_names
+
+    def get_context_data(self, **kwargs):
+        #init context with super()
+        context = super().get_context_data(**kwargs)
+
+        #specific values for context
+        context['title'] = '%s - %s' % (self.object.headline, self.SITE_TITLE)
+        # context['meta'] = self.object.get_meta(self.object, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
+        context['article'] = self.object
+        subsection = self.object.subsection.name.lower() if self.object.subsection else ""
+        context['subsection'] = 'subsection'
+        context['specific_css'] = 'ubyssey/css/magazine-' + str(self.year) + '.css'
+        context['year'] = self.year
+        context['suggested'] = ArticleHelper.get_random_articles(2, 'magazine', exclude=self.object.id)
+        context['base_template'] = 'magazine/base.html'
+        context['magazine_title'] = self.title
+        return context
+
+class MagazineLandingView(ListView):
+    model = Article
+
+    def setup(self, request, *args, **kwargs):
+        # Parent class version
+        self.year = kwargs['year'] if kwargs['year'] is not None else 2021
+        return super().setup(request, *args, **kwargs)        
+
+    def get_template_names(self):        
+        template_name = 'magazine/' + self.year + '/landing.html' # self.year should have defaulted to 2021
+        template_names = [template_name]
+        template_names += super().get_template_names()
+        return template_names
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=True, section__slug='magazine', tags__name=self.year).order_by('-importance')
+
+    def get_context_data(self, **kwargs):
+        #init context with super()
+        context = super().get_context_data(**kwargs)
+        return context
 
 class MagazineTheme(object):
 
@@ -36,11 +104,9 @@ class MagazineTheme(object):
     def article(self, request, slug=None):
         #TODO: tidy these remaining views up
         try:
-            article = ArticleHelper.get_article(request, slug)
+            article = Article.objects.filter(slug=slug, is_published=True).first()
         except:
-            raise Http404('Article could not be found.')
-
-        # Article.objects.filter(slug=slug, is_published=True).update(views=F('views')+1) #Not great, but this whole view is bad and is mostly sloppy legacy code
+            raise Http404('Article could not be found. Keegan wuz here')
 
         year = article.tags.get(name__icontains="20").name
 
@@ -63,6 +129,7 @@ class Magazine(object):
         subsection = article.subsection.name.lower() if article.subsection else ""
 
         # determine if user is viewing from mobile
+        # Also handled by ArticleView in get context. Thus we can and should remove it
         article_type = 'desktop'
         user_agent = get_user_agent(request)
         if user_agent.is_mobile:
@@ -73,7 +140,7 @@ class Magazine(object):
 
         #TODO: Fix hardcoding on default_image; no good available default
         context = {
-            'title': '%s - %s' % (article.headline, self.SITE_TITLE),
+            'title': '%s - %s' % (article.headline, self.SITE_TITLE), # normal stuff, replicated just fine
             'meta': ArticleHelper.get_meta(article, default_image=static('ubyssey/images/magazine/2017/cover-social.png')),
             'article': article,
             'subsection': subsection,
@@ -87,7 +154,6 @@ class Magazine(object):
         t = loader.select_template(['%s/%s' % (article.section.slug, article.get_template_path()), article.get_template_path()])
 
         return HttpResponse(t.render(context))
-
 
 class MagazineV1(Magazine):
     """View type 1 for The Ubyssey Magazine 2017 2018 microsite."""
@@ -162,7 +228,7 @@ class MagazineV2(Magazine):
                 elif article.subsection.slug == self.section3_name:
                     section3.append(temp.copy())
 
-        articles = json.dumps({
+        json_articles = json.dumps({
                 self.section1_name: section1,
                 self.section2_name: section2,
                 self.section3_name: section3,
@@ -180,7 +246,7 @@ class MagazineV2(Magazine):
             'section1Image': self.section1_img,
             'section2Image': self.section2_img,
             'section3Image': self.section3_img,
-            'articles': articles
+            'json_articles': json_articles
         }
         return render(request, self.template, context)
 
@@ -232,7 +298,21 @@ mag2020 = MagazineV2(
     'waysForward',
 )
 
+mag2021 = MagazineV2(
+    2021,
+    'The Ubyssey Magazine - Hot Mess',
+    'The February 2021 issue of the Ubyssey magazine.',
+    'ubyssey/images/magazine/2020/cover.png',
+    'magazine/2021/landing.html',
+    'ubyssey/images/magazine/2020/section1.png',
+    'ubyssey/images/magazine/2020/section2.png',
+    'ubyssey/images/magazine/2020/section3.jpg',
+    'hello',
+    'comesAround',
+    'waysForward',
+)
 magazine.add_magazine(mag2017)
 magazine.add_magazine(mag2018)
 magazine.add_magazine(mag2019)
 magazine.add_magazine(mag2020)
+magazine.add_magazine(mag2021)
