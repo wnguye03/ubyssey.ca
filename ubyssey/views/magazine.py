@@ -207,6 +207,8 @@ class Magazine(object):
     
     def article(self, request, article):
         """Magazine article page view."""
+
+        print(self.year)
        
 
         subsection = article.subsection.name.lower() if article.subsection else ""
