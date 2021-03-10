@@ -312,9 +312,9 @@ mag2021 = MagazineV2(
     'ubyssey/images/magazine/2020/section1.png',
     'ubyssey/images/magazine/2020/section2.png',
     'ubyssey/images/magazine/2020/section3.jpg',
-    'memory_leak',
-    'seg_fault',
-    'system_failure',
+    'Memory-Leak',
+    'Seg-Fault',
+    'System-Failure',
 )
 magazine.add_magazine(mag2017)
 magazine.add_magazine(mag2018)
