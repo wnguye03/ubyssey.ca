@@ -174,11 +174,14 @@ class ArticleHelper(object):
         return False
 
     @staticmethod
-    def get_random_articles(n, section, exclude=None):
+    def get_random_articles(n, section, tag_name=None, exclude=None):
         """Returns `n` random articles from the given section."""
 
         # Get all articles in section
         queryset = Article.objects.filter(is_published=True, section__slug=section)
+        
+        if tag_name is not None:
+            queryset = queryset.filter(tags__name=tag_name)
 
         # Exclude article (optional)
         if exclude:
