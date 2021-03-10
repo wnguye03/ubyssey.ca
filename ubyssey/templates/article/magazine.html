@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  {% include 'magazine/header.html' with title=magazine_title color=article.template_fields.color subsection=subsection%}
+  {% include 'magazine/header.html' with title=magazine_title color=article.template_fields.color subsection=subsection %}
 
   <article class="c-article c-article--{{ article.template_fields.color }} c-article--{{ article.template_fields.display }} c-article--{{ subsection }}">
     <div class="u-container u-container--small">
@@ -32,6 +32,19 @@
       <div class="c-article__body">{{ article.html|safe }}</div>
     </div>
 
+
+    
+
+ 
+   
+ 
+  
+    
+
+
+ 
+    {% if year < 2021%}
+    
     <div class="c-article__suggested u-container u-container--large">
       {% for a in suggested %}
       <a class="o-article-box {{subsection}} o-article-box--{{ a.template_fields.color }}" href="{{ a.get_absolute_url }}" style="background-image: url('{{ a.featured_image.image.get_medium_url }}');">
@@ -39,6 +52,8 @@
       </a>
       {% endfor %}
     </div>
+
+     {% endif %}
 
     <div class="c-article__explore u-container u-container--small">
       <a href="{% url 'magazine-landing' year %}">Explore the magazine</a>
