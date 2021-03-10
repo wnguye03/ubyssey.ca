@@ -22,12 +22,17 @@ h1{
 
  h2 , h3 , h4, p {
     margin: 1rem;
-    font-family: "montserrat";
+    font-family: 'Azonix';
+}
+p{
+  font-family: "montserrat";
+
 }
 
 
   
   .footer {
+    font-family: 'Azonix';
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,3 +52,19 @@ h1{
   }
 
 
+
+  .c-article {
+    color: white;
+  }
+
+  .c-header a{
+    color: white;
+
+  }
+
+  .u-container--small{
+    max-width: 890px;
+  }
+
+  
+  
