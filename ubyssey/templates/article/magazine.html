@@ -45,12 +45,12 @@
       </a>
       {% endfor %}
     </div>
-
-     {% endif %}
-
+    {% endif %}
+    {% if year != '2021'%}
     <div class="c-article__explore u-container u-container--small">
       <a href="{% url 'magazine-landing' year %}">Explore the magazine</a>
     </div>
+    {% endif %}
 
   </article>
 
