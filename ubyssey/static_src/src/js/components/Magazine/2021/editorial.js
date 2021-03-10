@@ -43,7 +43,7 @@ export default class editorial extends Component {
                                 <h4>
                                     DANNI OLUSANYA
                                 </h4>
-                                <p>editor in chief</p>
+                                <p>Editor in Chief</p>
 
                             </div>
 
@@ -56,7 +56,7 @@ export default class editorial extends Component {
                             <div className="editors">
 
                                 <h4>LUA PRESIDIO</h4>
-                                <p>Visuals Coordinator</p>
+                                <p>Visuals coordinator</p>
 
                                 <h4>ELIZABETH WANG</h4>
                                 <p>Visuals editor</p>
