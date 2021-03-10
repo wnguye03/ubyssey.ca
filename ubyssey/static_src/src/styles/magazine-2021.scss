@@ -3,3 +3,47 @@
 @import "modules/magazine/2021/nav";
 @import "modules/magazine/2021/sections";
 @import "modules/magazine/2021/sideBar";
+@import "modules/magazine/2021/loading.scss";
+
+
+
+@font-face {
+    font-family: "Azonix";
+    src: url("../fonts/Azonix.otf") format("otf");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+
+h1{
+    font-family: 'Azonix';
+}
+
+
+ h2 , h3 , h4, p {
+    margin: 1rem;
+    font-family: "montserrat";
+}
+
+
+  
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 150px;
+  }
+  
+  .footer a {
+    margin-top: 3%;
+  }
+
+  .menu_button{
+      background: transparent;
+      color:white;
+      padding:5px;
+      border: 1px solid white;
+  }
+
+
