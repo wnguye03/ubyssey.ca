@@ -2,6 +2,7 @@ from django.conf import settings
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.contrib.staticfiles.views import serve as serve_static
+from django.contrib import admin
 
 from dispatch.urls import admin_urls, api_urls, podcasts_urls
 from newsletter.urls import urlpatterns as newsletter_urls
@@ -11,7 +12,7 @@ from ubyssey.views.main import ads_txt, UbysseyTheme, HomePageView, ArticleView,
 from ubyssey.views.guide import guide2016, GuideArticleView, GuideLandingView
 
 from ubyssey.views.advertise import AdvertiseTheme
-from ubyssey.views.magazine import magazine
+from ubyssey.views.magazine import magazine, MagazineLandingView, MagazineArticleView
 
 from ubyssey.zones import *
 from ubyssey.widgets import *
@@ -48,6 +49,7 @@ urlpatterns += [
 
     re_path(r'^self-isolation/', IsolationView.as_view(), name='isolation'),
 
+    re_path(r'^djadmin/', admin.site.urls),
     re_path(r'^admin', include(admin_urls)),
     re_path(r'^api/', include(api_urls)),
     re_path(r'^podcasts/', include(podcasts_urls)),
@@ -81,6 +83,11 @@ urlpatterns += [
     # Magazine
     re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),
     re_path(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
+
+    # Magazine new
+    re_path(r'^mag/(?P<year>[0-9]{4})/$', MagazineLandingView.as_view(), name='mag-landing'),
+    re_path(r'^mag/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/$', MagazineLandingView.as_view(), name='mag-landing-sub'),
+    re_path(r'^mag/(?P<year>[0-9]{4})/(?P<subsection>[-\w]+)/(?P<slug>[-\w]+)/$', MagazineArticleView.as_view(), name='mag-article'),
 
     # Advertising
     re_path(r'^advertise/$', advertise.new, name='advertise-new'),

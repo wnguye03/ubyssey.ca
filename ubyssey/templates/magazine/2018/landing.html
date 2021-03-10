@@ -15,7 +15,7 @@
   </div>
 
   <div class="article-grid-container">
-    {% for a in articles %}
+    {% for a in json_articles %}
     <div class="article-grid">
       <a class="o-article-box o-article-box--grid o-article-box--{{ a.template_fields.color }}" href="{{ a.get_absolute_url }}" style="background-image: url('{{ a.featured_image.image.get_medium_url }}')">
         <h2>{{ a.headline }}</h2>
