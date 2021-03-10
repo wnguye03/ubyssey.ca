@@ -82,7 +82,7 @@ export default class editorial extends Component {
                                 <h4>SAMUEL LIN</h4>
                                 <p>Web developer</p>
 
-                                <h4>KEEGAN L</h4>
+                                <h4>KEEGAN LANDRIGAN</h4>
                                 <p>Web developer</p>
 
                             </div>

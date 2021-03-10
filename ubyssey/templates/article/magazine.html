@@ -28,18 +28,11 @@
     </div>
     {% endif %}
 
+
     <div class="u-container u-container--small">
       <div class="c-article__body">{{ article.html|safe }}</div>
     </div>
 
-
-    
-
- 
-   
- 
-  
-    
 
 
  
@@ -60,6 +53,13 @@
     </div>
 
   </article>
+
+    {% if year == '2021'%}
+              <div class="u-container u-container--small next_article_container">
+                <a class="next_article" href="{{ suggested.0.get_absolute_url }}"> Next Article </div>
+              </div>
+
+     {% endif %}
 
   {% include 'magazine/footer.html' with color=article.template_fields.color %}
 {% endblock %}
