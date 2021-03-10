@@ -147,7 +147,7 @@ class Magazine(object):
             'subsection': subsection,
             'specific_css': 'ubyssey/css/magazine-' + self.year + '.css',
             'year': self.year,
-            'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
+            'suggested': ArticleHelper.get_random_articles(2, 'magazine', tag_name=self.year, exclude=article.id), #lazy use of the helper still; get rid of this eventually
             'base_template': 'magazine/base.html',
             'magazine_title': self.title,
         }
