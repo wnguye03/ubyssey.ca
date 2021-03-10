@@ -12,7 +12,7 @@ export default class editorial extends Component {
 
                         <div className="box1" >
 
-                            <img src={'https://storage.googleapis.com/ubyssey/images/Memory_Leak_Move.gif'} />
+                            <img src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/CoverHome_Moving.gif'} />
 
 
                         </div>
@@ -43,7 +43,7 @@ export default class editorial extends Component {
                                 <h4>
                                     DANNI OLUSANYA
                                 </h4>
-                                <p>editor in chief</p>
+                                <p>Editor in Chief</p>
 
                             </div>
 
@@ -56,7 +56,7 @@ export default class editorial extends Component {
                             <div className="editors">
 
                                 <h4>LUA PRESIDIO</h4>
-                                <p>Visuals Coordinator</p>
+                                <p>Visuals coordinator</p>
 
                                 <h4>ELIZABETH WANG</h4>
                                 <p>Visuals editor</p>
@@ -82,7 +82,7 @@ export default class editorial extends Component {
                                 <h4>SAMUEL LIN</h4>
                                 <p>Web developer</p>
 
-                                <h4>KEEGAN L</h4>
+                                <h4>KEEGAN LANDRIGAN</h4>
                                 <p>Web developer</p>
 
                             </div>
@@ -92,7 +92,7 @@ export default class editorial extends Component {
 
                         <div className="box4">
 
-                            <img src={'https://storage.googleapis.com/ubyssey/images/Untitled_Artwork.gif'} />
+                            <img src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/Untitled_Artwork%202.gif'} />
 
 
                         </div>

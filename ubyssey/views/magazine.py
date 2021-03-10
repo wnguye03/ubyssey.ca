@@ -125,6 +125,8 @@ class Magazine(object):
     
     def article(self, request, article):
         """Magazine article page view."""
+
+        print(self.year)
        
 
         subsection = article.subsection.name.lower() if article.subsection else ""
@@ -147,7 +149,7 @@ class Magazine(object):
             'subsection': subsection,
             'specific_css': 'ubyssey/css/magazine-' + self.year + '.css',
             'year': self.year,
-            'suggested': ArticleHelper.get_random_articles(2, 'magazine', exclude=article.id),
+            'suggested': ArticleHelper.get_random_articles(2, 'magazine', tag_name=self.year, exclude=article.id), #lazy use of the helper still; get rid of this eventually
             'base_template': 'magazine/base.html',
             'magazine_title': self.title,
         }
@@ -310,9 +312,9 @@ mag2021 = MagazineV2(
     'ubyssey/images/magazine/2020/section1.png',
     'ubyssey/images/magazine/2020/section2.png',
     'ubyssey/images/magazine/2020/section3.jpg',
-    'memory_leak',
-    'seg_fault',
-    'system_failure',
+    'Memory-Leak',
+    'Seg-Fault',
+    'System-Failure',
 )
 magazine.add_magazine(mag2017)
 magazine.add_magazine(mag2018)

@@ -8,6 +8,18 @@ export default class systemFailure extends Component {
                 <div className="wrapper">
 
                     <div className="grid_container fade-in">
+
+
+                        <div className="header_photo nested">
+                            <div>
+                                <img className="photo_vertical" src={'https://storage.googleapis.com/ubyssey/images/mag2021smallgifs/Untitled_Artwork%203.gif'} />
+                            </div>
+                            <div className="overlay">
+                                <span> <h1>SYSTEM FAILURE </h1> </span>
+
+                            </div>
+                        </div>
+
                         {this.props.articles.map((article, index) => {
 
                             return (
@@ -18,7 +30,7 @@ export default class systemFailure extends Component {
                                         <img className="photo_vertical" src={article.featured_image} />
 
                                     </div>
-                                    <div> <h2 style={{ color: 'white' }}>{article.headline}</h2></div>
+                                    <div className="headline"> <div style={{ color: 'white' }} > {article.headline} </div> </div>
                                     <div className="card__overlay"> <a href={article.url}> <span> Read More </span></a> </div>
                                 </div>
 
@@ -27,14 +39,10 @@ export default class systemFailure extends Component {
 
 
                         })}
-
                     </div>
 
                 </div>
-
-
             </div>
-
 
 
         )

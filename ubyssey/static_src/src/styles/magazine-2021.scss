@@ -8,10 +8,8 @@
 
 
 @font-face {
-    font-family: "Azonix";
-    src: url("../fonts/Azonix.otf") format("otf");
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Azonix';
+  src: url("https://storage.googleapis.com/ubyssey/fonts/Azonix.otf");
   }
   
 
@@ -22,12 +20,28 @@ h1{
 
  h2 , h3 , h4, p {
     margin: 1rem;
-    font-family: "montserrat";
+    font-family: 'Azonix';
+}
+
+p{
+  font-family: "montserrat";
+
+}
+
+.c-header a{
+  font-family: 'Azonix';
+
+}
+
+.editor_note p{
+  margin-left: 0rem;
+
 }
 
 
   
   .footer {
+    font-family: 'Azonix';
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,3 +61,33 @@ h1{
   }
 
 
+
+  .c-article {
+    color: white;
+  }
+
+  .c-header a{
+    color: white;
+
+  }
+
+  .u-container--small{
+    max-width: 890px;
+  }
+
+  .c-article__byline{
+    color: white;
+  }
+
+  .next_article{
+    color: white;
+
+  }
+
+  .next_article_container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+  }
+  
+  
