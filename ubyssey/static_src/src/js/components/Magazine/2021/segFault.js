@@ -30,7 +30,7 @@ export default class segFault extends Component {
                                         <img className="photo_vertical" src={article.featured_image} />
 
                                     </div>
-                                    <div className="headline"> <div style={{ color: 'white' }} > {article.headline} Raging against the machine: what the evolution of UBC's protests tells us about student activism's future  </div> </div>
+                                    <div className="headline"> <div style={{ color: 'white' }} > {article.headline} </div> </div>
                                     <div className="card__overlay"> <a href={article.url}> <span> Read More </span></a> </div>
                                 </div>
                             )
