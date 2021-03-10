@@ -30,7 +30,7 @@ export default class Magazine extends Component {
                 this.setState({ isloading: false });
             }
                 .bind(this),
-            4000
+            1500
         );
 
     }
@@ -344,9 +344,9 @@ export default class Magazine extends Component {
                     {nav}
 
                     {this.state.section_display === "Editorial" && <Editorial />}
-                    {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} articles={this.props.articles['memory_leak']} />}
-                    {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} articles={this.props.articles['seg_fault']} />}
-                    {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} articles={this.props.articles['system_failure']} />}
+                    {this.state.section_display === "Memory_leak" && <MemoryLeak title={"Memory Leak"} articles={this.props.articles['Memory-Leak']} />}
+                    {this.state.section_display === "Seg_fault" && <SegFault title={"Seg Fault"} articles={this.props.articles['Seg-Fault']} />}
+                    {this.state.section_display === "System_failure" && <SystemFailure title={"System Failure"} articles={this.props.articles['System-Failure']} />}
 
 
                     <footer className="footer">

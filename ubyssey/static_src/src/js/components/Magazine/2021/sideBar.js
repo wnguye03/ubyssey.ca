@@ -19,7 +19,6 @@ export default class sideBar extends Component {
                     <li className='nav-item' style={{ color: 'white' }} onClick={() => this.props.dropdown_clicked('Memory_leak')}> <h4>MEMORY LEAK</h4></li>
                     <li className='nav-item' style={{ color: 'white' }} onClick={() => this.props.dropdown_clicked('Seg_fault')}> <h4>SEG FAULT </h4> </li>
                     <li className='nav-item' style={{ color: 'white' }} onClick={() => this.props.dropdown_clicked('System_failure')}> <h4>SYSTEM FAILURE</h4></li>
-                    <li className='nav-item' style={{ color: 'white' }} onClick={() => this.props.dropdown_clicked('Editorial')} > <h4>UBYSSEY</h4></li>
                 </ul>
 
             </div>

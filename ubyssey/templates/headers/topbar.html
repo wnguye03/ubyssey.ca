@@ -34,9 +34,9 @@
                 <li {% if section == 'magazine' %}class="current"{% endif %} id="sections-more-dropdown">
                     <a>Magazine</a>
                     <ul class="sections-more">
-                        {% comment %} <li>
-                            <a href="{% url 'mag-landing' 2021 %}">2021</a>
-                        </li> {% endcomment %}
+                        <li>
+                            <a href="{% url 'magazine-landing' 2021 %}">2021</a>
+                        </li>
                         <li>
                             <a href="{% url 'magazine-landing' 2020 %}">2020</a>
                         </li>
