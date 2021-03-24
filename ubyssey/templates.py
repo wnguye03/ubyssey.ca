@@ -52,6 +52,30 @@ class Guide(Template):
     next_b = CharField('Up next B', required=True)
 
 @register.template
+class Isolation(Template):
+    id = 'isolation'
+    name = 'Feature - Isolation'
+    article_prev = ArticleField('Previous Article')
+    article_next = ArticleField('Next Article')
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    HEADER_LAYOUT_OPTIONS = (
+        ('right-image', 'Right Image'),
+        ('top-image', 'Top Image'),
+        ('banner-image', 'Banner Image')
+    )
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    description = TextField('Description', required=True)
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
+    
+
+@register.template
 class Magazine(Template):
     id = 'magazine'
     name = 'Magazine - Article'
