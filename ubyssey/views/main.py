@@ -657,6 +657,12 @@ class TopicView(DetailView):
         }
         return context
 
+class IsolationView(TemplateView):
+    template_name = 'isolation/landing.html'
+    def get_context_data(self, **kwargs):
+        context = {}
+        return context
+
 class UbysseyTheme:
     @staticmethod
     def centennial(request):

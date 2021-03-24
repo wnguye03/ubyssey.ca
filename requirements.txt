@@ -1,5 +1,5 @@
-dispatch==1.3.13
-Django==3.0.7
+dispatch==1.3.15
+Django==3.1.6
 git+git://github.com/ubyssey/django-google-storage.git@v0.5.4#egg=django-google-storage-updated
 django-storages[google]==1.10
 django-canonical-domain==0.3.0
@@ -13,7 +13,7 @@ ua-parser==0.10.0
 user-agents==2.2.0
 django-user_agents==0.4.0
 gunicorn==20.0.4
-Pillow==7.2.0
+Pillow==8.1.1
 google-cloud-datastore==1.15.0
 google-cloud-storage==1.31.0
 google-cloud-secret-manager==1.0.0

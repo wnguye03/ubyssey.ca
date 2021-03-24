@@ -87,7 +87,7 @@ class GuideLandingView(GuideViewMixin, TemplateView):
         try:
             self.year = kwargs['year']
         except KeyError:
-            self.year = 2000
+            self.year = 2020
         
         if 'subsection' in kwargs:
             self.template_name = 'guide/' + self.year + '/section.html'
