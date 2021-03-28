@@ -217,3 +217,13 @@ class SoccerNationals(Template):
 
     instructions = InstructionField('Instructions', options=INSTRUCTIONS)
     description = TextField('Description', required=True)
+
+@register.template
+class EthicsAndTech(Template):
+    id = 'ethics-and-tech'
+    name = 'Feature: Ethics and Tech'
+
+    title = CharField('Title')
+    subtitle = CharField('Subtitle')
+    snippet = TextField('Snippet')
+    about = TextField('About')
