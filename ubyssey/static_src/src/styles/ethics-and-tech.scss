@@ -6,6 +6,53 @@ $pastel-green: #A0FFA9;
 $pastel-blue:  #B5FCFE;
 $pastel-pink:  #FFCCED;
 
+
+// --------- STYLES ---------- //
+
+// Header
+
+.eit-header-container {
+  width: 100%;
+  max-width: 840px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+
+  background: $pastel-blue;
+}
+
+.eit-header {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+  
+    display: flex;
+    flex-direction: column;
+    // background: $light-shade;
+    background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+    // background: linear-gradient(to bottom, rgba(0,232,61,0.65) 0%,rgba(0,0,0,0) 100%);
+}
+
+
+// note to myla: this is from top-image fw story:
+// &.top-image {
+//     width: 100%;
+//     max-width: 840px;
+//     margin-left: auto;
+//     margin-right: auto;
+
+//     .featured-media {
+//       width: 100%;
+//       max-width: 640px;
+//       margin: 0 auto;
+//     }
+
+//     .header-container {
+//       width: 100%;
+//       margin-top: 0;
+//       margin-bottom: 1.5rem;
+//     }
+
 @font-face {
 	font-family:'ub-minion-pro';
 	src: url('../fonts/MinionPro-Bold_gdi.eot');
@@ -86,31 +133,6 @@ html, body {
   margin: 0;
   background: #fff;
   -webkit-font-smoothing: antialiased;
-}
-
-.eit-header {
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  background: #000;
-}
-
-.oyl-header__container {
-  flex: 1;
-  width: 100%;
-
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-  }
 }
 
 .oyl-nav {
