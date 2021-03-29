@@ -16,28 +16,22 @@
   <body>
     <header>
       <div class="eit-header">
-          <div class="eit-header-top-style-bar">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"> </span>
-          </div>
-          <div class="headline-container">
-            <h1 class="eit-headline">{{ article.headline|safe }}</h1>
-              {% if article.template_fields.snippet %}
-              <!--<p class="fw-description">{{ article.template_fields.description }}</p>-->
-              <p class="fw-description">{{ article.template_fields.snippet }}</p>
-              {% endif %}
-                    <div class="c-article__byline c-article__byline-center">
-                      <div class="c-article__author">By {{ article.get_author_url|safe }}</div>
-                      <div class="c-article__byline__meta">
-                        <span class="c-article__published-at">{{ article.published_at|date:'N j, Y' }}</span>
-                        {% if reading_time %}
-                        <span> &nbsp;&middot;&nbsp; </span>
-                        <span class="c-article__reading-time">{{ reading_time }} min read</span>
-                        {% endif %}
-                      </div>
-            </div>
-          </div>
+        <div class="eit-header-top-style-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"> </span>
+        </div>
+        <div class="headline-container">
+          <h1 class="eit-headline">{{ article.headline|safe }}</h1>
+            {% if article.template_fields.snippet %}
+            <p class="eit-snippet">{{ article.template_fields.snippet }}</p>
+            {% endif %}
+            <!-- TODO: don't hardcode url ! -->
+            <p class="eit-byline normal">By <a class="eit-byline link" href="/authors/myla-white">Myla White</a> &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
+            <!-- For some reason this version includes ">" in byline on webpage
+            <p class="eit-byline normal">By <a class="eit-byline link" href={{ article.get_author_url|safe }} ></a> &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
+            -->
+        </div>
       </div>
     </header>
     <article></article>

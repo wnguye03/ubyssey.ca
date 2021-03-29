@@ -26,25 +26,40 @@ $dot-green:     #74BE45;
   color: $dark-purple;
   text-align: center;
   font-size: 3.375em;
+  width: 100%;
+  max-width: 740px;
+  //text-shadow: 0 2px 0 rgba(0,0,0,0.42);
 }
 
-.oyl-article__title {
-    font-family: 'ub-minion-pro', serif;
-    color: #F5A623;
-    text-align: center;
-    text-shadow: 0 2px 0 rgba(0,0,0,0.42);
-    line-height: 1em;
-  
-    margin-top: 1rem;
-    margin-bottom: 0.75rem;
-  
-    font-size: 48px;
-  
-    @media(min-width: 760px) {
-      font-size: 64px;
-    }
+.eit-snippet {
+  font-family: 'ub-avenir', Avenir, serif;
+  font-size: 18pt;
+  color: $dark-purple;
+  text-align: center;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
+}
+
+.eit-byline {
+  font-family: 'ub-avenir', Avenir, serif;
+  font-size: 15pt;
+  color: $dark-purple;
+  text-align: center;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
+  opacity: 0.85;
+  text-decoration: none;
+
+  &.normal:hover {
+    color: $dark-purple;
+    cursor: text;
   }
 
+  &.link:hover {
+    color: $pastel-pink;
+    cursor: pointer;
+  }
+}
 
 // Styled Items
 
@@ -103,7 +118,7 @@ $dot-green:     #74BE45;
       margin-left: auto;
       margin-right: auto;
       //margin-top: 1.5rem;
-      margin-top: 100px;
+      margin-top: 75px;
       padding-left: 15px;
       padding-right: 15px;
     }
