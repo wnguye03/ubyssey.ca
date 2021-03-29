@@ -15,14 +15,9 @@
   </head>
   <body>
     <article class="eit-article">
-      <header>
-        <div class="eit-header-container">
-        </div>
-      </header>
-
-      <!--
-      <header>
-                    <div class="header-container">
+        <div class="eit-header-test">
+            <div class="header-container">
+            <!--
                 <div class="featured-media">
                     <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
                     {% if article.featured_image.caption or article.featured_image.credit %}
@@ -31,6 +26,9 @@
                     </div>
                     {% endif %}
                 </div>
+            -->
+            <div class="eit-header-top-style-bar">
+                  </div>
                 <div class="headline-container">
                     <h1 class="o-headline o-headline--article">{{ article.headline|safe }}</h1>
                     {% if article.template_fields.description %}
@@ -48,11 +46,10 @@
                     </div>
                 </div>
             </div>
-      </header>
-      -->
+        </div>
 
 
-
+    <!--
       <header class="eit-header">
         <div class="oyl-header__container">
           <div>
@@ -68,14 +65,15 @@
               </div>
             </div>
             <div class="oyl-header__shadow"></div>
-            <!--
+            
             <video id="header-video" preload="yes" class="oyl-header__video" autoplay muted playsinline>
               <source src="{{ article.template_fields.video_src }}.mp4" type="video/mp4">
               <source src="{{ article.template_fields.video_src }}.ogg" type="video/ogg">
             </video>
-            -->
+            
           </div>
         </div>
+        -->
         <!--
         <nav class="oyl-nav js-sticky">
           <a class="oyl-nav__title">One Year Later</a>

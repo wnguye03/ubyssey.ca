@@ -12,26 +12,140 @@ $pastel-pink:  #FFCCED;
 // Header
 
 .eit-header-container {
+  overflow: auto;
   width: 100%;
   max-width: 840px;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+//   position: relative;
+//   margin-top: 0;
+//   margin-bottom: 1.5rem;
+//   margin-right: auto;
+//   margin-left: auto;
 
-  background: $pastel-blue;
+  margin: 40px 0 20px 0;
+  padding-bottom: 1rem;
+  display: table;
+  border-bottom: 1px solid #E4E4E4;
+
+  background: $dark-shade;
+}
+
+.eit-header-top-style-bar {
+  // position: absolute;
+  overflow: auto;
+
+  top: 0;
+  margin: 0 auto;
+  height: 20px;
+  width: 100%;
+  max-width: 840px;
+  outline: 2px solid $dark-shade;
+  background: $dark-shade;
 }
 
 .eit-header {
-    position: relative;
+    // position: absolute;
+    display: table-cell;
     overflow: hidden;
-    height: 100vh;
+    // height: 100vh;
+    height: 500px;
     width: 100%;
-  
+    max-width: 840px;
     display: flex;
     flex-direction: column;
+    outline: 2px solid $dark-shade;
     // background: $light-shade;
     background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
     // background: linear-gradient(to bottom, rgba(0,232,61,0.65) 0%,rgba(0,0,0,0) 100%);
 }
+
+.eit-header-test {
+    overflow: auto;
+    width: 100%;
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .header-container {
+      margin: 40px 0 20px 0;
+      padding-bottom: 1rem;
+      display: table;
+      border-bottom: 1px solid #E4E4E4;
+    //   @media($bp-larger-than-tablet) {
+    //     padding-bottom: 1.5rem;
+    //   }
+
+    height: 500px;
+    outline: 2px solid $dark-shade;
+    background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+
+
+
+    }
+    .headline-container {
+      text-align: center;
+    }
+    .left, .right {
+      display: table-cell;
+      box-sizing: border-box;
+    }
+    .left {
+      width: 55%;
+      padding-right: 50px;
+      padding-bottom: 25px;
+      vertical-align: middle;
+    }
+    .right {
+      width: 45%;
+    }
+    .article-byline {
+      opacity: 0.75;
+    }
+
+    p.fw-description {
+      font-family: 'ub-avenir';
+      font-size: 16px;
+      color: #464646;
+    }
+
+
+      width: 100%;
+      max-width: 840px;
+      margin-left: auto;
+      margin-right: auto;
+
+      .featured-media {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .header-container {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      .headline-container {
+        max-width: 585px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1.5rem;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .article-byline {
+        font-size: 15px;
+        line-height: 24px;
+      }
+
+    //   @media($bp-larger-than-mobile){
+    //     .header-container {
+    //       margin-top: 1.5rem;
+    //       margin-bottom: 1.5rem;
+    //     }
+    //   }
+    }
 
 
 // note to myla: this is from top-image fw story:
