@@ -38,32 +38,6 @@
       </div>
     </header>
     <article></article>
-
-    <!--
-      <header class="eit-header">
-        <div class="oyl-header__container">
-          <div>
-            <div class="oyl-header__logo">
-              <a href="https://www.ubyssey.ca"></a>
-            </div>
-            <div class="oyl-header__overlay">
-              <div class="oyl-article__header">
-                <h2 class="oyl-article__subtitle">{{ article.template_fields.subtitle }}</h2>
-                <h1 class="oyl-article__title">{{ article.template_fields.title }}</h1>
-                <p class="oyl-article__snippet">{{ article.template_fields.snippet }}</p>
-                <p class="oyl-article__byline">By Myla White &nbsp;&middot;&nbsp; June 3, 2018</p>
-              </div>
-            </div>
-            <div class="oyl-header__shadow"></div>
-            
-            <video id="header-video" preload="yes" class="oyl-header__video" autoplay muted playsinline>
-              <source src="{{ article.template_fields.video_src }}.mp4" type="video/mp4">
-              <source src="{{ article.template_fields.video_src }}.ogg" type="video/ogg">
-            </video>
-            
-          </div>
-        </div>
-        -->
         <!--
         <nav class="oyl-nav js-sticky">
           <a class="oyl-nav__title">One Year Later</a>
@@ -96,20 +70,25 @@
         </nav>
         -->
 
-      <div class="oyl-article__body">
+      <div class="eit-article-body">
+
+        <!-- Testing grounds for components -->
+
+        <!-- Dropcap -->
+        <div class="dropcap">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet interdum leo eu tempor. Maecenas et vestibulum nisi. Sed suscipit odio purus, in mattis diam lobortis at. Pellentesque vel elementum lorem. Etiam viverra, felis at feugiat condimentum, nisi dui mollis felis, vel commodo turpis mauris quis enim.</p>
+        </div>
+
+        <!-- Hyperlink -->
+
+
+        <!-- Block Quote -->
+
+
         {{ article.html|safe }}
-        <!--
-        <a class="oyl-preview" href="{{ article.template_fields.next_article.get_absolute_url }}" style="background-image: url('{{ article.template_fields.next_article.featured_image.image.get_medium_url }}')">
-          <div class="oyl-preview__container">
-            <h3>Up Next</h3>
-            <h2>{{ article.template_fields.next_title }}</h2>
-            <p>{{ article.template_fields.next_snippet }}</p>
-          </div>
-          <div class="oyl-preview__overlay"></div>
-        </a>
-        -->
+
       </div>
-      <div class="oyl-about">
+      <div class="eit-about">
         <h3>About the series</h3>
         {{ article.template_fields.about|safe }}
       </div>

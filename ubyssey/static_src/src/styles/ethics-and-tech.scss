@@ -63,7 +63,6 @@ $dot-green:     #74BE45;
 }
 
 // Styled Items
-
 .dot {
     height: 15px;
     width: 15px;
@@ -85,11 +84,67 @@ $dot-green:     #74BE45;
       background-color: $dot-green;
       margin-left: 5px;
     }
+}
+
+.dropcap > p:first-letter {
+  float: left;
+  font-size: 70px;
+  line-height: 70px;
+  padding-right: 10px;
+  color: $dark-purple;
+}
+
+.attachment.pull-quote {
+    //background: #f3a633;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    max-width: 585px;
+
+    overflow: auto;
+
+    margin: 40px auto;
+    padding-bottom: 1rem;
+    display: table;
+    //height: 500px;
+    border-radius: 5px;
+    border: 2px solid $dark-accent-1;
+    //background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+
+  
+    .quote {
+      margin: 0;
+      font-family: 'ub-avenir', Avenir, serif;
+      font-weight: bold;
+      font-size: 22px;
+      color: $dark-accent-1;
+      line-height: 1.4em;
+    }
+  
+    .source {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+      font-family: 'ub-avenir', Avenir, serif;
+      color: $dark-accent-2;
+    }
   }
 
+.attachment:nth-of-type(3n+0) {
+  // background: $pastel-pink;
+  background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
+}
+
+.attachment:nth-of-type(3n+1) {
+  // background: $pastel-green;
+  background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
+}
+
+.attachment:nth-of-type(3n+2) {
+  // background: $pastel-blue;
+  background: linear-gradient(to bottom right, $pastel-green, $pastel-pink);
+}
 
 // Header
-
 .eit-header-top-style-bar {
   overflow: auto;
   top: 0;
@@ -147,6 +202,71 @@ $dot-green:     #74BE45;
       padding-left: 15px;
       padding-right: 15px;
     }
+}
+
+// Article body
+.eit-article-body {
+
+    @media(min-width: 760px) {
+      padding-top: 1rem;
+    }
+  
+    p {
+      max-width: 585px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1.6rem;
+      margin-bottom: 1.6rem;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    p {
+      font-family: "Georgia", serif;
+      font-size: 1.0625em;
+      color: #333333;
+      line-height: 1.625rem;
+      margin-top: 1.4rem;
+  
+      a {
+        color: $dark-purple;
+      }
+      a:hover {
+        transition-duration: 0.25s;
+        color: $pastel-pink;
+        cursor: pointer;
+      }
+    }
+  }
+
+.eit-about {
+    max-width: 585px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    border: 2px solid $dark-accent-1;
+    background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+
+  
+    h3 {
+      font-family: 'Azonix';
+      color: $dark-purple;
+      font-size: 24px;
+      margin-bottom: 1rem;
+    }
+  
+    p {
+      color: $dark-accent-1;
+      font-family: 'ub-avenir', Avenir, serif;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 17px;
+      line-height: 1.5em;
+    }
+  
 }
 
 
@@ -489,57 +609,6 @@ html, body {
   text-align: center;
 }
 
-.oyl-article__body {
-
-  @media(min-width: 760px) {
-    padding-top: 1rem;
-  }
-
-  p {
-    max-width: 585px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1.6rem;
-    margin-bottom: 1.6rem;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  p {
-    font-family: "Georgia", serif;
-    font-size: 1.0625em;
-    color: #333333;
-    line-height: 1.625rem;
-    margin-top: 1.4rem;
-
-    a {
-      color: #F5A623;
-    }
-  }
-}
-
-.attachment.pull-quote {
-  background: #f3a633;
-  padding: 1.5rem;
-  margin-bottom: 1.25rem;
-
-  .quote {
-    margin: 0;
-    font-family: 'ub-avenir', Avenir, serif;
-    font-weight: bold;
-    font-size: 22px;
-    color: #ffffff;
-    line-height: 1.4em;
-  }
-
-  .source {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    font-family: 'ub-avenir', Avenir, serif;
-    color: white;
-  }
-}
-
 .oyl-graphic {
   background: #f3a633;
   padding: 1.5rem;
@@ -684,43 +753,8 @@ html, body {
   }
 }
 
-.dropcap > p:first-letter {
-  float: left;
-  font-size: 70px;
-  line-height: 70px;
-  padding-right: 10px;
-}
-
 .js-sticky--fixed {
   // Structure
   position: fixed;
   top: 0;
-}
-
-
-.oyl-about {
-  max-width: 585px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1.5rem;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  h3, p {
-    font-family: 'ub-avenir', Avenir, serif;
-    color: #555;
-  }
-
-  h3 {
-    font-size: 24px;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-    font-size: 17px;
-    line-height: 1.5em;
-  }
-
 }
