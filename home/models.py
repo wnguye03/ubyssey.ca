@@ -14,7 +14,9 @@ class HomePage(Page):
     content = StreamField(
         [
             ("home_page_section_block",homeblocks.HomePageSectionBlock())
-        ]
+        ],
+        null=True,
+        blank=True
     )
 
     def get_latest_articles(self):

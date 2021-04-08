@@ -16,6 +16,5 @@ class SectionChooserBlock(blocks.ChooserBlock):
 class HomePageSectionBlock(blocks.StructBlock):
     section = SectionChooserBlock(required=True)
 
-    section.
     class Meta:
         template = "home/home_page_section_block.html"
