@@ -73,7 +73,50 @@ class Isolation(Template):
     description = TextField('Description', required=True)
     image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
     header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
-    
+
+@register.template
+class IsolationFirst(Template):
+    id = 'isolation-first-article'
+    name = 'Feature - Isolation - First Page'
+    article_next = ArticleField('Next Article')
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    HEADER_LAYOUT_OPTIONS = (
+        ('right-image', 'Right Image'),
+        ('top-image', 'Top Image'),
+        ('banner-image', 'Banner Image')
+    )
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    description = TextField('Description', required=True)
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
+
+@register.template
+class IsolationLast(Template):
+    id = 'isolation-last-article'
+    name = 'Feature - Isolation - Last Page'
+    article_next = ArticleField('Previous Article')
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    HEADER_LAYOUT_OPTIONS = (
+        ('right-image', 'Right Image'),
+        ('top-image', 'Top Image'),
+        ('banner-image', 'Banner Image')
+    )
+    IMAGE_SIZE_OPTIONS = (
+        ('default', 'Default'),
+        ('full', 'Full')
+    )
+    description = TextField('Description', required=True)
+    image_size = SelectField('Image Size', options=IMAGE_SIZE_OPTIONS)
+    header_layout = SelectField('Header Layout', options=HEADER_LAYOUT_OPTIONS, required=True)
 
 @register.template
 class Magazine(Template):
