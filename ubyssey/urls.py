@@ -42,11 +42,6 @@ urlpatterns += [
     #For Google Adsense, because of our serverless setup with GCP
     re_path(r'^ads.txt$',ads_txt,name='ads-txt'),
 
-    # wagtail
-    path('cms/', include(wagtailadmin_urls)),
-    path('documents/', include(wagtaildocs_urls)),
-    path('pages/', include(wagtail_urls)),
-
     re_path(r'^self-isolation/', IsolationView.as_view(), name='isolation'),
 
     re_path(r'^djadmin/', admin.site.urls),
