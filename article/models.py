@@ -22,12 +22,22 @@ class ArticlePage(Page):
         on_delete=models.SET_NULL,
         related_name="+" # for when you're not using any special 
     )
-    # content = StreamField(
-    #     [
-    #         ("home_page_section_block",homeblocks.HomePageSectionBlock())
-    #     ]
-    # )
-
+    featured_video = models.ForeignKey()
+    section = models.ForeignKey()
+    authors = models.ForeignKey()
+    excerpt = RichTextField(
+        # Was called "snippet" in Dispatch - do not want to 
+        null=True,
+        blank=True,
+    )
+    # importance
+    # reading time
+    # facebook instant article
+    # breaking
+    # template
+    # SEO focus keywords
+    # SEO meta description
+    
     dispatch_version = models.ForeignKey(
         # Used to map the article to a previous version that exists in Dispatch
         "dispatch.Article",
