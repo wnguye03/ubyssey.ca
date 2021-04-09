@@ -16,7 +16,7 @@ class HomePage(Page):
             ("home_page_section_block",homeblocks.HomePageSectionBlock())
         ],
         null=True,
-        blank=True
+        blank=True,
     )
 
     content_panels = Page.content_panels + [
