@@ -19,11 +19,15 @@ class HomePage(Page):
         blank=True
     )
 
-    def get_latest_articles(self):
-        max_count = 6 # max count for displaying post
-        return Article.objects.all().order_by('-last_published_at')[:max_count]
+    content_panels = Page.content_panels + [
+        StreamFieldPanel("content"),
+    ]
 
-    def get_context(self, request):
-        context = super().get_context(request)
-        context['articles'] = self.get_latest_articles()
-        return context
+    # def get_latest_articles(self):
+    #     max_count = 6 # max count for displaying post
+    #     return Article.objects.all().order_by('-last_published_at')[:max_count]
+
+    # def get_context(self, request):
+    #     context = super().get_context(request)
+    #     context['articles'] = self.get_latest_articles()
+    #     return context
