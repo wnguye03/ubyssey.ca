@@ -28,6 +28,13 @@ class ArticlePage(Page):
     #     ]
     # )
 
+    dispatch_version = models.ForeignKey(
+        "dispatch.Article",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+
     content_panels = Page.content_panels + [
         FieldPanel("content"),
         ImageChooserPanel("featured_image"),
