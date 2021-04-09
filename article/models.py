@@ -10,7 +10,7 @@ from wagtail.core.fields import RichTextField
 
 class ArticlePage(Page):
     template = "article/article_page.html"
-    content = RichTextField(
+    article_content = RichTextField(
         null=True,
         blank=True,
     )
@@ -29,6 +29,7 @@ class ArticlePage(Page):
     # )
 
     dispatch_version = models.ForeignKey(
+        # Used to map the article to a previous version that exists in Dispatch
         "dispatch.Article",
         null=True,
         blank=True,
@@ -36,6 +37,6 @@ class ArticlePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("content"),
+        FieldPanel("article_content"),
         ImageChooserPanel("featured_image"),
     ]
