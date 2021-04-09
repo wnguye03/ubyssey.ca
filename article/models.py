@@ -10,7 +10,10 @@ from wagtail.core.fields import RichTextField
 
 class ArticlePage(Page):
     template = "article/article_page.html"
-    content = RichTextField()
+    content = RichTextField(
+        null=True,
+        blank=True,
+    )
     featured_image = models.ForeignKey(
         # based on https://www.youtube.com/watch?v=KCMdavRBvXE
         "wagtailimages.Image",
