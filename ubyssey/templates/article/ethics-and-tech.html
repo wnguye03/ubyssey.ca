@@ -14,7 +14,9 @@
     <meta name="author" content="Myla White" />
   </head>
   <body>
+        <div class="eit-test-bkg">
     <header>
+      {% comment %} <div class="eit-spacer"></div> {% endcomment %}
       <div class="eit-header">
         <div class="eit-header-top-style-bar">
           <span class="dot red"></span>
@@ -34,6 +36,7 @@
             <!-- For some reason this version includes ">" in byline on webpage
             <p class="eit-byline normal">By <a class="eit-byline link" href={{ article.get_author_url|safe }} ></a> &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
             -->
+          </div>
         </div>
       </div>
     </header>

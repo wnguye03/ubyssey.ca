@@ -21,6 +21,26 @@ $dot-green:     #74BE45;
     src: url("https://storage.googleapis.com/ubyssey/fonts/Azonix.otf");
 }
 
+.eit-test-bkg {
+  background-image:
+    linear-gradient(to bottom, transparent, white),
+    url('https://storage.googleapis.com/ubyssey/images/spring-2021-science-feature/BlueGrid.png');
+  //background-color: $dot-yellow;
+  margin: 0 auto;
+  height: 600px;
+  display: block;
+  z-index: 5;
+  position: relative;
+
+  // .eit-spacer {
+  //   margin: 40px auto;
+  // }
+}
+
+.eit-spacer {
+  margin: 40px auto;
+}
+
 .eit-headline {
   font-family: 'Azonix';
   color: $dark-purple;
@@ -129,26 +149,27 @@ $dot-green:     #74BE45;
     }
   }
 
-.attachment:nth-of-type(3n+0) {
+.attachment:nth-of-type(2n+0) {
   // background: $pastel-pink;
   background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
 }
 
-.attachment:nth-of-type(3n+1) {
+.attachment:nth-of-type(2n+1) {
   // background: $pastel-green;
   background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
 }
 
-.attachment:nth-of-type(3n+2) {
-  // background: $pastel-blue;
-  background: linear-gradient(to bottom right, $pastel-green, $pastel-pink);
-}
+// .attachment:nth-of-type(3n+2) {
+//   background: $pastel-blue;
+//   // background: linear-gradient(to bottom right, $pastel-green, $pastel-pink);
+// }
 
 // Header
 .eit-header-top-style-bar {
   overflow: auto;
   top: 0;
   margin: 0 auto;
+  // margin: 40px auto;
   height: 40px;
   width: 100%;
   max-width: 840px;
@@ -184,7 +205,8 @@ $dot-green:     #74BE45;
   overflow: auto;
   width: 100%;
   max-width: 840px;
-  margin: 40px auto;
+  //margin: 40px auto;
+  margin: 0 auto;
   padding-bottom: 1rem;
   display: table;
   height: 500px;
