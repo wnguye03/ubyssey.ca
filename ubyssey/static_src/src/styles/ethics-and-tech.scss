@@ -42,9 +42,12 @@ $dot-green:     #74BE45;
   }
 
   .card-body {
-    font-family: "Georgia", serif;
-    font-size: 1.0625em;
+    font-family: 'ub-avenir', Avenir, serif;
+    font-size: 1.08em;
+    // font-family: "Georgia", serif;
+    // font-size: 1.0625em;
     color: #333333;
+    //color: $dot-green;
     line-height: 1.625rem;
     margin-top: 1.4rem;
 
@@ -57,7 +60,11 @@ $dot-green:     #74BE45;
       cursor: pointer;
     }
   }
+}
 
+.card:hover {
+  transition-duration: 0.25s;
+  box-shadow: 5px 5px 5px $dark-accent-1;
 }
 
 // .card:hover {
@@ -82,7 +89,8 @@ $dot-green:     #74BE45;
 
 .btn:hover {
   transition: box-shadow .3s;
-  color: $pastel-pink;
+  //color: $pastel-pink;
+  color: $dark-accent-1;
 }
 
 
@@ -186,6 +194,7 @@ $dot-green:     #74BE45;
     border-radius: 5px;
     border: 2px solid $dark-accent-1;
     //background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+    background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
 
   
     .quote {
@@ -205,15 +214,15 @@ $dot-green:     #74BE45;
     }
   }
 
-.attachment:nth-of-type(2n+0) {
-  // background: $pastel-pink;
-  background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
-}
+// .attachment:nth-of-type(2n+0) {
+//   // background: $pastel-pink;
+//   background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
+// }
 
-.attachment:nth-of-type(2n+1) {
-  // background: $pastel-green;
-  background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
-}
+// .attachment:nth-of-type(2n+1) {
+//   // background: $pastel-green;
+//   background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
+// }
 
 // .attachment:nth-of-type(3n+2) {
 //   background: $pastel-blue;
@@ -329,6 +338,7 @@ $dot-green:     #74BE45;
     border-radius: 5px;
     border: 2px solid $dark-accent-1;
     background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+    font-family: 'ub-avenir', Avenir, serif;
 
   
     h3 {
@@ -336,11 +346,12 @@ $dot-green:     #74BE45;
       color: $dark-purple;
       font-size: 24px;
       margin-bottom: 1rem;
+      margin-top: 1rem;
     }
   
     p {
       color: $dark-accent-1;
-      font-family: 'ub-avenir', Avenir, serif;
+      // font-family: 'ub-avenir', Avenir, serif;
       margin-top: 1rem;
       margin-bottom: 1.5rem;
       font-size: 17px;
