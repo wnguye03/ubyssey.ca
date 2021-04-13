@@ -21,6 +21,71 @@ $dot-green:     #74BE45;
     src: url("https://storage.googleapis.com/ubyssey/fonts/Azonix.otf");
 }
 
+
+// Bootstrap mods
+
+.card {
+  //background-color: $pastel-blue;
+  background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
+  max-width: 585px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+
+  .card-header {
+    background-color: transparent;
+  }
+
+  .card-body {
+    font-family: "Georgia", serif;
+    font-size: 1.0625em;
+    color: #333333;
+    line-height: 1.625rem;
+    margin-top: 1.4rem;
+
+    a {
+      color: $dark-purple;
+    }
+    a:hover {
+      transition-duration: 0.25s;
+      color: $pastel-pink;
+      cursor: pointer;
+    }
+  }
+
+}
+
+// .card:hover {
+//   transition: box-shadow .3s;
+//   // width: 300px;
+//   // height: 500px;
+//   // margin: 50px;
+//   // border-radius:10px;
+//   border: 1px solid #ccc;
+//   background: #fff;
+// }
+
+.btn {
+  font-family: 'Azonix';
+  color: $dark-purple;
+  font-size: 32px;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.btn:hover {
+  transition: box-shadow .3s;
+  color: $pastel-pink;
+}
+
+
 .eit-test-bkg {
   background-image:
     linear-gradient(to bottom, transparent, white),
@@ -31,16 +96,7 @@ $dot-green:     #74BE45;
   display: block;
   z-index: 5;
   position: relative;
-
-  // .eit-spacer {
-  //   margin: 40px auto;
-  // }
 }
-
-.eit-spacer {
-  margin: 40px auto;
-}
-
 .eit-headline {
   font-family: 'Azonix';
   color: $dark-purple;
