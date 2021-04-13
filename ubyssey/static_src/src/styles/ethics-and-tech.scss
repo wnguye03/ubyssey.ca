@@ -21,6 +21,33 @@ $dot-green:     #74BE45;
     src: url("https://storage.googleapis.com/ubyssey/fonts/Azonix.otf");
 }
 
+.tableauholder {
+  margin-bottom: 1.25rem;
+  width: 100%;
+  max-width: 585px;
+  overflow: auto;
+  margin: 40px auto;
+  display: table;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+}
+
+.tableauholdertwo {
+  margin-bottom: 1.25rem;
+  width: 100%;
+  max-width: 490px;
+  overflow: auto;
+  margin: 40px auto;
+  display: table;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+}
+
+.eit-hr {
+  width: 100%;
+  max-width: 585px;
+  border: 1px solid $dark-purple;
+}
 
 // Bootstrap mods
 
@@ -213,21 +240,6 @@ $dot-green:     #74BE45;
       color: $dark-accent-2;
     }
   }
-
-// .attachment:nth-of-type(2n+0) {
-//   // background: $pastel-pink;
-//   background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
-// }
-
-// .attachment:nth-of-type(2n+1) {
-//   // background: $pastel-green;
-//   background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
-// }
-
-// .attachment:nth-of-type(3n+2) {
-//   background: $pastel-blue;
-//   // background: linear-gradient(to bottom right, $pastel-green, $pastel-pink);
-// }
 
 // Header
 .eit-header-top-style-bar {
@@ -442,333 +454,6 @@ html, body {
   margin: 0;
   background: #fff;
   -webkit-font-smoothing: antialiased;
-}
-
-.oyl-nav {
-  height: 50px;
-  width: 100%;
-  background: #000;
-  position: relative;
-  z-index: 400;
-
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-
-  //display: flex;
-  //align-items: center;
-}
-
-.oyl-nav.js-sticky--fixed {
-  .oyl-nav__title {
-    opacity: 1;
-  }
-
-  .oyl-nav__list {
-    right: 160px;
-  }
-
-  .oyl-nav__logo {
-    opacity: 1;
-  }
-}
-
-.oyl-nav__logo {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  top: 0;
-  opacity: 0;
-  transition: opacity 0.25s;
-
-  display: none;
-
-  @media(min-width: 800px) {
-    display: block;
-  }
-
-  a {
-    display: inline-block;
-    width: 120px;
-    height: 30px;
-    background-image: url(../images/ubyssey_logo_white.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-    position: relative;
-    align-self: center;
-    top: 10px;
-  }
-}
-
-.oyl-nav__title {
-  font-family: 'ub-avenir', Avenir, serif;
-  font-size: 16px;
-  color: #F5A623;
-  line-height: 50px;
-  margin-left: 1.5rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 0.5s;
-
-  display: none;
-
-  @media(min-width: 760px) {
-    display: block;
-  }
-}
-
-.oyl-nav__list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  top: 0;
-
-  text-align: center;
-  transition: right 0.5s;
-
-  height: 50px;
-
-  @media(min-width: 760px) {
-    top: 0;
-    position: absolute;
-
-    right: 50%;
-    width: 320px;
-    margin-right: -160px;
-  }
-
-  li {
-    display: inline-block;
-    line-height: 50px;
-    margin-left: 1.15rem;
-    margin-right: 1.15rem;
-
-    a {
-      color: #fff;
-      font-family: 'ub-avenir', Avenir, serif;
-      font-weight: bold;
-      font-size: 18px;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.23);
-      border-width: 0 0 3px 0;
-      border-style: solid;
-      border-color: transparent;
-      text-decoration: none;
-
-      transition: border-color 0.25s;
-
-      &.is-selected, &:hover {
-        border-color: #f3a633;
-      }
-    }
-  }
-}
-
-.oyl-header__logo {
-  position: absolute;
-  width: 100%;
-  z-index: 300;
-  padding-top: 1.5rem;
-  text-align: center;
-}
-
-.oyl-header__logo > a {
-  display: inline-block;
-  width: 141px;
-  height: 33px;
-  background-image: url('../images/ubyssey_logo_white.png');
-  background-size: 100%;
-
-  opacity: 1;
-  transition: opacity 0.25s;
-}
-
-.oyl-header__logo > a:hover {
-  opacity: 0.75;
-}
-
-.oyl-header__overlay {
-  width: 100%;
-  z-index: 200;
-
-  display: flex;
-  align-items: center;
-  text-align: center;
-  flex: 1;
-
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
-
-.oyl-header__shadow {
-  position: absolute;
-  z-index: 100;
-  top: -50%;
-  height: 150%;
-  left: -50%;
-  width: 200%;
-  background-image: radial-gradient(50% 97%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.00) 97%);
-
-  opacity: 0;
-  transition: opacity 4.5s ease-in;
-
-  @media(min-width: 760px) {
-    left: -25%;
-    width: 150%;
-  }
-}
-
-.oyl-header__shadow.is-visible {
-  opacity: 1;
-}
-
-.oyl-header__video {
-  width: 100%;
-  height: auto;
-  position: absolute;
-  z-index: 10;
-  background: #000;
-
-  &.vertical {
-    width: auto;
-    height: 100%;
-  }
-}
-
-.oyl-article__header {
-  opacity: 0;
-  transition: opacity 2.5s ease-in-out;
-  flex: 1;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.oyl-article__header.is-visible {
-  opacity: 1;
-}
-
-.oyl-article__subtitle {
-  font-family: 'ub-avenir', Avenir, serif;
-  font-weight: bold;
-  font-size: 22px;
-  color: #FFFFFF;
-  letter-spacing: 0;
-  text-align: center;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.23);
-}
-
-.oyl-article__title {
-  font-family: 'ub-minion-pro', serif;
-  color: #F5A623;
-  text-align: center;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.42);
-  line-height: 1em;
-
-  margin-top: 1rem;
-  margin-bottom: 0.75rem;
-
-  font-size: 48px;
-
-  @media(min-width: 760px) {
-    font-size: 64px;
-  }
-}
-
-.oyl-article__snippet {
-  font-family: 'ub-avenir', Avenir, serif;
-  font-weight: bold;
-  font-size: 18px;
-  color: #FFFFFF;
-  letter-spacing: 0;
-  text-align: center;
-  text-shadow: 0 2px 3px rgba(0,0,0,0.35);
-
-  max-width: 460px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.4em;
-  margin-top: 0.75rem;
-}
-
-.oyl-article__byline {
-  opacity: 0.85;
-  font-family: 'ub-avenir', Avenir, serif;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.75);
-  letter-spacing: 0;
-  text-align: center;
-}
-
-.oyl-graphic {
-  background: #f3a633;
-  padding: 1.5rem;
-  margin-bottom: 1.25rem;
-
-  ul {
-    margin: 0;
-    padding-left: 1.5rem;
-
-    li {
-      margin: 0;
-      font-family: 'ub-avenir', Avenir, serif;
-      font-weight: bold;
-      font-size: 16px;
-      color: #ffffff;
-      line-height: 1.4em;
-      margin-bottom: 0.75rem;
-    }
-  }
-}
-
-@media(min-width: 760px) {
-  .oyl-article__body .attachment:nth-of-type(odd) {
-    float: left;
-    margin-right: 1.75rem;
-    margin-left: 12%;
-    width: 25%;
-    max-width: 500px;
-
-    &.image-attachment {
-      margin-left: 8%;
-      width: 35%;
-    }
-  }
-
-  .oyl-article__body .attachment:nth-of-type(even) {
-    float: right;
-    margin-left: 1.75rem;
-    margin-right: 12%;
-    width: 25%;
-    max-width: 500px;
-
-    &.image-attachment {
-      margin-right: 8%;
-      width: 35%;
-    }
-  }
-}
-
-.image-attachment {
-  img {
-    width: 100%;
-    height: auto;
-  }
-
-  .caption {
-    font-family: 'ub-avenir', Avenir, serif;
-    font-size: 14px;
-    color: #666;
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
-    padding-left: 15px;
-    padding-right: 15px;
-
-    @media(min-width: 760px) {
-      padding-right: 0;
-      padding-left: 0;
-    }
-  }
 }
 
 .oyl-preview {
