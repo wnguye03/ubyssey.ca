@@ -1,0 +1,536 @@
+@import 'modules/fonts';
+
+// -------- CONSTANTS -------- //
+// Colours
+$dark-shade:    #000000;
+$dark-accent-1: #313133;
+$dark-accent-2: #3B3B3D;
+$light-shade:   #FFFFFF;
+$pastel-green:  #A0FFA9;
+$pastel-blue:   #B5FCFE;
+$pastel-pink:   #FFCCED;
+$dark-purple:   #654DAF;
+$dot-red:       #ED645B;
+$dot-yellow:    #DFC04B;
+$dot-green:     #74BE45;
+
+// --------- STYLES ---------- //
+// Fonts
+@font-face {
+    font-family: 'Azonix';
+    src: url("https://storage.googleapis.com/ubyssey/fonts/Azonix.otf");
+}
+
+.tableauholder {
+  margin-bottom: 1.25rem;
+  width: 100%;
+  max-width: 585px;
+  overflow: auto;
+  margin: 40px auto;
+  display: table;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+}
+
+.tableauholdertwo {
+  margin-bottom: 1.25rem;
+  width: 100%;
+  max-width: 490px;
+  overflow: auto;
+  margin: 40px auto;
+  display: table;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+}
+
+.eit-hr {
+  width: 100%;
+  max-width: 585px;
+  border: 1px solid $dark-purple;
+}
+
+// Bootstrap mods
+
+.card {
+  //background-color: $pastel-blue;
+  background: linear-gradient(to bottom left, $pastel-pink, $pastel-blue);
+  max-width: 585px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+
+  .card-header {
+    background-color: transparent;
+  }
+
+  .card-body {
+    font-family: 'ub-avenir', Avenir, serif;
+    font-size: 1.08em;
+    // font-family: "Georgia", serif;
+    // font-size: 1.0625em;
+    color: #333333;
+    //color: $dot-green;
+    line-height: 1.625rem;
+    margin-top: 1.4rem;
+
+    a {
+      color: $dark-purple;
+    }
+    a:hover {
+      transition-duration: 0.25s;
+      color: $pastel-pink;
+      cursor: pointer;
+    }
+  }
+}
+
+.card:hover {
+  transition-duration: 0.25s;
+  box-shadow: 5px 5px 5px $dark-accent-1;
+}
+
+// .card:hover {
+//   transition: box-shadow .3s;
+//   // width: 300px;
+//   // height: 500px;
+//   // margin: 50px;
+//   // border-radius:10px;
+//   border: 1px solid #ccc;
+//   background: #fff;
+// }
+
+.btn {
+  font-family: 'Azonix';
+  color: $dark-purple;
+  font-size: 32px;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.btn:hover {
+  transition: box-shadow .3s;
+  //color: $pastel-pink;
+  color: $dark-accent-1;
+}
+
+
+.eit-test-bkg {
+  background-image:
+    linear-gradient(to bottom, transparent, white),
+    url('https://storage.googleapis.com/ubyssey/images/spring-2021-science-feature/BlueGrid.png');
+  //background-color: $dot-yellow;
+  margin: 0 auto;
+  height: 600px;
+  display: block;
+  z-index: 5;
+  position: relative;
+}
+.eit-headline {
+  font-family: 'Azonix';
+  color: $dark-purple;
+  text-align: center;
+  font-size: 3.375em;
+  width: 100%;
+  max-width: 740px;
+  //text-shadow: 0 2px 0 rgba(0,0,0,0.42);
+}
+
+.eit-snippet {
+  font-family: 'ub-avenir', Avenir, serif;
+  font-size: 18pt;
+  color: $dark-purple;
+  text-align: center;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
+}
+
+.eit-byline {
+  font-family: 'ub-avenir', Avenir, serif;
+  font-size: 15pt;
+  color: $dark-purple;
+  text-align: center;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
+  opacity: 0.85;
+  text-decoration: none;
+
+  &.normal:hover {
+    color: $dark-purple;
+    cursor: text;
+  }
+
+  &.link:hover {
+    transition-duration: 0.25s;
+    color: $pastel-pink;
+    cursor: pointer;
+  }
+}
+
+// Styled Items
+.dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    top: 50%;
+    margin-top: 7.5px;
+  
+    &.red {
+      background-color: $dot-red;
+      // left: 3px;
+      margin-left: 10px;
+    }
+    &.yellow {
+      background-color: $dot-yellow;
+      margin-left: 5px;
+    }
+    &.green {
+      background-color: $dot-green;
+      margin-left: 5px;
+    }
+}
+
+.dropcap > p:first-letter {
+  float: left;
+  font-size: 70px;
+  line-height: 70px;
+  padding-right: 10px;
+  color: $dark-purple;
+}
+
+.attachment.pull-quote {
+    //background: #f3a633;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    max-width: 585px;
+
+    overflow: auto;
+
+    margin: 40px auto;
+    padding-bottom: 1rem;
+    display: table;
+    //height: 500px;
+    border-radius: 5px;
+    border: 2px solid $dark-accent-1;
+    //background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+    background: linear-gradient(to bottom right, $pastel-blue, $pastel-green);
+
+  
+    .quote {
+      margin: 0;
+      font-family: 'ub-avenir', Avenir, serif;
+      font-weight: bold;
+      font-size: 22px;
+      color: $dark-accent-1;
+      line-height: 1.4em;
+    }
+  
+    .source {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+      font-family: 'ub-avenir', Avenir, serif;
+      color: $dark-accent-2;
+    }
+  }
+
+// Header
+.eit-header-top-style-bar {
+  overflow: auto;
+  top: 0;
+  margin: 0 auto;
+  // margin: 40px auto;
+  height: 40px;
+  width: 100%;
+  max-width: 840px;
+  background: linear-gradient($dark-accent-2, $dark-accent-1);
+
+}
+
+.eit-header-logo {
+  display: inline-block;
+  width: 100%;
+  max-width: 704.5px;
+  margin: 0 auto;
+  position: absolute;
+  text-align: center;
+}
+  
+.eit-header-logo > a {
+  display: inline-block;
+  width: 141px;
+  height: 33px;
+  background-image: url('../images/ubyssey_logo_white.png');
+  background-size: 100%;
+  
+  opacity: 1;
+  transition: opacity 0.25s;
+}
+  
+.eit-header-logo > a:hover {
+  opacity: 0.75;
+}
+
+.eit-header {
+  overflow: auto;
+  width: 100%;
+  max-width: 840px;
+  //margin: 40px auto;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  display: table;
+  height: 500px;
+  border-radius: 5px;
+  border: 2px solid $dark-accent-1;
+  background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+
+    .headline-container {
+      text-align: center;
+      max-width: 585px;
+      margin-left: auto;
+      margin-right: auto;
+      //margin-top: 1.5rem;
+      margin-top: 75px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+}
+
+// Article body
+.eit-article-body {
+
+    @media(min-width: 760px) {
+      padding-top: 1rem;
+    }
+  
+    p {
+      max-width: 585px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1.6rem;
+      margin-bottom: 1.6rem;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    p {
+      font-family: 'ub-avenir', Avenir, serif;
+      //font-family: "Georgia", serif;
+      //font-size: 1.0625em;
+      font-size: 1.08em;
+      color: #333333;
+      line-height: 1.625rem;
+      margin-top: 1.4rem;
+  
+      a {
+        color: $dark-purple;
+      }
+      a:hover {
+        transition-duration: 0.25s;
+        color: $pastel-pink;
+        cursor: pointer;
+      }
+    }
+  }
+
+.eit-about {
+    max-width: 585px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    border: 2px solid $dark-accent-1;
+    background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
+    font-family: 'ub-avenir', Avenir, serif;
+
+  
+    h3 {
+      font-family: 'Azonix';
+      color: $dark-purple;
+      font-size: 24px;
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+    }
+  
+    p {
+      color: $dark-accent-1;
+      // font-family: 'ub-avenir', Avenir, serif;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 17px;
+      line-height: 1.5em;
+    }
+  
+}
+
+
+
+@font-face {
+	font-family:'ub-minion-pro';
+	src: url('../fonts/MinionPro-Bold_gdi.eot');
+	src: url('../fonts/MinionPro-Bold_gdi.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/MinionPro-Bold_gdi.woff') format('woff'),
+		url('../fonts/MinionPro-Bold_gdi.ttf') format('truetype'),
+		url('../fonts/MinionPro-Bold_gdi.svg#MinionPro-Bold') format('svg');
+	font-weight: 800;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'ub-minion-pro';
+	src: url('../fonts/MinionPro-BoldIt_gdi.eot');
+	src: url('../fonts/MinionPro-BoldIt_gdi.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/MinionPro-BoldIt_gdi.woff') format('woff'),
+		url('../fonts/MinionPro-BoldIt_gdi.ttf') format('truetype'),
+		url('../fonts/MinionPro-BoldIt_gdi.svg#MinionPro-BoldIt') format('svg');
+	font-weight: 800;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'ub-minion-pro';
+	src: url('../fonts/MinionPro-Regular_gdi.eot');
+	src: url('../fonts/MinionPro-Regular_gdi.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/MinionPro-Regular_gdi.woff') format('woff'),
+		url('../fonts/MinionPro-Regular_gdi.ttf') format('truetype'),
+		url('../fonts/MinionPro-Regular_gdi.svg#MinionPro-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'ub-minion-pro';
+	src: url('../fonts/MinionPro-It_gdi.eot');
+	src: url('../fonts/MinionPro-It_gdi.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/MinionPro-It_gdi.woff') format('woff'),
+		url('../fonts/MinionPro-It_gdi.ttf') format('truetype'),
+		url('../fonts/MinionPro-It_gdi.svg#MinionPro-It') format('svg');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+    font-family: 'ub-avenir';
+    src: url('../fonts/Avenir-Bold.woff2') format('woff2'),
+        url('../fonts/Avenir-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ub-avenir';
+    src: url('../fonts/Avenir-It.woff2') format('woff2'),
+        url('../fonts/Avenir-It.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'ub-avenir';
+    src: url('../fonts/Avenir-Regular.woff2') format('woff2'),
+        url('../fonts/Avenir-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+  margin: 0;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oyl-preview {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  max-width: 585px;
+  min-height: 225px;
+  padding-top: 22%;
+  background: black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  background-size: cover;
+
+  &:hover .oyl-preview__overlay {
+    opacity: 0.8;
+  }
+}
+
+.oyl-preview__overlay {
+  /* Rectangle 4: */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(-180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.81) 100%);
+
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.oyl-preview__container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  z-index: 200;
+
+  @media(min-width: 500px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  h3 {
+    font-family: 'ub-avenir', Avenir, serif;
+    font-size: 16px;
+    color: #F5A623;
+    letter-spacing: 1px;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin-bottom: 0;
+    margin-top: 0.25rem;
+    font-family: 'ub-avenir', Avenir, serif;
+    font-size: 36px;
+    color: #FFFFFF;;
+  }
+
+  p {
+    color: #fff;
+    padding: 0;
+    margin-top: 0.25rem;
+    font-family: 'ub-avenir', Avenir, serif;
+    margin-bottom: 0;
+  }
+}
+
+.js-sticky--fixed {
+  // Structure
+  position: fixed;
+  top: 0;
+}

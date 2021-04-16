@@ -1,0 +1,55 @@
+{% load static %}
+{% load dispatch_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'ubyssey/css/ethics-and-tech.css' %}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>{{ article.headline }} - The Ubyssey</title>
+    <!-- <link rel="canonical" href="{{ meta.url }}"> -->
+    <meta name="description" content="{{ meta.description }}" />
+    <meta name="author" content="Myla White" />
+  </head>
+  <body>
+    <div class="eit-test-bkg">
+    <header>
+      <div class="eit-header">
+        <div class="eit-header-top-style-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"> </span>
+          <div class="eit-header-logo">
+            <a href="https://www.ubyssey.ca"></a>
+          </div>
+        </div>
+        <div class="headline-container">
+          <h1 class="eit-headline">{{ article.headline|safe }}</h1>
+            {% if article.template_fields.snippet %}
+            <p class="eit-snippet">{{ article.template_fields.snippet }}</p>
+            {% endif %}
+            <!-- TODO: don't hardcode url ! -->
+            <p class="eit-byline normal">By <a class="eit-byline link" href="https://www.ubyssey.ca/authors/myla-white">Myla White</a> &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
+            <!-- For some reason this version includes ">" in byline on webpage
+            <p class="eit-byline normal">By <a class="eit-byline link" href={{ article.get_author_url|safe }} ></a> &nbsp;&middot;&nbsp; {{ article.published_at|date:'N j, Y' }}</p>
+            -->
+          </div>
+        </div>
+      </div>
+    </header>
+    <article>
+      <div class="eit-article-body">
+        {{ article.html|safe }}
+      </div>
+      <div class="eit-about">
+        <h3>About</h3>
+        {{ article.template_fields.about|safe }}
+      </div>
+    </article>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
