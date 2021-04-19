@@ -94,16 +94,6 @@ $dot-green:     #74BE45;
   box-shadow: 5px 5px 5px $dark-accent-1;
 }
 
-// .card:hover {
-//   transition: box-shadow .3s;
-//   // width: 300px;
-//   // height: 500px;
-//   // margin: 50px;
-//   // border-radius:10px;
-//   border: 1px solid #ccc;
-//   background: #fff;
-// }
-
 .btn {
   font-family: 'Azonix';
   color: $dark-purple;
@@ -125,9 +115,9 @@ $dot-green:     #74BE45;
   background-image:
     linear-gradient(to bottom, transparent, white),
     url('https://storage.googleapis.com/ubyssey/images/spring-2021-science-feature/BlueGrid.png');
-  //background-color: $dot-yellow;
   margin: 0 auto;
-  height: 600px;
+  height: auto;
+  min-height: 600px;
   display: block;
   z-index: 5;
   position: relative;
@@ -139,7 +129,6 @@ $dot-green:     #74BE45;
   font-size: 3.375em;
   width: 100%;
   max-width: 740px;
-  //text-shadow: 0 2px 0 rgba(0,0,0,0.42);
 }
 
 .eit-snippet {
@@ -282,11 +271,8 @@ $dot-green:     #74BE45;
   overflow: auto;
   width: 100%;
   max-width: 840px;
-  //margin: 40px auto;
   margin: 0 auto;
   padding-bottom: 1rem;
-  display: table;
-  height: 500px;
   border-radius: 5px;
   border: 2px solid $dark-accent-1;
   background: linear-gradient(to bottom right, $pastel-pink, $pastel-blue);
