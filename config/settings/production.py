@@ -2,6 +2,7 @@
 # Two Scoops of Django, p. 47: "For the singular case of Django setting modules we want to override all the namespace"
 # Therefore the below "import *" is correct
 from .base import *
+from google.oauth2 import service_account
 
 import environ
 
@@ -37,6 +38,10 @@ DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    "ubyssey-prd-ee6290e6327f.json"
+)
 
 GS_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
 GS_LOCATION = 'media'
