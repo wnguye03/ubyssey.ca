@@ -34,7 +34,7 @@ MIDDLEWARE += [
 ]
 
 # GCS File Storage - Production Only
-DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
