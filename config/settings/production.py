@@ -14,6 +14,7 @@ ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
     'ubyssey-prd.appspot.com',
+    'ubyssey-prd.uc.r.appspot.com',
 ]
 
 INSTALLED_APPS += [
