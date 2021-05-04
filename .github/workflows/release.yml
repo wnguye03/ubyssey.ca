@@ -66,6 +66,6 @@ jobs:
           export DJANGO_SETTINGS_MODULE="config.settings.production"
           pip install -I google-cloud-storage==1.13.2 -t lib/
       - name: Deploy to Google App Engine
-        uses: google-github-actions/deploy-appengine@master
+        uses: google-github-actions/deploy-appengine@main
         with:
           credentials: ${{ secrets.GCP_SA_KEY }}
