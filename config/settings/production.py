@@ -36,9 +36,9 @@ MIDDLEWARE += [
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
-GS_BUCKET_NAME = env('GS_SECRET_ACCESS_KEY')
+GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 
-GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+GS_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
