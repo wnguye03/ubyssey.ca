@@ -43,7 +43,8 @@ GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     "ubyssey-prd-ee6290e6327f.json"
 )
 
-GS_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+GS_BUCKET_NAME = GS_STORAGE_BUCKET_NAME # https://github.com/mirumee/saleor/issues/5222 see suggestion both these variables are needed
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
