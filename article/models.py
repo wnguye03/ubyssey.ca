@@ -3,14 +3,18 @@ from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+
+from wagtail.core import blocks
 from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField
+from wagtail.core.fields import RichTextField, StreamField
 
 # Create your models here.
 
 class ArticlePage(Page):
     template = "article/article_page.html"
-    article_content = RichTextField(
+    content = StreamField([
+            ('paragraph', blocks.RichTextBlock()),
+        ],
         null=True,
         blank=True,
     )
@@ -22,9 +26,9 @@ class ArticlePage(Page):
         on_delete=models.SET_NULL,
         related_name="+" # for when you're not using any special 
     )
-    featured_video = models.ForeignKey()
-    section = models.ForeignKey()
-    authors = models.ForeignKey()
+    # featured_video = models.ForeignKey()
+    # section = models.ForeignKey()n
+    # authors = models.ForeignKey()
     excerpt = RichTextField(
         # Was called "snippet" in Dispatch - do not want to 
         null=True,
@@ -47,6 +51,6 @@ class ArticlePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("article_content"),
+        StreamFieldPanel("content"),
         ImageChooserPanel("featured_image"),
     ]
