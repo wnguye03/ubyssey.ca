@@ -48,8 +48,8 @@ GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
-MEDIA_URL = 'https://storage.googleapis.com/ubyssey/media/'
-ADS_TXT_URL = 'https://storage.googleapis.com/ubyssey/media/ads.txt'
+MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
+ADS_TXT_URL = 'https://ubyssey.storage.googleapis.com/ads.txt'
 
 # Facebook - Production Only
 FACEBOOK_CLIENT_ID = env('FACEBOOK_CLIENT_ID')
