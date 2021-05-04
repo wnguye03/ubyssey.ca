@@ -36,15 +36,15 @@ MIDDLEWARE += [
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
-GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
+GS_BUCKET_NAME = env('GS_SECRET_ACCESS_KEY')
 
-GS_STORAGE_BUCKET_NAME = 'ubyssey'
+GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
 
-MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
-ADS_TXT_URL = 'https://ubyssey.storage.googleapis.com/ads.txt'
+MEDIA_URL = 'https://storage.googleapis.com/ubyssey/media/'
+ADS_TXT_URL = 'https://storage.googleapis.com/ubyssey/media/ads.txt'
 
 # Facebook - Production Only
 FACEBOOK_CLIENT_ID = env('FACEBOOK_CLIENT_ID')
