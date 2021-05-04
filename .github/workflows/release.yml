@@ -27,6 +27,7 @@ jobs:
       - name: Get Google Cloud credentials
         run: |
           echo $GCP_SA_KEY > client-secret.json
+          echo $GCP_MEDIA_SERVICE_ACCOUNT_CREDENTIALS > ubyssey-prd-ee6290e6327f.json
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       - name: Get .env file
