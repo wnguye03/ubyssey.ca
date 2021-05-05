@@ -256,8 +256,9 @@ class ArticleMixin(object):
         time_range = (start, end)
         trending_articles = articles.filter(
             published_at__range=(time_range),
-            views__gt=1000)
-
+            # views__gt=1000)   # Removed this because it's been so corrupted in the DB
+        )
+        
         if len(trending_articles) == 0:
             trending_article = None
         else:
