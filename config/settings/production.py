@@ -8,15 +8,11 @@ import environ
 
 env = environ.Env() #Scope issues without this line?
 
-BASE_URL = 'https://www.ubyssey.ca/'
-CANONICAL_DOMAIN = 'www.ubyssey.ca'
+BASE_URL = 'http://localhost:8000/'
 
-ALLOWED_HOSTS = [
-    'ubyssey.ca',
-    'www.ubyssey.ca',
-    'ubyssey-prd.appspot.com',
-    'ubyssey-prd.uc.r.appspot.com',
-]
+ALLOWED_HOSTS = ['localhost', '*']
+
+INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
 INSTALLED_APPS += [
 ]
@@ -42,7 +38,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file('ubyssey-prd-ee6290e6327f.json')
-GS_CREDENTIALS = env('GOOGLE_APPLICATION_CREDENTIALS')
+# GS_CREDENTIALS = env('GOOGLE_APPLICATION_CREDENTIALS')
 GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
 GS_BUCKET_NAME = GS_STORAGE_BUCKET_NAME # https://github.com/mirumee/saleor/issues/5222 see suggestion both these variables are needed
 GS_LOCATION = 'media'
