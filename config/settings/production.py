@@ -40,7 +40,7 @@ GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
 
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    "ubyssey-prd-ee6290e6327f.json"
+    os.path.join(BASE_DIR, 'ubyssey-prd-ee6290e6327f.json')
 )
 
 GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
