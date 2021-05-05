@@ -130,6 +130,8 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic', # uncomment for testing "production-like" serving of collected static files with DEBUG=False
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
+    'home',
+    'article',
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
     'newsletter.apps.NewsletterConfig',
@@ -254,7 +256,6 @@ MIDDLEWARE += [
 
 GS_LOCATION = None
 GS_STORAGE_BUCKET_NAME = None # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
-GS_BUCKET_NAME = GS_STORAGE_BUCKET_NAME
 GS_USE_SIGNED_URLS = False
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'

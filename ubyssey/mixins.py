@@ -229,7 +229,9 @@ class ArticleMixin(object):
             time_range = (start, end)
             articles = articles.filter(published_at__range=(time_range))
 
-        return articles.order_by('-views')
+        # return articles.order_by('-views')
+        return articles.order_by('-published_at')
+
 
     def get_suggested(self, article):
         """Returns the suggested articles for a current article"""
@@ -256,7 +258,8 @@ class ArticleMixin(object):
         time_range = (start, end)
         trending_articles = articles.filter(
             published_at__range=(time_range),
-            views__gt=1000)
+            # views__gt=1000)   # Removed this because it's been so corrupted in the DB
+        )
 
         if len(trending_articles) == 0:
             trending_article = None

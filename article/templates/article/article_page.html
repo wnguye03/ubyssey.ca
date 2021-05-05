@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailuserbar %}
+
+{% block content %}
+    {% image self.featured_image max-320x200 %}
+    {{ self.content|richtext }}
+{% endblock %}
+
+{% wagtailuserbar %}

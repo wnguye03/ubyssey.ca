@@ -4,7 +4,7 @@ WORKDIR /workspaces/ubyssey.ca/
 # Installs some basics
 RUN apt-get update
 RUN apt-get install -y git
-RUN apt-get install curl
+RUN apt-get install -y curl
 # Installs Node 14.x and npm 6.x
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
