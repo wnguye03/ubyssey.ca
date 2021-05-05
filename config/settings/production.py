@@ -9,7 +9,6 @@ import environ
 env = environ.Env() #Scope issues without this line?
 
 BASE_URL = 'https://www.ubyssey.ca/'
-BASE_URL = 'http://localhost:8000/'
 
 ALLOWED_HOSTS = ['localhost', '*']
 
