@@ -7,7 +7,7 @@
     <div class="frontpage">
       <div class="frontpage__columns">
         <div class="cell left">
-        {% if articles.trending %}
+        {% comment %} {% if articles.trending %}
           <div class="o-trending-article">
           {% with articles.trending as trending_article %}
             <span>
@@ -20,14 +20,14 @@
             </article>
           {% endwith %}
           </div>
-        {% else %}
-          {% with articles.secondary as article %}
-            <article class="secondary padded">
-                <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
-                <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
-            </article>
-          {% endwith %}
-        {% endif %}
+        {% else %} {% endcomment %}
+        {% with articles.secondary as article %}
+          <article class="secondary padded">
+              <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
+              <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
+          </article>
+        {% endwith %}
+        {% comment %} {% endif %} {% endcomment %}
         {% include 'objects/advertisement.html' with size='box' name='Box_A' class='mobile-frontpage-box' id=2 %}
         {% for article in articles.thumbs %}
             <article class="thumb row padded">

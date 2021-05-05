@@ -62,7 +62,7 @@ class HomePageView(ArticleMixin, TemplateView):
         )
         frontpage = list(frontpage)
 
-        trending_article = self.get_trending()
+        # trending_article = self.get_trending()
         try:
             #TODO: fail more gracefully!
             articles = {
@@ -71,7 +71,7 @@ class HomePageView(ArticleMixin, TemplateView):
                 'thumbs': frontpage[2:4],
                 'bullets': frontpage[4:6],
                 # Get random trending article
-                'trending': trending_article,
+                # 'trending': trending_article,
                 'breaking': context['breaking']
              }
         except IndexError:
