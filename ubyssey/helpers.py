@@ -229,7 +229,8 @@ class ArticleHelper(object):
             time_range = (start, end)
             articles = articles.filter(created_at__range=(time_range))
 
-        return articles.order_by('-views')
+        # return articles.order_by('-views')
+        return articles.order_by('-published_at')
 
     @staticmethod
     def get_suggested(article):
