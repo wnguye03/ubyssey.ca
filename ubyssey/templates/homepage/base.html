@@ -34,14 +34,14 @@
             <!-- {% include 'homepage/blocks/section_2.html' with section="themainmaller" articles=sections.themainmaller %} -->
         </div>
         <div class="sidebar-home">
-            <div class="popular sidebar-block">
+            {% comment %} <div class="popular sidebar-block">
               <h2 class="block-title">Most popular this week</h2>
               <ol class="article-list">
                   {% for article in popular %}
                   <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
                   {% endfor %}
               </ol>
-            </div>
+            </div> {% endcomment %}
             <div class="sidebar-block sidebar-block--advertisement">
               {% include 'objects/advertisement.html' with size='box' name='Box_A' id=4 %}
             </div>

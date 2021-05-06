@@ -214,7 +214,11 @@ class ArticleMixin(object):
         return results
 
     def get_popular(self, dur='week'):
-        """Returns the most popular articles in the time period."""
+        """
+        WARNING: views count broken, TODO rework this logic
+
+        Returns the most popular articles in the time period.
+        """
 
         durations = {
             'week': 7,

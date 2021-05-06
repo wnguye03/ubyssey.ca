@@ -154,7 +154,7 @@ class HomePageView(ArticleMixin, TemplateView):
         }
 
         #set all the parts of the context that only need a single line
-        context['popular'] = self.get_popular()[:5]
+        # context['popular'] = self.get_popular()[:5]
         context['blog'] = list(self.get_frontpage_qs(sections=['blog'], limit=5))
         context['day_of_week'] = datetime.now().weekday()
         return context
