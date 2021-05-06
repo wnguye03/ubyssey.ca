@@ -4,7 +4,7 @@
 {% block content %}
 <div class='bottom-banner-wrapper'>
   <div class='bottom-banner-container'>
-    <div class='area-1'>
+    {% comment %} <div class='area-1'>
       <div class='sa-container-outer'>
         <h2 class='bottom-banner__title'>Suggested Articles</h2>
         <div class='sa-container-inner'>
@@ -13,15 +13,15 @@
           {% endfor %}
         </div>
       </div>
-    </div>
-    <div class="popular sidebar-block area-2">
+    </div> {% endcomment %}
+    {% comment %} <div class="popular sidebar-block area-2">
       <h2 class="bottom-banner__title">Most popular this week</h2>
       <ol class="article-list">
           {% for article in popular %}
           <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
           {% endfor %}
       </ol>
-    </div>
+    </div> {% endcomment %}
   </div>
 </div>
 {% endblock %}
