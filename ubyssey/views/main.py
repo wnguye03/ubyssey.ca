@@ -57,8 +57,6 @@ class HomePageView(ArticleMixin, TemplateView):
             max_days=7
         ).select_related(
             'section'
-        ).prefetch_related(
-            'authors', 'authors__person'
         )
         frontpage = list(frontpage)
 
