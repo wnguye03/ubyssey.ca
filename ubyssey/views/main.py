@@ -53,16 +53,12 @@ class HomePageView(ArticleMixin, TemplateView):
 
         #set 'articles' section of context. Do some speed optimization for getting sections later
         frontpage = self.get_frontpage_qs(
-            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science', 'themainmaller'),
+            sections=('news', 'culture', 'opinion', 'sports', 'features', 'science'),
             max_days=7
         ).select_related(
             'section'
-        ).prefetch_related(
-            'authors', 'authors__person'
         )
         frontpage = list(frontpage)
-
-        # trending_article = self.get_trending()
         try:
             #TODO: fail more gracefully!
             articles = {
@@ -87,72 +83,16 @@ class HomePageView(ArticleMixin, TemplateView):
         #set 'is_mobile' entry of context
         context['is_mobile'] = self.is_mobile
 
-        #set 'podcast' entry of context
-        try:
-            podcast = Podcast.objects.all()[:1].get()
-            podcast_url = PodcastHelper.get_podcast_url(podcast.id)
-        except:
-            podcast = None
-            podcast_url = None
-
-        episode_list = None
-        episode_urls = []
-        episodes = None
-
-        if (podcast):
-            try:
-                episode_list = PodcastEpisode.objects.filter(podcast_id=podcast.id).order_by('-published_at')
-            except:
-                episode_list = None
-            if episode_list:
-                for episode in episode_list:
-                    episode_urls += [PodcastHelper.get_podcast_episode_url(episode.podcast_id, episode.id)]
-
-            episodes = list(zip(episode_list, episode_urls))
-
-        podcast_obj = None
-        if podcast and episode_list:
-            podcast_obj = { 'title': podcast.title, 'url': podcast_url, 'episodes': {'first': episodes[0], 'rest': episodes[1:4]} }
-        context['podcast'] = podcast_obj
-
-        #set 'video' entry of context
-        video_obj = { 'url': VideoHelper.get_video_page_url(), 'videos': {'first': [], 'rest':[]} }
-        video_list = None
-        video_urls = []
-        videos = None
-        
-        try:
-            video_list = Video.objects.prefetch_related('authors').order_by('-created_at')[:4]
-        except:
-            video_list = None
-        if video_list:
-            for index, video in enumerate(video_list):
-                video_list[index].videoAuthors = []
-                for author in video.authors.select_related('person').all():
-                    person_id = Author.objects.get(id=author.id).person_id
-                    person = Person.objects.get(id=person_id)
-                    video_list[index].videoAuthors.append({'name': person.full_name, 'link': VideoHelper.get_media_author_url(person.slug)})
-
-                match = self.youtube_regex.match(video.url)
-                if match:
-                    video_list[index].youtube_slug = match.group('id')
-                else:
-                    raise FieldError("Could not parse youtube slug from given url: %s", video.url)
-                video_list[index].numAuthors = len(video.videoAuthors)
-                video_urls += [VideoHelper.get_video_url(video.id)]
-            videos = list(zip(video_list, video_urls))
-            video_obj['videos'] =  { 'first': videos[0], 'rest': videos[1:4] } 
-        context['video'] = video_obj
-
+        context['podcast'] = None
+        context['video'] = None
         #set 'meta' entry of context
         context['meta'] = {
                 'title': context['title'],
                 'description': 'Weekly student newspaper of the University of British Columbia.',
                 'url': settings.BASE_URL
         }
-
         #set all the parts of the context that only need a single line
-        context['popular'] = self.get_popular()[:5]
+        # context['popular'] = self.get_popular()[:5]
         context['blog'] = list(self.get_frontpage_qs(sections=['blog'], limit=5))
         context['day_of_week'] = datetime.now().weekday()
         return context
@@ -251,11 +191,19 @@ class ArticleView(DispatchPublishableViewMixin, ArticleMixin, DetailView):
         # set the rest of the context
         context['article'] = self.object
         context['base_template'] = 'base.html'
+
         context['meta'] = self.get_article_meta()
-        context['popular'] = self.get_popular()[:5]
-        context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur) # Dependent on get_frontpage, get_popular, get_related 
-        context['reading_time'] = self.get_reading_time(self.object)
-        context['suggested'] = self.get_suggested(self.object)[:3]
+
+        # troublesome elements TODO FIX!!
+        context['popular'] = None
+        context['reading_list'] = None
+        context['reading_time'] = None
+        context['suggested'] = None
+
+        # context['popular'] = self.get_popular()[:5]
+        # context['reading_list'] = self.get_reading_list(self.object, ref=self.ref, dur=self.dur) # Dependent on get_frontpage, get_popular, get_related 
+        # context['reading_time'] = self.get_reading_time(self.object)
+        # context['suggested'] = self.get_suggested(self.object)[:3]
         # context['suggested'] = lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
 
         return context

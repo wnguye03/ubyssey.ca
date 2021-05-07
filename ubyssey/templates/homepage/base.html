@@ -23,34 +23,34 @@
     <div class="homepage-section row">
         <div class="sections">  
             {% include 'homepage/blocks/section_1.html' with section="news" articles=sections.news %}
-            {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
+            {% comment %} {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
             {% include 'homepage/blocks/section_2.html' with section="sports" articles=sections.sports %}
             {% include 'homepage/blocks/section_2.html' with section="opinion" articles=sections.opinion %}
             {% include 'homepage/blocks/section_2.html' with section="features" articles=sections.features %}
             {% include 'homepage/blocks/section_2.html' with section="science" articles=sections.science %}
-            {% include 'homepage/blocks/section_videos.html' with section="videos" video=video %}
+            {% include 'homepage/blocks/section_videos.html' with section="videos" video=video %} {% endcomment %}
             <!-- {% include 'homepage/blocks/section_podcast.html' with section="podcast" podcast=podcast %}-->
-            {% include 'homepage/blocks/section_2.html' with section="magazine" articles=sections.magazine %}
+            {% comment %} {% include 'homepage/blocks/section_2.html' with section="magazine" articles=sections.magazine %} {% endcomment %}
             <!-- {% include 'homepage/blocks/section_2.html' with section="themainmaller" articles=sections.themainmaller %} -->
         </div>
         <div class="sidebar-home">
-            <div class="popular sidebar-block">
+            {% comment %} <div class="popular sidebar-block">
               <h2 class="block-title">Most popular this week</h2>
               <ol class="article-list">
                   {% for article in popular %}
                   <li><h4 class="headline"><a href="{{ article.get_absolute_url }}?ref=popular&dur=week">{{ article.headline|safe }}</a></h4></li>
                   {% endfor %}
               </ol>
-            </div>
+            </div> {% endcomment %}
             <div class="sidebar-block sidebar-block--advertisement">
               {% include 'objects/advertisement.html' with size='box' name='Box_A' id=4 %}
             </div>
-            <div class=" sidebar-block">
+            {% comment %} <div class=" sidebar-block">
               <h2 class="block-title">Lost Dog on UBC Campus</h2>
               <div class='special_poster'>
               <a class='poster' id='poster' href="https://storage.googleapis.com/ubyssey/media/images/2020/11/lost_dog_poster2.jpg"><img src="{% static 'ubyssey/images/lost_dog_poster.png' %}" alt="Lost dog poster"></a>
               </div>
-            </div>
+            </div> {% endcomment %}
             <div class=" sidebar-block">
                 <h2 class="block-title">Check Out Our Digital Print Issue</h2>
                 <div class='sidebar-issue'>

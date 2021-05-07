@@ -97,30 +97,7 @@ class ArticleMixin(object):
         return ad_placements
 
     def get_frontpage_qs(self, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
-
-        reading_times = {
-            'morning_start': '9:00:00',
-            'midday_start': '11:00:00',
-            'midday_end': '16:00:00',
-            'evening_start': '16:00:00',
-        }
-        timeformat = '%H:%M:%S'
-        articles = Article.objects.annotate(
-            age = ExpressionWrapper(
-                F('published_at') - timezone.now(),
-                output_field=DurationField()
-            ),
-            reading = Case( 
-                When(reading_time='morning', then=1.0 if timezone.now().time() < datetime.strptime(reading_times['morning_start'],timeformat).time() else 0.0),
-                When(reading_time='midday', 
-                    then=1.0 if (
-                        timezone.now().time() >= datetime.strptime(reading_times['midday_start'],timeformat).time() and timezone.now().time() < datetime.strptime(reading_times['midday_start'],timeformat).time()
-                    )  else 0.0),
-                When(reading_time='evening', then=1.0 if timezone.now().time() <= datetime.strptime(reading_times['evening_start'],timeformat).time() else 0.0),
-                default = Value(0.5),
-                output_field=FloatField()
-            ),
-        ).filter(
+        articles = Article.objects.filter(
             head=1,
             is_published=is_published,
             section__slug__in=sections # See this link for why you can do this instead of SQL joining: https://docs.djangoproject.com/en/3.0/topics/db/queries/#lookups-that-span-relationships
@@ -214,7 +191,11 @@ class ArticleMixin(object):
         return results
 
     def get_popular(self, dur='week'):
-        """Returns the most popular articles in the time period."""
+        """
+        WARNING: views count broken, TODO rework this logic
+
+        Returns the most popular articles in the time period.
+        """
 
         durations = {
             'week': 7,
