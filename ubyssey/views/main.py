@@ -6,7 +6,7 @@ import logging
 
 from itertools import chain
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
@@ -33,6 +33,18 @@ def parse_int_or_none(maybe_int):
 
 def ads_txt(request):
     return redirect(settings.ADS_TXT_URL)
+
+
+class HomePageAJAX(TemplateView):
+    """
+    Based off: https://stackoverflow.com/questions/8059160/django-apps-using-class-based-views-and-ajax
+    """
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.is_ajax():
+            return JsonResponse({'foo': 'bar'})
+        else:
+            return Http404
 
 class HomePageView(ArticleMixin, TemplateView):
     """
