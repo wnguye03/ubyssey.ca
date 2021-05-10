@@ -23,12 +23,12 @@
     <div class="homepage-section row">
         <div class="sections">  
             {% include 'homepage/blocks/section_1.html' with section="news" articles=sections.news %}
-            {% comment %} {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
+            {% include 'homepage/blocks/section_2.html' with section="culture" articles=sections.culture %}
             {% include 'homepage/blocks/section_2.html' with section="sports" articles=sections.sports %}
             {% include 'homepage/blocks/section_2.html' with section="opinion" articles=sections.opinion %}
             {% include 'homepage/blocks/section_2.html' with section="features" articles=sections.features %}
             {% include 'homepage/blocks/section_2.html' with section="science" articles=sections.science %}
-            {% include 'homepage/blocks/section_videos.html' with section="videos" video=video %} {% endcomment %}
+            {% include 'homepage/blocks/section_videos.html' with section="videos" video=video %}
             <!-- {% include 'homepage/blocks/section_podcast.html' with section="podcast" podcast=podcast %}-->
             {% comment %} {% include 'homepage/blocks/section_2.html' with section="magazine" articles=sections.magazine %} {% endcomment %}
             <!-- {% include 'homepage/blocks/section_2.html' with section="themainmaller" articles=sections.themainmaller %} -->
