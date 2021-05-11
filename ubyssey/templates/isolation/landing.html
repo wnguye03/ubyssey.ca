@@ -16,7 +16,7 @@
         </div>
         <div class="isolation-row">
             {% include 'isolation/article-box.html' with type=1 title=Title1 subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
-            {% include 'isolation/article-box.html' with type=2 title=Title2 subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=Title2 subsection=subsection slug=article.slug image=article.featured_image.image.get_absolute_url%}
         </div>
         <div class="isolation-row">
             {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
@@ -24,7 +24,7 @@
         </div>
         <div class="isolation-row">
             {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
-        {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
         </div>
         <div class="isolation-row">
             {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article.slug  image=article.featured_image.image.get_absolute_url%}
