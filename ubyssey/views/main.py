@@ -618,9 +618,33 @@ class TopicView(DetailView):
         return context
 
 class IsolationView(TemplateView):
+    """
+    Ugly, unreusable View for "Isolation" special feature. Do not use this View for anything else!
+
+    TODO: replace with general landing pages
+    """
+    
     template_name = 'isolation/landing.html'
     def get_context_data(self, **kwargs):
-        context = {}
+        context = super().get_context_data(**kwargs)
+
+        articles_qs = Article.objects.filter(
+            # is_published=True, 
+            section__slug='culture',
+            subsection__slug='isolation',
+        )
+        try:
+            context['article1'] = articles_qs.get(head=True, slug='boredom-and-binging')
+            context['article2'] = articles_qs.get(head=True, slug='in-full-bloom')
+            context['article3'] = articles_qs.get(head=True, slug='temperature-checks')
+            context['article4'] = articles_qs.get(head=True, slug='a-breath-of-fresh-air')
+            context['article5'] = articles_qs.get(head=True, slug='paradise-found')
+            context['article6'] = articles_qs.get(head=True, slug='under-water')
+            context['article7'] = articles_qs.get(head=True, slug='healing-wounds')
+            context['article8'] = articles_qs.get(head=True, slug='feeling-raw')
+        except Article.DoesNotExist:
+            print("Did not find one of the Isolation articles in the db!\n")
+
         return context
 
 class UbysseyTheme:
