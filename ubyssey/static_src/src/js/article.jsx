@@ -30,32 +30,32 @@ $(function () {
         <CookieDisclaimer />,
         document.getElementById('cookie-disclaimer')
     )
-    $('.c-timeline').each(function() {
+    $('.c-timeline').each(function () {
         ReactDOM.render(
-            <Timeline   id={$(this).data('currentArticleId')}
-                        title={$(this).data('timelineTitle')}
-                        nodes={$(this).data('nodes')} />,
+            <Timeline id={$(this).data('currentArticleId')}
+                title={$(this).data('timelineTitle')}
+                nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })
-    $('.c-soccer-nationals').each(function() {
+    $('.c-soccer-nationals').each(function () {
         ReactDOM.render(
-            <Nationals  id={$(this).data('currentArticleId')}
-                        map={$(this).data('map')} 
-                        teamData={$(this).data('teamData')} />,
+            <Nationals id={$(this).data('currentArticleId')}
+                map={$(this).data('map')}
+                teamData={$(this).data('teamData')} />,
             $(this).get(0)
         )
     })
-    $('.c-podcast-episode').each(function() {
+    $('.c-podcast-episode').each(function () {
         ReactDOM.render(
-            <Episode    author = {$(this).data('author')}
-                        description = {$(this).data('description')}
-                        file = {$(this).data('file')}
-                        image = {$(this).data('image')}
-                        publishedAt = {$(this).data('published_at')}
-                        id = {$(this).data('id')}
-                        title = {$(this).data('title')}
-                        />,
+            <Episode author={$(this).data('author')}
+                description={$(this).data('description')}
+                file={$(this).data('file')}
+                image={$(this).data('image')}
+                publishedAt={$(this).data('published_at')}
+                id={$(this).data('id')}
+                title={$(this).data('title')}
+            />,
             $(this).get(0)
         )
     })
@@ -164,17 +164,17 @@ if ($('main.article').length) {
                     const element = {
                         element: $(this),
                         index: index,
-                        offset: $(this).offset().top + $('#content-wrapper').scrollTop() + index * adSpace/stickyElementLength,
+                        offset: $(this).offset().top + $('#content-wrapper').scrollTop() + index * adSpace / stickyElementLength,
                         dropoff: null,
                         height: $(this).height(),
-                        scrollDistance: adSpace/stickyElementLength
+                        scrollDistance: adSpace / stickyElementLength
                     }
                     stickyElements.push(element)
                 })
 
                 // Adjust last sticky element's offset
                 if (stickyElements.length > 1) {
-                    stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height/2
+                    stickyElements[stickyElements.length - 1].offset = stickyElements[stickyElements.length - 1].offset - stickyElements[stickyElements.length - 1].height / 2
                 }
 
                 // Sticky Ads
@@ -188,69 +188,75 @@ if ($('main.article').length) {
 
     articleAds()
 
-    if(document.getElementById('article-list') !== null) {
+    if (document.getElementById('article-list') !== null) {
         const articleList = ReactDOM.render(
             <ArticlesSuggested
-            breakpoint={960}
-            name={listName}
-            currentArticle={firstArticle}
-            articles={articleIds}
-            userId={userId} />,
+                breakpoint={960}
+                name={listName}
+                currentArticle={firstArticle}
+                articles={articleIds}
+                userId={userId} />,
             document.getElementById('article-list')
         );
     }
+
 
     const gatherImages = (gallery) => {
         var selector, trigger;
 
         if (gallery) {
-          const id = $(gallery).data("id");
-          selector = `#gallery-${id} .gallery-image`;
-          trigger = `#gallery-${id} .gallery-thumb`;
+            const id = $(gallery).data("id");
+            selector = `#gallery-${id} .gallery-image`;
+            trigger = `#gallery-${id} .gallery-thumb`;
         } else {
-          selector = `#article-${articleId} .article-attachment`;
-          trigger = `#article-${articleId} .article-attachment`;
+            selector = `#article-${articleId} .article-attachment`;
+            trigger = `#article-${articleId} .article-attachment`;
         }
 
         const images = $(selector).map((_, el) => {
-          const $el = $(el);
-          return {
-            id: $el.data('id'),
-            url: $el.data('url'),
-            style: $el.data('style'),
-            caption: $el.data('caption'),
-            credit: $el.data('credit'),
-            width: $el.width(),
-            height: $el.height()
-          };
+            const $el = $(el);
+            return {
+                id: $el.data('id'),
+                url: $el.data('url'),
+                style: $el.data('style'),
+                caption: $el.data('caption'),
+                credit: $el.data('credit'),
+                width: $el.width(),
+                height: $el.height()
+            };
         }).get();
 
         const imagesTable = images.reduce((table, image, i) => {
-          table[image.id] = i;
-          return table;
+            table[image.id] = i;
+            return table;
         }, {});
 
         return {
-          selector,
-          trigger,
-          title: gallery ? $(gallery).data('id') : 'Images',
-          list: images,
-          table: imagesTable,
+            selector,
+            trigger,
+            title: gallery ? $(gallery).data('id') : 'Images',
+            list: images,
+            table: imagesTable,
         };
-      };
+    };
 
 
     const galleries = [
         gatherImages(),
         ...$(`#article-${articleId} .gallery-attachment`)
-          .map((_, elem) => gatherImages(elem)).get()
-      ];
+            .map((_, elem) => gatherImages(elem)).get()
+    ];
+
+
 
     const gallery = ReactDOM.render(
         <Galleries galleries={galleries} />,
         document.getElementById('gallery')
     );
+
+
 }
+
 
 ReactDOM.render(
     <Search />,

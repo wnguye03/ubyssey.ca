@@ -1,6 +1,3 @@
-
-
-
 <div id="gallery-{{ id }}" data-id="{{ id }}" data-title="{{ title }}" class="gallery-attachment attachment">
     <div class="gallery-cover">
         <img class="gallery-thumb" data-id="{{ cover.id }}" src="{{ cover.image.get_medium_url }}" alt="Our gallery"/>
@@ -21,4 +18,3 @@
         {% for attachment in images %}<div class="gallery-image" data-id="{{ attachment.id }}" data-url="{{ attachment.image.get_medium_url }}" data-caption="{{ attachment.caption|safe }}"></div>{% endfor %}
     </div>
 </div>
-
