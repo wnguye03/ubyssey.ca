@@ -17,7 +17,8 @@ class SpecialLandingPage(Page):
     """
     template = "specialfeatureslanding/base.html"
     body = StreamField([
-        ("dispatch_article", specblocks.DispatchArticleBlock())
+        ("dispatch_article", specblocks.DispatchArticleBlock()),
+        ("dispatch_article_chooser", specblocks.DispatchArticleChooserBlock()),
         # ("dispatch_article",blocks.CharBlock(help_text="Type the SLUG of an article to be included here", validators=[validators.validate_published_article])),
         ], #end StreamField
         null=True,

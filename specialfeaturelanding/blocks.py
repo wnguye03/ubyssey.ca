@@ -29,3 +29,11 @@ class DispatchArticleBlock(blocks.StructBlock):
 
     class Meta:
         template = "specialfeatureslanding/blocks/article-box.html"
+
+
+class DispatchArticleChooserBlock(blocks.ChooserBlock):
+    target_model = Article
+    widget = forms.Select 
+
+    class Meta:
+        template = "specialfeatureslanding/blocks/article-box.html"
