@@ -1,27 +1,19 @@
 from datetime import datetime
-import random
 import json
 import re
-import logging
 
 from itertools import chain
 
 from django.http import HttpResponse, Http404, JsonResponse
-from django.template import loader
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.conf import settings
-from django.core.exceptions import FieldError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from django.templatetags.static import static
-from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Subsection, Topic, Page, Person, Podcast, PodcastEpisode, Video, Author, Image
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-import ubyssey
-import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
 from ubyssey.mixins import ArticleMixin, ArchiveListViewMixin, DispatchPublishableViewMixin, SectionMixin, SubsectionMixin
 
@@ -618,9 +610,33 @@ class TopicView(DetailView):
         return context
 
 class IsolationView(TemplateView):
+    """
+    Ugly, unreusable View for "Isolation" special feature. Do not use this View for anything else!
+
+    TODO: replace with general landing pages
+    """
+    
     template_name = 'isolation/landing.html'
     def get_context_data(self, **kwargs):
-        context = {}
+        context = super().get_context_data(**kwargs)
+
+        articles_qs = Article.objects.filter(
+            # is_published=True, 
+            section__slug='culture',
+            subsection__slug='isolation',
+        )
+        try:
+            context['article1'] = articles_qs.get(head=True, slug='boredom-and-binging')
+            context['article2'] = articles_qs.get(head=True, slug='in-full-bloom')
+            context['article3'] = articles_qs.get(head=True, slug='temperature-checks')
+            context['article4'] = articles_qs.get(head=True, slug='a-breath-of-fresh-air')
+            context['article5'] = articles_qs.get(head=True, slug='paradise-found')
+            context['article6'] = articles_qs.get(head=True, slug='under-water')
+            context['article7'] = articles_qs.get(head=True, slug='healing-wounds')
+            context['article8'] = articles_qs.get(head=True, slug='feeling-raw')
+        except Article.DoesNotExist:
+            print("Did not find one of the Isolation articles in the db!\n")
+
         return context
 
 class UbysseyTheme:

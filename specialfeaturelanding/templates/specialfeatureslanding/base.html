@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% comment %}base.html found in ubyssey app{% endcomment %}
+{% load static %}
+{% load dispatch_tags %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+  {% for block in page.body %}
+    {% include_block block %}
+  {% endfor %}
+{% endblock %}
