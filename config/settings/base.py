@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'home',
     'article',
+    'specialfeaturelanding',
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
     'newsletter.apps.NewsletterConfig',
