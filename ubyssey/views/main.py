@@ -1,27 +1,19 @@
 from datetime import datetime
-import random
 import json
 import re
-import logging
 
 from itertools import chain
 
 from django.http import HttpResponse, Http404, JsonResponse
-from django.template import loader
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.conf import settings
-from django.core.exceptions import FieldError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from django.templatetags.static import static
-from django_user_agents.utils import get_user_agent
 
 from dispatch.models import Article, Section, Subsection, Topic, Page, Person, Podcast, PodcastEpisode, Video, Author, Image
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-import ubyssey
-import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, SubsectionHelper, PodcastHelper, NationalsHelper, FoodInsecurityHelper, VideoHelper
 from ubyssey.mixins import ArticleMixin, ArchiveListViewMixin, DispatchPublishableViewMixin, SectionMixin, SubsectionMixin
 

@@ -1,11 +1,11 @@
 
-<div class="article-box{% if style %}--{{ style }}{% endif %}{% if type %} type-{{ type }}{% endif %}" style="background-image: url('/media/images/2020/11/tiannerawmeat-mayarodrigo-abdi.png');">
+<div class="article-box{% if style %}--{{ style }}{% endif %}{% if type %} type-{{ type }}{% endif %}" style="background-image: url('{{image}}');">
     <nav class="article-box{% if style %}--{{ style }}{% endif %}-container">
-        <a class="article-box--nav" href="#">
+        <a class="article-box--nav" href="{{ url }}">
             <div class="article-box-gradient"></div>
             <div class='title'>
-                <p class='title'>Temperature Checks</p>
-                <p class='author'>By samantha raw</p>
+                <p class='title'>{{ title }}</p>
+                <p class='author'>By {{ authors }}</p>
             </div>
         </a>
         

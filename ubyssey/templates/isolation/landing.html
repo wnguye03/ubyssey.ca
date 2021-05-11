@@ -15,20 +15,20 @@
             <p>This is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph</p>
         </div>
         <div class="isolation-row">
-            {% include 'isolation/article-box.html' with type=1 title=Title1 subsection=subsection slug=article1.slug image=article1.featured_image.image.get_absolute_url%}
-            {% include 'isolation/article-box.html' with type=2 title=Title2 subsection=subsection slug=article2.slug image=article2.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article1.headline authors=article1.authors url=article1.get_absolute_url image=article1.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article2.headline authors=article2.authors url=article2.get_absolute_url image=article2.featured_image.image.get_absolute_url%}
         </div>
         <div class="isolation-row">
-            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article3.slug  image=article4.featured_image.image.get_absolute_url%}
-            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article4.slug  image=article4.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article3.headline authors=article3.authors url=article3.get_absolute_url  image=article4.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article4.headline authors=article4.authors url=article4.get_absolute_url  image=article4.featured_image.image.get_absolute_url%}
         </div>
         <div class="isolation-row">
-            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article5.slug  image=article5.featured_image.image.get_absolute_url%}
-            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article6.slug  image=article6.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article5.headline authors=article5.authors url=article5.get_absolute_url  image=article5.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article6.headline authors=article6.authors url=article6.get_absolute_url  image=article6.featured_image.image.get_absolute_url%}
         </div>
         <div class="isolation-row">
-            {% include 'isolation/article-box.html' with type=2 title=article.headline subsection=subsection slug=article7.slug  image=article7.featured_image.image.get_absolute_url%}
-            {% include 'isolation/article-box.html' with type=1 title=article.headline subsection=subsection slug=article8.slug  image=article8.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=2 title=article7.headline authors=article7.authors url=article7.get_absolute_url  image=article7.featured_image.image.get_absolute_url%}
+            {% include 'isolation/article-box.html' with type=1 title=article8.headline authors=article8.authors url=article8.get_absolute_url  image=article8.featured_image.image.get_absolute_url%}
         </div>
     </main>
      
