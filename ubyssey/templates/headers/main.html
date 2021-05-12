@@ -30,7 +30,18 @@
           <ul class="sections">
             <!-- <li><a href="{% url 'section' 'themainmaller' %}">The Main Maller</a></li> -->
             <li><a href="{% url 'section' 'news' %}">News</a></li>
-            <li><a href="{% url 'section' 'culture' %}">Culture</a></li>
+            <li {% if section == 'culture' %} class="current" {% endif %} id="culture-sections-more-dropdown" >  
+            <a>Culture</a>
+              <ul class="culture-sections-more">
+                  <li>
+                        <a href="{% url 'section' 'culture' %}">Culture</a>
+                  </li>
+                  <li>
+                      <a href="{% url 'isolation' %}">Isolation </a>
+                  </li>
+                </ul>
+         
+            </li>
             <li><a href="{% url 'section' 'features' %}">Features</a></li>
             <li><a href="{% url 'section' 'opinion' %}">Opinion</a></li>
             <li><a href="{% url 'section' 'sports' %}">Sports</a></li>
