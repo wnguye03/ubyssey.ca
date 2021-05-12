@@ -10,8 +10,8 @@
 {% block banner %}
     <div class="isolation-header">
         <div class="isolation-header--container">
-            <a class="isolation-header--nav left" href="ubyssey.ca">Stories from self isolation</a>
-            <a class="isolation-header--nav right" href="ubyssey.ca"></a>
+            <a class="isolation-header--nav left" href="/self-isolation/">Stories from self isolation</a>
+            <a class="isolation-header--nav right" href="/"></a>
         </div>
     </div>
     {% with article.template_fields.header_layout as header_layout %}
@@ -49,9 +49,9 @@
             <div class="header-container">
                 <div class="featured-media">
                     <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
-                    {% if article.featured_image.caption or article.featured_image.credit %}
+                    {% if article.featured_image.credit %}
                     <div class="caption">
-                      {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
+                      {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -76,7 +76,7 @@
             <div class="banner-image">
                 <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
                 <div class="headline-container">
-                    {% if article.featured_image.caption or article.featured_image.credit %}
+                    {% if article.featured_image.credit %}
                         <div class="caption">
                 	        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
                         </div>
@@ -110,7 +110,7 @@
 {% endif %}
 
 {% block pre-content %}
-<h1 class="headline">{{ article.headline|safe }}</h1>
+{% comment %} <h1 class="headline">{{ article.headline|safe }}</h1> {% endcomment %}
 {% endblock %}
 
 {% block post-content %}
@@ -120,17 +120,17 @@
 {% block right-column %}
     <div class="right-column">
         <div class="sidebar">
-            {% zone 'article-sidebar' %}
+            {% comment %} {% zone 'article-sidebar' %}
             {% if explicit is not True %}
-            {% if reading_time >= 3 %}
-                {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
-                {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
+                {% if reading_time >= 3 %}
+                    {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
+                    {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
+                {% else %}
+                    {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+                {% endif %}
             {% else %}
-                {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
-            {% endif %}
-            {% else %}
-            {% include 'objects/replacement.html' with size='box' %}
-            {% endif %}
+                {% include 'objects/replacement.html' with size='box' %}
+            {% endif %} {% endcomment %}
         </div>
     </div>
 {% endblock %}

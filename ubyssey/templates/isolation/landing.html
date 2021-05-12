@@ -12,7 +12,7 @@
     
     <main class="section-flex-container">
         <div class="isolation-description">
-            <p>This is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph</p>
+            {% comment %} <p>This is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph his is a paragraph</p> {% endcomment %}
         </div>
         <div class="isolation-row">
             {% include 'isolation/article-box.html' with type=1 title=article1.headline authors=article1.get_author_string url=article1.get_absolute_url image=article1.featured_image.image.get_absolute_url%}
