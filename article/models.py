@@ -1,3 +1,5 @@
+from wagtail.core.blocks.field_block import TextBlock
+from . import blocks as articleblocks
 from dispatch.models import Article
 from django.db import models
 
@@ -13,7 +15,23 @@ from wagtail.core.fields import RichTextField, StreamField
 class ArticlePage(Page):
     template = "article/article_page.html"
     content = StreamField([
-            ('paragraph', blocks.RichTextBlock()),
+            ('richtext', blocks.RichTextBlock(                                
+                label="Rich Text Block",
+                help_text = "Write your article contents here. See documentation: https://docs.wagtail.io/en/latest/editor_manual/new_pages/creating_body_content.html#rich-text-fields"
+            )),
+            ('plaintext',blocks.TextBlock(
+                label="Plain Text Block",
+                help_text = "Warning: Rich Text Blocks preferred! Plain text primarily exists for importing old Dispatch text."
+            )),
+            ('dropcap', blocks.TextBlock(
+                label = "Dropcap Block",
+                template = 'article/stream_blocks/dropcap.html',
+                help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
+            )),
+            ('pagebreak', blocks.StaticBlock(
+                template = 'article/stream_blocks/pagebreak.html',
+                label = "Pagebreak - USE RICHTEXT INSTEAD"
+            ))
         ],
         null=True,
         blank=True,
@@ -27,7 +45,7 @@ class ArticlePage(Page):
         related_name="+" # for when you're not using any special 
     )
     # featured_video = models.ForeignKey()
-    # section = models.ForeignKey()n
+    # section = models.ForeignKey()
     # authors = models.ForeignKey()
     excerpt = RichTextField(
         # Was called "snippet" in Dispatch - do not want to 

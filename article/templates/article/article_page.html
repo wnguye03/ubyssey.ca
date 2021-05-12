@@ -1,10 +1,13 @@
+{% extends 'base.html' %} {% comment %}base.html found in ubyssey app{% endcomment %}
+{% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load wagtailuserbar %}
 
 {% block content %}
-    {% image self.featured_image max-320x200 %}
-    {{ self.content|richtext }}
+    {% image self.featured_image max-320x200 %}    
+    {% for block in self.content %}
+        {% include_block block %}
+    {% endfor %}
 {% endblock %}
-
 {% wagtailuserbar %}
