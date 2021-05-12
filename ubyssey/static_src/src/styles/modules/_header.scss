@@ -129,6 +129,12 @@ header.main{
       &.sections-more {
         @include sectionsMore;
       } 
+
+      &.culture-sections-more{
+        @include sectionsMore;
+
+      }
+      
   
       &.meta {
         li {
@@ -357,6 +363,10 @@ nav.mobile {
     padding: 0;
     margin: 0;
     #magazine-more{
+      display: none;
+      margin-left: 10px;
+    }
+    #culture-more{
       display: none;
       margin-left: 10px;
     }
