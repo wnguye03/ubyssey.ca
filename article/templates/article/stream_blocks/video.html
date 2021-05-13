@@ -1,4 +1,8 @@
-<div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ id }}">
+{% load wagtailembeds_tags %}
+
+{% embed value.video_embed.url %}
+
+{% comment %} <div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ id }}">
     <div class="o-article-embed--video__wrapper js-video-launch">
         <div class="o-article-embed--video__inner" style="background-image: url('https://img.youtube.com/vi/{{ id }}/0.jpg');">
 
@@ -12,8 +16,8 @@
                 </div>
                 <div class="o-article-embed--video__tag">Video</div>
                 <h2 class="o-article-embed--video__title">{{ title }}</h2>
-                {% if caption %}
-                <p class="o-article-embed--video__caption">{{ caption|safe }}</p>
+                {% if value.caption %}
+                <p class="o-article-embed--video__caption">{{ value.caption|safe }}</p>
                 {% endif %}
             </div>
 
@@ -23,7 +27,7 @@
 
     <div class="caption">
         {% if credit %}
-        <span class="credit">{{ credit }}</span>
+        <span class="credit">{{ value.credit }}</span>
         {% endif %}
     </div>
-</div>
+</div> {% endcomment %}

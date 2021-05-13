@@ -1,5 +1,5 @@
-from wagtail.core.blocks.field_block import TextBlock
-from . import blocks as articleblocks
+from . import blocks as article_blocks
+
 from dispatch.models import Article
 from django.db import models
 
@@ -14,7 +14,8 @@ from wagtail.core.fields import RichTextField, StreamField
 
 class ArticlePage(Page):
     template = "article/article_page.html"
-    content = StreamField([
+    content = StreamField(
+        [
             ('richtext', blocks.RichTextBlock(                                
                 label="Rich Text Block",
                 help_text = "Write your article contents here. See documentation: https://docs.wagtail.io/en/latest/editor_manual/new_pages/creating_body_content.html#rich-text-fields"
@@ -31,7 +32,11 @@ class ArticlePage(Page):
             ('pagebreak', blocks.StaticBlock(
                 template = 'article/stream_blocks/pagebreak.html',
                 label = "Pagebreak - USE RICHTEXT INSTEAD"
-            ))
+            )),
+            ('video', article_blocks.VideoBlock(
+                template = 'article/stream_blocks/video.html',
+                label = "Video Block",
+            )),
         ],
         null=True,
         blank=True,
@@ -69,6 +74,6 @@ class ArticlePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("content"),
         ImageChooserPanel("featured_image"),
+        StreamFieldPanel("content"),
     ]
