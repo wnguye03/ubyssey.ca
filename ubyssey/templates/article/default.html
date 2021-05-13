@@ -24,6 +24,9 @@
     </div>
     {% endif %}
     {% if special_message %}
+      <a class="o-breaking-news-article" href="{% url 'special-isolation' %}">
+        <h3>Stories from self-isolation</h3>
+      </a>
       {% comment %} If there are any special Banner message needed {% endcomment %}
     {% endif %}
     <div class="u-container u-container--content u-container--padded">
