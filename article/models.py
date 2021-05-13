@@ -37,6 +37,9 @@ class ArticlePage(Page):
                 template = 'article/stream_blocks/video.html',
                 label = "Video Block",
             )),
+            ('image', blocks.ImageChooserBlock(
+                label = "Image"
+            )),
         ],
         null=True,
         blank=True,
