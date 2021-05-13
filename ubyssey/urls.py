@@ -42,7 +42,7 @@ urlpatterns += [
     #For Google Adsense, because of our serverless setup with GCP
     re_path(r'^ads.txt$',ads_txt,name='ads-txt'),
 
-    re_path(r'^self-isolation/', IsolationView.as_view(), name='isolation'),
+    re_path(r'^culture/special/self-isolation/', IsolationView.as_view(), name='special-isolation'),
 
     re_path(r'^djadmin/', admin.site.urls),
 

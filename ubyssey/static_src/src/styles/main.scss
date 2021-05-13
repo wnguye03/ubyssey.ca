@@ -81,11 +81,12 @@ body, html, #page-wrapper {
   @media screen {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 }
 
 #content-wrapper {
-  overflow: auto;
+  //overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 

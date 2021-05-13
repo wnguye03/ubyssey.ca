@@ -8,9 +8,9 @@
 
 
 {% block banner %}
-    <div class="isolation-header">
+    <div class="isolation-header first">
         <div class="isolation-header--container">
-            <a class="isolation-header--nav left" href="/self-isolation/">Stories from self isolation</a>
+            <a class="isolation-header--nav left" href="{% url 'special-isolation' %}">Stories from self isolation</a>
             <a class="isolation-header--nav right" href="/"></a>
         </div>
     </div>
@@ -45,13 +45,13 @@
                     </div>
                 </div>
             </div>
-        {% elif header_layout == 'top-image' %}
+       {% elif header_layout == 'top-image' %}
             <div class="header-container">
                 <div class="featured-media">
                     <img class="article-attachment" data-id="{{ article.featured_image.id }}" data-caption="{{ article.featured_image.caption }}" data-url="{{ article.featured_image.image.get_absolute_url }}" data-credit="{{ article.featured_image.credit }}" src="{{ article.featured_image.image.get_absolute_url }}" alt=""/>
-                    {% if article.featured_image.caption or article.featured_image.credit %}
+                    {% if article.featured_image.credit %}
                     <div class="caption">
-                      {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %} {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
+                      {% if article.featured_image.credit %}<span class="credit">{{ article.featured_image.credit }}{% if not article.featured_image.has_custom_credit %}{% endif %}</span>{% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -95,12 +95,21 @@
 
     <div class="isolation--nav__list">
         <div class="isolation--nav__list--container">
-            <a class="article--nav previous" href="{{ article.template_fields.article_prev.get_absolute_url }}">
-                {{ article.template_fields.article_prev.title }}
-            </a>
-            <a class="article--nav next" href="{{ article.template_fields.article_next.get_absolute_url }}">
-                {{ article.template_fields.article_next.title }}
-            </a>
+            <ul class="isolation-navitem-list">
+                <li class="isolation-navitem" > 
+                    <a class="" href="{{ article.template_fields.article_prev.get_absolute_url }}">
+                    {{ article.template_fields.article_prev.title }}
+                    </a>
+                </li>
+
+                <li class="isolation-navitem" > 
+                    <a class="" href="{{ article.template_fields.article_next.get_absolute_url }}">
+                    {{ article.template_fields.article_next.title }}
+                    </a>
+                
+                </li>
+
+            </ul>
         </div>
     </div>
 {% endblock %}
