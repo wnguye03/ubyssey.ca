@@ -1,8 +1,18 @@
+{% comment %}
+Note this is a very "lazy" version of a video block, and wagtail currently lacks some features which would allow us to be less lazy:
+
+See this blog post:
+
+https://danielms.site/blog/wagtail-embedurl-youtube-tags/
+{% endcomment %}
+
 {% load wagtailembeds_tags %}
 
 {% embed value.video_embed.url %}
 
-{% comment %} <div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ id }}">
+
+{% comment %}
+<div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ id }}">
     <div class="o-article-embed--video__wrapper js-video-launch">
         <div class="o-article-embed--video__inner" style="background-image: url('https://img.youtube.com/vi/{{ id }}/0.jpg');">
 
