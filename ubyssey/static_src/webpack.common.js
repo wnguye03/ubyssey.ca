@@ -16,6 +16,7 @@ module.exports = {
     'magazine-2019': './src/js/magazine-2019.js',
     'magazine-2020': './src/js/magazine-2020.js',
     'magazine-2021': './src/js/magazine-2021.js',
+    'infinite': './src/js/infinite.js',
     blockadblock: './src/js/blockadblock.js'
   },
   output: {
