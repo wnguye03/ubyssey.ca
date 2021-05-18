@@ -1,14 +1,14 @@
 from . import blocks as article_blocks
+from . import snippets as article_snippets
 
-from dispatch.models import Article
 from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
-
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.blocks import ImageChooserBlock
 
 # Create your models here.
 
@@ -37,7 +37,7 @@ class ArticlePage(Page):
                 template = 'article/stream_blocks/video.html',
                 label = "Video Block",
             )),
-            ('image', blocks.ImageChooserBlock(
+            ('image', ImageChooserBlock(
                 label = "Image"
             )),
         ],
