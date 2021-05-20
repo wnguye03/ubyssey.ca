@@ -210,7 +210,7 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                InlinePanel("article_authors"),
+                InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
             heading="Authors"
         ),
