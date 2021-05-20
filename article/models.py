@@ -141,7 +141,7 @@ class ArticlePage(Page):
                 template = 'article/stream_blocks/pagebreak.html',
                 label = "Pagebreak - USE RICHTEXT INSTEAD"
             )),
-            ('video', article_blocks.VideoBlock(
+            ('video', article_blocks.OneOffVideoBlock(
                 template = 'article/stream_blocks/video.html',
                 label = "Video Block",
             )),
