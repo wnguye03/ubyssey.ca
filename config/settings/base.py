@@ -131,7 +131,9 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic', # uncomment for testing "production-like" serving of collected static files with DEBUG=False
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'home',
+    'authors'
     'article',
+    'videos',
     'specialfeaturelanding',
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
