@@ -175,7 +175,13 @@ class ArticlePage(Page):
         on_delete=models.SET_NULL,
         related_name="+"
     )
-    # featured_video = models.ForeignKey()
+    featured_video = models.ForeignKey(
+        "videos.VideoSnippet",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
 
     # importance
     # reading time
@@ -214,9 +220,10 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                ImageChooserPanel("featured_image"),                
+                ImageChooserPanel("featured_image"),
+                SnippetChooserPanel("featured_video"),
             ],
-            heading="For Front Page",
+            heading="Featured Media",
         ),
     ]
 
