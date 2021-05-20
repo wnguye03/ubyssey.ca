@@ -26,3 +26,4 @@ brotli==1.0.9
 django-debug-toolbar==3.2.1
 pylint==2.5.3
 pylint-django==2.3.0
+django-extensions==3.1.3
