@@ -31,74 +31,6 @@ class DispatchCounterpartSnippet(models.Model):
     )
 
 @register_snippet
-class AuthorSnippet(models.Model):
-    slug = models.SlugField(
-        primary_key=True,
-        unique=True,
-        blank=False,
-        null=False,
-        max_length=255,
-    )
-    full_name = models.CharField(
-        max_length=255,
-        blank=False,
-        null=False,
-    )
-    # # This implementation represents an "easy" way to implement this which is analogous to how Dispatch did it, though less user-friendly than the alternative
-    # image = models.ImageField(
-    #     upload_to='images',
-    #     null=True,
-    #     blank=True,
-    # )
-    image = models.ForeignKey(
-        "wagtailimages.Image",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="+",
-    )
-    title = models.CharField(
-        max_length=255,
-        null=False,
-        blank=True,
-        default='',
-    )
-    facebook_url = models.URLField(
-        null=True,
-        blank=True,
-    )
-    twitter_url = models.URLField(
-        null=True,
-        blank=True,
-    )
-    # For editting in wagtail:
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("slug"),
-                FieldPanel("full_name"),
-            ],
-            heading="Essentials",
-        ),
-        MultiFieldPanel(
-            [
-                ImageChooserPanel("image"),
-                FieldPanel("title"),
-                FieldPanel("facebook_url"),
-                FieldPanel("twitter_url"),
-            ],
-            heading="Optional Stuff",
-        ),
-    ]
-
-    def __str__(self):
-        return self.full_name
-    
-    class Meta:
-        verbose_name = "Author"
-        verbose_name_plural = "Authors"
-
-@register_snippet
 class SectionSnippet(models.Model):
     slug = models.SlugField(primary_key=True, unique=True, default='news')
     name = models.CharField(max_length=100, unique=True, default='News')
@@ -154,7 +86,7 @@ class ArticleAuthorsOrderable(Orderable):
         related_name="article_authors",
     )
     author = models.ForeignKey(
-        'AuthorSnippet',
+        'authors.AuthorSnippet',
         on_delete=models.CASCADE,
     )
     author_role = CharField(        
