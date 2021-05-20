@@ -94,6 +94,23 @@ class AuthorSnippet(models.Model):
         verbose_name = "Author"
         verbose_name_plural = "Authors"
 
+@register_snippet
+class SectionSnippet(models.Model):
+    slug = models.SlugField(primary_key=True, unique=True, default='news')
+    name = models.CharField(max_length=100, unique=True, default='News')
+
+    panels = [
+        FieldPanel('slug'),
+        FieldPanel('name'),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Section"
+        verbose_name_plural = "Sections"
+
 #-----Orderable models-----
 
 class ArticleAuthorsOrderable(Orderable):
@@ -174,13 +191,18 @@ class ArticlePage(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name="+" # for when you're not using any special 
+        related_name="+"
     )
     # featured_video = models.ForeignKey()
-    # section = models.ForeignKey() # 
-    # authors = models.ForeignKey() # must be orderable
+    section = models.ForeignKey(
+        "SectionSnippet",
+        null=True,
+        blank=False,
+        on_delete=models.PROTECT,
+        related_name="+"
+    )
     excerpt = RichTextField(
-        # Was called "snippet" in Dispatch - do not want to 
+        # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'excerpt' instead
         null=True,
         blank=True,
     )
@@ -203,15 +225,30 @@ class ArticlePage(Page):
     content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
-                ImageChooserPanel("featured_image"),
                 StreamFieldPanel("content"),
             ],
-            heading="Article content",
+            heading="Article Content",
         ),
         MultiFieldPanel(
             [
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
-            heading="Authors"
+            heading="Author(s)"
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("section"),                
+            ],
+            heading="Sections and Tags",
+        ),
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("featured_image"),                
+            ],
+            heading="For Front Page",
         ),
     ]
+
+    class Meta:
+        verbose_name = "Article"
+        verbose_name_plural = "Articles"
