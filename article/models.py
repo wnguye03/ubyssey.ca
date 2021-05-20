@@ -6,6 +6,7 @@ from django import forms
 from django.db import models
 from django.db.models.fields import CharField
 from django.forms.widgets import Select
+from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
 
@@ -40,6 +41,8 @@ class AuthorSnippet(models.Model):
     )
     full_name = models.CharField(
         max_length=255,
+        blank=False,
+        null=False,
     )
     # # This implementation represents an "easy" way to implement this which is analogous to how Dispatch did it, though less user-friendly than the alternative
     # image = models.ImageField(
@@ -56,8 +59,9 @@ class AuthorSnippet(models.Model):
     )
     title = models.CharField(
         max_length=255,
-        null=True,
+        null=False,
         blank=True,
+        default='',
     )
     facebook_url = models.URLField(
         null=True,
@@ -111,6 +115,34 @@ class SectionSnippet(models.Model):
         verbose_name = "Section"
         verbose_name_plural = "Sections"
 
+@register_snippet
+class Topic(models.Model):
+    slug = models.SlugField(
+        primary_key=True,
+        unique=True,
+        max_length=255,
+        null=False,
+        blank=False,
+    )
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        blank=False,
+    )
+    last_used = models.DateTimeField(
+        null=True
+    )
+    def update_timestamp(self):
+        self.last_used = timezone.now()
+        self.save()
+    
+    class Meta:
+        verbose_name = "Topic"
+        verbose_name_plural = "Topics"
+        indexes = [
+            models.Index(fields=['slug']),
+        ]
+
 #-----Orderable models-----
 
 class ArticleAuthorsOrderable(Orderable):
@@ -128,8 +160,9 @@ class ArticleAuthorsOrderable(Orderable):
     author_role = CharField(        
         # While stored as a CharField, will be selected from a menu. See the Widget in the panels value of this Orderable
         max_length=50,
-        null=True,
+        null=False,
         blank=True,
+        default='',
     )
     panels = [
         MultiFieldPanel(
@@ -139,6 +172,7 @@ class ArticleAuthorsOrderable(Orderable):
                     "author_role",
                     widget=Select(
                         choices=[
+                            ('', ''), 
                             ('author', 'Author'), 
                             ('illustrator','Illustrator'),
                             ('photographer','Photographer'),
@@ -154,6 +188,7 @@ class ArticleAuthorsOrderable(Orderable):
 #-----Page models-----
 
 class ArticlePage(Page):
+    #-----Main attributes-----
     template = "article/article_page.html"
     content = StreamField(
         [
@@ -185,15 +220,6 @@ class ArticlePage(Page):
         null=True,
         blank=True,
     )
-    featured_image = models.ForeignKey(
-        # based on https://www.youtube.com/watch?v=KCMdavRBvXE
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
-    )
-    # featured_video = models.ForeignKey()
     section = models.ForeignKey(
         "SectionSnippet",
         null=True,
@@ -201,11 +227,24 @@ class ArticlePage(Page):
         on_delete=models.PROTECT,
         related_name="+"
     )
-    excerpt = RichTextField(
+    excerpt = models.TextField(
         # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'excerpt' instead
+        null=False,
+        blank=True,
+        default='',
+    )
+
+    #-----Featured Media-----
+    
+    featured_image = models.ForeignKey(
+        "wagtailimages.Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
     )
+    # featured_video = models.ForeignKey()
+
     # importance
     # reading time
     # facebook instant article
