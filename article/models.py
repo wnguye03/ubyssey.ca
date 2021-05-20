@@ -1,14 +1,21 @@
 from . import blocks as article_blocks
 
 from dispatch.models import Article
-from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
+from django import forms
+from django.db import models
+from django.db.models.fields import CharField
+from django.forms.widgets import Select
+
+from modelcluster.fields import ParentalKey
+
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core import blocks
-from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.core.models import Page, Orderable
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
 #-----Snippet Models-----
@@ -87,6 +94,46 @@ class AuthorSnippet(models.Model):
         verbose_name = "Author"
         verbose_name_plural = "Authors"
 
+#-----Orderable models-----
+
+class ArticleAuthorsOrderable(Orderable):
+    """
+    This closely corresponds to the Dispatch model that is (mis-)named "Author"
+    """
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="article_authors",
+    )
+    author = models.ForeignKey(
+        'AuthorSnippet',
+        on_delete=models.CASCADE,
+    )
+    author_role = CharField(        
+        # While stored as a CharField, will be selected from a menu. See the Widget in the panels value of this Orderable
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                SnippetChooserPanel("author"),
+                FieldPanel(
+                    "author_role",
+                    widget=Select(
+                        choices=[
+                            ('author', 'Author'), 
+                            ('illustrator','Illustrator'),
+                            ('photographer','Photographer'),
+                            ('videographer','Videographer'),
+                        ],
+                    ),
+                ),
+            ],
+            heading="Author",
+        ),
+    ]
+
 #-----Page models-----
 
 class ArticlePage(Page):
@@ -154,6 +201,17 @@ class ArticlePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        ImageChooserPanel("featured_image"),
-        StreamFieldPanel("content"),
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("featured_image"),
+                StreamFieldPanel("content"),
+            ],
+            heading="Article content",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("article_authors"),
+            ],
+            heading="Authors"
+        ),
     ]
