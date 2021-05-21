@@ -7,8 +7,12 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
 @register_snippet
-class SportsTournamentSnippet(models.Model):
-    tournament_name = models.TextField(blank=True, null=False, default='')
+class SportsTournamentSnippet(ClusterableModel):
+    tournament_name = models.TextField(
+        blank=False,
+        null=False,
+        default='tournament'
+    )
     slug = models.SlugField(
         primary_key=True,
         unique=True,
@@ -16,8 +20,14 @@ class SportsTournamentSnippet(models.Model):
         null=False,
         max_length=255,
     )
-
+    
     panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('tournament_name'),
+            ],
+            heading="Tournament Information"
+        ),
         MultiFieldPanel(
             [
                 InlinePanel("tournament_team", min_num=1, max_num=20, label="Tournament Team"),
@@ -29,15 +39,23 @@ class SportsTournamentSnippet(models.Model):
     def __str__(self):
         return self.tournament_name
 
-class SportsTeamOrderable(ClusterableModel, Orderable):
+    class Meta:
+         verbose_name = "Sports Tournament"
+         verbose_name_plural = "Sports Tournaments"
+
+class SportsTeamOrderable(Orderable):
     """
     Based on individual team nodes
     """
-    team_name = models.TextField(blank=True, null=False, default='')
+    team_name = models.TextField(
+        blank=False,
+        null=False,
+        default='',
+    )
     ## we probably need to install https://pypi.org/project/django-colorfield/ for a more robust version of this
     team_color = models.CharField(
-        null=False,
         blank=False,
+        null=False,
         max_length=7,
         default='#FF0000',
     )
@@ -48,19 +66,31 @@ class SportsTeamOrderable(ClusterableModel, Orderable):
         blank=True,
         related_name="+",
     )
+    tournament = ParentalKey(
+        "SportsTournamentSnippet",
+        default='',
+        related_name="tournament_team",
+    )
 
     # TODO: representation of location and of stats
     panels = [
-
         MultiFieldPanel(
             [
-                InlinePanel("players_to_watch", min_num=1, max_num=1, label="Player to watch"),
+                FieldPanel('team_name'),
+                FieldPanel('team_color'),
+                ImageChooserPanel('team_logo'),
+            ],
+            heading="Team Information"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("player_to_watch", max_num=1, label="Player to watch"),
             ],
             heading="Player to Watch"
         ),
     ]
 
-class SportsPlayerProfileOrderable(Orderable):
+class SportsPlayerProfile(models.Model):
     full_name = models.CharField(
         max_length=255,
         blank=False,
@@ -78,14 +108,15 @@ class SportsPlayerProfileOrderable(Orderable):
         blank=True,
         related_name="+",
     )
-    players_team = ParentalKey(
+    players_team = models.ForeignKey(
         "SportsTeamOrderable",
-        related_name="players_to_watch",
+        related_name="player_to_watch",
+        on_delete=models.CASCADE,
     )
     panels = [
         FieldPanel('full_name'),
         FieldPanel('profile_text'),
-        ImageChooserPanel('players_photo'),
+        ImageChooserPanel('player_photo'),
     ]
 
     def __str__(self):
