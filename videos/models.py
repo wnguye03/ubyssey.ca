@@ -92,8 +92,8 @@ class VideoSnippet(ClusterableModel):
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel("slug"),
                 FieldPanel("title"),
+                FieldPanel("slug"),
                 FieldPanel("url"),
             ],
             heading="Necessary Fields"
