@@ -187,10 +187,20 @@ class ArticlePage(Page):
     # importance
     # reading time
     # facebook instant article
-    # breaking
     # template
 
     #-----Promote panel stuff------
+    is_breaking = models.BooleanField(
+        null=False,
+        blank=False,
+        default=False,
+        verbose_name="Breaking News?",
+    )
+    breaking_timeout = models.DateTimeField(
+        null=False,
+        blank=False,
+        default=timezone.now(),
+    )
     seo_keyword = models.CharField(
         max_length=100, 
         null=False, 
@@ -251,6 +261,14 @@ class ArticlePage(Page):
         ),
     ]
     promote_panels = Page.promote_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("is_breaking"),
+                FieldPanel("breaking_timeout"),
+            ],
+            heading="Old SEO stuff",
+            help_text="\"Breaking Timeout\" is irrelevant if news is not breaking news."
+        ),
         MultiFieldPanel(
             [
                 FieldPanel("seo_keyword"),
