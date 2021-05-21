@@ -1,6 +1,7 @@
 from django.db import models
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+from ubyssey.validators import validate_colour_hex
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -25,6 +26,7 @@ class SportsTournamentSnippet(ClusterableModel):
         MultiFieldPanel(
             [
                 FieldPanel('tournament_name'),
+                FieldPanel('slug'),
             ],
             heading="Tournament Information"
         ),
@@ -58,6 +60,9 @@ class SportsTeamOrderable(Orderable):
         null=False,
         max_length=7,
         default='#FF0000',
+        validators=[
+            validate_colour_hex,
+        ],
     )
     team_logo = models.ForeignKey(
         "wagtailimages.Image",
@@ -82,12 +87,12 @@ class SportsTeamOrderable(Orderable):
             ],
             heading="Team Information"
         ),
-        MultiFieldPanel(
-            [
-                InlinePanel("player_to_watch", max_num=1, label="Player to watch"),
-            ],
-            heading="Player to Watch"
-        ),
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel("player_to_watch", max_num=1, label="Player to watch"),
+        #     ],
+        #     heading="Player to Watch"
+        # ),
     ]
 
 class SportsPlayerProfile(models.Model):
@@ -108,11 +113,11 @@ class SportsPlayerProfile(models.Model):
         blank=True,
         related_name="+",
     )
-    players_team = models.ForeignKey(
-        "SportsTeamOrderable",
-        related_name="player_to_watch",
-        on_delete=models.CASCADE,
-    )
+    # players_team = models.ForeignKey(
+    #     "SportsTeamOrderable",
+    #     related_name="player_to_watch",
+    #     on_delete=models.CASCADE,
+    # )
     panels = [
         FieldPanel('full_name'),
         FieldPanel('profile_text'),
