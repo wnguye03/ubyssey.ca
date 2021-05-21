@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'authors',
     'article',
     'videos',
+    'sporttourney',
     'specialfeaturelanding',
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
