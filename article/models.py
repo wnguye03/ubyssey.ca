@@ -142,12 +142,13 @@ class ArticlePage(Page):
                 label = "Pagebreak - USE RICHTEXT INSTEAD"
             )),
             ('video', article_blocks.OneOffVideoBlock(
+                label = "One Off Video Block",
                 template = 'article/stream_blocks/video.html',
-                label = "Video Block",
+                help_text = "Use this for videos that will only be associated with this current article, rather than entered into our video library"
             )),
             ('image', ImageChooserBlock(
                 label = "Image"
-            )),
+            )),            
         ],
         null=True,
         blank=True,
@@ -159,8 +160,8 @@ class ArticlePage(Page):
         on_delete=models.PROTECT,
         related_name="+"
     )
-    excerpt = models.TextField(
-        # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'excerpt' instead
+    lede = models.TextField(
+        # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'lede' instead
         null=False,
         blank=True,
         default='',
@@ -188,9 +189,23 @@ class ArticlePage(Page):
     # facebook instant article
     # breaking
     # template
-    # SEO focus keywords
-    # SEO meta description
+
+    #-----Promote panel stuff------
+    seo_keyword = models.CharField(
+        max_length=100, 
+        null=False, 
+        blank=True, 
+        default='',
+        verbose_name="SEO Keyword",
+    ) # AKA "Focus Keywords" in the old Dispatch frontend
+    seo_description = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+        verbose_name="SEO Description",
+    ) # AKA "Meta Description" in the old Dispatch frontend
     
+    #-----Migration stuff------
     dispatch_version = models.ForeignKey(
         # Used to map the article to a previous version that exists in Dispatch
         "dispatch.Article",
@@ -199,18 +214,21 @@ class ArticlePage(Page):
         on_delete=models.SET_NULL,
     )
 
+    #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
                 StreamFieldPanel("content"),
             ],
             heading="Article Content",
+            help_text = "The main contents of the article, organized into \"blocks\". Most article text should be written in Rich Text Blocks, but many other features are available!",
         ),
         MultiFieldPanel(
             [
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
-            heading="Author(s)"
+            heading="Author(s)",
+            help_text="Authors may be created under \"Snippets\", then selected here."
         ),
         MultiFieldPanel(
             [
@@ -225,8 +243,23 @@ class ArticlePage(Page):
             ],
             heading="Featured Media",
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel("lede")
+            ],
+            heading="Front Page Stuff",
+        ),
     ]
-
+    promote_panels = Page.promote_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("seo_keyword"),
+                FieldPanel("seo_description"),
+            ],
+            heading="Old SEO stuff",
+            help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
+        )
+    ]
     class Meta:
         verbose_name = "Article"
         verbose_name_plural = "Articles"
