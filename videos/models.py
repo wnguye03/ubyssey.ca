@@ -1,9 +1,10 @@
-from .validators import validate_youtube_url
 from django.db import models
 from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+
+from ubyssey.validators import validate_youtube_url
 
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Orderable
