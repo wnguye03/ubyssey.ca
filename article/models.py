@@ -137,10 +137,6 @@ class ArticlePage(Page):
                 template = 'article/stream_blocks/dropcap.html',
                 help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
             )),
-            ('pagebreak', blocks.StaticBlock(
-                template = 'article/stream_blocks/pagebreak.html',
-                label = "Pagebreak - USE RICHTEXT INSTEAD"
-            )),
             ('video', article_blocks.OneOffVideoBlock(
                 label = "One Off Video Block",
                 template = 'article/stream_blocks/video.html',
@@ -235,7 +231,7 @@ class ArticlePage(Page):
                 StreamFieldPanel("content"),
             ],
             heading="Article Content",
-            help_text = "The main contents of the article, organized into \"blocks\". Most article text should be written in Rich Text Blocks, but many other features are available!",
+            help_text = "The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!",
         ),
         MultiFieldPanel(
             [
