@@ -18,14 +18,14 @@ class Command(BaseCommand):
         
         # wagtail_article
         wagtail_article = ArticlePage()
-        for dispatch_article_revision in dispatch_article_qs(''):
+        for dispatch_article_revision in dispatch_article_qs:
             for node in dispatch_article_revision.content:
                 # figure out what the type of the embed is (node_type). set the appropriate block_type
                 node_type = node['type']
                 block_type = 'richtext'
                 if node_type == 'paragraph':
                     block_type = 'richtext'
-                    block_value = node['value']
+                    block_value = node['data']
                                 
                 wagtail_article.content.append((block_type,block_value))
 
