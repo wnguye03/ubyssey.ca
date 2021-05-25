@@ -1,6 +1,7 @@
 from article.models import ArticlePage
 
 from dispatch.models import Article
+from dispatch.modules.content import embeds
 
 from django.core.management.base import BaseCommand, CommandError, no_translations
 
@@ -26,6 +27,17 @@ class Command(BaseCommand):
                 if node_type == 'paragraph':
                     block_type = 'richtext'
                     block_value = node['data']
+                elif node_type == 'dropcap':
+                    block_type = 'dropcap'
+                    block_value = node['data']['paragraph']
+                elif node_type == 'pagebreak':
+                    block_type = 'raw_html'
+                    block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                elif node_type == 'widget':
+                    # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
+                    block_type = 'raw_html'
+                    block_value = embeds.WidgetEmbed.render(data=node.data)
+
                                 
                 wagtail_article.content.append((block_type,block_value))
 
