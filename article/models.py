@@ -146,7 +146,7 @@ class ArticlePage(Page):
                 label = "Image"
             )),
             ('raw_html', blocks.RawHTMLBlock(
-                label = "Raw HTML Block"
+                label = "Raw HTML Block",
                 help_text = "WARNING: DO NOT use this unless you really know what you're doing!"
             ))            
         ],
