@@ -106,7 +106,7 @@ class ArticlePage(Page):
     #-----Main attributes-----
     template = "article/article_page.html"
 
-    parent_page_type = [
+    parent_page_types = [
         'specialfeaturelanding.SpecialLandingPage',
         'section.SectionPage',
     ]

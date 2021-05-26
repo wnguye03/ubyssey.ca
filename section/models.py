@@ -27,12 +27,12 @@ class SubsectionsOrderable(wagtail_core_models.Orderable):
 
 class SectionPage(wagtail_core_models.Page):
     template = 'section/section.html'
-    
+
     subpage_types = [
         'article.ArticlePage',
         'specialfeaturelanding.SpecialLandingPage',
     ]
-    parent_page_type = [
+    parent_page_types = [
         'home.HomePage',
     ]
 

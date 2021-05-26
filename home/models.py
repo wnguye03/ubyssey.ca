@@ -12,7 +12,7 @@ from wagtail.core.fields import StreamField
 class HomePage(Page):
     template = "home/home_page.html"
     
-    parent_page_type = [
+    parent_page_types = [
         'wagtailcore.Page',
     ]
 
