@@ -30,7 +30,6 @@ class DispatchCounterpartSnippet(models.Model):
         on_delete=models.SET_NULL,
     )
 
-
 @register_snippet
 class Topic(models.Model):
     slug = models.SlugField(
@@ -136,13 +135,13 @@ class ArticlePage(Page):
         null=True,
         blank=True,
     )
-    section = models.ForeignKey(
-        "SectionSnippet",
-        null=True,
-        blank=False,
-        on_delete=models.PROTECT,
-        related_name="+"
-    )
+    # section = models.ForeignKey(
+    #     "SectionSnippet",
+    #     null=True,
+    #     blank=False,
+    #     on_delete=models.PROTECT,
+    #     related_name="+"
+    # )
     lede = models.TextField(
         # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'lede' instead
         null=False,
@@ -223,12 +222,12 @@ class ArticlePage(Page):
             heading="Author(s)",
             help_text="Authors may be created under \"Snippets\", then selected here."
         ),
-        MultiFieldPanel(
-            [
-                FieldPanel("section"),                
-            ],
-            heading="Sections and Tags",
-        ),
+        # MultiFieldPanel(
+        #     [
+        #         FieldPanel("section"),                
+        #     ],
+        #     heading="Sections and Tags",
+        # ),
         MultiFieldPanel(
             [
                 ImageChooserPanel("featured_image"),

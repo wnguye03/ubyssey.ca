@@ -133,6 +133,7 @@ INSTALLED_APPS = [
     'home',
     'authors',
     'article',
+    'section',
     'videos',
     'sporttourney',
     'specialfeaturelanding',
