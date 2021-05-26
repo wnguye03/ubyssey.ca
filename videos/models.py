@@ -25,29 +25,10 @@ class VideoAuthorsOrderable(Orderable):
         'authors.AuthorSnippet',
         on_delete=models.CASCADE,
     )
-    # author_role = CharField(        
-    #     # While stored as a CharField, will be selected from a menu. See the Widget in the panels value of this Orderable
-    #     max_length=50,
-    #     null=False,
-    #     blank=True,
-    #     default='',
-    # )
     panels = [
         MultiFieldPanel(
             [
                 SnippetChooserPanel("author"),
-                # FieldPanel(
-                #     "author_role",
-                #     widget=Select(
-                #         choices=[
-                #             ('', ''), 
-                #             ('author', 'Author'), 
-                #             ('illustrator','Illustrator'),
-                #             ('photographer','Photographer'),
-                #             ('videographer','Videographer'),
-                #         ],
-                #     ),
-                # ),
             ],
             heading="Author",
         ),

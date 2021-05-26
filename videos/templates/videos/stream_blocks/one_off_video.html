@@ -1,22 +1,18 @@
 {% comment %}
-Note this is a very "lazy" version of a video block, and wagtail currently lacks some features which would allow us to be less lazy:
+stolen from Dispatch wholesale
 
-See this blog post:
+Usage: to be included with other video block templates. 
+Feed following variables in an "include...with":
+id
+title
+caption
+credit
+{% endcomment%}
+{% load video_filters %}
 
-https://danielms.site/blog/wagtail-embedurl-youtube-tags/
-
-TODO: produce custom tags that allow nice video logic!
-{% endcomment %}
-
-{% load wagtailembeds_tags %}
-
-{% embed value.video_embed.url %}
-
-
-{% comment %}
-<div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ id }}">
+<div class="o-article-embed o-article-embed--video js-video-youtube" data-id="{{ value.video_embed.url|youtube_embed_id }}">
     <div class="o-article-embed--video__wrapper js-video-launch">
-        <div class="o-article-embed--video__inner" style="background-image: url('https://img.youtube.com/vi/{{ id }}/0.jpg');">
+        <div class="o-article-embed--video__inner" style="background-image: url('https://img.youtube.com/vi/{{ value.video_embed.url|youtube_embed_id }}/0.jpg');">
 
                 <div class="o-article-embed--video__play-large">
                     <div class="o-article-embed--video__play-large__inner"></div>
@@ -35,11 +31,11 @@ TODO: produce custom tags that allow nice video logic!
 
         </div>
     </div>
-    <div class="o-article-embed--video__container" id="video-{{ id }}"></div>
+    <div class="o-article-embed--video__container" id="video-{{ value.video_embed.url|youtube_embed_id }}"></div>
 
     <div class="caption">
         {% if credit %}
         <span class="credit">{{ value.credit }}</span>
         {% endif %}
     </div>
-</div> {% endcomment %}
+</div>

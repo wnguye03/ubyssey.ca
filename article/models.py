@@ -1,5 +1,3 @@
-from . import blocks as article_blocks
-
 from dispatch.models import Article
 
 from django import forms
@@ -9,6 +7,8 @@ from django.forms.widgets import Select
 from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
+
+from videos import blocks as video_blocks
 
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core import blocks
@@ -137,9 +137,8 @@ class ArticlePage(Page):
                 template = 'article/stream_blocks/dropcap.html',
                 help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
             )),
-            ('video', article_blocks.OneOffVideoBlock(
+            ('video', video_blocks.OneOffVideoBlock(
                 label = "One Off Video Block",
-                template = 'article/stream_blocks/video.html',
                 help_text = "Use this for videos that will only be associated with this current article, rather than entered into our video library"
             )),
             ('image', ImageChooserBlock(
@@ -148,7 +147,7 @@ class ArticlePage(Page):
             ('raw_html', blocks.RawHTMLBlock(
                 label = "Raw HTML Block",
                 help_text = "WARNING: DO NOT use this unless you really know what you're doing!"
-            ))            
+            )),            
         ],
         null=True,
         blank=True,
