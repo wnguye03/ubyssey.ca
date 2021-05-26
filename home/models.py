@@ -11,6 +11,15 @@ from wagtail.core.fields import StreamField
 
 class HomePage(Page):
     template = "home/home_page.html"
+    
+    parent_page_type = [
+        'wagtailcore.Page',
+    ]
+
+    subpage_types = [
+        'section.SectionPage',
+    ]
+
     content = StreamField(
         [
             ("home_page_section_block",homeblocks.HomePageSectionBlock())
