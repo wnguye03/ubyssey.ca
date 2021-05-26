@@ -105,6 +105,14 @@ class ArticleAuthorsOrderable(Orderable):
 class ArticlePage(Page):
     #-----Main attributes-----
     template = "article/article_page.html"
+
+    parent_page_type = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                

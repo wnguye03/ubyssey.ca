@@ -2,6 +2,8 @@ from django.db import models
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core import models as wagtail_core_models
+from wagtail.core.models import Page
+
 
 #-----Orderable models-----
 
@@ -25,18 +27,20 @@ class SubsectionsOrderable(wagtail_core_models.Orderable):
 
 class SectionPage(wagtail_core_models.Page):
     template = 'section/section.html'
+    
     subpage_types = [
         'article.ArticlePage',
+        'specialfeaturelanding.SpecialLandingPage',
     ]
     parent_page_type = [
         'home.HomePage',
     ]
 
-    panels = [
+    content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
-                InlinePanel("article_authors"),
+                InlinePanel("subsections"),
             ],
-            heading="Author(s)",
+            heading="Subsection(s)",
         ),
     ]
