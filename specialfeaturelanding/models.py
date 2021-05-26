@@ -16,6 +16,15 @@ class SpecialLandingPage(Page):
     It uses weird tricks to be compatible with Dispatch articles 
     """
     template = "specialfeatureslanding/base.html"
+
+    parent_page_types = [
+        'section.SectionPage',
+    ]
+
+    subpage_types = [
+        'article.ArticlePage',
+    ]
+
     body = StreamField([
         ("dispatch_article", specblocks.DispatchArticleBlock()),
         ("dispatch_article_chooser", specblocks.DispatchArticleChooserBlock()),
