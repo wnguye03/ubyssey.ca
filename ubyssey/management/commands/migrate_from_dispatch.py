@@ -44,7 +44,9 @@ class Command(BaseCommand):
                 #     block_value = blocks.StructValue()
                 #     block_value['video_embed'] 
 
-                                
+                # NOTE: https://stackoverflow.com/questions/34200844/how-can-i-programmatically-add-content-to-a-wagtail-streamfield
+                # USE JSON LIKE THIS!
+
                 wagtail_article.content.append((block_type,block_value))
 
                 print(wagtail_article.content)
