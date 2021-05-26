@@ -30,22 +30,6 @@ class DispatchCounterpartSnippet(models.Model):
         on_delete=models.SET_NULL,
     )
 
-@register_snippet
-class SectionSnippet(models.Model):
-    slug = models.SlugField(primary_key=True, unique=True, default='news')
-    name = models.CharField(max_length=100, unique=True, default='News')
-
-    panels = [
-        FieldPanel('slug'),
-        FieldPanel('name'),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Section"
-        verbose_name_plural = "Sections"
 
 @register_snippet
 class Topic(models.Model):
@@ -198,7 +182,7 @@ class ArticlePage(Page):
     breaking_timeout = models.DateTimeField(
         null=False,
         blank=False,
-        default=timezone.now(),
+        default=timezone.now,
     )
     seo_keyword = models.CharField(
         max_length=100, 
