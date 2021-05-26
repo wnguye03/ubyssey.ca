@@ -8,6 +8,8 @@ from django.core.management.base import BaseCommand, CommandError, no_translatio
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
+from videos.blocks import OneOffVideoBlock
+
 
 class Command(BaseCommand):
     
@@ -37,8 +39,12 @@ class Command(BaseCommand):
                     # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                     block_type = 'raw_html'
                     block_value = embeds.WidgetEmbed.render(data=node.data)
+                # elif node_type == 'video':
+                #     block_type = 'video'
+                #     block_value = blocks.StructValue()
+                #     block_value['video_embed'] 
 
                                 
                 wagtail_article.content.append((block_type,block_value))
 
-                print(wagtail_article.content.append)
+                print(wagtail_article.content)
