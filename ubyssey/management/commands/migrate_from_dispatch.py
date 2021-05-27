@@ -51,9 +51,9 @@ class Command(BaseCommand):
             wagtail_article.title = dispatch_article_revision.headline
 
             if dispatch_article_revision.is_breaking is not None:
-                wagtail_article = is_breaking
+                wagtail_article = bool(dispatch_article_revision.is_breaking)
             if dispatch_article_revision.breaking_timeout is not None:
-                wagtail_article.breaking_timeout =
+                wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
             # Still need to do foreign keys for featured image/video and subsection!
 
