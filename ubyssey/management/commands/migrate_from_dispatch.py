@@ -5,6 +5,8 @@ from dispatch.modules.content import embeds
 
 from django.core.management.base import BaseCommand, CommandError, no_translations
 
+from section.models import SectionPage
+
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -21,6 +23,10 @@ class Command(BaseCommand):
         
         # wagtail_article
         wagtail_article = ArticlePage()
+
+        # wagtail section
+        wagtail_section = SectionPage.objects.get(slug='news')
+
         for dispatch_article_revision in dispatch_article_qs:
             for node in dispatch_article_revision.content:
                 # figure out what the type of the embed is (node_type). set the appropriate block_type
@@ -50,3 +56,7 @@ class Command(BaseCommand):
                 wagtail_article.content.append((block_type,block_value))
 
                 print(wagtail_article.content)
+
+        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
+
+        wagtail_section.add_child()
