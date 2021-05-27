@@ -7,6 +7,9 @@ from django.forms.widgets import Select
 from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+
+from taggit.models import TaggedItemBase
 
 from videos import blocks as video_blocks
 
@@ -100,6 +103,17 @@ class ArticleAuthorsOrderable(Orderable):
         ),
     ]
 
+#-----Taggit models-----
+class ArticlePageTag(TaggedItemBase):
+    """
+    Reference: 
+    https://docs.wagtail.io/en/stable/reference/pages/model_recipes.html
+    """
+    content_object = ParentalKey('article.ArticlePage', on_delete=models.CASCADE, related_name='tagged_items')
+    class Meta:
+        verbose_name = "article tag"
+        verbose_name_plural = "article tags"
+
 #-----Page models-----
 
 class ArticlePage(Page):
@@ -112,6 +126,8 @@ class ArticlePage(Page):
     ]
 
     subpage_types = [] #Prevents article pages from having child pages
+
+    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
     content = StreamField(
         [
@@ -129,8 +145,8 @@ class ArticlePage(Page):
                 help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
             )),
             ('video', video_blocks.OneOffVideoBlock(
-                label = "One Off Video Block",
-                help_text = "Use this for videos that will only be associated with this current article, rather than entered into our video library"
+                label = "Credited/Captioned One-Off Video",
+                help_text = "Use this to credit or caption videos that will only be associated with this current article, rather than entered into our video library. You can also embed videos in a Rich Text Block."
             )),
             ('image', ImageChooserBlock(
                 label = "Image"
@@ -230,12 +246,13 @@ class ArticlePage(Page):
             heading="Author(s)",
             help_text="Authors may be created under \"Snippets\", then selected here."
         ),
-        # MultiFieldPanel(
-        #     [
-        #         FieldPanel("section"),                
-        #     ],
-        #     heading="Sections and Tags",
-        # ),
+        MultiFieldPanel(
+            [
+                # FieldPanel("section"),
+                FieldPanel("tags"),
+            ],
+            heading="Sections and Tags",
+        ),
         MultiFieldPanel(
             [
                 ImageChooserPanel("featured_image"),
