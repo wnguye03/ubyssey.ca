@@ -28,7 +28,6 @@ class Command(BaseCommand):
         # wagtail section
         wagtail_section = SectionPage.objects.get(slug='news')
         # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
-        wagtail_section.add_child(instance=wagtail_article)
 
         for dispatch_article_revision in dispatch_article_qs:
 
@@ -36,9 +35,13 @@ class Command(BaseCommand):
             wagtail_article.revision_id = dispatch_article_revision.revision_id
             wagtail_article.created_at_time = dispatch_article_revision.created_at
             wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
-            wagtail_article.legacy_published_at_time = dispatch_article_revision.updated_at
+            if dispatch_article_revision.published_at is not None:
+                wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
 
             wagtail_article.slug = dispatch_article_revision.slug
+            wagtail_article.title = dispatch_article_revision.headline
+            wagtail_section.add_child(instance=wagtail_article)
+
             if dispatch_article_revision.seo_keyword is not None:
                 wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
             if dispatch_article_revision.seo_description is not None:
@@ -48,10 +51,8 @@ class Command(BaseCommand):
             if dispatch_article_revision.snippet is not None:
                 wagtail_article.lede = dispatch_article_revision.snippet
 
-            wagtail_article.title = dispatch_article_revision.headline
-
             if dispatch_article_revision.is_breaking is not None:
-                wagtail_article = bool(dispatch_article_revision.is_breaking)
+                wagtail_article.isbreaking = bool(dispatch_article_revision.is_breaking)
             if dispatch_article_revision.breaking_timeout is not None:
                 wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 

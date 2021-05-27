@@ -25,6 +25,9 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
+
+UBYSSEY_FOUNDING_DATE = datetime.date(1918,10,17)
+
 #-----Snippet Models-----
 
 @register_snippet
@@ -166,7 +169,7 @@ class ArticlePage(Page):
         # Maybe make a better default??
         null=False,
         blank=False,
-        default=datetime.date(1918,10,17), # SILLY MAGIC NUMBER: refers to founding date of the Ubyssey
+        default=UBYSSEY_FOUNDING_DATE,
         help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
     )
     last_modified_at = models.DateTimeField(
@@ -262,6 +265,7 @@ class ArticlePage(Page):
     )
     legacy_published_at_time = models.DateTimeField(
         null=True,
+        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time())
     )
 
     #-----For Wagtail's user interface-----
