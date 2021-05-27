@@ -26,7 +26,7 @@ class SubsectionsOrderable(wagtail_core_models.Orderable):
 #-----Page models-----
 
 class SectionPage(wagtail_core_models.Page):
-    template = 'section/section.html'
+    template = 'section/section_page.html'
 
     subpage_types = [
         'article.ArticlePage',
