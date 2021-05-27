@@ -229,6 +229,7 @@ class ArticlePage(Page):
     #-----Setting panel stuff-----
     is_explicit = models.BooleanField(
         default=False,
+        verbose_name="Is Explicit?",
         help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article."
     )
     #-----Migration stuff------
@@ -256,11 +257,11 @@ class ArticlePage(Page):
             heading="Author(s)",
             help_text="Authors may be created under \"Snippets\", then selected here."
         ),
-        MultiFieldPanel(
-            FieldRowPanel(
+        FieldRowPanel(
+            [
                 FieldPanel("publication_date"),
                 FieldPanel("show_last_modified"),
-            ),
+            ],
             heading="Publication Date"
         ),
         MultiFieldPanel(
@@ -304,7 +305,15 @@ class ArticlePage(Page):
     ]
 
     settings_panels = Page.settings_panels + [
-        FieldPanel('is_explicit'),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'is_explicit',
+                    help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article.",
+                ),
+            ],
+            heading="Advertising-Releated",
+        ),
     ]
 
     def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,
