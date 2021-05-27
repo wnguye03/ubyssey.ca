@@ -1,3 +1,4 @@
+from django import dispatch
 from article.models import ArticlePage
 
 from dispatch.models import Article
@@ -26,9 +27,38 @@ class Command(BaseCommand):
 
         # wagtail section
         wagtail_section = SectionPage.objects.get(slug='news')
+        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
+        wagtail_section.add_child(instance=wagtail_article)
 
         for dispatch_article_revision in dispatch_article_qs:
+
+            # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
+            wagtail_article.revision_id = dispatch_article_revision.revision_id
+            wagtail_article.created_at_time = dispatch_article_revision.created_at
+            wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
+            wagtail_article.legacy_published_at_time = dispatch_article_revision.updated_at
+
+            wagtail_article.slug = dispatch_article_revision.slug
+            if dispatch_article_revision.seo_keyword is not None:
+                wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
+            if dispatch_article_revision.seo_description is not None:
+                wagtail_article.seo_description = dispatch_article_revision.seo_description
+            # add something about article "template"
+            # wagtail_article.
+            if dispatch_article_revision.snippet is not None:
+                wagtail_article.lede = dispatch_article_revision.snippet
+
+            wagtail_article.title = dispatch_article_revision.headline
+
+            if dispatch_article_revision.is_breaking is not None:
+                wagtail_article = is_breaking
+            if dispatch_article_revision.breaking_timeout is not None:
+                wagtail_article.breaking_timeout =
+
+            # Still need to do foreign keys for featured image/video and subsection!
+
             for node in dispatch_article_revision.content:
+                # copy data from dispatch_article_revision.content to wagtail.article
                 # figure out what the type of the embed is (node_type). set the appropriate block_type
                 node_type = node['type']
                 block_type = 'richtext'
@@ -54,9 +84,6 @@ class Command(BaseCommand):
                 # USE JSON LIKE THIS!
 
                 wagtail_article.content.append((block_type,block_value))
-
-                print(wagtail_article.content)
-
-        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
-
-        wagtail_section.add_child()
+            wagtail_article.save_revision()
+            if dispatch_article_revision.is_published:
+                wagtail_article.publish()

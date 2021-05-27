@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 
 from dispatch.models import Article
@@ -162,9 +163,10 @@ class ArticlePage(Page):
         blank=True,
     )
     publication_date = models.DateField(
+        # Maybe make a better default??
         null=False,
         blank=False,
-        default=date.today,
+        default=datetime.date(1918,10,17), # SILLY MAGIC NUMBER: refers to founding date of the Ubyssey
         help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
     )
     last_modified_at = models.DateTimeField(
@@ -209,6 +211,7 @@ class ArticlePage(Page):
         verbose_name="Breaking News?",
     )
     breaking_timeout = models.DateTimeField(
+        # Note: should appear on interface contingent on "is breaking" being checked. Defaults are to ensure functionality prior to implementing this
         null=False,
         blank=False,
         default=timezone.now,
@@ -239,6 +242,26 @@ class ArticlePage(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+    )
+
+    #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
+    revision_id = models.PositiveIntegerField(
+        null=False,
+        blank=False,
+        default=0,
+    )
+    created_at_time = models.DateTimeField(
+        null=False,
+        blank=False,
+        default=timezone.now,
+    )
+    legacy_revised_at_time = models.DateTimeField(
+        null=False,
+        blank=False,
+        default=timezone.now,
+    )
+    legacy_published_at_time = models.DateTimeField(
+        null=True,
     )
 
     #-----For Wagtail's user interface-----
