@@ -1,3 +1,5 @@
+from datetime import date
+
 from dispatch.models import Article
 
 from django import forms
@@ -13,7 +15,7 @@ from taggit.models import TaggedItemBase
 
 from videos import blocks as video_blocks
 
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page, Orderable
@@ -159,13 +161,20 @@ class ArticlePage(Page):
         null=True,
         blank=True,
     )
-    # section = models.ForeignKey(
-    #     "SectionSnippet",
-    #     null=True,
-    #     blank=False,
-    #     on_delete=models.PROTECT,
-    #     related_name="+"
-    # )
+    publication_date = models.DateField(
+        null=False,
+        blank=False,
+        default=date.today,
+        help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
+    )
+    last_modified_at = models.DateTimeField(
+        # updates to current date/time every time the model's .save() method is hit
+        auto_now=True,
+    )
+    show_last_modified = models.BooleanField(
+        default = False,
+        help_text = "Check this to alert readers the article has been revised since its publication.",
+    )
     lede = models.TextField(
         # Was called "snippet" in Dispatch - do not want to reuse this work, so we call it 'lede' instead
         null=False,
@@ -190,9 +199,6 @@ class ArticlePage(Page):
         related_name="+"
     )
 
-    # importance
-    # reading time
-    # facebook instant article
     # template
 
     #-----Promote panel stuff------
@@ -220,7 +226,11 @@ class ArticlePage(Page):
         default='',
         verbose_name="SEO Description",
     ) # AKA "Meta Description" in the old Dispatch frontend
-    
+    #-----Setting panel stuff-----
+    is_explicit = models.BooleanField(
+        default=False,
+        help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article."
+    )
     #-----Migration stuff------
     dispatch_version = models.ForeignKey(
         # Used to map the article to a previous version that exists in Dispatch
@@ -245,6 +255,13 @@ class ArticlePage(Page):
             ],
             heading="Author(s)",
             help_text="Authors may be created under \"Snippets\", then selected here."
+        ),
+        MultiFieldPanel(
+            FieldRowPanel(
+                FieldPanel("publication_date"),
+                FieldPanel("show_last_modified"),
+            ),
+            heading="Publication Date"
         ),
         MultiFieldPanel(
             [
@@ -284,6 +301,10 @@ class ArticlePage(Page):
             heading="Old SEO stuff",
             help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
         )
+    ]
+
+    settings_panels = Page.settings_panels + [
+        FieldPanel('is_explicit'),
     ]
 
     def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,
