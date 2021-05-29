@@ -19,6 +19,16 @@ from videos.blocks import OneOffVideoBlock
 
 
 class Command(BaseCommand):
+    """
+    Certain things have to be migrated to Wagtail before this can be run properly:
+
+    Authors
+    Tags
+    Sections (small enough this one can be done manually)
+    Subsections
+    Images
+    Videos
+    """
     
     @no_translations
     def handle(self, *args, **options):
@@ -56,6 +66,7 @@ class Command(BaseCommand):
                 wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
                 if dispatch_article_revision.published_at is not None:
                     wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
+                    wagtail_article.published_at = wagtail_article.legacy_published_at_time
 
                 wagtail_article.title = dispatch_article_revision.headline
 
@@ -118,6 +129,10 @@ class Command(BaseCommand):
                 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
                 if dispatch_article_revision.is_published:
-                    wagtail_article.save_revision().publish()
+                    #maybe redundant code 
+                    wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
+                    wagtail_article.published_at = wagtail_article.legacy_published_at_time
+
+                    wagtail_article.save_revision(log_action=True).publish()
                 else:
-                    wagtail_article.save_revision()
+                    wagtail_article.save_revision(log_action=True)

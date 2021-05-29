@@ -165,11 +165,10 @@ class ArticlePage(Page):
         null=True,
         blank=True,
     )
-    publication_date = models.DateField(
-        # Maybe make a better default??
+    published_at = models.DateTimeField(
         null=False,
         blank=False,
-        default=UBYSSEY_FOUNDING_DATE,
+        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time()),
         help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
     )
     last_modified_at = models.DateTimeField(
@@ -286,7 +285,7 @@ class ArticlePage(Page):
         ),
         FieldRowPanel(
             [
-                FieldPanel("publication_date"),
+                FieldPanel("published_at"),
                 FieldPanel("show_last_modified"),
             ],
             heading="Publication Date"
