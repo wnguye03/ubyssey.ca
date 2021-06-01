@@ -109,6 +109,29 @@ class ArticleAuthorsOrderable(Orderable):
         ),
     ]
 
+class ArticleFeaturedImagesOrderable(Orderable):
+    """
+    This is based off the "ImageAttachment" class from Dispatch
+
+    The ImageAttachment 
+    """
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="featured_images",
+    )
+
+    caption = models.TextField(blank=True, null=False, default='')
+    credit = models.TextField(blank=True, null=False, default='')
+    # style = models.CharField(max_length=255, blank=True, null=False, default='')
+    # width = models.CharField(max_length=255, blank=True, null=False, default='')
+    image = models.ForeignKey(
+        "images.UbysseyImage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
     """
@@ -188,13 +211,6 @@ class ArticlePage(Page):
 
     #-----Featured Media-----
     
-    featured_image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
-    )
     featured_video = models.ForeignKey(
         "videos.VideoSnippet",
         null=True,
@@ -299,7 +315,9 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                ImageChooserPanel("featured_image"),
+                [
+                    InlinePanel("featured_images", label="Featured Image(s)"),
+                ],
                 SnippetChooserPanel("featured_video"),
             ],
             heading="Featured Media",
