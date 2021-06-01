@@ -466,5 +466,8 @@ class ArticlePage(Page):
         return revision
 
     class Meta:
+        # TODO Should probably index on:
+        # Subsection then article
+        # Author then article
         verbose_name = "Article"
         verbose_name_plural = "Articles"

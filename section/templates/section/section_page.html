@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailuserbar %}
 
 {% block header %}
 {% include 'headers/topbar.html' with section=section.slug %}
@@ -8,13 +11,24 @@
 {% endblock %}
 
 {% block content %}
-<main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
+<main class="section">
   {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
   {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 %}
   <div class="u-container u-container--padded">
     <div class="c-page__header">
       <h1 class="c-page__heading">{{ self.title }}</h1>
     </div>
+
+    {% for block in self.content %}
+      {% include_block block %}
+    {% endfor %}
+
+    {% comment %}
+    DESIGN NOTE:
+    The below will be turned into _blocks_,
+    allowing editors to have user to have some level of control
+    {% endcomment %}
+    {% comment %}
     {% if subsections %}
       <div class="c-page__header__subsections">
         <ul>
@@ -36,6 +50,7 @@
 
     <h3 class="c-page__section">Archive</h3>
     {% include 'objects/archive.html' %}
+    {% endcomment %}
 
   </div>
 </main>
