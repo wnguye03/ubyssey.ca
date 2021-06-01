@@ -3,7 +3,7 @@ See: https://docs.wagtail.io/en/stable/advanced_topics/images/custom_image_model
 """
 
 import os
-
+from datetime import date
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import gettext_lazy as _
@@ -50,7 +50,11 @@ class UbysseyImage(AbstractImage):
 
         https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py
         """
-        folder_name = 'wagtail_images/%Y/%m'
+
+        # If this were inheriting from ImageField, we'd just include the '%Y/%m' in the string
+        # See https://docs.djangoproject.com/en/dev/ref/models/fields/#imagefield
+        # Be careful of differances from ImageField!
+        folder_name = 'wagtail_images/' + date.today().strftime('%Y/%m')
         filename = self.file.field.storage.get_valid_name(filename)
 
         # do a unidecode in the filename and then
@@ -82,7 +86,13 @@ class UbysseyRendition(AbstractRendition):
     """
     image = models.ForeignKey(UbysseyImage, on_delete=models.CASCADE, related_name='renditions')
     def get_upload_to(self, filename):
-        folder_name = 'wagtail_renditions/%Y/%m'
+        """
+        Overrides original. Only difference is in folder_name Copried from:
+
+        https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py
+        """
+
+        folder_name = 'wagtail_renditions/' + date.today().strftime('%Y/%m')
         filename = self.file.field.storage.get_valid_name(filename)
         return os.path.join(folder_name, filename)
 
