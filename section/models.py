@@ -73,3 +73,7 @@ class SectionPage(wagtail_core_models.Page):
     def subsection_view(self, request, subsection_slug, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
         return render(request, 'section/section_page.html', context)
+
+    def get_section_articles_queryset(self):
+        articles_qs = ArticlePage.objects.live().descendant_of(self)
+        return articles_qs
