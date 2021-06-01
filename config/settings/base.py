@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'authors',
     'article',
     'section',
+    'images',
     'videos',
     'sporttourney',
     'specialfeaturelanding',
@@ -278,3 +279,5 @@ WAGTAIL_SITE_NAME = 'The Ubyssey'
 WAGTAIL_USER_EDIT_FORM = 'dispatchusers.forms.DispatchUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'dispatchusers.forms.DispatchUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['person', 'is_active']
+
+WAGTAILIMAGES_IMAGE_MODEL = 'images.UbysseyImage'

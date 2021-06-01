@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 
 from dispatch.models import Article
@@ -23,6 +24,9 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
+
+
+UBYSSEY_FOUNDING_DATE = datetime.date(1918,10,17)
 
 #-----Snippet Models-----
 
@@ -105,6 +109,39 @@ class ArticleAuthorsOrderable(Orderable):
         ),
     ]
 
+class ArticleFeaturedImagesOrderable(Orderable):
+    """
+    This is based off the "ImageAttachment" class from Dispatch
+
+    The ImageAttachment 
+    """
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="featured_images",
+    )
+
+    caption = models.TextField(blank=True, null=False, default='')
+    credit = models.TextField(blank=True, null=False, default='')
+    # style = models.CharField(max_length=255, blank=True, null=False, default='')
+    # width = models.CharField(max_length=255, blank=True, null=False, default='')
+    image = models.ForeignKey(
+        "images.UbysseyImage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                SnippetChooserPanel("caption"),
+                FieldPanel("credit"),
+            ],
+            heading="Featured Image",
+        ),
+    ]
+
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
     """
@@ -161,10 +198,10 @@ class ArticlePage(Page):
         null=True,
         blank=True,
     )
-    publication_date = models.DateField(
+    published_at = models.DateTimeField(
         null=False,
         blank=False,
-        default=date.today,
+        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time()),
         help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
     )
     last_modified_at = models.DateTimeField(
@@ -184,13 +221,6 @@ class ArticlePage(Page):
 
     #-----Featured Media-----
     
-    featured_image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
-    )
     featured_video = models.ForeignKey(
         "videos.VideoSnippet",
         null=True,
@@ -209,6 +239,7 @@ class ArticlePage(Page):
         verbose_name="Breaking News?",
     )
     breaking_timeout = models.DateTimeField(
+        # Note: should appear on interface contingent on "is breaking" being checked. Defaults are to ensure functionality prior to implementing this
         null=False,
         blank=False,
         default=timezone.now,
@@ -229,6 +260,7 @@ class ArticlePage(Page):
     #-----Setting panel stuff-----
     is_explicit = models.BooleanField(
         default=False,
+        verbose_name="Is Explicit?",
         help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article."
     )
     #-----Migration stuff------
@@ -238,6 +270,27 @@ class ArticlePage(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+    )
+
+    #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
+    revision_id = models.PositiveIntegerField(
+        null=False,
+        blank=False,
+        default=0,
+    )
+    created_at_time = models.DateTimeField(
+        null=False,
+        blank=False,
+        default=timezone.now,
+    )
+    legacy_revised_at_time = models.DateTimeField(
+        null=False,
+        blank=False,
+        default=timezone.now,
+    )
+    legacy_published_at_time = models.DateTimeField(
+        null=True,
+        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time())
     )
 
     #-----For Wagtail's user interface-----
@@ -256,11 +309,11 @@ class ArticlePage(Page):
             heading="Author(s)",
             help_text="Authors may be created under \"Snippets\", then selected here."
         ),
-        MultiFieldPanel(
-            FieldRowPanel(
-                FieldPanel("publication_date"),
+        FieldRowPanel(
+            [
+                FieldPanel("published_at"),
                 FieldPanel("show_last_modified"),
-            ),
+            ],
             heading="Publication Date"
         ),
         MultiFieldPanel(
@@ -272,7 +325,9 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                ImageChooserPanel("featured_image"),
+                # [
+                #     InlinePanel("featured_images", label="Featured Image(s)"),
+                # ],
                 SnippetChooserPanel("featured_video"),
             ],
             heading="Featured Media",
@@ -304,7 +359,15 @@ class ArticlePage(Page):
     ]
 
     settings_panels = Page.settings_panels + [
-        FieldPanel('is_explicit'),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'is_explicit',
+                    help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article.",
+                ),
+            ],
+            heading="Advertising-Releated",
+        ),
     ]
 
     def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,
