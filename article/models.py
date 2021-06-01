@@ -132,6 +132,16 @@ class ArticleFeaturedImagesOrderable(Orderable):
         related_name='+',
     )
 
+    panels = [
+        MultiFieldPanel(
+            [
+                SnippetChooserPanel("caption"),
+                FieldPanel("credit"),
+            ],
+            heading="Featured Image",
+        ),
+    ]
+
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
     """
@@ -315,9 +325,9 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                [
-                    InlinePanel("featured_images", label="Featured Image(s)"),
-                ],
+                # [
+                #     InlinePanel("featured_images", label="Featured Image(s)"),
+                # ],
                 SnippetChooserPanel("featured_video"),
             ],
             heading="Featured Media",
