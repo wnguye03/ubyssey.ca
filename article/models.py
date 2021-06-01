@@ -135,7 +135,8 @@ class ArticleFeaturedImagesOrderable(Orderable):
     panels = [
         MultiFieldPanel(
             [
-                SnippetChooserPanel("caption"),
+                ImageChooserPanel("image"),
+                FieldPanel("caption"),
                 FieldPanel("credit"),
             ],
             heading="Featured Image",
@@ -202,7 +203,7 @@ class ArticlePage(Page):
         null=False,
         blank=False,
         default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time()),
-        help_text = "To be explicitly shown to the reader. Defaults to today. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
+        help_text = "To be explicitly shown to the reader. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
     )
     last_modified_at = models.DateTimeField(
         # updates to current date/time every time the model's .save() method is hit
@@ -325,9 +326,7 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [
-                # [
-                #     InlinePanel("featured_images", label="Featured Image(s)"),
-                # ],
+                InlinePanel("featured_images", label="Featured Image(s)"),
                 SnippetChooserPanel("featured_video"),
             ],
             heading="Featured Media",

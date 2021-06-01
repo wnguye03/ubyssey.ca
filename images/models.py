@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import gettext_lazy as _
 from wagtail.core.models import Orderable
+from wagtail.core.utils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 
 
@@ -34,6 +35,7 @@ class UbysseyImage(AbstractImage):
     author = models.ForeignKey( #main req from original
         "authors.AuthorSnippet",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     updated_at = models.DateTimeField(auto_now=True)
