@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from article import ArticlePage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -69,11 +70,34 @@ class SectionPage(wagtail_core_models.Page):
         ),
     ]
 
-    @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
-    def subsection_view(self, request, subsection_slug, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        return render(request, 'section/section_page.html', context)
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        all_articles = ArticlePage.objects.live().public().descendant_of(self)
+        if 'subsection_slug' in kwargs:
+            pass
+            # TODO filter ArticlePage by subsection once that field is implemented properly
+            #all_articles.filter
 
-    def get_section_articles_queryset(self):
-        articles_qs = ArticlePage.objects.live().descendant_of(self)
-        return articles_qs
+        all_articles.order_by('-first_published_at')
+        # Paginate all posts by 15 per page
+        paginator = Paginator(all_articles, per_page=15)
+        # Try to get the ?page=x value
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            articles = paginator.page(paginator.num_pages)
+
+        context["articles"] = articles
+        return context
+        
+    @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
+    def subsection_view(self, request, subsection_slug):
+        context = self.get_context(request, subsection_slug=subsection_slug)
+        return render(request, 'section/section_page.html', context)
