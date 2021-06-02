@@ -1,28 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailuserbar %}
+{% comment %}
+Function of humanize: https://docs.djangoproject.com/en/3.2/ref/contrib/humanize/
+Will automatically render some things as 
+{% endcomment %}
 {% block header %}
 {% include 'headers/main.html' %}
 {% include 'headers/mobile.html' with class='homepage' %}
+{% comment %} 
+Headers/footers/"site naivgation" should be turned into its own app- but it will still go here
+{% endcomment %}
 {% endblock %}
 {% block content %}
 <main class="u-container u-container--large homepage">
-    {% if articles.breaking %}
-      <a class="o-breaking-news" href="{{ articles.breaking.get_absolute_url }}">
-        <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
-      </a>
-    {% endif %}
-    <div class="homepage-section row">
-      <div class="sections">  
-        {% comment %} 
-        This is where the StreamField will go
-        {% endcomment %}            
-      </div>
-      <div class="sidebar-home">
-        <div class="multi-zone cell right">
-        </div>
+  {% if articles.breaking %}
+    <a class="o-breaking-news" href="{{ articles.breaking.get_absolute_url }}">
+      <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
+    </a>
+  {% endif %}
+  {% comment %}
+  Additional fields/blocks will go here to alert students to some special events
+  {% endcomment %}
+  <div class="homepage-section row">
+    <div class="sections">  
+      {% comment %} 
+      This is where we put the contents of the main StreamField of section blocks 
+      This StreamField consists of blocks that each show off the contents of some section.
+      See the models.py of this app for implementation details
+      {% endcomment %}            
+      {% for block in self.sections_stream %}
+        {% include_block block %}
+      {% endfor %}
+    </div>
+    <div class="sidebar-home">
+      <div class="multi-zone cell right">
+      {% comment %} 
+      This should probably be renamed, because "zones"
+      were a mis-designed feature.
+
+      In all likelihood, it will contain another 
+      {% endcomment %}
       </div>
     </div>
+  </div>
 </main>
 {% endblock %}
 

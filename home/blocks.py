@@ -14,7 +14,7 @@ class SectionChooserBlock(blocks.ChooserBlock):
     widget = forms.Select
 
 class HomePageSectionBlock(blocks.StructBlock):
-    section = SectionChooserBlock(required=True)
+    section = blocks.CharBlock(required=True)
 
     class Meta:
-        template = "home/home_page_section_block.html"
+        template = "home/stream_blocks/section_non_news.html"

@@ -20,7 +20,7 @@ class HomePage(Page):
         'section.SectionPage',
     ]
 
-    content = StreamField(
+    sections_stream = StreamField(
         [
             ("home_page_section_block",homeblocks.HomePageSectionBlock())
         ],
@@ -29,7 +29,7 @@ class HomePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("content"),
+        StreamFieldPanel("sections_stream"),
     ]
 
     # def get_latest_articles(self):
