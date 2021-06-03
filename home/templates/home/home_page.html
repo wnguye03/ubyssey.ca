@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'ubyssey/base.html' %}
 {% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
@@ -50,5 +50,5 @@ Headers/footers/"site naivgation" should be turned into its own app- but it will
 {% endblock %}
 
 {% block footer %}
-{% include 'footer.html' with homepage=True %}
+{% include 'navigation/footer.html' with homepage=True %}
 {% endblock %}
