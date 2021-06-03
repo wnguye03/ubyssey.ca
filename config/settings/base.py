@@ -138,6 +138,8 @@ INSTALLED_APPS = [
     'videos',
     'sporttourney',
     'specialfeaturelanding',
+    'navigation',
+
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
     'newsletter.apps.NewsletterConfig',
