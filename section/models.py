@@ -2,10 +2,13 @@ from article.models import ArticlePage
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models.fields import CharField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render
+
+from django_extensions.db.fields import AutoSlugField
+
 from modelcluster.fields import ParentalKey
+
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core import models as wagtail_core_models
 from wagtail.contrib.routable_page.models import route, RoutablePageMixin
@@ -17,9 +20,20 @@ from wagtail.snippets.models import register_snippet
 class SubsectionSnippet(models.Model):
     name = models.CharField(
         max_length=100,
+        null=False,
+        blank=False,
     )
-    slug = models.CharField(
+    slug = AutoSlugField(
         max_length=100,
+        populate_from="name",
+        null=False,
+        blank=False,
+    )
+    section_page = ForeignKey(
+        "section.SectionPage",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
     )
 
 #-----Orderable models-----
@@ -29,10 +43,7 @@ class SubsectionsOrderable(wagtail_core_models.Orderable):
     """
     section_page = ParentalKey(
         "section.SectionPage",
-        related_name="subsections",
-    )
-    subsection_name = models.CharField(
-        max_length=100,
+        related_name="subsection_menu",
     )
     subsection_snippet = ForeignKey(
         'section.SubsectionSnippet',
@@ -64,7 +75,7 @@ class SectionPage(wagtail_core_models.Page):
     content_panels = wagtail_core_models.Page.content_panels + [
         MultiFieldPanel(
             [
-                InlinePanel("subsections"),
+                InlinePanel("subsection_menu"),
             ],
             heading="Subsection(s)",
         ),
