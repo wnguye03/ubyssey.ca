@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from django_extensions.db.fields import AutoSlugField
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -38,17 +40,19 @@ class VideoAuthorsOrderable(Orderable):
 
 @register_snippet
 class VideoSnippet(ClusterableModel):
-    slug = models.SlugField(
+    title = models.CharField(
         max_length=255,
-        primary_key=True,
-        unique=True,
-        db_index=True,
         null=False,
         blank=False,
         default='',
     )
-    title = models.CharField(
+    slug = AutoSlugField(
+        populate_from="title",
+        editable=True,
         max_length=255,
+        primary_key=True,
+        unique=True,
+        db_index=True,
         null=False,
         blank=False,
         default='',

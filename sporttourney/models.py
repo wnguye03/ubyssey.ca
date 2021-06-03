@@ -1,4 +1,5 @@
 from django.db import models
+from django_extensions.db.fields import AutoSlugField
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from ubyssey.validators import validate_colour_hex
@@ -14,12 +15,13 @@ class SportsTournamentSnippet(ClusterableModel):
         null=False,
         default='tournament'
     )
-    slug = models.SlugField(
+    slug = AutoSlugField(
+        populate_from="tournament_name",
+        editable=True,
         primary_key=True,
         unique=True,
         blank=False,
         null=False,
-        max_length=255,
     )
     
     panels = [

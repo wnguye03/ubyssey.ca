@@ -1,22 +1,26 @@
 from django.db import models
+from django_extensions.db.fields import AutoSlugField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
 @register_snippet
 class AuthorSnippet(models.Model):
-    slug = models.SlugField(
-        primary_key=True,
-        unique=True,
-        blank=False,
-        null=False,
-        max_length=255,
-    )
     full_name = models.CharField(
         max_length=255,
         blank=False,
         null=False,
     )
+    slug = AutoSlugField(
+        populate_from="full_name",
+        primary_key=True,
+        unique=True,
+        blank=False,
+        null=False,
+        max_length=255,
+        editable=True,
+    )
+
     # # This implementation represents an "easy" way to implement this which is analogous to how Dispatch did it, though less user-friendly than the alternative
     # image = models.ImageField(
     #     upload_to='images',
