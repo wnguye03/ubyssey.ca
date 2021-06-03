@@ -170,6 +170,7 @@ INSTALLED_APPS = [
     'ubyssey.events',
     'django_user_agents',
     'django.contrib.admin',
+    'django_extensions',
 ]
 
 if DEBUG:
