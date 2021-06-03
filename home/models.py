@@ -29,7 +29,7 @@ class HomePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("sections_stream"),
+        StreamFieldPanel("sections_stream", heading="Sections"),
     ]
 
     # def get_latest_articles(self):

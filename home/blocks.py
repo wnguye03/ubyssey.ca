@@ -2,9 +2,14 @@
 Blocks used on the home page of the site
 """
 
-from wagtail.core import blocks
 from django import forms
+from django.db import models
 from dispatch.models import Section
+
+from wagtail.core import blocks
+from wagtail.core.blocks import field_block
+from wagtail.admin.edit_handlers import PageChooserPanel
+
 
 class SectionChooserBlock(blocks.ChooserBlock):
     # based off code from:
@@ -14,7 +19,11 @@ class SectionChooserBlock(blocks.ChooserBlock):
     widget = forms.Select
 
 class HomePageSectionBlock(blocks.StructBlock):
-    section = blocks.CharBlock(required=True)
+    # section = blocks.CharBlock(required=True)
+
+    section = field_block.PageChooserBlock(
+        page_type='section.SectionPage'
+    )
 
     class Meta:
         template = "home/stream_blocks/section_non_news.html"

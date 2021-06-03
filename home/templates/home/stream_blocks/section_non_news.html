@@ -1,5 +1,6 @@
 {% load humanize %}
-<h1 class="section">{{ self.section|title }}</a></h1>
+{% load wagtailcore_tags %}
+<h1 class="section"><a href={% pageurl self.section %}>{{ self.section|title }}</a></h1>
 <section class="c-homepage__section c-homepage__section--2">
   {{ self.section }}
   {% comment %} {% with articles.first as article %}
