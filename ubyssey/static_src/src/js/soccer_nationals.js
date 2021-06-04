@@ -5,6 +5,8 @@ import { Nationals } from './components/Nationals'
 
 $(function () {
 
+    console.log('soccer')
+
     $('.c-soccer-nationals').each(function () {
         ReactDOM.render(
             <Nationals id={$(this).data('currentArticleId')}
