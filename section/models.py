@@ -21,10 +21,7 @@ from taggit.models import TagBase, ItemBase
 
 #-----Orderable models-----
 @register_snippet
-class Subsection(wagtail_core_models.Orderable):
-    """
-    This closely corresponds to the Dispatch model that is (mis-)named "Author"
-    """
+class Subsection(models.Model):
     name = CharField(
         blank=False,
         null=False,
@@ -39,41 +36,33 @@ class Subsection(wagtail_core_models.Orderable):
     )
     section_page = ParentalKey(
         "section.SectionPage",
-        related_name="subsection_menu",
+        related_name="subsections",
     )
     panels = [
         FieldPanel("name"),
         FieldPanel("slug"),
+        PageChooserPanel("section_page"),
     ]
     def __str__(self):
         return "%s - %s" % (self.section_page, self.name)
 
-# class PrefilteredSubsectionManager(models.Manager):
-#     def __init__(self, slug=''):
-#         self.section_page_slug = slug
-
-#     def get_queryset(self):
-#         qs = super().get_queryset()
-#         if self.section_page_slug != '': 
-#             qs.filter(section_page__slug=self.section_page_slug)
-#         return qs
-
-@register_snippet
-class PrefilteredSubsection(Subsection):
-    """
-    Proxy Class for Subsection
-    This is a bit of a strange pattern. It was taken from the below StackOverflow
-    https://stackoverflow.com/questions/56915888/how-can-i-customise-the-queryset-in-snippetchooserpanel-within-wagtail
-    """
-    def __init__(self):
-        super().__init__()
-        self.section_page_slug = ''
-
-    # objects = PrefilteredSubsectionManager()
-
-    class Meta:
-        proxy = True
-
+class SubsectionMenuItem(wagtail_core_models.Orderable):
+    subsection = ForeignKey(
+        "section.Subsection",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    section = ParentalKey(
+        "section.SectionPage",
+        blank=True,
+        null=True,
+        related_name="subsection_menu",
+    )
+    panels = [
+        SnippetChooserPanel("subsection"),
+    ]
+    
 #-----Page models-----
 
 class SectionPage(wagtail_core_models.Page):

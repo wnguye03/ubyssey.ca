@@ -1,9 +1,7 @@
 import datetime
-from datetime import date
 
 from dispatch.models import Article
 
-from django import forms
 from django.db import models
 from django.db.models.fields import CharField
 from django.forms.widgets import Select
@@ -18,7 +16,7 @@ from videos import blocks as video_blocks
 
 from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Orderable
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -192,15 +190,14 @@ class ArticlePage(Page):
     )
 
     #-----Section and Tag stuff-----
+    subsection = models.ForeignKey(
+        "section.Subsection",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
     tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
-    subsection = models.ForeignKey(
-        "section.PrefilteredSubsection",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="articles_in_subsection"
-    )
     #-----Featured Media-----
     
     featured_video = models.ForeignKey(
