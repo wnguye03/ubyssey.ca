@@ -1,3 +1,4 @@
+from django.db.models.fields import CharField
 from article.models import ArticlePage
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -7,57 +8,71 @@ from django.shortcuts import render
 
 from django_extensions.db.fields import AutoSlugField
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core import models as wagtail_core_models
 from wagtail.contrib.routable_page.models import route, RoutablePageMixin
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
+from taggit.models import TagBase, ItemBase
 
-#-----Snippet models-----
-@register_snippet
-class SubsectionSnippet(models.Model):
-    name = models.CharField(
-        max_length=100,
-        null=False,
-        blank=False,
-    )
-    slug = AutoSlugField(
-        max_length=100,
-        populate_from="name",
-        null=False,
-        blank=False,
-    )
-    section_page = ForeignKey(
-        "section.SectionPage",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False,
-    )
 
 #-----Orderable models-----
-class SubsectionsOrderable(wagtail_core_models.Orderable):
+@register_snippet
+class Subsection(wagtail_core_models.Orderable):
     """
     This closely corresponds to the Dispatch model that is (mis-)named "Author"
     """
+    name = CharField(
+        blank=False,
+        null=False,
+        max_length=100
+    )
+    slug = AutoSlugField(
+        populate_from="name",
+        editable=True,
+        blank=False,
+        null=False,
+        max_length=100
+    )
     section_page = ParentalKey(
         "section.SectionPage",
         related_name="subsection_menu",
     )
-    subsection_snippet = ForeignKey(
-        'section.SubsectionSnippet',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
     panels = [
-        FieldPanel("subsection_name"),
-        MultiFieldPanel(
-        [
-            SnippetChooserPanel("subsection_snippet"),
-        ]),      
+        FieldPanel("name"),
+        FieldPanel("slug"),
     ]
+    def __str__(self):
+        return "%s - %s" % (self.section_page, self.name)
+
+# class PrefilteredSubsectionManager(models.Manager):
+#     def __init__(self, slug=''):
+#         self.section_page_slug = slug
+
+#     def get_queryset(self):
+#         qs = super().get_queryset()
+#         if self.section_page_slug != '': 
+#             qs.filter(section_page__slug=self.section_page_slug)
+#         return qs
+
+@register_snippet
+class PrefilteredSubsection(Subsection):
+    """
+    Proxy Class for Subsection
+    This is a bit of a strange pattern. It was taken from the below StackOverflow
+    https://stackoverflow.com/questions/56915888/how-can-i-customise-the-queryset-in-snippetchooserpanel-within-wagtail
+    """
+    def __init__(self):
+        super().__init__()
+        self.section_page_slug = ''
+
+    # objects = PrefilteredSubsectionManager()
+
+    class Meta:
+        proxy = True
 
 #-----Page models-----
 

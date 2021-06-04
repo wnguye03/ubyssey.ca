@@ -39,33 +39,6 @@ class DispatchCounterpartSnippet(models.Model):
         on_delete=models.SET_NULL,
     )
 
-@register_snippet
-class Topic(models.Model):
-    slug = models.SlugField(
-        primary_key=True,
-        unique=True,
-        max_length=255,
-        null=False,
-        blank=False,
-    )
-    name = models.CharField(
-        max_length=255,
-        null=False,
-        blank=False,
-    )
-    last_used = models.DateTimeField(
-        null=True
-    )
-    def update_timestamp(self):
-        self.last_used = timezone.now()
-        self.save()
-    
-    class Meta:
-        verbose_name = "Topic"
-        verbose_name_plural = "Topics"
-        indexes = [
-            models.Index(fields=['slug']),
-        ]
 
 #-----Orderable models-----
 
@@ -167,8 +140,6 @@ class ArticlePage(Page):
 
     subpage_types = [] #Prevents article pages from having child pages
 
-    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
-
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
@@ -220,6 +191,16 @@ class ArticlePage(Page):
         default='',
     )
 
+    #-----Section and Tag stuff-----
+    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
+
+    subsection = models.ForeignKey(
+        "section.PrefilteredSubsection",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="articles_in_subsection"
+    )
     #-----Featured Media-----
     
     featured_video = models.ForeignKey(
@@ -320,6 +301,7 @@ class ArticlePage(Page):
         MultiFieldPanel(
             [
                 # FieldPanel("section"),
+                SnippetChooserPanel("subsection"),
                 FieldPanel("tags"),
             ],
             heading="Sections and Tags",
@@ -471,3 +453,6 @@ class ArticlePage(Page):
         # Author then article
         verbose_name = "Article"
         verbose_name_plural = "Articles"
+        indexes = [
+            models.Index(fields=['subsection',]),
+        ]

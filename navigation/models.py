@@ -5,6 +5,14 @@ from modelcluster.models import ClusterableModel
 from wagtail.core.models import Orderable
 from wagtail.snippets.models import register_snippet
 
+class NavigationMenuItem(Orderable):
+    navigation_menu = ParentalKey(
+        "navigation.NavigationMenu",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+    )
+
 #-----Snippet models-----
 @register_snippet
 class NavigationMenu(ClusterableModel):
@@ -18,4 +26,8 @@ class NavigationMenu(ClusterableModel):
         populate_from="name",
         null=False,
         blank=False,
+        editable=True,
     )
+
+    def __str__(self):
+        return self.name
