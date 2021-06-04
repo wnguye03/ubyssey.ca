@@ -189,9 +189,9 @@ class ArticlePage(Page):
         default='',
     )
 
-    #-----Section and Tag stuff-----
-    subsection = models.ForeignKey(
-        "section.Subsection",
+    #-----Category and Tag stuff-----
+    category = models.ForeignKey(
+        "section.CategorySnippet",
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -298,7 +298,7 @@ class ArticlePage(Page):
         MultiFieldPanel(
             [
                 # FieldPanel("section"),
-                SnippetChooserPanel("subsection"),
+                SnippetChooserPanel("category"),
                 FieldPanel("tags"),
             ],
             heading="Sections and Tags",
@@ -446,10 +446,9 @@ class ArticlePage(Page):
 
     class Meta:
         # TODO Should probably index on:
-        # Subsection then article
         # Author then article
         verbose_name = "Article"
         verbose_name_plural = "Articles"
         indexes = [
-            models.Index(fields=['subsection',]),
+            models.Index(fields=['category',]),
         ]
