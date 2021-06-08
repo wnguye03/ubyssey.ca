@@ -4,6 +4,7 @@ from django.db.models.fields.related import ForeignKey
 from django_extensions.db.fields import AutoSlugField
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+from section.models import SectionPage
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, HelpPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
@@ -49,7 +50,7 @@ class NavigationMenuItem(Orderable):
     ]
 
     @property
-    def link(self):
+    def link(self) -> str:
         if self.internal_link:
             return self.internal_link.url
         elif self.external_link:
@@ -58,14 +59,21 @@ class NavigationMenuItem(Orderable):
             return '#'
 
     @property
-    def text(self):
+    def text(self) -> str:
         if self.internal_link and self.link_text == '':
             return self.internal_link.title
         elif self.link_text != '':
             return self.link_text
         else:
-            return "MISSING LINK TEXT"
-        
+            return "ERROR MISSING LINK TEXT"
+
+
+    @property
+    def internal_link_slug(self) -> str:
+        if self.internal_link:
+            return self.internal_link.slug
+        else:
+            return "ERROR-NOT-AN-INTERNAL-LINK"
 
 #-----Snippet models-----
 @register_snippet

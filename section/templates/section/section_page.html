@@ -6,7 +6,7 @@
 {% load wagtailuserbar %}
 
 {% block header %}
-{% include 'headers/topbar.html' with section=section.slug %}
+{% include 'navigation/headers/topbar.html' with section=self.slug %}
 {% include 'headers/mobile.html' %}
 {% endblock %}
 
