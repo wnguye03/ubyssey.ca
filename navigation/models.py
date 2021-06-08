@@ -157,6 +157,13 @@ class SitewideMenus(BaseSetting):
         blank=True,
         related_name='+'
     )
+    mobile_links_menu = ForeignKey(
+        "navigation.NavigationMenu",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
 
     panels = [
         HelpPanel(
@@ -166,7 +173,7 @@ class SitewideMenus(BaseSetting):
         MultiFieldPanel([        
             SnippetChooserPanel("main_header_menu"),
             ], heading="Main Header",
-            help_text="Will appear in header of every page of the site, in header",
+            help_text="Will appear in header of every page of the site, in header, or in special menu on mobile",
         ),
         MultiFieldPanel([        
             SnippetChooserPanel("left_header_menu"),
@@ -180,7 +187,11 @@ class SitewideMenus(BaseSetting):
             ], heading="Footer",
             help_text="Will appear in header of every page of the site, in footer. Each selected menu represents a different row.",
         ),
-
+        MultiFieldPanel([        
+            SnippetChooserPanel("mobile_links_menu"),
+            ], heading="Main Header",
+            help_text="Links that will appear in the mobile menu alongside the main header links",
+        ),
     ]
 
 
