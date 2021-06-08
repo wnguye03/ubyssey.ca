@@ -1,11 +1,10 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import CharField, URLField
 from django.db.models.fields.related import ForeignKey
 from django_extensions.db.fields import AutoSlugField
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, HelpPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
 from wagtail.snippets.models import register_snippet
@@ -18,13 +17,13 @@ class NavigationMenuItem(Orderable):
         on_delete=models.CASCADE,
         null=False,
         blank=False,
-        related_name='navigation_menu_item',
+        related_name='navigation_menu_items',
     )
     link_text = CharField(
         max_length=25,
         default='',
         null=False,
-        blank=False,
+        blank=True,
     )
     internal_link = ForeignKey(
         "wagtailcore.Page",
@@ -44,10 +43,29 @@ class NavigationMenuItem(Orderable):
         MultiFieldPanel([
             PageChooserPanel("internal_link"),
             FieldPanel("external_link"),
-        ], heading="Link",
-        help_text = "Internal link takes priority over external link. Leave both blank if you want a menu item be non-functional plain text.",
+            ], heading="Link",
         ),
+        HelpPanel(content="Internal link takes priority over external link."),
     ]
+
+    @property
+    def link(self):
+        if self.internal_link:
+            return self.internal_link.url
+        elif self.external_link:
+            return self.external_link
+        else:
+            return '#'
+
+    @property
+    def text(self):
+        if self.internal_link and self.link_text == '':
+            return self.internal_link.title
+        elif self.link_text != '':
+            return self.link_text
+        else:
+            return "MISSING LINK TEXT"
+        
 
 #-----Snippet models-----
 @register_snippet
@@ -66,6 +84,10 @@ class NavigationMenu(ClusterableModel):
     )
 
     panels = [
+        HelpPanel(
+            content="<p>Navigation Menus contain an ordered collection of links.</p><p>The most common use of them is to render the menus use use to navigate the website. Because rendering is different in different situations, there is no standard template used for Navigation Menus; they are implemented differently in different Page templates.</p>",
+            heading="Help"
+        ),
         MultiFieldPanel([        
             FieldPanel("name"),
             FieldPanel("slug"),
@@ -73,14 +95,18 @@ class NavigationMenu(ClusterableModel):
             help_text = "Identifying information for your menus (e.g. whether this the \"header menu\" or \"footer menu\" etc.)",
         ),
         MultiFieldPanel([
-            InlinePanel("navigation_menu_item", min_num=1, max_num=10, label="Menu Item"),
+            InlinePanel("navigation_menu_items", min_num=1, max_num=10, label="Menu Item"),
             ], heading="Navigation Menu Links",
-            help_text = "Place 'Section' links to facilitate navigation by readers",
+            help_text = "Choose links to facilitate navigation by readers.",
         ),
     ]
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Navigation Menu"
+        verbose_name_plural = "Navigation Menus"
 
 @register_setting(icon='cogs')
 class SitewideMenus(BaseSetting):
@@ -94,14 +120,13 @@ class SitewideMenus(BaseSetting):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='+'
+        related_name='+',
     )
     left_header_menu = ForeignKey(
         "navigation.NavigationMenu",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='+'
     )
     right_header_menu = ForeignKey(
         "navigation.NavigationMenu",
@@ -125,13 +150,32 @@ class SitewideMenus(BaseSetting):
         related_name='+'
     )
 
-    # def save(self, *args, **kwargs):
-    #     # Originally from: https://stackoverflow.com/questions/39412968/allow-only-one-instance-of-a-model-in-django
-    #     if not self.pk and SitewideMenus.objects.exists():
-    #     # if you'll not check for self.pk 
-    #     # then error will also raised in update of exists model
-    #         raise ValidationError('There is can be only one SitewideMenus instance')
-    #     return super(SitewideMenus, self).save(*args, **kwargs)
+    panels = [
+        HelpPanel(
+            content="<p>Use this to select menus to be used as the main interface for navigating our website.</p><p>CAUTION: These settings are very important! You should not clear, choose another, or edit these menus unless headers or footers on the site look incorrect.</p>",
+            heading="Help"
+        ),
+        MultiFieldPanel([        
+            SnippetChooserPanel("main_header_menu"),
+            ], heading="Main Header",
+            help_text="Will appear in header of every page of the site, in header",
+        ),
+        MultiFieldPanel([        
+            SnippetChooserPanel("left_header_menu"),
+            SnippetChooserPanel("right_header_menu"),
+            ], heading="Secondary Header",
+            help_text="Mostly will only be seen on the homepage of the site.",
+        ),
+        MultiFieldPanel([        
+            SnippetChooserPanel("main_footer_menu"),
+            SnippetChooserPanel("second_footer_menu"),
+            ], heading="Footer",
+            help_text="Will appear in header of every page of the site, in footer. Each selected menu represents a different row.",
+        ),
+
+    ]
+
 
     class Meta:
-        verbose_name = "Sitewide Menus"
+        verbose_name = "Site-Wide Menus"
+        verbose_name_plural = "Instances of \'Site-Wide Menus\'"

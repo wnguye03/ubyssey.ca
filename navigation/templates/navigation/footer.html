@@ -7,33 +7,18 @@
             <div class="top-row">
                 <ul class="sections">
                     <!-- <li><a href="{% url 'section' 'themainmaller' %}">The Main Maller</a></li> -->
-                    <li><a href="{% url 'section' 'news' %}">News</a></li>
-                    <li><a href="{% url 'section' 'culture' %}">Culture</a></li>
-                    <li><a href="{% url 'section' 'features' %}">Features</a></li>
-                    <li><a href="{% url 'section' 'opinion' %}">Opinion</a></li>
-                    <li><a href="{% url 'section' 'sports' %}">Sports</a></li>
-                    <li><a href="{% url 'section' 'blog' %}">Blog</a></li>
-                    <li><a href="{% url 'section' 'science' %}">Science</a></li>
-                    <li><a href="{% url 'podcasts' 'episodes' %}">Podcast</a></li>
-                    <li><a href="{% url 'videos' %}">Video<!--<span class='upper-right-decorator'>New</span>--></a></li>
-                    <li><a href="{% url 'magazine-landing' 2020 %}">Magazine</a></li>
-                    <li><a href="{% url 'guide-landing' 2020 %}">Guide</a></li>
+                    {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.navigation_menu_items.all %}
+                        {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
+                        <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="bottom-row">
                 <ul class="pages">
-                    <li><a href="{% url 'newsletter' %}">Newsletter</a></li>
-                    <li><a href="{% url 'page' 'contact' %}">Contact</a></li>
-                    <li><a href="{% url 'page' 'volunteer' %}">Volunteer</a></li>
-                    <li><a href="{% url 'page' 'advertise' %}">Advertise</a></li>
-                    <li><a href="{% url 'page' 'about' %}">About</a></li>
-                    <!-- <li><a href="https://store.ubyssey.ca/">Store</a></li> -->
-                    <li><a href="{% url 'centennial-landing' %}">Alumni</a></li>
-                    <li><a href="{% url 'frontpage-feed' %}">Feed</a></li>
-                    <li><a href="{% url 'page' 'cookie-policy-2020' %}">Cookie Policy</a></li>
-                    <li><a href="{% url 'events' %}">Events</a></li>
-                    <li><a href="{% url 'page' 'advice' %}">Get advice</a></li>
-                    <li><a href="{% url 'archive' %}">Archive</a></li>
+                    {% for menu_item in settings.navigation.SitewideMenus.second_footer_menu.navigation_menu_items.all %}
+                        {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
+                        <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </nav>

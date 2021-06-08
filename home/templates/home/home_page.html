@@ -8,8 +8,8 @@ Function of humanize: https://docs.djangoproject.com/en/3.2/ref/contrib/humanize
 Will automatically render some things as 
 {% endcomment %}
 {% block header %}
-{% include 'headers/main.html' %}
-{% include 'headers/mobile.html' with class='homepage' %}
+{% include 'navigation/headers/main.html' %}
+{% include 'navigation/headers/mobile.html' with class='homepage' %}
 {% comment %} 
 Headers/footers/"site naivgation" should be turned into its own app- but it will still go here
 {% endcomment %}
