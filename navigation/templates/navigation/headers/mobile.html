@@ -7,7 +7,7 @@
 <div id="header-mobile-spacer{% if class %}--{{ class }}{% endif %}"></div>
 <nav class="mobile">
     <div class="left">
-        <h3>Sections</h3>
+        <h2>Sections</h2>
         <ul class="sections">
             {% for menu_item in settings.navigation.SitewideMenus.main_header_menu.navigation_menu_items.all %}
                 {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div class="right">
-        <h3>Links</h3>
+        <h2>Links</h2>
         <ul class="links">
             {% for menu_item in settings.navigation.SitewideMenus.mobile_links_menu.navigation_menu_items.all %}
                 {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
