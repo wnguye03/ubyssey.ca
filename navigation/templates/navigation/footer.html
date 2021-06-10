@@ -9,7 +9,7 @@
                     <!-- <li><a href="{% url 'section' 'themainmaller' %}">The Main Maller</a></li> -->
                     {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.navigation_menu_items.all %}
                         {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
-                        <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
+                        <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -17,7 +17,7 @@
                 <ul class="pages">
                     {% for menu_item in settings.navigation.SitewideMenus.second_footer_menu.navigation_menu_items.all %}
                         {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
-                        <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
+                        <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
