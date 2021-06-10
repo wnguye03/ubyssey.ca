@@ -11,6 +11,14 @@ ALLOWED_HOSTS = ['localhost', '*']
 
 INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
+# Easily manipulable file cache for proof of concept for front page etc.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/cache"
+    }
+}
+
 MIDDLEWARE += [
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
