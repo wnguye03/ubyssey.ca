@@ -15,7 +15,7 @@ INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": "/cache"
+        "LOCATION": "/workspaces/ubyssey.ca/cache/"
     }
 }
 
