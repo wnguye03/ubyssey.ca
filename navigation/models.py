@@ -109,6 +109,10 @@ class NavigationMenu(ClusterableModel):
         ),
     ]
 
+    @property
+    def cache_name(self):
+        return '%s-cache' % self.slug
+
     def __str__(self):
         return self.name
 
@@ -194,6 +198,36 @@ class SitewideMenus(BaseSetting):
         ),
     ]
 
+    # Source of truth for cache names.
+    # These exist here because it's upon saving of this model that these caches must be flushed
+    MAIN_HEADER_MENU_CACHE = 'main_header_menu_cache'
+    LEFT_HEADER_MENU_CACHE = 'left_header_menu_cache'
+    RIGHT_HEADER_MENU_CACHE = 'right_header_menu_cache'
+    MAIN_FOOTER_MENU_CACHE = 'main_footer_menu_cache'
+    SECOND_FOOTER_MENU_CACHE = 'second_footer_menu_cache'
+    MOBILE_LINKS_MENU_CACHE = 'mobile_links_menu_cache'
+
+    #Accessor properties for above. Used in templates
+    @property
+    def main_header_menu_cache(self):
+        return self.MAIN_HEADER_MENU_CACHE
+    @property
+    def left_header_menu_cache(self):
+        return self.LEFT_HEADER_MENU_CACHE
+    @property
+    def right_header_menu_cache(self):
+        return self.RIGHT_HEADER_MENU_CACHE
+    @property
+    def main_footer_menu_cache(self):
+        return self.MAIN_FOOTER_MENU_CACHE
+    @property
+    def second_footer_menu_cache(self):
+        return self.SECOND_FOOTER_MENU_CACHE
+    @property
+    def mobile_links_menu_cache(self):
+        return self.MOBILE_LINKS_MENU_CACHE
+
+    # Problem with clearing cache here. If one of the component menus is flushed, this model doesn't necessarily have any way to know that
 
     class Meta:
         verbose_name = "Site-Wide Menus"
