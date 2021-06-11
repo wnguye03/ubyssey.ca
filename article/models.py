@@ -10,6 +10,8 @@ from django.utils import timezone
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
+from section.sectionable.models import SectionablePage
+
 from taggit.models import TaggedItemBase
 
 from videos import blocks as video_blocks
@@ -127,7 +129,7 @@ class ArticlePageTag(TaggedItemBase):
 
 #-----Page models-----
 
-class ArticlePage(Page):
+class ArticlePage(SectionablePage):
     #-----Main attributes-----
     template = "article/article_page.html"
 

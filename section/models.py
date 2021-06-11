@@ -1,7 +1,11 @@
-from django.db.models.fields import CharField
+from .sectionable.models import SectionablePage
+
 from article.models import ArticlePage
+
+
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
+from django.db.models.fields import CharField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render
 
@@ -68,46 +72,6 @@ class CategoryMenuItem(wagtail_core_models.Orderable):
         SnippetChooserPanel("category"),
     ]
     
-#-----Page models-----
-class SectionablePage(wagtail_core_models.Page):
-    """
-    Pages in the site heirarchy tend to belong to a section.
-    Sections correspond to child nodes of the HomePage that themselves have many children.
-    Therefore all SectionablePages have built-in capacity to traverse backwards up the Page tree
-    """
-    is_creatable = False #no page should ever JUST be a sectionable page. This is an "abstract" page
-    current_section = CharField(
-        max_length=255, #should contain the SLUG of the current section, not its name. Max length reflects max Wagtail slug length
-        null=False,
-        blank=True,
-        default='',
-    ) 
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["current_section"] = self.current_section
-        return context
-
-    def save(self, *args, **kwargs):
-        """
-        Ensures the page's current section is synced with its parents/ancestors
-        Or else, if this is a section page, its section is itself
-        """
-        ancestors_qs = self.get_ancestors()
-        if len(ancestors_qs) <= 1:
-            # if there is at most one ancestor, this must be a section page, so use its slug for current section
-            self.current_section = self.slug
-        else:
-            # otherwise, we have some non-section page that should be able to learn what section it's in from its parent
-            try:
-                self.current_section = ancestors_qs.last().current_section
-            except Exception as e:
-                self.current_section = 'ERROR_SECTION'
-
-        return super().save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
 
 class SectionPage(SectionablePage):
     template = 'section/section_page.html'
