@@ -117,7 +117,7 @@ class SectionPage(SectionablePage):
             # Then return the last page
             articles = paginator.page(paginator.num_pages)
 
-        context["articles"] = articles
+        context["articles"] = articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
         return context
         
