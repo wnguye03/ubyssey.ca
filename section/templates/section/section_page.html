@@ -18,10 +18,25 @@
     <div class="c-page__header">
       <h1 class="c-page__heading">{{ self.title }}</h1>
     </div>
+    {% comment %} CATEGORY MENU {% endcomment %}
+    {% if self.category_menu.count %}
+      <div class="c-page__header__subsections">
+        <ul>
+          {% for category_menu_item in self.category_menu.all %}
+            {% if category_menu_item.category %}
+              <li><a href="{% url 'wagtail_serve' '' %}">{{ category_menu_item.category.name }}</a></li>
+            {% else %}
+              {% comment %} Failsafe, since wagtail seems to delete empty menu items. Shouldn't ever end up here! {% endcomment %}
+              <li><a href="#">ERROR: EMPTY CATEGORY MENU ITEM! PLEASE CHECK THE SECTION PAGE IN WAGTAIL</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
 
-    {% for block in self.content %}
+    {% comment %} {% for block in self.content %}
       {% include_block block %}
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
     {% comment %}
     DESIGN NOTE:
@@ -29,15 +44,7 @@
     allowing editors to have user to have some level of control
     {% endcomment %}
     {% comment %}
-    {% if subsections %}
-      <div class="c-page__header__subsections">
-        <ul>
-          {% for subsection in subsections %}
-            <li><a href="{% url 'subsection' subsection.slug %}">{{ subsection.name }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
+
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
       <div class="c-section__featured__articles u-flex--tablet">
@@ -45,7 +52,6 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
-
     </div>
 
     <h3 class="c-page__section">Archive</h3>
