@@ -1,0 +1,21 @@
+{% load wagtailcore_tags %}
+<article class="o-article o-article--column{% if padded %} o-article--padded{% endif %}">
+  <div class="o-article__meta">
+    <div class="o-article__meta__image">
+      {% comment %} {% if article.featured_image %}
+        <a class="o-article__image" href="{% pageurl article %}" style="background-image: url('{{ article.featured_image.image.get_thumbnail_url }}');"></a>
+      {% elif article.featured_video %}
+        <a class="o-article__image" href="{% pageurl article %}" style="background-image: url('http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg'); background-size: contain; background-repeat: no-repeat"></a>
+      {% endif %} {% endcomment %}
+      <h3 class="o-article__headline">
+        <a href="{% pageurl article %}">{{ article.title|safe }}</a>
+      </h3>
+    </div>
+    {% comment %} <div class="o-article__byline">
+      <span class="o-article__author">By {{ article.get_author_url|safe }}</span>
+      <span> &nbsp;·&nbsp; </span>
+      <span class="o-article__published">{{ article.published_at }}</span>
+    </div> {% endcomment %}
+  </div>
+  <p class="o-article__snippet">{{ article.lede|safe }}</p>
+</article>
