@@ -69,8 +69,47 @@ class CategoryMenuItem(wagtail_core_models.Orderable):
     ]
     
 #-----Page models-----
+class SectionablePage(wagtail_core_models.Page):
+    """
+    Pages in the site heirarchy tend to belong to a section.
+    Sections correspond to child nodes of the HomePage that themselves have many children.
+    Therefore all SectionablePages have built-in capacity to traverse backwards up the Page tree
+    """
+    is_creatable = False #no page should ever JUST be a sectionable page. This is an "abstract" page
+    current_section = CharField(
+        max_length=255, #should contain the SLUG of the current section, not its name. Max length reflects max Wagtail slug length
+        null=False,
+        blank=True,
+        default='',
+    ) 
 
-class SectionPage(wagtail_core_models.Page):
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["current_section"] = self.current_section
+        return context
+
+    def save(self, *args, **kwargs):
+        """
+        Ensures the page's current section is synced with its parents/ancestors
+        Or else, if this is a section page, its section is itself
+        """
+        ancestors_qs = self.get_ancestors()
+        if len(ancestors_qs) <= 1:
+            # if there is at most one ancestor, this must be a section page, so use its slug for current section
+            self.current_section = self.slug
+        else:
+            # otherwise, we have some non-section page that should be able to learn what section it's in from its parent
+            try:
+                self.current_section = ancestors_qs.last().current_section
+            except Exception as e:
+                self.current_section = 'ERROR_SECTION'
+
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+class SectionPage(SectionablePage):
     template = 'section/section_page.html'
 
     subpage_types = [
@@ -115,6 +154,7 @@ class SectionPage(wagtail_core_models.Page):
             articles = paginator.page(paginator.num_pages)
 
         context["articles"] = articles
+
         return context
         
     @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
