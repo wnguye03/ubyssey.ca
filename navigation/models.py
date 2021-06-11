@@ -1,3 +1,5 @@
+from django.core.cache import cache
+from django.core.cache.utils import make_template_fragment_key
 from django.db import models
 from django.db.models.fields import CharField, URLField
 from django.db.models.fields.related import ForeignKey
@@ -112,6 +114,12 @@ class NavigationMenu(ClusterableModel):
     @property
     def cache_name(self):
         return '%s-cache' % self.slug
+
+    def save(self, **kwargs):
+        key = make_template_fragment_key(self.cache_name)
+        cache.delete(key) 
+
+        return super().save(**kwargs)
 
     def __str__(self):
         return self.name

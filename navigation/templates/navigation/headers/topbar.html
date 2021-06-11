@@ -2,19 +2,25 @@
 Render the elements in a NavigationMenu 
 {% endcomment %}
 {% load static %}
+{% load cache %}
+
 <header class="topbar header-site">
     <div class="u-container">
         <a class="home-link" href="{% url 'wagtail_serve' '' %}"><img class="logo" src="{% static 'ubyssey/images/ubyssey-logo-small.svg' %}" alt=""/></a>
         <nav>
             <ul>
-                {% for menu_item in settings.navigation.SitewideMenus.main_header_menu.navigation_menu_items.all %}
-                    {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
-                    <li {% if menu_item.internal_link_slug == self.slug %}class="current"{% endif %}>
-                        {% comment %} section is an optional variable when including this template. It is used by section page and article page {% endcomment %}
-                        {% comment %} There may (but it is unknown whether there will be) odd behaviour if the internal link has a slug which is the same as a section, but the page is located differently. This should be extraordinarily unlikely, however. {% endcomment %}
-                        <a href="{{ menu_item.link }}">{{ menu_item.text }}</a>
-                    </li>
-                {% endfor %}
+                {% with settings.navigation.SitewideMenus.main_header_menu as main_header_menu %}
+                    {% cache 604800 main_header_menu.cache_name current_section 1 %}
+                        {% for menu_item in main_header_menu.navigation_menu_items.all %}
+                            {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
+                            <li {% if menu_item.internal_link_slug == current_section %}class="current"{% endif %}>
+                                {% comment %} section is an optional variable when including this template. It is used by section page and article page {% endcomment %}
+                                {% comment %} There may (but it is unknown whether there will be) odd behaviour if the internal link has a slug which is the same as a section, but the page is located differently. This should be extraordinarily unlikely, however. {% endcomment %}
+                                <a href="{{ menu_item.link }}">{{ menu_item.text }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endcache %}
+                {% endwith %}
             </ul>
         </nav>
         <a class="search" href="{% url 'search' %}"><i class="fa fa-search"></i></a>
