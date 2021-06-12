@@ -5,7 +5,10 @@
 {% load wagtailuserbar %}
 
 {% block content %}
-    {% image self.featured_image max-320x200 %}    
+    {% for img_obj in self.featured_images.all %}
+        {% image img_obj.image max-320x200 %}    
+    {% endfor %}
+    
     {% for block in self.content %}
         {% include_block block %}
     {% endfor %}

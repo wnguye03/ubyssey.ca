@@ -34,23 +34,39 @@
       </div>
     {% endif %}
 
-    {% comment %} {% for block in self.content %}
-      {% include_block block %}
-    {% endfor %} {% endcomment %}
+    {% comment %}
+      featured_articles is added to context by SectionPage
+      by default it containes the most recent 4 articles
+    {% endcomment %}
+    <div class="c-section__featured">
+      {% for article in featured_articles %}
+        {% if forloop.counter == 1 %}
+          {% include 'article/objects/featured.html' with article=article %}
+        {% else %}
+          {% if forloop.counter == 2 %}
+            <div class="c-section__featured__articles u-flex--tablet">
+          {% endif %}
+          {% include 'article/objects/column.html' with article=article%}
+          {% if forloop.last %}
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
 
     {% comment %}
-    DESIGN NOTE:
-    The below will be turned into _blocks_,
-    allowing editors to have user to have some level of control
+      DESIGN NOTE:
+      The below will be turned into _blocks_,
+      allowing editors to have user to have some level of control
     {% endcomment %}
     {% comment %}
 
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
       <div class="c-section__featured__articles u-flex--tablet">
-      {% for article in featured_articles.rest %}
-        {% include 'objects/articles/column.html' with article=article %}
-      {% endfor %}
+        {% for article in featured_articles.rest %}
+          {% include 'objects/articles/column.html' with article=article %}
+        {% endfor %}
       </div>
     </div>
 

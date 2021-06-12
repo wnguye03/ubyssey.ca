@@ -1,0 +1,25 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load cache %}
+<article class="o-article o-article--featured{% if padded %} o-article--padded{% endif %}">
+  {% if article.featured_images.first %}
+    <div class="o-article__left">
+      <a class="o-article__image" href="{% pageurl article %}">
+        {% image article.featured_images.first.image fill-340x238-c100 %}
+      </a>
+    </div>
+  {% endif %}
+  <div class="o-article__right">
+    <div class="o-article__meta">
+      <h3 class="o-article__headline">
+        <a href="{% pageurl article %}">{{ article.title|safe }}</a>
+      </h3>
+      <div class="o-article__byline">
+        {% comment %} <span class="o-article__author">By {{ article.get_author_url|safe }}</span> {% endcomment %}
+        <span> &nbsp;·&nbsp; </span>
+        <span class="o-article__published">{{ article.published_at }}</span>
+      </div>
+    </div>
+    <p class="o-article__snippet">{{ article.lede|safe }}</p>
+  </div>
+</article>

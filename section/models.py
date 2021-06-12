@@ -2,7 +2,6 @@ from .sectionable.models import SectionablePage
 
 from article.models import ArticlePage
 
-
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields import CharField
@@ -101,9 +100,9 @@ class SectionPage(SectionablePage):
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
 
-        all_articles.order_by('-first_published_at')
+        all_articles.order_by('-last_modified_at')
         # Paginate all posts by 15 per page
-        paginator = Paginator(all_articles, per_page=15)
+        paginator = Paginator(all_articles, per_page=1)
         # Try to get the ?page=x value
         page = request.GET.get("page")
         try:
@@ -117,6 +116,7 @@ class SectionPage(SectionablePage):
             # Then return the last page
             articles = paginator.page(paginator.num_pages)
 
+        context["featured_articles"] = all_articles[:4]
         context["articles"] = articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
         return context
