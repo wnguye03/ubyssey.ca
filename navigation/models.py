@@ -1,3 +1,4 @@
+import re
 from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from django.db import models
@@ -13,15 +14,12 @@ from wagtail.core.models import Orderable
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
-class NavigationMenuItem(Orderable):
+class AbstractNavigationMenuOrderable(Orderable):
+    """
+    Abstract class for DRY implementation of different menus
+    Useage: implement ParentalKey on a case-by-case basis
+    """
 
-    navigation_menu = ParentalKey(
-        "navigation.NavigationMenu",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False,
-        related_name='navigation_menu_items',
-    )
     link_text = CharField(
         max_length=25,
         default='',
@@ -76,164 +74,125 @@ class NavigationMenuItem(Orderable):
             return self.internal_link.slug
         else:
             return "ERROR-NOT-AN-INTERNAL-LINK"
-
-#-----Snippet models-----
-@register_snippet
-class NavigationMenu(ClusterableModel):
-    name = models.CharField(
-        max_length=100,
-        null=False,
-        blank=False,
-    )
-    slug = AutoSlugField(
-        max_length=100,
-        populate_from="name",
-        null=False,
-        blank=False,
-        editable=True,
-    )
-
-    panels = [
-        HelpPanel(
-            content="<p>Navigation Menus contain an ordered collection of links.</p><p>The most common use of them is to render the menus use use to navigate the website. Because rendering is different in different situations, there is no standard template used for Navigation Menus; they are implemented differently in different Page templates.</p>",
-            heading="Help"
-        ),
-        MultiFieldPanel([        
-            FieldPanel("name"),
-            FieldPanel("slug"),
-            ], heading="Navigation Menu Essentials",
-            help_text = "Identifying information for your menus (e.g. whether this the \"header menu\" or \"footer menu\" etc.)",
-        ),
-        MultiFieldPanel([
-            InlinePanel("navigation_menu_items", min_num=1, max_num=10, label="Menu Item"),
-            ], heading="Navigation Menu Links",
-            help_text = "Choose links to facilitate navigation by readers.",
-        ),
-    ]
-
-    @property
-    def cache_name(self):
-        return '%s-cache' % self.slug
+    
+    @classmethod
+    def class_cache_name(cls):
+        """
+        An entire menu is cached as a template fragment, so if any single orderable in that menu is changed, we need to flush the cache.
+        Since a menu is just a bundle of orderables, we associate the cache name with the orderables' class.
+        Uses regex to trim string to avoid "CacheKeyWarning: Cache key contains characters that will cause errors if used with memcached"
+        A little more complex than ideal.
+        """
+        result = re.search('\'(.*)\'', str(cls))
+        s = result.group(1)
+        return '%s-cache' % s
 
     def save(self, **kwargs):
-        key = make_template_fragment_key(self.cache_name)
+        class_cache_name = type(self).class_cache_name()
+        print(class_cache_name)
+        key = make_template_fragment_key(class_cache_name)
+        print(key)
         cache.delete(key) 
-
         return super().save(**kwargs)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
-        verbose_name = "Navigation Menu"
-        verbose_name_plural = "Navigation Menus"
+        abstract = True
+
+
+class MainHeaderNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='main_header_menu',
+    )
+class LeftHeaderNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='left_header_menu',
+    )
+class RightHeaderNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='right_header_menu',
+    )
+class MainFooterNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='main_footer_menu',
+    )
+class SecondFooterNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='second_footer_menu',
+    )
+class MobileLinksNavigationItem(AbstractNavigationMenuOrderable):
+    navigation_menu = ParentalKey(
+        "navigation.SitewideMenus",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name='mobile_links_menu',
+    )
+
+#-----Settings models-----
 
 @register_setting(icon='cogs')
-class SitewideMenus(BaseSetting):
+class SitewideMenus(ClusterableModel, BaseSetting):
     """    
     Collection of the NavigationMenus that are going to be used on many pages.
     Singleton class, and source of truth for the entire site.
     """
-
-    main_header_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+',
-    )
-    left_header_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
-    right_header_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    main_footer_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    second_footer_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    mobile_links_menu = ForeignKey(
-        "navigation.NavigationMenu",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-
     panels = [
         HelpPanel(
             content="<p>Use this to select menus to be used as the main interface for navigating our website.</p><p>CAUTION: These settings are very important! You should not clear, choose another, or edit these menus unless headers or footers on the site look incorrect.</p>",
             heading="Help"
         ),
         MultiFieldPanel([        
-            SnippetChooserPanel("main_header_menu"),
+            InlinePanel("main_header_menu"),
             ], heading="Main Header",
             help_text="Will appear in header of every page of the site, in header, or in special menu on mobile",
         ),
         MultiFieldPanel([        
-            SnippetChooserPanel("left_header_menu"),
-            SnippetChooserPanel("right_header_menu"),
-            ], heading="Secondary Header",
+            InlinePanel("left_header_menu"),
+            ], heading="Left Secondary Header",
             help_text="Mostly will only be seen on the homepage of the site.",
         ),
         MultiFieldPanel([        
-            SnippetChooserPanel("main_footer_menu"),
-            SnippetChooserPanel("second_footer_menu"),
-            ], heading="Footer",
-            help_text="Will appear in header of every page of the site, in footer. Each selected menu represents a different row.",
+            InlinePanel("right_header_menu"),
+            ], heading="Right Secondary Header",
+            help_text="Mostly will only be seen on the homepage of the site.",
         ),
         MultiFieldPanel([        
-            SnippetChooserPanel("mobile_links_menu"),
-            ], heading="Main Header",
+            InlinePanel("main_footer_menu"),
+            ], heading="Footer",
+            help_text="Will appear in footer of every page of the site.",
+        ),
+        MultiFieldPanel([                
+            InlinePanel("second_footer_menu"),
+            ], heading="Footer Second Row",
+            help_text="Will appear in footer of every page of the site.",
+        ),
+
+        MultiFieldPanel([        
+            InlinePanel("mobile_links_menu"),
+            ], heading="Mobile \"Links\" Menu",
             help_text="Links that will appear in the mobile menu alongside the main header links",
         ),
     ]
-
-    # Source of truth for cache names.
-    # These exist here because it's upon saving of this model that these caches must be flushed
-    MAIN_HEADER_MENU_CACHE = 'main_header_menu_cache'
-    LEFT_HEADER_MENU_CACHE = 'left_header_menu_cache'
-    RIGHT_HEADER_MENU_CACHE = 'right_header_menu_cache'
-    MAIN_FOOTER_MENU_CACHE = 'main_footer_menu_cache'
-    SECOND_FOOTER_MENU_CACHE = 'second_footer_menu_cache'
-    MOBILE_LINKS_MENU_CACHE = 'mobile_links_menu_cache'
-
-    #Accessor properties for above. Used in templates
-    @property
-    def main_header_menu_cache(self):
-        return self.MAIN_HEADER_MENU_CACHE
-    @property
-    def left_header_menu_cache(self):
-        return self.LEFT_HEADER_MENU_CACHE
-    @property
-    def right_header_menu_cache(self):
-        return self.RIGHT_HEADER_MENU_CACHE
-    @property
-    def main_footer_menu_cache(self):
-        return self.MAIN_FOOTER_MENU_CACHE
-    @property
-    def second_footer_menu_cache(self):
-        return self.SECOND_FOOTER_MENU_CACHE
-    @property
-    def mobile_links_menu_cache(self):
-        return self.MOBILE_LINKS_MENU_CACHE
 
     # Problem with clearing cache here. If one of the component menus is flushed, this model doesn't necessarily have any way to know that
 

@@ -55,7 +55,6 @@ class AuthorPage(Page):
         MultiFieldPanel(
             [
                 ImageChooserPanel("image"),
-                FieldPanel("title"),
                 FieldPanel("facebook_url"),
                 FieldPanel("twitter_url"),
             ],
