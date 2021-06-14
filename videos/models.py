@@ -24,7 +24,7 @@ class VideoAuthorsOrderable(Orderable):
         related_name="video_authors",
     )
     author = models.ForeignKey(
-        'authors.AuthorSnippet',
+        'authors.AuthorPage',
         on_delete=models.CASCADE,
     )
     panels = [

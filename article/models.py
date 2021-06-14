@@ -51,8 +51,9 @@ class ArticleAuthorsOrderable(Orderable):
         related_name="article_authors",
     )
     author = models.ForeignKey(
-        'authors.AuthorSnippet',
+        'authors.AuthorPage',
         on_delete=models.CASCADE,
+        related_name="article_authors",
     )
     author_role = CharField(        
         # While stored as a CharField, will be selected from a menu. See the Widget in the panels value of this Orderable

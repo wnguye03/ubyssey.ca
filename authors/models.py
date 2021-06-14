@@ -1,40 +1,40 @@
 from django.db import models
+from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.snippets.models import register_snippet
 
-@register_snippet
-class AuthorSnippet(models.Model):
+class AllAuthorsPage(Page):
+    subpage_types = [
+        'authors.AuthorPage',
+    ]
+    parent_page_types = [
+        'home.HomePage',
+    ]
+    max_count_per_parent = 1
+
+
+class AuthorPage(Page):
+    # The odd pattern used here was taken from: https://stackoverflow.com/questions/48625770/wagtail-page-title-overwriting
+    # This is to treat the full_name as the "title" field rather than the usual Wagtail pattern of 
+    parent_page_types = [
+        'authors.AllAuthorsPage',
+    ]
+
     full_name = models.CharField(
         max_length=255,
         blank=False,
         null=False,
     )
-    slug = AutoSlugField(
-        populate_from="full_name",
-        primary_key=True,
-        unique=True,
-        blank=False,
-        null=False,
-        max_length=255,
-        editable=True,
-    )
-
-    # # This implementation represents an "easy" way to implement this which is analogous to how Dispatch did it, though less user-friendly than the alternative
-    # image = models.ImageField(
-    #     upload_to='images',
-    #     null=True,
-    #     blank=True,
-    # )
     image = models.ForeignKey(
-        "wagtailimages.Image",
+        "images.UbysseyImage",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="+",
     )
-    title = models.CharField(
+    ubyssey_role = models.CharField(
         max_length=255,
         null=False,
         blank=True,
@@ -49,14 +49,9 @@ class AuthorSnippet(models.Model):
         blank=True,
     )
     # For editting in wagtail:
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("slug"),
-                FieldPanel("full_name"),
-            ],
-            heading="Essentials",
-        ),
+    content_panels = [
+        # title not present, title should NOT be directly editable
+        FieldPanel("full_name"),
         MultiFieldPanel(
             [
                 ImageChooserPanel("image"),
@@ -68,9 +63,23 @@ class AuthorSnippet(models.Model):
         ),
     ]
 
+    def clean(self):
+        """Override the values of title and slug before saving."""
+        super().clean()
+        self.title = self.full_name
+        self.slug = slugify(self.full_name)  # slug MUST be unique & slug-formatted
+
+
     def __str__(self):
         return self.full_name
     
     class Meta:
         verbose_name = "Author"
         verbose_name_plural = "Authors"
+        # indexes = [
+        #     models.Index(fields=['article_authors','slug',]),
+        # ]
+
+# set a default blank slug for when the editing form renders
+# we set this after the model is declared
+AuthorPage._meta.get_field('slug').default = 'default-blank-slug'
