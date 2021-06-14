@@ -13,6 +13,9 @@ class AllAuthorsPage(Page):
         'home.HomePage',
     ]
     max_count_per_parent = 1
+    class Meta:
+        verbose_name = "Author Management"
+        verbose_name_plural = "Author Management Pages"
 
 
 class AuthorPage(Page):
@@ -78,7 +81,3 @@ class AuthorPage(Page):
         # indexes = [
         #     models.Index(fields=['article_authors','slug',]),
         # ]
-
-# set a default blank slug for when the editing form renders
-# we set this after the model is declared
-AuthorPage._meta.get_field('slug').default = 'default-blank-slug'

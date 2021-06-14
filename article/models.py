@@ -16,7 +16,9 @@ from taggit.models import TaggedItemBase
 
 from videos import blocks as video_blocks
 
-from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel,
+)
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Orderable
@@ -65,7 +67,7 @@ class ArticleAuthorsOrderable(Orderable):
     panels = [
         MultiFieldPanel(
             [
-                SnippetChooserPanel("author"),
+                PageChooserPanel("author"),
                 FieldPanel(
                     "author_role",
                     widget=Select(

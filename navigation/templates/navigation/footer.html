@@ -8,11 +8,11 @@
             <div class="top-row">
                 <ul class="sections">
                     <!-- <li><a href="{% url 'section' 'themainmaller' %}">The Main Maller</a></li> -->
-                    {% cache 604800 settings.navigation.SitewideMenus.main_footer_menu.first.class_cache_name %}
+                    {% comment %} {% cache 604800 settings.navigation.SitewideMenus.main_footer_menu.first.class_cache_name %} {% endcomment %}
                         {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.all %}
                             <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
                         {% endfor %}
-                    {% endcache %}
+                    {% comment %} {% endcache %} {% endcomment %}
                 </ul>
             </div>
             <div class="bottom-row">
