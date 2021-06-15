@@ -359,7 +359,7 @@ class ArticlePage(SectionablePage):
 
         def format_author(article_author):
             if links:
-                return '<a href="/authors/%s/">%s</a>' % (article_author.author.slug, article_author.author.full_name)
+                return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
             return article_author.author.full_name
 
         authors = list(map(format_author, self.article_authors.all()))
