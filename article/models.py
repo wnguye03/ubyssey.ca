@@ -173,11 +173,10 @@ class ArticlePage(SectionablePage):
         null=True,
         blank=True,
     )
-    published_at = models.DateTimeField(
-        null=False,
-        blank=False,
-        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time()),
-        help_text = "To be explicitly shown to the reader. Articles are seperately date/timestamped for database use, so editors can explicitly override the displayed date.",
+    explicit_published_at = models.DateTimeField(
+        null=True,
+        verbose_name="Published At (Override)",
+        help_text = "Optional. Publication date which is explicitly shown to the reader. Articles are seperately date/timestamped for database use; if this field is blank front page etc. will display the database publication date.",
     )
     last_modified_at = models.DateTimeField(
         # updates to current date/time every time the model's .save() method is hit
@@ -295,7 +294,7 @@ class ArticlePage(SectionablePage):
         ),
         FieldRowPanel(
             [
-                FieldPanel("published_at"),
+                FieldPanel("explicit_published_at"),
                 FieldPanel("show_last_modified"),
             ],
             heading="Publication Date"
@@ -353,10 +352,15 @@ class ArticlePage(SectionablePage):
         ),
     ]
 
-    def get_authors_string(self, links=False):
-        """Returns list of authors as a comma-separated
-        string (with 'and' before last author)."""
+    #-----Properties, getters, setters, etc.-----
 
+    def get_authors_string(self, links=False) -> str:
+        """
+        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
+        Keeps large amounts of logic out of templates.
+
+          links: Whether the author names link to their respective pages.
+        """
         def format_author(article_author):
             if links:
                 return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
@@ -372,7 +376,10 @@ class ArticlePage(SectionablePage):
 
         return ", ".join(authors[0:-1]) + " and " + authors[-1]
 
-    def get_authors_with_urls(self):
+    def get_authors_with_urls(self) -> str:
+        """
+        Wrapper for get_authors_string for easy use in templates.
+        """
         return self.get_authors_string(links=True)
 
     def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,

@@ -1,6 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load cache %}
+{% load humanize %}
   <article class="o-article o-article--column{% if padded %} o-article--padded{% endif %}">
     <div class="o-article__meta">
       <div class="o-article__meta__image">
@@ -18,7 +19,7 @@
       <div class="o-article__byline">
         <span class="o-article__author">By {{ article.get_authors_with_urls|safe }}</span>
         <span> &nbsp;·&nbsp; </span>
-        <span class="o-article__published">{{ article.published_at }}</span>
+        <span class="o-article__published">{{ article.first_published_at|naturaltime }}</span>
       </div>
     </div>
     <p class="o-article__snippet">{{ article.lede|safe }}</p>

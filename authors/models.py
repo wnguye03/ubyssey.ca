@@ -17,14 +17,10 @@ class AllAuthorsPage(Page):
         verbose_name = "Author Management"
         verbose_name_plural = "Author Management Pages"
 
-
 class AuthorPage(Page):
-    # The odd pattern used here was taken from: https://stackoverflow.com/questions/48625770/wagtail-page-title-overwriting
-    # This is to treat the full_name as the "title" field rather than the usual Wagtail pattern of 
     parent_page_types = [
         'authors.AllAuthorsPage',
     ]
-
     full_name = models.CharField(
         max_length=255,
         blank=False,
@@ -67,10 +63,12 @@ class AuthorPage(Page):
 
     def clean(self):
         """Override the values of title and slug before saving."""
+        # The odd pattern used here was taken from: https://stackoverflow.com/questions/48625770/wagtail-page-title-overwriting
+        # This is to treat the full_name as the "title" field rather than the usual Wagtail pattern of 
+
         super().clean()
         self.title = self.full_name
         self.slug = slugify(self.full_name)  # slug MUST be unique & slug-formatted
-
 
     def __str__(self):
         return self.full_name
@@ -78,6 +76,3 @@ class AuthorPage(Page):
     class Meta:
         verbose_name = "Author"
         verbose_name_plural = "Authors"
-        # indexes = [
-        #     models.Index(fields=['article_authors','slug',]),
-        # ]
