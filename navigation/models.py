@@ -1,18 +1,15 @@
-import re
 from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from django.db import models
 from django.db.models.fields import CharField, URLField
 from django.db.models.fields.related import ForeignKey
-from django_extensions.db.fields import AutoSlugField
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from section.models import SectionPage
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, HelpPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+
 
 class NavigationMenuOrderable(Orderable):
     """
@@ -161,11 +158,12 @@ class SitewideMenus(ClusterableModel, BaseSetting):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.CACHES = (
-            'left_header',
-            'right_header',
-            'main_header',
-            'main_footer',
-            'secondary_footer',
+            'main_header_menu',
+            'left_header_menu',
+            'right_header_menu',
+            'main_footer_menu',
+            'second_footer_menu',
+            'mobile_links_menu',
         ) # these correspond to the template fragment names
         
     panels = [
@@ -198,18 +196,24 @@ class SitewideMenus(ClusterableModel, BaseSetting):
             ], heading="Footer Second Row",
             help_text="Will appear in footer of every page of the site.",
         ),
-
         MultiFieldPanel([        
             InlinePanel("mobile_links_menu"),
             ], heading="Mobile \"Links\" Menu",
             help_text="Links that will appear in the mobile menu alongside the main header links",
         ),
     ]
-    # def save(self, **kwargs):
-    #     for cache_name in self.CACHES:
-    #         key = make_template_fragment_key(cache_name)
-    #         cache.delete(key) 
-    #     return super().save(**kwargs)
+    def save(self, **kwargs):
+        """
+        When the menus are updated in the site settings, flush all cached menus.
+        """
+        for cache_name in self.CACHES:
+            key = make_template_fragment_key(cache_name)
+            cache.delete(key)        
+        for section in SectionPage.objects.all():
+            # class name differs for section-specific topbar headers
+            key = make_template_fragment_key("main_header_menu", vary_on=[section.slug])
+            cache.delete(key)
+        return super().save(**kwargs)
 
     class Meta:
         verbose_name = "Site-Wide Menus"

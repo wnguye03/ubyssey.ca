@@ -9,15 +9,17 @@ Render the elements in a NavigationMenu
         <a class="home-link" href="{% url 'wagtail_serve' '' %}"><img class="logo" src="{% static 'ubyssey/images/ubyssey-logo-small.svg' %}" alt=""/></a>
         <nav>
             <ul>
-                {% with settings.navigation.SitewideMenus.main_header_menu as main_header_menu %}
-                    {% for menu_item in main_header_menu.all %}
-                        <li {% if menu_item.internal_link_slug == current_section %}class="current"{% endif %}>
-                            {% comment %} section is an optional variable when including this template. It is used by section page and article page {% endcomment %}
-                            {% comment %} There may (but it is unknown whether there will be) odd behaviour if the internal link has a slug which is the same as a section, but the page is located differently. This should be extraordinarily unlikely, however. {% endcomment %}
-                            <a href="{{ menu_item.link }}">{{ menu_item.text }}</a>
-                        </li>
-                    {% endfor %}
-                {% endwith %}
+                {% cache 604800 main_header_menu current_section %}
+                    {% with settings.navigation.SitewideMenus.main_header_menu as main_header_menu %}
+                        {% for menu_item in main_header_menu.all %}
+                            <li {% if menu_item.internal_link_slug == current_section %} class="current"{% endif %}>
+                                {% comment %} section is an optional variable when including this template. It is used by section page and article page {% endcomment %}
+                                {% comment %} There may (but it is unknown whether there will be) odd behaviour if the internal link has a slug which is the same as a section, but the page is located differently. This should be extraordinarily unlikely, however. {% endcomment %}
+                                <a href="{{ menu_item.link }}">{{ menu_item.text }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endwith %}
+                {% endcache %}
             </ul>
         </nav>
         <a class="search" href="{% url 'search' %}"><i class="fa fa-search"></i></a>
