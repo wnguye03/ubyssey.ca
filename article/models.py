@@ -353,6 +353,28 @@ class ArticlePage(SectionablePage):
         ),
     ]
 
+    def get_authors_string(self, links=False):
+        """Returns list of authors as a comma-separated
+        string (with 'and' before last author)."""
+
+        def format_author(article_author):
+            if links:
+                return '<a href="/authors/%s/">%s</a>' % (article_author.author.slug, article_author.author.full_name)
+            return article_author.author.full_name
+
+        authors = list(map(format_author, self.article_authors.all()))
+
+        if not authors:
+            return ""
+        elif len(authors) == 1:
+            # If this is the only author, just return author name
+            return authors[0]
+
+        return ", ".join(authors[0:-1]) + " and " + authors[-1]
+
+    def get_authors_with_urls(self):
+        return self.get_authors_string(links=True)
+
     def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,
                       log_action=False, previous_revision=None, clean=True, custom_created_at_date=None):
         """

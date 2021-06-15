@@ -15,7 +15,7 @@
         <a href="{% pageurl article %}">{{ article.title|safe }}</a>
       </h3>
       <div class="o-article__byline">
-        {% comment %} <span class="o-article__author">By {{ article.get_author_url|safe }}</span> {% endcomment %}
+        <span class="o-article__author">By {{ article.get_authors_with_urls|safe }}</span>
         <span> &nbsp;·&nbsp; </span>
         <span class="o-article__published">{{ article.published_at }}</span>
       </div>
