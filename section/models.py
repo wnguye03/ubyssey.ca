@@ -94,7 +94,7 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = ArticlePage.objects.live().public().descendant_of(self)
+        all_articles = ArticlePage.objects.live().public().descendant_of(self).exact_type(types=['article.ArticlePage'])
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
@@ -116,10 +116,22 @@ class SectionPage(SectionablePage):
             # Then return the last page
             paginated_articles = paginator.page(paginator.num_pages)
 
-        context["featured_articles"] = all_articles[:4]
+        context["featured_articles"] = self.featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
         return context
+    
+    @property
+    def featured_articles(self, queryset=None, number_featured=4):
+        """
+        Returns a truncated queryset of articles
+            queryset: if not included, will default to all live, public, ArticlePage descendents of this SectionPage
+            number_featured: defaults to 4 as brute fact about 
+        """
+        if queryset == None:
+            queryset = ArticlePage.objects.live().public().descendant_of(self).exact_type(types=['article.ArticlePage'])
+
+        return queryset[:number_featured]
         
     @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
     def subsection_view(self, request, subsection_slug):
