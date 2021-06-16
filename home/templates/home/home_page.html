@@ -2,19 +2,15 @@
 {% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% comment %}
-Function of humanize: https://docs.djangoproject.com/en/3.2/ref/contrib/humanize/
-Will automatically render some things as 
-{% endcomment %}
+
 {% block header %}
-{% include 'navigation/headers/main.html' %}
-{% include 'navigation/headers/mobile.html' with class='homepage' %}
-{% comment %} 
-Headers/footers/"site naivgation" should be turned into its own app- but it will still go here
-{% endcomment %}
+  {% include 'navigation/headers/main.html' %}
+  {% include 'navigation/headers/mobile.html' with class='homepage' %}
 {% endblock %}
+
 {% block content %}
 <main class="u-container u-container--large homepage">
+
   {% if articles.breaking %}
     <a class="o-breaking-news" href="{{ articles.breaking.get_absolute_url }}">
       <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
@@ -23,6 +19,7 @@ Headers/footers/"site naivgation" should be turned into its own app- but it will
   {% comment %}
     Additional fields/blocks will go here to alert students to some special events
   {% endcomment %}
+
   <div class="homepage-section row">
     <div class="sections">  
       {% comment %} 
@@ -49,5 +46,5 @@ Headers/footers/"site naivgation" should be turned into its own app- but it will
 {% endblock %}
 
 {% block footer %}
-{% include 'navigation/footer.html' with homepage=True %}
+  {% include 'navigation/footer.html' with homepage=True %}
 {% endblock %}
