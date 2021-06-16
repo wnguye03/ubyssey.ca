@@ -39,19 +39,7 @@
       by default it containes the most recent 4 articles
     {% endcomment %}
     <div class="c-section__featured">
-      {% for article in featured_articles %}
-        {% if forloop.counter == 1 %}
-          {% include 'article/objects/featured.html' with article=article %}
-        {% else %}
-          {% if forloop.counter == 2 %}
-            <div class="c-section__featured__articles u-flex--tablet">
-          {% endif %}
-          {% include 'article/objects/column.html' with article=article%}
-          {% if forloop.last %}
-            </div>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
+      {% include 'section/objects/section_featured.html' with featured_articles=featured_articles %}
     </div>
 
     {% comment %}
