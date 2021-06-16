@@ -2,7 +2,6 @@
 {% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load wagtailuserbar %}
 {% comment %}
 Function of humanize: https://docs.djangoproject.com/en/3.2/ref/contrib/humanize/
 Will automatically render some things as 
@@ -22,14 +21,14 @@ Headers/footers/"site naivgation" should be turned into its own app- but it will
     </a>
   {% endif %}
   {% comment %}
-  Additional fields/blocks will go here to alert students to some special events
+    Additional fields/blocks will go here to alert students to some special events
   {% endcomment %}
   <div class="homepage-section row">
     <div class="sections">  
       {% comment %} 
-      This is where we put the contents of the main StreamField of section blocks 
-      This StreamField consists of blocks that each show off the contents of some section.
-      See the models.py of this app for implementation details
+        This is where we put the contents of the main StreamField of section blocks 
+        This StreamField consists of blocks that each show off the contents of some section.
+        See the models.py of this app for implementation details
       {% endcomment %}            
       {% for block in self.sections_stream %}
         {% include_block block %}
@@ -38,10 +37,10 @@ Headers/footers/"site naivgation" should be turned into its own app- but it will
     <div class="sidebar-home">
       <div class="multi-zone cell right">
       {% comment %} 
-      This should probably be renamed, because "zones"
-      were a mis-designed feature.
+        This should probably be renamed, because "zones"
+        were a mis-designed feature.
 
-      In all likelihood, it will contain another 
+        In all likelihood, it will contain another set of blocks
       {% endcomment %}
       </div>
     </div>

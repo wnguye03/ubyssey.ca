@@ -16,13 +16,6 @@ class NavigationMenuOrderable(Orderable):
     Abstract class for DRY implementation of different menus
     Useage: implement ParentalKey on a case-by-case basis
     """
-
-    link_text = CharField(
-        max_length=25,
-        default='',
-        null=False,
-        blank=True,
-    )
     internal_link = ForeignKey(
         "wagtailcore.Page",
         on_delete=models.CASCADE,
@@ -35,15 +28,22 @@ class NavigationMenuOrderable(Orderable):
         null=False,
         blank=True,
     )
+    link_text = CharField(
+        max_length=25,
+        default='',
+        null=False,
+        blank=True,
+        verbose_name="Link Text (Optional)",
+    )
 
     panels = [
-        FieldPanel("link_text"),
         MultiFieldPanel([
             PageChooserPanel("internal_link"),
             FieldPanel("external_link"),
+            FieldPanel("link_text"),
             ], heading="Link",
         ),
-        HelpPanel(content="Internal link takes priority over external link."),
+        HelpPanel(content="Internal link takes priority over external link. Link text will be be taken from internal link's title if you choose not to set it."),
     ]
 
     @property

@@ -175,6 +175,7 @@ class ArticlePage(SectionablePage):
     )
     explicit_published_at = models.DateTimeField(
         null=True,
+        blank=True,
         verbose_name="Published At (Override)",
         help_text = "Optional. Publication date which is explicitly shown to the reader. Articles are seperately date/timestamped for database use; if this field is blank front page etc. will display the database publication date.",
     )
