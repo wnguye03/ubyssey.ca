@@ -107,17 +107,17 @@ class SectionPage(SectionablePage):
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
-            articles = paginator.page(page)
+            paginated_articles = paginator.page(page)
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
-            articles = paginator.page(1)
+            paginated_articles = paginator.page(1)
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
             # Then return the last page
-            articles = paginator.page(paginator.num_pages)
+            paginated_articles = paginator.page(paginator.num_pages)
 
         context["featured_articles"] = all_articles[:4]
-        context["articles"] = articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+        context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
         return context
         
