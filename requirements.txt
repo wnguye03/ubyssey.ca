@@ -1,6 +1,6 @@
 dispatch==2.0.4
 Django==3.1.12
-wagtail==2.12.4
+wagtail==2.12.5
 git+git://github.com/ubyssey/django-google-storage.git@v0.5.4#egg=django-google-storage-updated
 django-storages[google]==1.10
 django-canonical-domain==0.3.0
