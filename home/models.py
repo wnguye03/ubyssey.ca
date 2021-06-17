@@ -1,6 +1,6 @@
 from . import blocks as homeblocks
 
-from dispatch.models import Article
+from article.models import ArticlePage
 from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -33,11 +33,12 @@ class HomePage(Page):
         StreamFieldPanel("sections_stream", heading="Sections"),
     ]
 
-    # def get_latest_articles(self):
-    #     max_count = 6 # max count for displaying post
-    #     return Article.objects.all().order_by('-last_published_at')[:max_count]
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
+        return context
 
-    # def get_context(self, request):
-    #     context = super().get_context(request)
-    #     context['articles'] = self.get_latest_articles()
-    #     return context
+    def get_above_cut_articles(self, max_count=6):
+        return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
+
+    above_cut_articles = property(fget=get_above_cut_articles)

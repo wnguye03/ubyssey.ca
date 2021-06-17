@@ -7,6 +7,9 @@ from django.db.models.fields import CharField
 from django.forms.widgets import Select
 from django.utils import timezone
 
+from itertools import groupby
+from django.utils.functional import empty
+
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
@@ -355,7 +358,7 @@ class ArticlePage(SectionablePage):
 
     #-----Properties, getters, setters, etc.-----
 
-    def get_authors_string(self, links=False) -> str:
+    def get_authors_string(self, links=False, authors_list=[]) -> str:
         """
         Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
         Keeps large amounts of logic out of templates.
@@ -367,7 +370,10 @@ class ArticlePage(SectionablePage):
                 return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
             return article_author.author.full_name
 
-        authors = list(map(format_author, self.article_authors.all()))
+        if not authors_list:
+            authors = list(map(format_author, self.article_authors.all()))
+        else:
+            authors = list(map(format_author, authors_list))
 
         if not authors:
             return ""
@@ -375,109 +381,52 @@ class ArticlePage(SectionablePage):
             # If this is the only author, just return author name
             return authors[0]
 
-        return ", ".join(authors[0:-1]) + " and " + authors[-1]
+        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
+    authors_string = property(fget=get_authors_string)
 
     def get_authors_with_urls(self) -> str:
         """
         Wrapper for get_authors_string for easy use in templates.
         """
         return self.get_authors_string(links=True)
+    authors_with_urls = property(fget=get_authors_with_urls)
 
-    def save_revision_with_custom_created_at(self, user=None, submitted_for_moderation=False, approved_go_live_at=None, changed=True,
-                      log_action=False, previous_revision=None, clean=True, custom_created_at_date=None):
-        """
-        Creates and saves a page revision. This mostly is an exact copy of the "save_revision" method of the original base Page class:
-        https://github.com/wagtail/wagtail/blob/main/wagtail/core/models.py
-        with the exception of the custom_created_at_date arg, which is used to 
+    def get_authors_with_roles(self) -> str:
+        """Returns list of authors as a comma-separated string
+        sorted by author type (with 'and' before last author)."""
 
+        authors_with_roles = ''
+        string_written = ''
+        string_photos = ''
+        string_author = ''
+        string_videos = ''
 
-        :param user: the user performing the action
-        :param submitted_for_moderation: indicates whether the page was submitted for moderation
-        :param approved_go_live_at: the date and time the revision is approved to go live
-        :param changed: indicates whether there were any content changes
-        :param log_action: flag for logging the action. Pass False to skip logging. Can be passed an action string.
-            Defaults to 'wagtail.edit' when no 'previous_revision' param is passed, otherwise 'wagtail.revert'
-        :param previous_revision: indicates a revision reversal. Should be set to the previous revision instance
-        :param clean: Set this to False to skip cleaning page content before saving this revision
-        :return: the newly created revision
-        """
-        # Raise an error if this page is an alias.
-        if self.alias_of_id:
-            raise RuntimeError(
-                "save_revision() was called on an alias page. "
-                "Revisions are not required for alias pages as they are an exact copy of another page."
-            )
-
-        if clean:
-            self.full_clean()
-
-        new_comments = self.comments.filter(pk__isnull=True)
-        for comment in new_comments:
-            # We need to ensure comments have an id in the revision, so positions can be identified correctly
-            comment.save()
-
-        # Create revision
-        revision = self.revisions.create(
-            content_json=self.to_json(),
-            user=user,
-            submitted_for_moderation=submitted_for_moderation,
-            approved_go_live_at=approved_go_live_at,
-        )
-
-        #ONLY CUSTOM LINE IN THIS METHOD!!
-        # expected value from PageRevision model:
-        # created_at = models.DateTimeField(db_index=True, verbose_name=_('created at'))
-        revision.created_at = custom_created_at_date
-
-        for comment in new_comments:
-            comment.revision_created = revision
-
-        update_fields = ['comments']
-
-        self.latest_revision_created_at = revision.created_at
-        update_fields.append('latest_revision_created_at')
-
-        self.draft_title = self.title
-        update_fields.append('draft_title')
-
-        if changed:
-            self.has_unpublished_changes = True
-            update_fields.append('has_unpublished_changes')
-
-        if update_fields:
-            # clean=False because the fields we're updating don't need validation
-            self.save(update_fields=update_fields, clean=False)
-
-        # Log
-        logger.info("Page edited: \"%s\" id=%d revision_id=%d", self.title, self.id, revision.id)
-        if log_action:
-            if not previous_revision:
-                PageLogEntry.objects.log_action(
-                    instance=self,
-                    action=log_action if isinstance(log_action, str) else 'wagtail.edit',
-                    user=user,
-                    revision=revision,
-                    content_changed=changed,
-                )
-            else:
-                PageLogEntry.objects.log_action(
-                    instance=self,
-                    action=log_action if isinstance(log_action, str) else 'wagtail.revert',
-                    user=user,
-                    data={
-                        'revision': {
-                            'id': previous_revision.id,
-                            'created': previous_revision.created_at.strftime("%d %b %Y %H:%M")
-                        }
-                    },
-                    revision=revision,
-                    content_changed=changed,
-                )
-
-        if submitted_for_moderation:
-            logger.info("Page submitted for moderation: \"%s\" id=%d revision_id=%d", self.title, self.id, revision.id)
-
-        return revision
+        authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
+        for author in authors:
+            if author == 'author':
+                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=[authors['author']])
+            if author == 'photographer':
+                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=[authors['photographer']])
+            if author == 'illustrator':
+                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=[authors['illustrator']])
+            if author == 'videographer':
+                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=[authors['videographer']])
+        if string_written != '':
+            authors_with_roles += string_written
+        if string_photos != '':
+            authors_with_roles += ', ' + string_photos
+        if string_author != '':
+            authors_with_roles += ', ' + string_author
+        if string_videos != '':
+            authors_with_roles += ', ' + string_videos
+        return authors_with_roles
+    authors_with_roles = property(fget=get_authors_with_urls)
+ 
+    @property
+    def published_at(self):
+        if self.explicit_published_at:
+            return self.explicit_published_at
+        return self.first_published_at
 
     class Meta:
         # TODO Should probably index on:
