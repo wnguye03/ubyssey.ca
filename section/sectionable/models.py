@@ -36,7 +36,7 @@ class SectionablePage(models.Page):
             else:
                 # otherwise, we have some non-section page that should be able to learn what section it's in from its parent
                 try:           
-                    self.current_section = ancestors_qs.last().specific().current_section
+                    self.current_section = ancestors_qs.last().specific.current_section
                 except Exception as e:
                     # This shouldn't ever be hit, but worst case scenario the current_section field's use with caching etc. can still work with "ERROR_SECTION"
                     self.current_section = 'ERROR_SECTION'
