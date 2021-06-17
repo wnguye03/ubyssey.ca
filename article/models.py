@@ -404,13 +404,13 @@ class ArticlePage(SectionablePage):
         authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
         for author in authors:
             if author == 'author':
-                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=[authors['author']])
+                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=authors['author'])
             if author == 'photographer':
-                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=[authors['photographer']])
+                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=authors['photographer'])
             if author == 'illustrator':
-                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=[authors['illustrator']])
+                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=authors['illustrator'])
             if author == 'videographer':
-                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=[authors['videographer']])
+                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=authors['videographer'])
         if string_written != '':
             authors_with_roles += string_written
         if string_photos != '':
@@ -420,7 +420,7 @@ class ArticlePage(SectionablePage):
         if string_videos != '':
             authors_with_roles += ', ' + string_videos
         return authors_with_roles
-    authors_with_roles = property(fget=get_authors_with_urls)
+    authors_with_roles = property(fget=get_authors_with_roles)
  
     @property
     def published_at(self):
