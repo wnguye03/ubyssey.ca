@@ -61,13 +61,6 @@ class Command(BaseCommand):
                 else:
                     wagtail_article_qs.get(slug=current_slug)
 
-                # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
-                wagtail_article.revision_id = dispatch_article_revision.revision_id
-                wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
-                if dispatch_article_revision.published_at is not None:
-                    wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
-                    wagtail_article.published_at = wagtail_article.legacy_published_at_time
-
                 wagtail_article.title = dispatch_article_revision.headline
 
                 try:
@@ -128,6 +121,14 @@ class Command(BaseCommand):
                     wagtail_article_nodes.append(wagtail_streamfield_node)
                 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
+
+                # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
+                wagtail_article.revision_id = dispatch_article_revision.revision_id
+                wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
+                if dispatch_article_revision.published_at is not None:
+                    wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
+                    wagtail_article.published_at = wagtail_article.legacy_published_at_time
+
                 if dispatch_article_revision.is_published:
                     #maybe redundant code 
                     wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
