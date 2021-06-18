@@ -6,12 +6,19 @@ from django_extensions.db.fields import AutoSlugField
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
+from taggit.models import TaggedItemBase
+from taggit.managers import TaggableManager
+
 from ubyssey.validators import validate_youtube_url
 
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.models import Orderable
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
+
+#-----Taggit stuff-----
+
+class VideoTag(TaggedItemBase):
+    content_object = ParentalKey('videos.VideoSnippet', on_delete=models.CASCADE, related_name='tagged_items')
 
 #-----Orderable models-----
 
@@ -30,7 +37,7 @@ class VideoAuthorsOrderable(Orderable):
     panels = [
         MultiFieldPanel(
             [
-                SnippetChooserPanel("author"),
+                PageChooserPanel("author"),
             ],
             heading="Author",
         ),
@@ -66,7 +73,7 @@ class VideoSnippet(ClusterableModel):
     )
 
     # authors = ManyToManyField(Author, related_name='video_authors')
-    # tags = ManyToManyField('Tag')
+    tags = TaggableManager(through=VideoTag, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -77,7 +84,7 @@ class VideoSnippet(ClusterableModel):
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel("title"),
+                FieldPanel("title"), 
                 FieldPanel("slug"),
                 FieldPanel("url"),
             ],
@@ -88,6 +95,12 @@ class VideoSnippet(ClusterableModel):
                 InlinePanel("video_authors", max_num=20, label="Author"),
             ],
             heading="Author(s)"
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("tags"), 
+            ],
+            heading="Tags"
         ),
     ]
     

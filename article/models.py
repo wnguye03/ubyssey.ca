@@ -88,15 +88,20 @@ class ArticleAuthorsOrderable(Orderable):
         ),
     ]
 
-class ArticleFeaturedImagesOrderable(Orderable):
+class ArticleFeaturedMediaOrderable(Orderable):
     """
     This is based off the "ImageAttachment" class from Dispatch
 
-    The ImageAttachment 
+    The ImageAttachment class was a bit of an oddity but it was clear that it was supposed to be an "intermediary"
+    between an article and an image model in a very analogous way to Orderables, even having an apparently unused
+    "Orderable" field.
+
+    Because essentialy identical classes were used for both Images and Videos, we are here making code more DRY
+    for an article
     """
     article_page = ParentalKey(
         "article.ArticlePage",
-        related_name="featured_images",
+        related_name="featured_media",
     )
 
     caption = models.TextField(blank=True, null=False, default='')
@@ -110,17 +115,31 @@ class ArticleFeaturedImagesOrderable(Orderable):
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    video = models.ForeignKey(
+        "videos.VideoSnippet",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     panels = [
         MultiFieldPanel(
             [
                 ImageChooserPanel("image"),
+                SnippetChooserPanel("video"),
+            ],
+            heading="Media Choosers",
+        ),
+        MultiFieldPanel(
+            [
                 FieldPanel("caption"),
                 FieldPanel("credit"),
             ],
-            heading="Featured Image",
+            heading="Caption/Credits",
         ),
     ]
+
 
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
@@ -313,8 +332,7 @@ class ArticlePage(SectionablePage):
         ),
         MultiFieldPanel(
             [
-                InlinePanel("featured_images", label="Featured Image(s)"),
-                SnippetChooserPanel("featured_video"),
+                InlinePanel("featured_media", label="Featured Image or Video"),
             ],
             heading="Featured Media",
         ),
