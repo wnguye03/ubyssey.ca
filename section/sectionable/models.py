@@ -4,6 +4,8 @@ from wagtail.core import models
 #-----Page models-----
 class SectionablePage(models.Page):
     """
+    Abstract class for pages. Allows a page to be aware of which section it belongs to, based on the structure of the site hierarchy.
+
     Pages in the site heirarchy tend to belong to a section.
     Sections correspond to child nodes of the HomePage that themselves have many children.
     Therefore all SectionablePages have built-in capacity to traverse backwards up the Page tree

@@ -128,7 +128,7 @@ class SectionPage(SectionablePage):
             number_featured: defaults to 4 as brute fact about 
         """
         if queryset == None:
-            queryset = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage)
+            queryset = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
 
         return queryset[:number_featured]
     
