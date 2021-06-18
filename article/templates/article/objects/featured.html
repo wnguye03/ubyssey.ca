@@ -12,7 +12,11 @@
         </a>
       </div>
     {% elif article.featured_media.first.video %}
-      <img src="http://img.youtube.com/vi/{{ article.featured_media.first.video.url|youtube_embed_id|safe }}/0.jpg" alt=""/>
+      <div class="o-article__left">
+        <a class="o-article__image" href="{% pageurl article %}">
+          <img src="http://img.youtube.com/vi/{{ article.featured_media.first.video.url|youtube_embed_id|safe }}/0.jpg" width=300 alt="" />
+        </a>
+      </div>
     {% endif %}
   {% endif %}
   <div class="o-article__right">
