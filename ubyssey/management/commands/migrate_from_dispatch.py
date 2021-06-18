@@ -129,9 +129,9 @@ class Command(BaseCommand):
                 # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
                 wagtail_article.revision_id = dispatch_article_revision.revision_id
                 wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
-                if dispatch_article_revision.published_at is not None:
+                if dispatch_article_revision.published_at:
                     wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
-                    wagtail_article.explicit_published_at = wagtail_article.legacy_published_at_time
+                    wagtail_article.explicit_published_at = dispatch_article_revision.published_at
 
                 wagtail_article.save_revision(log_action=True)
                 wagtail_revision = wagtail_article.get_latest_revision()
@@ -139,3 +139,5 @@ class Command(BaseCommand):
                 wagtail_revision.save()
                 if dispatch_article_revision.is_published:
                     wagtail_article.publish()
+                    wagtail_article.last_published_at = dispatch_article_revision.published_at
+                    wagtail_article.save()
