@@ -2,7 +2,6 @@ from .sectionable.models import SectionablePage
 
 from article.models import ArticlePage
 
-
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields import CharField
@@ -95,31 +94,44 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = ArticlePage.objects.live().public().descendant_of(self)
+        all_articles = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
 
-        all_articles.order_by('-first_published_at')
         # Paginate all posts by 15 per page
-        paginator = Paginator(all_articles, per_page=15)
+        paginator = Paginator(all_articles, per_page=1)
         # Try to get the ?page=x value
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
-            articles = paginator.page(page)
+            paginated_articles = paginator.page(page)
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
-            articles = paginator.page(1)
+            paginated_articles = paginator.page(1)
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
             # Then return the last page
-            articles = paginator.page(paginator.num_pages)
+            paginated_articles = paginator.page(paginator.num_pages)
 
-        context["articles"] = articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+        context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
+        context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
         return context
+    
+    def get_featured_articles(self, queryset=None, number_featured=4):
+        """
+        Returns a truncated queryset of articles
+            queryset: if not included, will default to all live, public, ArticlePage descendents of this SectionPage
+            number_featured: defaults to 4 as brute fact about 
+        """
+        if queryset == None:
+            queryset = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
+
+        return queryset[:number_featured]
+    
+    featured_articles = property(fget=get_featured_articles)
         
     @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
     def subsection_view(self, request, subsection_slug):

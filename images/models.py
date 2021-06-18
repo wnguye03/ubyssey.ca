@@ -33,7 +33,7 @@ class UbysseyImage(AbstractImage):
       objects
     """
     author = models.ForeignKey( #main req from original
-        "authors.AuthorSnippet",
+        "authors.AuthorPage",
         null=True,
         blank=True,
         on_delete=models.SET_NULL

@@ -93,7 +93,7 @@ class Command(BaseCommand):
                     block_type = 'richtext'
                     if node_type == 'paragraph':
                         block_type = 'richtext'
-                        block_value = node['data']
+                        block_value = '<p>' + node['data'] + '</p>'
                     elif node_type == 'dropcap':
                         block_type = 'dropcap'
                         block_value = node['data']['paragraph']
@@ -112,14 +112,18 @@ class Command(BaseCommand):
                     # NOTE: https://stackoverflow.com/questions/34200844/how-can-i-programmatically-add-content-to-a-wagtail-streamfield
                     # https://stackoverflow.com/questions/47788080/how-can-i-create-page-and-set-its-streamfield-value-programmatically
                     # USE JSON LIKE THIS!
-                    wagtail_streamfield_node = {
-                        'type':'',
-                        'value':'',
-                    }
-                    wagtail_streamfield_node['type'] = block_type
-                    wagtail_streamfield_node['value'] = block_value
-                    wagtail_article_nodes.append(wagtail_streamfield_node)
-                
+                    if len(wagtail_article_nodes) > 0 and wagtail_article_nodes[-1]['type'] == 'richtext' and block_type == 'richtext':
+                        # Special case of last node being a richtext and current one also a richtext, just join them together as seperate paragraphs
+                        wagtail_article_nodes[-1]['value'] = wagtail_article_nodes[-1]['value'] + block_value
+                    else:
+                        wagtail_streamfield_node = {
+                            'type':'',
+                            'value':'',
+                        }
+                        wagtail_streamfield_node['type'] = block_type
+                        wagtail_streamfield_node['value'] = block_value
+                        wagtail_article_nodes.append(wagtail_streamfield_node)
+
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
 
                 # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
@@ -132,7 +136,7 @@ class Command(BaseCommand):
                 if dispatch_article_revision.is_published:
                     #maybe redundant code 
                     wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
-                    wagtail_article.published_at = wagtail_article.legacy_published_at_time
+                    wagtail_article.explicit_published_at = wagtail_article.legacy_published_at_time
 
                     wagtail_article.save_revision(log_action=True).publish()
                 else:

@@ -4,6 +4,8 @@ from wagtail.core import models
 #-----Page models-----
 class SectionablePage(models.Page):
     """
+    Abstract class for pages. Allows a page to be aware of which section it belongs to, based on the structure of the site hierarchy.
+
     Pages in the site heirarchy tend to belong to a section.
     Sections correspond to child nodes of the HomePage that themselves have many children.
     Therefore all SectionablePages have built-in capacity to traverse backwards up the Page tree
@@ -36,7 +38,7 @@ class SectionablePage(models.Page):
             else:
                 # otherwise, we have some non-section page that should be able to learn what section it's in from its parent
                 try:           
-                    self.current_section = ancestors_qs.last().specific().current_section
+                    self.current_section = ancestors_qs.last().specific.current_section
                 except Exception as e:
                     # This shouldn't ever be hit, but worst case scenario the current_section field's use with caching etc. can still work with "ERROR_SECTION"
                     self.current_section = 'ERROR_SECTION'

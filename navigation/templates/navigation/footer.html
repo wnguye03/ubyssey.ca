@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <footer>
     <div class="u-container{% if homepage %} u-container--large{% endif %}">
 
@@ -6,19 +7,20 @@
         <nav>
             <div class="top-row">
                 <ul class="sections">
-                    <!-- <li><a href="{% url 'section' 'themainmaller' %}">The Main Maller</a></li> -->
-                    {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.navigation_menu_items.all %}
-                        {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
-                        <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
-                    {% endfor %}
+                    {% cache 604800 main_footer_menu %}
+                        {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.all %}
+                            <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             </div>
             <div class="bottom-row">
                 <ul class="pages">
-                    {% for menu_item in settings.navigation.SitewideMenus.second_footer_menu.navigation_menu_items.all %}
-                        {% comment %} The above loop goes through the NavigationMenuItems in a NavigationMenu {% endcomment %}
-                        <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
-                    {% endfor %}
+                    {% cache 604800 second_footer_menu %}
+                        {% for menu_item in settings.navigation.SitewideMenus.second_footer_menu.all %}
+                            <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             </div>
         </nav>
