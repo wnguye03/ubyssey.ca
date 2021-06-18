@@ -94,13 +94,12 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage)
+        all_articles = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
 
-        all_articles.order_by('-last_modified_at')
         # Paginate all posts by 15 per page
         paginator = Paginator(all_articles, per_page=1)
         # Try to get the ?page=x value
