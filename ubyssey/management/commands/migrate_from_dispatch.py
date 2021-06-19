@@ -13,6 +13,7 @@ from section.models import SectionPage
 from treebeard import exceptions as treebeard_exceptions
 
 from wagtail.core import blocks
+from wagtail.core.models import PageLogEntry
 from wagtail.images.blocks import ImageChooserBlock
 
 from videos.blocks import OneOffVideoBlock
@@ -85,7 +86,7 @@ class Command(BaseCommand):
                 # Still need to do foreign keys for featured image/video and subsection!
 
                 wagtail_article_nodes = []
-
+                
                 for node in dispatch_article_revision.content:
                     # copy data from dispatch_article_revision.content to wagtail.article
                     # figure out what the type of the embed is (node_type). set the appropriate block_type
@@ -126,18 +127,28 @@ class Command(BaseCommand):
 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
 
+                # References for Wagtail revisions
                 # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
-                wagtail_article.revision_id = dispatch_article_revision.revision_id
-                wagtail_article.legacy_revised_at_time = dispatch_article_revision.updated_at
-                if dispatch_article_revision.published_at:
-                    wagtail_article.legacy_published_at_time = dispatch_article_revision.published_at
-                    wagtail_article.explicit_published_at = dispatch_article_revision.published_at
+            
 
                 wagtail_article.save_revision(log_action=True)
+                if len(wagtail_article_qs) < 1:
+                    log_entry_creation = PageLogEntry.objects.all()[0]
+                    log_entry_creation.timestamp = dispatch_article_revision.updated_at
+                    log_entry_creation.save()
+
                 wagtail_revision = wagtail_article.get_latest_revision()
                 wagtail_revision.created_at = dispatch_article_revision.updated_at
                 wagtail_revision.save()
-                if dispatch_article_revision.is_published:
-                    wagtail_article.publish()
-                    wagtail_article.last_published_at = dispatch_article_revision.published_at
+                log_entry_change = PageLogEntry.objects.all()[0]
+                log_entry_change.timestamp = dispatch_article_revision.updated_at
+                log_entry_change.save()
+
+                if dispatch_article_revision.published_at:
+                    wagtail_revision.publish()
+                    wagtail_article.first_published_at = dispatch_article_revision.published_at
+                    wagtail_article.last_published_at = dispatch_article_revision.updated_at
                     wagtail_article.save()
+                    log_entry_publication = PageLogEntry.objects.all()[0]
+                    log_entry_publication.timestamp = dispatch_article_revision.updated_at
+                    log_entry_publication.save()
