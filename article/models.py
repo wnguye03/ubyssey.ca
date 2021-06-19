@@ -279,25 +279,25 @@ class ArticlePage(SectionablePage):
     )
 
     #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
-    revision_id = models.PositiveIntegerField(
-        null=False,
-        blank=False,
-        default=0,
-    )
-    created_at_time = models.DateTimeField(
-        null=False,
-        blank=False,
-        default=timezone.now,
-    )
-    legacy_revised_at_time = models.DateTimeField(
-        null=False,
-        blank=False,
-        default=timezone.now,
-    )
-    legacy_published_at_time = models.DateTimeField(
-        null=True,
-        default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time())
-    )
+    # revision_id = models.PositiveIntegerField(
+    #     null=False,
+    #     blank=False,
+    #     default=0,
+    # )
+    # created_at_time = models.DateTimeField(
+    #     null=False,
+    #     blank=False,
+    #     default=timezone.now,
+    # )
+    # legacy_revised_at_time = models.DateTimeField(
+    #     null=False,
+    #     blank=False,
+    #     default=timezone.now,
+    # )
+    # legacy_published_at_time = models.DateTimeField(
+    #     null=True,
+    #     default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time())
+    # )
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
