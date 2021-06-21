@@ -280,8 +280,6 @@ class ArticlePage(SectionablePage):
 
     #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
 
-    minutes_to_read = models.IntegerField()
-
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         MultiFieldPanel(
