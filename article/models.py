@@ -279,25 +279,8 @@ class ArticlePage(SectionablePage):
     )
 
     #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
-    # revision_id = models.PositiveIntegerField(
-    #     null=False,
-    #     blank=False,
-    #     default=0,
-    # )
-    # created_at_time = models.DateTimeField(
-    #     null=False,
-    #     blank=False,
-    #     default=timezone.now,
-    # )
-    # legacy_revised_at_time = models.DateTimeField(
-    #     null=False,
-    #     blank=False,
-    #     default=timezone.now,
-    # )
-    # legacy_published_at_time = models.DateTimeField(
-    #     null=True,
-    #     default=datetime.datetime.combine(UBYSSEY_FOUNDING_DATE, datetime.time())
-    # )
+
+    minutes_to_read = models.IntegerField()
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
@@ -445,6 +428,22 @@ class ArticlePage(SectionablePage):
         if self.explicit_published_at:
             return self.explicit_published_at
         return self.first_published_at
+    
+    @property
+    def word_count(self) -> int:
+        # gotten from https://stackoverflow.com/questions/42585858/display-word-count-in-blog-post-with-wagtail
+        count = 0
+        for block in self.content:
+            if block.block_type == 'richtext' or block.block_type == 'plaintext':
+                count += len(str(block.value).split())
+        return count
+
+    @property
+    def minutes_to_read(self) -> int:
+        """
+        Assumes readers read 150 wpm on average. Returns self.world_count // 150
+        """
+        return self.word_count // 150
 
     class Meta:
         # TODO Should probably index on:
