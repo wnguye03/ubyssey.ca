@@ -35,7 +35,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # dispatch_article 
-        current_slug = 'keegan-test'
         dispatch_head_articles_qs = Article.objects.filter(head=True).order_by('-published_at')        
 
         for head_article in dispatch_head_articles_qs:
