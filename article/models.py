@@ -280,6 +280,17 @@ class ArticlePage(SectionablePage):
 
     #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
 
+    legacy_template = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+    legacy_template = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         MultiFieldPanel(
