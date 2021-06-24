@@ -47,6 +47,11 @@ class AuthorPage(Page):
         null=True,
         blank=True,
     )
+    description = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
     # For editting in wagtail:
     content_panels = [
         # title not present, title should NOT be directly editable
