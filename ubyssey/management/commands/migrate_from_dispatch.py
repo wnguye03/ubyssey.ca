@@ -1,11 +1,15 @@
 import json
+import hashlib
 
-from django import dispatch
-from article.models import ArticlePage
 
-from dispatch.models import Article
+from article.models import ArticlePage, ArticleAuthorsOrderable
+from authors.models import AuthorPage, AllAuthorsPage
+
+
+from dispatch.models import Article, Person
 from dispatch.modules.content import embeds
 
+from django import dispatch
 from django.core.management.base import BaseCommand, CommandError, no_translations
 
 from section.models import SectionPage
@@ -33,6 +37,31 @@ class Command(BaseCommand):
     
     @no_translations
     def handle(self, *args, **options):
+        
+        # dispatch persons
+        # FIRST we go without taking images into account. Likewise for Images. Then we'll go back 
+        all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+        dispatch_persons_qs = Person.objects.all()
+        for person in dispatch_persons_qs:
+            wagtail_authors_qs = AuthorPage.objects.filter(slug=person.slug)
+            if len(wagtail_authors_qs) > 0:
+                continue # go to next person if this person has already been created
+            wagtail_author = AuthorPage()
+            wagtail_author.slug = person.slug
+            wagtail_author.full_name = person.full_name
+            wagtail_author.title = person.full_name
+            if person.title:
+                wagtail_author.ubyssey_role = person.title
+            if person.facebook_url:
+                wagtail_author.facebook_url = person.facebook_url
+            if person.twitter_url:
+                wagtail_author.twitter_url = person.twitter_url
+            try:
+                all_authors_page.add_child(instance=wagtail_author)
+            except treebeard_exceptions.NodeAlreadySaved as e:
+                print(e)
+            wagtail_author.save_revision(log_action=False).publish()
+            print(AuthorPage.objects.filter(slug=person.slug))
 
         # dispatch_article 
         dispatch_head_articles_qs = Article.objects.filter(head=True).order_by('-published_at')        
@@ -50,7 +79,6 @@ class Command(BaseCommand):
             for dispatch_article_revision in dispatch_article_qs:
 
                 # first check if there's an article with this slug already:
-
                 wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
 
                 if len(wagtail_article_qs) < 1:
@@ -59,24 +87,46 @@ class Command(BaseCommand):
                     wagtail_article.created_at_time = dispatch_article_revision.created_at
                     wagtail_article.slug = dispatch_article_revision.slug
                 else:
+                    # WARNING: what does this do? db hit and then...?
                     wagtail_article_qs.get(slug=current_slug)
 
+                # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
 
+                # Section
                 try:
                     wagtail_section.add_child(instance=wagtail_article)
                 except treebeard_exceptions.NodeAlreadySaved as e:
                     print(e)
+                # Author
+                for dispatch_author in dispatch_article_revision.authors.all():
+                    # First we make sure there's any author page corresponding to this author
+                    if AuthorPage.objects.get(slug=dispatch_author.person.slug):
+                        # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
+                        # Otherwise we'll just get a bunch of redundant orderables
+                        has_author_already = any(article_author.author.slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
+                        if not has_author_already:
+                            wagtail_author_orderable = ArticleAuthorsOrderable()
+                            wagtail_author_orderable.article_page = wagtail_article
+                            wagtail_author_orderable.author_role = dispatch_author.type
+                            wagtail_author_orderable.sort_order = dispatch_author.order
+                            wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
+                            wagtail_author_orderable.save()
 
+                # Image stuff:
+                # Take note of how to programatically do this http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
+
+                # SEO stuff
                 if dispatch_article_revision.seo_keyword is not None:
                     wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
                 if dispatch_article_revision.seo_description is not None:
                     wagtail_article.seo_description = dispatch_article_revision.seo_description
                 # add something about article "template"
-                # wagtail_article.
+                
+                # Lede
                 if dispatch_article_revision.snippet is not None:
                     wagtail_article.lede = dispatch_article_revision.snippet
-
+                # Breaking
                 if dispatch_article_revision.is_breaking is not None:
                     wagtail_article.isbreaking = bool(dispatch_article_revision.is_breaking)
                 if dispatch_article_revision.breaking_timeout is not None:
@@ -112,37 +162,43 @@ class Command(BaseCommand):
                     # NOTE: https://stackoverflow.com/questions/34200844/how-can-i-programmatically-add-content-to-a-wagtail-streamfield
                     # https://stackoverflow.com/questions/47788080/how-can-i-create-page-and-set-its-streamfield-value-programmatically
                     # USE JSON LIKE THIS!
-                    if len(wagtail_article_nodes) > 0 and wagtail_article_nodes[-1]['type'] == 'richtext' and block_type == 'richtext':
-                        # Special case of last node being a richtext and current one also a richtext, just join them together as seperate paragraphs
-                        wagtail_article_nodes[-1]['value'] = wagtail_article_nodes[-1]['value'] + block_value
-                    else:
-                        wagtail_streamfield_node = {
-                            'type':'',
-                            'value':'',
-                        }
-                        wagtail_streamfield_node['type'] = block_type
-                        wagtail_streamfield_node['value'] = block_value
-                        wagtail_article_nodes.append(wagtail_streamfield_node)
+
+                    # Turns out keeping blocks on a paragraph-by-paragraph basis makes keeping track of present revisions make more sense, so we do not use the below if statement
+                    # it may be useful for something though, so it lives on in comments
+                    # if len(wagtail_article_nodes) > 0 and wagtail_article_nodes[-1]['type'] == 'richtext' and block_type == 'richtext':
+                    #    # Special case of last node being a richtext and current one also a richtext, just join them together as seperate paragraphs
+                    #    wagtail_article_nodes[-1]['value'] = wagtail_article_nodes[-1]['value'] + block_value
+                    # else:
+
+                    wagtail_streamfield_node = {
+                        'type':'',
+                        'value':'',
+                    }
+                    wagtail_streamfield_node['type'] = block_type
+                    wagtail_streamfield_node['value'] = block_value
+                    wagtail_streamfield_node['id'] = hashlib.sha1(str(wagtail_streamfield_node).encode('utf-8')).hexdigest()
+                    wagtail_article_nodes.append(wagtail_streamfield_node)
 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
 
-                # References for Wagtail revisions
-                # Used strictly for maintaining the paper trail of articles that originally came from Dispatch
-            
-
+                # Wagtail revision created corresponding to the Dispatch revision
                 wagtail_article.save_revision(log_action=True)
+                
+                # Ensure all Wagtail _creation_ timestamps correspond to their Dispatch counterparts
                 if len(wagtail_article_qs) < 1:
                     log_entry_creation = PageLogEntry.objects.all()[0]
                     log_entry_creation.timestamp = dispatch_article_revision.updated_at
                     log_entry_creation.save()
-
+                # Ensure all Wagtail _draft_ timestamps correspond to their Dispatch counterparts
                 wagtail_revision = wagtail_article.get_latest_revision()
                 wagtail_revision.created_at = dispatch_article_revision.updated_at
                 wagtail_revision.save()
                 log_entry_change = PageLogEntry.objects.all()[0]
                 log_entry_change.timestamp = dispatch_article_revision.updated_at
                 log_entry_change.save()
-
+                wagtail_article.latest_revision_created_at = dispatch_article_revision.updated_at
+                wagtail_article.save()
+                # Ensure all Wagtail _publish_ timestamps correspond to their Dispatch counterparts
                 if dispatch_article_revision.published_at:
                     wagtail_revision.publish()
                     wagtail_article.first_published_at = dispatch_article_revision.published_at
