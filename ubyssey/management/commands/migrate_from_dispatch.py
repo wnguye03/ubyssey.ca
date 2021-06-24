@@ -1,16 +1,19 @@
 import json
 import hashlib
+import requests
 
 
 from article.models import ArticlePage, ArticleAuthorsOrderable
 from authors.models import AuthorPage, AllAuthorsPage
 
-
 from dispatch.models import Article, Person
 from dispatch.modules.content import embeds
 
 from django import dispatch
+from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
+
+from io import BytesIO
 
 from section.models import SectionPage
 
@@ -18,6 +21,7 @@ from treebeard import exceptions as treebeard_exceptions
 
 from wagtail.core import blocks
 from wagtail.core.models import PageLogEntry
+from wagtail.images.models import Image
 from wagtail.images.blocks import ImageChooserBlock
 
 from videos.blocks import OneOffVideoBlock
@@ -34,6 +38,11 @@ class Command(BaseCommand):
     Images
     Videos
     """
+    def _migrate_all_images():
+        pass
+        # Image stuff:
+        # Take note of how to programatically do this http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
+
     
     @no_translations
     def handle(self, *args, **options):
@@ -112,9 +121,6 @@ class Command(BaseCommand):
                             wagtail_author_orderable.sort_order = dispatch_author.order
                             wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
                             wagtail_author_orderable.save()
-
-                # Image stuff:
-                # Take note of how to programatically do this http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
 
                 # SEO stuff
                 if dispatch_article_revision.seo_keyword is not None:
