@@ -73,7 +73,7 @@ class AuthorPage(Page):
 
         super().clean()
         self.title = self.full_name
-        self.slug = slugify(self.full_name)  # slug MUST be unique & slug-formatted
+        # self.slug = slugify(self.full_name)  # slug MUST be unique & slug-formatted
 
     def __str__(self):
         return self.full_name
