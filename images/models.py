@@ -40,6 +40,12 @@ class UbysseyImage(AbstractImage):
     )
     updated_at = models.DateTimeField(auto_now=True)
 
+    legacy_filename = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
     admin_form_fields = Image.admin_form_fields + (
         'author',
     )
