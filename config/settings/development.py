@@ -46,7 +46,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'http://localhost:8000/'
+MEDIA_URL = '/media/'
 
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
