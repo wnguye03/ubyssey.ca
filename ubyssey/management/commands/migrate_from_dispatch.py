@@ -54,6 +54,9 @@ def _migrate_all_images():
                 wagtail_image.created_at = old_image.created_at
                 wagtail_image.updated_at = old_image.updated_at
                 wagtail_image.save()
+                for tag in old_image.tags.all():
+                    wagtail_image.tags.add(tag.name)
+                wagtail_image.save()
 
 class Command(BaseCommand):
     """
