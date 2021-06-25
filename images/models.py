@@ -52,7 +52,8 @@ class UbysseyImage(AbstractImage):
 
     def get_upload_to(self, filename):
         """
-        Overrides original. Only difference is in folder_name Copried from:
+        Overrides original. Only difference is in folder_name
+        Copied from:
 
         https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py
         """
