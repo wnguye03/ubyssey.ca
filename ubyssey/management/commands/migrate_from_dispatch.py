@@ -9,6 +9,7 @@ from dispatch import models as dispatch_models
 from dispatch.modules.content import embeds
 
 from django import dispatch
+from django.conf import settings
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 
@@ -35,25 +36,24 @@ def _migrate_all_images():
     for old_image in old_images:
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
         if not has_been_sent_to_wagtail:
-            http_res = requests.get(old_image.get_absolute_url())
-            wagtail_image_title = 'default_title' #should never actually be used, but just in case
-            if not old_image.title:
-                wagtail_image_title = str(old_image.img)
-            else:
-                wagtail_image_title = old_image.title
-            image_file = ImageFile(BytesIO(http_res.content), name=wagtail_image_title)
-            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+            url = old_image.get_absolute_url()
+            if settings.DEBUG:
+                url = 'http://localhost:8000' + url
+            http_res = requests.get(url)
 
-            wagtail_image.legacy_filename = str(old_image.img)
-            wagtail_image.created_at = old_image.created_at
-            wagtail_image.updated_at = old_image.updated_at
-            wagtail_image.width = old_image.width
-            print(old_image.width)
-            print(wagtail_image.width)
-            wagtail_image.height = old_image.height
-            print(old_image.height)
-            print(wagtail_image.height)
-            wagtail_image.save()
+            if http_res.status_code == 200:    
+                wagtail_image_title = 'default_title' #should never actually be used, but just in case
+                if not old_image.title:
+                    wagtail_image_title = str(old_image.img)
+                else:
+                    wagtail_image_title = old_image.title
+                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_image_title)
+                wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+
+                wagtail_image.legacy_filename = str(old_image.img)
+                wagtail_image.created_at = old_image.created_at
+                wagtail_image.updated_at = old_image.updated_at
+                wagtail_image.save()
 
 class Command(BaseCommand):
     """
