@@ -2,11 +2,10 @@ import json
 import hashlib
 import requests
 
-
 from article.models import ArticlePage, ArticleAuthorsOrderable
 from authors.models import AuthorPage, AllAuthorsPage
 
-from dispatch.models import Article, Person
+from dispatch import models as dispatch_models
 from dispatch.modules.content import embeds
 
 from django import dispatch
@@ -14,6 +13,7 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 
 from io import BytesIO
+from images.models import UbysseyImage as CustomImage
 
 from section.models import SectionPage
 
@@ -27,6 +27,34 @@ from wagtail.images.blocks import ImageChooserBlock
 from videos.blocks import OneOffVideoBlock
 
 
+def _migrate_all_images():
+    # Documentation this was originally taken from: http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
+
+    old_images = dispatch_models.Image.objects.all()
+    wagtail_images = CustomImage.objects.all()
+    for old_image in old_images:
+        has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
+        if not has_been_sent_to_wagtail:
+            http_res = requests.get(old_image.get_absolute_url())
+            wagtail_image_title = 'default_title' #should never actually be used, but just in case
+            if not old_image.title:
+                wagtail_image_title = str(old_image.img)
+            else:
+                wagtail_image_title = old_image.title
+            image_file = ImageFile(BytesIO(http_res.content), name=wagtail_image_title)
+            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+
+            wagtail_image.legacy_filename = str(old_image.img)
+            wagtail_image.created_at = old_image.created_at
+            wagtail_image.updated_at = old_image.updated_at
+            wagtail_image.width = old_image.width
+            print(old_image.width)
+            print(wagtail_image.width)
+            wagtail_image.height = old_image.height
+            print(old_image.height)
+            print(wagtail_image.height)
+            wagtail_image.save()
+
 class Command(BaseCommand):
     """
     Certain things have to be migrated to Wagtail before this can be run properly:
@@ -38,11 +66,6 @@ class Command(BaseCommand):
     Images
     Videos
     """
-    def _migrate_all_images():
-        pass
-        # Image stuff:
-        # Take note of how to programatically do this http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
-
     
     @no_translations
     def handle(self, *args, **options):
@@ -50,7 +73,7 @@ class Command(BaseCommand):
         # dispatch persons
         # FIRST we go without taking images into account. Likewise for Images. Then we'll go back 
         all_authors_page = AllAuthorsPage.objects.get(slug='authors')
-        dispatch_persons_qs = Person.objects.all()
+        dispatch_persons_qs = dispatch_models.Person.objects.all()
         for person in dispatch_persons_qs:
             wagtail_authors_qs = AuthorPage.objects.filter(slug=person.slug)
             if len(wagtail_authors_qs) > 0:
@@ -73,12 +96,12 @@ class Command(BaseCommand):
             print(AuthorPage.objects.filter(slug=person.slug))
 
         # dispatch_article 
-        dispatch_head_articles_qs = Article.objects.filter(head=True).order_by('-published_at')        
+        dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
 
         for head_article in dispatch_head_articles_qs:
             current_slug = head_article.slug
             
-            dispatch_article_qs = Article.objects.filter(slug=current_slug).order_by('revision_id')        
+            dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
             # wagtail_article
             wagtail_article = ArticlePage()
             # wagtail section
