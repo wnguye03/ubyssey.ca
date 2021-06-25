@@ -21,14 +21,56 @@ from section.models import SectionPage
 from treebeard import exceptions as treebeard_exceptions
 
 from wagtail.core import blocks
-from wagtail.core.models import PageLogEntry
+from wagtail.core.models import PageLogEntry, Collection
 from wagtail.images.models import Image
 from wagtail.images.blocks import ImageChooserBlock
 
+from videos.models import VideoSnippet
 from videos.blocks import OneOffVideoBlock
 
+def _migrate_all_authors():
+    all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+    dispatch_persons_qs = dispatch_models.Person.objects.all()
+    wagtail_authors_qs = AuthorPage.objects.all()        
+    for person in dispatch_persons_qs:
+        has_been_sent_to_wagtail = any(person.slug == wagtail_author.slug for wagtail_author in wagtail_authors_qs)
+        if not has_been_sent_to_wagtail:
+            wagtail_author = AuthorPage()
+            wagtail_author.slug = person.slug
+            wagtail_author.full_name = person.full_name
+            wagtail_author.title = person.full_name
+            if person.title:
+                wagtail_author.ubyssey_role = person.title
+            if person.facebook_url:
+                wagtail_author.facebook_url = person.facebook_url
+            if person.twitter_url:
+                wagtail_author.twitter_url = person.twitter_url
+            try:
+                all_authors_page.add_child(instance=wagtail_author)
+            except treebeard_exceptions.NodeAlreadySaved as e:
+                print(e)
+            wagtail_author.save_revision(log_action=False).publish()
+
+            # Get the author's image and put it in a collection
+            img_url = settings.MEDIA_URL + str(person.image)
+            if settings.DEBUG:
+                img_url = 'http://localhost:8000' + img_url
+            http_res = requests.get(img_url)
+            if http_res.status_code == 200:
+                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title)
+                wagtail_image = CustomImage(title=wagtail_author.title, file=image_file)
+                wagtail_image.legacy_filename = str(person.image)
+                wagtail_image.save()
+                if any(collection.name == "Author Pics" for collection in Collection.objects.all()):
+                    wagtail_image.collection = Collection.objects.get(name="Author Pics")
+                    wagtail_image.save()
+                wagtail_author.image = wagtail_image
+                wagtail_author.save_revision(log_action=False).publish()
 
 def _migrate_all_images():
+    """
+    Migrates all images from Dispatch to Wagtail. Does NOT add authors
+    """
     # Documentation this was originally taken from: http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
 
     old_images = dispatch_models.Image.objects.all()
@@ -58,6 +100,30 @@ def _migrate_all_images():
                     wagtail_image.tags.add(tag.name)
                 wagtail_image.save()
 
+def _migrate_all_videos():
+    """
+    Migrates all videos from Dispatch to Wagtail. Does NOT add authors
+    """
+    old_videos = dispatch_models.Video.objects.all()
+    wagtail_videos = VideoSnippet.objects.all()
+    for old_video in old_videos:
+        has_been_sent_to_wagtail = any(old_video.url == wagtail_video.url for wagtail_video in wagtail_videos)
+        if not has_been_sent_to_wagtail:
+            if old_video.title:
+                new_title = old_video.title
+            else:
+                new_title = "UNTITLED_VIDEO"
+
+            if old_video.url:
+                new_url = old_video.url
+            else:
+                new_url = "https://www.youtube.com/watch?v=kUJw2eVYznw"
+            wagtail_video = VideoSnippet(title=new_title, url=new_url)
+            wagtail_video.save()
+            for tag in old_video.tags.all():
+                wagtail_video.tags.add(tag.name)
+            wagtail_video.save()
+
 class Command(BaseCommand):
     """
     Certain things have to be migrated to Wagtail before this can be run properly:
@@ -73,31 +139,6 @@ class Command(BaseCommand):
     @no_translations
     def handle(self, *args, **options):
         
-        # dispatch persons
-        # FIRST we go without taking images into account. Likewise for Images. Then we'll go back 
-        all_authors_page = AllAuthorsPage.objects.get(slug='authors')
-        dispatch_persons_qs = dispatch_models.Person.objects.all()
-        for person in dispatch_persons_qs:
-            wagtail_authors_qs = AuthorPage.objects.filter(slug=person.slug)
-            if len(wagtail_authors_qs) > 0:
-                continue # go to next person if this person has already been created
-            wagtail_author = AuthorPage()
-            wagtail_author.slug = person.slug
-            wagtail_author.full_name = person.full_name
-            wagtail_author.title = person.full_name
-            if person.title:
-                wagtail_author.ubyssey_role = person.title
-            if person.facebook_url:
-                wagtail_author.facebook_url = person.facebook_url
-            if person.twitter_url:
-                wagtail_author.twitter_url = person.twitter_url
-            try:
-                all_authors_page.add_child(instance=wagtail_author)
-            except treebeard_exceptions.NodeAlreadySaved as e:
-                print(e)
-            wagtail_author.save_revision(log_action=False).publish()
-            print(AuthorPage.objects.filter(slug=person.slug))
-
         # dispatch_article 
         dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
 
