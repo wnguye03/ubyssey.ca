@@ -100,6 +100,15 @@ def _migrate_all_images():
                     wagtail_image.tags.add(tag.name)
                 wagtail_image.save()
 
+                if len(old_image.authors.all()) > 0:
+                    old_author = old_image.authors.all()[0]
+                    try:
+                        wagtail_image.author = AuthorPage.objects.get(slug=old_author.person.slug)
+                        wagtail_image.legacy_authors = old_image.get_author_string()
+                        wagtail_image.save()
+                    except:
+                        print("Couldn't find an author with the slug " + old_author.person.slug)
+
 def _migrate_all_videos():
     """
     Migrates all videos from Dispatch to Wagtail. Does NOT add authors
@@ -123,6 +132,19 @@ def _migrate_all_videos():
             for tag in old_video.tags.all():
                 wagtail_video.tags.add(tag.name)
             wagtail_video.save()
+
+            for dispatch_author in old_video.authors.all():
+                # First we make sure there's any author page corresponding to this author
+                if AuthorPage.objects.get(slug=dispatch_author.person.slug):
+                    # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
+                    # Otherwise we'll just get a bunch of redundant orderables
+                    has_author_already = any(article_author.author.slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
+                    if not has_author_already:
+                        wagtail_author_orderable = VideoAuthorsOrderable()
+                        wagtail_author_orderable.video = wagtail_video
+                        wagtail_author_orderable.sort_order = dispatch_author.order
+                        wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
+                        wagtail_author_orderable.save()
 
 class Command(BaseCommand):
     """
