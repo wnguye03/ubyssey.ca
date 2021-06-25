@@ -45,9 +45,16 @@ class UbysseyImage(AbstractImage):
         blank=True,
         default='',
     )
+    legacy_authors = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
 
     admin_form_fields = Image.admin_form_fields + (
         'author',
+        'legacy_filename',
+        'legacy_authors',
     )
 
     def get_upload_to(self, filename):
