@@ -239,16 +239,31 @@ class Command(BaseCommand):
                     if node_type == 'paragraph':
                         block_type = 'richtext'
                         block_value = '<p>' + node['data'] + '</p>'
-                    elif node_type == 'dropcap':
-                        block_type = 'dropcap'
-                        block_value = node['data']['paragraph']
-                    elif node_type == 'pagebreak':
-                        block_type = 'raw_html'
-                        block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                    elif node_type == 'image':
+                        pass #TODO
+                    elif node_type == 'video':
+                        pass #TODO
+                    elif node_type == 'quote':
+                        pass #TODO
+                    elif node_type == 'gallery':
+                        pass #TODO
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         block_type = 'raw_html'
                         block_value = embeds.WidgetEmbed.render(data=node.data)
+                    elif node_type == 'poll':
+                        pass #TODO
+                    elif node_type == 'podcast':
+                        pass #TODO
+                    elif node_type == 'interactive_map':
+                        pass #TODO
+                    elif node_type == 'pagebreak':
+                        block_type = 'raw_html'
+                        block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                    elif node_type == 'dropcap':
+                        block_type = 'dropcap'
+                        block_value = node['data']['paragraph']
+
                     # elif node_type == 'video':
                     #     block_type = 'video'
                     #     block_value = blocks.StructValue()
