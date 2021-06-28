@@ -4,6 +4,7 @@ from dispatch.models import Article
 
 from django.db import models
 from django.db.models.fields import CharField
+from django.db.models.query import QuerySet
 from django.forms.widgets import Select
 from django.utils import timezone
 
@@ -24,7 +25,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, Orderable
+from wagtail.core.models import Page, PageManager, Orderable
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
@@ -152,10 +153,28 @@ class ArticlePageTag(TaggedItemBase):
         verbose_name = "article tag"
         verbose_name_plural = "article tags"
 
+#-----Manager models-----
+class ArticlePageManager(PageManager):
+    
+    def from_section(self, section_slug='', section_root=None) -> QuerySet:
+        from .models import ArticlePage
+        if section_slug:
+            try:
+                new_section_root = Page.objects.get(slug=section_slug)
+            except Page.DoesNotExist:
+                new_section_root = None
+            if new_section_root:
+                section_root = new_section_root
+            
+        return self.live().public().descendant_of(section_root).exact_type(ArticlePage).order_by('-last_modified_at')
+
 #-----Page models-----
 
 class ArticlePage(SectionablePage):
-    #-----Main attributes-----
+
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
     template = "article/article_page.html"
 
     parent_page_types = [
@@ -165,6 +184,7 @@ class ArticlePage(SectionablePage):
 
     subpage_types = [] #Prevents article pages from having child pages
 
+    #-----Field attributes-----
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
