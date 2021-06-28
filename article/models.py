@@ -156,7 +156,7 @@ class ArticlePageTag(TaggedItemBase):
 #-----Manager models-----
 class ArticlePageManager(PageManager):
     
-    def section_articles(self, section_slug='', section_root=None) -> QuerySet:
+    def from_section(self, section_slug='', section_root=None) -> QuerySet:
         from .models import ArticlePage
         if section_slug:
             try:
