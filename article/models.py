@@ -1,4 +1,5 @@
 import datetime
+from images.models import GallerySnippet
 
 from dispatch.models import Article
 
@@ -10,6 +11,7 @@ from django.utils import timezone
 
 from itertools import groupby
 from images import blocks as image_blocks
+from images.models import GallerySnippet
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -26,8 +28,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, PageManager, Orderable
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
@@ -217,7 +219,11 @@ class ArticlePage(SectionablePage):
                 ],
                 label = "Pull Quote",
                 template = 'article/stream_blocks/quote.html',
-            )),            
+            )),
+            ('gallery', SnippetChooserBlock(
+                target_model = GallerySnippet,
+                template = 'article/stream_blocks/gallery.html',
+            )),
         ],
         null=True,
         blank=True,

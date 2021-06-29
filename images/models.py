@@ -13,6 +13,8 @@ from wagtail.core.models import Orderable
 from wagtail.core.utils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.models import register_snippet
+
 
 #-----Custom Image Model-----
 
@@ -118,6 +120,8 @@ class UbysseyRendition(AbstractRendition):
             ('image', 'filter_spec', 'focal_point_key'),
         )
 
+#-----Snippets-----
+@register_snippet
 class GallerySnippet(ClusterableModel):
     title = models.TextField(
         blank=False,
@@ -132,8 +136,8 @@ class GallerySnippet(ClusterableModel):
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel("caption"),
-                FieldPanel("credit"),
+                FieldPanel("title"),
+                FieldPanel("slug"),
             ],
             heading="Essentials",
         ),
@@ -144,6 +148,9 @@ class GallerySnippet(ClusterableModel):
             heading="Gallery Images",
         ),
     ]
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = "Gallery"
