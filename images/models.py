@@ -3,8 +3,9 @@ See: https://docs.wagtail.io/en/stable/advanced_topics/images/custom_image_model
 """
 
 import os
-from datetime import date
+from datetime import date, timezone
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
@@ -133,6 +134,18 @@ class GallerySnippet(ClusterableModel):
         blank=False,
         null=False,
     )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models. DateTimeField(
+        auto_now=True
+    )
+    legacy_created_at = models.DateTimeField(
+        null=True
+    )
+    legacy_updated_at = models.DateTimeField(
+        null=True
+    )
     panels = [
         MultiFieldPanel(
             [
@@ -146,6 +159,13 @@ class GallerySnippet(ClusterableModel):
                 InlinePanel("gallery_images"),
             ],
             heading="Gallery Images",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('legacy_created_at'),
+                FieldPanel('legacy_updated_at'),
+            ],
+            heading="Legacy Stuff",
         ),
     ]
 
