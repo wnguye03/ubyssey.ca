@@ -198,7 +198,7 @@ class ArticlePage(SectionablePage):
             ('dropcap', blocks.TextBlock(
                 label = "Dropcap Block",
                 template = 'article/stream_blocks/dropcap.html',
-                help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
+                help_text = "DO NOT USE - Legacy block. Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
             )),
             ('video', video_blocks.OneOffVideoBlock(
                 label = "Credited/Captioned One-Off Video",
@@ -209,6 +209,14 @@ class ArticlePage(SectionablePage):
             ('raw_html', blocks.RawHTMLBlock(
                 label = "Raw HTML Block",
                 help_text = "WARNING: DO NOT use this unless you really know what you're doing!"
+            )),
+            ('quote', blocks.StructBlock(
+                [
+                    ('content',blocks.CharBlock(required=False)),
+                    ('source',blocks.CharBlock(required=False)),
+                ],
+                label = "Pull Quote",
+                template = 'article/stream_blocks/quote.html',
             )),            
         ],
         null=True,
@@ -244,17 +252,7 @@ class ArticlePage(SectionablePage):
     )
     tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
-    #-----Featured Media-----
-    
-    featured_video = models.ForeignKey(
-        "videos.VideoSnippet",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
-    )
-
-    # template
+    # template #TODO
 
     #-----Promote panel stuff------
     is_breaking = models.BooleanField(
