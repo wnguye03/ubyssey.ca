@@ -183,13 +183,13 @@ class Command(BaseCommand):
                 wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
 
                 if len(wagtail_article_qs) < 1:
-                    #initialize a new wagtail article
+                    # initialize a new wagtail article
                     wagtail_article = ArticlePage()
                     wagtail_article.created_at_time = dispatch_article_revision.created_at
                     wagtail_article.slug = dispatch_article_revision.slug
                 else:
-                    # WARNING: what does this do? db hit and then...?
-                    wagtail_article_qs.get(slug=current_slug)
+                    # or else get the existing article
+                    wagtail_article = wagtail_article_qs.get(slug=current_slug)
 
                 # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
@@ -261,17 +261,23 @@ class Command(BaseCommand):
                             block_type = 'richtext'
                             block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE: </p>' + dispatch_article_revision.slug
                     elif node_type == 'video':
-                        pass #TODO
+                        block_value['embed'] = node['data']['video_embed']
+                        block_value['caption'] = node['data']['caption']
+                        block_value['credit'] = node['data']['credit']
+                        block_type = 'video'
                     elif node_type == 'quote':
-                        pass #TODO
+                        block_type = 'quote'
+                        block_value['content'] = node['data']['content']
+                        block_value['source'] = node['data']['source']
                     elif node_type == 'gallery':
                         pass #TODO
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node.data)
+                        block_value = embeds.WidgetEmbed.render(data=node['data'])
                     elif node_type == 'poll':
-                        pass #TODO
+                        block_type = 'raw_html'
+                        block_value = embeds.WidgetEmbed.render(data=node['data']['data'])
                     elif node_type == 'podcast':
                         pass #TODO
                     elif node_type == 'interactive_map':
@@ -279,10 +285,9 @@ class Command(BaseCommand):
                     elif node_type == 'pagebreak':
                         block_type = 'raw_html'
                         block_value = '<div class="page-break"><hr class = "page-break"></div>'
-                    elif node_type == 'dropcap':
-                        block_type = 'dropcap'
-                        block_value = node['data']['paragraph']
-
+                    elif node_type == 'drop_cap':
+                        block_type = 'raw_html'
+                        block_value = '<p class="drop-cap">' + node['data']['paragraph'] + '</p>'
                     # elif node_type == 'video':
                     #     block_type = 'video'
                     #     block_value = blocks.StructValue()
