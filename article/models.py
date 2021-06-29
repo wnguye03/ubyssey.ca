@@ -9,7 +9,7 @@ from django.forms.widgets import Select
 from django.utils import timezone
 
 from itertools import groupby
-from django.utils.functional import empty
+from images import blocks as image_blocks
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -204,8 +204,7 @@ class ArticlePage(SectionablePage):
                 label = "Credited/Captioned One-Off Video",
                 help_text = "Use this to credit or caption videos that will only be associated with this current article, rather than entered into our video library. You can also embed videos in a Rich Text Block."
             )),
-            ('image', ImageChooserBlock(
-                label = "Image"
+            ('image', image_blocks.ImageBlock(
             )),
             ('raw_html', blocks.RawHTMLBlock(
                 label = "Raw HTML Block",
