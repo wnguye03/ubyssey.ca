@@ -160,7 +160,10 @@ class Command(BaseCommand):
     
     @no_translations
     def handle(self, *args, **options):
-        
+
+        _migrate_all_authors()
+        _migrate_all_images()
+        _migrate_all_videos()
         # dispatch_article 
         dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
 
@@ -212,19 +215,19 @@ class Command(BaseCommand):
                             wagtail_author_orderable.save()
 
                 # SEO stuff
-                if dispatch_article_revision.seo_keyword is not None:
+                if dispatch_article_revision.seo_keyword:
                     wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
-                if dispatch_article_revision.seo_description is not None:
+                if dispatch_article_revision.seo_description:
                     wagtail_article.seo_description = dispatch_article_revision.seo_description
                 # add something about article "template"
                 
                 # Lede
-                if dispatch_article_revision.snippet is not None:
+                if dispatch_article_revision.snippet:
                     wagtail_article.lede = dispatch_article_revision.snippet
                 # Breaking
-                if dispatch_article_revision.is_breaking is not None:
+                if dispatch_article_revision.is_breaking:
                     wagtail_article.isbreaking = bool(dispatch_article_revision.is_breaking)
-                if dispatch_article_revision.breaking_timeout is not None:
+                if dispatch_article_revision.breaking_timeout:
                     wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
                 # Still need to do foreign keys for featured image/video and subsection!
@@ -240,7 +243,23 @@ class Command(BaseCommand):
                         block_type = 'richtext'
                         block_value = '<p>' + node['data'] + '</p>'
                     elif node_type == 'image':
-                        pass #TODO
+                        try:
+                            old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
+                            new_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+                            block_value['image'] = new_image.pk
+                            block_value['title'] = node['data']['title']
+                            block_value['style'] = node['data']['style']
+                            block_value['caption'] = node['data']['caption']
+                            block_value['credit'] = node['data']['credit']
+                            block_type = 'image'
+                        except dispatch_models.Image.DoesNotExist as e:
+                            print(e)
+                            block_type = 'richtext'
+                            block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE: </p>' + dispatch_article_revision.slug
+                        except CustomImage.DoesNotExist as e:
+                            print(e)
+                            block_type = 'richtext'
+                            block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE: </p>' + dispatch_article_revision.slug
                     elif node_type == 'video':
                         pass #TODO
                     elif node_type == 'quote':
