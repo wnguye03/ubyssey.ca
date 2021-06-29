@@ -5,12 +5,16 @@ See: https://docs.wagtail.io/en/stable/advanced_topics/images/custom_image_model
 import os
 from datetime import date
 from django.db import models
-from django.db.models.fields.related import ForeignKey
 from django.utils.translation import gettext_lazy as _
+from modelcluster.models import ClusterableModel
+from modelcluster.fields import ParentalKey
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Orderable
 from wagtail.core.utils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
+from wagtail.images.edit_handlers import ImageChooserPanel
 
+#-----Custom Image Model-----
 
 class UbysseyImage(AbstractImage):
     """
@@ -93,7 +97,6 @@ class UbysseyImage(AbstractImage):
             ("choose_image", "Can choose image"),
         ]
 
-
 class UbysseyRendition(AbstractRendition):
     """
     Custom Renditions model for the Ubyssey
@@ -114,3 +117,65 @@ class UbysseyRendition(AbstractRendition):
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
         )
+
+class GallerySnippet(ClusterableModel):
+    title = models.TextField(
+        blank=False,
+        null=False,
+    )
+    slug = models.SlugField(
+        primary_key=True,
+        unique=True,
+        blank=False,
+        null=False,
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("caption"),
+                FieldPanel("credit"),
+            ],
+            heading="Essentials",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("gallery_images"),
+            ],
+            heading="Gallery Images",
+        ),
+    ]
+
+    class Meta:
+        verbose_name = "Gallery"
+        verbose_name_plural = "Galleries"
+
+class GalleryOrderable(Orderable):
+    gallery = ParentalKey(
+        "images.GallerySnippet",
+        related_name="gallery_images",
+    )
+
+    caption = models.TextField(blank=True, null=False, default='')
+    credit = models.TextField(blank=True, null=False, default='')
+    image = models.ForeignKey(
+        "images.UbysseyImage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("image"),
+            ],
+            heading="Image Chooser",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("caption"),
+                FieldPanel("credit"),
+            ],
+            heading="Caption/Credits",
+        ),
+    ]
