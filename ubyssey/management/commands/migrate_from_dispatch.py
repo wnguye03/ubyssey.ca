@@ -27,7 +27,7 @@ from wagtail.core.models import PageLogEntry, Collection
 from wagtail.images.models import Image
 from wagtail.images.blocks import ImageChooserBlock
 
-from videos.models import VideoSnippet
+from videos.models import VideoSnippet, VideoAuthorsOrderable
 from videos.blocks import OneOffVideoBlock
 
 def _migrate_all_authors():
@@ -165,7 +165,7 @@ def _migrate_all_videos():
                 if AuthorPage.objects.get(slug=dispatch_author.person.slug):
                     # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
                     # Otherwise we'll just get a bunch of redundant orderables
-                    has_author_already = any(article_author.author.slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
+                    has_author_already = any(video_author.author.slug == dispatch_author.person.slug for video_author in wagtail_video.video_authors.all())
                     if not has_author_already:
                         wagtail_author_orderable = VideoAuthorsOrderable()
                         wagtail_author_orderable.video = wagtail_video
@@ -190,6 +190,7 @@ class Command(BaseCommand):
 
         _migrate_all_authors()
         _migrate_all_images()
+        _migrate_all_image_galleries()
         _migrate_all_videos()
         # dispatch_article 
         dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
