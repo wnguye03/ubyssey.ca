@@ -48,6 +48,7 @@
 @import 'components/poll';
 @import 'components/text-input';
 @import 'components/podcast';
+@import 'components/loading';
 
 @import 'components/events/calendar';
 @import 'components/events/event-submit-form';
@@ -67,6 +68,8 @@
 @import 'modules/widgets/banner';
 @import 'modules/widgets/weekly-events';
 @import 'modules/widgets/twitter';
+
+
 
 body, html, #page-wrapper {
   max-height: 100%;
