@@ -12,9 +12,11 @@ from django import dispatch
 from django.conf import settings
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
+from django.utils.text import slugify
 
 from io import BytesIO
 from images.models import UbysseyImage as CustomImage
+from images.models import GallerySnippet, GalleryOrderable
 
 from section.models import SectionPage
 
@@ -108,6 +110,31 @@ def _migrate_all_images():
                         wagtail_image.save()
                     except:
                         print("Couldn't find an author with the slug " + old_author.person.slug)
+
+def _migrate_all_image_galleries():
+    """
+    Assumes all images have been sent to wagtail already
+    """
+    old_galleries = dispatch_models.ImageGallery.objects.all()
+    wagtail_galleries = GallerySnippet.objects.all()
+    for old_gallery in old_galleries:
+        old_gallery.title
+        print(old_gallery.title)
+        has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
+        if has_been_sent_to_wagtail:
+            wagtail_gallery = GallerySnippet()
+            wagtail_gallery.title = old_gallery.title
+            wagtail_gallery.slug = slugify(old_gallery.title)
+
+            for image_attachment_object in old_gallery.images.all():
+
+                gallery_orderable = GalleryOrderable()
+                gallery_orderable.gallery = wagtail_gallery
+                gallery_orderable.caption = image_attachment_object.caption
+                gallery_orderable.credit = image_attachment_object.credit
+                gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
+                gallery_orderable.order = image_attachment_object.order
+                gallery_orderable.save()
 
 def _migrate_all_videos():
     """
