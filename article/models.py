@@ -313,6 +313,9 @@ class ArticlePage(SectionablePage):
         blank=True,
         default='',
     )
+    legacy_revision_number = models.IntegerField(
+        default=0
+    )
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
@@ -386,6 +389,15 @@ class ArticlePage(SectionablePage):
                 ),
             ],
             heading="Advertising-Releated",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'legacy_revision_number',
+                    help_text = "DO NOT TOUCH",
+                ),
+            ],
+            heading='Legacy stuff'
         ),
     ]
 
