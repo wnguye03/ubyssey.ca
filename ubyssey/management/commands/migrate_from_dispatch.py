@@ -119,9 +119,8 @@ def _migrate_all_image_galleries():
     wagtail_galleries = GallerySnippet.objects.all()
     for old_gallery in old_galleries:
         old_gallery.title
-        print(old_gallery.title)
         has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
-        if has_been_sent_to_wagtail:
+        if not has_been_sent_to_wagtail:
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
             wagtail_gallery.slug = slugify(old_gallery.title)
