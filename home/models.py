@@ -1,6 +1,7 @@
 from . import blocks as homeblocks
 
 from article.models import ArticlePage
+from section.models import SectionPage , CategorySnippet
 from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -11,6 +12,8 @@ from wagtail.core.fields import StreamField
 
 class HomePage(Page):
     template = "home/home_page.html"
+
+    ajax_template = "home/ajax_section.html"
     
     parent_page_types = [
         'wagtailcore.Page',
@@ -29,6 +32,9 @@ class HomePage(Page):
         blank=True,
     )
 
+
+
+
     content_panels = Page.content_panels + [
         StreamFieldPanel("sections_stream", heading="Sections"),
     ]
@@ -36,9 +42,27 @@ class HomePage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
+
+        if request.is_ajax():
+            section = request.GET.get('section')
+            context[ 'feature_articles'] = self.get_section_articles(section_slug=section)
+            context['section_name'] = section
+   
         return context
 
     def get_above_cut_articles(self, max_count=6):
+  
+       
         return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
 
     above_cut_articles = property(fget=get_above_cut_articles)
+
+
+    def get_section_articles(self, section_slug , max_count=6):
+
+        sectionPage = SectionPage.objects.get(slug = section_slug)
+        
+
+        return sectionPage.get_featured_articles()
+
+

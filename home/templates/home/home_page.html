@@ -21,16 +21,22 @@
   {% endcomment %}
 
   <div class="homepage-section row">
-    <div class="sections">  
+    <div class="sections" id="section_container">  
       {% comment %} 
         This is where we put the contents of the main StreamField of section blocks 
         This StreamField consists of blocks that each show off the contents of some section.
         See the models.py of this app for implementation details
-      {% endcomment %}            
-      {% for block in self.sections_stream %}
-        {% include_block block %}
-      {% endfor %}
+      {% endcomment %}        
+
+    
+      {% with self.sections_stream.0 as first_section %}
+       {% include_block  first_section %}
+        
+      {% endwith %}
+
+     
     </div>
+
     <div class="sidebar-home">
       <div class="multi-zone cell right">
       {% comment %} 
@@ -42,6 +48,10 @@
       </div>
     </div>
   </div>
+
+     <div class="loader-container">
+         <div class="loader"></div>
+     </div>
 </main>
 {% endblock %}
 

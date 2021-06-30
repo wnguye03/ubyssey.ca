@@ -27,3 +27,13 @@ class HomePageSectionBlock(blocks.StructBlock):
 
     class Meta:
         template = "home/stream_blocks/section_non_news.html"
+
+class HomepageFeaturedSectionBlock(blocks.StructBlock):
+
+    section = field_block.PageChooserBlock(
+        page_type='section.SectionPage'
+    )
+
+    class Meta:
+        template = "home/stream_blocks/section_news.html"
+
