@@ -1,15 +1,10 @@
 from wagtail.core import blocks
-from wagtail.embeds import blocks as embed_blocks
 from wagtail.images.blocks import ImageChooserBlock
 
 class ImageBlock(blocks.StructBlock):
 
     image = ImageChooserBlock(
         required=True,
-    )
-    title = blocks.CharBlock(
-        max_length=255,
-        required=False,
     )
     style = blocks.ChoiceBlock(
         choices=[

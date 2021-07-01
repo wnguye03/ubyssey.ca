@@ -124,6 +124,9 @@ def _migrate_all_image_galleries():
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
             wagtail_gallery.slug = slugify(old_gallery.title)
+            wagtail_gallery.legacy_created_at = old_gallery.created_at
+            wagtail_gallery.legacy_updated_at = old_gallery.updated_at
+            wagtail_gallery.save()
 
             for image_attachment_object in old_gallery.images.all():
 
@@ -172,51 +175,38 @@ def _migrate_all_videos():
                         wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
                         wagtail_author_orderable.save()
 
-class Command(BaseCommand):
-    """
-    Certain things have to be migrated to Wagtail before this can be run properly:
+def _migrate_all_articles():
+    # dispatch_article 
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
 
-    Authors
-    Tags
-    Sections (small enough this one can be done manually)
-    Subsections
-    Images
-    Videos
-    """
-    
-    @no_translations
-    def handle(self, *args, **options):
+    for head_article in dispatch_head_articles_qs:
+        current_slug = head_article.slug
+        
+        dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
+        # wagtail_article
+        wagtail_article = ArticlePage()
+        # wagtail section
+        wagtail_section = SectionPage.objects.get(slug='news')
+        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
 
-        _migrate_all_authors()
-        _migrate_all_images()
-        _migrate_all_image_galleries()
-        _migrate_all_videos()
-        # dispatch_article 
-        dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
+        for dispatch_article_revision in dispatch_article_qs:
 
-        for head_article in dispatch_head_articles_qs:
-            current_slug = head_article.slug
+            # first check if there's an article with this slug already:
+            wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
+
+            if len(wagtail_article_qs) < 1:
+                # initialize a new wagtail article
+                wagtail_article = ArticlePage()
+                wagtail_article.created_at_time = dispatch_article_revision.created_at
+                wagtail_article.slug = dispatch_article_revision.slug
+            else:
+                # or else get the existing article
+                wagtail_article = wagtail_article_qs.get(slug=current_slug)
             
-            dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
-            # wagtail_article
-            wagtail_article = ArticlePage()
-            # wagtail section
-            wagtail_section = SectionPage.objects.get(slug='news')
-            # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
-
-            for dispatch_article_revision in dispatch_article_qs:
-
-                # first check if there's an article with this slug already:
-                wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
-
-                if len(wagtail_article_qs) < 1:
-                    # initialize a new wagtail article
-                    wagtail_article = ArticlePage()
-                    wagtail_article.created_at_time = dispatch_article_revision.created_at
-                    wagtail_article.slug = dispatch_article_revision.slug
-                else:
-                    # or else get the existing article
-                    wagtail_article = wagtail_article_qs.get(slug=current_slug)
+            if dispatch_article_revision.revision_id > wagtail_article.legacy_revision_number:
+                # The above bool prevents the same revision from being sent over twice. If the current revision is greater than the last one sent over,
+                # then we make a new wagtail revision
+                wagtail_article.legacy_revision_number = dispatch_article_revision.revision_id
 
                 # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
@@ -273,27 +263,30 @@ class Command(BaseCommand):
                         try:
                             old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
                             new_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+                            block_type = 'image'
+                            block_value = {}
                             block_value['image'] = new_image.pk
-                            block_value['title'] = node['data']['title']
                             block_value['style'] = node['data']['style']
+                            block_value['width'] = node['data']['width']
                             block_value['caption'] = node['data']['caption']
                             block_value['credit'] = node['data']['credit']
-                            block_type = 'image'
                         except dispatch_models.Image.DoesNotExist as e:
                             print(e)
                             block_type = 'richtext'
-                            block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE: </p>' + dispatch_article_revision.slug
+                            block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE</p>'
                         except CustomImage.DoesNotExist as e:
                             print(e)
                             block_type = 'richtext'
-                            block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE: </p>' + dispatch_article_revision.slug
+                            block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
                     elif node_type == 'video':
-                        block_value['embed'] = node['data']['video_embed']
+                        block_type = 'video'
+                        block_value = {}
+                        block_value['embed'] = node['data']['url']
                         block_value['caption'] = node['data']['caption']
                         block_value['credit'] = node['data']['credit']
-                        block_type = 'video'
                     elif node_type == 'quote':
                         block_type = 'quote'
+                        block_value = {}
                         block_value['content'] = node['data']['content']
                         block_value['source'] = node['data']['source']
                     elif node_type == 'gallery':
@@ -368,3 +361,24 @@ class Command(BaseCommand):
                     log_entry_publication = PageLogEntry.objects.all()[0]
                     log_entry_publication.timestamp = dispatch_article_revision.updated_at
                     log_entry_publication.save()
+
+class Command(BaseCommand):
+    """
+    Certain things have to be migrated to Wagtail before this can be run properly:
+
+    Authors
+    Tags
+    Sections (small enough this one can be done manually)
+    Subsections
+    Images
+    Videos
+    """
+    
+    @no_translations
+    def handle(self, *args, **options):
+
+        _migrate_all_authors()
+        _migrate_all_images()
+        _migrate_all_image_galleries()
+        _migrate_all_videos()
+        _migrate_all_articles()

@@ -141,10 +141,12 @@ class GallerySnippet(ClusterableModel):
         auto_now=True
     )
     legacy_created_at = models.DateTimeField(
-        null=True
+        null=True,
+        blank=True,
     )
     legacy_updated_at = models.DateTimeField(
-        null=True
+        null=True,
+        blank=True,
     )
     panels = [
         MultiFieldPanel(
