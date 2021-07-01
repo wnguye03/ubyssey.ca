@@ -86,6 +86,10 @@ def _migrate_all_authors():
                 wagtail_author.image = wagtail_image
                 wagtail_author.save_revision(log_action=False).publish()
 
+def _migrate_all_categories():
+    #TODO
+    dispatch_subsections_qs = dispatch_models.Subsection.objects.all()
+
 def _migrate_all_images():
     """
     Migrates all images from Dispatch to Wagtail. Does NOT add authors
