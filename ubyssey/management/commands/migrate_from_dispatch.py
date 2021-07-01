@@ -14,6 +14,8 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 from django.utils.text import slugify
 
+from home.models import HomePage
+
 from io import BytesIO
 from images.models import UbysseyImage as CustomImage
 from images.models import GallerySnippet, GalleryOrderable
@@ -29,6 +31,21 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
 from videos.blocks import OneOffVideoBlock
+
+def _migrate_all_sections():
+    home_page = HomePage.objects.first()
+    wagtail_sections_qs = SectionPage.objects.all()
+    dispatch_sections_qs = dispatch_models.Section.objects.all()
+
+    for dispatch_section in dispatch_sections_qs:
+        has_been_sent_to_wagtail = any(dispatch_section.slug == section_page.slug for section_page in wagtail_sections_qs)
+        if not has_been_sent_to_wagtail:
+
+            wagtail_section = SectionPage()
+            wagtail_section.slug = dispatch_section.slug
+            wagtail_section.name = dispatch_section.title
+            home_page.add_child(instance=wagtail_section)
+            wagtail_section.save_revision(log_action=False).publish()
 
 def _migrate_all_authors():
     all_authors_page = AllAuthorsPage.objects.get(slug='authors')
@@ -377,6 +394,7 @@ class Command(BaseCommand):
     @no_translations
     def handle(self, *args, **options):
 
+        _migrate_all_sections()
         _migrate_all_authors()
         _migrate_all_images()
         _migrate_all_image_galleries()
