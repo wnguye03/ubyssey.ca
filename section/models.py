@@ -5,7 +5,7 @@ from article.models import ArticlePage
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models.fields import CharField
+from django.db.models.fields import CharField, BooleanField, TextField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render
 
@@ -37,6 +37,15 @@ class CategorySnippet(models.Model):
         blank=False,
         null=False,
         max_length=100
+    )
+    description = TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+    # authors = ManyToManyField('Author', related_name='subsection_authors')
+    is_active = BooleanField( # legacy field
+        default=False
     )
     section_page = ParentalKey(
         "section.SectionPage",
