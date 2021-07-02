@@ -20,7 +20,7 @@ from io import BytesIO
 from images.models import UbysseyImage as CustomImage
 from images.models import GallerySnippet, GalleryOrderable
 
-from section.models import SectionPage
+from section.models import SectionPage, CategorySnippet
 
 from treebeard import exceptions as treebeard_exceptions
 
@@ -89,6 +89,18 @@ def _migrate_all_authors():
 def _migrate_all_categories():
     #TODO
     dispatch_subsections_qs = dispatch_models.Subsection.objects.all()
+    wagtail_category_qs = CategorySnippet.objects.all()
+
+    for dispatch_subsection in dispatch_subsections_qs:
+        has_been_sent_to_wagtail = any(dispatch_subsection.slug == wagtail_category.slug for wagtail_category in wagtail_category_qs)
+        if not has_been_sent_to_wagtail:
+            wagtail_category = CategorySnippet()
+            wagtail_category.slug = dispatch_subsection.slug
+            wagtail_category.name = dispatch_subsection.name
+            wagtail_category.description = dispatch_subsection.description
+            wagtail_category.is_active = dispatch_subsection.is_active
+            for author_obj in dispatch_subsection.authors.all():
+                pass
 
 def _migrate_all_images():
     """
