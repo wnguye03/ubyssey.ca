@@ -11,7 +11,7 @@
         <div class="cell left">
         {% with articles.0 as article %}
           <article class="secondary padded">
-              <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.title|safe }}</a></h2>
+              <h2 class="headline"><a href={% pageurl article %}>{{ article.title|safe }}</a></h2>
               <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.lede|safe }}</p>
           </article>
         {% endwith %}
@@ -22,7 +22,7 @@
         {% with articles.1 as article %}
             <article class="thumb row padded">
                 <div class="image">
-                    <a href="{{ article.get_absolute_url}}?ref=frontpage">
+                    <a href={% pageurl article %}>
                       {% if article.featured_media.first.image %}
                        {% image article.featured_media.first.image fill-80x80 %}
                       {% elif article.featured_video %}
@@ -31,7 +31,7 @@
                     </a>
                 </div>
                 <div>
-                    <h2 class="headline"><a href="{{ article.get_absolute_url}}?ref=frontpage">{{ article.title|safe }}</a></h2>
+                    <h2 class="headline"><a href={% pageurl article %}>{{ article.title|safe }}</a></h2>
                     <p class="o-article__snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span></p>
                 </div>
             </article>
@@ -39,7 +39,7 @@
         {% with articles.2 as article %}
             <article class="thumb row padded">
                 <div class="image">
-                    <a href="{{ article.get_absolute_url}}?ref=frontpage">
+                    <a href={% pageurl article %}>
                       {% if article.featured_media.first.image %}
                         {% image article.featured_media.first.image fill-80x80 %}
                       {% elif article.featured_video %}
@@ -48,7 +48,7 @@
                     </a>
                 </div>
                 <div>
-                    <h2 class="headline"><a href="{{ article.get_absolute_url}}?ref=frontpage">{{ article.title|safe }}</a></h2>
+                    <h2 class="headline"><a href={% pageurl article %}>{{ article.title|safe }}</a></h2>
                     <p class="o-article__snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span></p>
                 </div>
             </article>
@@ -73,7 +73,7 @@
         <div class="cell middle">
             {% with articles.5 as article %}
             <article class="primary {{ article.template }}">
-                <a class="image" href="{{ article.get_absolute_url }}?ref=frontpage">
+                <a class="image" href={% pageurl article %}>
                   {% if article.featured_media.first.image %}
                      {% image article.featured_media.first.image fill-340x238-c100 %}
                   {% elif article.featured_video %} 
@@ -82,7 +82,7 @@
                 </a>
                 
                 <div class="meta">
-                  <a href="{{ article.get_absolute_url }}?ref=frontpage"><h1 class="headline">{{ article.title|safe }}</h1></a>
+                  <a href={% pageurl article %}><h1 class="headline">{{ article.title|safe }}</h1></a>
                   <div class="o-article__byline">
                     <span class="o-article__author">By {{ article.get_author_url|safe }}</span>
                     <span> &nbsp;·&nbsp; </span>
