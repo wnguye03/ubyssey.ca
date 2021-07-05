@@ -1,14 +1,17 @@
 import datetime
+from images.models import GallerySnippet
 
 from dispatch.models import Article
 
 from django.db import models
 from django.db.models.fields import CharField
+from django.db.models.query import QuerySet
 from django.forms.widgets import Select
 from django.utils import timezone
 
 from itertools import groupby
-from django.utils.functional import empty
+from images import blocks as image_blocks
+from images.models import GallerySnippet
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -24,9 +27,9 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, Orderable
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.core.models import Page, PageManager, Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
@@ -152,10 +155,28 @@ class ArticlePageTag(TaggedItemBase):
         verbose_name = "article tag"
         verbose_name_plural = "article tags"
 
+#-----Manager models-----
+class ArticlePageManager(PageManager):
+    
+    def from_section(self, section_slug='', section_root=None) -> QuerySet:
+        from .models import ArticlePage
+        if section_slug:
+            try:
+                new_section_root = Page.objects.get(slug=section_slug)
+            except Page.DoesNotExist:
+                new_section_root = None
+            if new_section_root:
+                section_root = new_section_root
+            
+        return self.live().public().descendant_of(section_root).exact_type(ArticlePage).order_by('-last_modified_at')
+
 #-----Page models-----
 
 class ArticlePage(SectionablePage):
-    #-----Main attributes-----
+
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
     template = "article/article_page.html"
 
     parent_page_types = [
@@ -165,6 +186,7 @@ class ArticlePage(SectionablePage):
 
     subpage_types = [] #Prevents article pages from having child pages
 
+    #-----Field attributes-----
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
@@ -178,19 +200,30 @@ class ArticlePage(SectionablePage):
             ('dropcap', blocks.TextBlock(
                 label = "Dropcap Block",
                 template = 'article/stream_blocks/dropcap.html',
-                help_text = "Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
+                help_text = "DO NOT USE - Legacy block. Create a block where special dropcap styling with be applied to the first letter and the first letter only.\n\nThe contents of this block will be enclosed in a <p class=\"drop-cap\">...</p> element, allowing its targetting for styling.\n\nNo RichText allowed."
             )),
             ('video', video_blocks.OneOffVideoBlock(
                 label = "Credited/Captioned One-Off Video",
                 help_text = "Use this to credit or caption videos that will only be associated with this current article, rather than entered into our video library. You can also embed videos in a Rich Text Block."
             )),
-            ('image', ImageChooserBlock(
-                label = "Image"
+            ('image', image_blocks.ImageBlock(
             )),
             ('raw_html', blocks.RawHTMLBlock(
                 label = "Raw HTML Block",
                 help_text = "WARNING: DO NOT use this unless you really know what you're doing!"
-            )),            
+            )),
+            ('quote', blocks.StructBlock(
+                [
+                    ('content',blocks.CharBlock(required=False)),
+                    ('source',blocks.CharBlock(required=False)),
+                ],
+                label = "Pull Quote",
+                template = 'article/stream_blocks/quote.html',
+            )),
+            ('gallery', SnippetChooserBlock(
+                target_model = GallerySnippet,
+                template = 'article/stream_blocks/gallery.html',
+            )),
         ],
         null=True,
         blank=True,
@@ -225,17 +258,7 @@ class ArticlePage(SectionablePage):
     )
     tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
-    #-----Featured Media-----
-    
-    featured_video = models.ForeignKey(
-        "videos.VideoSnippet",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
-    )
-
-    # template
+    # template #TODO
 
     #-----Promote panel stuff------
     is_breaking = models.BooleanField(
@@ -289,6 +312,9 @@ class ArticlePage(SectionablePage):
         null=False,
         blank=True,
         default='',
+    )
+    legacy_revision_number = models.IntegerField(
+        default=0
     )
 
     #-----For Wagtail's user interface-----
@@ -363,6 +389,15 @@ class ArticlePage(SectionablePage):
                 ),
             ],
             heading="Advertising-Releated",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'legacy_revision_number',
+                    help_text = "DO NOT TOUCH",
+                ),
+            ],
+            heading='Legacy stuff'
         ),
     ]
 

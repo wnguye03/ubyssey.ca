@@ -3,14 +3,21 @@ See: https://docs.wagtail.io/en/stable/advanced_topics/images/custom_image_model
 """
 
 import os
-from datetime import date
+from datetime import date, timezone
 from django.db import models
-from django.db.models.fields.related import ForeignKey
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from modelcluster.models import ClusterableModel
+from modelcluster.fields import ParentalKey
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Orderable
 from wagtail.core.utils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.models import register_snippet
 
+
+#-----Custom Image Model-----
 
 class UbysseyImage(AbstractImage):
     """
@@ -45,9 +52,16 @@ class UbysseyImage(AbstractImage):
         blank=True,
         default='',
     )
+    legacy_authors = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
 
     admin_form_fields = Image.admin_form_fields + (
         'author',
+        'legacy_filename',
+        'legacy_authors',
     )
 
     def get_upload_to(self, filename):
@@ -86,7 +100,6 @@ class UbysseyImage(AbstractImage):
             ("choose_image", "Can choose image"),
         ]
 
-
 class UbysseyRendition(AbstractRendition):
     """
     Custom Renditions model for the Ubyssey
@@ -107,3 +120,91 @@ class UbysseyRendition(AbstractRendition):
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
         )
+
+#-----Snippets-----
+@register_snippet
+class GallerySnippet(ClusterableModel):
+    title = models.TextField(
+        blank=False,
+        null=False,
+    )
+    slug = models.SlugField(
+        primary_key=True,
+        unique=True,
+        blank=False,
+        null=False,
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models. DateTimeField(
+        auto_now=True
+    )
+    legacy_created_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    legacy_updated_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("title"),
+                FieldPanel("slug"),
+            ],
+            heading="Essentials",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("gallery_images"),
+            ],
+            heading="Gallery Images",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('legacy_created_at'),
+                FieldPanel('legacy_updated_at'),
+            ],
+            heading="Legacy Stuff",
+        ),
+    ]
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Gallery"
+        verbose_name_plural = "Galleries"
+
+class GalleryOrderable(Orderable):
+    gallery = ParentalKey(
+        "images.GallerySnippet",
+        related_name="gallery_images",
+    )
+
+    caption = models.TextField(blank=True, null=False, default='')
+    credit = models.TextField(blank=True, null=False, default='')
+    image = models.ForeignKey(
+        "images.UbysseyImage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("image"),
+            ],
+            heading="Image Chooser",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("caption"),
+                FieldPanel("credit"),
+            ],
+            heading="Caption/Credits",
+        ),
+    ]

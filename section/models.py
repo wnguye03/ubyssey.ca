@@ -1,10 +1,11 @@
+from django.db.models.query import QuerySet
 from .sectionable.models import SectionablePage
 
 from article.models import ArticlePage
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models.fields import CharField
+from django.db.models.fields import CharField , BooleanField, TextField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render
 
@@ -36,6 +37,15 @@ class CategorySnippet(models.Model):
         blank=False,
         null=False,
         max_length=100
+    )
+    description = TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+    # authors = ManyToManyField('Author', related_name='subsection_authors')
+    is_active = BooleanField( # legacy field
+        default=False
     )
     section_page = ParentalKey(
         "section.SectionPage",
@@ -94,7 +104,7 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
+        all_articles = self.get_section_articles()
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
@@ -103,6 +113,7 @@ class SectionPage(SectionablePage):
         # Paginate all posts by 15 per page
         paginator = Paginator(all_articles, per_page=1)
         # Try to get the ?page=x value
+        
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
@@ -117,22 +128,25 @@ class SectionPage(SectionablePage):
 
         context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+    
 
         return context
     
-    def get_featured_articles(self, queryset=None, number_featured=4):
+    def get_section_articles(self) -> QuerySet:
+        return ArticlePage.objects.from_section(section_root=self)
+
+    def get_featured_articles(self, queryset=None, number_featured=4) -> QuerySet:
         """
         Returns a truncated queryset of articles
             queryset: if not included, will default to all live, public, ArticlePage descendents of this SectionPage
             number_featured: defaults to 4 as brute fact about 
         """
         if queryset == None:
-            queryset = ArticlePage.objects.live().public().descendant_of(self).exact_type(ArticlePage).order_by('-last_modified_at')
+            queryset = ArticlePage.objects.from_section(section_root=self)
 
-        return queryset[:number_featured]
-    
+        return queryset[:number_featured]    
     featured_articles = property(fget=get_featured_articles)
-        
+
     @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
     def subsection_view(self, request, subsection_slug):
         context = self.get_context(request, subsection_slug=subsection_slug)
