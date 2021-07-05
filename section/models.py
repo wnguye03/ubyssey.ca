@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 from django_extensions.db.fields import AutoSlugField
 
+from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
 
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
@@ -22,7 +23,7 @@ from wagtail.snippets.models import register_snippet
 
 #-----Snippet models-----
 @register_snippet
-class CategorySnippet(models.Model):
+class CategorySnippet(ClusterableModel):
     """
     Formerly known as a 'Subsection'
     """
@@ -52,9 +53,21 @@ class CategorySnippet(models.Model):
         related_name="categories",
     )
     panels = [
-        FieldPanel("name"),
-        FieldPanel("slug"),
-        PageChooserPanel("section_page"),
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("slug"),
+                PageChooserPanel("section_page"),
+                FieldPanel("description"),
+            ],
+            heading="Essentials"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("category_authors"),
+            ],
+            heading="Category Author(s)"
+        ),
     ]
     def __str__(self):
         return "%s - %s" % (self.section_page, self.name)
@@ -64,6 +77,23 @@ class CategorySnippet(models.Model):
         verbose_name_plural = "Categories"
 
 #-----Orderable models-----
+class CategoryAuthor(wagtail_core_models.Orderable):
+    author = ForeignKey(
+        "authors.AuthorPage",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+    category = ParentalKey(
+        CategorySnippet,
+        blank=True,
+        null=True,
+        related_name="category_authors",
+    )
+    panels = [
+        PageChooserPanel("author"),
+    ]
+
 class CategoryMenuItem(wagtail_core_models.Orderable):
     category = ForeignKey(
         "section.CategorySnippet",
@@ -80,7 +110,6 @@ class CategoryMenuItem(wagtail_core_models.Orderable):
     panels = [
         SnippetChooserPanel("category"),
     ]
-    
 
 class SectionPage(SectionablePage):
     template = 'section/section_page.html'
