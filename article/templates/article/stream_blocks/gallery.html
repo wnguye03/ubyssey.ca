@@ -1,10 +1,12 @@
-<div id="gallery-{{ id }}" data-id="{{ id }}" data-title="{{ title }}" class="gallery-attachment attachment">
+{% load wagtailimages_tags %}
+<div id="gallery-{{ self.pk }}" data-id="{{ self.id }}" data-title="{{ self.title }}" class="gallery-attachment attachment">
     <div class="gallery-cover">
-        <img class="gallery-thumb" data-id="{{ cover.id }}" src="{{ cover.image.get_medium_url }}" alt="Our gallery"/>
+        {% image self.gallery_images.all.0.image fill-800x600 as cover_image %}
+        <img class="gallery-thumb" data-id="{{ self.gallery_images.all.0.id }}" src="{{ cover_image.url }}" alt="Our gallery"/>
         <div class="meta row">
             <div class="eight columns">
-                <h2>{{ title }}</h2>
-                <span>Gallery &middot; {{ size }} images</span>
+                <h2>{{ self.title }}</h2>
+                <span>Gallery &middot; {{ self.gallery_images.all.count }} images</span>
             </div>
             <div class="four columns u-text-right">
                 <button>View Gallery</button>
@@ -12,9 +14,21 @@
         </div>
     </div>
     <ul class="thumbs">
-        {% for attachment in thumbs %}<li><div class="gallery-thumb" data-id="{{ attachment.id }}" style="background-image: url('{{ attachment.image.get_thumbnail_url }}');" /></div></li>{% endfor %}
+        {% for orderable in self.gallery_images.all %}
+            {% if forloop.counter0 == 0 %}
+                {% comment %} do nothing, this is only for every image except the "cover" (first) image {% endcomment %}
+            {% else %}
+                <li>
+                    {% image orderable.image fill-250x250 as thumb_image %}
+                    <div class="gallery-thumb" data-id="{{ orderable.pk }}" style="background-image: url('{{ thumb_image.url }}');" /></div>
+                </li>
+            {% endif %}
+        {% endfor %}
     </ul>
     <div class="images">
-        {% for attachment in images %}<div class="gallery-image" data-id="{{ attachment.id }}" data-url="{{ attachment.image.get_medium_url }}" data-caption="{{ attachment.caption|safe }}"></div>{% endfor %}
+        {% for orderable in self.gallery_images.all %}
+            {% image orderable.image fill-800x600 as image %}
+            <div class="gallery-image" data-id="{{ orderable.pk }}" data-url="{{ image.url }}" {% if orderable.caption %}data-caption="{{ orderable.caption|safe }}"{% endif %}></div>
+        {% endfor %}
     </div>
 </div>

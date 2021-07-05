@@ -12,11 +12,15 @@ from django import dispatch
 from django.conf import settings
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
+from django.utils.text import slugify
+
+from home.models import HomePage
 
 from io import BytesIO
 from images.models import UbysseyImage as CustomImage
+from images.models import GallerySnippet, GalleryOrderable
 
-from section.models import SectionPage
+from section.models import SectionPage, CategorySnippet
 
 from treebeard import exceptions as treebeard_exceptions
 
@@ -25,8 +29,23 @@ from wagtail.core.models import PageLogEntry, Collection
 from wagtail.images.models import Image
 from wagtail.images.blocks import ImageChooserBlock
 
-from videos.models import VideoSnippet
+from videos.models import VideoSnippet, VideoAuthorsOrderable
 from videos.blocks import OneOffVideoBlock
+
+def _migrate_all_sections():
+    home_page = HomePage.objects.first()
+    wagtail_sections_qs = SectionPage.objects.all()
+    dispatch_sections_qs = dispatch_models.Section.objects.all()
+
+    for dispatch_section in dispatch_sections_qs:
+        has_been_sent_to_wagtail = any(dispatch_section.slug == section_page.slug for section_page in wagtail_sections_qs)
+        if not has_been_sent_to_wagtail:
+
+            wagtail_section = SectionPage()
+            wagtail_section.slug = dispatch_section.slug
+            wagtail_section.name = dispatch_section.title
+            home_page.add_child(instance=wagtail_section)
+            wagtail_section.save_revision(log_action=False).publish()
 
 def _migrate_all_authors():
     all_authors_page = AllAuthorsPage.objects.get(slug='authors')
@@ -66,6 +85,22 @@ def _migrate_all_authors():
                     wagtail_image.save()
                 wagtail_author.image = wagtail_image
                 wagtail_author.save_revision(log_action=False).publish()
+
+def _migrate_all_categories():
+    #TODO
+    dispatch_subsections_qs = dispatch_models.Subsection.objects.all()
+    wagtail_category_qs = CategorySnippet.objects.all()
+
+    for dispatch_subsection in dispatch_subsections_qs:
+        has_been_sent_to_wagtail = any(dispatch_subsection.slug == wagtail_category.slug for wagtail_category in wagtail_category_qs)
+        if not has_been_sent_to_wagtail:
+            wagtail_category = CategorySnippet()
+            wagtail_category.slug = dispatch_subsection.slug
+            wagtail_category.name = dispatch_subsection.name
+            wagtail_category.description = dispatch_subsection.description
+            wagtail_category.is_active = dispatch_subsection.is_active
+            for author_obj in dispatch_subsection.authors.all():
+                pass
 
 def _migrate_all_images():
     """
@@ -109,6 +144,33 @@ def _migrate_all_images():
                     except:
                         print("Couldn't find an author with the slug " + old_author.person.slug)
 
+def _migrate_all_image_galleries():
+    """
+    Assumes all images have been sent to wagtail already
+    """
+    old_galleries = dispatch_models.ImageGallery.objects.all()
+    wagtail_galleries = GallerySnippet.objects.all()
+    for old_gallery in old_galleries:
+        old_gallery.title
+        has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
+        if not has_been_sent_to_wagtail:
+            wagtail_gallery = GallerySnippet()
+            wagtail_gallery.title = old_gallery.title
+            wagtail_gallery.slug = slugify(old_gallery.title)
+            wagtail_gallery.legacy_created_at = old_gallery.created_at
+            wagtail_gallery.legacy_updated_at = old_gallery.updated_at
+            wagtail_gallery.save()
+
+            for image_attachment_object in old_gallery.images.all():
+
+                gallery_orderable = GalleryOrderable()
+                gallery_orderable.gallery = wagtail_gallery
+                gallery_orderable.caption = image_attachment_object.caption
+                gallery_orderable.credit = image_attachment_object.credit
+                gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
+                gallery_orderable.order = image_attachment_object.order
+                gallery_orderable.save()
+
 def _migrate_all_videos():
     """
     Migrates all videos from Dispatch to Wagtail. Does NOT add authors
@@ -138,7 +200,7 @@ def _migrate_all_videos():
                 if AuthorPage.objects.get(slug=dispatch_author.person.slug):
                     # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
                     # Otherwise we'll just get a bunch of redundant orderables
-                    has_author_already = any(article_author.author.slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
+                    has_author_already = any(video_author.author.slug == dispatch_author.person.slug for video_author in wagtail_video.video_authors.all())
                     if not has_author_already:
                         wagtail_author_orderable = VideoAuthorsOrderable()
                         wagtail_author_orderable.video = wagtail_video
@@ -146,47 +208,38 @@ def _migrate_all_videos():
                         wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
                         wagtail_author_orderable.save()
 
-class Command(BaseCommand):
-    """
-    Certain things have to be migrated to Wagtail before this can be run properly:
+def _migrate_all_articles():
+    # dispatch_article 
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
 
-    Authors
-    Tags
-    Sections (small enough this one can be done manually)
-    Subsections
-    Images
-    Videos
-    """
-    
-    @no_translations
-    def handle(self, *args, **options):
+    for head_article in dispatch_head_articles_qs:
+        current_slug = head_article.slug
         
-        # dispatch_article 
-        dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
+        dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
+        # wagtail_article
+        wagtail_article = ArticlePage()
+        # wagtail section
+        wagtail_section = SectionPage.objects.get(slug='news')
+        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
 
-        for head_article in dispatch_head_articles_qs:
-            current_slug = head_article.slug
+        for dispatch_article_revision in dispatch_article_qs:
+
+            # first check if there's an article with this slug already:
+            wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
+
+            if len(wagtail_article_qs) < 1:
+                # initialize a new wagtail article
+                wagtail_article = ArticlePage()
+                wagtail_article.created_at_time = dispatch_article_revision.created_at
+                wagtail_article.slug = dispatch_article_revision.slug
+            else:
+                # or else get the existing article
+                wagtail_article = wagtail_article_qs.get(slug=current_slug)
             
-            dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
-            # wagtail_article
-            wagtail_article = ArticlePage()
-            # wagtail section
-            wagtail_section = SectionPage.objects.get(slug='news')
-            # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
-
-            for dispatch_article_revision in dispatch_article_qs:
-
-                # first check if there's an article with this slug already:
-                wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
-
-                if len(wagtail_article_qs) < 1:
-                    #initialize a new wagtail article
-                    wagtail_article = ArticlePage()
-                    wagtail_article.created_at_time = dispatch_article_revision.created_at
-                    wagtail_article.slug = dispatch_article_revision.slug
-                else:
-                    # WARNING: what does this do? db hit and then...?
-                    wagtail_article_qs.get(slug=current_slug)
+            if dispatch_article_revision.revision_id > wagtail_article.legacy_revision_number:
+                # The above bool prevents the same revision from being sent over twice. If the current revision is greater than the last one sent over,
+                # then we make a new wagtail revision
+                wagtail_article.legacy_revision_number = dispatch_article_revision.revision_id
 
                 # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
@@ -212,19 +265,19 @@ class Command(BaseCommand):
                             wagtail_author_orderable.save()
 
                 # SEO stuff
-                if dispatch_article_revision.seo_keyword is not None:
+                if dispatch_article_revision.seo_keyword:
                     wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
-                if dispatch_article_revision.seo_description is not None:
+                if dispatch_article_revision.seo_description:
                     wagtail_article.seo_description = dispatch_article_revision.seo_description
                 # add something about article "template"
                 
                 # Lede
-                if dispatch_article_revision.snippet is not None:
+                if dispatch_article_revision.snippet:
                     wagtail_article.lede = dispatch_article_revision.snippet
                 # Breaking
-                if dispatch_article_revision.is_breaking is not None:
+                if dispatch_article_revision.is_breaking:
                     wagtail_article.isbreaking = bool(dispatch_article_revision.is_breaking)
-                if dispatch_article_revision.breaking_timeout is not None:
+                if dispatch_article_revision.breaking_timeout:
                     wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
                 # Still need to do foreign keys for featured image/video and subsection!
@@ -239,16 +292,55 @@ class Command(BaseCommand):
                     if node_type == 'paragraph':
                         block_type = 'richtext'
                         block_value = '<p>' + node['data'] + '</p>'
-                    elif node_type == 'dropcap':
-                        block_type = 'dropcap'
-                        block_value = node['data']['paragraph']
-                    elif node_type == 'pagebreak':
-                        block_type = 'raw_html'
-                        block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                    elif node_type == 'image':
+                        try:
+                            old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
+                            new_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+                            block_type = 'image'
+                            block_value = {}
+                            block_value['image'] = new_image.pk
+                            block_value['style'] = node['data']['style']
+                            block_value['width'] = node['data']['width']
+                            block_value['caption'] = node['data']['caption']
+                            block_value['credit'] = node['data']['credit']
+                        except dispatch_models.Image.DoesNotExist as e:
+                            print(e)
+                            block_type = 'richtext'
+                            block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE</p>'
+                        except CustomImage.DoesNotExist as e:
+                            print(e)
+                            block_type = 'richtext'
+                            block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
+                    elif node_type == 'video':
+                        block_type = 'video'
+                        block_value = {}
+                        block_value['embed'] = node['data']['url']
+                        block_value['caption'] = node['data']['caption']
+                        block_value['credit'] = node['data']['credit']
+                    elif node_type == 'quote':
+                        block_type = 'quote'
+                        block_value = {}
+                        block_value['content'] = node['data']['content']
+                        block_value['source'] = node['data']['source']
+                    elif node_type == 'gallery':
+                        pass #TODO
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node.data)
+                        block_value = embeds.WidgetEmbed.render(data=node['data'])
+                    elif node_type == 'poll':
+                        block_type = 'raw_html'
+                        block_value = embeds.WidgetEmbed.render(data=node['data']['data'])
+                    elif node_type == 'podcast':
+                        pass #TODO
+                    elif node_type == 'interactive_map':
+                        pass #TODO
+                    elif node_type == 'pagebreak':
+                        block_type = 'raw_html'
+                        block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                    elif node_type == 'drop_cap':
+                        block_type = 'raw_html'
+                        block_value = '<p class="drop-cap">' + node['data']['paragraph'] + '</p>'
                     # elif node_type == 'video':
                     #     block_type = 'video'
                     #     block_value = blocks.StructValue()
@@ -302,3 +394,25 @@ class Command(BaseCommand):
                     log_entry_publication = PageLogEntry.objects.all()[0]
                     log_entry_publication.timestamp = dispatch_article_revision.updated_at
                     log_entry_publication.save()
+
+class Command(BaseCommand):
+    """
+    Certain things have to be migrated to Wagtail before this can be run properly:
+
+    Authors
+    Tags
+    Sections (small enough this one can be done manually)
+    Subsections
+    Images
+    Videos
+    """
+    
+    @no_translations
+    def handle(self, *args, **options):
+
+        _migrate_all_sections()
+        _migrate_all_authors()
+        _migrate_all_images()
+        _migrate_all_image_galleries()
+        _migrate_all_videos()
+        _migrate_all_articles()
