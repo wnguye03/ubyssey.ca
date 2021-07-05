@@ -128,7 +128,7 @@ class SectionPage(SectionablePage):
         """
         Returns a truncated queryset of articles
             queryset: if not included, will default to all live, public, ArticlePage descendents of this SectionPage
-            number_featured: defaults to 4 as brute fact about 
+            number_featured: defaults to 4 as brute fact about our template's design
         """
         if queryset == None:
             queryset = ArticlePage.objects.from_section(section_root=self)
