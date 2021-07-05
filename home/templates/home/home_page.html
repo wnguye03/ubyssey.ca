@@ -55,7 +55,17 @@
                   <h5 class="headline"><a class='issue' id ='issue3' href="https://issuu.com/ubyssey/docs/march_30_spoof_-_no_bleed">March 30, 2021 - NICE: The Ubyssey's Spoof Issue</a></h5>
                   <h5 class="headline"><a class='issue' id ='issue4' href="https://issuu.com/ubyssey/docs/the_ubyssey_march_16">March 16, 2021</a></h5>
                 </div>
-            </div>
+        </div>
+        <div class="article-list blog sidebar-block">
+                <h2 class="block-title">From the blog</h2>
+                <ul class="article-list">
+                    {% for article in blog %}
+                    <li>
+                      {% include 'article/objects/blog_column.html' with article=article padded=True   %}
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
       <div class="multi-zone cell right">
       {% comment %} 
         This should probably be renamed, because "zones"

@@ -43,6 +43,7 @@ class HomePage(Page):
         context = super().get_context(request, *args, **kwargs)
         context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
         context['breaking_news_article'] = self.get_breaking_articles()
+        context['blog'] = self.get_section_articles(section_slug='blog')
 
 
         if request.is_ajax():
