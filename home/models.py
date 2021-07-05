@@ -42,6 +42,8 @@ class HomePage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
+        context['breaking_news_article'] = self.get_breaking_articles()
+
 
         if request.is_ajax():
             section = request.GET.get('section')
@@ -52,7 +54,6 @@ class HomePage(Page):
 
     def get_above_cut_articles(self, max_count=6):
   
-       
         return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
 
     above_cut_articles = property(fget=get_above_cut_articles)
@@ -64,5 +65,18 @@ class HomePage(Page):
         
 
         return sectionPage.get_featured_articles()
+
+    def get_breaking_articles(self):
+
+        breaking_news_artciles = []
+        allsectionPages = SectionPage.objects.all()
+
+
+        for section in allsectionPages:
+            for article in section.get_section_articles(): 
+                if article.is_breaking:
+                    breaking_news_artciles.append(article)
+
+        return breaking_news_artciles
 
 

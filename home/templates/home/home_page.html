@@ -11,11 +11,15 @@
 {% block content %}
 <main class="u-container u-container--large homepage">
 
-  {% if articles.breaking %}
-    <a class="o-breaking-news" href="{{ articles.breaking.get_absolute_url }}">
-      <h3>BREAKING: {{ articles.breaking.headline|safe }}</h3>
+{% for article in breaking_news_article%}
+  
+    <a class="o-breaking-news" href={% pageurl article %}>
+      <h3>BREAKING: {{ article.title|safe }}</h3>
     </a>
-  {% endif %}
+
+{% endfor %}
+
+
   {% comment %}
     Additional fields/blocks will go here to alert students to some special events
   {% endcomment %}
@@ -30,7 +34,10 @@
         See the models.py of this app for implementation details
       {% endcomment %}        
 
-    
+    {% comment %}
+     Only the first section, "News", is not an ajax request so we can display it with the include_block template tag
+    {% endcomment %}
+
       {% with self.sections_stream.0 as first_section %}
        {% include_block  first_section  %}
         
