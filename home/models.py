@@ -26,7 +26,7 @@ class HomePage(Page):
 
     sections_stream = StreamField(
         [
-            ("home_page_section_block",homeblocks.HomePageSectionBlock())
+            ("home_page_section_block", homeblocks.HomepageFeaturedSectionBlock())
         ],
         null=True,
         blank=True,

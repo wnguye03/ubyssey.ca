@@ -75,7 +75,7 @@
             <article class="primary {{ article.template }}">
                 <a class="image" href={% pageurl article %}>
                   {% if article.featured_media.first.image %}
-                     {% image article.featured_media.first.image fill-340x238-c100 %}
+                     {% image article.featured_media.first.image width-400 %}
                   {% elif article.featured_video %} 
                     <img src="http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" alt=""/>
                   {% endif %}
