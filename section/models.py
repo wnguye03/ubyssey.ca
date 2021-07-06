@@ -5,11 +5,9 @@ from article.models import ArticlePage
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models.fields import CharField, BooleanField, TextField
+from django.db.models.fields import CharField, BooleanField, TextField, SlugField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render
-
-from django_extensions.db.fields import AutoSlugField
 
 from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
@@ -27,14 +25,13 @@ class CategorySnippet(ClusterableModel):
     """
     Formerly known as a 'Subsection'
     """
-    name = CharField(
+    title = CharField(
         blank=False,
         null=False,
         max_length=100
     )
-    slug = AutoSlugField(
-        populate_from="name",
-        editable=True,
+    slug = SlugField(
+        unique=True,
         blank=False,
         null=False,
         max_length=100
@@ -55,7 +52,7 @@ class CategorySnippet(ClusterableModel):
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel("name"),
+                FieldPanel("title"),
                 FieldPanel("slug"),
                 PageChooserPanel("section_page"),
                 FieldPanel("description"),
@@ -70,7 +67,7 @@ class CategorySnippet(ClusterableModel):
         ),
     ]
     def __str__(self):
-        return "%s - %s" % (self.section_page, self.name)
+        return "%s - %s" % (self.section_page, self.title)
     
     class Meta:
         verbose_name = "Category"
