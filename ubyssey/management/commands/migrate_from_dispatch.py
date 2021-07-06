@@ -10,6 +10,7 @@ from dispatch.modules.content import embeds
 
 from django import dispatch
 from django.conf import settings
+from django.core import exceptions
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 from django.utils.text import slugify
@@ -20,7 +21,7 @@ from io import BytesIO
 from images.models import UbysseyImage as CustomImage
 from images.models import GallerySnippet, GalleryOrderable
 
-from section.models import SectionPage, CategorySnippet
+from section.models import SectionPage, CategorySnippet, CategoryAuthor
 
 from treebeard import exceptions as treebeard_exceptions
 
@@ -43,7 +44,7 @@ def _migrate_all_sections():
 
             wagtail_section = SectionPage()
             wagtail_section.slug = dispatch_section.slug
-            wagtail_section.name = dispatch_section.title
+            wagtail_section.title = dispatch_section.name
             home_page.add_child(instance=wagtail_section)
             wagtail_section.save_revision(log_action=False).publish()
 
@@ -87,7 +88,6 @@ def _migrate_all_authors():
                 wagtail_author.save_revision(log_action=False).publish()
 
 def _migrate_all_categories():
-    #TODO
     dispatch_subsections_qs = dispatch_models.Subsection.objects.all()
     wagtail_category_qs = CategorySnippet.objects.all()
 
@@ -96,11 +96,22 @@ def _migrate_all_categories():
         if not has_been_sent_to_wagtail:
             wagtail_category = CategorySnippet()
             wagtail_category.slug = dispatch_subsection.slug
-            wagtail_category.name = dispatch_subsection.name
-            wagtail_category.description = dispatch_subsection.description
+            wagtail_category.title = dispatch_subsection.name
+            if dispatch_subsection.description:
+                wagtail_category.description = dispatch_subsection.description
             wagtail_category.is_active = dispatch_subsection.is_active
+            wagtail_category.section_page = SectionPage.objects.get(slug=dispatch_subsection.section.slug)
+            wagtail_category.save()
             for author_obj in dispatch_subsection.authors.all():
-                pass
+                try:
+                    category_author = CategoryAuthor()
+                    category_author.author = AuthorPage.objects.get(full_name=author_obj.person.full_name)
+                    category_author.category = wagtail_category
+                    category_author.save()
+                except AuthorPage.DoesNotExist as e:
+                    print(e)
+                    error_string = author_obj.person.full_name + " is not a valid AuthorPage!"
+                    print(error_string)
 
 def _migrate_all_images():
     """
@@ -412,6 +423,7 @@ class Command(BaseCommand):
 
         _migrate_all_sections()
         _migrate_all_authors()
+        _migrate_all_categories()
         _migrate_all_images()
         _migrate_all_image_galleries()
         _migrate_all_videos()
