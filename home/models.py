@@ -45,7 +45,7 @@ class HomePage(Page):
         context['breaking_news_article'] = self.get_breaking_articles()
         context['blog'] = self.get_section_articles(section_slug='blog')
 
-
+        #if the request is ajax, it will return the requested 'section' and the feature articles under that section
         if request.is_ajax():
             section = request.GET.get('section')
             context[ 'feature_articles'] = self.get_section_articles(section_slug=section)
@@ -60,13 +60,16 @@ class HomePage(Page):
     above_cut_articles = property(fget=get_above_cut_articles)
 
 
-    def get_section_articles(self, section_slug , max_count=6):
+
+    #takes a section_slug and returns the feature articles for that section
+    def get_section_articles(self, section_slug):
 
         sectionPage = SectionPage.objects.get(slug = section_slug)
         
 
         return sectionPage.get_featured_articles()
 
+    #returns the the breaking articles from each section
     def get_breaking_articles(self):
 
         breaking_news_artciles = []

@@ -3,15 +3,23 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
+
 {% block header %}
   {% include 'navigation/headers/main.html' %}
   {% include 'navigation/headers/mobile.html' with class='homepage' %}
 {% endblock %}
 
+
+
 {% block content %}
 <main class="u-container u-container--large homepage">
 
+  {% comment %}
+    breaking_news_article is passed through from context and it contains all of the breaking articles from each section
+  {% endcomment %}
+
 {% for article in breaking_news_article%}
+
   
     <a class="o-breaking-news" href={% pageurl article %}>
       <h3>BREAKING: {{ article.title|safe }}</h3>
@@ -59,6 +67,11 @@
         <div class="article-list blog sidebar-block">
                 <h2 class="block-title">From the blog</h2>
                 <ul class="article-list">
+
+                {% comment %}
+                blog is passed through from context
+                {% endcomment %}
+
                     {% for article in blog %}
                     <li>
                       {% include 'article/objects/blog_column.html' with article=article padded=True   %}
