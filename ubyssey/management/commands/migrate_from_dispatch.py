@@ -27,6 +27,8 @@ from wagtail.core.models import PageLogEntry, Collection
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
 
+def
+
 def _migrate_all_sections():
     home_page = HomePage.objects.first()
     wagtail_sections_qs = SectionPage.objects.all()
@@ -49,7 +51,9 @@ def _migrate_all_authors():
         all_authors_page = AllAuthorsPage()
         all_authors_page.title = "Authors"
         all_authors_page.slug = "authors"
-        all_authors_page.save()
+        home_page = HomePage.objects.first()
+        home_page.add_child(instance=all_authors_page) 
+        all_authors_page.save_revision(log_action=False).publish()    
 
     dispatch_persons_qs = dispatch_models.Person.objects.all()
     wagtail_authors_qs = AuthorPage.objects.all()        
