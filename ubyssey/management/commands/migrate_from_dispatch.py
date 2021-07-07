@@ -23,20 +23,39 @@ from section.models import SectionPage, CategorySnippet, CategoryAuthor
 
 from treebeard import exceptions as treebeard_exceptions
 
-from wagtail.core.models import Page, PageLogEntry, Collection
+from wagtail.core.models import Page, PageLogEntry, Collection, Site
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
 
 def _home_page_init():
+
+    #delete the default wagtail homepage (useless)
     try:
-        HomePage.objects.first()
+        old_home = Page.objects.get(slug='home')
+        old_home.delete()
+    except Page.DoesNotExist:
+        print("old homepage was already deleted!")
+
+    #make a new home page
+    try:
+        home_page = HomePage.objects.get(slug="ubyssey")
     except HomePage.DoesNotExist:
-        root_page = Page.objects.get('root') #Should always succeed in a wagtail installation, or else we have a bigger problem...
         home_page = HomePage()
         home_page.title = "The Ubyssey Homepage"
         home_page.slug = "ubyssey"
+        root_page = Page.objects.get(slug='root') #Should always succeed in a wagtail installation, or else we have a bigger problem...
         root_page.add_child(instance=home_page)
         home_page.save_revision(log_action=False).publish()
+
+    #new site
+    try:
+        default_site = Site.objects.get(hostname='localhost')
+    except Site.DoesNotExist:
+        default_site = Site()
+        default_site.hostname = 'localhost'
+        default_site.root_page = home_page
+        default_site.is_default_site = True
+        default_site.save()
 
 def _migrate_all_sections():
     home_page = HomePage.objects.get(slug="ubyssey")
