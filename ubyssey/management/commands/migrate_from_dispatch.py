@@ -8,9 +8,7 @@ from authors.models import AuthorPage, AllAuthorsPage
 from dispatch import models as dispatch_models
 from dispatch.modules.content import embeds
 
-from django import dispatch
 from django.conf import settings
-from django.core import exceptions
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 from django.utils.text import slugify
@@ -25,13 +23,9 @@ from section.models import SectionPage, CategorySnippet, CategoryAuthor
 
 from treebeard import exceptions as treebeard_exceptions
 
-from wagtail.core import blocks
 from wagtail.core.models import PageLogEntry, Collection
-from wagtail.images.models import Image
-from wagtail.images.blocks import ImageChooserBlock
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
-from videos.blocks import OneOffVideoBlock
 
 def _migrate_all_sections():
     home_page = HomePage.objects.first()
@@ -49,7 +43,14 @@ def _migrate_all_sections():
             wagtail_section.save_revision(log_action=False).publish()
 
 def _migrate_all_authors():
-    all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+    try:
+        all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+    except AllAuthorsPage.DoesNotExist:
+        all_authors_page = AllAuthorsPage()
+        all_authors_page.title = "Authors"
+        all_authors_page.slug = "authors"
+        all_authors_page.save()
+
     dispatch_persons_qs = dispatch_models.Person.objects.all()
     wagtail_authors_qs = AuthorPage.objects.all()        
     for person in dispatch_persons_qs:
