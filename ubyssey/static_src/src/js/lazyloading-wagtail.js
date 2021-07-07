@@ -20,12 +20,16 @@ function load_sections(scrollHandler) {
         },
         success: function (response) {
 
-            console.log(response)
 
-            document.getElementById('section_container').innerHTML = document.getElementById('section_container').innerHTML + `${response}`
+            if (response.length > 141) {
+                document.getElementById('section_container').innerHTML = document.getElementById('section_container').innerHTML + `${response}`
 
-            $(window).scroll(scrollHandler);
-            section_count = section_count + 1;
+                $(window).scroll(scrollHandler);
+                section_count = section_count + 1;
+
+            } else {
+                $(window).off("scroll", scrollHandler);
+            }
         }
     })
 
