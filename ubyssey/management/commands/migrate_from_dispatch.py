@@ -23,12 +23,23 @@ from section.models import SectionPage, CategorySnippet, CategoryAuthor
 
 from treebeard import exceptions as treebeard_exceptions
 
-from wagtail.core.models import PageLogEntry, Collection
+from wagtail.core.models import Page, PageLogEntry, Collection
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
 
+def _home_page_init():
+    try:
+        HomePage.objects.first()
+    except HomePage.DoesNotExist:
+        root_page = Page.objects.get('root') #Should always succeed in a wagtail installation, or else we have a bigger problem...
+        home_page = HomePage()
+        home_page.title = "The Ubyssey Homepage"
+        home_page.slug = "ubyssey"
+        root_page.add_child(instance=home_page)
+        home_page.save_revision(log_action=False).publish()
+
 def _migrate_all_sections():
-    home_page = HomePage.objects.first()
+    home_page = HomePage.objects.get(slug="ubyssey")
     wagtail_sections_qs = SectionPage.objects.all()
     dispatch_sections_qs = dispatch_models.Section.objects.all()
 
@@ -424,6 +435,7 @@ class Command(BaseCommand):
     @no_translations
     def handle(self, *args, **options):
 
+        _home_page_init()
         _migrate_all_sections()
         _migrate_all_authors()
         _migrate_all_categories()
