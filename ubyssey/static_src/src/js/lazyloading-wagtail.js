@@ -10,7 +10,7 @@ function load_sections(scrollHandler) {
         url: '/beta',
         type: 'get',
         data: {
-            section: section_count,
+            section_count: section_count,
         },
         beforeSend: function () {
             $('.loader').show();
@@ -20,7 +20,7 @@ function load_sections(scrollHandler) {
         },
         success: function (response) {
 
-
+            // if the response.length is < 141 it means that the user have loaded all of the sections on the homepage and we will remove the scrolling functionality 
             if (response.length > 141) {
                 document.getElementById('section_container').innerHTML = document.getElementById('section_container').innerHTML + `${response}`
 
@@ -28,6 +28,7 @@ function load_sections(scrollHandler) {
                 section_count = section_count + 1;
 
             } else {
+
                 $(window).off("scroll", scrollHandler);
             }
         }

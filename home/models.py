@@ -47,6 +47,7 @@ class HomePage(Page):
 
         ajax_section_blocks = []
 
+        #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
         for section in  self.get_children().specific().type(SectionPage):
             if(section.title != "Blog"):
                 ajax_section_blocks.append(section)
@@ -55,11 +56,14 @@ class HomePage(Page):
         #if the request is ajax, it will return the requested 'section' and the feature articles under that section
       
         if request.is_ajax():
-            section = int(request.GET.get('section'))
+            
+            # This is the index for which the section will be loaded onto the homepage
+            # section_count is going to be updated in the frontend after each repsonse is recieved. Check lazyloading-wagtail.js
+            section_count = int(request.GET.get('section_count'))
 
             if section < len(ajax_section_blocks):
-                context[ 'feature_articles'] = ajax_section_blocks[section].get_featured_articles()
-                context['section_name'] = ajax_section_blocks[section].title
+                context[ 'feature_articles'] = ajax_section_blocks[section_count].get_featured_articles()
+                context['section_name'] = ajax_section_blocks[section_count].title
                 
    
         return context
