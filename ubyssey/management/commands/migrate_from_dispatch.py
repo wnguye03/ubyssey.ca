@@ -27,8 +27,6 @@ from wagtail.core.models import PageLogEntry, Collection
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
 
-def
-
 def _migrate_all_sections():
     home_page = HomePage.objects.first()
     wagtail_sections_qs = SectionPage.objects.all()
