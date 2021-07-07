@@ -45,20 +45,21 @@ class HomePage(Page):
         context['breaking_news_article'] = self.get_breaking_articles()
         context['blog'] = self.get_section_articles(section_slug='blog')
 
-        sections = self.get_children().specific().type(SectionPage)
-    
+        ajax_section_blocks = []
+
+        for section in  self.get_children().specific().type(SectionPage):
+            if(section.title != "Blog"):
+                ajax_section_blocks.append(section)
+
 
         #if the request is ajax, it will return the requested 'section' and the feature articles under that section
       
         if request.is_ajax():
             section = int(request.GET.get('section'))
 
-            if section < len(sections):
-                print(sections[section].get_featured_articles())
-                print(sections[section].title)
-                print('hello')
-                context[ 'feature_articles'] = sections[section].get_featured_articles()
-                context['section_name'] = sections[section].title
+            if section < len(ajax_section_blocks):
+                context[ 'feature_articles'] = ajax_section_blocks[section].get_featured_articles()
+                context['section_name'] = ajax_section_blocks[section].title
                 
    
         return context
