@@ -45,11 +45,21 @@ class HomePage(Page):
         context['breaking_news_article'] = self.get_breaking_articles()
         context['blog'] = self.get_section_articles(section_slug='blog')
 
+        sections = self.get_children().specific().type(SectionPage)
+    
+
         #if the request is ajax, it will return the requested 'section' and the feature articles under that section
+      
         if request.is_ajax():
-            section = request.GET.get('section')
-            context[ 'feature_articles'] = self.get_section_articles(section_slug=section)
-            context['section_name'] = section
+            section = int(request.GET.get('section'))
+
+            if section < len(sections):
+                print(sections[section].get_featured_articles())
+                print(sections[section].title)
+                print('hello')
+                context[ 'feature_articles'] = sections[section].get_featured_articles()
+                context['section_name'] = sections[section].title
+                
    
         return context
 
@@ -68,6 +78,18 @@ class HomePage(Page):
         
 
         return sectionPage.get_featured_articles()
+
+    def get_all_section_slug(self):
+        
+        allsection_slug = []
+        allsectionPages = SectionPage.objects.all()
+
+        for section in allsectionPages:
+            allsection_slug.append(section.slug)
+
+        return allsection_slug
+
+
 
     #returns the the breaking articles from each section
     def get_breaking_articles(self):

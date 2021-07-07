@@ -46,10 +46,15 @@
      Only the first section, "News", is not an ajax request so we can display it with the include_block template tag
     {% endcomment %}
 
+
+
+
       {% with self.sections_stream.0 as first_section %}
        {% include_block  first_section  %}
         
       {% endwith %}
+
+ 
 
      
     </div>
