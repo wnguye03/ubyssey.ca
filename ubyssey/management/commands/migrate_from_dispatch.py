@@ -8,9 +8,7 @@ from authors.models import AuthorPage, AllAuthorsPage
 from dispatch import models as dispatch_models
 from dispatch.modules.content import embeds
 
-from django import dispatch
 from django.conf import settings
-from django.core import exceptions
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
 from django.utils.text import slugify
@@ -25,16 +23,42 @@ from section.models import SectionPage, CategorySnippet, CategoryAuthor
 
 from treebeard import exceptions as treebeard_exceptions
 
-from wagtail.core import blocks
-from wagtail.core.models import PageLogEntry, Collection
-from wagtail.images.models import Image
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.core.models import Page, PageLogEntry, Collection, Site
 
 from videos.models import VideoSnippet, VideoAuthorsOrderable
-from videos.blocks import OneOffVideoBlock
+
+def _home_page_init():
+
+    #delete the default wagtail homepage (useless)
+    try:
+        old_home = Page.objects.get(slug='home')
+        old_home.delete()
+    except Page.DoesNotExist:
+        print("old homepage was already deleted!")
+
+    #make a new home page
+    try:
+        home_page = HomePage.objects.get(slug="ubyssey")
+    except HomePage.DoesNotExist:
+        home_page = HomePage()
+        home_page.title = "The Ubyssey Homepage"
+        home_page.slug = "ubyssey"
+        root_page = Page.objects.get(slug='root') #Should always succeed in a wagtail installation, or else we have a bigger problem...
+        root_page.add_child(instance=home_page)
+        home_page.save_revision(log_action=False).publish()
+
+    #new site
+    try:
+        default_site = Site.objects.get(hostname='localhost')
+    except Site.DoesNotExist:
+        default_site = Site()
+        default_site.hostname = 'localhost'
+        default_site.root_page = home_page
+        default_site.is_default_site = True
+        default_site.save()
 
 def _migrate_all_sections():
-    home_page = HomePage.objects.first()
+    home_page = HomePage.objects.get(slug="ubyssey")
     wagtail_sections_qs = SectionPage.objects.all()
     dispatch_sections_qs = dispatch_models.Section.objects.all()
 
@@ -49,7 +73,16 @@ def _migrate_all_sections():
             wagtail_section.save_revision(log_action=False).publish()
 
 def _migrate_all_authors():
-    all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+    try:
+        all_authors_page = AllAuthorsPage.objects.get(slug='authors')
+    except AllAuthorsPage.DoesNotExist:
+        all_authors_page = AllAuthorsPage()
+        all_authors_page.title = "Authors"
+        all_authors_page.slug = "authors"
+        home_page = HomePage.objects.first()
+        home_page.add_child(instance=all_authors_page) 
+        all_authors_page.save_revision(log_action=False).publish()    
+
     dispatch_persons_qs = dispatch_models.Person.objects.all()
     wagtail_authors_qs = AuthorPage.objects.all()        
     for person in dispatch_persons_qs:
@@ -68,7 +101,7 @@ def _migrate_all_authors():
             try:
                 all_authors_page.add_child(instance=wagtail_author)
             except treebeard_exceptions.NodeAlreadySaved as e:
-                print(e)
+                print("Author " + wagtail_author.slug + " already added!")
             wagtail_author.save_revision(log_action=False).publish()
 
             # Get the author's image and put it in a collection
@@ -229,9 +262,9 @@ def _migrate_all_articles():
         dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
         # wagtail_article
         wagtail_article = ArticlePage()
-        # wagtail section
-        wagtail_section = SectionPage.objects.get(slug='news')
         # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
+
+        last_section_slug = head_article.section.slug
 
         for dispatch_article_revision in dispatch_article_qs:
 
@@ -254,12 +287,6 @@ def _migrate_all_articles():
 
                 # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
-
-                # Section
-                try:
-                    wagtail_section.add_child(instance=wagtail_article)
-                except treebeard_exceptions.NodeAlreadySaved as e:
-                    print(e)
                 # Author
                 for dispatch_author in dispatch_article_revision.authors.all():
                     # First we make sure there's any author page corresponding to this author
@@ -379,6 +406,20 @@ def _migrate_all_articles():
 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
 
+                # set Section
+                if dispatch_article_revision.section.slug != last_section_slug:
+                    wagtail_section = SectionPage.objects.get(slug=dispatch_article_revision.section.slug)
+                    last_section_slug = wagtail_section.slug
+                try:
+                    wagtail_section.add_child(instance=wagtail_article)
+                    print("Added " + wagtail_article.slug + " to section: " + wagtail_section.slug)
+                except treebeard_exceptions.NodeAlreadySaved as e:
+                    wagtail_article.move(wagtail_section, pos='last-child') # article stays in place if wagtail_section didn't change, moves otherwise
+                    log_entry_change = PageLogEntry.objects.all()[0]
+                    log_entry_change.timestamp = dispatch_article_revision.updated_at
+                    log_entry_change.save()
+                    print("Updating revision #" + str(wagtail_article.legacy_revision_number) + " of " + wagtail_article.slug)
+
                 # Wagtail revision created corresponding to the Dispatch revision
                 wagtail_article.save_revision(log_action=True)
                 
@@ -421,6 +462,7 @@ class Command(BaseCommand):
     @no_translations
     def handle(self, *args, **options):
 
+        _home_page_init()
         _migrate_all_sections()
         _migrate_all_authors()
         _migrate_all_categories()
