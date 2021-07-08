@@ -61,7 +61,7 @@ class HomePage(Page):
             # section_count is going to be updated in the frontend after each repsonse is recieved. Check lazyloading-wagtail.js
             section_count = int(request.GET.get('section_count'))
 
-            if section < len(ajax_section_blocks):
+            if  section_count < len(ajax_section_blocks):
                 context[ 'feature_articles'] = ajax_section_blocks[section_count].get_featured_articles()
                 context['section_name'] = ajax_section_blocks[section_count].title
                 
