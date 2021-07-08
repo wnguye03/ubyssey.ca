@@ -101,7 +101,7 @@ def _migrate_all_authors():
             try:
                 all_authors_page.add_child(instance=wagtail_author)
             except treebeard_exceptions.NodeAlreadySaved as e:
-                print(e)
+                print("Author " + wagtail_author.slug + " already added!")
             wagtail_author.save_revision(log_action=False).publish()
 
             # Get the author's image and put it in a collection
@@ -262,9 +262,9 @@ def _migrate_all_articles():
         dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
         # wagtail_article
         wagtail_article = ArticlePage()
-        # wagtail section
-        wagtail_section = SectionPage.objects.get(slug='news')
         # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
+
+        last_section_slug = head_article.section.slug
 
         for dispatch_article_revision in dispatch_article_qs:
 
@@ -287,12 +287,6 @@ def _migrate_all_articles():
 
                 # Headline/Title
                 wagtail_article.title = dispatch_article_revision.headline
-
-                # Section
-                try:
-                    wagtail_section.add_child(instance=wagtail_article)
-                except treebeard_exceptions.NodeAlreadySaved as e:
-                    print(e)
                 # Author
                 for dispatch_author in dispatch_article_revision.authors.all():
                     # First we make sure there's any author page corresponding to this author
@@ -411,6 +405,20 @@ def _migrate_all_articles():
                     wagtail_article_nodes.append(wagtail_streamfield_node)
 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
+
+                # set Section
+                if dispatch_article_revision.section.slug != last_section_slug:
+                    wagtail_section = SectionPage.objects.get(slug=dispatch_article_revision.section.slug)
+                    last_section_slug = wagtail_section.slug
+                try:
+                    wagtail_section.add_child(instance=wagtail_article)
+                    print("Added " + wagtail_article.slug + " to section: " + wagtail_section.slug)
+                except treebeard_exceptions.NodeAlreadySaved as e:
+                    wagtail_article.move(wagtail_section, pos='last-child') # article stays in place if wagtail_section didn't change, moves otherwise
+                    log_entry_change = PageLogEntry.objects.all()[0]
+                    log_entry_change.timestamp = dispatch_article_revision.updated_at
+                    log_entry_change.save()
+                    print("Updating revision #" + str(wagtail_article.legacy_revision_number) + " of " + wagtail_article.slug)
 
                 # Wagtail revision created corresponding to the Dispatch revision
                 wagtail_article.save_revision(log_action=True)
