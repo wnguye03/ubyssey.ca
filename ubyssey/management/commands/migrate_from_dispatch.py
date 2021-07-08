@@ -260,11 +260,6 @@ def _migrate_all_articles():
         current_slug = head_article.slug
         
         dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
-        # wagtail_article
-        wagtail_article = ArticlePage()
-        # https://stackoverflow.com/questions/43040023/programatically-add-a-page-to-a-known-parent
-
-        last_section_slug = head_article.section.slug
 
         for dispatch_article_revision in dispatch_article_qs:
 
@@ -276,10 +271,12 @@ def _migrate_all_articles():
                 wagtail_article = ArticlePage()
                 wagtail_article.created_at_time = dispatch_article_revision.created_at
                 wagtail_article.slug = dispatch_article_revision.slug
+                wagtail_section = SectionPage.objects.get(slug=head_article.section.slug)
+                wagtail_section.add_child(instance=wagtail_article) 
             else:
                 # or else get the existing article
                 wagtail_article = wagtail_article_qs.get(slug=current_slug)
-            
+
             if dispatch_article_revision.revision_id > wagtail_article.legacy_revision_number:
                 # The above bool prevents the same revision from being sent over twice. If the current revision is greater than the last one sent over,
                 # then we make a new wagtail revision
@@ -364,13 +361,15 @@ def _migrate_all_articles():
                         pass #TODO
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
+                        # SQL queries say there are no widgets used this way on the entire site
                         block_type = 'raw_html'
                         block_value = embeds.WidgetEmbed.render(data=node['data'])
                     elif node_type == 'poll':
                         block_type = 'raw_html'
                         block_value = embeds.WidgetEmbed.render(data=node['data']['data'])
-                    elif node_type == 'podcast':
-                        pass #TODO
+                    # elif node_type == 'podcast':
+                    #     pass #TODO
+                    # SQL says this never actually occurs
                     elif node_type == 'interactive_map':
                         pass #TODO
                     elif node_type == 'pagebreak':
@@ -405,20 +404,6 @@ def _migrate_all_articles():
                     wagtail_article_nodes.append(wagtail_streamfield_node)
 
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
-
-                # set Section
-                if dispatch_article_revision.section.slug != last_section_slug:
-                    wagtail_section = SectionPage.objects.get(slug=dispatch_article_revision.section.slug)
-                    last_section_slug = wagtail_section.slug
-                try:
-                    wagtail_section.add_child(instance=wagtail_article)
-                    print("Added " + wagtail_article.slug + " to section: " + wagtail_section.slug)
-                except treebeard_exceptions.NodeAlreadySaved as e:
-                    wagtail_article.move(wagtail_section, pos='last-child') # article stays in place if wagtail_section didn't change, moves otherwise
-                    log_entry_change = PageLogEntry.objects.all()[0]
-                    log_entry_change.timestamp = dispatch_article_revision.updated_at
-                    log_entry_change.save()
-                    print("Updating revision #" + str(wagtail_article.legacy_revision_number) + " of " + wagtail_article.slug)
 
                 # Wagtail revision created corresponding to the Dispatch revision
                 wagtail_article.save_revision(log_action=True)
