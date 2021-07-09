@@ -89,6 +89,7 @@ def _migrate_all_authors():
     for person in dispatch_persons_qs:
         has_been_sent_to_wagtail = any(person.slug == wagtail_author.slug for wagtail_author in wagtail_authors_qs)
         if not has_been_sent_to_wagtail:
+            print("Sending author " + person.slug + " to wagtail")
             wagtail_author = AuthorPage()
             wagtail_author.slug = person.slug
             wagtail_author.full_name = person.full_name
@@ -128,6 +129,7 @@ def _migrate_all_categories():
     for dispatch_subsection in dispatch_subsections_qs:
         has_been_sent_to_wagtail = any(dispatch_subsection.slug == wagtail_category.slug for wagtail_category in wagtail_category_qs)
         if not has_been_sent_to_wagtail:
+            print("Sending category " + dispatch_subsection.slug + " to wagtail")
             wagtail_category = CategorySnippet()
             wagtail_category.slug = dispatch_subsection.slug
             wagtail_category.title = dispatch_subsection.name
@@ -199,6 +201,7 @@ def _migrate_all_image_galleries():
         old_gallery.title
         has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
         if not has_been_sent_to_wagtail:
+            print("Sending gallery " + old_gallery.title + " to wagtail")
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
             wagtail_gallery.slug = slugify(old_gallery.title)
@@ -225,6 +228,7 @@ def _migrate_all_videos():
     for old_video in old_videos:
         has_been_sent_to_wagtail = any(old_video.url == wagtail_video.url for wagtail_video in wagtail_videos)
         if not has_been_sent_to_wagtail:
+            print("Sending video " + str(old_video) + " to wagtail" )
             if old_video.title:
                 new_title = old_video.title
             else:
@@ -263,7 +267,7 @@ def _migrate_all_articles():
         dispatch_article_qs = dispatch_models.Article.objects.filter(slug=current_slug).order_by('revision_id')        
 
         for dispatch_article_revision in dispatch_article_qs:
-
+            print ("Sending article revision " + str(dispatch_article_revision) + " to wagtail")
             # first check if there's an article with this slug already:
             wagtail_article_qs = ArticlePage.objects.filter(slug=current_slug)
 
