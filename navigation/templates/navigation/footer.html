@@ -1,0 +1,29 @@
+{% load static %}
+{% load cache %}
+<footer>
+    <div class="u-container{% if homepage %} u-container--large{% endif %}">
+
+        <a class="home-link" href="{% url 'wagtail_serve' '' %}"><img class="logo" src="{% static 'ubyssey/images/ubyssey-logo-small-grey.svg' %}" alt=""/></a>
+        <nav>
+            <div class="top-row">
+                <ul class="sections">
+                    {% cache 604800 main_footer_menu %}
+                        {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.all %}
+                            <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
+                        {% endfor %}
+                    {% endcache %}
+                </ul>
+            </div>
+            <div class="bottom-row">
+                <ul class="pages">
+                    {% cache 604800 second_footer_menu %}
+                        {% for menu_item in settings.navigation.SitewideMenus.second_footer_menu.all %}
+                            <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
+                        {% endfor %}
+                    {% endcache %}
+                </ul>
+            </div>
+        </nav>
+        <div class="copyright">&copy; {% now "Y" %} The Ubyssey</div>
+    </div>
+</footer>

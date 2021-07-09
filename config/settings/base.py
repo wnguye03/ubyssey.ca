@@ -131,8 +131,15 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic', # uncomment for testing "production-like" serving of collected static files with DEBUG=False
     'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'home',
+    'authors',
     'article',
+    'section',
+    'images',
+    'videos',
+    'sporttourney',
     'specialfeaturelanding',
+    'navigation',
+
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
     'newsletter.apps.NewsletterConfig',
@@ -140,6 +147,7 @@ INSTALLED_APPS = [
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+    'wagtail.contrib.settings',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -149,6 +157,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtail.contrib.routable_page',
 
     'taggit',
     'modelcluster',
@@ -164,6 +173,7 @@ INSTALLED_APPS = [
     'ubyssey.events',
     'django_user_agents',
     'django.contrib.admin',
+    'django_extensions',
 ]
 
 if DEBUG:
@@ -202,6 +212,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
@@ -273,3 +284,5 @@ WAGTAIL_SITE_NAME = 'The Ubyssey'
 WAGTAIL_USER_EDIT_FORM = 'dispatchusers.forms.DispatchUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'dispatchusers.forms.DispatchUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['person', 'is_active']
+
+WAGTAILIMAGES_IMAGE_MODEL = 'images.UbysseyImage'

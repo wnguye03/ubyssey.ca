@@ -4,18 +4,29 @@ from . import blocks as specblocks
 from dispatch.models import Article
 from django.db import models
 
+from section.sectionable.models import SectionablePage
+
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 
-class SpecialLandingPage(Page):
+class SpecialLandingPage(SectionablePage):
     """
     This is the general model for "special features" landing pages, such as for the guide, or a magazine.
 
     It uses weird tricks to be compatible with Dispatch articles 
     """
     template = "specialfeatureslanding/base.html"
+
+    parent_page_types = [
+        'section.SectionPage',
+    ]
+
+    subpage_types = [
+        'article.ArticlePage',
+    ]
+
     body = StreamField([
         ("dispatch_article", specblocks.DispatchArticleBlock()),
         ("dispatch_article_chooser", specblocks.DispatchArticleChooserBlock()),

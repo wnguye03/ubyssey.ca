@@ -11,6 +11,14 @@ ALLOWED_HOSTS = ['localhost', '*']
 
 INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
+# Easily manipulable file cache for proof of concept for front page etc.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/workspaces/ubyssey.ca/cache/"
+    }
+}
+
 MIDDLEWARE += [
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
@@ -38,6 +46,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
