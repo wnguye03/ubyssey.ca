@@ -307,8 +307,11 @@ def _migrate_all_articles():
                     wagtail_article.seo_keyword = dispatch_article_revision.seo_keyword 
                 if dispatch_article_revision.seo_description:
                     wagtail_article.seo_description = dispatch_article_revision.seo_description
-                # add something about article "template"
-                
+                # "template"
+                if dispatch_article_revision.template:
+                    wagtail_article.legacy_template = dispatch_article_revision.template 
+                if dispatch_article_revision.template_data:
+                    wagtail_article.legacy_template = dispatch_article_revision.template_data
                 # Lede
                 if dispatch_article_revision.snippet:
                     wagtail_article.lede = dispatch_article_revision.snippet
@@ -391,6 +394,12 @@ def _migrate_all_articles():
                     elif node_type == 'drop_cap':
                         block_type = 'raw_html'
                         block_value = '<p class="drop-cap">' + node['data']['paragraph'] + '</p>'
+                    elif node_type == 'header':
+                        block_type = 'raw_html'
+                        block_value = embeds.HeaderEmbed.render(data=node['data'])
+                    elif node_type == 'list':
+                        block_type = 'raw_html'
+                        block_value = embeds.ListEmbed.render(data=node['data'])
                     # elif node_type == 'video':
                     #     block_type = 'video'
                     #     block_value = blocks.StructValue()
