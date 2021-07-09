@@ -10,8 +10,10 @@ from dispatch import models as dispatch_models
 from dispatch.modules.content import embeds
 
 from django.conf import settings
+from django.core import exceptions
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, no_translations
+from django.core.validators import slug_re
 from django.utils.text import slugify
 
 from home.models import HomePage
@@ -87,19 +89,34 @@ def _migrate_all_authors():
     dispatch_persons_qs = dispatch_models.Person.objects.all()
     wagtail_authors_qs = AuthorPage.objects.all()        
     for person in dispatch_persons_qs:
-        has_been_sent_to_wagtail = any(person.slug == wagtail_author.slug for wagtail_author in wagtail_authors_qs)
+        has_been_sent_to_wagtail = any(person.slug == wagtail_author.legacy_slug for wagtail_author in wagtail_authors_qs)
         if not has_been_sent_to_wagtail:
-            print("Sending author " + person.slug + " to wagtail")
+            print("Sending author #" + str(person.pk) + " " + person.slug + " to wagtail")
             wagtail_author = AuthorPage()
-            wagtail_author.slug = person.slug
+            
+            wagtail_author.legacy_slug = person.slug # there are a lot of invalid slugs in the original db
+                        
             wagtail_author.full_name = person.full_name
             wagtail_author.title = person.full_name
+
+            #set slug
+            existing_author_qs = AuthorPage.objects.filter(slug=slugify(wagtail_author.title))
+            if len(existing_author_qs) > 0:
+                slug = slugify(wagtail_author.title) + '2'
+            else:
+                slug = slugify(wagtail_author.title)
+
+            # For the one weird author named '.' - lazy
+            if not slugify(wagtail_author.title):
+                slug = wagtail_author.legacy_slug
+            wagtail_author.slug = slug
+
             if person.title:
                 wagtail_author.ubyssey_role = person.title
             if person.facebook_url:
-                wagtail_author.facebook_url = person.facebook_url
+                wagtail_author.legacy_facebook_url = person.facebook_url                
             if person.twitter_url:
-                wagtail_author.twitter_url = person.twitter_url
+                wagtail_author.legacy_twitter_url = person.twitter_url
             try:
                 all_authors_page.add_child(instance=wagtail_author)
             except treebeard_exceptions.NodeAlreadySaved as e:
@@ -129,7 +146,7 @@ def _migrate_all_categories():
     for dispatch_subsection in dispatch_subsections_qs:
         has_been_sent_to_wagtail = any(dispatch_subsection.slug == wagtail_category.slug for wagtail_category in wagtail_category_qs)
         if not has_been_sent_to_wagtail:
-            print("Sending category " + dispatch_subsection.slug + " to wagtail")
+            print("Sending category #" + str(dispatch_subsection.pk) + " " + dispatch_subsection.slug + " to wagtail")
             wagtail_category = CategorySnippet()
             wagtail_category.slug = dispatch_subsection.slug
             wagtail_category.title = dispatch_subsection.name
@@ -151,7 +168,7 @@ def _migrate_all_categories():
 
 def _migrate_all_images():
     """
-    Migrates all images from Dispatch to Wagtail. Does NOT add authors
+    Migrates all images from Dispatch to Wagtail.
     """
     # Documentation this was originally taken from: http://devans.mycanadapayday.com/programmatically-adding-images-to-wagtail/
 
@@ -185,7 +202,7 @@ def _migrate_all_images():
                 if len(old_image.authors.all()) > 0:
                     old_author = old_image.authors.all()[0]
                     try:
-                        wagtail_image.author = AuthorPage.objects.get(slug=old_author.person.slug)
+                        wagtail_image.author = AuthorPage.objects.get(legacy_slug=old_author.person.slug)
                         wagtail_image.legacy_authors = old_image.get_author_string()
                         wagtail_image.save()
                     except:
@@ -201,7 +218,7 @@ def _migrate_all_image_galleries():
         old_gallery.title
         has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
         if not has_been_sent_to_wagtail:
-            print("Sending gallery " + old_gallery.title + " to wagtail")
+            print("Sending gallery #" + str(old_gallery.pk) + " " + old_gallery.title + " to wagtail")
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
             wagtail_gallery.slug = slugify(old_gallery.title)
@@ -228,7 +245,7 @@ def _migrate_all_videos():
     for old_video in old_videos:
         has_been_sent_to_wagtail = any(old_video.url == wagtail_video.url for wagtail_video in wagtail_videos)
         if not has_been_sent_to_wagtail:
-            print("Sending video " + str(old_video) + " to wagtail" )
+            print("Sending video #" + str(old_video.pk) + " " + str(old_video) + " to wagtail" )
             if old_video.title:
                 new_title = old_video.title
             else:
@@ -246,15 +263,15 @@ def _migrate_all_videos():
 
             for dispatch_author in old_video.authors.all():
                 # First we make sure there's any author page corresponding to this author
-                if AuthorPage.objects.get(slug=dispatch_author.person.slug):
+                if AuthorPage.objects.get(legacy_slug=dispatch_author.person.slug):
                     # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
                     # Otherwise we'll just get a bunch of redundant orderables
-                    has_author_already = any(video_author.author.slug == dispatch_author.person.slug for video_author in wagtail_video.video_authors.all())
+                    has_author_already = any(video_author.author.legacy_slug == dispatch_author.person.slug for video_author in wagtail_video.video_authors.all())
                     if not has_author_already:
                         wagtail_author_orderable = VideoAuthorsOrderable()
                         wagtail_author_orderable.video = wagtail_video
                         wagtail_author_orderable.sort_order = dispatch_author.order
-                        wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
+                        wagtail_author_orderable.author = AuthorPage.objects.get(legacy_slug=dispatch_author.person.slug)
                         wagtail_author_orderable.save()
 
 def _migrate_all_articles():
@@ -273,7 +290,7 @@ def _migrate_all_articles():
 
             if len(wagtail_article_qs) < 1:
                 # initialize a new wagtail article
-                print("Sending " + str(dispatch_article_revision.slug) + " to wagtail")
+                print("Sending article revision PK " + str(dispatch_article_revision.pk) + " " + str(dispatch_article_revision.slug) + " to wagtail")
                 wagtail_article = ArticlePage()
                 wagtail_article.created_at_time = dispatch_article_revision.created_at
                 wagtail_article.slug = dispatch_article_revision.slug
@@ -294,16 +311,16 @@ def _migrate_all_articles():
                 # Author
                 for dispatch_author in dispatch_article_revision.authors.all():
                     # First we make sure there's any author page corresponding to this author
-                    if AuthorPage.objects.get(slug=dispatch_author.person.slug):
+                    if AuthorPage.objects.get(legacy_slug=dispatch_author.person.slug):
                         # Unfortunately, first we need to see if there is already an author orderable corresponding to this author already
                         # Otherwise we'll just get a bunch of redundant orderables
-                        has_author_already = any(article_author.author.slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
+                        has_author_already = any(article_author.author.legacy_slug == dispatch_author.person.slug for article_author in wagtail_article.article_authors.all())
                         if not has_author_already:
                             wagtail_author_orderable = ArticleAuthorsOrderable()
                             wagtail_author_orderable.article_page = wagtail_article
                             wagtail_author_orderable.author_role = dispatch_author.type
                             wagtail_author_orderable.sort_order = dispatch_author.order
-                            wagtail_author_orderable.author = AuthorPage.objects.get(slug=dispatch_author.person.slug)
+                            wagtail_author_orderable.author = AuthorPage.objects.get(legacy_slug=dispatch_author.person.slug)
                             wagtail_author_orderable.save()
 
                 # SEO stuff
