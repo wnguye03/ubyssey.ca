@@ -1,5 +1,6 @@
 import json
 import hashlib
+from dispatch.modules.content.models import Section
 import requests
 
 from article.models import ArticlePage, ArticleAuthorsOrderable
@@ -268,9 +269,11 @@ def _migrate_all_articles():
 
             if len(wagtail_article_qs) < 1:
                 # initialize a new wagtail article
+                print("Sending " + str(dispatch_article_revision.slug) + " to wagtail")
                 wagtail_article = ArticlePage()
                 wagtail_article.created_at_time = dispatch_article_revision.created_at
                 wagtail_article.slug = dispatch_article_revision.slug
+                wagtail_article.title = dispatch_article_revision.headline
                 wagtail_section = SectionPage.objects.get(slug=head_article.section.slug)
                 wagtail_section.add_child(instance=wagtail_article) 
             else:
@@ -346,6 +349,14 @@ def _migrate_all_articles():
                             print(e)
                             block_type = 'richtext'
                             block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
+                    elif node_type == 'code':
+                        block_type = 'raw_html'
+                        if node['data']['mode'] == 'html':
+                            block_value = node['data']['content']
+                        elif node['data']['mode'] == 'css':
+                            block_value = '<style>' + node['data']['content'] + '</style>'
+                        elif node['data']['mode'] == 'javascript':
+                            block_value = '<script>' + node['data']['content'] + '</script>'
                     elif node_type == 'video':
                         block_type = 'video'
                         block_value = {}
@@ -358,7 +369,9 @@ def _migrate_all_articles():
                         block_value['content'] = node['data']['content']
                         block_value['source'] = node['data']['source']
                     elif node_type == 'gallery':
-                        pass #TODO
+                        old_gallery = dispatch_models.ImageGallery.objects.get(pk=node['data']['id'])
+                        block_type = 'gallery'
+                        block_value = slugify(old_gallery.title)
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         # SQL queries say there are no widgets used this way on the entire site
