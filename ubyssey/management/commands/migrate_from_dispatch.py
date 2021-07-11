@@ -224,15 +224,15 @@ def _migrate_all_image_galleries():
     old_galleries = dispatch_models.ImageGallery.objects.all()
     wagtail_galleries = GallerySnippet.objects.all()
     for old_gallery in old_galleries:
-        old_gallery.title
-        has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
+        has_been_sent_to_wagtail = any(old_gallery.pk == wagtail_gallery.legacy_pk for wagtail_gallery in wagtail_galleries)
         if not has_been_sent_to_wagtail:
             print("Sending gallery #" + str(old_gallery.pk) + " " + old_gallery.title + " to wagtail")
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
-            wagtail_gallery.slug = slugify(old_gallery.title)
+            wagtail_gallery.slug = slugify(old_gallery.title) + str(old_gallery.pk) 
             wagtail_gallery.legacy_created_at = old_gallery.created_at
             wagtail_gallery.legacy_updated_at = old_gallery.updated_at
+            wagtail_gallery.legacy_pk = old_gallery.pk
             wagtail_gallery.save()
 
             for image_attachment_object in old_gallery.images.all():
@@ -243,7 +243,8 @@ def _migrate_all_image_galleries():
                     gallery_orderable.caption = image_attachment_object.caption
                 if gallery_orderable.credit:
                     gallery_orderable.credit = image_attachment_object.credit
-                gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
+                if image_attachment_object.image:
+                    gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
                 gallery_orderable.order = image_attachment_object.order
                 gallery_orderable.save()
 

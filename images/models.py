@@ -148,6 +148,11 @@ class GallerySnippet(ClusterableModel):
         null=True,
         blank=True,
     )
+    legacy_pk = models.IntegerField(
+        null=False,
+        blank=False,
+        default=0
+    )
     panels = [
         MultiFieldPanel(
             [
