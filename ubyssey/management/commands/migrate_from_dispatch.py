@@ -229,7 +229,7 @@ def _migrate_all_image_galleries():
             print("Sending gallery #" + str(old_gallery.pk) + " " + old_gallery.title + " to wagtail")
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
-            wagtail_gallery.slug = slugify(old_gallery.title) + str(old_gallery.pk) 
+            wagtail_gallery.slug = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
             wagtail_gallery.legacy_created_at = old_gallery.created_at
             wagtail_gallery.legacy_updated_at = old_gallery.updated_at
             wagtail_gallery.legacy_pk = old_gallery.pk
