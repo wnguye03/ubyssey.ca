@@ -98,6 +98,7 @@ def _migrate_all_authors():
                         
             wagtail_author.full_name = person.full_name
             wagtail_author.title = person.full_name
+            
 
             #set slug
             existing_author_qs = AuthorPage.objects.filter(slug=slugify(wagtail_author.title))
@@ -110,9 +111,12 @@ def _migrate_all_authors():
             if not slugify(wagtail_author.title):
                 slug = wagtail_author.legacy_slug
             wagtail_author.slug = slug
-
+            
             if person.title:
                 wagtail_author.ubyssey_role = person.title
+            if person.description:
+                print(person.description)
+                wagtail_author.description = person.description
             if person.facebook_url:
                 wagtail_author.legacy_facebook_url = person.facebook_url                
             if person.twitter_url:
@@ -125,10 +129,11 @@ def _migrate_all_authors():
 
             # Get the author's image and put it in a collection
             img_url = settings.MEDIA_URL + str(person.image)
-            if settings.DEBUG:
-                img_url = 'http://localhost:8000' + img_url
+            # if settings.DEBUG:
+            #     img_url = 'http://localhost:8000' + img_url
             http_res = requests.get(img_url)
             if http_res.status_code == 200:
+                print(str(img_url))
                 image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title)
                 wagtail_image = CustomImage(title=wagtail_author.title, file=image_file)
                 wagtail_image.legacy_filename = str(person.image)
@@ -177,9 +182,10 @@ def _migrate_all_images():
     for old_image in old_images:
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
         if not has_been_sent_to_wagtail:
+            print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
-            if settings.DEBUG:
-                url = 'http://localhost:8000' + url
+            # if settings.DEBUG:
+            #     url = 'http://localhost:8000' + url
             http_res = requests.get(url)
 
             if http_res.status_code == 200:    
@@ -198,6 +204,9 @@ def _migrate_all_images():
                 for tag in old_image.tags.all():
                     wagtail_image.tags.add(tag.name)
                 wagtail_image.save()
+                if any(collection.name == "Dispatch Imports" for collection in Collection.objects.all()):
+                    wagtail_image.collection = Collection.objects.get(name="Dispatch Imports")
+                    wagtail_image.save()
 
                 if len(old_image.authors.all()) > 0:
                     old_author = old_image.authors.all()[0]
@@ -230,8 +239,10 @@ def _migrate_all_image_galleries():
 
                 gallery_orderable = GalleryOrderable()
                 gallery_orderable.gallery = wagtail_gallery
-                gallery_orderable.caption = image_attachment_object.caption
-                gallery_orderable.credit = image_attachment_object.credit
+                if gallery_orderable.caption:
+                    gallery_orderable.caption = image_attachment_object.caption
+                if gallery_orderable.credit:
+                    gallery_orderable.credit = image_attachment_object.credit
                 gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
                 gallery_orderable.order = image_attachment_object.order
                 gallery_orderable.save()
