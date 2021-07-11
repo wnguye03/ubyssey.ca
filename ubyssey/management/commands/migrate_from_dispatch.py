@@ -244,7 +244,7 @@ def _migrate_all_image_galleries():
                 if gallery_orderable.credit:
                     gallery_orderable.credit = image_attachment_object.credit
                 if image_attachment_object.image:
-                    gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
+                    gallery_orderable.image = CustomImage.objects.filter(legacy_filename=str(image_attachment_object.image.img)).first()
                 gallery_orderable.order = image_attachment_object.order
                 gallery_orderable.save()
 
