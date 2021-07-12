@@ -134,7 +134,7 @@ def _migrate_all_authors():
             http_res = requests.get(img_url)
             if http_res.status_code == 200:
                 print(str(img_url))
-                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title)
+                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title) #TODO FIX
                 wagtail_image = CustomImage(title=wagtail_author.title, file=image_file)
                 wagtail_image.legacy_filename = str(person.image)
                 wagtail_image.save()
@@ -181,7 +181,12 @@ def _migrate_all_images():
     wagtail_images = CustomImage.objects.all()
     for old_image in old_images:
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
-        if not has_been_sent_to_wagtail:
+
+        if has_been_sent_to_wagtail:
+            wagtail_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+            wagtail_image.legacy_pk = old_image.pk
+            print("Fixed image of legacy pk #" + str(wagtail_image.legacy_pk))
+        else:
             print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
             # if settings.DEBUG:
@@ -194,9 +199,9 @@ def _migrate_all_images():
                     wagtail_image_title = str(old_image.img)
                 else:
                     wagtail_image_title = old_image.title
-                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_image_title)
+                image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
                 wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
-
+                wagtail_image.legacy_pk = old_image.pk
                 wagtail_image.legacy_filename = str(old_image.img)
                 wagtail_image.created_at = old_image.created_at
                 wagtail_image.updated_at = old_image.updated_at
@@ -204,8 +209,14 @@ def _migrate_all_images():
                 for tag in old_image.tags.all():
                     wagtail_image.tags.add(tag.name)
                 wagtail_image.save()
-                if any(collection.name == "Dispatch Imports" for collection in Collection.objects.all()):
-                    wagtail_image.collection = Collection.objects.get(name="Dispatch Imports")
+
+                if any(collection.name == str(old_image.img)[7:14] for collection in Collection.objects.all()):
+                    wagtail_image.collection = Collection.objects.get(name=str(old_image.img)[7:14] )
+                    wagtail_image.save()
+                else:
+                    new_collection = Collection(name=str(old_image.img)[7:14])
+                    Collection.objects.get(name="Root").add_child(instance=new_collection)
+                    wagtail_image.collection = new_collection
                     wagtail_image.save()
 
                 if len(old_image.authors.all()) > 0:
@@ -244,7 +255,7 @@ def _migrate_all_image_galleries():
                 if gallery_orderable.credit:
                     gallery_orderable.credit = image_attachment_object.credit
                 if image_attachment_object.image:
-                    gallery_orderable.image = CustomImage.objects.filter(legacy_filename=str(image_attachment_object.image.img)).first()
+                    gallery_orderable.image = CustomImage.objects.filter(legacy_pk=str(image_attachment_object.image.pk)).first()
                 gallery_orderable.order = image_attachment_object.order
                 gallery_orderable.save()
 
@@ -369,7 +380,7 @@ def _migrate_all_articles():
                     elif node_type == 'image':
                         try:
                             old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
-                            new_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+                            new_image = CustomImage.objects.get(legacy_pk=old_image.pk)
                             block_type = 'image'
                             block_value = {}
                             block_value['image'] = new_image.pk
