@@ -184,7 +184,7 @@ def _migrate_all_images():
 
         if has_been_sent_to_wagtail:
             print("Old image filename: " + str(old_image.img) )
-            wagtail_image = CustomImage.objects.get(legacy_filename__contains=str(old_image.img))
+            wagtail_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
             wagtail_image.legacy_pk = old_image.pk
             print("Fixed image of legacy pk #" + str(wagtail_image.legacy_pk)) 
         else:
