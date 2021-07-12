@@ -122,8 +122,7 @@ class UbysseyRendition(AbstractRendition):
 
         https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py
         """
-
-        folder_name = 'wagtail_renditions/' + date.today().strftime('%Y/%m')
+        folder_name = 'renditions'
         filename = self.file.field.storage.get_valid_name(filename)
         return os.path.join(folder_name, filename)
 
