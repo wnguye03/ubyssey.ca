@@ -248,7 +248,7 @@ def _migrate_all_image_galleries():
 
                 gallery_orderable = GalleryOrderable()
                 gallery_orderable.gallery = wagtail_gallery
-                gallery_orderable.order = image_attachment_object.order
+                gallery_orderable.sort_order = image_attachment_object.order
                 if gallery_orderable.caption:
                     gallery_orderable.caption = image_attachment_object.caption
                 if gallery_orderable.credit:
