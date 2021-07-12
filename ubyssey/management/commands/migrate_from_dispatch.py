@@ -183,10 +183,7 @@ def _migrate_all_images():
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
 
         if has_been_sent_to_wagtail:
-            print("Old image filename: " + str(old_image.img) )
-            wagtail_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
-            wagtail_image.legacy_pk = old_image.pk
-            print("Fixed image of legacy pk #" + str(wagtail_image.legacy_pk)) 
+            print("Image of legacy pk #" + str(wagtail_image.legacy_pk) + "already sent to wagtail") 
         else:
             print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
@@ -197,7 +194,7 @@ def _migrate_all_images():
             if http_res.status_code == 200:    
                 wagtail_image_title = 'default_title' #should never actually be used, but just in case
                 if not old_image.title:
-                    wagtail_image_title = str(old_image.img)
+                    wagtail_image_title = str(old_image.img)[15:]
                 else:
                     wagtail_image_title = old_image.title
                 image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
