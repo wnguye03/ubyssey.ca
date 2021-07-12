@@ -430,7 +430,8 @@ def _migrate_all_articles():
                     #     pass #TODO
                     # SQL says this never actually occurs
                     elif node_type == 'interactive_map':
-                        pass #TODO
+                        block_type = 'raw_html'
+                        block_value = node['data']['svg'] + node['data']['initScript']
                     elif node_type == 'pagebreak':
                         block_type = 'raw_html'
                         block_value = '<div class="page-break"><hr class = "page-break"></div>'
