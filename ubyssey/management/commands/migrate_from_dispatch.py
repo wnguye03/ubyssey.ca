@@ -248,14 +248,15 @@ def _migrate_all_image_galleries():
 
                 gallery_orderable = GalleryOrderable()
                 gallery_orderable.gallery = wagtail_gallery
+                gallery_orderable.order = image_attachment_object.order
                 if gallery_orderable.caption:
                     gallery_orderable.caption = image_attachment_object.caption
                 if gallery_orderable.credit:
                     gallery_orderable.credit = image_attachment_object.credit
                 if image_attachment_object.image:
-                    gallery_orderable.image = CustomImage.objects.filter(legacy_pk=str(image_attachment_object.image.pk)).first()
-                gallery_orderable.order = image_attachment_object.order
-                gallery_orderable.save()
+                    print(image_attachment_object.image.pk)
+                    gallery_orderable.image = CustomImage.objects.get(legacy_pk=image_attachment_object.image.pk)
+                    gallery_orderable.save()
 
 def _migrate_all_videos():
     """
