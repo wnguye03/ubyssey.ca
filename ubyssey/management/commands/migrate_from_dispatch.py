@@ -364,35 +364,66 @@ def _migrate_all_articles():
                 if dispatch_article_revision.breaking_timeout:
                     wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
-                # Still need to do foreign keys for featured image/video and subsection!
+                # Still need to do foreign keys for featured video and subsection!
 
-                # TODO
-                # # Featured media:
-                # if dispatch_article_revision.featured_image:
-                #     has_media_already = any()
-                #     any(video_author.author.legacy_slug == dispatch_author.person.slug for video_author in wagtail_video.video_authors.all())
-                #     old_img_obj = dispatch_article_revision.featured_image
-                #     featured_media_orderable = ArticleFeaturedMediaOrderable()
-                #     featured_media_orderable.article_page = wagtail_article
-                #     if old_img_obj.caption:
-                #         featured_media_orderable.caption = old_img_obj.caption
-                #     if old_img_obj.credit:
-                #         featured_media_orderable.credit = old_img_obj.credit
-                #     if old_img_obj.image:
-                #         featured_media_orderable = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
-                #         featured_media_orderable.save()
+                # Featured image:
+                if dispatch_article_revision.featured_image:
+                    if len(wagtail_article.featured_media.all()) < 1:                    
+                        old_img_obj = dispatch_article_revision.featured_image
+                        featured_media_orderable = ArticleFeaturedMediaOrderable()
+                        featured_media_orderable.sort_order = 0
+                        featured_media_orderable.article_page = wagtail_article
+                        if old_img_obj.caption:
+                            featured_media_orderable.caption = old_img_obj.caption
+                        if old_img_obj.credit:
+                            featured_media_orderable.credit = old_img_obj.credit
+                        if old_img_obj.image:
+                            featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                            featured_media_orderable.save()
+                    else:
+                        if any(featured_media_orderable.image for featured_media_orderable in wagtail_article.featured_media.all()):
+                            old_img_obj = dispatch_article_revision.featured_image
+                            featured_media_orderable = wagtail_article.featured_media.all()[0]
+                            if old_img_obj.image.pk != featured_media_orderable.image.legacy_pk:
+                                featured_media_orderable.sort_order = 0
+                                featured_media_orderable.article_page = wagtail_article
+                                if old_img_obj.caption:
+                                    featured_media_orderable.caption = old_img_obj.caption
+                                if old_img_obj.credit:
+                                    featured_media_orderable.credit = old_img_obj.credit
+                                if old_img_obj.image:
+                                    featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                                    featured_media_orderable.save()
+                if dispatch_article_revision.featured_video:
+                    if len(wagtail_article.featured_media.all()) < 1:                    
+                        old_vid_obj = dispatch_article_revision.featured_video
+                        featured_media_orderable = ArticleFeaturedMediaOrderable()
+                        featured_media_orderable.sort_order = 1
+                        featured_media_orderable.article_page = wagtail_article
+                        if old_vid_obj.caption:
+                            featured_media_orderable.caption = old_img_obj.caption
+                        if old_vid_obj.credit:
+                            featured_media_orderable.credit = old_img_obj.credit
+                        if old_vid_obj.video:
+                            featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                            featured_media_orderable.save()
+                    else:
+                        if any(featured_media_orderable.video for featured_media_orderable in wagtail_article.featured_media.all()):
+                            old_vid_obj = dispatch_article_revision.featured_video
+                            featured_media_orderable = wagtail_article.featured_media.all()[-1]
+                            if old_vid_obj.video.url != featured_media_orderable.video.url:
+                                featured_media_orderable.sort_order = 1
+                                featured_media_orderable.article_page = wagtail_article
+                                if old_vid_obj.caption:
+                                    featured_media_orderable.caption = old_img_obj.caption
+                                if old_vid_obj.credit:
+                                    featured_media_orderable.credit = old_img_obj.credit
+                                if old_vid_obj.video:
+                                    featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    featured_media_orderable.save()
                 
-                # if dispatch_article_revision.featured_video:
-                #     old_vid_obj = dispatch_article_revision.featured_video
-                #     featured_media_orderable = ArticleFeaturedMediaOrderable()
-                #     featured_media_orderable.article_page = wagtail_article
-                #     if old_vid_obj.caption:
-                #         featured_media_orderable.caption = old_vid_obj.caption
-                #     if old_vid_obj.credit:
-                #         featured_media_orderable.credit = old_vid_obj.credit
-                #     if old_vid_obj.video:
-                #         featured_media_orderable = VideoSnippet.objects.get(url=old_vid_obj.video.url)
-                #         featured_media_orderable.save()
+                if dispatch_article_revision.subsection:
+                    wagtail_article.category = CategorySnippet.objects.get(slug=dispatch_article_revision.subsection.slug)
 
                 wagtail_article_nodes = []
                 
