@@ -298,7 +298,7 @@ def _migrate_all_videos():
 
 def _migrate_all_articles():
     # dispatch_article 
-    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True)    
 
     for head_article in dispatch_head_articles_qs:
         current_slug = head_article.slug
