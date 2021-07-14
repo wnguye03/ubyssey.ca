@@ -467,22 +467,22 @@ def _migrate_all_articles():
                     elif node_type == 'code':
                         block_type = 'raw_html'
                         if node['data']['mode'] == 'html':
-                            block_value = node['data']['content']
+                            block_value = node['data'].get('content', '')
                         elif node['data']['mode'] == 'css':
-                            block_value = '<style>' + node['data']['content'] + '</style>'
+                            block_value = '<style>' + node['data'].get('content', '') + '</style>'
                         elif node['data']['mode'] == 'javascript':
-                            block_value = '<script>' + node['data']['content'] + '</script>'
+                            block_value = '<script>' + node['data'].get('content', '') + '</script>'
                     elif node_type == 'video':
                         block_type = 'video'
                         block_value = {}
-                        block_value['embed'] = node['data']['url']
-                        block_value['caption'] = node['data']['caption']
-                        block_value['credit'] = node['data']['credit']
+                        block_value['embed'] = node['data'].get('caption', 'https://www.youtube.com/watch?v=e_fTr5XHh9U') # Look for this later when 
+                        block_value['caption'] = node['data'].get('caption', '')
+                        block_value['credit'] = node['data'].get('credit', '')
                     elif node_type == 'quote':
                         block_type = 'quote'
                         block_value = {}
-                        block_value['content'] = node['data']['content']
-                        block_value['source'] = node['data']['source']
+                        block_value['content'] = node['data'].get('content', '')
+                        block_value['source'] = node['data'].get('source', '')
                     elif node_type == 'gallery':
                         old_gallery = dispatch_models.ImageGallery.objects.get(pk=node['data']['id'])
                         block_type = 'gallery'
@@ -506,7 +506,7 @@ def _migrate_all_articles():
                         block_value = '<div class="page-break"><hr class = "page-break"></div>'
                     elif node_type == 'drop_cap':
                         block_type = 'raw_html'
-                        block_value = '<p class="drop-cap">' + node['data']['paragraph'] + '</p>'
+                        block_value = '<p class="drop-cap">' + node['data'].get('paragraph', '') + '</p>'
                     elif node_type == 'header':
                         block_type = 'raw_html'
                         block_value = embeds.HeaderEmbed.render(data=node['data'])
