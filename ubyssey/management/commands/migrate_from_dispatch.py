@@ -183,7 +183,17 @@ def _migrate_all_images():
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
 
         if has_been_sent_to_wagtail:
-            print("Image of legacy pk #" + str(wagtail_image.legacy_pk) + "already sent to wagtail") 
+            print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
+            wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
+            wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
+            if not wagtail_http_res.status_code == 200:
+                old_img_http_res = requests.get(old_image.get_absolute_url())
+                image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
+                wagtail_image.file = image_file
+                wagtail_image.save()
+                print("Fixed " + str(wagtail_image))
+            else:
+                print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
         else:
             print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
@@ -381,19 +391,18 @@ def _migrate_all_articles():
                             featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
                             featured_media_orderable.save()
                     else:
+                        # There is an image orderable ALREADY associated with this article
                         if any(featured_media_orderable.image for featured_media_orderable in wagtail_article.featured_media.all()):
                             old_img_obj = dispatch_article_revision.featured_image
                             featured_media_orderable = wagtail_article.featured_media.all()[0]
-                            if old_img_obj.image.pk != featured_media_orderable.image.legacy_pk:
-                                featured_media_orderable.sort_order = 0
-                                featured_media_orderable.article_page = wagtail_article
-                                if old_img_obj.caption:
-                                    featured_media_orderable.caption = old_img_obj.caption
-                                if old_img_obj.credit:
-                                    featured_media_orderable.credit = old_img_obj.credit
-                                if old_img_obj.image:
+                            if old_img_obj.caption:
+                                featured_media_orderable.caption = old_img_obj.caption
+                            if old_img_obj.credit:
+                                featured_media_orderable.credit = old_img_obj.credit
+                            if old_img_obj.image:
+                                if old_img_obj.image.pk != featured_media_orderable.image.legacy_pk:
                                     featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
-                                    featured_media_orderable.save()
+                            featured_media_orderable.save()
                 if dispatch_article_revision.featured_video:
                     if len(wagtail_article.featured_media.all()) < 1:                    
                         old_vid_obj = dispatch_article_revision.featured_video
@@ -406,7 +415,8 @@ def _migrate_all_articles():
                             featured_media_orderable.credit = old_img_obj.credit
                         if old_vid_obj.video:
                             featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
-                            featured_media_orderable.save()
+                        featured_media_orderable.save()
+
                     else:
                         if any(featured_media_orderable.video for featured_media_orderable in wagtail_article.featured_media.all()):
                             old_vid_obj = dispatch_article_revision.featured_video
@@ -442,10 +452,10 @@ def _migrate_all_articles():
                             block_type = 'image'
                             block_value = {}
                             block_value['image'] = new_image.pk
-                            block_value['style'] = node['data']['style']
-                            block_value['width'] = node['data']['width']
-                            block_value['caption'] = node['data']['caption']
-                            block_value['credit'] = node['data']['credit']
+                            block_value['style'] = node['data'].get('style', 'default')
+                            block_value['width'] = node['data'].get('width', 'full')
+                            block_value['caption'] = node['data'].get('width', ''),
+                            block_value['credit'] = node['data'].get('credit', '')
                         except dispatch_models.Image.DoesNotExist as e:
                             print(e)
                             block_type = 'richtext'
