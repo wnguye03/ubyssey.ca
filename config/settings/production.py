@@ -44,6 +44,7 @@ GS_BUCKET_NAME = GS_STORAGE_BUCKET_NAME # https://github.com/mirumee/saleor/issu
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 GS_QUERYSTRING_AUTH = False
+GS_FILE_OVERWRITE = False
 
 # Facebook - Production Only
 FACEBOOK_CLIENT_ID = env('FACEBOOK_CLIENT_ID')

@@ -47,6 +47,11 @@ class UbysseyImage(AbstractImage):
     )
     updated_at = models.DateTimeField(auto_now=True)
 
+    legacy_pk = models.IntegerField(
+        null=False,
+        blank=False,
+        default=0,
+    )
     legacy_filename = models.TextField(
         null=False,
         blank=True,
@@ -75,7 +80,13 @@ class UbysseyImage(AbstractImage):
         # If this were inheriting from ImageField, we'd just include the '%Y/%m' in the string
         # See https://docs.djangoproject.com/en/dev/ref/models/fields/#imagefield
         # Be careful of differances from ImageField!
-        folder_name = 'wagtail_images/' + date.today().strftime('%Y/%m')
+        
+        if self.legacy_filename != '':
+            # Delete this stuff once migration is over. It's to preserve legacy directory structure dates
+            folder_name = 'wagtail_images/' + str(self.legacy_filename)[7:14]
+        else:
+            folder_name = 'wagtail_images/' + date.today().strftime('%Y/%m')
+                
         filename = self.file.field.storage.get_valid_name(filename)
 
         # do a unidecode in the filename and then
@@ -111,8 +122,7 @@ class UbysseyRendition(AbstractRendition):
 
         https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py
         """
-
-        folder_name = 'wagtail_renditions/' + date.today().strftime('%Y/%m')
+        folder_name = 'renditions'
         filename = self.file.field.storage.get_valid_name(filename)
         return os.path.join(folder_name, filename)
 
@@ -147,6 +157,11 @@ class GallerySnippet(ClusterableModel):
     legacy_updated_at = models.DateTimeField(
         null=True,
         blank=True,
+    )
+    legacy_pk = models.IntegerField(
+        null=False,
+        blank=False,
+        default=0
     )
     panels = [
         MultiFieldPanel(

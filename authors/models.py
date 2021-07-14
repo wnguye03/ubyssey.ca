@@ -47,6 +47,15 @@ class AuthorPage(Page):
         null=True,
         blank=True,
     )
+    legacy_facebook_url = models.CharField(max_length=255, null=False, blank=True, default='')
+    legacy_twitter_url = models.CharField(max_length=255, null=False, blank=True, default='')
+    legacy_slug = models.CharField(
+        max_length=255,
+        blank=True,
+        null=False,
+        default='',
+    )
+
     description = models.TextField(
         null=False,
         blank=True,
@@ -59,6 +68,7 @@ class AuthorPage(Page):
         MultiFieldPanel(
             [
                 ImageChooserPanel("image"),
+                FieldPanel("description"),
                 FieldPanel("facebook_url"),
                 FieldPanel("twitter_url"),
             ],

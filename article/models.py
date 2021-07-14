@@ -303,10 +303,11 @@ class ArticlePage(SectionablePage):
 
     #-----Hidden stuff: editors don't get to modify these, but they may be programatically changed-----
 
-    legacy_template = models.TextField(
+    legacy_template = models.CharField(
         null=False,
         blank=True,
         default='',
+        max_length=255,
     )
     legacy_template_data = models.TextField(
         null=False,
