@@ -183,17 +183,20 @@ def _migrate_all_images():
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
 
         if has_been_sent_to_wagtail:
-            print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
-            wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
-            wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
-            if not wagtail_http_res.status_code == 200:
-                old_img_http_res = requests.get(old_image.get_absolute_url())
-                image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
-                wagtail_image.file = image_file
-                wagtail_image.save()
-                print("Fixed " + str(wagtail_image))
+            if old_image.pk > 32500:
+                print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
+                wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
+                wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
+                if not wagtail_http_res.status_code == 200:
+                    old_img_http_res = requests.get(old_image.get_absolute_url())
+                    image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
+                    wagtail_image.file = image_file
+                    wagtail_image.save()
+                    print("Fixed " + str(wagtail_image))
+                else:
+                    print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
             else:
-                print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
+                print ("Skipping " + str(old_image.pk) )
         else:
             print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
