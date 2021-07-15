@@ -208,10 +208,6 @@ def _migrate_all_images():
                 print("ERROR: " + str(old_image.get_absolute_url()) + " recieved " + str(http_res.status_code))
                 tag_for_error = True
                 http_res = requests.get('https://www.ubyssey.ca/static/ubyssey/images/ubyssey-logo-square.7fdeb5ac7f29.png')
-
-            image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
-            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
-    
             wagtail_image_title = 'default_title' #should never actually be used, but just in case
             if not old_image.title:
                 wagtail_image_title = str(old_image.img)[15:]
