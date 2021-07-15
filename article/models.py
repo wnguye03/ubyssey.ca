@@ -307,7 +307,7 @@ class ArticlePage(SectionablePage):
         null=False,
         blank=True,
         default='',
-        max_length=255,
+        max_length=1000,
     )
     legacy_template_data = models.TextField(
         null=False,
