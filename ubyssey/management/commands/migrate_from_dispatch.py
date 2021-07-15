@@ -183,61 +183,71 @@ def _migrate_all_images():
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
 
         if has_been_sent_to_wagtail:
-            if old_image.pk > 32500:
-                print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
-                wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
-                wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
-                if not wagtail_http_res.status_code == 200:
-                    old_img_http_res = requests.get(old_image.get_absolute_url())
-                    image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
-                    wagtail_image.file = image_file
-                    wagtail_image.save()
-                    print("Fixed " + str(wagtail_image))
-                else:
-                    print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
-            else:
-                print ("Skipping " + str(old_image.pk) )
+            # if old_image.pk > 32500:
+            #     print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
+            #     wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
+            #     wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
+            #     if not wagtail_http_res.status_code == 200:
+            #         old_img_http_res = requests.get(old_image.get_absolute_url())
+            #         image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
+            #         wagtail_image.file = image_file
+            #         wagtail_image.save()
+            #         print("Fixed " + str(wagtail_image))
+            #     else:
+            #         print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
+            # else:
+            pass
         else:
             print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
             # if settings.DEBUG:
             #     url = 'http://localhost:8000' + url
             http_res = requests.get(url)
+            tag_for_error = False
+            if http_res.status_code != 200:
+                print("ERROR: " + str(old_image.get_absolute_url()) + " recieved " + str(http_res.status_code))
+                tag_for_error = True
+                http_res = requests.get('https://www.ubyssey.ca/static/ubyssey/images/ubyssey-logo-square.7fdeb5ac7f29.png')
 
-            if http_res.status_code == 200:    
-                wagtail_image_title = 'default_title' #should never actually be used, but just in case
-                if not old_image.title:
-                    wagtail_image_title = str(old_image.img)[15:]
-                else:
-                    wagtail_image_title = old_image.title
-                image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
-                wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
-                wagtail_image.legacy_pk = old_image.pk
-                wagtail_image.legacy_filename = str(old_image.img)
-                wagtail_image.created_at = old_image.created_at
-                wagtail_image.updated_at = old_image.updated_at
+            image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
+            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+    
+            wagtail_image_title = 'default_title' #should never actually be used, but just in case
+            if not old_image.title:
+                wagtail_image_title = str(old_image.img)[15:]
+            else:
+                wagtail_image_title = old_image.title
+            image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
+            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+            wagtail_image.legacy_pk = old_image.pk
+            wagtail_image.legacy_filename = str(old_image.img)
+            wagtail_image.created_at = old_image.created_at
+            wagtail_image.updated_at = old_image.updated_at
+            wagtail_image.save()
+            for tag in old_image.tags.all():
+                wagtail_image.tags.add(tag.name)
+            if tag_for_error:
+                wagtail_image.tags.add('MIGRATE ERROR')
+            wagtail_image.save()
+
+            if any(collection.name == str(old_image.img)[7:14] for collection in Collection.objects.all()):
+                wagtail_image.collection = Collection.objects.get(name=str(old_image.img)[7:14] )
                 wagtail_image.save()
-                for tag in old_image.tags.all():
-                    wagtail_image.tags.add(tag.name)
+            else:
+                new_collection = Collection(name=str(old_image.img)[7:14])
+                Collection.objects.get(name="Root").add_child(instance=new_collection)
+                wagtail_image.collection = new_collection
                 wagtail_image.save()
 
-                if any(collection.name == str(old_image.img)[7:14] for collection in Collection.objects.all()):
-                    wagtail_image.collection = Collection.objects.get(name=str(old_image.img)[7:14] )
+            if len(old_image.authors.all()) > 0:
+                old_author = old_image.authors.all()[0]
+                try:
+                    wagtail_image.author = AuthorPage.objects.get(legacy_slug=old_author.person.slug)
+                    wagtail_image.legacy_authors = old_image.get_author_string()
                     wagtail_image.save()
-                else:
-                    new_collection = Collection(name=str(old_image.img)[7:14])
-                    Collection.objects.get(name="Root").add_child(instance=new_collection)
-                    wagtail_image.collection = new_collection
-                    wagtail_image.save()
+                except:
+                    print("Couldn't find an author with the slug " + old_author.person.slug)
 
-                if len(old_image.authors.all()) > 0:
-                    old_author = old_image.authors.all()[0]
-                    try:
-                        wagtail_image.author = AuthorPage.objects.get(legacy_slug=old_author.person.slug)
-                        wagtail_image.legacy_authors = old_image.get_author_string()
-                        wagtail_image.save()
-                    except:
-                        print("Couldn't find an author with the slug " + old_author.person.slug)
 
 def _migrate_all_image_galleries():
     """
@@ -404,7 +414,10 @@ def _migrate_all_articles():
                                 featured_media_orderable.credit = old_img_obj.credit
                             if old_img_obj.image:
                                 if old_img_obj.image.pk != featured_media_orderable.image.legacy_pk:
-                                    featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                                    try:
+                                        featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                                    except Exception as e:
+                                        print("No image found corresponding to " + str(old_img_obj.image.pk))
                             featured_media_orderable.save()
                 if dispatch_article_revision.featured_video:
                     if len(wagtail_article.featured_media.all()) < 1:                    
