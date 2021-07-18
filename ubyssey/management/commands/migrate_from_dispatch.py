@@ -3,7 +3,7 @@ import hashlib
 from dispatch.modules.content.models import Section
 import requests
 
-from article.models import ArticlePage, ArticleAuthorsOrderable
+from article.models import ArticlePage, ArticleAuthorsOrderable, ArticleFeaturedMediaOrderable
 from authors.models import AuthorPage, AllAuthorsPage
 
 from dispatch import models as dispatch_models
@@ -98,6 +98,7 @@ def _migrate_all_authors():
                         
             wagtail_author.full_name = person.full_name
             wagtail_author.title = person.full_name
+            
 
             #set slug
             existing_author_qs = AuthorPage.objects.filter(slug=slugify(wagtail_author.title))
@@ -110,9 +111,12 @@ def _migrate_all_authors():
             if not slugify(wagtail_author.title):
                 slug = wagtail_author.legacy_slug
             wagtail_author.slug = slug
-
+            
             if person.title:
                 wagtail_author.ubyssey_role = person.title
+            if person.description:
+                print(person.description)
+                wagtail_author.description = person.description
             if person.facebook_url:
                 wagtail_author.legacy_facebook_url = person.facebook_url                
             if person.twitter_url:
@@ -125,11 +129,12 @@ def _migrate_all_authors():
 
             # Get the author's image and put it in a collection
             img_url = settings.MEDIA_URL + str(person.image)
-            if settings.DEBUG:
-                img_url = 'http://localhost:8000' + img_url
+            # if settings.DEBUG:
+            #     img_url = 'http://localhost:8000' + img_url
             http_res = requests.get(img_url)
             if http_res.status_code == 200:
-                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title)
+                print(str(img_url))
+                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_author.title) #TODO FIX
                 wagtail_image = CustomImage(title=wagtail_author.title, file=image_file)
                 wagtail_image.legacy_filename = str(person.image)
                 wagtail_image.save()
@@ -176,37 +181,69 @@ def _migrate_all_images():
     wagtail_images = CustomImage.objects.all()
     for old_image in old_images:
         has_been_sent_to_wagtail = any(str(old_image.img) == wagtail_image.legacy_filename for wagtail_image in wagtail_images)
-        if not has_been_sent_to_wagtail:
+
+        if has_been_sent_to_wagtail:
+            # if old_image.pk > 32500:
+            #     print("Image of legacy pk #" + str(old_image.pk) + " already sent to wagtail")
+            #     wagtail_image = CustomImage.objects.get(legacy_pk=str(old_image.pk))
+            #     wagtail_http_res = requests.get(settings.MEDIA_URL + str(wagtail_image.file))
+            #     if not wagtail_http_res.status_code == 200:
+            #         old_img_http_res = requests.get(old_image.get_absolute_url())
+            #         image_file = ImageFile(BytesIO(old_img_http_res.content), name=str(old_image.img)[15:])
+            #         wagtail_image.file = image_file
+            #         wagtail_image.save()
+            #         print("Fixed " + str(wagtail_image))
+            #     else:
+            #         print(settings.MEDIA_URL + str(wagtail_image.file) + ' 200s')
+            # else:
+            pass
+        else:
+            print("Sending image pk# " + str(old_image.pk) + " url: " + str(old_image.get_absolute_url()) + " to wagtail")
             url = old_image.get_absolute_url()
-            if settings.DEBUG:
-                url = 'http://localhost:8000' + url
+            # if settings.DEBUG:
+            #     url = 'http://localhost:8000' + url
             http_res = requests.get(url)
+            tag_for_error = False
+            if http_res.status_code != 200:
+                print("ERROR: " + str(old_image.get_absolute_url()) + " recieved " + str(http_res.status_code))
+                tag_for_error = True
+                http_res = requests.get('https://www.ubyssey.ca/static/ubyssey/images/ubyssey-logo-square.7fdeb5ac7f29.png')
+            wagtail_image_title = 'default_title' #should never actually be used, but just in case
+            if not old_image.title:
+                wagtail_image_title = str(old_image.img)[15:]
+            else:
+                wagtail_image_title = old_image.title
+            image_file = ImageFile(BytesIO(http_res.content), name=str(old_image.img)[15:]) #old filename includes directory crap. Slice is to get rid of that
+            wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
+            wagtail_image.legacy_pk = old_image.pk
+            wagtail_image.legacy_filename = str(old_image.img)
+            wagtail_image.created_at = old_image.created_at
+            wagtail_image.updated_at = old_image.updated_at
+            wagtail_image.save()
+            for tag in old_image.tags.all():
+                wagtail_image.tags.add(tag.name)
+            if tag_for_error:
+                wagtail_image.tags.add('MIGRATE ERROR')
+            wagtail_image.save()
 
-            if http_res.status_code == 200:    
-                wagtail_image_title = 'default_title' #should never actually be used, but just in case
-                if not old_image.title:
-                    wagtail_image_title = str(old_image.img)
-                else:
-                    wagtail_image_title = old_image.title
-                image_file = ImageFile(BytesIO(http_res.content), name=wagtail_image_title)
-                wagtail_image = CustomImage(title=wagtail_image_title, file=image_file)
-
-                wagtail_image.legacy_filename = str(old_image.img)
-                wagtail_image.created_at = old_image.created_at
-                wagtail_image.updated_at = old_image.updated_at
+            if any(collection.name == str(old_image.img)[7:14] for collection in Collection.objects.all()):
+                wagtail_image.collection = Collection.objects.get(name=str(old_image.img)[7:14] )
                 wagtail_image.save()
-                for tag in old_image.tags.all():
-                    wagtail_image.tags.add(tag.name)
+            else:
+                new_collection = Collection(name=str(old_image.img)[7:14])
+                Collection.objects.get(name="Root").add_child(instance=new_collection)
+                wagtail_image.collection = new_collection
                 wagtail_image.save()
 
-                if len(old_image.authors.all()) > 0:
-                    old_author = old_image.authors.all()[0]
-                    try:
-                        wagtail_image.author = AuthorPage.objects.get(legacy_slug=old_author.person.slug)
-                        wagtail_image.legacy_authors = old_image.get_author_string()
-                        wagtail_image.save()
-                    except:
-                        print("Couldn't find an author with the slug " + old_author.person.slug)
+            if len(old_image.authors.all()) > 0:
+                old_author = old_image.authors.all()[0]
+                try:
+                    wagtail_image.author = AuthorPage.objects.get(legacy_slug=old_author.person.slug)
+                    wagtail_image.legacy_authors = old_image.get_author_string()
+                    wagtail_image.save()
+                except:
+                    print("Couldn't find an author with the slug " + old_author.person.slug)
+
 
 def _migrate_all_image_galleries():
     """
@@ -215,26 +252,30 @@ def _migrate_all_image_galleries():
     old_galleries = dispatch_models.ImageGallery.objects.all()
     wagtail_galleries = GallerySnippet.objects.all()
     for old_gallery in old_galleries:
-        old_gallery.title
-        has_been_sent_to_wagtail = any(old_gallery.title == wagtail_gallery.title for wagtail_gallery in wagtail_galleries)
+        has_been_sent_to_wagtail = any(old_gallery.pk == wagtail_gallery.legacy_pk for wagtail_gallery in wagtail_galleries)
         if not has_been_sent_to_wagtail:
             print("Sending gallery #" + str(old_gallery.pk) + " " + old_gallery.title + " to wagtail")
             wagtail_gallery = GallerySnippet()
             wagtail_gallery.title = old_gallery.title
-            wagtail_gallery.slug = slugify(old_gallery.title)
+            wagtail_gallery.slug = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
             wagtail_gallery.legacy_created_at = old_gallery.created_at
             wagtail_gallery.legacy_updated_at = old_gallery.updated_at
+            wagtail_gallery.legacy_pk = old_gallery.pk
             wagtail_gallery.save()
 
             for image_attachment_object in old_gallery.images.all():
 
                 gallery_orderable = GalleryOrderable()
                 gallery_orderable.gallery = wagtail_gallery
-                gallery_orderable.caption = image_attachment_object.caption
-                gallery_orderable.credit = image_attachment_object.credit
-                gallery_orderable.image = CustomImage.objects.get(legacy_filename=str(image_attachment_object.image.img))
-                gallery_orderable.order = image_attachment_object.order
-                gallery_orderable.save()
+                gallery_orderable.sort_order = image_attachment_object.order
+                if gallery_orderable.caption:
+                    gallery_orderable.caption = image_attachment_object.caption
+                if gallery_orderable.credit:
+                    gallery_orderable.credit = image_attachment_object.credit
+                if image_attachment_object.image:
+                    print(image_attachment_object.image.pk)
+                    gallery_orderable.image = CustomImage.objects.get(legacy_pk=image_attachment_object.image.pk)
+                    gallery_orderable.save()
 
 def _migrate_all_videos():
     """
@@ -276,7 +317,7 @@ def _migrate_all_videos():
 
 def _migrate_all_articles():
     # dispatch_article 
-    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).order_by('-published_at')        
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True)    
 
     for head_article in dispatch_head_articles_qs:
         current_slug = head_article.slug
@@ -342,7 +383,69 @@ def _migrate_all_articles():
                 if dispatch_article_revision.breaking_timeout:
                     wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
-                # Still need to do foreign keys for featured image/video and subsection!
+                # Still need to do foreign keys for featured video and subsection!
+
+                # Featured image:
+                if dispatch_article_revision.featured_image:
+                    if len(wagtail_article.featured_media.all()) < 1:                    
+                        old_img_obj = dispatch_article_revision.featured_image
+                        featured_media_orderable = ArticleFeaturedMediaOrderable()
+                        featured_media_orderable.sort_order = 0
+                        featured_media_orderable.article_page = wagtail_article
+                        if old_img_obj.caption:
+                            featured_media_orderable.caption = old_img_obj.caption
+                        if old_img_obj.credit:
+                            featured_media_orderable.credit = old_img_obj.credit
+                        if old_img_obj.image:
+                            featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                            featured_media_orderable.save()
+                    else:
+                        # There is an image orderable ALREADY associated with this article
+                        if any(featured_media_orderable.image for featured_media_orderable in wagtail_article.featured_media.all()):
+                            old_img_obj = dispatch_article_revision.featured_image
+                            featured_media_orderable = wagtail_article.featured_media.all()[0]
+                            if old_img_obj.caption:
+                                featured_media_orderable.caption = old_img_obj.caption
+                            if old_img_obj.credit:
+                                featured_media_orderable.credit = old_img_obj.credit
+                            if old_img_obj.image:
+                                if old_img_obj.image.pk != featured_media_orderable.image.legacy_pk:
+                                    try:
+                                        featured_media_orderable.image = CustomImage.objects.get(legacy_pk=old_img_obj.image.pk)
+                                    except Exception as e:
+                                        print("No image found corresponding to " + str(old_img_obj.image.pk))
+                            featured_media_orderable.save()
+                if dispatch_article_revision.featured_video:
+                    if len(wagtail_article.featured_media.all()) < 1:                    
+                        old_vid_obj = dispatch_article_revision.featured_video
+                        featured_media_orderable = ArticleFeaturedMediaOrderable()
+                        featured_media_orderable.sort_order = 1
+                        featured_media_orderable.article_page = wagtail_article
+                        if old_vid_obj.caption:
+                            featured_media_orderable.caption = old_img_obj.caption
+                        if old_vid_obj.credit:
+                            featured_media_orderable.credit = old_img_obj.credit
+                        if old_vid_obj.video:
+                            featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                        featured_media_orderable.save()
+
+                    else:
+                        if any(featured_media_orderable.video for featured_media_orderable in wagtail_article.featured_media.all()):
+                            old_vid_obj = dispatch_article_revision.featured_video
+                            featured_media_orderable = wagtail_article.featured_media.all()[-1]
+                            if old_vid_obj.video.url != featured_media_orderable.video.url:
+                                featured_media_orderable.sort_order = 1
+                                featured_media_orderable.article_page = wagtail_article
+                                if old_vid_obj.caption:
+                                    featured_media_orderable.caption = old_img_obj.caption
+                                if old_vid_obj.credit:
+                                    featured_media_orderable.credit = old_img_obj.credit
+                                if old_vid_obj.video:
+                                    featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    featured_media_orderable.save()
+                
+                if dispatch_article_revision.subsection:
+                    wagtail_article.category = CategorySnippet.objects.get(slug=dispatch_article_revision.subsection.slug)
 
                 wagtail_article_nodes = []
                 
@@ -357,14 +460,14 @@ def _migrate_all_articles():
                     elif node_type == 'image':
                         try:
                             old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
-                            new_image = CustomImage.objects.get(legacy_filename=str(old_image.img))
+                            new_image = CustomImage.objects.get(legacy_pk=old_image.pk)
                             block_type = 'image'
                             block_value = {}
                             block_value['image'] = new_image.pk
-                            block_value['style'] = node['data']['style']
-                            block_value['width'] = node['data']['width']
-                            block_value['caption'] = node['data']['caption']
-                            block_value['credit'] = node['data']['credit']
+                            block_value['style'] = node['data'].get('style', 'default')
+                            block_value['width'] = node['data'].get('width', 'full')
+                            block_value['caption'] = node['data'].get('width', ''),
+                            block_value['credit'] = node['data'].get('credit', '')
                         except dispatch_models.Image.DoesNotExist as e:
                             print(e)
                             block_type = 'richtext'
@@ -376,26 +479,29 @@ def _migrate_all_articles():
                     elif node_type == 'code':
                         block_type = 'raw_html'
                         if node['data']['mode'] == 'html':
-                            block_value = node['data']['content']
+                            block_value = node['data'].get('content', '')
                         elif node['data']['mode'] == 'css':
-                            block_value = '<style>' + node['data']['content'] + '</style>'
+                            block_value = '<style>' + node['data'].get('content', '') + '</style>'
                         elif node['data']['mode'] == 'javascript':
-                            block_value = '<script>' + node['data']['content'] + '</script>'
+                            block_value = '<script>' + node['data'].get('content', '') + '</script>'
                     elif node_type == 'video':
                         block_type = 'video'
                         block_value = {}
-                        block_value['embed'] = node['data']['url']
-                        block_value['caption'] = node['data']['caption']
-                        block_value['credit'] = node['data']['credit']
+                        block_value['embed'] = node['data'].get('caption', 'https://www.youtube.com/watch?v=e_fTr5XHh9U') # Look for this later when 
+                        block_value['caption'] = node['data'].get('caption', '')
+                        block_value['credit'] = node['data'].get('credit', '')
                     elif node_type == 'quote':
                         block_type = 'quote'
                         block_value = {}
-                        block_value['content'] = node['data']['content']
-                        block_value['source'] = node['data']['source']
+                        block_value['content'] = node['data'].get('content', '')
+                        block_value['source'] = node['data'].get('source', '')
                     elif node_type == 'gallery':
-                        old_gallery = dispatch_models.ImageGallery.objects.get(pk=node['data']['id'])
                         block_type = 'gallery'
-                        block_value = slugify(old_gallery.title)
+                        if node['data'].get('id',0) != 0:
+                            old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
+                            block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                        else:
+                            block_value = 'default'
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         # SQL queries say there are no widgets used this way on the entire site
@@ -408,13 +514,14 @@ def _migrate_all_articles():
                     #     pass #TODO
                     # SQL says this never actually occurs
                     elif node_type == 'interactive_map':
-                        pass #TODO
+                        block_type = 'raw_html'
+                        block_value = node['data']['svg'] + node['data']['initScript']
                     elif node_type == 'pagebreak':
                         block_type = 'raw_html'
                         block_value = '<div class="page-break"><hr class = "page-break"></div>'
                     elif node_type == 'drop_cap':
                         block_type = 'raw_html'
-                        block_value = '<p class="drop-cap">' + node['data']['paragraph'] + '</p>'
+                        block_value = '<p class="drop-cap">' + node['data'].get('paragraph', '') + '</p>'
                     elif node_type == 'header':
                         block_type = 'raw_html'
                         block_value = embeds.HeaderEmbed.render(data=node['data'])
