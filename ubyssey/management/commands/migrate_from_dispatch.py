@@ -496,9 +496,12 @@ def _migrate_all_articles():
                         block_value['content'] = node['data'].get('content', '')
                         block_value['source'] = node['data'].get('source', '')
                     elif node_type == 'gallery':
-                        old_gallery = dispatch_models.ImageGallery.objects.get(pk=node['data']['id'])
                         block_type = 'gallery'
-                        block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                        if node['data'].get('id',0) != 0:
+                            old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
+                            block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                        else:
+                            block_value = 'default'
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         # SQL queries say there are no widgets used this way on the entire site
