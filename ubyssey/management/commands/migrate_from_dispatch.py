@@ -426,7 +426,10 @@ def _migrate_all_articles():
                         if old_vid_obj.credit:
                             featured_media_orderable.credit = old_img_obj.credit
                         if old_vid_obj.video:
-                            featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                            try:
+                                featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                            except exceptions.ObjectDoesNotExist as e:
+                                print(e)
                         featured_media_orderable.save()
 
                     else:
@@ -441,7 +444,10 @@ def _migrate_all_articles():
                                 if old_vid_obj.credit:
                                     featured_media_orderable.credit = old_img_obj.credit
                                 if old_vid_obj.video:
-                                    featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    try:
+                                        featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    except exceptions.ObjectDoesNotExist as e:
+                                        print(e)
                                     featured_media_orderable.save()
                 
                 if dispatch_article_revision.subsection:
@@ -498,8 +504,12 @@ def _migrate_all_articles():
                     elif node_type == 'gallery':
                         block_type = 'gallery'
                         if node['data'].get('id',0) != 0:
-                            old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
-                            block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                            try:
+                                old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
+                                block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                            except exceptions.ObjectDoesNotExist as e:
+                                print(e)
+                                block_value = 'default'
                         else:
                             block_value = 'default'
                     elif node_type == 'widget':
