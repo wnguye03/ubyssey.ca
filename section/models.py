@@ -137,15 +137,18 @@ class SectionPage(SectionablePage):
             #all_articles.filter
 
         # Paginate all posts by 15 per page
-        paginator = Paginator(all_articles, per_page=1)
+        paginator = Paginator(all_articles, per_page=15)
         # Try to get the ?page=x value
+        
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
             paginated_articles = paginator.page(page)
+            
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
             paginated_articles = paginator.page(1)
+           
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
             # Then return the last page
@@ -153,6 +156,7 @@ class SectionPage(SectionablePage):
 
         context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+    
 
         return context
     
