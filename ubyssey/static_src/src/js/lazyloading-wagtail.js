@@ -1,5 +1,7 @@
 var section_count = 1;
 
+console.log('hello')
+
 
 
 //a GET request based on the 'section'
@@ -40,8 +42,11 @@ function load_sections(scrollHandler) {
 
 
 $(window).scroll(function scrollHandler() {
+    console.log('hello')
     //An ajax call will be sent when the user reaches the bottom of the window
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+
+        console.log('hello')
 
 
         $(window).off("scroll", scrollHandler);
