@@ -426,7 +426,10 @@ def _migrate_all_articles():
                         if old_vid_obj.credit:
                             featured_media_orderable.credit = old_img_obj.credit
                         if old_vid_obj.video:
-                            featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                            try:
+                                featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                            except exceptions.ObjectDoesNotExist as e:
+                                print(e)
                         featured_media_orderable.save()
 
                     else:
@@ -441,7 +444,10 @@ def _migrate_all_articles():
                                 if old_vid_obj.credit:
                                     featured_media_orderable.credit = old_img_obj.credit
                                 if old_vid_obj.video:
-                                    featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    try:
+                                        featured_media_orderable.video = VideoSnippet.objects.get(url=old_vid_obj.video.url)
+                                    except exceptions.ObjectDoesNotExist as e:
+                                        print(e)
                                     featured_media_orderable.save()
                 
                 if dispatch_article_revision.subsection:
@@ -478,12 +484,15 @@ def _migrate_all_articles():
                             block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
                     elif node_type == 'code':
                         block_type = 'raw_html'
-                        if node['data']['mode'] == 'html':
-                            block_value = node['data'].get('content', '')
-                        elif node['data']['mode'] == 'css':
-                            block_value = '<style>' + node['data'].get('content', '') + '</style>'
-                        elif node['data']['mode'] == 'javascript':
-                            block_value = '<script>' + node['data'].get('content', '') + '</script>'
+                        try:
+                            if node['data']['mode'] == 'html':
+                                block_value = node['data'].get('content', '')
+                            elif node['data']['mode'] == 'css':
+                                block_value = '<style>' + node['data'].get('content', '') + '</style>'
+                            elif node['data']['mode'] == 'javascript':
+                                block_value = '<script>' + node['data'].get('content', '') + '</script>'
+                        except:
+                            block_value = 'CODE BLOCK ERROR'
                     elif node_type == 'video':
                         block_type = 'video'
                         block_value = {}
@@ -498,24 +507,43 @@ def _migrate_all_articles():
                     elif node_type == 'gallery':
                         block_type = 'gallery'
                         if node['data'].get('id',0) != 0:
-                            old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
-                            block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                            try:
+                                old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
+                                block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                            except exceptions.ObjectDoesNotExist as e:
+                                print(e)
+                                block_value = 'default'
                         else:
                             block_value = 'default'
                     elif node_type == 'widget':
                         # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
                         # SQL queries say there are no widgets used this way on the entire site
                         block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node['data'])
+                        try:
+                            block_value = embeds.WidgetEmbed.render(data=node['data'])
+                        except KeyError as e:
+                            print(e)
+                            block_value = 'WIDGET DATA ERROR'
+                        except:
+                            block_value = 'WIDGET ERROR'
                     elif node_type == 'poll':
                         block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node['data']['data'])
+                        try:
+                            block_value = embeds.WidgetEmbed.render(data=node['data'].get('data', ''))
+                        except KeyError as e:
+                            print(e)
+                            block_value = 'WIDGET DATA ERROR'
+                        except:
+                            block_value = 'WIDGET ERROR'
                     # elif node_type == 'podcast':
                     #     pass #TODO
                     # SQL says this never actually occurs
                     elif node_type == 'interactive_map':
                         block_type = 'raw_html'
-                        block_value = node['data']['svg'] + node['data']['initScript']
+                        try:
+                            block_value = node['data']['svg'] + node['data']['initScript']
+                        except:
+                            block_value = 'INTERACTIVE MAP ERROR'
                     elif node_type == 'pagebreak':
                         block_type = 'raw_html'
                         block_value = '<div class="page-break"><hr class = "page-break"></div>'

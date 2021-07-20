@@ -20,6 +20,7 @@ module.exports = {
     'soccer_nationals': './src/js/soccer_nationals.js',
     'timeline': './src/js/timeline.js',
     'episode': './src/js/episode.js',
+    'lazyloading-wagtail': './src/js/lazyloading-wagtail.js',
     blockadblock: './src/js/blockadblock.js'
   },
   output: {
