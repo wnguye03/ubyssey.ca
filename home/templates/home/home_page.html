@@ -101,8 +101,12 @@
 </main>
 {% endblock %}
 
-<script src="{% static 'home/js/lazyloading.js' %}" type="text/javascript"></script>
 
 {% block footer %}
   {% include 'navigation/footer.html' with homepage=True %}
 {% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'home/js/lazyloading.js' %}" type="text/javascript"></script>
+{% endblock %}
+ 
