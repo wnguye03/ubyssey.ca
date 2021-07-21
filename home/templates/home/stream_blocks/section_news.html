@@ -10,25 +10,23 @@
     </div>
     <div class="c-homepage__section__right">
       <div class="c-homepage__section__stacked">
-      {% with self.section.featured_articles.1 as article %}
-        {% if article %}
-          {% include 'article/objects/default.html' with article=article hide_image=True padded=True %}
-        {% endif %}
-      {% endwith %}
-      {% with self.section.featured_articles.2 as article %}
-        {% if article %}
-          {% include 'article/objects/default.html' with article=article hide_image=True padded=True %}
-        {% endif %}
-      {% endwith %}
-
+        {% with self.section.featured_articles.1 as article %}
+          {% if article %}
+            {% include 'article/objects/default.html' with article=article hide_image=True padded=True %}
+          {% endif %}
+        {% endwith %}
+        {% with self.section.featured_articles.2 as article %}
+          {% if article %}
+            {% include 'article/objects/default.html' with article=article hide_image=True padded=True %}
+          {% endif %}
+        {% endwith %}
       </div>
       <ul class="c-homepage__section__bullets">
-      {% with self.section.featured_articles.3 as article %}
-        {% if article %}
-           <li>{% include 'article/objects/bullet.html' with article=article %}</li>
-         {% endif %}
-      {% endwith %}
-     
+        {% with self.section.featured_articles.3 as article %}
+          {% if article %}
+            <li>{% include 'article/objects/bullet.html' with article=article %}</li>
+          {% endif %}
+        {% endwith %}     
       </ul>
     </div>
 </section>
