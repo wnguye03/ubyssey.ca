@@ -4,6 +4,7 @@ from images.models import GallerySnippet
 from dispatch.models import Article
 
 from django.db import models
+from django.db.models import fields
 from django.db.models.fields import CharField
 from django.db.models.query import QuerySet
 from django.forms.widgets import Select
@@ -14,6 +15,7 @@ from images import blocks as image_blocks
 from images.models import GallerySnippet
 
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from section.sectionable.models import SectionablePage
@@ -47,9 +49,41 @@ class DispatchCounterpartSnippet(models.Model):
         on_delete=models.SET_NULL,
     )
 
+@register_snippet
+class ArticleSeriesSnippet(ClusterableModel):
+    title = fields.CharField(
+        blank=False,
+        null=False,
+        max_length=200
+    )
+    slug = fields.SlugField(
+        unique=True,
+        blank=False,
+        null=False,
+        max_length=200
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('title'),
+                FieldPanel('slug'),
+            ],
+            heading="Essentials"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("articles", label="Articles"),
+            ],
+            heading="articles"
+        ),
+    ]
+    def __str__(self):
+        return self.title
+    class Meta:
+         verbose_name = "Series of Articles"
+         verbose_name_plural = "Series of Articles"
 
 #-----Orderable models-----
-
 class ArticleAuthorsOrderable(Orderable):
     """
     This closely corresponds to the Dispatch model that is (mis-)named "Author"
@@ -88,6 +122,31 @@ class ArticleAuthorsOrderable(Orderable):
                 ),
             ],
             heading="Author",
+        ),
+    ]
+
+class SeriesOrderable(Orderable):
+    """
+    Represents a single article in a series of articles. Associated with ArticleSeriesSnippet
+    """
+    article = models.ForeignKey(
+        "article.ArticlePage",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="+",
+    )
+    series = ParentalKey(
+        "ArticleSeriesSnippet",
+        default='',
+        related_name="articles",
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                PageChooserPanel('article'),
+            ],
+            heading="Article"
         ),
     ]
 
@@ -142,7 +201,6 @@ class ArticleFeaturedMediaOrderable(Orderable):
             heading="Caption/Credits",
         ),
     ]
-
 
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):

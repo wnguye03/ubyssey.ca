@@ -32,9 +32,6 @@ class HomePage(Page):
         blank=True,
     )
 
-
-
-
     content_panels = Page.content_panels + [
         StreamFieldPanel("sections_stream", heading="Sections"),
     ]
@@ -47,7 +44,6 @@ class HomePage(Page):
 
         #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
         for section_stream in self.sections_stream:
-
             if(str(section_stream.value['section']) == "Blog" and SectionPage.objects.get(slug = "blog") is not None):
                 context['blog'] = self.get_section_articles(section_slug='blog')
 
@@ -56,10 +52,8 @@ class HomePage(Page):
                         ajax_section_blocks.append(section)
                   
 
-        #if the request is ajax, it will return the requested 'section' and the feature articles under that section
-      
+        #if the request is ajax, it will return the requested 'section' and the feature articles under that section     
         if request.is_ajax():
-
             # This is the index for which the section will be loaded onto the homepage
             # section_count is going to be updated in the frontend after each repsonse is recieved. Check lazyloading-wagtail.js
             section_count = int(request.GET.get('section_count'))
@@ -67,24 +61,17 @@ class HomePage(Page):
             if  section_count < len(ajax_section_blocks):
                 context[ 'feature_articles'] = ajax_section_blocks[section_count].get_featured_articles()
                 context['section_name'] = ajax_section_blocks[section_count].title
-                
-   
         return context
 
-    def get_above_cut_articles(self, max_count=6):
-  
+    def get_above_cut_articles(self, max_count=6):  
         return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
-
     above_cut_articles = property(fget=get_above_cut_articles)
-
-
 
     #takes a section_slug and returns the feature articles for that section
     def get_section_articles(self, section_slug):
 
         sectionPage = SectionPage.objects.get(slug = section_slug)
         
-
         return sectionPage.get_featured_articles()
 
     def get_all_section_slug(self):
@@ -97,14 +84,11 @@ class HomePage(Page):
 
         return allsection_slug
 
-
-
     #returns the the breaking articles from each section
     def get_breaking_articles(self):
 
         breaking_news_artciles = []
         allsectionPages = SectionPage.objects.all()
-
 
         for section in allsectionPages:
             for article in section.get_section_articles(): 
@@ -112,5 +96,3 @@ class HomePage(Page):
                     breaking_news_artciles.append(article)
 
         return breaking_news_artciles
-
-
