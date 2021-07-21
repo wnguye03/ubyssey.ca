@@ -244,7 +244,6 @@ def _migrate_all_images():
                 except:
                     print("Couldn't find an author with the slug " + old_author.person.slug)
 
-
 def _migrate_all_image_galleries():
     """
     Assumes all images have been sent to wagtail already
@@ -317,7 +316,7 @@ def _migrate_all_videos():
 
 def _migrate_all_articles():
     # dispatch_article 
-    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True)    
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True)
 
     for head_article in dispatch_head_articles_qs:
         current_slug = head_article.slug
@@ -454,115 +453,137 @@ def _migrate_all_articles():
                     wagtail_article.category = CategorySnippet.objects.get(slug=dispatch_article_revision.subsection.slug)
 
                 wagtail_article_nodes = []
-                
-                for node in dispatch_article_revision.content:
-                    # copy data from dispatch_article_revision.content to wagtail.article
-                    # figure out what the type of the embed is (node_type). set the appropriate block_type
-                    node_type = node['type']
-                    block_type = 'richtext'
-                    if node_type == 'paragraph':
+                try:
+                    for node in dispatch_article_revision.content:
+                        # copy data from dispatch_article_revision.content to wagtail.article
+                        # figure out what the type of the embed is (node_type). set the appropriate block_type
+                        node_type = node['type']
                         block_type = 'richtext'
-                        block_value = '<p>' + node['data'] + '</p>'
-                    elif node_type == 'image':
-                        try:
-                            old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
-                            new_image = CustomImage.objects.get(legacy_pk=old_image.pk)
-                            block_type = 'image'
-                            block_value = {}
-                            block_value['image'] = new_image.pk
-                            block_value['style'] = node['data'].get('style', 'default')
-                            block_value['width'] = node['data'].get('width', 'full')
-                            block_value['caption'] = node['data'].get('width', ''),
-                            block_value['credit'] = node['data'].get('credit', '')
-                        except dispatch_models.Image.DoesNotExist as e:
-                            print(e)
+                        if node_type == 'paragraph':
                             block_type = 'richtext'
-                            block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE</p>'
-                        except CustomImage.DoesNotExist as e:
-                            print(e)
-                            block_type = 'richtext'
-                            block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
-                    elif node_type == 'code':
-                        block_type = 'raw_html'
-                        if node['data']['mode'] == 'html':
-                            block_value = node['data'].get('content', '')
-                        elif node['data']['mode'] == 'css':
-                            block_value = '<style>' + node['data'].get('content', '') + '</style>'
-                        elif node['data']['mode'] == 'javascript':
-                            block_value = '<script>' + node['data'].get('content', '') + '</script>'
-                    elif node_type == 'video':
-                        block_type = 'video'
-                        block_value = {}
-                        block_value['embed'] = node['data'].get('caption', 'https://www.youtube.com/watch?v=e_fTr5XHh9U') # Look for this later when 
-                        block_value['caption'] = node['data'].get('caption', '')
-                        block_value['credit'] = node['data'].get('credit', '')
-                    elif node_type == 'quote':
-                        block_type = 'quote'
-                        block_value = {}
-                        block_value['content'] = node['data'].get('content', '')
-                        block_value['source'] = node['data'].get('source', '')
-                    elif node_type == 'gallery':
-                        block_type = 'gallery'
-                        if node['data'].get('id',0) != 0:
+                            block_value = '<p>' + node['data'] + '</p>'
+                        elif node_type == 'image':
                             try:
-                                old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
-                                block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
-                            except exceptions.ObjectDoesNotExist as e:
+                                old_image = dispatch_models.Image.objects.get(pk=node['data']['image_id'])
+                                new_image = CustomImage.objects.get(legacy_pk=old_image.pk)
+                                block_type = 'image'
+                                block_value = {}
+                                block_value['image'] = new_image.pk
+                                block_value['style'] = node['data'].get('style', 'default')
+                                block_value['width'] = node['data'].get('width', 'full')
+                                block_value['caption'] = node['data'].get('width', ''),
+                                block_value['credit'] = node['data'].get('credit', '')
+                            except dispatch_models.Image.DoesNotExist as e:
                                 print(e)
+                                block_type = 'richtext'
+                                block_value = '<p>DISPATCH IMAGE EMBED ERROR WITH ARTICLE</p>'
+                            except CustomImage.DoesNotExist as e:
+                                print(e)
+                                block_type = 'richtext'
+                                block_value = '<p>WAGTAIL IMAGE EMBED ERROR WITH ARTICLE</p>'
+                        elif node_type == 'code':
+                            block_type = 'raw_html'
+                            try:
+                                if node['data']['mode'] == 'html':
+                                    block_value = node['data'].get('content', '')
+                                elif node['data']['mode'] == 'css':
+                                    block_value = '<style>' + node['data'].get('content', '') + '</style>'
+                                elif node['data']['mode'] == 'javascript':
+                                    block_value = '<script>' + node['data'].get('content', '') + '</script>'
+                            except:
+                                block_value = 'CODE BLOCK ERROR'
+                        elif node_type == 'video':
+                            block_type = 'video'
+                            block_value = {}
+                            block_value['embed'] = node['data'].get('caption', 'https://www.youtube.com/watch?v=e_fTr5XHh9U') # Look for this later when 
+                            block_value['caption'] = node['data'].get('caption', '')
+                            block_value['credit'] = node['data'].get('credit', '')
+                        elif node_type == 'quote':
+                            block_type = 'quote'
+                            block_value = {}
+                            block_value['content'] = node['data'].get('content', '')
+                            block_value['source'] = node['data'].get('source', '')
+                        elif node_type == 'gallery':
+                            block_type = 'gallery'
+                            if node['data'].get('id',0) != 0:
+                                try:
+                                    old_gallery = dispatch_models.ImageGallery.objects.get(id=node['data']['id'])
+                                    block_value = slugify(old_gallery.title)[:48] + str(old_gallery.pk) 
+                                except exceptions.ObjectDoesNotExist as e:
+                                    print(e)
+                                    block_value = 'default'
+                            else:
                                 block_value = 'default'
-                        else:
-                            block_value = 'default'
-                    elif node_type == 'widget':
-                        # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
-                        # SQL queries say there are no widgets used this way on the entire site
-                        block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node['data'])
-                    elif node_type == 'poll':
-                        block_type = 'raw_html'
-                        block_value = embeds.WidgetEmbed.render(data=node['data']['data'])
-                    # elif node_type == 'podcast':
-                    #     pass #TODO
-                    # SQL says this never actually occurs
-                    elif node_type == 'interactive_map':
-                        block_type = 'raw_html'
-                        block_value = node['data']['svg'] + node['data']['initScript']
-                    elif node_type == 'pagebreak':
-                        block_type = 'raw_html'
-                        block_value = '<div class="page-break"><hr class = "page-break"></div>'
-                    elif node_type == 'drop_cap':
-                        block_type = 'raw_html'
-                        block_value = '<p class="drop-cap">' + node['data'].get('paragraph', '') + '</p>'
-                    elif node_type == 'header':
-                        block_type = 'raw_html'
-                        block_value = embeds.HeaderEmbed.render(data=node['data'])
-                    elif node_type == 'list':
-                        block_type = 'raw_html'
-                        block_value = embeds.ListEmbed.render(data=node['data'])
-                    # elif node_type == 'video':
-                    #     block_type = 'video'
-                    #     block_value = blocks.StructValue()
-                    #     block_value['video_embed'] 
+                        elif node_type == 'widget':
+                            # This is the "worst case scenario" way of migrating old Dispatch stuff, when it depdnds on features we no longer intend to support
+                            # SQL queries say there are no widgets used this way on the entire site
+                            block_type = 'raw_html'
+                            try:
+                                block_value = embeds.WidgetEmbed.render(data=node['data'])
+                            except KeyError as e:
+                                print(e)
+                                block_value = 'WIDGET DATA ERROR'
+                            except:
+                                block_value = 'WIDGET ERROR'
+                        elif node_type == 'poll':
+                            block_type = 'raw_html'
+                            try:
+                                block_value = embeds.WidgetEmbed.render(data=node['data'].get('data', ''))
+                            except KeyError as e:
+                                print(e)
+                                block_value = 'WIDGET DATA ERROR'
+                            except:
+                                block_value = 'WIDGET ERROR'
+                        # elif node_type == 'podcast':
+                        #     pass #TODO
+                        # SQL says this never actually occurs
+                        elif node_type == 'interactive_map':
+                            block_type = 'raw_html'
+                            try:
+                                block_value = node['data']['svg'] + node['data']['initScript']
+                            except:
+                                block_value = 'INTERACTIVE MAP ERROR'
+                        elif node_type == 'pagebreak':
+                            block_type = 'raw_html'
+                            block_value = '<div class="page-break"><hr class = "page-break"></div>'
+                        elif node_type == 'drop_cap':
+                            block_type = 'raw_html'
+                            block_value = '<p class="drop-cap">' + node['data'].get('paragraph', '') + '</p>'
+                        elif node_type == 'header':
+                            block_type = 'raw_html'
+                            block_value = embeds.HeaderEmbed.render(data=node['data'])
+                        elif node_type == 'list':
+                            block_type = 'raw_html'
+                            block_value = embeds.ListEmbed.render(data=node['data'])
 
-                    # NOTE: https://stackoverflow.com/questions/34200844/how-can-i-programmatically-add-content-to-a-wagtail-streamfield
-                    # https://stackoverflow.com/questions/47788080/how-can-i-create-page-and-set-its-streamfield-value-programmatically
-                    # USE JSON LIKE THIS!
+                        # NOTE: https://stackoverflow.com/questions/34200844/how-can-i-programmatically-add-content-to-a-wagtail-streamfield
+                        # https://stackoverflow.com/questions/47788080/how-can-i-create-page-and-set-its-streamfield-value-programmatically
+                        # USE JSON LIKE THIS!
 
-                    # Turns out keeping blocks on a paragraph-by-paragraph basis makes keeping track of present revisions make more sense, so we do not use the below if statement
-                    # it may be useful for something though, so it lives on in comments
-                    # if len(wagtail_article_nodes) > 0 and wagtail_article_nodes[-1]['type'] == 'richtext' and block_type == 'richtext':
-                    #    # Special case of last node being a richtext and current one also a richtext, just join them together as seperate paragraphs
-                    #    wagtail_article_nodes[-1]['value'] = wagtail_article_nodes[-1]['value'] + block_value
-                    # else:
+                        # Turns out keeping blocks on a paragraph-by-paragraph basis makes keeping track of present revisions make more sense, so we do not use the below if statement
+                        # it may be useful for something though, so it lives on in comments
+                        # if len(wagtail_article_nodes) > 0 and wagtail_article_nodes[-1]['type'] == 'richtext' and block_type == 'richtext':
+                        #    # Special case of last node being a richtext and current one also a richtext, just join them together as seperate paragraphs
+                        #    wagtail_article_nodes[-1]['value'] = wagtail_article_nodes[-1]['value'] + block_value
+                        # else:
 
-                    wagtail_streamfield_node = {
-                        'type':'',
-                        'value':'',
-                    }
-                    wagtail_streamfield_node['type'] = block_type
-                    wagtail_streamfield_node['value'] = block_value
-                    wagtail_streamfield_node['id'] = hashlib.sha1(str(wagtail_streamfield_node).encode('utf-8')).hexdigest()
-                    wagtail_article_nodes.append(wagtail_streamfield_node)
+                        wagtail_streamfield_node = {
+                            'type':'',
+                            'value':'',
+                        }
+                        wagtail_streamfield_node['type'] = block_type
+                        wagtail_streamfield_node['value'] = block_value
+                        wagtail_streamfield_node['id'] = hashlib.sha1(str(wagtail_streamfield_node).encode('utf-8')).hexdigest()
+                        wagtail_article_nodes.append(wagtail_streamfield_node)
 
+                except TypeError:
+                    print("Article contents could not be interpreted as valid JSON")
+                    wagtail_article_nodes = [
+                        {
+                            'type':'raw_html',
+                            'value':str(dispatch_article_revision.content),
+                        }
+                    ]
                 wagtail_article.content = json.dumps(wagtail_article_nodes)
 
                 # Wagtail revision created corresponding to the Dispatch revision
