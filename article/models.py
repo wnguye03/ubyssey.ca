@@ -228,6 +228,8 @@ class ArticlePageManager(PageManager):
             
         return self.live().public().descendant_of(section_root).exact_type(ArticlePage).order_by('-last_modified_at')
 
+
+
 #-----Page models-----
 
 class ArticlePage(SectionablePage):
