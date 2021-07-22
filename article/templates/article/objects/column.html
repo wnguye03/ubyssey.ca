@@ -3,6 +3,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load video_filters %}
+{% if article %}
   <article class="o-article o-article--column{% if padded %} o-article--padded{% endif %}">
     <div class="o-article__meta">
       <div class="o-article__meta__image">
@@ -27,3 +28,4 @@
     </div>
     <p class="o-article__snippet">{{ article.lede|safe }}</p>
   </article>
+{% endif %}
