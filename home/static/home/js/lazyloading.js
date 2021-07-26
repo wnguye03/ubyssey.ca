@@ -8,7 +8,7 @@ function load_sections(scrollHandler) {
             section_count: section_count,
         },
         beforeSend: function () {
-            $('.loader').show();
+
         },
         complete: function () {
             $('.loader').hide();
@@ -31,7 +31,7 @@ function load_sections(scrollHandler) {
 $(window).scroll(function scrollHandler() {
     //An ajax call will be sent when the user reaches the bottom of the window
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-        $(window).off("scroll", scrollHandler);
+        $('.loader').show();
         load_sections(scrollHandler);
     }
 })
