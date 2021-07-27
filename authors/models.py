@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from article.models import ArticlePage
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -18,6 +21,9 @@ class AllAuthorsPage(Page):
         verbose_name_plural = "Author Management Pages"
 
 class AuthorPage(Page):
+
+    template = "authors/author_page.html"
+
     parent_page_types = [
         'authors.AllAuthorsPage',
     ]
@@ -76,6 +82,33 @@ class AuthorPage(Page):
         ),
     ]
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        all_articles = ArticlePage.objects.all()
+
+          # Paginate all posts by 15 per page
+        paginator = Paginator(all_articles, per_page=5)
+        # Try to get the ?page=x value
+        
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            paginated_articles = paginator.page(page)
+            
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            paginated_articles = paginator.page(1)
+           
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            paginated_articles = paginator.page(paginator.num_pages)
+        context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+
+    
+        return context
+    
+   
     def clean(self):
         """Override the values of title and slug before saving."""
         # The odd pattern used here was taken from: https://stackoverflow.com/questions/48625770/wagtail-page-title-overwriting
