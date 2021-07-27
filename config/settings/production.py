@@ -24,7 +24,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 # The cache requires a Memcached instance be set up in Google Cloud Platform (GCP) and access connectors to be set both on GCP and in app.yaml
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': '10.18.240.4:11211',
     }
 }
