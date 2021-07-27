@@ -1,10 +1,10 @@
-dispatch==2.0.4
-Django==3.1.12
+dispatch==2.0.5
+Django==3.2.5
 wagtail==2.13.4
 git+git://github.com/ubyssey/django-google-storage.git@v0.5.4#egg=django-google-storage-updated
 django-storages[google]==1.10
 django-canonical-domain==0.3.0
-pylibmc==1.6.1
+pymemcache==3.5.0
 mysqlclient==2.0.1
 django-phonenumber-field==2.0.0
 phonenumbers==8.12.9
