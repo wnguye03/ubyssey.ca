@@ -157,11 +157,11 @@ class SectionPage(SectionablePage):
         context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
     
-
         return context
     
     def get_section_articles(self) -> QuerySet:
-        return ArticlePage.objects.from_section(section_root=self)
+        # return ArticlePage.objects.from_section(section_root=self)
+        return ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
 
     def get_featured_articles(self, queryset=None, number_featured=4) -> QuerySet:
         """
@@ -170,7 +170,8 @@ class SectionPage(SectionablePage):
             number_featured: defaults to 4 as brute fact about our template's design
         """
         if queryset == None:
-            queryset = ArticlePage.objects.from_section(section_root=self)
+            # queryset = ArticlePage.objects.from_section(section_root=self)
+            queryset = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
 
         return queryset[:number_featured]    
     featured_articles = property(fget=get_featured_articles)
