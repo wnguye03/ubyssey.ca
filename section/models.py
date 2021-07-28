@@ -3,6 +3,7 @@ from .sectionable.models import SectionablePage
 
 from article.models import ArticlePage
 
+from django.core.cache import cache
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields import CharField, BooleanField, TextField, SlugField
@@ -161,7 +162,8 @@ class SectionPage(SectionablePage):
     
     def get_section_articles(self) -> QuerySet:
         # return ArticlePage.objects.from_section(section_root=self)
-        return ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
+        section_articles = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
+        return section_articles
 
     def get_featured_articles(self, queryset=None, number_featured=4) -> QuerySet:
         """
@@ -171,8 +173,7 @@ class SectionPage(SectionablePage):
         """
         if queryset == None:
             # queryset = ArticlePage.objects.from_section(section_root=self)
-            queryset = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
-
+            queryset = self.get_section_articles()
         return queryset[:number_featured]    
     featured_articles = property(fget=get_featured_articles)
 
