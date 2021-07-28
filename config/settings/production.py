@@ -17,11 +17,15 @@ INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 INSTALLED_APPS += [
 ]
 
+# Sessions are used to anonymously keep track of individual site visitors
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+# Caches are used to store the results of SQL queries so it can be quickly retrieved and needs to do less work
+# The cache requires a Memcached instance be set up in Google Cloud Platform (GCP) and access connectors to be set both on GCP and in app.yaml
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '10.18.240.4:11211',
     }
 }
 

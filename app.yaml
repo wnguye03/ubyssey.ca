@@ -16,3 +16,5 @@ handlers:
   script: auto
   secure: always
 
+vpc_access_connector:
+  name: projects/ubyssey-prd/locations/us-central1/connectors/ubyssey-connector

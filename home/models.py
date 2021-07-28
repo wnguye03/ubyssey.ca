@@ -38,9 +38,11 @@ class HomePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
-        context['breaking_news_article'] = self.get_breaking_articles()
         childrenPages = self.get_children().specific().type(SectionPage)
+        qs = ArticlePage.objects.live().public().order_by('-last_published_at')
+        context['above_cut_articles'] = qs[:6]
+        context['breaking_news_article'] = qs.filter(is_breaking=True)
+
         ajax_section_blocks = []
 
         #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
@@ -59,15 +61,17 @@ class HomePage(Page):
             # section_count is going to be updated in the frontend after each repsonse is recieved. Check lazyloading-wagtail.js
             section_count = int(request.GET.get('section_count'))
 
-            if  section_count < len(ajax_section_blocks):
+            if section_count < len(ajax_section_blocks):
                 context[ 'feature_articles'] = ajax_section_blocks[section_count].get_featured_articles()
                 context['section_name'] = ajax_section_blocks[section_count].title
         return context
 
-    def get_above_cut_articles(self, max_count=6):  
-        return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
-    above_cut_articles = property(fget=get_above_cut_articles)
+    #takes a section_slug and returns the feature articles for that section
+    def get_section_articles(self, section_slug):
 
+        sectionPage = SectionPage.objects.get(slug = section_slug)
+        
+        return sectionPage.get_featured_articles()
 
     def get_all_section_slug(self):
         
@@ -78,16 +82,3 @@ class HomePage(Page):
             allsection_slug.append(section.slug)
 
         return allsection_slug
-
-    #returns the the breaking articles from each section
-    def get_breaking_articles(self):
-
-        breaking_news_artciles = []
-        allsectionPages = SectionPage.objects.all()
-
-        for section in allsectionPages:
-            for article in section.get_section_articles(): 
-                if article.is_breaking:
-                    breaking_news_artciles.append(article)
-
-        return breaking_news_artciles

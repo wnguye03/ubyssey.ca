@@ -286,3 +286,6 @@ WAGTAIL_USER_CREATION_FORM = 'dispatchusers.forms.DispatchUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['person', 'is_active']
 
 WAGTAILIMAGES_IMAGE_MODEL = 'images.UbysseyImage'
+
+# Model defaults
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
