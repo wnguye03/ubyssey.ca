@@ -226,7 +226,7 @@ class ArticlePageManager(PageManager):
             if new_section_root:
                 section_root = new_section_root
             
-        return self.live().public().descendant_of(section_root).exact_type(ArticlePage).order_by('-last_modified_at')
+        return self.live().public().descendant_of(section_root).exact_type(ArticlePage) #.order_by('-last_modified_at')
 
 #-----Page models-----
 
@@ -554,5 +554,7 @@ class ArticlePage(SectionablePage):
         verbose_name = "Article"
         verbose_name_plural = "Articles"
         indexes = [
+            models.Index(fields=['current_section','last_modified_at']),
+            models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
