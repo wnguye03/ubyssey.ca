@@ -40,6 +40,7 @@ class HomePage(Page):
         context = super().get_context(request, *args, **kwargs)
         context['above_cut_articles'] = self.get_above_cut_articles(max_count=6)
         context['breaking_news_article'] = self.get_breaking_articles()
+        childrenPages = self.get_children().specific().type(SectionPage)
         ajax_section_blocks = []
 
         #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
@@ -47,7 +48,7 @@ class HomePage(Page):
             if(str(section_stream.value['section']) == "Blog" and SectionPage.objects.get(slug = "blog") is not None):
                 context['blog'] = self.get_section_articles(section_slug='blog')
 
-            for section in self.get_children().specific().type(SectionPage):
+            for section in childrenPages:
                   if(str(section_stream.value['section']) == section.title and section.title != "Blog"):
                         ajax_section_blocks.append(section)
                   
@@ -67,12 +68,6 @@ class HomePage(Page):
         return ArticlePage.objects.all().order_by('-last_published_at')[:max_count]
     above_cut_articles = property(fget=get_above_cut_articles)
 
-    #takes a section_slug and returns the feature articles for that section
-    def get_section_articles(self, section_slug):
-
-        sectionPage = SectionPage.objects.get(slug = section_slug)
-        
-        return sectionPage.get_featured_articles()
 
     def get_all_section_slug(self):
         
