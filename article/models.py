@@ -30,6 +30,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, PageManager, Orderable
+from wagtail.documents.models import Document
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
@@ -199,6 +201,27 @@ class ArticleFeaturedMediaOrderable(Orderable):
                 FieldPanel("credit"),
             ],
             heading="Caption/Credits",
+        ),
+    ]
+
+class ArticleScriptOrderable(Orderable):
+    script = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+',
+    )
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="scripts",
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                DocumentChooserPanel('script'),
+            ],
+            heading="Scripts"
         ),
     ]
 
@@ -387,6 +410,12 @@ class ArticlePage(SectionablePage):
         ),
         MultiFieldPanel(
             [
+                FieldPanel("lede")
+            ],
+            heading="Front Page Stuff",
+        ),
+        MultiFieldPanel(
+            [
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
             heading="Author(s)",
@@ -415,10 +444,10 @@ class ArticlePage(SectionablePage):
         ),
         MultiFieldPanel(
             [
-                FieldPanel("lede")
+                InlinePanel("scripts"),
             ],
-            heading="Front Page Stuff",
-        ),
+            heading="Custom JavaScript etc. (Warning: Advanced!)",
+        )
     ]
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
