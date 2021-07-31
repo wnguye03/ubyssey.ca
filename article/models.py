@@ -558,3 +558,45 @@ class ArticlePage(SectionablePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
+
+
+class GuideArticlePage(ArticlePage):
+    pass
+    # banner quote
+    # banner quote source
+    # subheading
+    # intro text
+    # series
+
+class MagazineArticlePage(ArticlePage):
+    pass
+
+class FeatureArticlePage(ArticlePage):
+    alternate_title = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=255,
+    )
+    optional_subtitle = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=255,
+    )
+    
+    above_cut_lede = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
+    # Corresponds to pseudo-field called "About" in some templates
+    about_this_article = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
+class FWTypeArticlePage(ArticlePage):
+    pass
