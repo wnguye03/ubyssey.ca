@@ -372,13 +372,13 @@ def _migrate_all_articles():
                 if dispatch_article_revision.template:
                     wagtail_article.legacy_template = dispatch_article_revision.template 
                 if dispatch_article_revision.template_data:
-                    wagtail_article.legacy_template = dispatch_article_revision.template_data
+                    wagtail_article.legacy_template_data = dispatch_article_revision.template_data
                 # Lede
                 if dispatch_article_revision.snippet:
                     wagtail_article.lede = dispatch_article_revision.snippet
                 # Breaking
                 if dispatch_article_revision.is_breaking:
-                    wagtail_article.isbreaking = bool(dispatch_article_revision.is_breaking)
+                    wagtail_article.is_breaking = bool(dispatch_article_revision.is_breaking)
                 if dispatch_article_revision.breaking_timeout:
                     wagtail_article.breaking_timeout = dispatch_article_revision.breaking_timeout
 
