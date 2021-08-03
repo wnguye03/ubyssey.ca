@@ -159,6 +159,7 @@ class SectionPage(SectionablePage):
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
     
         return context
+
     
     def get_section_articles(self) -> QuerySet:
         # return ArticlePage.objects.from_section(section_root=self)
