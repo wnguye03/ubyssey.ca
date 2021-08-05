@@ -174,6 +174,9 @@ INSTALLED_APPS = [
     'django_user_agents',
     'django.contrib.admin',
     'django_extensions',
+    
+    'django.contrib.sites',
+    'dbtemplates',
 ]
 
 if DEBUG:
@@ -206,13 +209,18 @@ TEMPLATES = [
     {
         'NAME': 'app_dirs',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'wagtail.contrib.settings.context_processors.settings',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'dbtemplates.loader.Loader',
             ],
         },
     },
@@ -289,3 +297,5 @@ WAGTAILIMAGES_IMAGE_MODEL = 'images.UbysseyImage'
 
 # Model defaults
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+SITE_ID = 1
