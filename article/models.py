@@ -1,4 +1,6 @@
 import datetime
+
+from wagtail.admin import edit_handlers
 from images.models import GallerySnippet
 
 from dispatch.models import Article
@@ -25,7 +27,16 @@ from taggit.models import TaggedItemBase
 from videos import blocks as video_blocks
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel,
+    # Panels
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    PageChooserPanel, 
+    StreamFieldPanel,
+    # Custom admin tabs
+    ObjectList,
+    TabbedInterface,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
@@ -204,6 +215,27 @@ class ArticleFeaturedMediaOrderable(Orderable):
         ),
     ]
 
+class ArticleStyleOrderable(Orderable):
+    css = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+',
+    )
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="styles",
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                DocumentChooserPanel('css'),
+            ],
+            heading="CSS Document"
+        ),
+    ]
+
 class ArticleScriptOrderable(Orderable):
     script = models.ForeignKey(
         'wagtaildocs.Document',
@@ -221,7 +253,7 @@ class ArticleScriptOrderable(Orderable):
             [
                 DocumentChooserPanel('script'),
             ],
-            heading="Scripts"
+            heading="Script"
         ),
     ]
 
@@ -257,8 +289,6 @@ class ArticlePage(SectionablePage):
 
     #-----Django/Wagtail settings etc-----
     objects = ArticlePageManager()
-
-    template = "article/article_page.html"
 
     parent_page_types = [
         'specialfeaturelanding.SpecialLandingPage',
@@ -399,6 +429,14 @@ class ArticlePage(SectionablePage):
         default=0
     )
 
+    #-----Custom layout etc-----
+    use_default_template = models.BooleanField(default=True)
+
+    def get_template(self, request):
+        if not self.use_default_template:
+            pass
+        return "article/article_page.html"
+
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -442,12 +480,6 @@ class ArticlePage(SectionablePage):
             ],
             heading="Featured Media",
         ),
-        MultiFieldPanel(
-            [
-                InlinePanel("scripts"),
-            ],
-            heading="Custom JavaScript etc. (Warning: Advanced!)",
-        )
     ]
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
@@ -467,7 +499,6 @@ class ArticlePage(SectionablePage):
             help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
         )
     ]
-
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(
             [
@@ -488,6 +519,32 @@ class ArticlePage(SectionablePage):
             heading='Legacy stuff'
         ),
     ]
+
+    customization_panels = [
+        MultiFieldPanel(
+            [
+                InlinePanel("styles"),
+            ],
+            heading="Custom CSS",
+            help_text="Please upload any custom CSS to \"Documents\", then select the appropriate document here.\n\nSelecting a non-CSS Document will cause errors.",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("scripts"),
+            ],
+            heading="Custom JavaScript",
+            help_text="Please upload any custom JavaScript to \"Documents\", then select the appropriate document here.\n\nSelecting a non-JavaScript Document will cause errors.",
+        ),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading='Content'),
+            ObjectList(promote_panels, heading='Promote'),
+            ObjectList(settings_panels, heading='Settings'),
+            ObjectList(customization_panels, heading='Customization (Advanced!)'),
+        ],
+    )
 
     #-----Properties, getters, setters, etc.-----
 
