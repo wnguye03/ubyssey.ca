@@ -3,6 +3,8 @@ import datetime
 from wagtail.admin import edit_handlers
 from images.models import GallerySnippet
 
+from dbtemplates.models import Template as DBTemplate
+
 from dispatch.models import Article
 
 from django.db import models
@@ -432,9 +434,18 @@ class ArticlePage(SectionablePage):
     #-----Custom layout etc-----
     use_default_template = models.BooleanField(default=True)
 
+    db_template = models.ForeignKey(
+        DBTemplate,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',        
+    )
+
     def get_template(self, request):
         if not self.use_default_template:
-            pass
+            if self.db_template:
+                return self.db_template.name
         return "article/article_page.html"
 
     #-----For Wagtail's user interface-----
@@ -523,6 +534,13 @@ class ArticlePage(SectionablePage):
     customization_panels = [
         MultiFieldPanel(
             [
+                FieldPanel("use_default_template"),
+                SnippetChooserPanel("db_template"),
+            ],
+            heading="Custom HTML",
+        ),
+        MultiFieldPanel(
+            [
                 InlinePanel("styles"),
             ],
             heading="Custom CSS",
@@ -542,7 +560,7 @@ class ArticlePage(SectionablePage):
             ObjectList(content_panels, heading='Content'),
             ObjectList(promote_panels, heading='Promote'),
             ObjectList(settings_panels, heading='Settings'),
-            ObjectList(customization_panels, heading='Customization (Advanced!)'),
+            ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
         ],
     )
 
