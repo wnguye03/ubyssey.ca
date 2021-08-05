@@ -1,7 +1,9 @@
 from dbtemplates.models import Template as DBTemplate
-
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
+from wagtailmodelchooser import register_model_chooser
+
+register_model_chooser(DBTemplate)
 
 class DBTemplateAdmin(ModelAdmin):
     model = DBTemplate

@@ -50,6 +50,8 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from wagtailmodelchooser.edit_handlers import ModelChooserPanel
+
 
 UBYSSEY_FOUNDING_DATE = datetime.date(1918,10,17)
 
@@ -535,7 +537,7 @@ class ArticlePage(SectionablePage):
         MultiFieldPanel(
             [
                 FieldPanel("use_default_template"),
-                SnippetChooserPanel("db_template"),
+                ModelChooserPanel("db_template"),
             ],
             heading="Custom HTML",
         ),
