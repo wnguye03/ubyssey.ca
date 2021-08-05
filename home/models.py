@@ -38,10 +38,11 @@ class HomePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        childrenPages = self.get_children().specific().type(SectionPage)
         qs = ArticlePage.objects.live().public().order_by('-last_published_at')
-
         context['above_cut_articles'] = qs[:6]
         context['breaking_news_article'] = qs.filter(is_breaking=True)
+
         ajax_section_blocks = []
 
         #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
@@ -49,7 +50,7 @@ class HomePage(Page):
             if(str(section_stream.value['section']) == "Blog" and SectionPage.objects.get(slug = "blog") is not None):
                 context['blog'] = self.get_section_articles(section_slug='blog')
 
-            for section in self.get_children().specific().type(SectionPage):
+            for section in childrenPages:
                   if(str(section_stream.value['section']) == section.title and section.title != "Blog"):
                         ajax_section_blocks.append(section)
                   

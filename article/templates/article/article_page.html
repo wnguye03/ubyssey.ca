@@ -124,10 +124,9 @@
 
 {% endblock %}
 
-{% block scripts %}
-{% endblock %}
-
 <!-- Article-specific scripts -->
-{% comment %} {% for s in article.scripts.all %}
-    <script src="http://localhost:8888/resources/js/{{ s.filename }}"></script>
-{% endfor %} {% endcomment %}
+{% block scripts %}
+    {% for script_obj in self.scripts.all %}
+        <script src="{{ script_obj.script.file.url }}" type="text/javascript"></script>
+    {% endfor %}
+{% endblock %}

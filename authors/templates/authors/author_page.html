@@ -5,8 +5,11 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-{% include 'headers/topbar.html' %}
-{% include 'headers/mobile.html' %}
+{% block header %}
+  {% include 'navigation/headers/topbar.html' %}
+  {% include 'navigation/headers/mobile.html' %}
+{% endblock %}
+
 <main class="c-page c-page--author">
   <div class="u-container u-container--padded">
 
@@ -28,7 +31,7 @@
 
    
 
-    {% include 'authors/archive.html' with paginated_articles=paginated_articles %}
+     {% include 'ubyssey/archive.html' with paginated_articles=paginated_articles%}
 
 
   </div>

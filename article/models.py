@@ -1,5 +1,9 @@
 import datetime
+
+from wagtail.admin import edit_handlers
 from images.models import GallerySnippet
+
+from dbtemplates.models import Template as DBTemplate
 
 from dispatch.models import Article
 
@@ -25,15 +29,28 @@ from taggit.models import TaggedItemBase
 from videos import blocks as video_blocks
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel,
+    # Panels
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    PageChooserPanel, 
+    StreamFieldPanel,
+    # Custom admin tabs
+    ObjectList,
+    TabbedInterface,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, PageManager, Orderable
+from wagtail.documents.models import Document
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
+
+from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 
 
 UBYSSEY_FOUNDING_DATE = datetime.date(1918,10,17)
@@ -202,6 +219,48 @@ class ArticleFeaturedMediaOrderable(Orderable):
         ),
     ]
 
+class ArticleStyleOrderable(Orderable):
+    css = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+',
+    )
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="styles",
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                DocumentChooserPanel('css'),
+            ],
+            heading="CSS Document"
+        ),
+    ]
+
+class ArticleScriptOrderable(Orderable):
+    script = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+',
+    )
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="scripts",
+    )
+    panels = [
+        MultiFieldPanel(
+            [
+                DocumentChooserPanel('script'),
+            ],
+            heading="Script"
+        ),
+    ]
+
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
     """
@@ -234,8 +293,6 @@ class ArticlePage(SectionablePage):
 
     #-----Django/Wagtail settings etc-----
     objects = ArticlePageManager()
-
-    template = "article/article_page.html"
 
     parent_page_types = [
         'specialfeaturelanding.SpecialLandingPage',
@@ -376,6 +433,23 @@ class ArticlePage(SectionablePage):
         default=0
     )
 
+    #-----Custom layout etc-----
+    use_default_template = models.BooleanField(default=True)
+
+    db_template = models.ForeignKey(
+        DBTemplate,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',        
+    )
+
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
+        return "article/article_page.html"
+
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -384,6 +458,12 @@ class ArticlePage(SectionablePage):
             ],
             heading="Article Content",
             help_text = "The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("lede")
+            ],
+            heading="Front Page Stuff",
         ),
         MultiFieldPanel(
             [
@@ -413,12 +493,6 @@ class ArticlePage(SectionablePage):
             ],
             heading="Featured Media",
         ),
-        MultiFieldPanel(
-            [
-                FieldPanel("lede")
-            ],
-            heading="Front Page Stuff",
-        ),
     ]
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
@@ -438,7 +512,6 @@ class ArticlePage(SectionablePage):
             help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
         )
     ]
-
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(
             [
@@ -459,6 +532,39 @@ class ArticlePage(SectionablePage):
             heading='Legacy stuff'
         ),
     ]
+
+    customization_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("use_default_template"),
+                ModelChooserPanel("db_template"),
+            ],
+            heading="Custom HTML",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("styles"),
+            ],
+            heading="Custom CSS",
+            help_text="Please upload any custom CSS to \"Documents\", then select the appropriate document here.\n\nSelecting a non-CSS Document will cause errors.",
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("scripts"),
+            ],
+            heading="Custom JavaScript",
+            help_text="Please upload any custom JavaScript to \"Documents\", then select the appropriate document here.\n\nSelecting a non-JavaScript Document will cause errors.",
+        ),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading='Content'),
+            ObjectList(promote_panels, heading='Promote'),
+            ObjectList(settings_panels, heading='Settings'),
+            ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
+        ],
+    )
 
     #-----Properties, getters, setters, etc.-----
 
@@ -558,3 +664,45 @@ class ArticlePage(SectionablePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
+
+
+class GuideArticlePage(ArticlePage):
+    pass
+    # banner quote
+    # banner quote source
+    # subheading
+    # intro text
+    # series
+
+class MagazineArticlePage(ArticlePage):
+    pass
+
+class FeatureArticlePage(ArticlePage):
+    alternate_title = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=255,
+    )
+    optional_subtitle = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=255,
+    )
+    
+    above_cut_lede = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
+    # Corresponds to pseudo-field called "About" in some templates
+    about_this_article = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
+class FWTypeArticlePage(ArticlePage):
+    pass
