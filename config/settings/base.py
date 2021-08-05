@@ -178,6 +178,7 @@ INSTALLED_APPS = [
     
     'django.contrib.sites',
     'dbtemplates',
+    'wagtailmodelchooser',
 ]
 
 if DEBUG:
