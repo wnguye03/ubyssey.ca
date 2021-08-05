@@ -3,6 +3,7 @@ Certain Model fields need to be validated in a similar way accross different app
 
 Import this to perform those validations
 """
+import json
 import re as regex
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -40,3 +41,13 @@ def validate_youtube_url(value):
             _('%(value)s is not a valid youtube URL'),
             params={'value': value},
         )
+
+def validate_string_as_json(value):
+    if value != '':
+        try:
+            json.loads(value)
+        except ValueError:
+            raise ValidationError(
+                _('Invalid JSON: \n\n %(value)s'),
+                params={'value': value},
+            )
