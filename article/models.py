@@ -142,6 +142,18 @@ class ArticleAuthorsOrderable(Orderable):
         ),
     ]
 
+class MagazineArticleBylineOrderable(Orderable):
+    byline = models.TextField(blank=True, null=False, default='')
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('byline'),
+            ],
+            heading="Byline",
+            help_text="Legacy field. 'Magazine' type articles typically allowed for custom bylines, rather than using the ones ArticlePages could generate automatically. While future magazines COULD continue to use these custom bylines, this tends to create confusion and users entering lots of information that is redundant accross fields (with no formal guarantee of that redundancy, disallowing the removal of this field to recreate bylines from some single source of truth).",
+        ),
+    ]
+
 class SeriesOrderable(Orderable):
     """
     Represents a single article in a series of articles. Associated with ArticleSeriesSnippet
@@ -664,7 +676,6 @@ class ArticlePage(SectionablePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
-
 
 class GuideArticlePage(ArticlePage):
     pass
