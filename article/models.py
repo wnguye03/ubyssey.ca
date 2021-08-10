@@ -479,7 +479,67 @@ class ArticlePage(SectionablePage):
         default=0
     )
 
-    #-----Custom layout etc-----
+    # "Layouts (stores data that once was Template data)"
+    layout = models.CharField(
+        null=False,
+        blank=False,
+        default='default',
+        verbose_name='Article Layout',
+        help_text="These correspond to very frequently used templates. More \"bespoke\", one-off templates should be added to the library of DB Templates",
+        max_length=100,
+    )
+
+    fw_alternate_title = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        verbose_name='Alternate Title (Optional)',
+        help_text="When there is a \"special feature\" or full-width style article, sometimes we would like to override the title as it render in the template",
+        max_length=255,
+    )
+
+    fw_optional_subtitle = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        verbose_name='Subtitle (Optional)',
+        help_text="When there is a \"special feature\" or full-width style article, sometime we want to add a subtitle alongside the title",
+        max_length=255,
+    )
+    
+    # Corresponds to the pseudo-field called "snippet" in some templates
+    fw_above_cut_lede = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+        verbose_name='Above Cut Lede (Optional)',
+        help_text="Articles that use a special header/banner often contain a second lede/abstract summary ",
+    )
+
+    # Corresponds to pseudo-field called "About" in some templates
+    fw_about_this_article = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+
+    # Featured image stuff used for tempalte customization. Legacy
+    image_size = models.CharField(
+        null=False,
+        blank=False,
+        default='default',
+        max_length=50,
+        help_text="Legacy from Dispatch's \"Templates\" feature",
+    )
+    header_layout = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=50,
+        help_text="Legacy from Dispatch's \"Templates\" feature",
+    )
+
+    #-----Advanted, custom layout etc-----
     use_default_template = models.BooleanField(default=True)
 
     db_template = models.ForeignKey(
@@ -577,8 +637,61 @@ class ArticlePage(SectionablePage):
             ],
             heading='Legacy stuff'
         ),
+    ]    
+    fw_article_panels = [
+        HelpPanel(
+            content= "The majority of these fields are not used for most articles. They exist to store additional data in the backend used to support alternate, customized frontend "
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    "layout",
+                    widget=Select(
+                        choices=[
+                            ('default', 'Default'), 
+                            ('fw-story', 'Full-Width Story'),
+                        ],
+                    ),
+                ),
+            ],
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(
+                    content="These were at one time parts of Dispatch's now-obselete \"Templates\" feature. \n\n" + 
+                    "Care should be taken to ensure these fields are actually used in their corresponding templates files (in the Django sense of template).\n",
+                ),
+                FieldPanel(
+                    "image_size",
+                    widget=Select(
+                        choices=[
+                            ('default', 'Default'),
+                            ('full', 'Full'),
+                        ],
+                    ),
+                ),
+                FieldPanel(
+                    "header_layout",
+                    widget=Select(
+                        choices=[
+                            ('', ''), 
+                            ('right-image', 'Right Image'),
+                            ('top-image', 'Top Image'),
+                            ('banner-image', 'Banner Image')
+                        ],
+                    )
+                ),
+            ],
+            heading="Image Size and Position",
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(content="Somewhat legacy. These will not be used with the majority of templates, but are used with how Magazines or Guides or some special articles have traditionally been set up."),
+                InlinePanel("connected_articles"),
+            ],
+            heading="Connected or Related Article Links (Non-Series)",
+        ),
     ]
-
     customization_panels = [
         MultiFieldPanel(
             [
@@ -608,6 +721,7 @@ class ArticlePage(SectionablePage):
             ObjectList(content_panels, heading='Content'),
             ObjectList(promote_panels, heading='Promote'),
             ObjectList(settings_panels, heading='Settings'),
+            ObjectList(fw_article_panels, heading='Layout (Stock Templates)'),
             ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
         ],
     )
@@ -721,106 +835,3 @@ class GuideArticlePage(ArticlePage):
 
 class MagazineArticlePage(ArticlePage):
     pass
-
-class FeatureArticlePage(ArticlePage):
-    layout = models.CharField(
-        null=False,
-        blank=False,
-        default='default',
-        verbose_name='Article Layout',
-        help_text="These correspond to very frequently used templates. More \"bespoke\", one-off templates should be added to the library of DB Templates",
-        max_length=100,
-    )
-    fw_alternate_title = models.CharField(
-        null=False,
-        blank=True,
-        default='',
-        verbose_name='Alternate Title (Optional)',
-        help_text="When there is a \"special feature\" or full-width style article, sometimes we would like to override the title as it render in the template",
-        max_length=255,
-    )
-    fw_optional_subtitle = models.CharField(
-        null=False,
-        blank=True,
-        default='',
-        verbose_name='Subtitle (Optional)',
-        help_text="When there is a \"special feature\" or full-width style article, sometime we want to add a subtitle alongside the title",
-        max_length=255,
-    )
-    
-    # Corresponds to the pseudo-field called "snippet" in some templates
-    fw_above_cut_lede = models.TextField(
-        null=False,
-        blank=True,
-        default='',
-        verbose_name='Above Cut Lede (Optional)',
-        help_text="Articles that use a special header/banner often contain a second lede/abstract summary ",
-    )
-
-    # Corresponds to pseudo-field called "About" in some templates
-    fw_about_this_article = models.TextField(
-        null=False,
-        blank=True,
-        default='',
-    )
-
-    # Featured image stuff
-    image_size = models.CharField(
-        null=False,
-        blank=False,
-        default='default',
-        max_length=50,
-        help_text="Legacy from Dispatch's \"Templates\" feature",
-    )
-    header_layout = models.CharField(
-        null=False,
-        blank=True,
-        default='',
-        max_length=50,
-        help_text="Legacy from Dispatch's \"Templates\" feature",
-    )
-
-    fw_article_panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel(
-                    "layout",
-                    widget=Select(
-                        choices=[
-                            ('default', 'Default'), 
-                            ('fw-story', 'Full-Width Story'),
-                        ],
-                    ),
-                ),
-            ],
-        ),
-        MultiFieldPanel(
-            [
-                HelpPanel(
-                    content="These were at one time parts of Dispatch's now-obselete \"Templates\" feature. \n\n" + 
-                    "Care should be taken to ensure these fields are actually used in their corresponding templates files (in the Django sense of template).\n",
-                ),
-                FieldPanel(
-                    "image_size",
-                    widget=Select(
-                        choices=[
-                            ('default', 'Default'),
-                            ('full', 'Full'),
-                        ],
-                    ),
-                ),
-                FieldPanel(
-                    "header_layout",
-                    widget=Select(
-                        choices=[
-                            ('', ''), 
-                            ('right-image', 'Right Image'),
-                            ('top-image', 'Top Image'),
-                            ('banner-image', 'Banner Image')
-                        ],
-                    )
-                ),
-            ],
-            heading="Image Size and Position",
-        ),
-    ]
