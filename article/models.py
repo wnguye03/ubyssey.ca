@@ -181,7 +181,7 @@ class ConnectedArticleOrderable(Orderable):
     panels = [
         MultiFieldPanel(
             [
-                PageChooserPanel('article'),
+                PageChooserPanel('connected_article'),
             ],
             heading="Article"
         ),
