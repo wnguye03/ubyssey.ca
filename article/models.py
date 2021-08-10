@@ -723,6 +723,14 @@ class MagazineArticlePage(ArticlePage):
     pass
 
 class FeatureArticlePage(ArticlePage):
+    layout = models.CharField(
+        null=False,
+        blank=False,
+        default='default',
+        verbose_name='Article Layout',
+        help_text="These correspond to very frequently used templates. More \"bespoke\", one-off templates should be added to the library of DB Templates",
+        max_length=100,
+    )
     fw_alternate_title = models.CharField(
         null=False,
         blank=True,
@@ -775,6 +783,19 @@ class FeatureArticlePage(ArticlePage):
     fw_article_panels = [
         MultiFieldPanel(
             [
+                FieldPanel(
+                    "layout",
+                    widget=Select(
+                        choices=[
+                            ('default', 'Default'), 
+                            ('fw-story', 'Full-Width Story'),
+                        ],
+                    ),
+                ),
+            ],
+        ),
+        MultiFieldPanel(
+            [
                 HelpPanel(
                     content="These were at one time parts of Dispatch's now-obselete \"Templates\" feature. \n\n" + 
                     "Care should be taken to ensure these fields are actually used in their corresponding templates files (in the Django sense of template).\n",
@@ -783,8 +804,8 @@ class FeatureArticlePage(ArticlePage):
                     "image_size",
                     widget=Select(
                         choices=[
-                            ('', ''), 
-                            ('default', 'Default'), 
+                            ('default', 'Default'),
+                            ('full', 'Full'),
                         ],
                     ),
                 ),
