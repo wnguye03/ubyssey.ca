@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models import fields
 from django.db.models.fields import CharField
 from django.db.models.query import QuerySet
-from django.forms.widgets import Select
+from django.forms.widgets import Select, Widget
 from django.utils import timezone
 
 from itertools import groupby
@@ -32,6 +32,7 @@ from wagtail.admin.edit_handlers import (
     # Panels
     FieldPanel,
     FieldRowPanel,
+    HelpPanel,
     InlinePanel,
     MultiFieldPanel,
     PageChooserPanel, 
@@ -144,6 +145,10 @@ class ArticleAuthorsOrderable(Orderable):
 
 class MagazineArticleBylineOrderable(Orderable):
     byline = models.TextField(blank=True, null=False, default='')
+    article_page = ParentalKey(
+        "article.ArticlePage",
+        related_name="magazine_bylines",
+    )
     panels = [
         MultiFieldPanel(
             [
@@ -152,6 +157,35 @@ class MagazineArticleBylineOrderable(Orderable):
             heading="Byline",
             help_text="Legacy field. 'Magazine' type articles typically allowed for custom bylines, rather than using the ones ArticlePages could generate automatically. While future magazines COULD continue to use these custom bylines, this tends to create confusion and users entering lots of information that is redundant accross fields (with no formal guarantee of that redundancy, disallowing the removal of this field to recreate bylines from some single source of truth).",
         ),
+    ]
+
+class ConnectedArticleOrderable(Orderable):
+    connected_article = models.ForeignKey(
+        "article.ArticlePage",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="+",
+    )
+    article_description = models.TextField(
+        null=False,
+        blank=True,
+        default='',
+    )
+    parent_article = ParentalKey(
+        "article.ArticlePage",
+        default='',
+        related_name="connected_articles",
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                PageChooserPanel('article'),
+            ],
+            heading="Article"
+        ),
+        FieldPanel('article_description')
     ]
 
 class SeriesOrderable(Orderable):
@@ -689,31 +723,83 @@ class MagazineArticlePage(ArticlePage):
     pass
 
 class FeatureArticlePage(ArticlePage):
-    alternate_title = models.CharField(
+    fw_alternate_title = models.CharField(
         null=False,
         blank=True,
         default='',
+        verbose_name='Alternate Title (Optional)',
+        help_text="When there is a \"special feature\" or full-width style article, sometimes we would like to override the title as it render in the template",
         max_length=255,
     )
-    optional_subtitle = models.CharField(
+    fw_optional_subtitle = models.CharField(
         null=False,
         blank=True,
         default='',
+        verbose_name='Subtitle (Optional)',
+        help_text="When there is a \"special feature\" or full-width style article, sometime we want to add a subtitle alongside the title",
         max_length=255,
     )
     
-    above_cut_lede = models.TextField(
+    # Corresponds to the pseudo-field called "snippet" in some templates
+    fw_above_cut_lede = models.TextField(
         null=False,
         blank=True,
         default='',
+        verbose_name='Above Cut Lede (Optional)',
+        help_text="Articles that use a special header/banner often contain a second lede/abstract summary ",
     )
 
     # Corresponds to pseudo-field called "About" in some templates
-    about_this_article = models.TextField(
+    fw_about_this_article = models.TextField(
         null=False,
         blank=True,
         default='',
     )
 
-class FWTypeArticlePage(ArticlePage):
-    pass
+    # Featured image stuff
+    image_size = models.CharField(
+        null=False,
+        blank=False,
+        default='default',
+        max_length=50,
+        help_text="Legacy from Dispatch's \"Templates\" feature",
+    )
+    header_layout = models.CharField(
+        null=False,
+        blank=True,
+        default='',
+        max_length=50,
+        help_text="Legacy from Dispatch's \"Templates\" feature",
+    )
+
+    fw_article_panels = [
+        MultiFieldPanel(
+            [
+                HelpPanel(
+                    content="These were at one time parts of Dispatch's now-obselete \"Templates\" feature. \n\n" + 
+                    "Care should be taken to ensure these fields are actually used in their corresponding templates files (in the Django sense of template).\n",
+                ),
+                FieldPanel(
+                    "image_size",
+                    widget=Select(
+                        choices=[
+                            ('', ''), 
+                            ('default', 'Default'), 
+                        ],
+                    ),
+                ),
+                FieldPanel(
+                    "header_layout",
+                    widget=Select(
+                        choices=[
+                            ('', ''), 
+                            ('right-image', 'Right Image'),
+                            ('top-image', 'Top Image'),
+                            ('banner-image', 'Banner Image')
+                        ],
+                    )
+                ),
+            ],
+            heading="Image Size and Position",
+        ),
+    ]
