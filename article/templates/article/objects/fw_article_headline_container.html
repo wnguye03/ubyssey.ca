@@ -17,13 +17,17 @@
 		<p class="fw-description">{{ self.fw_above_cut_lede }}</p>
 	{% endif %}
 	<div class="c-article__byline c-article__byline-center">
-	<div class="c-article__author">By {{ self.get_author_url|safe }}</div>
-	<div class="c-article__byline__meta">
-		<span class="c-article__published-at">{{ self.published_at|date:'N j, Y' }}</span>
-		{% if self.minutes_to_read %}
-			<span> &nbsp;&middot;&nbsp; </span>
-			<span class="c-article__reading-time">{{ self.minutes_to_read }} min read</span>
-		{% endif %}
-	</div>
+        <div class="c-article__author">
+            By {{ self.get_author_url|safe }}
+        </div>
+        <div class="c-article__byline__meta">
+            <span class="c-article__published-at">
+                {{ self.published_at|date:'N j, Y' }}
+            </span>
+            {% if self.minutes_to_read %}
+                <span> &nbsp;&middot;&nbsp; </span>
+                <span class="c-article__reading-time">{{ self.minutes_to_read }} min read</span>
+            {% endif %}
+        </div>
 	</div>
 </div>
