@@ -521,6 +521,7 @@ class ArticlePage(SectionablePage):
         null=False,
         blank=True,
         default='',
+        verbose_name='About This Article (Optional)',
     )
 
     # Featured image stuff used for tempalte customization. Legacy
@@ -564,26 +565,30 @@ class ArticlePage(SectionablePage):
             ],
             heading="Article Content",
             help_text = "The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!",
+            classname="collapsible",
         ),
         MultiFieldPanel(
             [
                 FieldPanel("lede")
             ],
             heading="Front Page Stuff",
+            classname="collapsible",
         ),
         MultiFieldPanel(
             [
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
             heading="Author(s)",
-            help_text="Authors may be created under \"Snippets\", then selected here."
+            help_text="Authors may be created under \"Snippets\", then selected here.",
+            classname="collapsible",
         ),
         FieldRowPanel(
             [
                 FieldPanel("explicit_published_at"),
                 FieldPanel("show_last_modified"),
             ],
-            heading="Publication Date"
+            heading="Publication Date",
+            classname="collapsible",
         ),
         MultiFieldPanel(
             [
@@ -592,12 +597,14 @@ class ArticlePage(SectionablePage):
                 FieldPanel("tags"),
             ],
             heading="Sections and Tags",
+            classname="collapsible",
         ),
         MultiFieldPanel(
             [
                 InlinePanel("featured_media", label="Featured Image or Video"),
             ],
             heading="Featured Media",
+            classname="collapsible",
         ),
     ]
     promote_panels = Page.promote_panels + [
@@ -640,7 +647,7 @@ class ArticlePage(SectionablePage):
     ]    
     fw_article_panels = [
         HelpPanel(
-            content= "The majority of these fields are not used for most articles. They exist to store additional data in the backend used to support alternate, customized frontend "
+            content = "<p>If you need to use an alternate layout for your article, but still a the frequently-used stock layout (such as the layout with a full-width banner) rather than a highly customized frontend, select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, for the majority of articles, nothing on this tab should be touched; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
         ),
         MultiFieldPanel(
             [
@@ -654,7 +661,25 @@ class ArticlePage(SectionablePage):
                     ),
                 ),
             ],
+            heading = "Stock Layouts",
         ),
+        MultiFieldPanel(
+            [
+                HelpPanel(content="<p>This information is generally used in articles that use a full-width banner of some sort.</p>"),
+                FieldPanel('fw_alternate_title'),
+                FieldPanel('fw_optional_subtitle'),
+                FieldPanel('fw_above_cut_lede'),
+            ],
+            heading = "Header fields, etc.",
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(content="<p>This information is generally used in a special article that has additional credits beyond the normal byline.</p>"),
+                FieldPanel('fw_about_this_article'),
+            ],
+            heading = "Additional credits, etc.",
+        ),
+
         MultiFieldPanel(
             [
                 HelpPanel(
@@ -693,8 +718,14 @@ class ArticlePage(SectionablePage):
         ),
     ]
     customization_panels = [
+        HelpPanel(
+            content="<p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and Javascript, and here you may utilize all three of those.</p><p>Custom HTML templates, which use the Django templating language should be uploaded not as files/documents but as \"Custom HTML\" DB Templates in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
+        ),
         MultiFieldPanel(
             [
+                HelpPanel(
+                    content="<p>Making a template requires some understanding of how the Django backend works, so that you might know variable names etc. for the data the template is supposed to render.</p> <p>Because of the potential complexity of a template, it is desirable to be able to quickly switch the article back to a default template. Turn on \"Use default template\" to use the stock template and turn it off to be able to override the default with a custom template. Defaults to \"on\".</p>",
+                ),
                 FieldPanel("use_default_template"),
                 ModelChooserPanel("db_template"),
             ],
