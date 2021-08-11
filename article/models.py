@@ -555,6 +555,10 @@ class ArticlePage(SectionablePage):
         if not self.use_default_template:
             if self.db_template:
                 return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+                        
         return "article/article_page.html"
 
     #-----For Wagtail's user interface-----
