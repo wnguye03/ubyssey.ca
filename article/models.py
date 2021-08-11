@@ -719,12 +719,12 @@ class ArticlePage(SectionablePage):
     ]
     customization_panels = [
         HelpPanel(
-            content="<p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and Javascript, and here you may utilize all three of those.</p><p>Custom HTML templates, which use the Django templating language should be uploaded not as files/documents but as \"Custom HTML\" DB Templates in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
+            content="<p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and JavaScript, and here you may utilize all three.</p><p>Custom HTML templates, which use the Django templating language, should be uploaded not as files/documents but as \"Custom HTML\" in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
         ),
         MultiFieldPanel(
             [
                 HelpPanel(
-                    content="<p>Making a template requires some understanding of how the Django backend works, so that you might know variable names etc. for the data the template is supposed to render.</p> <p>Because of the potential complexity of a template, it is desirable to be able to quickly switch the article back to a default template. Turn on \"Use default template\" to use the stock template and turn it off to be able to override the default with a custom template. Defaults to \"on\".</p>",
+                    content="<p>Making a template requires some understanding of how the Django backend works, so that you might know variable names etc. for the data that the template is supposed to render.</p> <p>Because of the potential complexity of a template, it is desirable to be able to quickly switch the article back to a default template. Turn on \"Use default template\" to use the stock template and turn it off to be able to override the default with a custom template. Defaults to \"on\".</p>",
                 ),
                 FieldPanel("use_default_template"),
                 ModelChooserPanel("db_template"),
