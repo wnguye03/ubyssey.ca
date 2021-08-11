@@ -139,6 +139,7 @@ INSTALLED_APPS = [
     'sporttourney',
     'specialfeaturelanding',
     'navigation',
+    'dashboard',
 
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
