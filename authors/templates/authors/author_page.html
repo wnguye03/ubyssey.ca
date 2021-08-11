@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'ubyssey/base.html' %}
 {% load static %}
 {% block content %}
 {% load static %}
@@ -16,7 +16,8 @@
     <div class="c-page__header">
       {% if self.image %}
       <div class="c-page__header__thumbnail">
-        {% image self.image scale-25 %}
+          {% image self.image fill-150x200   %}
+
       </div>
       {% endif %}
       <div class="c-page__header__meta">
