@@ -824,14 +824,3 @@ class ArticlePage(SectionablePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
-
-class GuideArticlePage(ArticlePage):
-    pass
-    # banner quote
-    # banner quote source
-    # subheading
-    # intro text
-    # series
-
-class MagazineArticlePage(ArticlePage):
-    pass
