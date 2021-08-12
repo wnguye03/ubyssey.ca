@@ -534,8 +534,8 @@ class ArticlePage(SectionablePage):
     )
     header_layout = models.CharField(
         null=False,
-        blank=True,
-        default='',
+        blank=False,
+        default='right-image',
         max_length=50,
         help_text="Legacy from Dispatch's \"Templates\" feature",
     )
@@ -555,6 +555,10 @@ class ArticlePage(SectionablePage):
         if not self.use_default_template:
             if self.db_template:
                 return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+                        
         return "article/article_page.html"
 
     #-----For Wagtail's user interface-----
@@ -699,7 +703,6 @@ class ArticlePage(SectionablePage):
                     "header_layout",
                     widget=Select(
                         choices=[
-                            ('', ''), 
                             ('right-image', 'Right Image'),
                             ('top-image', 'Top Image'),
                             ('banner-image', 'Banner Image')
