@@ -1,6 +1,7 @@
 {% extends 'article/article_page.html' %}
 {% load static %}
 {% load dispatch_tags %}
+{% load wagtailimages_tags %}
 
 {% block banner %}
     <div class="fw-banner {{ self.header_layout }}">
@@ -25,30 +26,33 @@
                 </div>
             </div>
         {% elif self.header_layout == 'banner-image' %}
-            <div class="banner-image">
-                <div class="backdrop" style="background-image: url('{{ article.featured_image.image.get_absolute_url }}');"></div>
-                <div class="headline-container">
-                    <div class="u-container u-container--padded">
-                        <h1 class="headline">{{ self.title|safe }}</h1>
-                        {% if self.fw_above_cut_lede %}
-                            <p class="fw-description">{{ self.fw_above_cut_lede }}</p>
-                        {% endif %}
-                        <div class="article-byline c-article__byline-center">
-                            <span class="author">By {{ article.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ article.published_at }}</span>
+            {% with self.featured_media.first as featured_image_object %}
+                <div class="banner-image">
+                    {% image featured_image_object.image original as featured_image %}
+                    <div class="backdrop" style="background-image: url('{{ featured_image.url }})';"></div>
+                    <div class="headline-container">
+                        <div class="u-container u-container--padded">
+                            <h1 class="headline">{{ self.title|safe }}</h1>
+                            {% if self.fw_above_cut_lede %}
+                                <p class="fw-description">{{ self.fw_above_cut_lede }}</p>
+                            {% endif %}
+                            <div class="article-byline c-article__byline-center">
+                                <span class="author">By {{ self.get_author_url|safe }}</span> &nbsp;&middot;&nbsp; <span class="published">{{ self.published_at }}</span>
+                            </div>
                         </div>
-                    </div>
-                    {% if article.featured_image.caption or article.featured_image.credit %}
-                        <div class="caption">
-                        {% if article.featured_image.caption %}{{ article.featured_image.caption }}{% endif %}{% if article.featured_image.credit %} <span class="credit">{{ article.featured_image.credit }}</span>{% endif %}
-                    </div>
-                    {% endif %}
-                </div>                    
-            </div>
-            <!-- {% if article.featured_image.caption or article.featured_image.credit %}
-                <div class="caption">
-                    {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                        {% if featured_image_object.caption or featured_image_object.credit %}
+                            <div class="caption">
+                            {% if featured_image_object.caption %}{{ featured_image_object.caption }}{% endif %}{% if featured_image_object.credit %} <span class="credit">{{ featured_image_object.credit }}</span>{% endif %}
+                        </div>
+                        {% endif %}
+                    </div>                    
                 </div>
-            {% endif %} -->
+                <!-- {% if article.featured_image.caption or article.featured_image.credit %}
+                    <div class="caption">
+                        {{ article.featured_image.caption }} <span class="credit">{{ article.featured_image.credit }}</span>
+                    </div>
+                {% endif %} -->
+            {% endwith %}
         {% endif %}
     </div>
 {% endblock %}

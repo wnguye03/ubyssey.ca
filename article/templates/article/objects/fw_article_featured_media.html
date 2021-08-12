@@ -13,9 +13,7 @@
             data-caption="{{ featured_image_object.caption }}"
             data-url="{{ featured_image.url }}"
             data-credit="{{ featured_image_object.credits }}"
-            {% if self.header_layout == 'right-image' %}
-                src="{{ featured_image.url }}"
-            {% endif %}
+            src="{{ featured_image.url }}"
             alt=""
         />
         {% if featured_image_object.caption or featured_image_object.credit %}
