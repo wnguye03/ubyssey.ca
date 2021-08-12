@@ -2,17 +2,19 @@
     This template object exists because both the "right image" and "top image" style fw articles were using almost identical contents when div class="featured-media
     It was seperated out to try to make the code more readable
 {% endcomment %}
+{% load wagtailimages_tags %}
 
 {% if self.featured_media.first.image %}
     {% with self.featured_media.first as featured_image_object %}
+        {% image featured_image_object.image original as featured_image %}
         <img
             class="article-attachment"
             data-id="{{ featured_image_object.image.id }}"
             data-caption="{{ featured_image_object.caption }}"
-            data-url="{{ featured_image_object.image.url }}"
-            data-credit="{{ featured_image_object.image.url }}"
+            data-url="{{ featured_image.url }}"
+            data-credit="{{ featured_image_object.credits }}"
             {% if self.header_layout == 'right-image' %}
-                src="{{ featured_image_object.image.url }}"
+                src="{{ featured_image.url }}"
             {% endif %}
             alt=""
         />

@@ -534,8 +534,8 @@ class ArticlePage(SectionablePage):
     )
     header_layout = models.CharField(
         null=False,
-        blank=True,
-        default='',
+        blank=False,
+        default='right-image',
         max_length=50,
         help_text="Legacy from Dispatch's \"Templates\" feature",
     )
@@ -703,7 +703,6 @@ class ArticlePage(SectionablePage):
                     "header_layout",
                     widget=Select(
                         choices=[
-                            ('', ''), 
                             ('right-image', 'Right Image'),
                             ('top-image', 'Top Image'),
                             ('banner-image', 'Banner Image')
