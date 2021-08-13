@@ -139,6 +139,7 @@ INSTALLED_APPS = [
     'sporttourney',
     'specialfeaturelanding',
     'navigation',
+    'dashboard',
 
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
@@ -159,6 +160,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.routable_page',
+    'wagtail.contrib.styleguide',
 
     'taggit',
     'modelcluster',

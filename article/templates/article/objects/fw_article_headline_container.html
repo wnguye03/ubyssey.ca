@@ -1,0 +1,33 @@
+{% comment %} 
+    This template object exists because both the "right image" and "top image" style fw articles were using almost identical contents when div class="headline-container"
+    It was seperated out to try to make the code more readable
+{% endcomment %}
+<div class="headline-container">
+    {% if self.header_layout == 'right-image' %}
+        {% comment %} Odd choice of class names in this div. Should check the corresponding CSS {% endcomment %}
+        <h1 class="headline">
+            {{ self.title|safe }}
+        </h1>
+	{% elif self.header_layout == 'top-image' %}
+        <h1 class="o-headline o-headline--article">
+            {{ self.title|safe }}
+        </h1>
+    {% endif %}
+	{% if self.fw_above_cut_lede %}
+		<p class="fw-description">{{ self.fw_above_cut_lede }}</p>
+	{% endif %}
+	<div class="c-article__byline c-article__byline-center">
+        <div class="c-article__author">
+            By {{ self.get_author_url|safe }}
+        </div>
+        <div class="c-article__byline__meta">
+            <span class="c-article__published-at">
+                {{ self.published_at|date:'N j, Y' }}
+            </span>
+            {% if self.minutes_to_read %}
+                <span> &nbsp;&middot;&nbsp; </span>
+                <span class="c-article__reading-time">{{ self.minutes_to_read }} min read</span>
+            {% endif %}
+        </div>
+	</div>
+</div>
