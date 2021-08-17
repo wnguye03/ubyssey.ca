@@ -524,6 +524,21 @@ class ArticlePage(SectionablePage):
         verbose_name='About This Article (Optional)',
     )
 
+
+    # Timelines are only usable on a 
+    show_timeline = models.BooleanField(
+        default=False,
+        help_text="Layout MUST be full-width (or else customized) to display a timeline",
+    )
+
+    timeline = models.ForeignKey(
+        ArticleSeriesSnippet,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        help_text="Create a timeline in the Snippets menu and set it here."
+    )
+
     # Featured image stuff used for tempalte customization. Legacy
     image_size = models.CharField(
         null=False,
@@ -750,6 +765,7 @@ class ArticlePage(SectionablePage):
         ),
     ]
 
+    # This overrides the default Wagtail edit handler, in order to add custom tabs to the article editting interface
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading='Content'),
