@@ -101,6 +101,20 @@ class ArticleSeriesSnippet(ClusterableModel):
          verbose_name = "Series of Articles"
          verbose_name_plural = "Series of Articles"
 
+@register_snippet
+class TimelineSnippet(models.Model):
+    title = fields.CharField(blank=False, null=False, max_length=200)
+    slug = fields.SlugField(unique=True, blank=False, null=False, max_length=200)
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('title'),
+                FieldPanel('slug'),
+            ],
+            heading="Essentials"
+        ),
+    ]
+
 #-----Orderable models-----
 class ArticleAuthorsOrderable(Orderable):
     """
@@ -536,6 +550,7 @@ class ArticlePage(SectionablePage):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+        related_name="timeline_articles",
         help_text="Create a timeline in the Snippets menu and set it here."
     )
 
