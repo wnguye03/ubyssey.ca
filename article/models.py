@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from wagtail.admin import edit_handlers
 from images.models import GallerySnippet
@@ -103,8 +104,13 @@ class ArticleSeriesSnippet(ClusterableModel):
 
 @register_snippet
 class TimelineSnippet(models.Model):
+    """
+    Users select a TimelineSnippet in article admin for Article.
+    Data field will automatically update whenever save() is hit.
+    """
     title = fields.CharField(blank=False, null=False, max_length=200)
     slug = fields.SlugField(unique=True, blank=False, null=False, max_length=200)
+    data = fields.TextField(blank=True, null=False)
     panels = [
         MultiFieldPanel(
             [
@@ -114,6 +120,25 @@ class TimelineSnippet(models.Model):
             heading="Essentials"
         ),
     ]
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Forces update of the "data" field every time a timeline is saved.
+
+        Should be called during the pre_save of ArticlePage when the ArticlePage happens to have a corresponding timeline.
+        """
+        self.update_data()
+        return super().save(*args, **kwargs)
+    
+    def update_data(self) -> None:
+
+        sorted_timeline_articles = self.timeline_articles.all().sort(key=lambda a: a.timeline_date)
+        sorted_timeline_articles_data = list(sorted_timeline_articles.values('id', 'fw_above_cut_lede', 'timeline_date', 'slug', 'title', 'featured_media'))
+        try:
+            sorted_timeline_articles_data['featured_media'] = sorted_timeline_articles_data['featured_media'].first().image.get_rendition('fill-200x200').url
+        except:
+            sorted_timeline_articles_data['featured_media'] = None
+        self.data = json.dumps(sorted_timeline_articles_data)
 
 #-----Orderable models-----
 class ArticleAuthorsOrderable(Orderable):
@@ -539,19 +564,21 @@ class ArticlePage(SectionablePage):
     )
 
 
-    # Timelines are only usable on a 
+    # Timelines
     show_timeline = models.BooleanField(
         default=False,
         help_text="Layout MUST be full-width (or else customized) to display a timeline",
     )
-
     timeline = models.ForeignKey(
-        ArticleSeriesSnippet,
+        TimelineSnippet,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name="timeline_articles",
         help_text="Create a timeline in the Snippets menu and set it here."
+    )
+    timeline_date = models.DateTimeField(
+        default=timezone.now,
     )
 
     # Featured image stuff used for tempalte customization. Legacy
@@ -696,6 +723,7 @@ class ArticlePage(SectionablePage):
                 ),
             ],
             heading = "Stock Layouts",
+            classname="collapsible",
         ),
         MultiFieldPanel(
             [
@@ -705,6 +733,16 @@ class ArticlePage(SectionablePage):
                 FieldPanel('fw_above_cut_lede'),
             ],
             heading = "Header fields, etc.",
+            classname="collapsible collapsed",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('show_timeline'),
+                FieldPanel('timeline'),
+                FieldPanel('timeline_date'),
+            ],
+            heading = "Timeline information",
+            classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
@@ -712,6 +750,7 @@ class ArticlePage(SectionablePage):
                 FieldPanel('fw_about_this_article'),
             ],
             heading = "Additional credits, etc.",
+            classname="collapsible collapsed",
         ),
 
         MultiFieldPanel(
@@ -741,6 +780,7 @@ class ArticlePage(SectionablePage):
                 ),
             ],
             heading="Image Size and Position",
+            classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
@@ -748,6 +788,7 @@ class ArticlePage(SectionablePage):
                 InlinePanel("connected_articles"),
             ],
             heading="Connected or Related Article Links (Non-Series)",
+            classname="collapsible collapsed",
         ),
     ]
     customization_panels = [
