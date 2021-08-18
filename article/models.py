@@ -627,12 +627,21 @@ class ArticlePage(SectionablePage):
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
+        FieldRowPanel(
+            [
+                FieldPanel("explicit_published_at"),
+                FieldPanel("show_last_modified"),
+            ],
+            heading="Publication Date",
+        ),
         MultiFieldPanel(
             [
+                HelpPanel(
+                    content='<h1>Help: Writing Articles</h1><p>The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!</p><p>Blocks simply represent units of the article you may wish to re-arrange. You do not have to put every individual paragraph in its own block (doing so is probably time consuming!). Many articles that have been imported into our database DO divide every paragraph into its own block, but this is for computer convenience during the import.</p>'
+                ),
                 StreamFieldPanel("content"),
             ],
             heading="Article Content",
-            help_text = "The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!",
             classname="collapsible",
         ),
         MultiFieldPanel(
@@ -644,27 +653,19 @@ class ArticlePage(SectionablePage):
         ),
         MultiFieldPanel(
             [
+                HelpPanel(content="Authors may be created under \"Snippets\", then selected here."),
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
             heading="Author(s)",
-            help_text="Authors may be created under \"Snippets\", then selected here.",
             classname="collapsible",
-        ),
-        FieldRowPanel(
-            [
-                FieldPanel("explicit_published_at"),
-                FieldPanel("show_last_modified"),
-            ],
-            heading="Publication Date",
-            classname="collapsible",
-        ),
+        ), # Author(s)
         MultiFieldPanel(
             [
                 # FieldPanel("section"),
                 SnippetChooserPanel("category"),
                 FieldPanel("tags"),
             ],
-            heading="Sections and Tags",
+            heading="Categories and Tags",
             classname="collapsible",
         ),
         MultiFieldPanel(
@@ -678,11 +679,11 @@ class ArticlePage(SectionablePage):
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
             [
+                HelpPanel(content="\"Breaking Timeout\" is irrelevant if news is not breaking news."),
                 FieldPanel("is_breaking"),
                 FieldPanel("breaking_timeout"),
             ],
-            heading="Old SEO stuff",
-            help_text="\"Breaking Timeout\" is irrelevant if news is not breaking news."
+            heading="Breaking",
         ),
         MultiFieldPanel(
             [
@@ -715,7 +716,7 @@ class ArticlePage(SectionablePage):
     ] # settings_panels   
     fw_article_panels = [
         HelpPanel(
-            content = "<h1>Help</h1><p>When you need an alternate layout for your article, but still a frequently-used layout (such as including a full-width banner) rather making than a highly customized frontend (as you can do in the next tab over), select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, <u>for the majority of articles, nothing on this tab should be touched</u>; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
+            content = "<h1>Help</h1><p>IF you need an alternate layout for your article, but still a frequently-used layout (such as including a full-width banner), THEN, rather making than a highly customized frontend (as you can do in the next tab over), select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, <u>for the majority of articles, nothing on this tab should be touched</u>; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
         ),
         MultiFieldPanel(
             [
@@ -755,7 +756,7 @@ class ArticlePage(SectionablePage):
         ), # Optional Header/Banner Fields
         MultiFieldPanel(
             [
-                HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet LAST, after your article is otherwise written</p><p>Developers should note the Timeline/Article sync is accomplished with Django signals to prevent tight coupling of the two classes.</p>'),
+                HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet LAST, <i>after</i> your article is otherwise written.</p><p><u>Developers</u> should note: the Timeline/Article sync is accomplished with Django signals, to prevent tight coupling of the two classes. Do not allow use of signals to turn into noodle logic.</p>'),
                 FieldPanel('show_timeline'),
                 FieldPanel('timeline_date'),
                 SnippetChooserPanel('timeline'),
@@ -782,7 +783,7 @@ class ArticlePage(SectionablePage):
     ] # fw_article_panels
     customization_panels = [
         HelpPanel(
-            content="<p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and JavaScript, and here you may utilize all three.</p><p>Custom HTML templates, which use the Django templating language, should be uploaded not as files/documents but as \"Custom HTML\" in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
+            content="<h1>Help</h1><p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and JavaScript, and here you may utilize all three.</p><p>Custom HTML templates, which use the Django templating language, should be uploaded not as files/documents but as \"Custom HTML\" in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
         ),
         MultiFieldPanel(
             [
