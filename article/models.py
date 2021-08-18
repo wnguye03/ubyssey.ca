@@ -341,7 +341,7 @@ class TimelineSnippet(models.Model):
     
     def update_data(self) -> None:
 
-        qs = self.timeline_articles.all().order_by('timeline_date')
+        qs = self.timeline_articles.all().live().order_by('timeline_date')
 
         if len(qs) > 0:
             list_of_dictified_articles = list(qs.values('id','fw_above_cut_lede','timeline_date','slug','title','featured_media'))
