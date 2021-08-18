@@ -755,7 +755,7 @@ class ArticlePage(SectionablePage):
         ), # Optional Header/Banner Fields
         MultiFieldPanel(
             [
-                HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet </p>'),
+                HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet LAST, after your article is otherwise written</p><p>Developers should note the Timeline/Article sync is accomplished with Django signals to prevent tight coupling of the two classes.</p>'),
                 FieldPanel('show_timeline'),
                 FieldPanel('timeline_date'),
                 SnippetChooserPanel('timeline'),
