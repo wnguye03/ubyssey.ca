@@ -340,9 +340,8 @@ class TimelineSnippet(models.Model):
         return super().save(*args, **kwargs)
     
     def update_data(self) -> None:
-
+        self.data = '' # Wipe our slate clean before we update. Otherwise, an article that once had articles but no longer does will end up with "leftover" data
         qs = self.timeline_articles.all().live().order_by('timeline_date')
-
         if len(qs) > 0:
             list_of_dictified_articles = list(qs.values('id','fw_above_cut_lede','timeline_date','slug','title','featured_media'))
 
@@ -754,7 +753,7 @@ class ArticlePage(SectionablePage):
         MultiFieldPanel(
             [
                 FieldPanel('show_timeline'),
-                FieldPanel('timeline'),
+                SnippetChooserPanel('timeline'),
                 FieldPanel('timeline_date'),
             ],
             heading = "Timeline information",
