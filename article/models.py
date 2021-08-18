@@ -102,44 +102,6 @@ class ArticleSeriesSnippet(ClusterableModel):
          verbose_name = "Series of Articles"
          verbose_name_plural = "Series of Articles"
 
-@register_snippet
-class TimelineSnippet(models.Model):
-    """
-    Users select a TimelineSnippet in article admin for Article.
-    Data field will automatically update whenever save() is hit.
-    """
-    title = fields.CharField(blank=False, null=False, max_length=200)
-    slug = fields.SlugField(unique=True, blank=False, null=False, max_length=200)
-    data = fields.TextField(blank=True, null=False)
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel('title'),
-                FieldPanel('slug'),
-            ],
-            heading="Essentials"
-        ),
-    ]
-
-    def save(self, *args, **kwargs) -> None:
-        """
-        Forces update of the "data" field every time a timeline is saved.
-
-        Should be called during the pre_save of ArticlePage when the ArticlePage happens to have a corresponding timeline.
-        """
-        self.update_data()
-        return super().save(*args, **kwargs)
-    
-    def update_data(self) -> None:
-
-        sorted_timeline_articles = self.timeline_articles.all().sort(key=lambda a: a.timeline_date)
-        sorted_timeline_articles_data = list(sorted_timeline_articles.values('id', 'fw_above_cut_lede', 'timeline_date', 'slug', 'title', 'featured_media'))
-        try:
-            sorted_timeline_articles_data['featured_media'] = sorted_timeline_articles_data['featured_media'].first().image.get_rendition('fill-200x200').url
-        except:
-            sorted_timeline_articles_data['featured_media'] = None
-        self.data = json.dumps(sorted_timeline_articles_data)
-
 #-----Orderable models-----
 class ArticleAuthorsOrderable(Orderable):
     """
@@ -345,6 +307,61 @@ class ArticleScriptOrderable(Orderable):
             heading="Script"
         ),
     ]
+
+# Timeline Snippets
+@register_snippet
+class TimelineSnippet(models.Model):
+    """
+    Users select a TimelineSnippet in article admin for Article.
+    Data field will automatically update whenever save() is hit.
+    """
+
+    title = fields.CharField(blank=False, null=False, max_length=200)
+    slug = fields.SlugField(unique=True, blank=False, null=False, max_length=200)
+    data = fields.TextField(blank=True, null=False)
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('title'),
+                FieldPanel('slug'),
+            ],
+            heading="Essentials",
+        ),
+    ]
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Forces update of the "data" field every time a timeline is saved.
+
+        Should be called during the pre_save of ArticlePage when the ArticlePage happens to have a corresponding timeline.
+        """
+        self.update_data()
+        return super().save(*args, **kwargs)
+    
+    def update_data(self) -> None:
+
+        qs = self.timeline_articles.all().order_by('timeline_date')
+
+        if len(qs) > 0:
+            list_of_dictified_articles = list(qs.values('id','fw_above_cut_lede','timeline_date','slug','title','featured_media'))
+
+            for i, dictified_article in enumerate(list_of_dictified_articles):
+                try:
+                    list_of_dictified_articles[i]['featured_media'] = ArticleFeaturedMediaOrderable.objects.get(id=[dictified_article['featured_media']]).image.get_rendition('fill-200x200').url
+                except:
+                    list_of_dictified_articles[i]['featured_media'] = ''
+
+                try: 
+                    list_of_dictified_articles[i]['timeline_date'] = dictified_article['timeline_date'].strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                except:
+                    list_of_dictified_articles[i]['timeline_date'] = timezone.now.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            self.data = json.dumps(list_of_dictified_articles)
+        return
+
+    def __str__(self) -> str:
+        return self.title
+
 
 #-----Taggit models-----
 class ArticlePageTag(TaggedItemBase):
@@ -562,7 +579,6 @@ class ArticlePage(SectionablePage):
         default='',
         verbose_name='About This Article (Optional)',
     )
-
 
     # Timelines
     show_timeline = models.BooleanField(
