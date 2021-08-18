@@ -596,20 +596,13 @@ class ArticlePage(SectionablePage):
         default=timezone.now,
     )
 
-    # Featured image stuff used for tempalte customization. Legacy
-    image_size = models.CharField(
-        null=False,
-        blank=False,
-        default='default',
-        max_length=50,
-        help_text="Legacy from Dispatch's \"Templates\" feature",
-    )
+    # Featured image stuff used for tempalte customization
     header_layout = models.CharField(
         null=False,
         blank=False,
         default='right-image',
         max_length=50,
-        help_text="Legacy from Dispatch's \"Templates\" feature",
+        help_text="Based on from Dispatch's obselete \"Templates\" feature",
     )
 
     #-----Advanted, custom layout etc-----
@@ -682,7 +675,7 @@ class ArticlePage(SectionablePage):
             heading="Featured Media",
             classname="collapsible",
         ),
-    ]
+    ] # content_panels
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
             [
@@ -700,7 +693,7 @@ class ArticlePage(SectionablePage):
             heading="Old SEO stuff",
             help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
         )
-    ]
+    ] # promote_panels
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(
             [
@@ -720,10 +713,10 @@ class ArticlePage(SectionablePage):
             ],
             heading='Legacy stuff'
         ),
-    ]    
+    ] # settings_panels   
     fw_article_panels = [
         HelpPanel(
-            content = "<p>If you need to use an alternate layout for your article, but still a the frequently-used stock layout (such as the layout with a full-width banner) rather than a highly customized frontend, select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, for the majority of articles, nothing on this tab should be touched; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
+            content = "<h1>Help</h1><p>When you need an alternate layout for your article, but still a frequently-used layout (such as including a full-width banner) rather making than a highly customized frontend (as you can do in the next tab over), select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, <u>for the majority of articles, nothing on this tab should be touched</u>; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
         ),
         MultiFieldPanel(
             [
@@ -737,52 +730,12 @@ class ArticlePage(SectionablePage):
                     ),
                 ),
             ],
-            heading = "Stock Layouts",
-            classname="collapsible",
-        ),
+            heading = "Select Stock Layout",
+            classname="collapsible collapsed",
+        ), # Select Stock Layout
         MultiFieldPanel(
             [
                 HelpPanel(content="<p>This information is generally used in articles that use a full-width banner of some sort.</p>"),
-                FieldPanel('fw_alternate_title'),
-                FieldPanel('fw_optional_subtitle'),
-                FieldPanel('fw_above_cut_lede'),
-            ],
-            heading = "Header fields, etc.",
-            classname="collapsible collapsed",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('show_timeline'),
-                SnippetChooserPanel('timeline'),
-                FieldPanel('timeline_date'),
-            ],
-            heading = "Timeline information",
-            classname="collapsible collapsed",
-        ),
-        MultiFieldPanel(
-            [
-                HelpPanel(content="<p>This information is generally used in a special article that has additional credits beyond the normal byline.</p>"),
-                FieldPanel('fw_about_this_article'),
-            ],
-            heading = "Additional credits, etc.",
-            classname="collapsible collapsed",
-        ),
-
-        MultiFieldPanel(
-            [
-                HelpPanel(
-                    content="These were at one time parts of Dispatch's now-obselete \"Templates\" feature. \n\n" + 
-                    "Care should be taken to ensure these fields are actually used in their corresponding templates files (in the Django sense of template).\n",
-                ),
-                FieldPanel(
-                    "image_size",
-                    widget=Select(
-                        choices=[
-                            ('default', 'Default'),
-                            ('full', 'Full'),
-                        ],
-                    ),
-                ),
                 FieldPanel(
                     "header_layout",
                     widget=Select(
@@ -791,12 +744,34 @@ class ArticlePage(SectionablePage):
                             ('top-image', 'Top Image'),
                             ('banner-image', 'Banner Image')
                         ],
-                    )
+                    ),
+                    help_text='This field is used to set variations on the \"Full-Width Story\" and similar layouts.',
                 ),
+                FieldPanel('fw_alternate_title'),
+                FieldPanel('fw_optional_subtitle'),
+                FieldPanel('fw_above_cut_lede'),
             ],
-            heading="Image Size and Position",
+            heading = "Optional Header/Banner Fields",
             classname="collapsible collapsed",
-        ),
+        ), # Optional Header/Banner Fields
+        MultiFieldPanel(
+            [
+                HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet </p>'),
+                FieldPanel('show_timeline'),
+                FieldPanel('timeline_date'),
+                SnippetChooserPanel('timeline'),
+            ],
+            heading = "Timeline",
+            classname="collapsible collapsed",
+        ), # Timeline
+        MultiFieldPanel(
+            [
+                HelpPanel(content="<p>This information is generally used in a special article that has additional credits beyond the normal byline.</p>"),
+                FieldPanel('fw_about_this_article'),
+            ],
+            heading = "Additional Credits",
+            classname="collapsible collapsed",
+        ), # Additional Credits
         MultiFieldPanel(
             [
                 HelpPanel(content="Somewhat legacy. These will not be used with the majority of templates, but are used with how Magazines or Guides or some special articles have traditionally been set up."),
@@ -804,8 +779,8 @@ class ArticlePage(SectionablePage):
             ],
             heading="Connected or Related Article Links (Non-Series)",
             classname="collapsible collapsed",
-        ),
-    ]
+        ), # Connected or Related Article Links (Non-Series)
+    ] # fw_article_panels
     customization_panels = [
         HelpPanel(
             content="<p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and JavaScript, and here you may utilize all three.</p><p>Custom HTML templates, which use the Django templating language, should be uploaded not as files/documents but as \"Custom HTML\" in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
@@ -819,22 +794,22 @@ class ArticlePage(SectionablePage):
                 ModelChooserPanel("db_template"),
             ],
             heading="Custom HTML",
-        ),
+        ), # Custom HTML
         MultiFieldPanel(
             [
                 InlinePanel("styles"),
             ],
             heading="Custom CSS",
             help_text="Please upload any custom CSS to \"Documents\", then select the appropriate document here.\n\nSelecting a non-CSS Document will cause errors.",
-        ),
+        ), # Custom CSS
         MultiFieldPanel(
             [
                 InlinePanel("scripts"),
             ],
             heading="Custom JavaScript",
             help_text="Please upload any custom JavaScript to \"Documents\", then select the appropriate document here.\n\nSelecting a non-JavaScript Document will cause errors.",
-        ),
-    ]
+        ), # Custom JavaScript
+    ] # customization_panels
 
     # This overrides the default Wagtail edit handler, in order to add custom tabs to the article editting interface
     edit_handler = TabbedInterface(
@@ -845,7 +820,7 @@ class ArticlePage(SectionablePage):
             ObjectList(fw_article_panels, heading='Layout (Stock Templates)'),
             ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
         ],
-    )
+    ) # edit_handler
 
     #-----Properties, getters, setters, etc.-----
 
