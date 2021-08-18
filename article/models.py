@@ -121,7 +121,7 @@ class ArticleAuthorsOrderable(Orderable):
         max_length=50,
         null=False,
         blank=True,
-        default='',
+        default='author',
     )
     panels = [
         MultiFieldPanel(
@@ -131,7 +131,6 @@ class ArticleAuthorsOrderable(Orderable):
                     "author_role",
                     widget=Select(
                         choices=[
-                            ('', ''), 
                             ('author', 'Author'), 
                             ('illustrator','Illustrator'),
                             ('photographer','Photographer'),
@@ -142,7 +141,7 @@ class ArticleAuthorsOrderable(Orderable):
             ],
             heading="Author",
         ),
-    ]
+    ] # panels for ArticleAuthorsOrderable
 
 class MagazineArticleBylineOrderable(Orderable):
     byline = models.TextField(blank=True, null=False, default='')
