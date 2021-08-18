@@ -794,6 +794,7 @@ class ArticlePage(SectionablePage):
                 ModelChooserPanel("db_template"),
             ],
             heading="Custom HTML",
+            classname="collapsible collapsed",
         ), # Custom HTML
         MultiFieldPanel(
             [
@@ -801,6 +802,7 @@ class ArticlePage(SectionablePage):
             ],
             heading="Custom CSS",
             help_text="Please upload any custom CSS to \"Documents\", then select the appropriate document here.\n\nSelecting a non-CSS Document will cause errors.",
+            classname="collapsible collapsed",
         ), # Custom CSS
         MultiFieldPanel(
             [
@@ -808,6 +810,7 @@ class ArticlePage(SectionablePage):
             ],
             heading="Custom JavaScript",
             help_text="Please upload any custom JavaScript to \"Documents\", then select the appropriate document here.\n\nSelecting a non-JavaScript Document will cause errors.",
+            classname="collapsible collapsed",
         ), # Custom JavaScript
     ] # customization_panels
 
