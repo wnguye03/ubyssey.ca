@@ -1,4 +1,5 @@
 {% extends 'guide/2020/base.html' %}
+{% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
 {% block content %}
@@ -55,7 +56,9 @@
                             <div class="advertisement box sidebar">
                                 {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
                             </div>
-                            {{ article.html|safe }}
+                            {% for block in self.content %}
+                                {% include_block block %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
