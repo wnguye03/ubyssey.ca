@@ -6,7 +6,8 @@
     {% if self.header_layout == 'right-image' %}
         {% comment %} Odd choice of class names in this div. Should check the corresponding CSS {% endcomment %}
         <h1 class="headline">
-            {{ self.title|safe }}
+            {{ self.title |safe }}
+            
         </h1>
 	{% elif self.header_layout == 'top-image' %}
         <h1 class="o-headline o-headline--article">

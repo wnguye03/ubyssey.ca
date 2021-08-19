@@ -42,8 +42,13 @@
                         </div>
                         {% if featured_image_object.caption or featured_image_object.credit %}
                             <div class="caption">
-                            {% if featured_image_object.caption %}{{ featured_image_object.caption }}{% endif %}{% if featured_image_object.credit %} <span class="credit">{{ featured_image_object.credit }}</span>{% endif %}
-                        </div>
+                                {% if featured_image_object.caption %}
+                                    {{ featured_image_object.caption }}
+                                {% endif %}
+                                {% if featured_image_object.credit %}
+                                    <span class="credit">{{ featured_image_object.credit }}</span>
+                                {% endif %}
+                            </div>
                         {% endif %}
                     </div>                    
                 </div>
