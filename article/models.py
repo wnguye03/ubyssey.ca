@@ -401,6 +401,8 @@ class ArticlePage(SectionablePage):
 
     subpage_types = [] #Prevents article pages from having child pages
 
+    show_in_menus_default = False
+
     #-----Field attributes-----
     content = StreamField(
         [
