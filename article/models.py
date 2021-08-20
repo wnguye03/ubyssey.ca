@@ -624,6 +624,8 @@ class ArticlePage(SectionablePage):
 
         if self.layout == 'fw-story':
             return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
                         
         return "article/article_page.html"
 
@@ -728,6 +730,7 @@ class ArticlePage(SectionablePage):
                         choices=[
                             ('default', 'Default'), 
                             ('fw-story', 'Full-Width Story'),
+                            ('guide-2020', 'Guide (2020 style)'),
                         ],
                     ),
                 ),
@@ -828,6 +831,27 @@ class ArticlePage(SectionablePage):
     ) # edit_handler
 
     #-----Properties, getters, setters, etc.-----
+
+    def get_context(self, request, *args, **kwargs):
+        """
+        Wagtail uses this method to add context variables following a request at a URL.
+        All the below code occurs after the user submits a request and before they receive it.
+        Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
+        """
+        context = super().get_context(request, *args, **kwargs)
+        context['prev'] = self.get_prev_sibling()
+        context['next'] = self.get_next_sibling()
+
+        if self.current_section == 'guide':
+            # Desired behaviour for guide articles is to always have two adjacent articles. Therefore we create an "infinite loop"
+            if not context['prev']:
+                context['prev'] = self.get_last_sibling()
+            if not context['next']:
+                context['next'] = self.get_first_sibling()
+
+        context['prev'] = context['prev'].specific
+        context['next'] = context['next'].specific
+        return context
 
     def get_authors_string(self, links=False, authors_list=[]) -> str:
         """
