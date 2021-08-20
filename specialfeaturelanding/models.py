@@ -29,6 +29,7 @@ class SpecialLandingPage(SectionablePage):
     menu = ForeignKey(
         FlatMenu,
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
