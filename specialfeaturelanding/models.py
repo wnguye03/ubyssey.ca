@@ -19,6 +19,8 @@ class SpecialLandingPage(SectionablePage):
         'specialfeaturelanding.SpecialLandingPage',
         'article.ArticlePage',
     ]
+    
+    show_in_menus_default = True
 
     content_panels = Page.content_panels + [
     ]
