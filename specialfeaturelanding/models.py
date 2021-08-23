@@ -52,7 +52,7 @@ class SpecialLandingPage(SectionablePage):
             ('quote', QuoteBlock(
                 label="Quote Block",
             )),
-            ('stylable-cta',CustomStylingCTABlock(
+            ('stylecta',CustomStylingCTABlock(
                 label="Custom Styling CTA",
             )),
         ],
