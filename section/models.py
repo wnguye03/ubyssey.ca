@@ -13,8 +13,10 @@ from django.shortcuts import render
 from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
 
+
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core import models as wagtail_core_models
+from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import route, RoutablePageMixin
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -184,6 +186,10 @@ class SectionPage(SectionablePage):
     def subsection_view(self, request, subsection_slug):
         context = self.get_context(request, subsection_slug=subsection_slug)
         return render(request, 'section/section_page.html', context)
+
+    def save(self, *args, **kwargs):
+        self.current_section = self.slug
+        return Page.save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Section"
