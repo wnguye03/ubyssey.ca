@@ -9,6 +9,7 @@ from django.db.models.fields.related import ForeignKey
 from section.sectionable.models import SectionablePage
 
 from wagtail.admin.edit_handlers import (
+    FieldPanel,
     MultiFieldPanel,
     StreamFieldPanel,
     HelpPanel,
@@ -25,7 +26,7 @@ class SpecialLandingPage(SectionablePage):
     This is the general model for "special features" landing pages, such as for the guide, or a magazine.
     """
     # template = "specialfeatureslanding/base.html"
-    template = "specialfeatureslanding/guide2020index.html"
+    template = "specialfeatureslanding/landing_page_guide2020.html"
 
     parent_page_types = [
         'section.SectionPage',
@@ -48,6 +49,13 @@ class SpecialLandingPage(SectionablePage):
         related_name='+',
     )
 
+    main_class_name = models.CharField(
+        null=False,
+        blank=True,
+        default='home-content-container',
+        max_length=255,
+    )
+
     content = StreamField(
         [
             ('quote', QuoteBlock(
@@ -62,6 +70,13 @@ class SpecialLandingPage(SectionablePage):
     )
     content_panels = Page.content_panels + [
         ModelChooserPanel('menu'),
+        MultiFieldPanel(
+            [
+                HelpPanel(content='Used for targetting <main> by the css'),
+                FieldPanel('main_class_name'),
+            ],
+            heading="Styling",
+        ),
         MultiFieldPanel(
             [
                 HelpPanel(

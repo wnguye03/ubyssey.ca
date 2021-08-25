@@ -84,13 +84,6 @@ class CustomStylingCTABlock(blocks.StructBlock):
         ],
     )
     
-    @property
-    def content(self):
-        if self.use_richtext:
-            return self.richcontent
-        else:
-            return self.htmlcontent
-
     def render(self, value, context=None):
         """
         According to the below stackoverflow, we need to modify this specific method in order to allow template selection
