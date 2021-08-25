@@ -44,7 +44,9 @@ class HomePage(Page):
         context['breaking_news_article'] = qs.filter(is_breaking=True)
 
         for section_stream in self.sections_stream:
-            context[str(section_stream.value['section'])] = self.get_section_articles(section_slug=section_stream.value['section'].slug)
+            section_title = str(section_stream.value['section'])
+            section_slug = section_stream.value['section'].slug
+            context[section_title] = self.get_section_articles(section_slug=section_slug)
 
         return context
                   

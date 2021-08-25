@@ -50,7 +50,7 @@
             {% comment %}
               blog is passed through from context
             {% endcomment %}
-            {% for article in blog %}
+            {% for article in Blog %}
               <li>
                 {% include 'article/objects/blog_column.html' with article=article padded=True   %}
               </li>
