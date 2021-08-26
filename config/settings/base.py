@@ -136,6 +136,7 @@ INSTALLED_APPS = [
     'section',
     'images',
     'videos',
+    'ads',
     'sporttourney',
     'specialfeaturelanding',
     'navigation',
