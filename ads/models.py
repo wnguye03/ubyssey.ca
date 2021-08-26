@@ -45,3 +45,6 @@ class AdSlot(models.Model):
             ('ads/advertisement.html','ads/advertisement.html'),
         ],
     )
+
+    def __str__(self) -> str:
+        return self.slug
