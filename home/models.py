@@ -39,33 +39,17 @@ class HomePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        childrenPages = self.get_children().specific().type(SectionPage)
         qs = ArticlePage.objects.live().public().order_by('-last_published_at')
         context['above_cut_articles'] = qs[:6]
         context['breaking_news_article'] = qs.filter(is_breaking=True)
 
-        ajax_section_blocks = []
-
-        #remove "blog" from the sections that are about to be loaded because "blog" is a section that will be loaded on the right-side bar under digital print issuses on the homepage
         for section_stream in self.sections_stream:
-            if(str(section_stream.value['section']) == "Blog" and SectionPage.objects.get(slug = "blog") is not None):
-                context['blog'] = self.get_section_articles(section_slug='blog')
+            section_title = str(section_stream.value['section'])
+            section_slug = section_stream.value['section'].slug
+            context[section_title] = self.get_section_articles(section_slug=section_slug)
 
-            for section in childrenPages:
-                  if(str(section_stream.value['section']) == section.title and section.title != "Blog"):
-                        ajax_section_blocks.append(section)
-                  
-
-        #if the request is ajax, it will return the requested 'section' and the feature articles under that section     
-        if request.is_ajax():
-            # This is the index for which the section will be loaded onto the homepage
-            # section_count is going to be updated in the frontend after each repsonse is recieved. Check lazyloading-wagtail.js
-            section_count = int(request.GET.get('section_count'))
-
-            if section_count < len(ajax_section_blocks):
-                context[ 'feature_articles'] = ajax_section_blocks[section_count].get_featured_articles()
-                context['section_name'] = ajax_section_blocks[section_count].title
         return context
+                  
 
     #takes a section_slug and returns the feature articles for that section
     def get_section_articles(self, section_slug):
