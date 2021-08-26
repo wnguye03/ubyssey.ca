@@ -20,6 +20,11 @@ class QuoteBlock(blocks.StructBlock):
             ('guide-2020', '\"Guide 2020\"-Style Panel Quote'),
         ],
     )
+    class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='panel-quote __1'
+    )
 
     def render(self, value, context=None):
         """
@@ -31,7 +36,8 @@ class QuoteBlock(blocks.StructBlock):
         """
 
         # Rather than the "normal" template logic, we look at our self.template variable
-        if self.template == 'guide-2020':
+        block_template = value.get('template')
+        if block_template == 'guide-2020':
             template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html'
         else:
             template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html' #TODO better default
@@ -50,8 +56,15 @@ class CustomStylingCTABlock(blocks.StructBlock):
         max_length=255,
         required=True,
     )
-    content = blocks.RichTextBlock(
-        required=True,
+    richcontent = blocks.RichTextBlock(
+        required=False,
+    )
+    htmlcontent = blocks.RawHTMLBlock(
+        required=False,
+    )
+    use_richtext = blocks.BooleanBlock(
+        default=False,
+        required=False,
     )
     link = blocks.PageChooserBlock(
         required=True,
@@ -65,11 +78,12 @@ class CustomStylingCTABlock(blocks.StructBlock):
         required=True,
     )
     template = blocks.ChoiceBlock(
+        required=True,
         choices=[
             ('guide-2020', '\"Guide 2020\"-Style CTA'),
         ],
     )
-
+    
     def render(self, value, context=None):
         """
         According to the below stackoverflow, we need to modify this specific method in order to allow template selection
@@ -80,10 +94,11 @@ class CustomStylingCTABlock(blocks.StructBlock):
         """
 
         # Rather than the "normal" template logic, we look at our self.template variable
-        if self.template == 'guide-2020':
-            template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html'
+        block_template = value.get('template')
+        if block_template == 'guide-2020':
+            template = 'specialfeatureslanding/blocks/guide-2020-cta.html'
         else:
-            template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html' #TODO better default
+            template = 'specialfeatureslanding/blocks/guide-2020-cta.html' #TODO better default
 
         # Below this point, this render() is identical to its original counterpart
         if context is None:
