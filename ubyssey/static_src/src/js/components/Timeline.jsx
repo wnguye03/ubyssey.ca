@@ -4,7 +4,7 @@ import { desktopSize } from '../utils'
 
 class Timeline extends React.Component {
   constructor(props) {
-    console.log('hello')
+
     super(props)
     this.state = {
       nodes: props.nodes.map((node) => {
