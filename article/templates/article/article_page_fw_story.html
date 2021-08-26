@@ -4,7 +4,10 @@
 {% load wagtailimages_tags %}
 
 {% block banner %}
-    <div class="fw-banner {{ self.header_layout }}">
+    <div class="fw-banner {% if self.show_timeline%} timeline-banner {% endif %} {{ self.header_layout }}">
+    {% if self.show_timeline%}
+    <div class='c-timeline' data-current-article-id={{self.id}} data-timeline-title="{{timeline_title}}" data-nodes="{{timeline_data}}"></div>
+    {% endif %}
         {% if self.header_layout == 'right-image' %}
             <div class="header-container">
                 <div class="headline-container left">
@@ -86,3 +89,11 @@
         </div>
     </div>
 {% endblock %}
+
+
+{% if self.show_timeline%}
+    {% block scripts %} 
+         <script src="{% static 'ubyssey/js/timeline.js' %}" type="text/javascript"></script>
+    {% endblock %}
+
+{% endif %}
