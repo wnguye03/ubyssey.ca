@@ -6,7 +6,7 @@
 {% block banner %}
     <div class="fw-banner {% if self.show_timeline%} timeline-banner {% endif %} {{ self.header_layout }}">
     {% if self.show_timeline%}
-    <div class='c-timeline' data-current-article-id={{self.id}} data-timeline-title="{{timeline_title}}" data-nodes="{{timeline_data}}"></div>
+    <div class='c-timeline' data-current-article-id={{self.id}} data-timeline-title="{{self.timeline}}" data-nodes="{{self.timeline.data}}"></div>
     {% endif %}
         {% if self.header_layout == 'right-image' %}
             <div class="header-container">

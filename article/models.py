@@ -854,10 +854,6 @@ class ArticlePage(SectionablePage):
         if context['next']:
             context['next'] = context['next'].specific
 
-        if self.show_timeline:
-            context['timeline_title'] = self.timeline
-            context['timeline_data'] = self.timeline.data
-
         return context
 
     def get_authors_string(self, links=False, authors_list=[]) -> str:
