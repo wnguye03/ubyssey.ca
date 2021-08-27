@@ -40,9 +40,11 @@ class AdSlot(models.Model):
         ],
     )
     dfp = models.CharField(null=False, blank=True, default='', max_length=255)
-    template = models.CharField(null=False, blank=False, default='ads/advertisement.html', max_length=255,
+    div_class = models.CharField(null=False, blank=False, default='box', max_length=255,
         choices=[
-            ('ads/advertisement.html','ads/advertisement.html'),
+            ('','Default'),
+            ('homepage', 'Homepage'),
+            ('mobile-frontpage-box', 'Mobile Frontpage Box'),            
         ],
     )
 
