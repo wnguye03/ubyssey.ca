@@ -853,6 +853,7 @@ class ArticlePage(SectionablePage):
             context['prev'] = context['prev'].specific
         if context['next']:
             context['next'] = context['next'].specific
+
         return context
 
     def get_authors_string(self, links=False, authors_list=[]) -> str:
