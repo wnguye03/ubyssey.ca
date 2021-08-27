@@ -2,6 +2,7 @@
 {% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+{% load ubyssey_ad_tags %}
 
 {% block header %}
   {% include 'navigation/headers/main.html' %}
@@ -9,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
+  {% adslot self.home_leaderboard_ad_slot.slug %}
+  {% adslot self.home_mobile_leaderboard_ad_slot.slug %}
   <main class="u-container u-container--large homepage">
     {% comment %}
       breaking_news_article is passed through from context and it contains all of the breaking articles from each section
@@ -34,6 +37,9 @@
       </div>
 
       <div class="sidebar-home">
+        <div class="sidebar-block sidebar-block--advertisement">
+          {% adslot self.home_sidebar_ad_slot1.slug %}
+        </div>
         <div class=" sidebar-block">
           <h2 class="block-title">Check Out Our Digital Print Issue</h2>
           <div class='sidebar-issue'>
@@ -43,6 +49,9 @@
                   <h5 class="headline"><a class='issue' id ='issue2' href="https://issuu.com/ubyssey/docs/the_ubyssey_april_7">April 7, 2021 - Year in Review </a></h5>
 
           </div>
+        </div>
+        <div class="sidebar-block sidebar-block--advertisement">
+          {% adslot self.home_sidebar_ad_slot2.slug %}
         </div>
         <div class="article-list blog sidebar-block">
           <h2 class="block-title">From the blog</h2>

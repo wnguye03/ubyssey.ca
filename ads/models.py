@@ -1,7 +1,5 @@
 from django.db import models
-
-# Create your models here.
-
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 class AdSlot(models.Model):
     """
@@ -40,11 +38,35 @@ class AdSlot(models.Model):
         ],
     )
     dfp = models.CharField(null=False, blank=True, default='', max_length=255)
-    template = models.CharField(null=False, blank=False, default='ads/advertisement.html', max_length=255,
+    div_class = models.CharField(null=False, blank=False, default='box', max_length=255,
         choices=[
-            ('ads/advertisement.html','ads/advertisement.html'),
+            ('','Default'),
+            ('homepage', 'Homepage'),
+            ('mobile-frontpage-box', 'Mobile Frontpage Box'),            
         ],
     )
 
     def __str__(self) -> str:
         return self.slug
+
+    class Meta:
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['slug']),
+        ]
+
+class AdSettings(BaseSetting):
+    leaderboard_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+    mobile_leaderboard_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
