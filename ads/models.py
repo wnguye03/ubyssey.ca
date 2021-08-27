@@ -49,6 +49,12 @@ class AdSlot(models.Model):
     def __str__(self) -> str:
         return self.slug
 
+    class Meta:
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['slug']),
+        ]
+
 class AdSettings(BaseSetting):
     leaderboard_ad_slot = models.ForeignKey(
         AdSlot,
