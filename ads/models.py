@@ -1,7 +1,5 @@
 from django.db import models
-
-# Create your models here.
-
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 class AdSlot(models.Model):
     """
@@ -50,3 +48,19 @@ class AdSlot(models.Model):
 
     def __str__(self) -> str:
         return self.slug
+
+class AdSettings(BaseSetting):
+    leaderboard_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+    mobile_leaderboard_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
