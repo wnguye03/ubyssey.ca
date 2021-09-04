@@ -4,8 +4,9 @@ from wagtail.contrib.modeladmin.options import (
 
 class AdAdmin(ModelAdmin):
     model = AdSlot
-    menu_label = 'Manage Ads'
+    menu_label = 'Add/Remove Ad Slots'
     menu_icon = 'cogs'
-    menu_order = 850
+    menu_order = 1000
+    add_to_settings_menu = True
     list_display = ('slug', 'dfp', 'size','div_id','div_class')
 modeladmin_register(AdAdmin)

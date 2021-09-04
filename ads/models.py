@@ -111,7 +111,6 @@ class AdSettings(BaseSetting):
         ObjectList(section_ad_panels, heading='Section Page Ads'),
         ObjectList(article_ad_panels, heading='Article Page Ads'),
     ])
-
     class Meta:
-        verbose_name = "Ad Settings"
-        verbose_name_plural = "Instances of \'Ad Settings\'"
+        verbose_name = "Side-Wide Ad Slots"
+        verbose_name_plural = "Instances of \Side-Wide Ad Slots\'"

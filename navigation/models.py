@@ -147,8 +147,6 @@ class MobileLinksNavigationItem(NavigationMenuOrderable):
     )
 
 #-----Settings models-----
-
-@register_setting(icon='cogs')
 class SitewideMenus(ClusterableModel, BaseSetting):
     """    
     Collection of the NavigationMenus that are going to be used on many pages.
