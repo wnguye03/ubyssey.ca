@@ -40,7 +40,7 @@ class AdSlot(models.Model):
         ],
     )
     dfp = models.CharField(null=False, blank=True, default='', max_length=255)
-    div_class = models.CharField(null=False, blank=False, default='box', max_length=255,
+    div_class = models.CharField(null=False, blank=True, default='box', max_length=255,
         choices=[
             ('','Default'),
             ('homepage', 'Homepage'),
