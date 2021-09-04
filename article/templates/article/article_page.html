@@ -128,11 +128,19 @@
                 <div class="article-content">
                     {% block pre-content %}
                     {% endblock %}
-                    {% filter inject_ads:is_mobile %}
+                    {% if not self.is_explicit %}
+                        {% filter add_slug_to_ad_divs:self.slug %}
+                            {% filter inject_ads:is_mobile %}
+                                {% for block in self.content %}
+                                    {% include_block block %}
+                                {% endfor %}
+                            {% endfilter %}
+                        {% endfilter %}
+                    {% else %}
                         {% for block in self.content %}
                             {% include_block block %}
-                        {% endfor %}
-                    {% endfilter %}
+                        {% endfor %}                        
+                    {% endif %}
                     {% block post-content %}
                     {% endblock %}
                 </div>

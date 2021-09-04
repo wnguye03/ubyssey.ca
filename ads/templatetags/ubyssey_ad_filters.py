@@ -1,6 +1,8 @@
+from bs4 import BeautifulSoup
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.template.loader import render_to_string
+from random import randint
 
 register = template.Library()
 
@@ -45,4 +47,11 @@ def inject_ads(value, is_mobile):
         value = "</p>".join(paragraphs)
     return value
 
-
+@register.filter(name='add_slug_to_ad_divs')
+@stringfilter
+def add_slug_to_ad_divs(value, slug):
+    soup = BeautifulSoup(value)
+    adslot_divs = soup.find_all("div", {"class": "adslot"})
+    for div in adslot_divs:
+        div['id'] = div['id'] + '-' + slug
+    return soup
