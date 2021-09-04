@@ -128,7 +128,7 @@
                 <div class="article-content">
                     {% block pre-content %}
                     {% endblock %}
-                    {% filter inject_ads_after_paragraphs:6 %}
+                    {% filter inject_ads:is_mobile %}
                         {% for block in self.content %}
                             {% include_block block %}
                         {% endfor %}
