@@ -1,6 +1,10 @@
 from django.db import models
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtailmodelchooser import register_model_chooser
+from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 
+@register_model_chooser
 class AdSlot(models.Model):
     """
     Corresponds to the data needed for frontend scripts that will render ads.
@@ -55,7 +59,10 @@ class AdSlot(models.Model):
             models.Index(fields=['slug']),
         ]
 
+@register_setting(icon='cogs')
 class AdSettings(BaseSetting):
+    
+    #-----Appear on Section Page only-----
     leaderboard_ad_slot = models.ForeignKey(
         AdSlot,
         on_delete=models.SET_NULL,
@@ -70,3 +77,43 @@ class AdSettings(BaseSetting):
         blank=True,
         related_name='+'
     )
+    #-----Appear on Article Page only-----
+    article_right_column_skyscraper_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+    article_right_column_boxA_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+    article_right_column_boxB_ad_slot = models.ForeignKey(
+        AdSlot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+    #-----Editor interface-----
+    section_ad_panels = [
+        ModelChooserPanel('leaderboard_ad_slot'),
+        ModelChooserPanel('mobile_leaderboard_ad_slot'),
+    ]
+    article_ad_panels = [
+        ModelChooserPanel('article_right_column_skyscraper_ad_slot'),
+        ModelChooserPanel('article_right_column_boxA_ad_slot'),
+        ModelChooserPanel('article_right_column_boxB_ad_slot'),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(section_ad_panels, heading='Section Page Ads'),
+        ObjectList(article_ad_panels, heading='Article Page Ads'),
+    ])
+
+    class Meta:
+        verbose_name = "Ad Settings"
+        verbose_name_plural = "Instances of \'Ad Settings\'"

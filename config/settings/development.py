@@ -14,9 +14,9 @@ INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', 'localhost']
 # Easily manipulable file cache for proof of concept for front page etc.
 CACHES = {
     "default": {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        # "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        # "LOCATION": "/workspaces/ubyssey.ca/cache/",
+        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/workspaces/ubyssey.ca/cache/",
     }
 }
 
@@ -44,12 +44,27 @@ TEMPLATES += [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-GCS_CREDENTIALS_FILE = '../gcs-local.json'
+# GCS_CREDENTIALS_FILE = '../gcs-local.json'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
 
-GCS_CREDENTIALS_FILE = '../gcs-local.json'
+# GCS_CREDENTIALS_FILE = '../gcs-local.json'
+# GCS File Storage - Production Only
+MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
+MEDIA_ROOT = ''
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_ACCESS_KEY_ID = env('GS_ACCESS_KEY_ID')
+GS_SECRET_ACCESS_KEY = env('GS_SECRET_ACCESS_KEY')
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file('ubyssey-prd-ee6290e6327f.json')
+# GS_CREDENTIALS = env('GOOGLE_APPLICATION_CREDENTIALS')
+GS_STORAGE_BUCKET_NAME = 'ubyssey' # See documentation https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+GS_BUCKET_NAME = GS_STORAGE_BUCKET_NAME # https://github.com/mirumee/saleor/issues/5222 see suggestion both these variables are needed
+GS_LOCATION = 'media'
+GS_USE_SIGNED_URLS = True
+GS_QUERYSTRING_AUTH = False
+GS_FILE_OVERWRITE = False
+
 
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
