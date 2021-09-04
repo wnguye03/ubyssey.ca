@@ -19,9 +19,7 @@ class AdSlot(models.Model):
     should NOT having a corresponding field in this model, because it is constant and not variable.
     
     The ultimate goal of these fields is to allow the Google Publisher Tag library to call googletag.defineSlot in dfp.js
-    https://developers.google.com/publisher-tag/reference#googletag.defineSlot
-
-    Slots need three pieces of information. Below information Information taken from 
+    https://developers.google.com/publisher-tag/reference#googletag.defineSlot 
 
     Attributes:
         slug: identifies entry in table
