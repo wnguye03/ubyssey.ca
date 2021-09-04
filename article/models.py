@@ -14,6 +14,7 @@ from django.db.models.fields import CharField
 from django.db.models.query import QuerySet
 from django.forms.widgets import Select, Widget
 from django.utils import timezone
+from django_user_agents.utils import get_user_agent
 
 from itertools import groupby
 from images import blocks as image_blocks
@@ -839,6 +840,11 @@ class ArticlePage(SectionablePage):
         Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
         """
         context = super().get_context(request, *args, **kwargs)
+
+        user_agent = get_user_agent(request)
+        context['is_mobile'] = user_agent.is_mobile
+
+
         context['prev'] = self.get_prev_sibling()
         context['next'] = self.get_next_sibling()
 

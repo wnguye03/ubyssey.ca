@@ -3,6 +3,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load video_filters %}
+{% load ubyssey_ad_filters %}
 
 {% block header %}
     {% include 'navigation/headers/topbar.html' %}
@@ -127,9 +128,11 @@
                 <div class="article-content">
                     {% block pre-content %}
                     {% endblock %}
-                    {% for block in self.content %}
-                        {% include_block block %}
-                    {% endfor %}
+                    {% filter inject_ads:is_mobile %}
+                        {% for block in self.content %}
+                            {% include_block block %}
+                        {% endfor %}
+                    {% endfilter %}
                     {% block post-content %}
                     {% endblock %}
                 </div>
