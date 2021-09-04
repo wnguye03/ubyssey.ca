@@ -7,19 +7,20 @@ from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 @register_model_chooser
 class AdSlot(models.Model):
     """
-    Corresponds to the data needed for frontend scripts that will render ads.
-    Works clsoely with ubyssey/js/dfp.js
+    About:
+        Corresponds to the data needed for frontend scripts that will render ads.
+        Works clsoely with ubyssey/js/dfp.js
 
-    "DFP" stands for "DoubleClick for Publishers", the features of which have been rolled
-    into Google Ad Manager as of this writing (2021)
+        "DFP" stands for "DoubleClick for Publishers", the features of which have been rolled
+        into Google Ad Manager as of this writing (2021)
 
-    The relevant divs for displaying ads will be selected by the class, which
-    should be a fixed part of the template used to render this information.
-    This, unlike the rest of the attributes used to construct the relevant div
-    should NOT having a corresponding field in this model, because it is constant and not variable.
-    
-    The ultimate goal of these fields is to allow the Google Publisher Tag library to call googletag.defineSlot in dfp.js
-    https://developers.google.com/publisher-tag/reference#googletag.defineSlot 
+        The relevant divs for displaying ads will be selected by the class, which
+        should be a fixed part of the template used to render this information.
+        This, unlike the rest of the attributes used to construct the relevant div
+        should NOT having a corresponding field in this model, because it is constant and not variable.
+        
+        The ultimate goal of these fields is to allow the Google Publisher Tag library to call googletag.defineSlot in dfp.js
+        https://developers.google.com/publisher-tag/reference#googletag.defineSlot 
 
     Attributes:
         slug: identifies entry in table
