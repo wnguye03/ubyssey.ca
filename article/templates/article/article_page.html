@@ -3,6 +3,9 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load video_filters %}
+{% load ubyssey_ad_filters %}
+{% load ubyssey_ad_tags %}
+
 
 {% block header %}
     {% include 'navigation/headers/topbar.html' %}
@@ -12,12 +15,12 @@
 {% block content %}
     <main id="article-{{ self.slug }}" class="article">
         {% block banner_ad %}
-            {% if self.is_explicit is not True %}
-                {% comment %}
-                {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 article=article.id %}
-                {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=2 article=article.id %}
-                {% endcomment %}
-            {% endif %}
+            {% filter add_slug_to_ad_divs:self.slug %}
+                {% if self.is_explicit is not True %}
+                    {% adslot settings.ads.AdSettings.leaderboard_ad_slot %}
+                    {% adslot settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
+                {% endif %}
+            {% endfilter %}
         {% endblock %}
 
         <article class="c-article {% if timeline %}c-article--timeline{% endif %} js-article c-article--fw-story">
@@ -94,8 +97,6 @@
                                     {% endif %}
                                 </div>
                             {% endwith %}
-                            <div class="sidebar offset">
-                            </div>
                         {% elif self.featured_media.first.video %}
                             {% with self.featured_media.first as featured_video_object %}
                                 <div class="featured-media">
@@ -116,20 +117,39 @@
                                     {% endif %}
                                 </div>
                             {% endwith %}
-                            <div class="sidebar offset">
-                            </div>
-                        {% else %}
-                            <div class="sidebar">
-                            </div>
-                        {% endif %}                        
+                        {% endif %}
+                        <div class="sidebar{% if self.featured_media.first.image or self.featured_media.first.video %} offset{% endif %}">
+                            {% filter add_slug_to_ad_divs:self.slug %}
+                                {% if self.is_explicit is not True %}
+                                    {% if self.minutes_to_read >= 3 %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
+                                    {% else %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
+                                    {% endif %}
+                                {% else %}
+                                    {% comment %} {% include 'objects/replacement.html' with size='box' %} {% endcomment %}
+                                {% endif %}
+                            {% endfilter %}
+                        </div>                        
                     </div>
                 {% endblock %}
                 <div class="article-content">
                     {% block pre-content %}
                     {% endblock %}
-                    {% for block in self.content %}
-                        {% include_block block %}
-                    {% endfor %}
+                    {% if not self.is_explicit %}
+                        {% filter add_slug_to_ad_divs:self.slug %}
+                            {% filter inject_ads:is_mobile %}
+                                {% for block in self.content %}
+                                    {% include_block block %}
+                                {% endfor %}
+                            {% endfilter %}
+                        {% endfilter %}
+                    {% else %}
+                        {% for block in self.content %}
+                            {% include_block block %}
+                        {% endfor %}                        
+                    {% endif %}
                     {% block post-content %}
                     {% endblock %}
                 </div>
