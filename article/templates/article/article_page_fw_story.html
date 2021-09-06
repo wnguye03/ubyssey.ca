@@ -3,6 +3,9 @@
 {% load dispatch_tags %}
 {% load wagtailimages_tags %}
 
+{% block specific_article_class %}
+    c-article--fw-story
+{% endblock %}
 {% block banner %}
     <div class="fw-banner {% if self.show_timeline%} timeline-banner {% endif %} {{ self.header_layout }}">
         {% if self.show_timeline%}
@@ -63,6 +66,9 @@
             {% endwith %}
         {% endif %}
     </div>
+{% endblock %}
+{% block right_column_class %}
+    fw-story
 {% endblock %}
 
 {% if self.header_layout == 'banner-image' %}
