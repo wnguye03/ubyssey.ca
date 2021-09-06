@@ -1,0 +1,56 @@
+{% extends 'guide/2021/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="guide-section-container"> 
+
+    <div class="section-img">
+      <img  class="photo_cover" src="{% static 'ubyssey/images/guide/2021/Vancouver-cover.jpg' %}">
+
+    </div>
+
+    <div class="section-articles">
+            
+            <h2 class="{{self.slug}}"> {{self.title}} </h2>
+
+            <ul class="section-articles-list">
+
+                {% for article in self.get_children.specific %}
+                    <li>
+                        {{article.title}}
+                    </li>
+                {% endfor %}
+            
+            </ul>
+    </div>
+
+</div>
+
+{% if self.slug == 'the-ubyssey' %}
+    <h1> The Ubyssey </h1>
+{% elif self.slug == 'parties-sex-and-drugs' %}
+    <h1> parties-sex-and-drugs </h1> 
+
+{% elif self.slug == 'vancouver' %}
+
+    <h1> Vancouver </h1>
+
+{% elif self.slug == 'student-resources' %}
+
+    <h1> student resources </h1>
+
+{% elif self.slug == 'student-life' %}
+
+    <h1> student-life </h1>
+
+{% elif self.slug == 'UBC' %}
+
+    <h1> UBC </h1>
+
+{% elif self.slug == 'academics' %}
+
+    <h1> academics</h1>
+
+{% endif %}
+
+{% endblock %}

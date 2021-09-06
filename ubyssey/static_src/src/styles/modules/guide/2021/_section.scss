@@ -1,0 +1,62 @@
+.guide-section-container{
+    display: flex;
+    flex-direction: column;
+    padding: 4em;
+}
+
+
+.section-img{
+    width: 100%;
+
+
+}
+
+.section-articles{
+    margin-top: 5%;
+    width: 100%;
+   
+}
+
+.section-articles h2{
+    background-color: white;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.student-resources{
+    color: pink;
+}
+
+.section-articles-list{
+    margin-top: 5%;
+    padding-right: 1em;
+}
+
+.section-articles-list li{
+    margin-bottom: 5%;
+}
+
+@media (min-width: 1000px) {
+
+    .guide-section-container{
+        display: flex;
+        flex-direction: row;
+        padding: 4em;
+    }
+
+    .section-img{
+        width: 50%;
+        padding: 4em;
+    
+    
+    }
+    
+    .section-articles{
+        width: 50%;
+        padding: 3em;
+    }
+
+
+
+}
+

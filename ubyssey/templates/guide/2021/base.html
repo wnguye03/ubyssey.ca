@@ -67,13 +67,20 @@
 </head>
 <body>
   {% block header %}
-  {% include 'guide/2020/header.html' %}
+  {% with self.slug as section %}
+    {% include 'guide/2021/header.html' with section=section %}
+  {% endwith %}
+  
   {% endblock %}
   <div class="o-site-wrapper">
   {% block content %}
   {% endblock %}
   </div>
-  {% include 'guide/2020/footer.html' %}
+  {% with self.slug as section %}
+    {% include 'guide/2021/footer.html' with section=section %} 
+  {% endwith %}
+
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
   <script src="{% static 'ubyssey/js/main.js' %}" type="text/javascript"></script>
   <script src="{% static 'ubyssey/js/dfp.js' %}" type="text/javascript"></script>
