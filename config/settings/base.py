@@ -305,6 +305,9 @@ WAGTAIL_USER_CUSTOM_FIELDS = ['person', 'is_active']
 
 WAGTAILIMAGES_IMAGE_MODEL = 'images.UbysseyImage'
 
+# wagtailmenus settings
+WAGTAILMENUS_ACTIVE_CLASS = 'current' # used for css in e.g. navigation/header.html
+
 # Model defaults
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
