@@ -15,8 +15,11 @@
     font-weight: bold;
 }
 
+.home-content-container .editorial__.home-content .content-wrapper{
+    padding: 5%
+}
+
 .home-content-container .home-content .content-wrapper {
-    padding: 5% 10%;
     line-height: 2em;
     font-family: Lora, serif;
     font-size: 1rem;
@@ -88,14 +91,17 @@
 .p-bio{
     text-align: left;
     line-height: 2em;
+    margin: 8%;
 }
 
 
 
 .p-img{
     width: 100%;
-    height: 60%;
     overflow: hidden;
+    text-align: center;
+    margin-bottom: 20px;
+    
 
 }
 
@@ -170,7 +176,15 @@
     margin-right: 4em;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
+    .home-content-container .home-content .title{
+        padding-left: 10%;
+        text-align: left;
+    }
+
+    .home-content-container .editorial__.home-content .content-wrapper{
+        padding: 10%
+    }
 
     .land_mark_image-container{
         width: 35%;
@@ -197,6 +211,7 @@
         text-align: left;
         padding: 2em;
         line-height: 2em;
+        margin: 0%;
     }
 
     .panelist-container{
@@ -207,6 +222,7 @@
         margin-left: 8em;
         margin-right: 8em;
     }
+
 
     .p-one{
   

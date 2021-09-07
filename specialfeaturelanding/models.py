@@ -26,7 +26,7 @@ class SpecialLandingPage(SectionablePage):
     This is the general model for "special features" landing pages, such as for the guide, or a magazine.
     """
     # template = "specialfeatureslanding/base.html"
-    template = "specialfeatureslanding/guide2021section.html"
+    template = "specialfeatureslanding/landing_page_guide2021.html"
 
     parent_page_types = [
         'section.SectionPage',
