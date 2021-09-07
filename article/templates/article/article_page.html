@@ -23,7 +23,17 @@
             {% endfilter %}
         {% endblock %}
 
-        <article class="c-article {% if timeline %}c-article--timeline{% endif %} js-article c-article--fw-story">
+        <article class="c-article
+            {% if timeline %}c-article--timeline{% endif %}
+            js-article
+            {% block specific_article_class %}
+                {% comment %} 
+                    This block is used to override styling for the main article body (as in e.g. a full width banner article)
+                {% endcomment %}
+                c-article--default
+            {% endblock %}
+            "
+        > <!--article-->
             {% block banner %}
                 <div class="u-container">
                     {% comment %} {% if breaking %}
@@ -61,7 +71,15 @@
                         </div>
                     </div>
             {% endblock %}
-            <div class="u-container clearfix">
+            <div class="u-container
+                clearfix
+                {% block right_column_class %}
+                    {% comment %} 
+                        This block is used to override the styling of the right column (as in e.g. a full width banner article)
+                    {% endcomment %}
+                {% endblock %}
+                "
+            >
                 {% block right-column %}
                     <div class="right-column">
                         {% if self.featured_media.first.image %}

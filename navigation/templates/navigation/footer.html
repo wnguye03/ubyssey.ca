@@ -1,5 +1,6 @@
 {% load static %}
 {% load cache %}
+{% load menu_tags %}
 <footer>
     <div class="u-container{% if homepage %} u-container--large{% endif %}">
 
@@ -7,11 +8,7 @@
         <nav>
             <div class="top-row">
                 <ul class="sections">
-                    {% cache 604800 main_footer_menu %}
-                        {% for menu_item in settings.navigation.SitewideMenus.main_footer_menu.all %}
-                            <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
-                        {% endfor %}
-                    {% endcache %}
+                    {% main_menu show_multiple_levels=False apply_active_classes=False %}
                 </ul>
             </div>
             <div class="bottom-row">
