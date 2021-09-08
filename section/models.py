@@ -189,7 +189,7 @@ class SectionPage(SectionablePage):
 
     def save(self, *args, **kwargs):
         self.current_section = self.slug
-        return Page.save(*args, **kwargs)
+        return Page.save(self,*args, **kwargs)
 
     class Meta:
         verbose_name = "Section"
