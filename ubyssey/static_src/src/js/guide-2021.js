@@ -18,7 +18,9 @@ $(document).ready(function () {
     dropDownHeader('.c-nav-current', '#c-section-more--current');
     dropDownHeader('#c-nav-section--academic', '#c-section-more--academic');
     dropDownHeader('#c-nav-section--ubc', '#c-section-more--ubc');
-    dropDownHeader('#c-nav-section--adulting', '#c-section-more--adulting');
-    dropDownHeader('#c-nav-section--sdp', '#c-section-more--sdp');
+    dropDownHeader('#c-nav-section--student-resources', '#c-section-more--student-resources');
+    dropDownHeader('#c-nav-section--parties-sex-and-drugs', '#c-section-more--parties-sex-and-drugs');
     dropDownHeader('#c-nav-section--vancouver', '#c-section-more--vancouver');
+    dropDownHeader('#c-nav-section--student-life', '#c-section-more--student-life');
+    dropDownHeader('#c-nav-section--the-ubyssey', '#c-section-more--the-ubyssey');
 });
