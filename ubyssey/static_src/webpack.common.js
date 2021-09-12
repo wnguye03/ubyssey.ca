@@ -13,6 +13,7 @@ module.exports = {
     'sport-series': './src/js/sport-series.js',
     'food-insecurity': './src/js/food-insecurity.jsx',
     'guide-2020': './src/js/guide-2020.js',
+    'guide-2021': './src/js/guide-2021.js',
     'magazine-2019': './src/js/magazine-2019.js',
     'magazine-2020': './src/js/magazine-2020.js',
     'magazine-2021': './src/js/magazine-2021.js',
