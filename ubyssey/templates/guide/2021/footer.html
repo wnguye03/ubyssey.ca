@@ -25,7 +25,7 @@
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-adulting">
-          <h2>Adulting</h2>
+          <h2>Student Life</h2>
           <ul>
             {% for article in articles.adulting %}
               <li>
@@ -35,11 +35,21 @@
           </ul>
         </div>
         <div class="c-nav-footer__column" id="footer-sdp">
-          <h2>Sex, Drugs, Party</h2>
+          <h2>Parties, Sex, Drugs</h2>
           <ul>
             {% for article in articles.sdp %}
               <li>
                   <a class="header-button" href="{% url 'guide-article' 2020 'sdp' article.slug %}">{{ article.headline }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="c-nav-footer__column" id="footer-vancouver">
+          <h2>The Ubyssey</h2>
+          <ul>
+            {% for article in articles.vancouver %}
+              <li>
+                  <a class="header-button" href="{% url 'guide-article' 2020 'vancouver' article.slug %}">{{ article.headline }}</a>
               </li>
             {% endfor %}
           </ul>
