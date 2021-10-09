@@ -164,6 +164,7 @@ def _migrate_all_categories():
             for author_obj in dispatch_subsection.authors.all():
                 try:
                     category_author = CategoryAuthor()
+                    print('Getting author from Wagtail table for categories: ' + author_obj.person.full_name)
                     category_author.author = AuthorPage.objects.get(full_name=author_obj.person.full_name)
                     category_author.category = wagtail_category
                     category_author.save()
@@ -370,10 +371,15 @@ def _migrate_all_articles():
                 if dispatch_article_revision.seo_description:
                     wagtail_article.seo_description = dispatch_article_revision.seo_description
                 # "template"
+                wagtail_article.header_layout = 'right-image' # "safe default"
                 if dispatch_article_revision.template:
                     wagtail_article.legacy_template = dispatch_article_revision.template 
                 if dispatch_article_revision.template_data:
+                    processed_template_data = dispatch_article_revision.template_fields
+                    if 'header_layout' in processed_template_data:
+                        wagtail_article.header_layout = processed_template_data['header_layout']
                     wagtail_article.legacy_template_data = dispatch_article_revision.template_data
+                
                 # Lede
                 if dispatch_article_revision.snippet:
                     wagtail_article.lede = dispatch_article_revision.snippet
