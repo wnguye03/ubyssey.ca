@@ -44,6 +44,7 @@ class AuthorPage(Page):
         null=False,
         blank=True,
         default='',
+        verbose_name='Role at The Ubyssey',
     )
     facebook_url = models.URLField(
         null=True,
@@ -74,6 +75,7 @@ class AuthorPage(Page):
         MultiFieldPanel(
             [
                 ImageChooserPanel("image"),
+                FieldPanel("ubyssey_role"),
                 FieldPanel("description"),
                 FieldPanel("facebook_url"),
                 FieldPanel("twitter_url"),
