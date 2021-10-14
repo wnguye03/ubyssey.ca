@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from .sectionable.models import SectionablePage # self made abstract model
 
 from django_extensions.db.fields import AutoSlugField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+
 
 from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
@@ -43,10 +45,34 @@ class VideoAuthorsOrderable(Orderable):
         ),
     ]
 
+class VideosPage(SectionablePage):
+    template = 'videos/videos_page.html'
+
+    subpage_types = [
+        # 'article.ArticlePage',
+        # 'specialfeaturelanding.SpecialLandingPage',
+    ]
+    parent_page_types = [
+        'home.HomePage',
+    ]
+
+    show_in_menus_default = True
+
+    content_panels = wagtail_core_models.Page.content_panels + [
+        MultiFieldPanel(
+            [
+                InlinePanel("category_menu"),
+            ],
+            heading="Category Menu",
+        ),
+    ]
+
+
 #-----Snippet models-----
 
 @register_snippet
 class VideoSnippet(ClusterableModel):
+
     title = models.CharField(
         max_length=255,
         null=False,
