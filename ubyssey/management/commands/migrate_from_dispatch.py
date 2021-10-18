@@ -318,7 +318,7 @@ def _migrate_all_videos():
 
 def _migrate_all_articles():
     # dispatch_article 
-    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True)
+    dispatch_head_articles_qs = dispatch_models.Article.objects.filter(head=True).filter(id__gte=97000)
 
     for head_article in dispatch_head_articles_qs:
         current_slug = head_article.slug
@@ -632,6 +632,9 @@ def _fix_guide_articles():
         print(guide_article.slug + " publish date set to: " + str(guide_article.explicit_published_at))
         print(guide_article.slug + " layout set to: " + str(guide_article.layout))
         guide_article.save()
+
+def fix_explicit_published_at_date():
+    qs = ArticlePage.objects.all()
 
 class Command(BaseCommand):
     """

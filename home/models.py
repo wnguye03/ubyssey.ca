@@ -73,7 +73,6 @@ class HomePage(Page):
         ModelChooserPanel('home_sidebar_ad_slot2'),
     ]
 
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         qs = ArticlePage.objects.live().public().order_by('-last_published_at')
