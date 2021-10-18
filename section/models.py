@@ -167,7 +167,7 @@ class SectionPage(SectionablePage):
     
     def get_section_articles(self) -> QuerySet:
         # return ArticlePage.objects.from_section(section_root=self)
-        section_articles = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-last_modified_at')
+        section_articles = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-explicit_published_at')
         return section_articles
 
     def get_featured_articles(self, queryset=None, number_featured=4) -> QuerySet:
