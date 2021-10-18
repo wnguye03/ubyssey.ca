@@ -75,7 +75,7 @@ class HomePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        qs = ArticlePage.objects.live().public().order_by('-last_published_at')
+        qs = ArticlePage.objects.live().public().order_by('-explicit_published_at')
         context['above_cut_articles'] = qs[:6]
         context['breaking_news_article'] = qs.filter(is_breaking=True, breaking_timeout__gte=timezone.now())
 
@@ -88,8 +88,8 @@ class HomePage(Page):
                   
     #takes a section_slug and returns the feature articles for that section
     def get_section_articles(self, section_slug):
-        sectionPage = SectionPage.objects.get(slug = section_slug)
-        return sectionPage.get_featured_articles()
+        section_page = SectionPage.objects.get(slug = section_slug)
+        return section_page.get_featured_articles()
 
     def get_all_section_slug(self):
         
