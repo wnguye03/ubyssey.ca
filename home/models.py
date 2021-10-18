@@ -3,6 +3,7 @@ from . import blocks as homeblocks
 from article.models import ArticlePage
 from section.models import SectionPage , CategorySnippet
 from django.db import models
+from django.utils import timezone
 
 from ads.models import AdSlot
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -77,7 +78,7 @@ class HomePage(Page):
         context = super().get_context(request, *args, **kwargs)
         qs = ArticlePage.objects.live().public().order_by('-last_published_at')
         context['above_cut_articles'] = qs[:6]
-        context['breaking_news_article'] = qs.filter(is_breaking=True)
+        context['breaking_news_article'] = qs.filter(is_breaking=True, breaking_timeout__gte=timezone.now())
 
         for section_stream in self.sections_stream:
             section_title = str(section_stream.value['section'])
