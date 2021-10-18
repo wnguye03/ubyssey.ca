@@ -449,8 +449,8 @@ class ArticlePage(SectionablePage):
     explicit_published_at = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name="Published At (Override)",
-        help_text = "Optional. Publication date which is explicitly shown to the reader. Articles are seperately date/timestamped for database use; if this field is left blank, it will by default be set to the \"first published date\" on publication.",
+        verbose_name="Publication Date/Time",
+        help_text = "Techically optional (computer will fill it in for you if you do not). Publication date which is explicitly shown to the reader. Articles are seperately date/timestamped for database use; if this field is left blank, it will by default be set to the \"first published date\" on publication.",
     )
     last_modified_at = models.DateTimeField(
         # updates to current date/time every time the model's .save() method is hit
