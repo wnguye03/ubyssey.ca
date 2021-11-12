@@ -389,22 +389,11 @@ class ArticlePageManager(PageManager):
         return self.live().public().descendant_of(section_root).exact_type(ArticlePage) #.order_by('-last_modified_at')
 
 #-----Page models-----
-
-class ArticlePage(SectionablePage):
-
-    #-----Django/Wagtail settings etc-----
-    objects = ArticlePageManager()
-
-    parent_page_types = [
-        'specialfeaturelanding.SpecialLandingPage',
-        'section.SectionPage',
-    ]
-
-    subpage_types = [] #Prevents article pages from having child pages
-
-    show_in_menus_default = False
-
-    #-----Field attributes-----
+class ArticleLikePage(SectionablePage):
+    """
+    
+    """
+     #-----Field attributes-----
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
@@ -606,7 +595,6 @@ class ArticlePage(SectionablePage):
         max_length=50,
         help_text="Based on from Dispatch's obselete \"Templates\" feature",
     )
-
     #-----Advanted, custom layout etc-----
     use_default_template = models.BooleanField(default=True)
 
@@ -629,6 +617,22 @@ class ArticlePage(SectionablePage):
             return "article/article_page_guide_2020.html"
                         
         return "article/article_page.html"
+   
+    class Meta:
+        abstract = True
+
+class ArticlePage(ArticleLikePage):
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
+    parent_page_types = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
+    show_in_menus_default = False
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
