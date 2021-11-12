@@ -129,7 +129,6 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 # Application definition
 INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic', # uncomment for testing "production-like" serving of collected static files with DEBUG=False
-    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'home',
     'authors',
     'article',
@@ -141,6 +140,8 @@ INSTALLED_APPS = [
     'specialfeaturelanding',
     'navigation',
     'dashboard',
+    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
+
 
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
@@ -216,7 +217,7 @@ TEMPLATES = [
     {
         'NAME': 'app_dirs',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': False,
+        
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -226,8 +227,8 @@ TEMPLATES = [
                 'wagtailmenus.context_processors.wagtailmenus',
             ],
             'loaders': [
-                'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
+                'django.template.loaders.filesystem.Loader',
                 'dbtemplates.loader.Loader',
             ],
         },
