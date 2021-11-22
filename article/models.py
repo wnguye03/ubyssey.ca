@@ -606,34 +606,6 @@ class ArticleLikePage(SectionablePage):
         related_name='+',        
     )
 
-    def get_template(self, request):
-        if not self.use_default_template:
-            if self.db_template:
-                return self.db_template.name
-
-        if self.layout == 'fw-story':
-            return "article/article_page_fw_story.html"
-        elif self.layout == 'guide-2020':
-            return "article/article_page_guide_2020.html"
-                        
-        return "article/article_page.html"
-   
-    class Meta:
-        abstract = True
-
-class ArticlePage(ArticleLikePage):
-    #-----Django/Wagtail settings etc-----
-    objects = ArticlePageManager()
-
-    parent_page_types = [
-        'specialfeaturelanding.SpecialLandingPage',
-        'section.SectionPage',
-    ]
-
-    subpage_types = [] #Prevents article pages from having child pages
-
-    show_in_menus_default = False
-
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
         FieldRowPanel(
@@ -836,7 +808,6 @@ class ArticlePage(ArticleLikePage):
     ) # edit_handler
 
     #-----Properties, getters, setters, etc.-----
-
     def get_context(self, request, *args, **kwargs):
         """
         Wagtail uses this method to add context variables following a request at a URL.
@@ -951,6 +922,34 @@ class ArticlePage(ArticleLikePage):
         Assumes readers read 150 wpm on average. Returns self.world_count // 150
         """
         return self.word_count // 150
+
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
+                        
+        return "article/article_page.html"
+   
+    class Meta:
+        abstract = True
+
+class ArticlePage(ArticleLikePage):
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
+    parent_page_types = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
+    show_in_menus_default = False
 
     class Meta:
         # TODO Should probably index on:
