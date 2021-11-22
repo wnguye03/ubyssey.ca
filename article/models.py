@@ -463,7 +463,6 @@ class ArticleLikePage(SectionablePage):
         null=True,
         on_delete=models.SET_NULL,
     )
-    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
     # template #TODO
 
@@ -704,18 +703,6 @@ class ArticleLikePage(SectionablePage):
         Assumes readers read 150 wpm on average. Returns self.world_count // 150
         """
         return self.word_count // 150
-
-    def get_template(self, request):
-        if not self.use_default_template:
-            if self.db_template:
-                return self.db_template.name
-
-        if self.layout == 'fw-story':
-            return "article/article_page_fw_story.html"
-        elif self.layout == 'guide-2020':
-            return "article/article_page_guide_2020.html"
-                        
-        return "article/article_page.html"
    
     class Meta:
         abstract = True
@@ -732,6 +719,9 @@ class ArticlePage(ArticleLikePage):
     subpage_types = [] #Prevents article pages from having child pages
 
     show_in_menus_default = False
+
+    # Tags
+    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
     # Timelines
     show_timeline = models.BooleanField(
@@ -951,6 +941,18 @@ class ArticlePage(ArticleLikePage):
         ],
     ) # edit_handler
 
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
+                        
+        return "article/article_page.html"
+
     class Meta:
         # TODO Should probably index on:
         # Author then article
@@ -963,6 +965,9 @@ class ArticlePage(ArticleLikePage):
         ]
 
 class FlexPage(ArticleLikePage):
+
+    template = 'article/flex_page.html' #TODO: replace with proper get_templates so flex pages can work as a flex page
+
     #-----Django/Wagtail settings etc-----
     subpage_types = [] #Prevents article pages from having child pages
 
@@ -1009,7 +1014,10 @@ class FlexPage(ArticleLikePage):
             [
                 # FieldPanel("section"),
                 SnippetChooserPanel("category"),
-                FieldPanel("tags"),
+                # #####
+                # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+                # #####
+                # FieldPanel("tags"),
             ],
             heading="Categories and Tags",
             classname="collapsible",
