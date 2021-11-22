@@ -964,16 +964,9 @@ class ArticlePage(ArticleLikePage):
 
 class FlexPage(ArticleLikePage):
     #-----Django/Wagtail settings etc-----
-    objects = ArticlePageManager()
-
-    parent_page_types = [
-        'specialfeaturelanding.SpecialLandingPage',
-        'section.SectionPage',
-    ]
-
     subpage_types = [] #Prevents article pages from having child pages
 
-    show_in_menus_default = False
+    show_in_menus_default = True
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
@@ -1197,8 +1190,8 @@ class FlexPage(ArticleLikePage):
     class Meta:
         # TODO Should probably index on:
         # Author then article
-        verbose_name = "Article"
-        verbose_name_plural = "Articles"
+        verbose_name = "Flex Page"
+        verbose_name_plural = "Flex Pages"
         indexes = [
             models.Index(fields=['current_section','last_modified_at']),
             models.Index(fields=['last_modified_at']),
