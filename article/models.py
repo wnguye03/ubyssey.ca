@@ -389,22 +389,11 @@ class ArticlePageManager(PageManager):
         return self.live().public().descendant_of(section_root).exact_type(ArticlePage) #.order_by('-last_modified_at')
 
 #-----Page models-----
-
-class ArticlePage(SectionablePage):
-
-    #-----Django/Wagtail settings etc-----
-    objects = ArticlePageManager()
-
-    parent_page_types = [
-        'specialfeaturelanding.SpecialLandingPage',
-        'section.SectionPage',
-    ]
-
-    subpage_types = [] #Prevents article pages from having child pages
-
-    show_in_menus_default = False
-
-    #-----Field attributes-----
+class ArticleLikePage(SectionablePage):
+    """
+    
+    """
+     #-----Field attributes-----
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
@@ -474,7 +463,6 @@ class ArticlePage(SectionablePage):
         null=True,
         on_delete=models.SET_NULL,
     )
-    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
     # template #TODO
 
@@ -581,6 +569,160 @@ class ArticlePage(SectionablePage):
         verbose_name='About This Article (Optional)',
     )
 
+    # Featured image stuff used for tempalte customization
+    header_layout = models.CharField(
+        null=False,
+        blank=False,
+        default='right-image',
+        max_length=50,
+        help_text="Based on from Dispatch's obselete \"Templates\" feature",
+    )
+    #-----Advanted, custom layout etc-----
+    use_default_template = models.BooleanField(default=True)
+
+    db_template = models.ForeignKey(
+        DBTemplate,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',        
+    )
+
+    #-----Properties, getters, setters, etc.-----
+    def get_context(self, request, *args, **kwargs):
+        """
+        Wagtail uses this method to add context variables following a request at a URL.
+        All the below code occurs after the user submits a request and before they receive it.
+        Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
+        """
+        context = super().get_context(request, *args, **kwargs)
+
+        user_agent = get_user_agent(request)
+        context['is_mobile'] = user_agent.is_mobile
+
+
+        context['prev'] = self.get_prev_sibling()
+        context['next'] = self.get_next_sibling()
+
+        if self.current_section == 'guide':
+            # Desired behaviour for guide articles is to always have two adjacent articles. Therefore we create an "infinite loop"
+            if not context['prev']:
+                context['prev'] = self.get_last_sibling()
+            if not context['next']:
+                context['next'] = self.get_first_sibling()
+
+        if context['prev']:
+            context['prev'] = context['prev'].specific
+        if context['next']:
+            context['next'] = context['next'].specific
+
+        return context
+
+    def get_authors_string(self, links=False, authors_list=[]) -> str:
+        """
+        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
+        Keeps large amounts of logic out of templates.
+
+          links: Whether the author names link to their respective pages.
+        """
+        def format_author(article_author):
+            if links:
+                return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
+            return article_author.author.full_name
+
+        if not authors_list:
+            authors = list(map(format_author, self.article_authors.all()))
+        else:
+            authors = list(map(format_author, authors_list))
+
+        if not authors:
+            return ""
+        elif len(authors) == 1:
+            # If this is the only author, just return author name
+            return authors[0]
+
+        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
+    authors_string = property(fget=get_authors_string)
+
+    def get_authors_with_urls(self) -> str:
+        """
+        Wrapper for get_authors_string for easy use in templates.
+        """
+        return self.get_authors_string(links=True)
+    authors_with_urls = property(fget=get_authors_with_urls)
+
+    def get_authors_with_roles(self) -> str:
+        """Returns list of authors as a comma-separated string
+        sorted by author type (with 'and' before last author)."""
+
+        authors_with_roles = ''
+        string_written = ''
+        string_photos = ''
+        string_author = ''
+        string_videos = ''
+
+        authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
+        for author in authors:
+            if author == 'author':
+                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=authors['author'])
+            if author == 'photographer':
+                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=authors['photographer'])
+            if author == 'illustrator':
+                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=authors['illustrator'])
+            if author == 'videographer':
+                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=authors['videographer'])
+        if string_written != '':
+            authors_with_roles += string_written
+        if string_photos != '':
+            authors_with_roles += ', ' + string_photos
+        if string_author != '':
+            authors_with_roles += ', ' + string_author
+        if string_videos != '':
+            authors_with_roles += ', ' + string_videos
+        return authors_with_roles
+    authors_with_roles = property(fget=get_authors_with_roles)
+ 
+    @property
+    def published_at(self):
+        if self.explicit_published_at:
+            return self.explicit_published_at
+        return self.first_published_at
+    
+    @property
+    def word_count(self) -> int:
+        # gotten from https://stackoverflow.com/questions/42585858/display-word-count-in-blog-post-with-wagtail
+        count = 0
+        for block in self.content:
+            if block.block_type == 'richtext' or block.block_type == 'plaintext':
+                count += len(str(block.value).split())
+        return count
+
+    @property
+    def minutes_to_read(self) -> int:
+        """
+        Assumes readers read 150 wpm on average. Returns self.world_count // 150
+        """
+        return self.word_count // 150
+   
+    class Meta:
+        abstract = True
+
+class ArticlePage(ArticleLikePage):
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
+    parent_page_types = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
+    show_in_menus_default = False
+
+    # Tags
+    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
+
     # Timelines
     show_timeline = models.BooleanField(
         default=False,
@@ -597,38 +739,6 @@ class ArticlePage(SectionablePage):
     timeline_date = models.DateTimeField(
         default=timezone.now,
     )
-
-    # Featured image stuff used for tempalte customization
-    header_layout = models.CharField(
-        null=False,
-        blank=False,
-        default='right-image',
-        max_length=50,
-        help_text="Based on from Dispatch's obselete \"Templates\" feature",
-    )
-
-    #-----Advanted, custom layout etc-----
-    use_default_template = models.BooleanField(default=True)
-
-    db_template = models.ForeignKey(
-        DBTemplate,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',        
-    )
-
-    def get_template(self, request):
-        if not self.use_default_template:
-            if self.db_template:
-                return self.db_template.name
-
-        if self.layout == 'fw-story':
-            return "article/article_page_fw_story.html"
-        elif self.layout == 'guide-2020':
-            return "article/article_page_guide_2020.html"
-                        
-        return "article/article_page.html"
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
@@ -831,128 +941,265 @@ class ArticlePage(SectionablePage):
         ],
     ) # edit_handler
 
-    #-----Properties, getters, setters, etc.-----
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
 
-    def get_context(self, request, *args, **kwargs):
-        """
-        Wagtail uses this method to add context variables following a request at a URL.
-        All the below code occurs after the user submits a request and before they receive it.
-        Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
-        """
-        context = super().get_context(request, *args, **kwargs)
-
-        user_agent = get_user_agent(request)
-        context['is_mobile'] = user_agent.is_mobile
-
-
-        context['prev'] = self.get_prev_sibling()
-        context['next'] = self.get_next_sibling()
-
-        if self.current_section == 'guide':
-            # Desired behaviour for guide articles is to always have two adjacent articles. Therefore we create an "infinite loop"
-            if not context['prev']:
-                context['prev'] = self.get_last_sibling()
-            if not context['next']:
-                context['next'] = self.get_first_sibling()
-
-        if context['prev']:
-            context['prev'] = context['prev'].specific
-        if context['next']:
-            context['next'] = context['next'].specific
-
-        return context
-
-    def get_authors_string(self, links=False, authors_list=[]) -> str:
-        """
-        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
-        Keeps large amounts of logic out of templates.
-
-          links: Whether the author names link to their respective pages.
-        """
-        def format_author(article_author):
-            if links:
-                return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
-            return article_author.author.full_name
-
-        if not authors_list:
-            authors = list(map(format_author, self.article_authors.all()))
-        else:
-            authors = list(map(format_author, authors_list))
-
-        if not authors:
-            return ""
-        elif len(authors) == 1:
-            # If this is the only author, just return author name
-            return authors[0]
-
-        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
-    authors_string = property(fget=get_authors_string)
-
-    def get_authors_with_urls(self) -> str:
-        """
-        Wrapper for get_authors_string for easy use in templates.
-        """
-        return self.get_authors_string(links=True)
-    authors_with_urls = property(fget=get_authors_with_urls)
-
-    def get_authors_with_roles(self) -> str:
-        """Returns list of authors as a comma-separated string
-        sorted by author type (with 'and' before last author)."""
-
-        authors_with_roles = ''
-        string_written = ''
-        string_photos = ''
-        string_author = ''
-        string_videos = ''
-
-        authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
-        for author in authors:
-            if author == 'author':
-                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=authors['author'])
-            if author == 'photographer':
-                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=authors['photographer'])
-            if author == 'illustrator':
-                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=authors['illustrator'])
-            if author == 'videographer':
-                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=authors['videographer'])
-        if string_written != '':
-            authors_with_roles += string_written
-        if string_photos != '':
-            authors_with_roles += ', ' + string_photos
-        if string_author != '':
-            authors_with_roles += ', ' + string_author
-        if string_videos != '':
-            authors_with_roles += ', ' + string_videos
-        return authors_with_roles
-    authors_with_roles = property(fget=get_authors_with_roles)
- 
-    @property
-    def published_at(self):
-        if self.explicit_published_at:
-            return self.explicit_published_at
-        return self.first_published_at
-    
-    @property
-    def word_count(self) -> int:
-        # gotten from https://stackoverflow.com/questions/42585858/display-word-count-in-blog-post-with-wagtail
-        count = 0
-        for block in self.content:
-            if block.block_type == 'richtext' or block.block_type == 'plaintext':
-                count += len(str(block.value).split())
-        return count
-
-    @property
-    def minutes_to_read(self) -> int:
-        """
-        Assumes readers read 150 wpm on average. Returns self.world_count // 150
-        """
-        return self.word_count // 150
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
+                        
+        return "article/article_page.html"
 
     class Meta:
         # TODO Should probably index on:
         # Author then article
         verbose_name = "Article"
         verbose_name_plural = "Articles"
+        indexes = [
+            models.Index(fields=['current_section','last_modified_at']),
+            models.Index(fields=['last_modified_at']),
+            models.Index(fields=['category',]),
+        ]
+
+class FlexPage(ArticleLikePage):
+
+    template = 'article/flex_page.html' #TODO: replace with proper get_templates so flex pages can work as a flex page
+
+    #-----Django/Wagtail settings etc-----
+    subpage_types = [] #Prevents article pages from having child pages
+
+    show_in_menus_default = True
+
+    #-----For Wagtail's user interface-----
+    content_panels = Page.content_panels + [
+        FieldRowPanel(
+            [
+                FieldPanel("explicit_published_at"),
+                FieldPanel("show_last_modified"),
+            ],
+            heading="Publication Date",
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(
+                    content='<h1>Help: Writing Articles</h1><p>The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!</p><p>Blocks simply represent units of the article you may wish to re-arrange. You do not have to put every individual paragraph in its own block (doing so is probably time consuming!). Many articles that have been imported into our database DO divide every paragraph into its own block, but this is for computer convenience during the import.</p>'
+                ),
+                StreamFieldPanel("content"),
+            ],
+            heading="Article Content",
+            classname="collapsible",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("lede")
+            ],
+            heading="Front Page Stuff",
+            classname="collapsible",
+        ),
+        # #####
+        # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         HelpPanel(content="Authors may be created under \"Snippets\", then selected here."),
+        #         InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
+        #     ],
+        #     heading="Author(s)",
+        #     classname="collapsible",
+        # ), # Author(s)
+        MultiFieldPanel(
+            [
+                # FieldPanel("section"),
+                SnippetChooserPanel("category"),
+                # #####
+                # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+                # #####
+                # FieldPanel("tags"),
+            ],
+            heading="Categories and Tags",
+            classname="collapsible",
+        ),
+        # #####
+        # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel("featured_media", label="Featured Image or Video"),
+        #     ],
+        #     heading="Featured Media",
+        #     classname="collapsible",
+        # ),
+    ] # content_panels
+    promote_panels = Page.promote_panels + [
+        MultiFieldPanel(
+            [
+                HelpPanel(content="\"Breaking Timeout\" is irrelevant if news is not breaking news."),
+                FieldPanel("is_breaking"),
+                FieldPanel("breaking_timeout"),
+            ],
+            heading="Breaking",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("seo_keyword"),
+                FieldPanel("seo_description"),
+            ],
+            heading="Old SEO stuff",
+            help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
+        )
+    ] # promote_panels
+    settings_panels = Page.settings_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'is_explicit',
+                    help_text = "Check if this article contains advertiser-unfriendly content. Disables ads for this specific article.",
+                ),
+            ],
+            heading="Advertising-Releated",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    'legacy_revision_number',
+                    help_text = "DO NOT TOUCH",
+                ),
+            ],
+            heading='Legacy stuff'
+        ),
+    ] # settings_panels   
+    fw_article_panels = [
+        HelpPanel(
+            content = "<h1>Help</h1><p>IF you need an alternate layout for your article, but still a frequently-used layout (such as including a full-width banner), THEN, rather making than a highly customized frontend (as you can do in the next tab over), select the options you require here.</p> <p>The majority of articles will just use the default layout. Thus, <u>for the majority of articles, nothing on this tab should be touched</u>; the majority of these fields are not even used in most layouts. They primarily exist to keep our data organized.</p>"
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel(
+                    "layout",
+                    widget=Select(
+                        choices=[
+                            ('default', 'Default'), 
+                            ('fw-story', 'Full-Width Story'),
+                            ('guide-2020', 'Guide (2020 style)'),
+                        ],
+                    ),
+                ),
+            ],
+            heading = "Select Stock Layout",
+            classname="collapsible collapsed",
+        ), # Select Stock Layout
+        MultiFieldPanel(
+            [
+                HelpPanel(content="<p>This information is generally used in articles that use a full-width banner of some sort.</p>"),
+                FieldPanel(
+                    "header_layout",
+                    widget=Select(
+                        choices=[
+                            ('right-image', 'Right Image'),
+                            ('top-image', 'Top Image'),
+                            ('banner-image', 'Banner Image')
+                        ],
+                    ),
+                    help_text='This field is used to set variations on the \"Full-Width Story\" and similar layouts.',
+                ),
+                FieldPanel('fw_alternate_title'),
+                FieldPanel('fw_optional_subtitle'),
+                FieldPanel('fw_above_cut_lede'),
+            ],
+            heading = "Optional Header/Banner Fields",
+            classname="collapsible collapsed",
+        ), # Optional Header/Banner Fields
+        # #####
+        # Flex pages shouldn't be part of timelines
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         HelpPanel(content='<h1>Warning</h1><p>If a timeline is included in your article, <u>additional processing will be required when the article is saved</u>.</p><p>It is recommended you add a Timeline snippet LAST, <i>after</i> your article is otherwise written.</p><p><u>Developers</u> should note: the Timeline/Article sync is accomplished with Django signals, to prevent tight coupling of the two classes. Do not allow use of signals to turn into noodle logic.</p>'),
+        #         FieldPanel('show_timeline'),
+        #         FieldPanel('timeline_date'),
+        #         SnippetChooserPanel('timeline'),
+        #     ],
+        #     heading = "Timeline",
+        #     classname="collapsible collapsed",
+        # ), # Timeline
+        MultiFieldPanel(
+            [
+                HelpPanel(content="<p>This information is generally used in a special article that has additional credits beyond the normal byline.</p>"),
+                FieldPanel('fw_about_this_article'),
+            ],
+            heading = "Additional Credits",
+            classname="collapsible collapsed",
+        ), # Additional Credits
+        # #####
+        # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         HelpPanel(content="Somewhat legacy. These will not be used with the majority of templates, but are used with how Magazines or Guides or some special articles have traditionally been set up."),
+        #         InlinePanel("connected_articles"),
+        #     ],
+        #     heading="Connected or Related Article Links (Non-Series)",
+        #     classname="collapsible collapsed",
+        # ), # Connected or Related Article Links (Non-Series)
+    ] # fw_article_panels
+    customization_panels = [
+        HelpPanel(
+            content="<h1>Help</h1><p>This tab exists so that every aspect of the frontend for an individual article may be customized, down to the finest detail. There are three fundamental tools of frontend web programming - HTML, CSS and JavaScript, and here you may utilize all three.</p><p>Custom HTML templates, which use the Django templating language, should be uploaded not as files/documents but as \"Custom HTML\" in the site admin.\n\n Custom CSS or JavaScript should be uploaded to \"Documents\"</p>"
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(
+                    content="<p>Making a template requires some understanding of how the Django backend works, so that you might know variable names etc. for the data that the template is supposed to render.</p> <p>Because of the potential complexity of a template, it is desirable to be able to quickly switch the article back to a default template. Turn on \"Use default template\" to use the stock template and turn it off to be able to override the default with a custom template. Defaults to \"on\".</p>",
+                ),
+                FieldPanel("use_default_template"),
+                ModelChooserPanel("db_template"),
+            ],
+            heading="Custom HTML",
+            classname="collapsible collapsed",
+        ), # Custom HTML
+        # #####
+        # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel("styles"),
+        #     ],
+        #     heading="Custom CSS",
+        #     help_text="Please upload any custom CSS to \"Documents\", then select the appropriate document here.\n\nSelecting a non-CSS Document will cause errors.",
+        #     classname="collapsible collapsed",
+        # ), # Custom CSS
+        # #####
+        # Abstracting out ArticleLikePage broke the design of ForeignKey relations. We deal with this quick and dirty by just commenting them out in FlexPage's interface
+        # #####
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel("scripts"),
+        #     ],
+        #     heading="Custom JavaScript",
+        #     help_text="Please upload any custom JavaScript to \"Documents\", then select the appropriate document here.\n\nSelecting a non-JavaScript Document will cause errors.",
+        #     classname="collapsible collapsed",
+        # ), # Custom JavaScript
+    ] # customization_panels
+
+    # This overrides the default Wagtail edit handler, in order to add custom tabs to the article editting interface
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading='Content'),
+            ObjectList(promote_panels, heading='Promote'),
+            ObjectList(settings_panels, heading='Settings'),
+            ObjectList(fw_article_panels, heading='Layout (Stock Templates)'),
+            ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
+        ],
+    ) # edit_handler
+
+    class Meta:
+        # TODO Should probably index on:
+        # Author then article
+        verbose_name = "Flex Page"
+        verbose_name_plural = "Flex Pages"
         indexes = [
             models.Index(fields=['current_section','last_modified_at']),
             models.Index(fields=['last_modified_at']),
