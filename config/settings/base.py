@@ -95,6 +95,7 @@ environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
 ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
+
 DEBUG = env('DEBUG')
 
 SPECIAL_MESSAGE_AVAILABLE = env('SPECIAL_MESSAGE_AVAILABLE')
@@ -129,6 +130,7 @@ NOTIFICATION_KEY = env('NOTIFICATION_KEY')
 # Application definition
 INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic', # uncomment for testing "production-like" serving of collected static files with DEBUG=False
+    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
     'home',
     'authors',
     'article',
@@ -140,8 +142,6 @@ INSTALLED_APPS = [
     'specialfeaturelanding',
     'navigation',
     'dashboard',
-    'ubyssey', #For some reason using ubyssey.apps.UbysseyConfig breaks static file finding?
-
 
     'dispatch.apps.DispatchConfig',
     'dispatchusers.apps.DispatchusersConfig',
@@ -217,7 +217,7 @@ TEMPLATES = [
     {
         'NAME': 'app_dirs',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -227,8 +227,8 @@ TEMPLATES = [
                 'wagtailmenus.context_processors.wagtailmenus',
             ],
             'loaders': [
-                'django.template.loaders.app_directories.Loader',
                 'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
                 'dbtemplates.loader.Loader',
             ],
         },

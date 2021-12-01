@@ -49,21 +49,6 @@ class VideoAuthorsOrderable(Orderable):
         ),
     ]
 
-# class VideosPageVideoPlacement(Orderable, models.Model):
-#     page = ParentalKey('video.VideosPage', on_delete=models.CASCADE, related_name='video_placements')
-#     video = models.ForeignKey('videos.VideoSnippet', on_delete=models.CASCADE, related_name='+')
-
-#     class Meta(Orderable.Meta):
-#         verbose_name = "video placement"
-#         verbose_name_plural = "video placements"
-
-#     panels = [
-#         SnippetChooserPanel('video'),
-#     ]
-
-#     def __str__(self):
-#         return self.page.title + " -> " + self.advert.text
-
 # def videos(context):
 #     return {
 #         'videos': VideoSnippet.objects.all(),
