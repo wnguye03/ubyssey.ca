@@ -116,7 +116,6 @@ class SectionPage(SectionablePage):
 
     subpage_types = [
         'article.ArticlePage',
-        'article.FlexPage',
         'specialfeaturelanding.SpecialLandingPage',
     ]
     parent_page_types = [

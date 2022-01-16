@@ -24,7 +24,6 @@ class HomePage(Page):
     ]
 
     subpage_types = [
-        'article.FlexPage',
         'section.SectionPage',
         'authors.AllAuthorsPage',
     ]
