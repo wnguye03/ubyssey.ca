@@ -389,11 +389,22 @@ class ArticlePageManager(PageManager):
         return self.live().public().descendant_of(section_root).exact_type(ArticlePage) #.order_by('-last_modified_at')
 
 #-----Page models-----
-class ArticleLikePage(SectionablePage):
-    """
-    
-    """
-     #-----Field attributes-----
+
+class ArticlePage(SectionablePage):
+
+    #-----Django/Wagtail settings etc-----
+    objects = ArticlePageManager()
+
+    parent_page_types = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
+    show_in_menus_default = False
+
+    #-----Field attributes-----
     content = StreamField(
         [
             ('richtext', blocks.RichTextBlock(                                
@@ -463,6 +474,7 @@ class ArticleLikePage(SectionablePage):
         null=True,
         on_delete=models.SET_NULL,
     )
+    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
 
     # template #TODO
 
@@ -569,160 +581,6 @@ class ArticleLikePage(SectionablePage):
         verbose_name='About This Article (Optional)',
     )
 
-    # Featured image stuff used for tempalte customization
-    header_layout = models.CharField(
-        null=False,
-        blank=False,
-        default='right-image',
-        max_length=50,
-        help_text="Based on from Dispatch's obselete \"Templates\" feature",
-    )
-    #-----Advanted, custom layout etc-----
-    use_default_template = models.BooleanField(default=True)
-
-    db_template = models.ForeignKey(
-        DBTemplate,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',        
-    )
-
-    #-----Properties, getters, setters, etc.-----
-    def get_context(self, request, *args, **kwargs):
-        """
-        Wagtail uses this method to add context variables following a request at a URL.
-        All the below code occurs after the user submits a request and before they receive it.
-        Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
-        """
-        context = super().get_context(request, *args, **kwargs)
-
-        user_agent = get_user_agent(request)
-        context['is_mobile'] = user_agent.is_mobile
-
-
-        context['prev'] = self.get_prev_sibling()
-        context['next'] = self.get_next_sibling()
-
-        if self.current_section == 'guide':
-            # Desired behaviour for guide articles is to always have two adjacent articles. Therefore we create an "infinite loop"
-            if not context['prev']:
-                context['prev'] = self.get_last_sibling()
-            if not context['next']:
-                context['next'] = self.get_first_sibling()
-
-        if context['prev']:
-            context['prev'] = context['prev'].specific
-        if context['next']:
-            context['next'] = context['next'].specific
-
-        return context
-
-    def get_authors_string(self, links=False, authors_list=[]) -> str:
-        """
-        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
-        Keeps large amounts of logic out of templates.
-
-          links: Whether the author names link to their respective pages.
-        """
-        def format_author(article_author):
-            if links:
-                return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
-            return article_author.author.full_name
-
-        if not authors_list:
-            authors = list(map(format_author, self.article_authors.all()))
-        else:
-            authors = list(map(format_author, authors_list))
-
-        if not authors:
-            return ""
-        elif len(authors) == 1:
-            # If this is the only author, just return author name
-            return authors[0]
-
-        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
-    authors_string = property(fget=get_authors_string)
-
-    def get_authors_with_urls(self) -> str:
-        """
-        Wrapper for get_authors_string for easy use in templates.
-        """
-        return self.get_authors_string(links=True)
-    authors_with_urls = property(fget=get_authors_with_urls)
-
-    def get_authors_with_roles(self) -> str:
-        """Returns list of authors as a comma-separated string
-        sorted by author type (with 'and' before last author)."""
-
-        authors_with_roles = ''
-        string_written = ''
-        string_photos = ''
-        string_author = ''
-        string_videos = ''
-
-        authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
-        for author in authors:
-            if author == 'author':
-                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=authors['author'])
-            if author == 'photographer':
-                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=authors['photographer'])
-            if author == 'illustrator':
-                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=authors['illustrator'])
-            if author == 'videographer':
-                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=authors['videographer'])
-        if string_written != '':
-            authors_with_roles += string_written
-        if string_photos != '':
-            authors_with_roles += ', ' + string_photos
-        if string_author != '':
-            authors_with_roles += ', ' + string_author
-        if string_videos != '':
-            authors_with_roles += ', ' + string_videos
-        return authors_with_roles
-    authors_with_roles = property(fget=get_authors_with_roles)
- 
-    @property
-    def published_at(self):
-        if self.explicit_published_at:
-            return self.explicit_published_at
-        return self.first_published_at
-    
-    @property
-    def word_count(self) -> int:
-        # gotten from https://stackoverflow.com/questions/42585858/display-word-count-in-blog-post-with-wagtail
-        count = 0
-        for block in self.content:
-            if block.block_type == 'richtext' or block.block_type == 'plaintext':
-                count += len(str(block.value).split())
-        return count
-
-    @property
-    def minutes_to_read(self) -> int:
-        """
-        Assumes readers read 150 wpm on average. Returns self.world_count // 150
-        """
-        return self.word_count // 150
-   
-    class Meta:
-        abstract = True
-
-class ArticlePage(ArticleLikePage):
-    #-----Django/Wagtail settings etc-----
-    objects = ArticlePageManager()
-
-    parent_page_types = [
-        'specialfeaturelanding.SpecialLandingPage',
-        'section.SectionPage',
-    ]
-
-    subpage_types = [] #Prevents article pages from having child pages
-
-    show_in_menus_default = False
-
-    # Tags
-    tags = ClusterTaggableManager(through='article.ArticlePageTag', blank=True)
-
     # Timelines
     show_timeline = models.BooleanField(
         default=False,
@@ -739,6 +597,38 @@ class ArticlePage(ArticleLikePage):
     timeline_date = models.DateTimeField(
         default=timezone.now,
     )
+
+    # Featured image stuff used for tempalte customization
+    header_layout = models.CharField(
+        null=False,
+        blank=False,
+        default='right-image',
+        max_length=50,
+        help_text="Based on from Dispatch's obselete \"Templates\" feature",
+    )
+
+    #-----Advanted, custom layout etc-----
+    use_default_template = models.BooleanField(default=True)
+
+    db_template = models.ForeignKey(
+        DBTemplate,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',        
+    )
+
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
+                        
+        return "article/article_page.html"
 
     #-----For Wagtail's user interface-----
     content_panels = Page.content_panels + [
@@ -941,17 +831,122 @@ class ArticlePage(ArticleLikePage):
         ],
     ) # edit_handler
 
-    def get_template(self, request):
-        if not self.use_default_template:
-            if self.db_template:
-                return self.db_template.name
+    #-----Properties, getters, setters, etc.-----
 
-        if self.layout == 'fw-story':
-            return "article/article_page_fw_story.html"
-        elif self.layout == 'guide-2020':
-            return "article/article_page_guide_2020.html"
-                        
-        return "article/article_page.html"
+    def get_context(self, request, *args, **kwargs):
+        """
+        Wagtail uses this method to add context variables following a request at a URL.
+        All the below code occurs after the user submits a request and before they receive it.
+        Therefore, keep the length of this method to a minimum; otherwise users will be kept waiting
+        """
+        context = super().get_context(request, *args, **kwargs)
+
+        user_agent = get_user_agent(request)
+        context['is_mobile'] = user_agent.is_mobile
+
+
+        context['prev'] = self.get_prev_sibling()
+        context['next'] = self.get_next_sibling()
+
+        if self.current_section == 'guide':
+            # Desired behaviour for guide articles is to always have two adjacent articles. Therefore we create an "infinite loop"
+            if not context['prev']:
+                context['prev'] = self.get_last_sibling()
+            if not context['next']:
+                context['next'] = self.get_first_sibling()
+
+        if context['prev']:
+            context['prev'] = context['prev'].specific
+        if context['next']:
+            context['next'] = context['next'].specific
+
+        return context
+
+    def get_authors_string(self, links=False, authors_list=[]) -> str:
+        """
+        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
+        Keeps large amounts of logic out of templates.
+
+          links: Whether the author names link to their respective pages.
+        """
+        def format_author(article_author):
+            if links:
+                return '<a href="%s">%s</a>' % (article_author.author.full_url, article_author.author.full_name)
+            return article_author.author.full_name
+
+        if not authors_list:
+            authors = list(map(format_author, self.article_authors.all()))
+        else:
+            authors = list(map(format_author, authors_list))
+
+        if not authors:
+            return ""
+        elif len(authors) == 1:
+            # If this is the only author, just return author name
+            return authors[0]
+
+        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
+    authors_string = property(fget=get_authors_string)
+
+    def get_authors_with_urls(self) -> str:
+        """
+        Wrapper for get_authors_string for easy use in templates.
+        """
+        return self.get_authors_string(links=True)
+    authors_with_urls = property(fget=get_authors_with_urls)
+
+    def get_authors_with_roles(self) -> str:
+        """Returns list of authors as a comma-separated string
+        sorted by author type (with 'and' before last author)."""
+
+        authors_with_roles = ''
+        string_written = ''
+        string_photos = ''
+        string_author = ''
+        string_videos = ''
+
+        authors = dict((k, list(v)) for k, v in groupby(self.article_authors.all(), lambda a: a.author_role))
+        for author in authors:
+            if author == 'author':
+                string_written += 'Written by ' + self.get_authors_string(links=True, authors_list=authors['author'])
+            if author == 'photographer':
+                string_photos += 'Photos by ' + self.get_authors_string(links=True, authors_list=authors['photographer'])
+            if author == 'illustrator':
+                string_author += 'Illustrations by ' + self.get_authors_string(links=True, authors_list=authors['illustrator'])
+            if author == 'videographer':
+                string_videos += 'Videos by ' + self.get_authors_string(links=True, authors_list=authors['videographer'])
+        if string_written != '':
+            authors_with_roles += string_written
+        if string_photos != '':
+            authors_with_roles += ', ' + string_photos
+        if string_author != '':
+            authors_with_roles += ', ' + string_author
+        if string_videos != '':
+            authors_with_roles += ', ' + string_videos
+        return authors_with_roles
+    authors_with_roles = property(fget=get_authors_with_roles)
+ 
+    @property
+    def published_at(self):
+        if self.explicit_published_at:
+            return self.explicit_published_at
+        return self.first_published_at
+    
+    @property
+    def word_count(self) -> int:
+        # gotten from https://stackoverflow.com/questions/42585858/display-word-count-in-blog-post-with-wagtail
+        count = 0
+        for block in self.content:
+            if block.block_type == 'richtext' or block.block_type == 'plaintext':
+                count += len(str(block.value).split())
+        return count
+
+    @property
+    def minutes_to_read(self) -> int:
+        """
+        Assumes readers read 150 wpm on average. Returns self.world_count // 150
+        """
+        return self.word_count // 150
 
     class Meta:
         # TODO Should probably index on:
@@ -963,6 +958,3 @@ class ArticlePage(ArticleLikePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
-
-
-#template = 'article/flex_page.html' #TODO: replace with proper get_templates so flex pages can work as a flex page
