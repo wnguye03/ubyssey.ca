@@ -1,5 +1,6 @@
 import datetime
 import json
+from tabnanny import verbose
 
 from wagtail.admin import edit_handlers
 from images.models import GallerySnippet
@@ -658,7 +659,7 @@ class ArticlePage(SectionablePage):
         ),
         MultiFieldPanel(
             [
-                HelpPanel(content="Authors may be created under \"Snippets\", then selected here."),
+                HelpPanel(content="Authors may be created by creating an \"Author Page\", then selected here."),
                 InlinePanel("article_authors", min_num=1, max_num=20, label="Author"),
             ],
             heading="Author(s)",
@@ -958,3 +959,15 @@ class ArticlePage(SectionablePage):
             models.Index(fields=['last_modified_at']),
             models.Index(fields=['category',]),
         ]
+
+class SpecialArticleLikePage(ArticlePage):
+    parent_page_types = [
+        'specialfeaturelanding.SpecialLandingPage',
+        'section.SectionPage',
+    ]
+
+    subpage_types = [] #Prevents article pages from having child pages
+
+    class Meta:
+        verbose_name = "Special Article-Like Page (for About Page, Contact, etc.)"
+        verbose_name_plural = "Articles"
