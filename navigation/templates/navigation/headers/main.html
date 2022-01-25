@@ -22,7 +22,7 @@
     </div>
     <nav class="main row">
         <div class="left">
-          {% flat_menu 'left_header_menu' max_levels=1 show_menu_heading=False  fall_back_to_default_site_menus=True %}
+          {% flat_menu 'left_header_menu' max_levels=1 show_menu_heading=False fall_back_to_default_site_menus=True %}
           {% comment %} <ul class="meta">
             {% cache 604800 left_header_menu %}
               {% for menu_item in settings.navigation.SitewideMenus.left_header_menu.all %}
@@ -42,7 +42,7 @@
           </ul>
         </div>
         <div class="right">
-          {% flat_menu 'right_header_menu' max_levels=1 show_menu_heading=False  fall_back_to_default_site_menus=True %}
+          {% flat_menu 'right_header_menu' max_levels=1 show_menu_heading=False fall_back_to_default_site_menus=True %}
           {% comment %} <ul class="meta">
             {% cache 604800 right_header_menu %}
               {% for menu_item in settings.navigation.SitewideMenus.right_header_menu.all %}
