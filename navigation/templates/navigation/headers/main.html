@@ -22,13 +22,14 @@
     </div>
     <nav class="main row">
         <div class="left">
-          <ul class="meta">
+          {% flat_menu 'left_header_menu' max_levels=1 show_menu_heading=False  fall_back_to_default_site_menus=True %}
+          {% comment %} <ul class="meta">
             {% cache 604800 left_header_menu %}
               {% for menu_item in settings.navigation.SitewideMenus.left_header_menu.all %}
                 <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
               {% endfor %}
-            {% endcache %}
-          </ul>
+            {% endcache %} 
+          </ul> {% endcomment %}
         </div>
         <div class="middle">
           <ul class="sections">
@@ -41,13 +42,14 @@
           </ul>
         </div>
         <div class="right">
-          <ul class="meta">
+          {% flat_menu 'right_header_menu' max_levels=1 show_menu_heading=False  fall_back_to_default_site_menus=True %}
+          {% comment %} <ul class="meta">
             {% cache 604800 right_header_menu %}
               {% for menu_item in settings.navigation.SitewideMenus.right_header_menu.all %}
                 <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
               {% endfor %}
             {% endcache %}
-          </ul>
+          </ul> {% endcomment %}
         </div>
     </nav>
 </div>
