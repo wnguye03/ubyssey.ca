@@ -1,6 +1,10 @@
+
 from django.db import models
 from django.utils import timezone
-from .sectionable.models import SectionablePage # self made abstract model
+from section.sectionable.models import SectionablePage # self made abstract model
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 
 from django_extensions.db.fields import AutoSlugField
 
@@ -13,8 +17,9 @@ from taggit.managers import TaggableManager
 
 from ubyssey.validators import validate_youtube_url
 
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
-from wagtail.core.models import Orderable
+from wagtail.core.models import Orderable, Page
 from wagtail.snippets.models import register_snippet
 
 #-----Taggit stuff-----
@@ -45,27 +50,50 @@ class VideoAuthorsOrderable(Orderable):
         ),
     ]
 
-class VideosPage(SectionablePage):
-    template = 'videos/videos_page.html'
+# def videos(context):
+#     return {
+#         'videos': VideoSnippet.objects.all(),
+#         'request': context['request'],
+#     }
 
-    subpage_types = [
-        # 'article.ArticlePage',
-        # 'specialfeaturelanding.SpecialLandingPage',
-    ]
+class VideosPage(SectionablePage):
+    template = 'videos/videos.html'
+
     parent_page_types = [
         'home.HomePage',
     ]
-
+    max_count_per_parent = 1
     show_in_menus_default = True
+    
+    def __str__(self):
+        """String rep of VideosPage"""
+        return self.name
 
-    content_panels = wagtail_core_models.Page.content_panels + [
-        MultiFieldPanel(
-            [
-                InlinePanel("category_menu"),
-            ],
-            heading="Category Menu",
-        ),
-    ]
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        all_videos = VideoSnippet.objects.all()
+
+        paginator = Paginator(all_videos, per_page=15)
+
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            paginated_articles = paginator.page(page)
+            
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            paginated_articles = paginator.page(1)
+        
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            paginated_videos = paginator.page(paginator.num_pages)
+
+        context["videos"] = VideoSnippet.objects.all()
+        print(queryset=all_videos)
+        
+        return context
 
 
 #-----Snippet models-----
@@ -77,7 +105,7 @@ class VideoSnippet(ClusterableModel):
         max_length=255,
         null=False,
         blank=False,
-        default='',
+        default='Hello',
     )
     slug = AutoSlugField(
         populate_from="title",
