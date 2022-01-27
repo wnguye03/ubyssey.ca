@@ -95,6 +95,7 @@ environ.Env.read_env(env_file)
 
 # Set Django's configs to the values taken from the .env file (or else to their defaults listed above)
 ORGANIZATION_NAME = env('ORGANIZATION_NAME') # Used for registration/invitation
+
 DEBUG = env('DEBUG')
 
 SPECIAL_MESSAGE_AVAILABLE = env('SPECIAL_MESSAGE_AVAILABLE')
