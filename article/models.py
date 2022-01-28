@@ -961,12 +961,27 @@ class ArticlePage(SectionablePage):
         ]
 
 class SpecialArticleLikePage(ArticlePage):
+
+    show_in_menus_default = True
+
     parent_page_types = [
         'specialfeaturelanding.SpecialLandingPage',
         'section.SectionPage',
     ]
 
     subpage_types = [] #Prevents article pages from having child pages
+
+    def get_template(self, request):
+        if not self.use_default_template:
+            if self.db_template:
+                return self.db_template.name
+
+        if self.layout == 'fw-story':
+            return "article/article_page_fw_story.html"
+        elif self.layout == 'guide-2020':
+            return "article/article_page_guide_2020.html"
+                        
+        return "article/article_like_special_page.html"
 
     class Meta:
         verbose_name = "Special Article-Like Page (for About Page, Contact, etc.)"
