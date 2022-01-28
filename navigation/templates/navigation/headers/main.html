@@ -1,5 +1,4 @@
 {% load static %}
-{% load cache %}
 {% load menu_tags %}
 
 <header class="main">
@@ -21,34 +20,21 @@
       </div>
     </div>
     <nav class="main row">
-        <div class="left">
-          <ul class="meta">
-            {% cache 604800 left_header_menu %}
-              {% for menu_item in settings.navigation.SitewideMenus.left_header_menu.all %}
-                <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
-              {% endfor %}
-            {% endcache %}
-          </ul>
-        </div>
-        <div class="middle">
-          <ul class="sections">
-            {% cache 604800 main_header_menu %}
-              {% main_menu %}
-              {% comment %} {% for menu_item in settings.navigation.SitewideMenus.main_header_menu.all %}
-                <li><a href="{{ menu_item.link }}">{{ menu_item.text }}</a></li>
-              {% endfor %} {% endcomment %}
-            {% endcache %}
-          </ul>
-        </div>
-        <div class="right">
-          <ul class="meta">
-            {% cache 604800 right_header_menu %}
-              {% for menu_item in settings.navigation.SitewideMenus.right_header_menu.all %}
-                <li><a href="{{ menu_item.link }}">{{ menu_item.text}}</a></li>
-              {% endfor %}
-            {% endcache %}
-          </ul>
-        </div>
+      <div class="left">
+        <ul class="meta">
+          {% flat_menu 'left_header_menu' max_levels=1 show_menu_heading=False fall_back_to_default_site_menus=True %}
+        </ul> 
+      </div>
+      <div class="middle">
+        <ul class="sections">
+          {% main_menu %}
+        </ul>
+      </div>
+      <div class="right">
+        <ul class="meta">
+          {% flat_menu 'right_header_menu' max_levels=1 show_menu_heading=False fall_back_to_default_site_menus=True %}
+        </ul>
+      </div>
     </nav>
 </div>
 </header>
