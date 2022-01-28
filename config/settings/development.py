@@ -54,5 +54,3 @@ GCS_CREDENTIALS_FILE = '../gcs-local.json'
 # Use in-memory file handler on Google App Engine
 FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440
-
-# DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False,}

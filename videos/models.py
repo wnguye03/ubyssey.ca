@@ -79,11 +79,11 @@ class VideosPage(SectionablePage):
         page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
-            paginated_articles = paginator.page(page)
+            paginated_videos = paginator.page(page)
             
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
-            paginated_articles = paginator.page(1)
+            paginated_videos = paginator.page(1)
         
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
@@ -104,7 +104,6 @@ class VideoSnippet(ClusterableModel):
         max_length=255,
         null=False,
         blank=False,
-        default='Hello',
     )
     slug = AutoSlugField(
         populate_from="title",
