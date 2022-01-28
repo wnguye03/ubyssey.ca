@@ -1,0 +1,73 @@
+{% extends 'ubyssey/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailuserbar %}
+
+{% block header %}
+  {% include 'navigation/headers/topbar.html' %}
+  {% include 'navigation/headers/mobile.html' %}
+{% endblock %}
+
+{% block content %}
+<main class="section">
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
+  {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=5 %}
+  <div class="u-container u-container--padded">
+    <div class="c-page__header">
+      <h1 class="c-page__heading">Videos</h1>
+    </div>
+
+    {% comment %} use menu for video tags/filter {% endcomment %}
+     
+    {% if self.category_menu.count %}
+      <div class="c-page__header__subsections">
+        <ul>
+          {% for category_menu_item in self.category_menu.all %}
+            {% if category_menu_item.category %}
+              <li><a href="{% url 'wagtail_serve' '' %}">{{ category_menu_item.category.title }}</a></li>
+            {% else %}
+              {% comment %} Failsafe, since wagtail seems to delete empty menu items. Shouldn't ever end up here! {% endcomment %}
+              {% comment %} <li><a href="#">ERROR: EMPTY CATEGORY MENU ITEM! PLEASE CHECK THE SECTION PAGE IN WAGTAIL</a></li> {% endcomment %}
+             {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    
+    {% for video in videos %}
+      {% load dispatch_filters %}
+        <div class="c-videos__video">
+          <div class="c-videos__title">
+            <h3><a name="video-{{video.url}}" href="#video-{{video.url}}">{{video.title|safe}}</a></h3>
+          </div>
+          
+          <div class='c-videos__wrapper'>
+            Loading Video...
+            <iframe 
+              src="{{ video.url|youtube_embed_url|safe }}"
+              allowfullscreen="allowfullscreen"
+              mozallowfullscreen="mozallowfullscreen" 
+              msallowfullscreen="msallowfullscreen" 
+              oallowfullscreen="oallowfullscreen" 
+              webkitallowfullscreen="webkitallowfullscreen"></iframe>
+          </div>
+          
+          {% comment %} <em>Credits: {{video.get_author_url|safe}}</em> {% endcomment %}
+        </div>
+      {% comment %} <p>
+          <a href="{{ video_placement.video.url }}">
+              {{ video_placement.video.text }}
+          </a>
+      </p> {% endcomment %}
+      {% comment %} <li>
+        {% include "videos/video_snippet.html" %}
+      </li> {% endcomment %}
+    {% endfor %}
+
+  </div>
+
+</main>
+{% endblock %}
+
