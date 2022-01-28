@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from section.sectionable.models import SectionablePage # self made abstract model
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from django_extensions.db.fields import AutoSlugField
 
@@ -11,8 +14,9 @@ from taggit.managers import TaggableManager
 
 from ubyssey.validators import validate_youtube_url
 
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
-from wagtail.core.models import Orderable
+from wagtail.core.models import Orderable, Page
 from wagtail.snippets.models import register_snippet
 
 #-----Taggit stuff-----
@@ -43,15 +47,60 @@ class VideoAuthorsOrderable(Orderable):
         ),
     ]
 
+# def videos(context):
+#     return {
+#         'videos': VideoSnippet.objects.all(),
+#         'request': context['request'],
+#     }
+
+class VideosPage(SectionablePage):
+    template = 'videos/videos_page.html'
+
+    parent_page_types = [
+        'home.HomePage',
+    ]
+    max_count_per_parent = 1
+    show_in_menus_default = True
+    
+    def __str__(self):
+        """String rep of VideosPage"""
+        return self.title
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        all_videos = VideoSnippet.objects.all()
+
+        paginator = Paginator(all_videos, per_page=15)
+
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            paginated_videos = paginator.page(page)
+            
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            paginated_videos = paginator.page(1)
+        
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            paginated_videos = paginator.page(paginator.num_pages)
+
+        context["videos"] = VideoSnippet.objects.all()
+        
+        return context
+
+
 #-----Snippet models-----
 
 @register_snippet
 class VideoSnippet(ClusterableModel):
+
     title = models.CharField(
         max_length=255,
         null=False,
         blank=False,
-        default='',
     )
     slug = AutoSlugField(
         populate_from="title",
@@ -72,7 +121,7 @@ class VideoSnippet(ClusterableModel):
         validators=[validate_youtube_url,]
     )
 
-    # authors = ManyToManyField(Author, related_name='video_authors')
+    # authors = models.ManyToManyField(related_name='video_authors')
     tags = TaggableManager(through=VideoTag, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now)

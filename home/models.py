@@ -26,6 +26,7 @@ class HomePage(Page):
     subpage_types = [
         'section.SectionPage',
         'authors.AllAuthorsPage',
+        'videos.VideosPage',
     ]
 
     sections_stream = StreamField(
