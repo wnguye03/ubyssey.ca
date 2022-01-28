@@ -101,6 +101,7 @@ class VideoSnippet(ClusterableModel):
         max_length=255,
         null=False,
         blank=False,
+        default='',
     )
     slug = AutoSlugField(
         populate_from="title",
