@@ -57,7 +57,7 @@ class VideoAuthorsOrderable(Orderable):
 #     }
 
 class VideosPage(SectionablePage):
-    template = 'videos/videos.html'
+    template = 'videos/videos_page.html'
 
     parent_page_types = [
         'home.HomePage',
@@ -67,7 +67,7 @@ class VideosPage(SectionablePage):
     
     def __str__(self):
         """String rep of VideosPage"""
-        return self.name
+        return self.title
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -91,7 +91,6 @@ class VideosPage(SectionablePage):
             paginated_videos = paginator.page(paginator.num_pages)
 
         context["videos"] = VideoSnippet.objects.all()
-        print(queryset=all_videos)
         
         return context
 
@@ -126,7 +125,7 @@ class VideoSnippet(ClusterableModel):
         validators=[validate_youtube_url,]
     )
 
-    # authors = ManyToManyField(Author, related_name='video_authors')
+    # authors = models.ManyToManyField(related_name='video_authors')
     tags = TaggableManager(through=VideoTag, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now)
