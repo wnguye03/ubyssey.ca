@@ -1,16 +1,13 @@
-
 from django.db import models
 from django.utils import timezone
 from section.sectionable.models import SectionablePage # self made abstract model
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
-
 from django_extensions.db.fields import AutoSlugField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-
 
 from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
