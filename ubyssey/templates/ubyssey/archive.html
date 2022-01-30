@@ -43,7 +43,7 @@
       </div>
       <div class="o-archive__header">
         <h3 class="o-archive__header__title">
-          {% if apaginated_articles %} {{ paginated_articles.paginator.count }} RESULTS {% else %}NO RESULTS{% endif %}
+          {% if paginated_articles %} {{ paginated_articles.paginator.count }} RESULTS {% else %}NO RESULTS{% endif %}
           {% if q %} FOR "{{ q }}"{% endif %}
         </h3>
         <div class="o-archive__header__sort o-dropdown js-dropdown">
