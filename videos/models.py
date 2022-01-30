@@ -157,3 +157,4 @@ class VideoSnippet(ClusterableModel):
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "Videos"
+        ordering = ['-created_at']
