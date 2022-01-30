@@ -87,7 +87,7 @@ class VideosPage(SectionablePage):
             # Then return the last page
             paginated_videos = paginator.page(paginator.num_pages)
 
-        context["videos"] = VideoSnippet.objects.all()
+        context["paginated_videos"] = paginated_videos
         
         return context
 
