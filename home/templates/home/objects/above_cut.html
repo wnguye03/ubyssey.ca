@@ -3,13 +3,15 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load video_filters %}
+{% load ubyssey_ad_filters %}
+{% load ubyssey_ad_tags %}
 
 <div class="homepage-section frontpage-container">
     <h1 class="homepage_heading">Home</h1>
     <div class="frontpage">
       <div class="frontpage__columns">
         <div class="cell left">
-          {% with articles.0 as article %}
+          {% with articles.1 as article %}
             {% if article %}
               <article class="secondary padded">
                 <h2 class="headline"><a href={% pageurl article %}>{{ article.title|safe }}</a></h2>
@@ -20,7 +22,7 @@
 
           {% comment %} {% include 'objects/advertisement.html' with size='box' name='Box_A' class='mobile-frontpage-box' id=2 %} {% endcomment %}
         
-          {% with articles.1 as article %}
+          {% with articles.2 as article %}
             {% if article %}
               <article class="thumb row padded">
                 <div class="image">
@@ -40,7 +42,7 @@
             {% endif %}
           {% endwith %}
 
-          {% with articles.2 as article %}
+          {% with articles.3 as article %}
             {% if article %}
               <article class="thumb row padded">
                   <div class="image">
@@ -62,7 +64,7 @@
 
 
           <ul class="c-homepage__bullets">
-            {% with articles.3 as article %}
+            {% with articles.4 as article %}
               {% if article %}
                 <li>
                   <article class="o-article o-article--bullet">
@@ -74,7 +76,7 @@
               {% endif %}
             {% endwith %}
 
-            {% with articles.4 as article %}
+            {% with articles.5 as article %}
               {% if article %}
                 <li>
                   <article class="o-article o-article--bullet">
@@ -89,7 +91,7 @@
           </ul>
         </div>
         <div class="cell middle">
-            {% with articles.5 as article %}
+            {% with articles.0 as article %}
               {% if article %}
                 <article class="primary {{ article.template }}">
                     <a class="image" href={% pageurl article %}>
@@ -114,6 +116,11 @@
             {% endwith %}
         </div>
         <div class="multi-zone cell right">
+          <div class="c-widget-advertisement">
+            {% adslot self.home_sidebar_ad_slot1.slug %}
+            {% comment %} {% include 'objects/advertisement.html' with size='box' name='Widget' id=3 %} {% endcomment %}
+          </div>
+          
           {{ sidebar.render }}
           {% if sidebar2 %} <br> {{ sidebar2.render }} {% endif %}
         </div>
