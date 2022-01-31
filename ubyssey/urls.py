@@ -56,8 +56,8 @@ urlpatterns += [
     re_path(r'^api/events/', include(event_api_urls)),
 
     # Wagtail
-    path('/admin/', include(wagtailadmin_urls)),
-    path('/documents/', include(wagtaildocs_urls)),
+    re_path(r'^admin/', include(wagtailadmin_urls)),
+    re_path(r'^documents/', include(wagtaildocs_urls)),
     path('', include(wagtail_urls)),
 
     # # standard Ubyssey site
