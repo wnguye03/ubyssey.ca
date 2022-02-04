@@ -1,0 +1,50 @@
+{% load static %}
+{% load wagtailcore_tags %}
+
+<title>{{ page.title|striptags|safe }}</title>
+<link rel="canonical" href="{% pageurl page %}">
+<meta name="description" content="{{ meta.description }}" />
+{% if page.authors_with_roles %}<meta name="author" content="{{ page.authors_with_roles }}" />{% endif %}
+
+<!-- Open Graph data -->
+<meta property="og:title" content="{{ page.title|striptags|safe }}" />
+<meta property="og:type" content="{% if page.content_type.model == 'articlepage' %}article{% else %}website{% endif %}" />
+<meta property="og:url" content="{% pageurl page %}" />
+{% if page.featured_media.first.image %}
+    {% image page.featured_media.first.image fill-800x600 as the_image %}
+    <meta property="og:image" content="{{ the_image.full_url }}" />
+{% else %}
+    <meta property="og:image" content="{% static 'ubyssey/images/ubyssey-logo-square.png' %}" />
+{% endif %}
+<meta property="og:description" content="{% if page.seo_description %}{{ page.seo_description }}{% elif page.lede %}{{ page.lede }}{% endif %}" />
+<meta property="og:site_name" content="The Ubyssey" />
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ubyssey">
+<meta name="twitter:title" content="{{ page.title|striptags|safe }}">
+<meta name="twitter:description" content="{% if page.seo_description %}{{ page.seo_description }}{% elif page.lede %}{{ page.lede }}{% endif %}">
+{% if page.featured_media.first.image %}
+    {% image page.featured_media.first.image fill-800x600 as the_image %}
+    <meta name="twitter:image" content="{{ the_image.full_url }}">
+{% endif %}
+
+<!-- Additional stuff-->
+<link rel="apple-touch-icon" sizes="57x57" href="{% static 'ubyssey/images/favicons/apple-touch-icon-57x57.png' %}">
+<link rel="apple-touch-icon" sizes="60x60" href="{% static 'ubyssey/images/favicons/apple-touch-icon-60x60.png' %}">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'ubyssey/images/favicons/apple-touch-icon-72x72.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'ubyssey/images/favicons/apple-touch-icon-76x76.png' %}">
+<link rel="apple-touch-icon" sizes="114x114" href="{% static 'ubyssey/images/favicons/apple-touch-icon-114x114.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'ubyssey/images/favicons/apple-touch-icon-120x120.png' %}">
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'ubyssey/images/favicons/apple-touch-icon-144x144.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'ubyssey/images/favicons/apple-touch-icon-152x152.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'ubyssey/images/favicons/apple-touch-icon-180x180.png' %}">
+<link rel="icon" type="image/png" href="{% static 'ubyssey/images/favicons/android-chrome-192x192.png' %}" sizes="192x192">
+<link rel="icon" type="image/png" href="{% static 'ubyssey/images/favicons/favicon-16x16.png' %}" sizes="16x16">
+<link rel="icon" type="image/png" href="{% static 'ubyssey/images/favicons/favicon-32x32.png' %}" sizes="32x32">
+<link rel="icon" type="image/png" href="{% static 'ubyssey/images/favicons/favicon-96x96.png' %}" sizes="96x96">
+<link rel="manifest" href="{% static 'ubyssey/images/favicons/manifest.json' %}">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<meta property="fb:pages" content="99164676792" />
