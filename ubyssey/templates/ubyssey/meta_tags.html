@@ -5,7 +5,7 @@
 <title>{{ self.title|striptags|safe }}</title>
 <link rel="canonical" href="{% pageurl self %}">
 <meta name="description" content="{{ meta.description }}" />
-{% if self.authors_with_roles %}<meta name="author" content="{{ self.authors_with_roles }}" />{% endif %}
+{% if self.authors_with_roles %}<meta name="author" content="{{ self.get_authors_string }}" />{% endif %}
 
 <!-- Open Graph data -->
 <meta property="og:title" content="{{ self.title|striptags|safe }}" />
