@@ -3,14 +3,14 @@
 {% load wagtailimages_tags %}
 
 <title>{{ self.title|striptags|safe }}</title>
-<link rel="canonical" href="http://ubyssey.ca{% pageurl self %}">
+<link rel="canonical" href="https://ubyssey.ca{% pageurl self %}">
 <meta name="description" content="{{ meta.description }}" />
 {% if self.authors_with_roles %}<meta name="author" content="{{ self.get_authors_string }}" />{% endif %}
 
 <!-- Open Graph data -->
 <meta property="og:title" content="{{ self.title|striptags|safe }}" />
 <meta property="og:type" content="{% if self.content_type.model == 'articlepage' %}article{% else %}website{% endif %}" />
-<meta property="og:url" content="http://ubyssey.ca{% pageurl self %}" />
+<meta property="og:url" content="https://ubyssey.ca{% pageurl self %}" />
 {% if self.featured_media.first.image %}
     {% with self.featured_media.first as featured_image_object %}
         {% image featured_image_object.image fill-800x600 as the_image %}
