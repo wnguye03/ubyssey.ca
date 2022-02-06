@@ -136,7 +136,6 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        
         search_query = request.GET.get("q")
         page = request.GET.get("page")
         order = request.GET.get("order")
@@ -147,12 +146,13 @@ class SectionPage(SectionablePage):
             article_order = "-explicit_published_at"
         context["order"] = order
 
-
         all_articles = self.get_section_articles(order=article_order)
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
+
+        context["featured_articles"] = self.get_featured_articles(queryset=all_articles) #Happens before all_articles is "further filtered" by .search()
 
         if search_query:
             context["search_query"] = search_query
@@ -174,7 +174,6 @@ class SectionPage(SectionablePage):
             # Then return the last page
             paginated_articles = paginator.page(paginator.num_pages)
 
-        context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
     
         return context
