@@ -152,7 +152,7 @@ class SectionPage(SectionablePage):
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
 
-        context["featured_articles"] = self.get_featured_articles(queryset=all_articles) #Happens before all_articles is "further filtered" by .search()
+        context["featured_articles"] = self.get_featured_articles()
 
         if search_query:
             context["search_query"] = search_query
