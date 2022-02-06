@@ -6,6 +6,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from article.models import ArticlePage
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.core.models import Page
+from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 class AllAuthorsPage(Page):
@@ -83,21 +84,31 @@ class AuthorPage(Page):
             heading="Optional Stuff",
         ),
     ]
+    #-----Search fields etc-----
+    #See https://docs.wagtail.org/en/stable/topics/search/indexing.html
+    search_fields = Page.search_fields + [
+        index.SearchField('full_name'),
+        index.SearchField('description'),
+    ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
+        search_query = request.GET.get("q")
         page = request.GET.get("page")
         order = request.GET.get("order")
 
-        if order == 'newest':
-            article_order = "-explicit_published_at"
-        else:
+        if order == 'oldest':
             article_order = "explicit_published_at"
+        else:            
+            article_order = "-explicit_published_at"
         context["order"] = order
 
         # Hit the db
         authors_articles = ArticlePage.objects.live().public().filter(article_authors__author=self).order_by(article_order)
+        if search_query:
+            context["search_query"] = search_query
+            authors_articles = authors_articles.search(search_query)
 
         # Paginate all posts by 15 per page
         paginator = Paginator(authors_articles, per_page=15)
@@ -115,7 +126,6 @@ class AuthorPage(Page):
 
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
-    
         return context
     
    
