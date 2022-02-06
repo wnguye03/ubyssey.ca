@@ -42,7 +42,9 @@
       {% include 'article/objects/featured.html' with article=featured_articles.first %}
       <div class="c-section__featured__articles u-flex--tablet">
         {% for article in featured_articles %}
-          {% include 'article/objects/column.html' with article=article %}
+          {% if forloop.counter0 != 0 %}
+            {% include 'article/objects/column.html' with article=article %}
+          {% endif %}
         {% endfor %}
       </div>
       {% comment %}

@@ -136,21 +136,35 @@ class SectionPage(SectionablePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = self.get_section_articles()
+        search_query = request.GET.get("q")
+        page = request.GET.get("page")
+        order = request.GET.get("order")
+
+        if order == 'oldest':
+            article_order = "explicit_published_at"
+        else:            
+            article_order = "-explicit_published_at"
+        context["order"] = order
+
+        all_articles = self.get_section_articles(order=article_order)
         if 'subsection_slug' in kwargs:
             pass
             # TODO filter ArticlePage by subsection once that field is implemented properly
             #all_articles.filter
 
+        context["featured_articles"] = self.get_featured_articles()
+
+        if search_query:
+            context["search_query"] = search_query
+            all_articles = all_articles.search(search_query)
+
         # Paginate all posts by 15 per page
-        paginator = Paginator(all_articles, per_page=15)
-        # Try to get the ?page=x value
-        
-        page = request.GET.get("page")
+        paginator = Paginator(all_articles, per_page=15)       
         try:
             # If the page exists and the ?page=x is an int
             paginated_articles = paginator.page(page)
-            
+            context["current_page"] = page
+
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
             paginated_articles = paginator.page(1)
@@ -160,15 +174,14 @@ class SectionPage(SectionablePage):
             # Then return the last page
             paginated_articles = paginator.page(paginator.num_pages)
 
-        context["featured_articles"] = self.get_featured_articles(queryset=all_articles)
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
     
         return context
 
     
-    def get_section_articles(self) -> QuerySet:
+    def get_section_articles(self, order='-explicit_published_at') -> QuerySet:
         # return ArticlePage.objects.from_section(section_root=self)
-        section_articles = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by('-explicit_published_at')
+        section_articles = ArticlePage.objects.live().public().filter(current_section=self.slug).order_by(order)
         return section_articles
 
     def get_featured_articles(self, queryset=None, number_featured=4) -> QuerySet:
