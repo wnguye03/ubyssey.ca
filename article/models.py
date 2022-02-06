@@ -841,7 +841,11 @@ class ArticlePage(SectionablePage):
         
         index.FilterField('current_section'),
         index.FilterField('author_id'),
+        index.FilterField('slug'),
 
+        index.RelatedFields('category', [
+            index.FilterField('slug'),
+        ]),
         index.RelatedFields('article_authors', [
             index.SearchField('full_name'),
         ]),
