@@ -86,10 +86,10 @@ class AuthorPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        all_articles = ArticlePage.objects.all()
+        authors_articles = ArticlePage.objects.live().public().filter(article_authors__author=self)
 
-          # Paginate all posts by 15 per page
-        paginator = Paginator(all_articles, per_page=5)
+        # Paginate all posts by 15 per page
+        paginator = Paginator(authors_articles, per_page=15)
         # Try to get the ?page=x value
         
         page = request.GET.get("page")
