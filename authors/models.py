@@ -86,25 +86,33 @@ class AuthorPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        authors_articles = ArticlePage.objects.live().public().filter(article_authors__author=self)
+
+        page = request.GET.get("page")
+        order = request.GET.get("order")
+
+        if order == 'newest':
+            article_order = "-explicit_published_at"
+        else:
+            article_order = "explicit_published_at"
+        context["order"] = order
+
+        # Hit the db
+        authors_articles = ArticlePage.objects.live().public().filter(article_authors__author=self).order_by(article_order)
 
         # Paginate all posts by 15 per page
         paginator = Paginator(authors_articles, per_page=15)
-        # Try to get the ?page=x value
-        
-        page = request.GET.get("page")
         try:
             # If the page exists and the ?page=x is an int
             paginated_articles = paginator.page(page)
-            
+            context["current_page"] = page
         except PageNotAnInteger:
             # If the ?page=x is not an int; show the first page
             paginated_articles = paginator.page(1)
-           
         except EmptyPage:
             # If the ?page=x is out of range (too high most likely)
             # Then return the last page
             paginated_articles = paginator.page(paginator.num_pages)
+
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
 
     
