@@ -50,6 +50,7 @@ from wagtail.core.models import Page, PageManager, Orderable
 from wagtail.documents.models import Document
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -831,6 +832,18 @@ class ArticlePage(SectionablePage):
             ObjectList(customization_panels, heading='Custom Frontend (Advanced!)'),
         ],
     ) # edit_handler
+
+    #-----Search fields etc-----
+    #See https://docs.wagtail.org/en/stable/topics/search/indexing.html
+    search_fields = Page.search_fields + [
+        index.SearchField('lede'),
+        index.SearchField('content'),
+        index.FilterField('author_id'),
+
+        index.RelatedFields('article_authors', [
+            index.SearchField('full_name'),
+        ]),
+    ]
 
     #-----Properties, getters, setters, etc.-----
 
