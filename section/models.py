@@ -18,13 +18,14 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core import models as wagtail_core_models
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import route, RoutablePageMixin
+from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
 
 #-----Snippet models-----
 @register_snippet
-class CategorySnippet(ClusterableModel):
+class CategorySnippet(index.Indexed, ClusterableModel):
     """
     Formerly known as a 'Subsection'
     """
@@ -52,6 +53,10 @@ class CategorySnippet(ClusterableModel):
         "section.SectionPage",
         related_name="categories",
     )
+    search_fields = [
+        index.SearchField('title', partial_match=True),
+    ]
+
     panels = [
         MultiFieldPanel(
             [
