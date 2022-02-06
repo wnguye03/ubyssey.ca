@@ -111,7 +111,7 @@ class CategoryMenuItem(wagtail_core_models.Orderable):
         SnippetChooserPanel("category"),
     ]
 
-class SectionPage(SectionablePage):
+class SectionPage(RoutablePageMixin, SectionablePage):
     template = 'section/section_page.html'
 
     subpage_types = [
@@ -147,10 +147,8 @@ class SectionPage(SectionablePage):
         context["order"] = order
 
         all_articles = self.get_section_articles(order=article_order)
-        if 'subsection_slug' in kwargs:
-            pass
-            # TODO filter ArticlePage by subsection once that field is implemented properly
-            #all_articles.filter
+        if 'category_slug' in kwargs:            
+            all_articles = all_articles.filter(category__slug=kwargs['category_slug'])
 
         context["featured_articles"] = self.get_featured_articles()
 
@@ -177,7 +175,6 @@ class SectionPage(SectionablePage):
         context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
     
         return context
-
     
     def get_section_articles(self, order='-explicit_published_at') -> QuerySet:
         # return ArticlePage.objects.from_section(section_root=self)
@@ -196,9 +193,9 @@ class SectionPage(SectionablePage):
         return queryset[:number_featured]    
     featured_articles = property(fget=get_featured_articles)
 
-    @route(r'^subsection/(?P<subsection_slug>[-\w]+)/$', name='subsection_view')
-    def subsection_view(self, request, subsection_slug):
-        context = self.get_context(request, subsection_slug=subsection_slug)
+    @route(r'^category/(?P<category_slug>[-\w]+)/$', name='category_view')
+    def category_view(self, request, category_slug):
+        context = self.get_context(request, category_slug=category_slug)
         return render(request, 'section/section_page.html', context)
 
     def save(self, *args, **kwargs):
