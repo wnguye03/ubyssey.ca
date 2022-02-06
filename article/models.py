@@ -838,6 +838,8 @@ class ArticlePage(SectionablePage):
     search_fields = Page.search_fields + [
         index.SearchField('lede'),
         index.SearchField('content'),
+        
+        index.FilterField('current_section'),
         index.FilterField('author_id'),
 
         index.RelatedFields('article_authors', [
