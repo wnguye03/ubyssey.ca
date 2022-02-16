@@ -43,6 +43,8 @@ urlpatterns += [
     re_path(r'^ads.txt$',ads_txt,name='ads-txt'),
 
     re_path(r'^culture/special/self-isolation/', IsolationView.as_view(), name='special-isolation'),
+    re_path(r'^magazine/(?P<year>[0-9]{4})/$', magazine.magazine, name='magazine-landing'),
+    re_path(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     re_path(r'^djadmin/', admin.site.urls),
 
@@ -52,13 +54,13 @@ urlpatterns += [
     re_path(r'^newsletter/', include(newsletter_urls)),
 
     # Events
-    re_path(r'^events/', include(events_urls)),
-    re_path(r'^api/events/', include(event_api_urls)),
+    # re_path(r'^events/', include(events_urls)),
+    # re_path(r'^api/events/', include(event_api_urls)),
 
     # Wagtail
     re_path(r'^admin/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
-    path('', include(wagtail_urls)),
+    path('', include(wagtail_urls), name='home'),
 
     # # standard Ubyssey site
     # re_path(r'^$', HomePageView.as_view(), name='home'),
