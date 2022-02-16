@@ -60,7 +60,7 @@ urlpatterns += [
     # Wagtail
     re_path(r'^admin/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
-    path('', include(wagtail_urls), name='home'),
+    path('', include(wagtail_urls)),
 
     # # standard Ubyssey site
     # re_path(r'^$', HomePageView.as_view(), name='home'),
