@@ -1,4 +1,4 @@
-# Ubyssey Dispatch Theme
+# The Ubyssey website
 
 ![ubyssey_top](https://user-images.githubusercontent.com/9669739/46310069-2e177400-c573-11e8-8b94-bf567daf5f45.png)
 
