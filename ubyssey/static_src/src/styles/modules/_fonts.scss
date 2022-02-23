@@ -1,7 +1,10 @@
-// Font families
-$font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+// $font-default: 'ub-lft-etica', 'LFT Etica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-default: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
 $font-secondary: $font-default;
-$font-headline: 'ub-minion-pro', 'Minion Pro', 'Georgia', serif;
+// $font-headline: 'ub-minion-pro', 'Minion Pro', 'Georgia', serif;
+$font-headline: 'Georgia', serif;
+
 $font-body: 'Georgia', serif;
 
 $font-size-base: 16;
