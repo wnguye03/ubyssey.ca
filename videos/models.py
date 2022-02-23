@@ -47,12 +47,6 @@ class VideoAuthorsOrderable(Orderable):
         ),
     ]
 
-# def videos(context):
-#     return {
-#         'videos': VideoSnippet.objects.all(),
-#         'request': context['request'],
-#     }
-
 class VideosPage(SectionablePage):
     template = 'videos/videos_page.html'
 
@@ -122,7 +116,6 @@ class VideoSnippet(ClusterableModel):
         validators=[validate_youtube_url,]
     )
 
-    # authors = models.ManyToManyField(related_name='video_authors')
     tags = TaggableManager(through=VideoTag, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now)
