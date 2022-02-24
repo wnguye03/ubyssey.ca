@@ -116,6 +116,7 @@ class VideoSnippet(ClusterableModel):
         validators=[validate_youtube_url,]
     )
 
+    # v_authors = models.ManyToManyField(VideoAuthorsOrderable, related_name='video_authors')
     tags = TaggableManager(through=VideoTag, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now)
@@ -123,6 +124,41 @@ class VideoSnippet(ClusterableModel):
 
     def __str__(self):
         return self.title
+
+    def get_authors_string(self, links=False, authors_list=[]) -> str:
+        """
+        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
+        Keeps large amounts of logic out of templates.
+
+          links: Whether the author names link to their respective pages.
+        """
+        def format_author(video_author):
+            return '<a href="%s">%s</a>' % (video_author.author.full_url, video_author.author.full_name)
+            
+            # if links:
+            #     return '<a href="%s">%s</a>' % (self.video_authors.all()[0].author.full_url, self.video_authors.all()[0].author.full_name)
+            # return self.video_authors.all()[0].author.full_name
+
+        if not authors_list:
+            authors = list(map(format_author, self.video_authors.all()))
+        else:
+            authors = list(map(format_author, authors_list))
+
+        if not authors:
+            return ""
+        elif len(authors) == 1:
+            # If this is the only author, just return author name
+            return authors[0]
+
+        return ", ".join(authors[0:-1]) + " and " + authors[-1]        
+    authors_string = property(fget=get_authors_string)
+
+    def get_authors_with_urls(self) -> str:
+        """
+        Wrapper for get_authors_string for easy use in templates.
+        """
+        return self.get_authors_string(links=True)
+    authors_with_urls = property(fget=get_authors_with_urls)
 
     panels = [
         MultiFieldPanel(
