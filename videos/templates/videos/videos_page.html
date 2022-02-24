@@ -52,8 +52,8 @@
                 oallowfullscreen="oallowfullscreen" 
                 webkitallowfullscreen="webkitallowfullscreen"></iframe>
             </div>
-            
-            {% comment %} <em>Credits: {{video.get_author_url|safe}}</em> {% endcomment %}
+            <div class="c-video__authors">Credits: {{ video.get_authors_string|safe }}</div>
+
           </div>
         {% comment %} <p>
             <a href="{{ video_placement.video.url }}">
