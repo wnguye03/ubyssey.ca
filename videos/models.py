@@ -125,12 +125,10 @@ class VideoSnippet(ClusterableModel):
     def __str__(self):
         return self.title
 
-    def get_authors_string(self, links=False, authors_list=[]) -> str:
+    def get_authors_string(self, authors_list=[]) -> str:
         """
-        Returns html-friendly list of the ArticlePage's authors as a comma-separated string (with 'and' before last author).
+        Returns html-friendly list of the VideoPage's authors as a comma-separated string (with 'and' before last author).
         Keeps large amounts of logic out of templates.
-
-          links: Whether the author names link to their respective pages.
         """
         def format_author(video_author):
             return '<a href="%s">%s</a>' % (video_author.author.full_url, video_author.author.full_name)
