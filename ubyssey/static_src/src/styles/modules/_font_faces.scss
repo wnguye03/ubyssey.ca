@@ -1,36 +1,33 @@
 @font-face {
-	font-family:'ub-minion-pro';
-	src: url('../fonts/MinionPro-Bold_gdi.eot');
-	src: url('../fonts/MinionPro-Bold_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MinionPro-Bold_gdi.woff') format('woff'),
-		url('../fonts/MinionPro-Bold_gdi.ttf') format('truetype'),
-		url('../fonts/MinionPro-Bold_gdi.svg#MinionPro-Bold') format('svg');
-	font-weight: 800;
+	font-family:'noto-sans';
+	src: url('../fonts/NotoSans-Bold.tff');
+	src: 
+		url('../fonts/NotoSans-Bold.woff') format('woff'),
+		url('../fonts/NotoSans-Bold.ttf') format('truetype');
+	font-weight: 700;
 	font-style: normal;
 	font-stretch: normal;
 	unicode-range: U+0020-25CA;
 }
 
 @font-face {
-	font-family:'ub-minion-pro';
-	src: url('../fonts/MinionPro-BoldIt_gdi.eot');
-	src: url('../fonts/MinionPro-BoldIt_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MinionPro-BoldIt_gdi.woff') format('woff'),
-		url('../fonts/MinionPro-BoldIt_gdi.ttf') format('truetype'),
-		url('../fonts/MinionPro-BoldIt_gdi.svg#MinionPro-BoldIt') format('svg');
-	font-weight: 800;
+	font-family:'noto-sans';
+	src: url('../fonts/NotoSans-BoldItalic.tff');
+	src: 
+		url('../fonts/NotoSans-BoldItalic.woff') format('woff'),
+		url('../fonts/NotoSans-BoldItalic.ttf') format('truetype');
+	font-weight: 700;
 	font-style: italic;
 	font-stretch: normal;
 	unicode-range: U+0020-25CA;
 }
 
 @font-face {
-	font-family:'ub-minion-pro';
-	src: url('../fonts/MinionPro-Regular_gdi.eot');
-	src: url('../fonts/MinionPro-Regular_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MinionPro-Regular_gdi.woff') format('woff'),
-		url('../fonts/MinionPro-Regular_gdi.ttf') format('truetype'),
-		url('../fonts/MinionPro-Regular_gdi.svg#MinionPro-Regular') format('svg');
+	font-family:'noto-sans';
+	src: url('../fonts/NotoSans-Regular.tff');
+	src: 
+		url('../fonts/NotoSans-Regular.woff') format('woff'),
+		url('../fonts/NotoSans-Regular.ttf') format('truetype');
 	font-weight: 400;
 	font-style: normal;
 	font-stretch: normal;
@@ -38,12 +35,11 @@
 }
 
 @font-face {
-	font-family:'ub-minion-pro';
-	src: url('../fonts/MinionPro-It_gdi.eot');
-	src: url('../fonts/MinionPro-It_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MinionPro-It_gdi.woff') format('woff'),
-		url('../fonts/MinionPro-It_gdi.ttf') format('truetype'),
-		url('../fonts/MinionPro-It_gdi.svg#MinionPro-It') format('svg');
+	font-family:'noto-sans';
+	src: url('../fonts/NotoSans-Italic.tff');
+	src: 
+		url('../fonts/NotoSans-Italic.woff') format('woff'),
+		url('../fonts/NotoSans-Italic.ttf') format('truetype');
 	font-weight: 400;
 	font-style: italic;
 	font-stretch: normal;
@@ -51,37 +47,236 @@
 }
 
 @font-face {
-	font-family:'ub-lft-etica';
-	src: url('../fonts/LFTEtica-Bold_gdi.eot');
-	src: url('../fonts/LFTEtica-Bold_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/LFTEtica-Bold_gdi.woff') format('woff'),
-		url('../fonts/LFTEtica-Bold_gdi.ttf') format('truetype'),
-		url('../fonts/LFTEtica-Bold_gdi.svg#LFTEtica-Bold') format('svg');
-	font-weight: 800;
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-Regular.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-Regular.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-Regular.ttf') format('truetype');
+	font-weight: 400;
 	font-style: normal;
 	font-stretch: normal;
 	unicode-range: U+0020-25CA;
 }
 
 @font-face {
-	font-family:'ub-lft-etica';
-	src: url('../fonts/LFTEtica-SemiBold.eot');
-	src: url('../fonts/LFTEtica-SemiBold.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/LFTEtica-SemiBold.woff') format('woff'),
-		url('../fonts/LFTEtica-SemiBold.ttf') format('truetype');
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-Italic.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-Italic.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-Italic.ttf') format('truetype');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-Medium.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-Medium.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-MediumItalic.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-MediumItalic.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-MediumItalic.ttf') format('truetype');
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-SemiBold.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-SemiBold.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-SemiBold.ttf') format('truetype');
 	font-weight: 600;
 	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
 }
 
 @font-face {
-	font-family:'ub-lft-etica';
-	src: url('../fonts/LFTEtica-Regular_gdi.eot');
-	src: url('../fonts/LFTEtica-Regular_gdi.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/LFTEtica-Regular_gdi.woff') format('woff'),
-		url('../fonts/LFTEtica-Regular_gdi.ttf') format('truetype'),
-		url('../fonts/LFTEtica-Regular_gdi.svg#LFTEtica-Regular') format('svg');
+	font-family:'noto-serif-display';
+	src: url('../fonts/NotoSerifDisplay-SemiBoldItalic.tff');
+	src: 
+		url('../fonts/NotoSerifDisplay-SemiBoldItalic.woff') format('woff'),
+		url('../fonts/NotoSerifDisplay-SemiBoldItalic.ttf') format('truetype');
+	font-weight: 600;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-Bold.tff');
+	src: 
+		url('../fonts/CormorantGaramond-Bold.woff') format('woff'),
+		url('../fonts/CormorantGaramond-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-BoldItalic.tff');
+	src: 
+		url('../fonts/CormorantGaramond-BoldItalic.woff') format('woff'),
+		url('../fonts/CormorantGaramond-BoldItalic.ttf') format('truetype');
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-Regular.tff');
+	src: 
+		url('../fonts/CormorantGaramond-Regular.woff') format('woff'),
+		url('../fonts/CormorantGaramond-Regular.ttf') format('truetype');
 	font-weight: 400;
 	font-style: normal;
 	font-stretch: normal;
 	unicode-range: U+0020-25CA;
 }
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-Italic.tff');
+	src: 
+		url('../fonts/CormorantGaramond-Italic.woff') format('woff'),
+		url('../fonts/CormorantGaramond-Italic.ttf') format('truetype');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-Medium.tff');
+	src: 
+		url('../fonts/CormorantGaramond-Medium.woff') format('woff'),
+		url('../fonts/CormorantGaramond-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+@font-face {
+	font-family:'cormorant-garamond';
+	src: url('../fonts/CormorantGaramond-MediumItalic.tff');
+	src: 
+		url('../fonts/CormorantGaramond-MediumItalic.woff') format('woff'),
+		url('../fonts/CormorantGaramond-MediumItalic.ttf') format('truetype');
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	unicode-range: U+0020-25CA;
+}
+
+
+
+
+// @font-face {
+// 	font-family:'ub-minion-pro';
+// 	src: url('../fonts/MinionPro-Bold_gdi.eot');
+// 	src: url('../fonts/MinionPro-Bold_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/MinionPro-Bold_gdi.woff') format('woff'),
+// 		url('../fonts/MinionPro-Bold_gdi.ttf') format('truetype'),
+// 		url('../fonts/MinionPro-Bold_gdi.svg#MinionPro-Bold') format('svg');
+// 	font-weight: 800;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'ub-minion-pro';
+// 	src: url('../fonts/MinionPro-BoldIt_gdi.eot');
+// 	src: url('../fonts/MinionPro-BoldIt_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/MinionPro-BoldIt_gdi.woff') format('woff'),
+// 		url('../fonts/MinionPro-BoldIt_gdi.ttf') format('truetype'),
+// 		url('../fonts/MinionPro-BoldIt_gdi.svg#MinionPro-BoldIt') format('svg');
+// 	font-weight: 800;
+// 	font-style: italic;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'ub-minion-pro';
+// 	src: url('../fonts/MinionPro-Regular_gdi.eot');
+// 	src: url('../fonts/MinionPro-Regular_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/MinionPro-Regular_gdi.woff') format('woff'),
+// 		url('../fonts/MinionPro-Regular_gdi.ttf') format('truetype'),
+// 		url('../fonts/MinionPro-Regular_gdi.svg#MinionPro-Regular') format('svg');
+// 	font-weight: 400;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'ub-minion-pro';
+// 	src: url('../fonts/MinionPro-It_gdi.eot');
+// 	src: url('../fonts/MinionPro-It_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/MinionPro-It_gdi.woff') format('woff'),
+// 		url('../fonts/MinionPro-It_gdi.ttf') format('truetype'),
+// 		url('../fonts/MinionPro-It_gdi.svg#MinionPro-It') format('svg');
+// 	font-weight: 400;
+// 	font-style: italic;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'ub-lft-etica';
+// 	src: url('../fonts/LFTEtica-Bold_gdi.eot');
+// 	src: url('../fonts/LFTEtica-Bold_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/LFTEtica-Bold_gdi.woff') format('woff'),
+// 		url('../fonts/LFTEtica-Bold_gdi.ttf') format('truetype'),
+// 		url('../fonts/LFTEtica-Bold_gdi.svg#LFTEtica-Bold') format('svg');
+// 	font-weight: 800;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'ub-lft-etica';
+// 	src: url('../fonts/LFTEtica-SemiBold.eot');
+// 	src: url('../fonts/LFTEtica-SemiBold.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/LFTEtica-SemiBold.woff') format('woff'),
+// 		url('../fonts/LFTEtica-SemiBold.ttf') format('truetype');
+// 	font-weight: 600;
+// 	font-style: normal;
+// }
+
+// @font-face {
+// 	font-family:'ub-lft-etica';
+// 	src: url('../fonts/LFTEtica-Regular_gdi.eot');
+// 	src: url('../fonts/LFTEtica-Regular_gdi.eot?#iefix') format('embedded-opentype'),
+// 		url('../fonts/LFTEtica-Regular_gdi.woff') format('woff'),
+// 		url('../fonts/LFTEtica-Regular_gdi.ttf') format('truetype'),
+// 		url('../fonts/LFTEtica-Regular_gdi.svg#LFTEtica-Regular') format('svg');
+// 	font-weight: 400;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
