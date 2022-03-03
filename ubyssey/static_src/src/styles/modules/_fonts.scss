@@ -4,7 +4,7 @@ $font-default: 'noto-sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 $font-secondary: $font-default;
 $font-headline: 'noto-serif-display', 'Georgia', serif;
 
-$font-body: 'noto-sans', 'Arial', sans-serif;
+$font-body: 'cormorant-garamond', 'Georgia', serif;
 
 $font-size-base: 16;
 
@@ -25,6 +25,10 @@ $font-size-26px:  1.625em;
 $font-size-36px:  2.250em;
 
 // Font weights
+$font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-semi-bold: 600;
 $font-weight-bold: 800;
+
+// Letter spacing
+$letter-spacing-noto-sans: -0.025em;
