@@ -98,7 +98,8 @@ div.indicator {
   margin-bottom: 0.2rem;
   font-family: $font-default;
   font-size: $font-size-15px;
-  font-weight: $font-weight-semi-bold;
+  // font-weight: $font-weight-semi-bold;
+  font-weight: $font-weight-bold;
 
   @media($bp-larger-than-tablet) {
     display: flex;
@@ -216,7 +217,8 @@ div.article-content {
   }
   > p, > ul {
     font-family: $font-body !important;
-    font-size: font-size(17) !important;
+    font-weight: $font-weight-medium !important;
+    font-size: font-size(19.2) !important;
     color: #333333 !important;
     line-height: 1.625rem !important;
     margin-top: 1.4rem;
