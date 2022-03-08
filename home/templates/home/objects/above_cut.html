@@ -28,7 +28,7 @@
                 <div class="image">
                     <a href={% pageurl article %}>
                       {% if article.featured_media.first.image %}
-                        {% image article.featured_media.first.image fill-80x80 %}
+                        {% image article.featured_media.first.image fill-250x250-c0 %}
                       {% elif article.featured_video %}
                         <img src="http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" alt=""/>
                       {% endif %}  
@@ -48,7 +48,7 @@
                   <div class="image">
                       <a href={% pageurl article %}>
                         {% if article.featured_media.first.image %}
-                          {% image article.featured_media.first.image fill-80x80 %}
+                          {% image article.featured_media.first.image fill-250x250-c0 %}
                         {% elif article.featured_video %}
                           <img src="http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" alt=""/>
                         {% endif %}  
@@ -96,7 +96,7 @@
                 <article class="primary {{ article.template }}">
                     <a class="image" href={% pageurl article %}>
                       {% if article.featured_media.first.image %}
-                        {% image article.featured_media.first.image width-400 %}
+                        {% image article.featured_media.first.image width-480 %}
                       {% elif article.featured_video %} 
                         <img src="http://img.youtube.com/vi/{{ article.featured_video.video.url|youtube_embed_id|safe }}/0.jpg" alt=""/>
                       {% endif %}
