@@ -1,58 +1,65 @@
 // font faces
 
-// too thin for article body text
-@font-face {
-	font-family:'cormorant-garamond';
-	src: 
-		url('../fonts/CormorantGaramond-Regular.woff2') format('woff2'),
-		url('../fonts/CormorantGaramond-Regular.woff') format('woff'),
-		url('../fonts/CormorantGaramond-Regular.ttf') format('truetype'),
-		url('../fonts/CormorantGaramond-Regular.svg#CormorantGaramond-Regular') format('svg');
-	font-weight: 400;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+0020-25CA;
-}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @font-face {
-	font-family:'cormorant-garamond';
-	src: 
-		url('../fonts/CormorantGaramond-Italic.woff2') format('woff2'),
-		url('../fonts/CormorantGaramond-Italic.woff') format('woff'),
-		url('../fonts/CormorantGaramond-Italic.ttf') format('truetype'),
-		url('../fonts/CormorantGaramond-Italic.svg#CormorantGaramond-Italic') format('svg');
-	font-weight: 400;
-	font-style: italic;
-	font-stretch: normal;
-	unicode-range: U+0020-25CA;
+	font-family:'playfair-display';
+	src: url(../fonts/PlayfairDisplay-VariableFont_wght.ttf) format("truetype-variations");
+	font-weight: 400 900;
 }
 
-// more readable vs Regular for article body text
-@font-face {
-	font-family:'cormorant-garamond-medium';
-	src: 
-		url('../fonts/CormorantGaramond-Medium.woff2') format('woff2'),
-		url('../fonts/CormorantGaramond-Medium.woff') format('woff'),
-		url('../fonts/CormorantGaramond-Medium.ttf') format('truetype'),
-		url('../fonts/CormorantGaramond-Medium.svg#CormorantGaramond-Medium') format('svg');
-	font-weight: 500;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+0020-25CA;
-}
+// @font-face {
+// 	font-family:'noto-serif';
+// 	src: 
+// 		url('../fonts/NotoSerif-Regular.woff2') format('woff2'),
+// 		url('../fonts/NotoSerif-Regular.woff') format('woff'),
+// 		url('../fonts/NotoSerif-Regular.ttf') format('truetype'),
+// 		url('../fonts/NotoSerif-Regular.svg#NotoSerif-Regular') format('svg');
+// 	font-weight: 400;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
 
-@font-face {
-	font-family:'cormorant-garamond-medium';
-	src: 
-		url('../fonts/CormorantGaramond-MediumItalic.woff2') format('woff2'),
-		url('../fonts/CormorantGaramond-MediumItalic.woff') format('woff'),
-		url('../fonts/CormorantGaramond-MediumItalic.ttf') format('truetype'),
-		url('../fonts/CormorantGaramond-MediumItalic.svg#CormorantGaramond-MediumItalic') format('svg');
-	font-weight: 500;
-	font-style: italic;
-	font-stretch: normal;
-	unicode-range: U+0020-25CA;
-}
+// @font-face {
+// 	font-family:'noto-serif';
+// 	src: 
+// 		url('../fonts/NotoSerif-Italic.woff2') format('woff2'),
+// 		url('../fonts/NotoSerif-Italic.woff') format('woff'),
+// 		url('../fonts/NotoSerif-Italic.ttf') format('truetype'),
+// 		url('../fonts/NotoSerif-Italic.svg#NotoSerif-Italic') format('svg');
+// 	font-weight: 400;
+// 	font-style: italic;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'noto-serif';
+// 	src: 
+// 		url('../fonts/NotoSerif-Bold.woff2') format('woff2'),
+// 		url('../fonts/NotoSerif-Bold.woff') format('woff'),
+// 		url('../fonts/NotoSerif-Bold.ttf') format('truetype'),
+// 		url('../fonts/NotoSerif-Bold.svg#NotoSerif-Bold') format('svg');
+// 	font-weight: 700;
+// 	font-style: normal;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+
+// @font-face {
+// 	font-family:'noto-serif';
+// 	src: 
+// 		url('../fonts/NotoSerif-BoldItalic.woff2') format('woff2'),
+// 		url('../fonts/NotoSerif-BoldItalic.woff') format('woff'),
+// 		url('../fonts/NotoSerif-BoldItalic.ttf') format('truetype'),
+// 		url('../fonts/NotoSerif-BoldItalic.svg#NotoSerif-BoldItalic') format('svg');
+// 	font-weight: 700;
+// 	font-style: italic;
+// 	font-stretch: normal;
+// 	unicode-range: U+0020-25CA;
+// }
+	
 
 @font-face {
 	font-family:'noto-sans';
