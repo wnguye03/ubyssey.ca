@@ -28,12 +28,13 @@
 
     <div class="homepage-section row">
       <div class="sections" >  
-        {% include 'home/stream_blocks/section_news.html' with section="News" articles=News %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Culture" articles=Culture %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Sports" articles=Sports %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Opinion" articles=Opinion %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Features" articles=Features %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Science" articles=Science %}
+        {% include 'home/stream_blocks/section_news.html' with section="News" section_slug="news" articles=News %}
+
+        {% include 'home/stream_blocks/section_non_news.html' with section="Culture" section_slug="culture" articles=Culture %}
+        {% include 'home/stream_blocks/section_non_news.html' with section="Sports" section_slug="sports" articles=Sports %}
+        {% include 'home/stream_blocks/section_non_news.html' with section="Opinion" section_slug="opinion" articles=Opinion %}
+        {% include 'home/stream_blocks/section_non_news.html' with section="Features" section_slug="features" articles=Features %}
+        {% include 'home/stream_blocks/section_non_news.html' with section="Science" section_slug="science" articles=Science %}
       </div>
 
       <div class="sidebar-home">
