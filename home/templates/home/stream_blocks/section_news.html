@@ -1,8 +1,5 @@
 {% load humanize %}
-<h1 class="section"><a href={{ section_slug }}>{{ section | title }}</a></h1>
-{% comment %} <h1 class="section">{{ format_section_slug(section) }}</h1> {% endcomment %}
-
-
+<h1 class="section"><a href=''>{{ section|title }}</a></h1>
 <section class="c-homepage__section c-homepage__section--1">
     <div class="c-homepage__section__left">
       {% with articles.0 as article %}
