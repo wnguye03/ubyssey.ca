@@ -16,8 +16,6 @@ from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 class HomePage(Page):
     show_in_menus_default = True
     template = "home/home_page.html"
-
-    ajax_template = "home/ajax_section.html"
     
     parent_page_types = [
         'wagtailcore.Page',
@@ -73,20 +71,7 @@ class HomePage(Page):
         ModelChooserPanel('home_sidebar_ad_slot1'),
         ModelChooserPanel('home_sidebar_ad_slot2'),
     ]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        qs = ArticlePage.objects.live().public().order_by('-explicit_published_at')
-        context['above_cut_articles'] = qs[:6]
-        context['breaking_news_article'] = qs.filter(is_breaking=True, breaking_timeout__gte=timezone.now())
-
-        for section_stream in self.sections_stream:
-            section_title = str(section_stream.value['section'])
-            section_slug = section_stream.value['section'].slug
-            context[section_title] = self.get_section_articles(section_slug=section_slug)
-
-        return context
-                  
+                 
     #takes a section_slug and returns the feature articles for that section
     def get_section_articles(self, section_slug):
         section_page = SectionPage.objects.get(slug = section_slug)
