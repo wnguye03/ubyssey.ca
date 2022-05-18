@@ -24,6 +24,11 @@ class HomePageSectionBlock(blocks.StructBlock):
     section = field_block.PageChooserBlock(
         page_type='section.SectionPage'
     )
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['section'] = value['section']
+        context['articles'] = context['section'].get_featured_articles()          
+        return context
 
     class Meta:
         template = "home/stream_blocks/section_non_news.html"
@@ -33,6 +38,11 @@ class HomepageFeaturedSectionBlock(blocks.StructBlock):
     section = field_block.PageChooserBlock(
         page_type='section.SectionPage'
     )
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['section'] = value['section']
+        context['articles'] = context['section'].get_featured_articles()          
+        return context
 
     class Meta:
         template = "home/stream_blocks/section_news.html"
