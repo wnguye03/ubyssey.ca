@@ -72,11 +72,6 @@ class HomePage(Page):
         ModelChooserPanel('home_sidebar_ad_slot2'),
     ]
                  
-    #takes a section_slug and returns the feature articles for that section
-    def get_section_articles(self, section_slug):
-        section_page = SectionPage.objects.get(slug = section_slug)
-        return section_page.get_featured_articles()
-
     def get_all_section_slug(self):
         
         allsection_slug = []
