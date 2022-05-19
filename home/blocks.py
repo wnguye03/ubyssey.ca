@@ -55,7 +55,7 @@ class AboveCutBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        qs = ArticlePage.objects.live().public.order_by('explicit_published_at')
+        qs = ArticlePage.objects.live().public().order_by('explicit_published_at')
         context['articles'] = qs[:6]
         return context
 
