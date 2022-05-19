@@ -24,8 +24,18 @@
     {% comment %}
       Additional fields/blocks will go here to alert students to some special events
     {% endcomment %}
-    {% include 'home/objects/above_cut.html' with articles=above_cut_articles %}
 
+    {% comment %}
+      Display user-selected bocks that will be the first thing the user sees when going to the site, before scrolling down
+      (hence, "above the cut")
+    {% endcomment %}
+    {% for block in self.above_cut_stream%}
+      {% include_block block %}
+    {% endfor %}
+
+    {% comment %}
+      Below-cut content
+    {% endcomment%}
     <div class="homepage-section row">
       <div class="sections" >  
         {% for block in self.sections_stream %}

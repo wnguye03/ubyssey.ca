@@ -27,6 +27,14 @@ class HomePage(Page):
         'videos.VideosPage',
     ]
 
+    above_cut_stream = StreamField(
+        [
+            ("above_cut_block", homeblocks.AboveCutBlock())
+        ],
+        null=True,
+        blank=True,
+    )
+
     sections_stream = StreamField(
         [
             ("home_page_section_block", homeblocks.HomepageFeaturedSectionBlock())
@@ -65,6 +73,7 @@ class HomePage(Page):
     )
 
     content_panels = Page.content_panels + [
+        StreamFieldPanel("above_cut_stream", heading="\"Above the Cut\" Content"),
         StreamFieldPanel("sections_stream", heading="Sections"),
         ModelChooserPanel('home_leaderboard_ad_slot'),
         ModelChooserPanel('home_mobile_leaderboard_ad_slot'),
