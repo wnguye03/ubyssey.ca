@@ -864,7 +864,6 @@ class ArticlePage(SectionablePage):
         user_agent = get_user_agent(request)
         context['is_mobile'] = user_agent.is_mobile
 
-
         context['prev'] = self.get_prev_sibling()
         context['next'] = self.get_next_sibling()
 
@@ -879,6 +878,10 @@ class ArticlePage(SectionablePage):
             context['prev'] = context['prev'].specific
         if context['next']:
             context['next'] = context['next'].specific
+
+
+        # not currently working TODO
+        # context['featured_articles'] = self.get_parent().context['featured_articles']
 
         return context
 

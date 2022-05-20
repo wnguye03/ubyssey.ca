@@ -80,8 +80,40 @@
                 {% endblock %}
                 "
             >
+                {% comment %} Right column containing ads and suggested articles {% endcomment %}
                 {% block right-column %}
                     <div class="right-column">
+                        <div class="sidebar{% if self.featured_media.first.image or self.featured_media.first.video %} offset{% endif %}">
+                            {% filter add_slug_to_ad_divs:self.slug %}
+                                {% if self.is_explicit is not True %}
+                                    {% if self.minutes_to_read >= 3 %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
+                                    {% else %}
+                                        {% adslot settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
+                                    {% endif %}
+                                {% else %}
+                                    {% comment %} {% include 'objects/replacement.html' with size='box' %} {% endcomment %}
+                                {% endif %}
+                            {% endfilter %}
+                        </div>
+                        {% comment %} Suggested articles in same Section {% endcomment %}
+                    </div>
+                    <div class="suggested-articles">
+                        {% comment %} TODO {% endcomment %}
+                        {% comment %} {% for article in self.featured_articles %}
+                            <li>
+                            {% include 'article/objects/blog_column.html' with article=article padded=True   %}
+                            </li>
+                        {% endfor %} {% endcomment %}
+                {% endblock %}
+
+                {% comment %} Left column containing article media and text content {% endcomment %}
+                <div class="article-content">
+                    {% block pre-content %}
+                    {% endblock %}
+                    {% comment %} Article media (photo or video) {% endcomment %}
+                    <div class="media-column">
                         {% if self.featured_media.first.image %}
                             {% with self.featured_media.first as featured_image_object %}
                                 <div class="featured-media">
@@ -136,25 +168,8 @@
                                 </div>
                             {% endwith %}
                         {% endif %}
-                        <div class="sidebar{% if self.featured_media.first.image or self.featured_media.first.video %} offset{% endif %}">
-                            {% filter add_slug_to_ad_divs:self.slug %}
-                                {% if self.is_explicit is not True %}
-                                    {% if self.minutes_to_read >= 3 %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
-                                    {% else %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
-                                    {% endif %}
-                                {% else %}
-                                    {% comment %} {% include 'objects/replacement.html' with size='box' %} {% endcomment %}
-                                {% endif %}
-                            {% endfilter %}
-                        </div>                        
                     </div>
-                {% endblock %}
-                <div class="article-content">
-                    {% block pre-content %}
-                    {% endblock %}
+                    {% comment %} Article content (mobile vs web) {% endcomment %}
                     {% if not self.is_explicit %}
                         {% filter add_slug_to_ad_divs:self.slug %}
                             {% filter inject_ads:is_mobile %}
@@ -168,13 +183,13 @@
                             {% include_block block %}
                         {% endfor %}                        
                     {% endif %}
+
                     {% block post-content %}
                     {% endblock %}
                 </div>
             {% comment %} {% include 'objects/social-icons-bottom.html' with article=article %} {% endcomment %}
         </article>
     </main>
-
 
     {% comment %} Former location of suggested/trending articles. Do not re-implement until a design contract exists {% endcomment %}
     {% comment %} <div class='bottom-banner-wrapper'>
