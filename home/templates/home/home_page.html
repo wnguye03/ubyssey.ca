@@ -24,16 +24,23 @@
     {% comment %}
       Additional fields/blocks will go here to alert students to some special events
     {% endcomment %}
-    {% include 'home/objects/above_cut.html' with articles=above_cut_articles %}
 
+    {% comment %}
+      Display user-selected bocks that will be the first thing the user sees when going to the site, before scrolling down
+      (hence, "above the cut")
+    {% endcomment %}
+    {% for block in self.above_cut_stream%}
+      {% include_block block %}
+    {% endfor %}
+
+    {% comment %}
+      Below-cut content
+    {% endcomment%}
     <div class="homepage-section row">
       <div class="sections" >  
-        {% include 'home/stream_blocks/section_news.html' with section="News" articles=News %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Culture" articles=Culture %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Sports" articles=Sports %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Opinion" articles=Opinion %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Features" articles=Features %}
-        {% include 'home/stream_blocks/section_non_news.html' with section="Science" articles=Science %}
+        {% for block in self.sections_stream %}
+          {% include_block block %}
+        {% endfor %}
       </div>
 
       <div class="sidebar-home">
