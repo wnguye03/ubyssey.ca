@@ -43,6 +43,16 @@ class HomePage(Page):
         blank=True,
     )
 
+    sidebar_stream = StreamField(
+        [
+            ("sidebar_advertisement_block", homeblocks.SidebarAdvertisementBlock()),
+            ("sidebar_issuu_block", homeblocks.SidebarIssuuBlock()),
+            ("sidebar_section_block", homeblocks.SidebarSectionBlock()),            
+        ],
+        null=True,
+        blank=True,
+    )
+
     home_leaderboard_ad_slot = models.ForeignKey(
         AdSlot,
         on_delete=models.SET_NULL,
@@ -75,6 +85,7 @@ class HomePage(Page):
     content_panels = Page.content_panels + [
         StreamFieldPanel("above_cut_stream", heading="\"Above the Cut\" Content"),
         StreamFieldPanel("sections_stream", heading="Sections"),
+        StreamFieldPanel("sidebar_stream", heading="Sidebar"),
         ModelChooserPanel('home_leaderboard_ad_slot'),
         ModelChooserPanel('home_mobile_leaderboard_ad_slot'),
         ModelChooserPanel('home_sidebar_ad_slot1'),

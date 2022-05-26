@@ -16,7 +16,7 @@
     {% comment %}
       breaking_news_article is passed through from context and it contains all of the breaking articles from each section
     {% endcomment %}
-    {% for article in breaking_news_article%}      
+    {% for article in breaking_news_article %}      
       <a class="o-breaking-news" href={% pageurl article %}>
         <h3>BREAKING: {{ article.title|safe }}</h3>
       </a>
@@ -29,7 +29,7 @@
       Display user-selected bocks that will be the first thing the user sees when going to the site, before scrolling down
       (hence, "above the cut")
     {% endcomment %}
-    {% for block in self.above_cut_stream%}
+    {% for block in self.above_cut_stream %}
       {% include_block block %}
     {% endfor %}
 
@@ -44,35 +44,9 @@
       </div>
 
       <div class="sidebar-home">
-        <div class="sidebar-block sidebar-block--advertisement">
-          {% adslot self.home_sidebar_ad_slot1.slug %}
-        </div>
-        <div class=" sidebar-block">
-          <h2 class="block-title">Check Out Our Digital Print Issue</h2>
-          <div class='sidebar-issue'>
-
-                  <h5 class="headline" id='issue-photo'><a class='issue' id ='issue1' href="https://issuu.com/ubyssey/docs/the_ubyssey_-_march_7_2022">March 7, 2022<img src="https://image.isu.pub/220307204607-206e6a72ebc184e20b60889eab4ec250/jpg/page_1_thumb_large.jpg"></a></h5>
-                  <h5 class="headline"><a class='issue' id ='issue2' href="https://issuu.com/ubyssey/docs/the_ubyssey_-_february_15_2022">February 15, 2022 </a></h5>
-                  <h5 class="headline"><a class='issue' id ='issue3' href="https://issuu.com/ubyssey/docs/the_ubyssey_-_february_1_2022">February 1, 2022 </a></h5>
-                  <h5 class="headline"><a class='issue' id ='issue4' href="https://issuu.com/ubyssey/docs/the_ubyssey_-_january_18_2022">January 18, 2022 </a></h5>
-          </div>
-        </div>
-        <div class="sidebar-block sidebar-block--advertisement">
-          {% adslot self.home_sidebar_ad_slot2.slug %}
-        </div>
-        <div class="article-list blog sidebar-block">
-          <h2 class="block-title">From the blog</h2>
-          <ul class="article-list">
-            {% comment %}
-              blog is passed through from context
-            {% endcomment %}
-            {% for article in Blog %}
-              <li>
-                {% include 'article/objects/blog_column.html' with article=article padded=True   %}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+        {% for block in self.sidebar_stream %}
+          {% include_block block %}
+        {% endfor %}
         <div class="multi-zone cell right">
           {% comment %} 
             This should probably be renamed, because "zones"
