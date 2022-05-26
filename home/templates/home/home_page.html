@@ -4,6 +4,17 @@
 {% load wagtailimages_tags %}
 {% load ubyssey_ad_tags %}
 
+{% block head_scripts %}
+  <script>
+    window.googletag = window.googletag || {cmd: []};
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/61222807/Leaderboard', [[728, 90], [970, 90]], 'homepage-leaderboard').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+  </script>
+{% endblock %}
+
 {% block header %}
   {% include 'navigation/headers/main.html' %}
   {% include 'navigation/headers/mobile.html' with class='homepage' %}
