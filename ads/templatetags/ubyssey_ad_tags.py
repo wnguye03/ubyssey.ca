@@ -20,3 +20,26 @@ def adslot(slug) -> dict:
             'size' : 'ad-tag-error',
             'div_class' : '',
         }
+
+@register.inclusion_tag('ads/ad_tag.html')
+def ad_tag(slug) -> dict:
+    try:
+        ad_slot = AdSlot.objects.get(slug=slug)
+        SIZES = {
+            'box': '[300, 250]', 
+            'skyscraper' : '[[300, 250], [300, 600]]',
+            'banner': '[468, 60]',
+            'leaderboard': '[[728, 90], [970, 90]]',
+            'mobile-leaderboard': '[300, 50]'
+        }
+        return {
+            'div_id' : ad_slot.div_id,
+            'dfp' : ad_slot.dfp,
+            'size' : SIZES[ad_slot.size],
+        }
+    except:
+        return {
+            'div_id' : 'ad-tag-error',
+            'dfp' : 'ad-tag-error',
+            'size' : 'ad-tag-error',
+        }
