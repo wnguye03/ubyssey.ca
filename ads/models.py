@@ -34,7 +34,7 @@ class AdSlot(models.Model):
         template: template used to render this information. Only one such template exists by default. 
     """
     slug = models.SlugField(null=False, blank=False, unique=True)
-    div_id = models.CharField(null=False, blank=True, default='', max_length=255)
+    div_id = models.CharField(null=False, blank=True, default='', max_length=255, verbose_name="HTML Element ID")
     size = models.CharField(null=False, blank=False, default='box', max_length=255,
         choices=[
             ('box','Box'),
@@ -44,7 +44,7 @@ class AdSlot(models.Model):
             ('mobile-leaderboard',"Mobile Leaderboard"),
         ],
     )
-    dfp = models.CharField(null=False, blank=True, default='', max_length=255)
+    dfp = models.CharField(null=False, blank=True, default='', max_length=255, verbose_name="Ad Unit Name")
     div_class = models.CharField(null=False, blank=True, default='box', max_length=255,
         choices=[
             ('','Default'),
