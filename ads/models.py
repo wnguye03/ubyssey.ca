@@ -8,24 +8,28 @@ from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 class AdSlot(models.Model):
     """
     About:
-        Corresponds to the data needed for frontend scripts that will render ads.
-        Works clsoely with ubyssey/js/dfp.js
+        Definition of "ad slot" according to Google Ad Manager glossary:
 
-        "DFP" stands for "DoubleClick for Publishers", the features of which have been rolled
-        into Google Ad Manager as of this writing (2021)
+            "An ad slot is the HTML markup (usually between <div> tags) the defines where an ad appears.
+            Ad slots can reference either unique ad units or, if on a single page, ad slots can also reference the same ad unit."
+
+        (from https://support.google.com/admanager/table/7636513?hl=en, accessed 2022/05/26)
+
+        This class models the data that distinguishes different ad slots in the HTML.
+        It works with the template tag "adslot" to insert these HTML elements into templates.
 
         The relevant divs for displaying ads will be selected by the class, which
         should be a fixed part of the template used to render this information.
         This, unlike the rest of the attributes used to construct the relevant div
         should NOT having a corresponding field in this model, because it is constant and not variable.
         
-        The ultimate goal of these fields is to allow the Google Publisher Tag library to call googletag.defineSlot in dfp.js
+        To use an ad slot to display an ad, use the Google Publisher Tag library to call googletag.defineSlot
         https://developers.google.com/publisher-tag/reference#googletag.defineSlot 
 
     Attributes:
         slug: identifies entry in table
         size: str - dfp.js keeps a dictionary of standard ad sizes. The possible choices for this field represent the keys for that dictionary.
-        div_id: str - "id" in the sense of a div attribute. 
+        div_id: str - "id" in the sense of an HTML attribute. 
         dfp: str - Corresponds to the ad unit on the Google Ad Manager side of things.
         template: template used to render this information. Only one such template exists by default. 
     """
