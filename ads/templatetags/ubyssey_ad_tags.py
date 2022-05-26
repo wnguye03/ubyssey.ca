@@ -22,7 +22,7 @@ def adslot(slug) -> dict:
         }
 
 @register.inclusion_tag('ads/ad_tag.html')
-def ad_tag(slug) -> dict:
+def adtag(slug) -> dict:
     try:
         ad_slot = AdSlot.objects.get(slug=slug)
         SIZES = {
