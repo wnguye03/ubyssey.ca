@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block content %}
-  {% adslot self.home_leaderboard_ad_slot.slug %}
-  {% adslot self.home_mobile_leaderboard_ad_slot.slug %}
+  {% gpt_placement_tag  self.home_leaderboard_ad_slot.slug %}
+  {% gpt_placement_tag  self.home_mobile_leaderboard_ad_slot.slug %}
   <main class="u-container u-container--large homepage">
     {% comment %}
       breaking_news_article is passed through from context and it contains all of the breaking articles from each section

@@ -4,7 +4,7 @@ from ..models import AdSlot
 register = template.Library()
 
 @register.inclusion_tag('ads/advertisement.html')
-def adslot(slug) -> dict:
+def gpt_placement_tag (slug) -> dict:
     try:
         ad_slot = AdSlot.objects.get(slug=slug)
         return {

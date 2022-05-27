@@ -24,8 +24,8 @@
         {% block banner_ad %}
             {% filter add_slug_to_ad_divs:self.slug %}
                 {% if self.is_explicit is not True %}
-                    {% adslot settings.ads.AdSettings.leaderboard_ad_slot %}
-                    {% adslot settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
+                    {% gpt_placement_tag  settings.ads.AdSettings.leaderboard_ad_slot %}
+                    {% gpt_placement_tag  settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
                 {% endif %}
             {% endfilter %}
         {% endblock %}
@@ -147,10 +147,10 @@
                             {% filter add_slug_to_ad_divs:self.slug %}
                                 {% if self.is_explicit is not True %}
                                     {% if self.minutes_to_read >= 3 %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
+                                        {% gpt_placement_tag  settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
+                                        {% gpt_placement_tag  settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
                                     {% else %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
+                                        {% gpt_placement_tag  settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
                                     {% endif %}
                                 {% else %}
                                     {% comment %} {% include 'objects/replacement.html' with size='box' %} {% endcomment %}
