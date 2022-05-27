@@ -5,8 +5,8 @@
 {% load ubyssey_ad_tags %}
 
 {% block head_scripts %}
-  {% adtag self.home_leaderboard_ad_slot.slug %}
-  {% adtag self.home_mobile_leaderboard_ad_slot.slug %}
+  {% gpt_define_tag self.home_leaderboard_ad_slot.slug %}
+  {% gpt_define_tag self.home_mobile_leaderboard_ad_slot.slug %}
 {% endblock %}
 
 {% block header %}

@@ -21,8 +21,8 @@ def adslot(slug) -> dict:
             'div_class' : '',
         }
 
-@register.inclusion_tag('ads/ad_tag.html')
-def adtag(slug) -> dict:
+@register.inclusion_tag('ads/gpt_define_tag.html')
+def gpt_define_tag(slug) -> dict:
     try:
         ad_slot = AdSlot.objects.get(slug=slug)
         SIZES = {

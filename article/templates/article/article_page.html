@@ -7,11 +7,11 @@
 {% load ubyssey_ad_tags %}
 
 {% block head_scripts %}
-    {% adtag settings.ads.AdSettings.leaderboard_ad_slot %}
-    {% adtag settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
-    {% adtag settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
-    {% adtag settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
-    {% adtag settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
+    {% gpt_define_tag settings.ads.AdSettings.leaderboard_ad_slot %}
+    {% gpt_define_tag settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
+    {% gpt_define_tag settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
+    {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
+    {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
 {% endblock %}
 
 {% block header %}
