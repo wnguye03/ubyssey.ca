@@ -879,9 +879,7 @@ class ArticlePage(SectionablePage):
         if context['next']:
             context['next'] = context['next'].specific
 
-
-        # not currently working TODO
-        # context['featured_articles'] = self.get_parent().context['featured_articles']
+        context['suggested_articles'] = self.get_parent().specific.featured_articles
 
         return context
 

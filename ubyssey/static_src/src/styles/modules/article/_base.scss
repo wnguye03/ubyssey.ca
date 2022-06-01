@@ -154,7 +154,23 @@ div.indicator {
   }
 }
 
+// @media($bp-larger-than-mobile) {
+//   div.headline-container {
+//     padding: 0;
+//   }
+// }
+
+
+// Article content
 div.article-content {
+  // width: 60%;
+  border-right: 1px solid #e6e6e6;
+  display: table-cell;
+  padding-right: 15px;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding-left: 0;
+
   > p,
   div.caption,
   > h1,
@@ -194,9 +210,15 @@ div.article-content {
       padding-right: 0;
     }
   }
+
+  @media ($bp-smaller-than-desktop) {
+    border-right: none;
+  }
+  @media only screen and ($bp-smaller-than-tablet) {
+    float: left;
+    // width: 100%;
+  }
 }
-
-
 
 div.caption {
   margin-top: 6px;
@@ -213,9 +235,7 @@ div.caption {
 }
 
 div.article-content {
-  @media($bp-smaller-than-mobile) {
-    padding: 0 3%;
-  }
+
   > p, > ul {
     font-family: $font-body !important;
     font-weight: $font-weight-normal !important;
@@ -242,17 +262,19 @@ div.article-content {
     margin: 30px 0 0 0;
   }
 
-}
-
-@media($bp-larger-than-mobile) {
-  div.headline-container {
-    padding: 0;
+  @media($bp-smaller-than-mobile) {
+    padding: 0 3%;
   }
 }
 
 // Right column
 
-div.right-column {
+aside.right-column {
+
+  width: 37%;
+  vertical-align: top;
+  box-sizing: border-box;
+  display: table-cell;
 
   img {
     width: 100%;
@@ -266,11 +288,22 @@ div.right-column {
     margin-bottom: 20px;
   }
 
+  // < small
+  @media($bp-smaller-than-mobile) {
+    padding: 0 3%;
+  }
+
+  // < medium
+  @media($bp-smaller-than-tablet) {
+    
+  }
+
+  // > medium
   @media($bp-larger-than-tablet) {
 
     position: relative;
-    float: right;
-    padding: 0 0 40px 40px;
+    // float: right;
+    padding: 0 0 40px 15px;
 
     div.featured-media {
       display: block;
@@ -278,29 +311,48 @@ div.right-column {
       margin-bottom: 0;
     }
 
-    div.sidebar {
+    div.sidebar, div.suggested-articles {
       display: block;
       position: absolute;
-      right: 0;
+      // right: 0;
       width: 300px;
       &.offset {
         margin-top: 3em;
       }
     }
   }
-}
 
-div.side {
-    float: right;
+  // < large
+  @media only screen and ($bp-smaller-than-tablet) {
+    float: left;
+    padding: 15px 0;
+    width: 100%;
+    div.suggested-articles {
+      width: 100%;
+    }
+    max-width: 585px;
+  }
 }
 
 .fw-story, .timeline {
+
   div.right-column {
     display: none;
     right: -150px;
     @media($bp-larger-than-desktophd){
       display: block;
     }
+  }
+
+  div.media-column {
+    display: none;
+  }
+  div.article-content {
+    border-right: none;
+    display: block;
+    padding-right: 0;
+    vertical-align: top;
+    box-sizing: border-box;
   }
 }
 
