@@ -7,6 +7,16 @@
 {% block head_scripts %}
   {% gpt_define_tag self.home_leaderboard_ad_slot.slug %}
   {% gpt_define_tag self.home_mobile_leaderboard_ad_slot.slug %}
+  {% comment %} {% gpt_define_tag settings.ads.AdSettings.leaderboard_ad_slot %}
+  {% gpt_define_tag settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
+  {% gpt_define_tag settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
+  {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
+  {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxA_ad_slot %} {% endcomment %}
+  {% comment %}
+    TODO put ad placements on page more elegantly
+  {% endcomment %}
+
+
 {% endblock %}
 
 {% block header %}
