@@ -1,6 +1,7 @@
 """
 Blocks used on the home page of the site
 """
+from ads.models import AdSlot
 from article.models import ArticlePage
 
 from django import forms
@@ -11,6 +12,7 @@ from wagtail.core import blocks
 from wagtail.core.blocks import field_block
 from wagtail.admin.edit_handlers import PageChooserPanel
 
+from wagtailmodelchooser.blocks import ModelChooserBlock
 
 class SectionChooserBlock(blocks.ChooserBlock):
     # based off code from:
@@ -52,12 +54,62 @@ class HomepageFeaturedSectionBlock(blocks.StructBlock):
 class AboveCutBlock(blocks.StructBlock):
     # Ideally this will be used to grant the user more control of what happens "above the cut"
     # As of 2022/05/18, all it does is expose to the user what was previously just implemented with a hardcoded "include"
+    # As of 2022/05/25, adding ad block selection
 
+    above_cut_ad_slot = ModelChooserBlock(
+        target_model=AdSlot,
+        required=False,
+    )
+    
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         qs = ArticlePage.objects.live().public().order_by('-explicit_published_at')
         context['articles'] = qs[:6]
+        context['above_cut_ad_slot'] = value['above_cut_ad_slot']
         return context
 
     class Meta:
         template = "home/stream_blocks/above_cut_block.html"
+
+class SidebarAdvertisementBlock(blocks.StructBlock):
+    # DRY insertion of the recurring ad pattern for home page side bar
+
+    ad_slot = ModelChooserBlock(target_model=AdSlot)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['ad_slot'] = value['ad_slot']
+        return context
+
+    class Meta:
+        template = "home/stream_blocks/sidebar_advertisement_block.html"
+
+class SidebarIssuuBlock(blocks.StructBlock):
+    title = blocks.CharBlock(
+        required=True,
+        max_length=255,
+    )
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['title'] = value['title']
+        return context
+    class Meta:
+        template = "home/stream_blocks/sidebar_issuu_block.html"
+
+
+class SidebarSectionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(
+        required=True,
+        max_length=255,
+    )
+    section = field_block.PageChooserBlock(
+        page_type='section.SectionPage'
+    )
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['title'] = value['title']
+        context['section'] = value['section']
+        context['articles'] = context['section'].get_featured_articles()          
+        return context
+    class Meta:
+        template = "home/stream_blocks/sidebar_section_block.html"

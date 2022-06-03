@@ -117,7 +117,9 @@
         </div>
         <div class="multi-zone cell right">
           <div class="c-widget-advertisement">
-            {% adslot self.home_sidebar_ad_slot1.slug %}
+            {% if above_cut_ad_slot %}
+              {% adslot above_cut_ad_slot.slug %}
+            {% endif %}
             {% comment %} {% include 'objects/advertisement.html' with size='box' name='Widget' id=3 %} {% endcomment %}
           </div>
           
