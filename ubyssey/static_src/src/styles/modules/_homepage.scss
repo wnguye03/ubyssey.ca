@@ -7,7 +7,7 @@ img.featured {
 div.homepage-section {
   @media($bp-larger-than-phablet){
     padding-bottom: 25px;
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid $color-border-gray-light;
     margin-bottom: 25px;
     &:last-child {
       margin-bottom: 0;
@@ -117,7 +117,7 @@ div.frontpage {
 
       width: 42%;
       padding: 0 15px;
-      border-right: 1px solid #E6E6E6;
+      border-right: 1px solid $color-border-gray;
     }
 
   }
@@ -127,7 +127,7 @@ div.frontpage {
   article, li {
 
     &.primary {
-      border-bottom: 1px dotted #C8C8C8;
+      border-bottom: 1px solid $color-border-gray-dark;
       img {
         width: 100%;
         height: auto;
@@ -243,7 +243,7 @@ article.thumb {
   padding-right: 15px;
 
   // Border
-  border-bottom: 1px dotted #C8C8C8;
+  border-bottom: 1px dotted $color-border-gray-dark;
 
   @media($bp-larger-than-phablet) {
     // Structure
@@ -297,7 +297,7 @@ article.thumb {
       display: table-cell;
     }
     &.left {
-      border-right: 1px solid #E6E6E6;
+      border-right: 1px solid $color-border-gray;
     }
   }
 }
@@ -334,7 +334,7 @@ article.thumb {
           padding-top: 0;
         }
         &:last-of-type {
-          border-bottom: 1px dotted #C8C8C8;
+          border-bottom: 1px solid $color-border-gray-dark;
         }
       }
     }
@@ -367,7 +367,7 @@ div.sections {
 
     box-sizing: border-box;
 
-    border-right: 1px solid #E6E6E6;
+    border-right: 1px solid $color-border-gray;
     padding-right: 20px;
   }
 }
@@ -381,7 +381,7 @@ h1.section, h2.title, h2.block-title {
   text-transform: uppercase;
   font-size: 1.125em;
   border-style: solid;
-  border-color: #DDD;
+  border-color: $color-border-gray-light;
   border-width: 1px 0;
   margin-top: 0;
   margin-bottom: 0;
@@ -438,21 +438,20 @@ div.multi-zone {
   @media($bp-larger-than-phablet){
     display: block;
 
-    h2.title {
-      border-style: dotted;
-      border-color: #C8C8C8;
+    h2.title { // not sure if still in use?? No h2 html element within div.multi-zone code
+      border-style: solid;
+      border-color: $color-border-gray-dark;
       font-size: 14px;
-
     }
   }
-  .sidebar-block {
+  .sidebar-block { // same here. Only ad at the moment (2022 June 3, ad container classes have the word advertisement in them)
 	  a {
 			display: block;
 			margin: 0 auto;
 			text-align: center;
 	  }
 
-		img {
+		img { 
 			display: block;
 			margin: 0 auto;
 		}
@@ -497,7 +496,7 @@ div.sidebar-home {
   }
 
   .o-advertisement {
-    border-top: 1px solid #E6E6E6;
+    border-top: 1px solid $color-border-gray-light;
 
     &--box {
       text-align: center;
@@ -519,7 +518,7 @@ ul.article-list, ol.article-list {
     margin-top: 1rem;
     margin-bottom: 1rem;
 
-    border-bottom: 1px dotted #C8C8C8;
+    border-bottom: 1px solid $color-border-gray-dark;
 
     .o-article {
       margin-bottom: 1rem;

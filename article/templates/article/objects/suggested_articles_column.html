@@ -20,9 +20,17 @@ This template is for the columns for the blog section on the home page under the
           <a class="o-article__image" href="{% pageurl article %}" style="background-image: url('http://img.youtube.com/vi/{{ article.featured_media.first.video.url|youtube_embed_id|safe }}/0.jpg'); background-size: contain; background-repeat: no-repeat"></a>
         {% endif %}
       {% endif %}
+
+    </div>
+    <div class="o-article__headline__byline">
       <h3 class="o-article__headline">
         <a href="{% pageurl article %}">{{ article.title|safe }}</a>
       </h3>
+      <div class="o-article__byline">
+        <span class="o-article__author">By {{ article.get_authors_with_urls|safe }}</span>
+        <span class="o-article__interpunct-dot"> &nbsp;·&nbsp; </span>
+        <span class="o-article__published">{{ article.first_published_at|naturaltime }}</span>
+      </div>
     </div>
   </div>
 </article>

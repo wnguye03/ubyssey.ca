@@ -1,4 +1,5 @@
 @import 'full_width';
+// @import 'suggested_column';
 @import 'modules/variables';
 
 .featured-media {
@@ -10,7 +11,7 @@
 // Article Slide
 
 div.article-slide {
-  border-top: 1px solid #DADADA;
+  border-top: 1px solid $color-border-gray-light;
   margin-top: 50px;
 
   main.article {
@@ -58,8 +59,8 @@ div.indicator {
       padding-top: 25px;
       padding-bottom: 25px;
       margin: 0;
-      border-top: 2px solid #3E3E3E;
-      border-bottom: 1px solid #D2D2D2;
+      border-top: 2px solid $color-border-gray-very-dark;
+      border-bottom: 1px solid $color-border-gray;
     }
   }
 }
@@ -146,7 +147,8 @@ div.indicator {
 
 .c-article__featured-media {
   // Structure
-  max-width: 585px;
+  // max-width: 585px;
+  max-width: 700px;
   margin-bottom: 1.5rem;
 
   .article-attachment {
@@ -154,22 +156,13 @@ div.indicator {
   }
 }
 
-// @media($bp-larger-than-mobile) {
-//   div.headline-container {
-//     padding: 0;
-//   }
-// }
-
-
 // Article content
 div.article-content {
-  // width: 60%;
-  border-right: 1px solid #e6e6e6;
+  width: 75%;
   display: table-cell;
-  padding-right: 15px;
+  padding: 0 20px 20px 0;
   vertical-align: top;
   box-sizing: border-box;
-  padding-left: 0;
 
   > p,
   div.caption,
@@ -197,7 +190,7 @@ div.article-content {
     padding-left: $article-content-div-child-padding;
     @media($bp-larger-than-phablet){
       padding: 0;
-      max-width: 585px;
+      max-width: 700px;
     }
   }
 
@@ -216,7 +209,7 @@ div.article-content {
   }
   @media only screen and ($bp-smaller-than-tablet) {
     float: left;
-    // width: 100%;
+    width: 100%;
   }
 }
 
@@ -271,7 +264,8 @@ div.article-content {
 
 aside.right-column {
 
-  width: 37%;
+  border-left: 1px solid $color-border-gray-light;
+  width: 25%;
   vertical-align: top;
   box-sizing: border-box;
   display: table-cell;
@@ -288,6 +282,22 @@ aside.right-column {
     margin-bottom: 20px;
   }
 
+  .o-article__meta {
+    margin-bottom: 1rem;
+    .o-article__meta__image {
+      
+      display: block;
+    }
+    .o-article__headline__byline {
+      flex: 1;
+      min-width: 219px; // width of byline and SA img containers at width of screen >= 1000px
+                        // prevents byline and img from changing until screen reaches < 960px
+      .o-article__author, .o-article__interpunct-dot {
+        display: none;
+      }
+    }
+  }
+
   // < small
   @media($bp-smaller-than-mobile) {
     padding: 0 3%;
@@ -295,16 +305,12 @@ aside.right-column {
 
   // < medium
   @media($bp-smaller-than-tablet) {
-    
   }
 
   // > medium
   @media($bp-larger-than-tablet) {
-
     position: relative;
-    // float: right;
-    padding: 0 0 40px 15px;
-
+    padding: 0 0 0 20px;
     div.featured-media {
       display: block;
       width: 500px;
@@ -313,9 +319,9 @@ aside.right-column {
 
     div.sidebar, div.suggested-articles {
       display: block;
-      position: absolute;
+      // position: absolute;
       // right: 0;
-      width: 300px;
+      // width: 300px;
       &.offset {
         margin-top: 3em;
       }
@@ -324,13 +330,33 @@ aside.right-column {
 
   // < large
   @media only screen and ($bp-smaller-than-tablet) {
+    border-left: none;
     float: left;
     padding: 15px 0;
     width: 100%;
     div.suggested-articles {
       width: 100%;
+      div.o-article__snippet {
+        display: block;
+      }
     }
-    max-width: 585px;
+    div.o-article__meta {
+      display: flex;
+      div.o-article__meta__image {
+        display: flex;
+        .o-article__image {
+          width: 9rem;
+          height: auto;
+        }
+      }
+      div.o-article__byline {
+        display: flex;
+        div.o-article__author, div.o-article__interpunct-dot {
+          display: inline;
+        }
+      }
+    }
+    // max-width: 585px;
   }
 }
 
@@ -348,7 +374,7 @@ aside.right-column {
     display: none;
   }
   div.article-content {
-    border-right: none;
+    width: 100%;
     display: block;
     padding-right: 0;
     vertical-align: top;
@@ -362,4 +388,8 @@ aside.right-column {
   @media print {
     display: none;
   }
+}
+
+@media only screen and ($bp-smaller-than-tablet) {
+  
 }

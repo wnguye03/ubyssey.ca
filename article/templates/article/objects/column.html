@@ -26,6 +26,6 @@
         <span class="o-article__published">{{ article.first_published_at|naturaltime }}</span>
       </div>
     </div>
-    {% comment %} <p class="o-article__snippet">{{ article.lede|safe }}</p> {% endcomment %}
+    <p class="o-article__snippet">{{ article.lede|safe }}</p>
   </article>
 {% endif %}
