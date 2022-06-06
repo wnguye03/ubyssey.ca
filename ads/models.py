@@ -1,8 +1,13 @@
 from django.db import models
-from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, InlinePanel, MultiFieldPanel, HelpPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.core.models import Orderable
+
 from wagtailmodelchooser import register_model_chooser
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
+
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 @register_model_chooser
 class AdSlot(models.Model):
@@ -115,3 +120,31 @@ class AdSettings(BaseSetting):
     class Meta:
         verbose_name = "Side-Wide Ad Slots"
         verbose_name_plural = "Instances of \Side-Wide Ad Slots\'"
+
+class AdTagSettings(ClusterableModel, BaseSetting):
+    panels = [
+        MultiFieldPanel(
+            [
+                HelpPanel(content='This is where the explanation on how to add Google Ad Manager ads to our website go.\nThere are two tags per ad slot: a "head" tag which communicates with Google, and a "placement" tag')
+            ],
+            heading="How to add Google Ad Manager ads to the site"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("ad_head_orderables", label="Ad Head Tags"),
+            ],
+            heading="Ad Head Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("ad_placement_orderables", label="Ad Placement Tags"),
+            ],
+            heading="Ad Placement Tags"
+        ),
+    ]
+
+class AdHeadOrderable(Orderable):
+    settings = ParentalKey(AdTagSettings,related_name='ad_head_orderables')
+
+class AdPlacementOrderable(Orderable):
+    settings = ParentalKey(AdTagSettings,related_name='ad_placement_orderables')
