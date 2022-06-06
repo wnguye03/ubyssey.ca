@@ -122,6 +122,8 @@ class AdSettings(BaseSetting):
         verbose_name_plural = "Instances of \Side-Wide Ad Slots\'"
 
 class AdTagSettings(ClusterableModel, BaseSetting):
+    # There should be one of these per (major) page type:
+    # Home Page, Section Page, Article Page
     panels = [
         MultiFieldPanel(
             [
@@ -144,7 +146,32 @@ class AdTagSettings(ClusterableModel, BaseSetting):
     ]
 
 class AdHeadOrderable(Orderable):
+    ad_slot = models.ForeignKey(
+        AdSlot,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name="Ad Slot"
+    )
     settings = ParentalKey(AdTagSettings,related_name='ad_head_orderables')
 
+    panels = [
+        ModelChooserPanel('ad_slot'),
+    ]
+
+
 class AdPlacementOrderable(Orderable):
+    ad_slot = models.ForeignKey(
+        AdSlot,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name="Ad Slot"
+    )
     settings = ParentalKey(AdTagSettings,related_name='ad_placement_orderables')
+
+    panels = [
+        ModelChooserPanel('ad_slot'),
+    ]
