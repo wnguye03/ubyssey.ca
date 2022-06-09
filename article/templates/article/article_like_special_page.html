@@ -26,8 +26,12 @@
                         {% endfor %}                        
                     </div>
                 </div>
-                <div class="five columns u-text-right">
+                {% comment %} <div class="five columns u-text-right"> {% endcomment %}
+                <div class="five columns">
                     {% comment %}ad goes here{% endcomment %}
+                    {% for right_column_block in self.right_column_content %}
+                        {% include_block right_column_block %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

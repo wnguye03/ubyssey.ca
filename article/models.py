@@ -448,6 +448,23 @@ class ArticlePage(SectionablePage):
         null=True,
         blank=True,
     )
+    right_column_content = StreamField(
+        # only for article-like special pages
+        # intended for use for About Us page only as of Jun 9, 2022
+        [
+            ('richtext', blocks.RichTextBlock(                                
+                label="Rich Text Block",
+                help_text = "Write your article contents here. See documentation: https://docs.wagtail.io/en/latest/editor_manual/new_pages/creating_body_content.html#rich-text-fields"
+            )),
+            ('plaintext',blocks.TextBlock(
+                label="Plain Text Block",
+                help_text = "Warning: Rich Text Blocks preferred! Plain text primarily exists for importing old Dispatch text."
+            )),
+        ],
+        null=True,
+        blank=True,
+        help_text = "Use only for article-like special pages (current made compatible for About Us page only), using elsewhere will break page layout!",
+    )
     explicit_published_at = models.DateTimeField(
         null=True,
         blank=True,
@@ -647,6 +664,10 @@ class ArticlePage(SectionablePage):
                     content='<h1>Help: Writing Articles</h1><p>The main contents of the article are organized into \"blocks\". Click the + to add a block. Most article text should be written in Rich Text Blocks, but many other features are available!</p><p>Blocks simply represent units of the article you may wish to re-arrange. You do not have to put every individual paragraph in its own block (doing so is probably time consuming!). Many articles that have been imported into our database DO divide every paragraph into its own block, but this is for computer convenience during the import.</p>'
                 ),
                 StreamFieldPanel("content"),
+                HelpPanel(
+                    content='<h1>Right Column Content</h1><p><b>Ignore and leave empty for all regular articles. Use in regular articles will break page layout!</b> Use only for Article-like Special Pages (i.e. About, Volunteer, etc.). </p>'
+                ),
+                StreamFieldPanel("right_column_content")
             ],
             heading="Article Content",
             classname="collapsible",

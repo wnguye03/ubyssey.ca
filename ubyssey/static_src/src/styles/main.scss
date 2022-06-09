@@ -69,7 +69,13 @@
 @import 'modules/widgets/weekly-events';
 @import 'modules/widgets/twitter';
 
-
+div.o-advertisement--ad-tag-error {
+  border: 2px solid green;
+  min-height: 100px;    
+  min-width: 25px;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
 
 body, html, #page-wrapper {
   max-height: 100%;
