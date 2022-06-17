@@ -125,6 +125,7 @@ class AdSettings(BaseSetting):
         verbose_name = "Side-Wide Ad Slots"
         verbose_name_plural = "Instances of \Side-Wide Ad Slots\'"
 
+@register_setting(icon='cogs')
 class AdTagSettings(ClusterableModel, BaseSetting):
     # There should be one of these per (major) page type:
     # Home Page, Section Page, Article Page
