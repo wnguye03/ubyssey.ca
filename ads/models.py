@@ -129,7 +129,7 @@ class AdSettings(BaseSetting):
 class AdTagSettings(ClusterableModel, BaseSetting):
     # There should be one of these per (major) page type:
     # Home Page, Section Page, Article Page
-    panels = [
+    home_ad_panels = [
         MultiFieldPanel(
             [
                 HelpPanel(content='This is where the explanation on how to add Google Ad Manager ads to our website go.\nThere are two tags per ad slot: a "head" tag which communicates with Google, and a "placement" tag')
@@ -138,17 +138,83 @@ class AdTagSettings(ClusterableModel, BaseSetting):
         ),
         MultiFieldPanel(
             [
-                InlinePanel("ad_head_orderables", label="Ad Head Tags"),
+                InlinePanel("home_head_orderables", label="Home page ad head tags"),
             ],
-            heading="Ad Head Tags"
+            heading="Head Tags"
         ),
         MultiFieldPanel(
             [
-                InlinePanel("ad_placement_orderables", label="Ad Placement Tags"),
+                InlinePanel("home_header_placements", label="Home header banner/leaderboard placement tags"),
             ],
-            heading="Ad Placement Tags"
+            heading="Header Placement Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("home_sidebar_placements", label="Home sidebar placement tags"),
+            ],
+            heading="Sidebar Placement Tags"
         ),
     ]
+    section_ad_panels = [
+        MultiFieldPanel(
+            [
+                HelpPanel(content='This is where the explanation on how to add Google Ad Manager ads to our website go.\nThere are two tags per ad slot: a "head" tag which communicates with Google, and a "placement" tag')
+            ],
+            heading="How to add Google Ad Manager ads to the site"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("section_head_tags", label="Section page ad head tags"),
+            ],
+            heading="Head Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("section_header_placements", label="Section header banner/leaderboard placement tags"),
+            ],
+            heading="Header Placement Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("section_sidebar_placements", label="Section sidebar placement tags"),
+            ],
+            heading="Sidebar Placement Tags"
+        ),
+    ]
+
+    article_ad_panels = [
+        MultiFieldPanel(
+            [
+                HelpPanel(content='This is where the explanation on how to add Google Ad Manager ads to our website go.\nThere are two tags per ad slot: a "head" tag which communicates with Google, and a "placement" tag')
+            ],
+            heading="How to add Google Ad Manager ads to the site"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("article_head_tags", label="Article page ad head tags"),
+            ],
+            heading="Head Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("article_header_placements", label="Article header banner/leaderboard placement tags"),
+            ],
+            heading="Header Placement Tags"
+        ),
+        MultiFieldPanel(
+            [
+                InlinePanel("article_sidebar_placements", label="Article sidebar placement tags"),
+            ],
+            heading="Sidebar Placement Tags"
+        ),
+    ]
+
+
+    edit_handler = TabbedInterface([
+        ObjectList(home_ad_panels, heading='Home Page Ads'),
+        ObjectList(section_ad_panels, heading='Section Page Ads'),
+        ObjectList(article_ad_panels, heading='Article Page Ads'),
+    ])
 
 class AdHeadOrderable(Orderable):
     ad_slot = models.ForeignKey(
@@ -159,7 +225,6 @@ class AdHeadOrderable(Orderable):
         related_name='+',
         verbose_name="Ad Slot"
     )
-    settings = ParentalKey(AdTagSettings,related_name='ad_head_orderables')
 
     panels = [
         ModelChooserPanel('ad_slot'),
@@ -175,8 +240,31 @@ class AdPlacementOrderable(Orderable):
         related_name='+',
         verbose_name="Ad Slot"
     )
-    settings = ParentalKey(AdTagSettings,related_name='ad_placement_orderables')
 
     panels = [
         ModelChooserPanel('ad_slot'),
     ]
+
+class HomeAdHeadOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='home_head_tags')
+
+class HomeHeaderPlacementOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='home_header_placements')
+
+class HomeSidebarPlacementOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='home_sidebar_placements')
+
+class SectionAdHeadOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='section_head_tags')
+
+class SectionHeaderPlacementOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='section_header_placements')
+
+class ArticleAdHeadOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='article_head_tags')
+
+class ArticleHeaderPlacementOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='article_header_placements')
+
+class ArticleSidebarPlacementOrderable(AdPlacementOrderable):
+    settings = ParentalKey(AdTagSettings,related_name='article_sidebar_placements')
