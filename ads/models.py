@@ -138,7 +138,7 @@ class AdTagSettings(ClusterableModel, BaseSetting):
         ),
         MultiFieldPanel(
             [
-                InlinePanel("home_head_orderables", label="Home page ad head tags"),
+                InlinePanel("home_head_tags", label="Home page ad head tags"),
             ],
             heading="Head Tags"
         ),
@@ -229,7 +229,6 @@ class AdHeadOrderable(Orderable):
     panels = [
         ModelChooserPanel('ad_slot'),
     ]
-
 
 class AdPlacementOrderable(Orderable):
     ad_slot = models.ForeignKey(
