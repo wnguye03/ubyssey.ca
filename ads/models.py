@@ -68,64 +68,6 @@ class AdSlot(models.Model):
         ]
 
 @register_setting(icon='cogs')
-class AdSettings(BaseSetting):
-    
-    #-----Appear on Section Page only-----
-    leaderboard_ad_slot = models.ForeignKey(
-        AdSlot,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    mobile_leaderboard_ad_slot = models.ForeignKey(
-        AdSlot,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    #-----Appear on Article Page only-----
-    article_right_column_skyscraper_ad_slot = models.ForeignKey(
-        AdSlot,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    article_right_column_boxA_ad_slot = models.ForeignKey(
-        AdSlot,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    article_right_column_boxB_ad_slot = models.ForeignKey(
-        AdSlot,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='+'
-    )
-    #-----Editor interface-----
-    section_ad_panels = [
-        ModelChooserPanel('leaderboard_ad_slot'),
-        ModelChooserPanel('mobile_leaderboard_ad_slot'),
-    ]
-    article_ad_panels = [
-        ModelChooserPanel('article_right_column_skyscraper_ad_slot'),
-        ModelChooserPanel('article_right_column_boxA_ad_slot'),
-        ModelChooserPanel('article_right_column_boxB_ad_slot'),
-    ]
-    edit_handler = TabbedInterface([
-        ObjectList(section_ad_panels, heading='Section Page Ads'),
-        ObjectList(article_ad_panels, heading='Article Page Ads'),
-    ])
-    class Meta:
-        verbose_name = "Side-Wide Ad Slots"
-        verbose_name_plural = "Instances of \Side-Wide Ad Slots\'"
-
-@register_setting(icon='cogs')
 class AdTagSettings(ClusterableModel, BaseSetting):
     # There should be one of these per (major) page type:
     # Home Page, Section Page, Article Page
@@ -174,14 +116,13 @@ class AdTagSettings(ClusterableModel, BaseSetting):
             ],
             heading="Header Placement Tags"
         ),
-        MultiFieldPanel(
-            [
-                InlinePanel("section_sidebar_placements", label="Section sidebar placement tags"),
-            ],
-            heading="Sidebar Placement Tags"
-        ),
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel("section_sidebar_placements", label="Section sidebar placement tags"),
+        #     ],
+        #     heading="Sidebar Placement Tags"
+        # ),
     ]
-
     article_ad_panels = [
         MultiFieldPanel(
             [
@@ -209,12 +150,15 @@ class AdTagSettings(ClusterableModel, BaseSetting):
         ),
     ]
 
-
     edit_handler = TabbedInterface([
         ObjectList(home_ad_panels, heading='Home Page Ads'),
         ObjectList(section_ad_panels, heading='Section Page Ads'),
         ObjectList(article_ad_panels, heading='Article Page Ads'),
     ])
+
+    class Meta:
+        verbose_name = "Ad Settings"
+        verbose_name_plural = "Instances of \'Ad Settings\'"
 
 class AdHeadOrderable(Orderable):
     ad_slot = models.ForeignKey(
