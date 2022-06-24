@@ -5,18 +5,10 @@
 {% load ubyssey_ad_tags %}
 
 {% block head_scripts %}
-  {% gpt_define_tag self.home_leaderboard_ad_slot.slug %}
-  {% gpt_define_tag self.home_mobile_leaderboard_ad_slot.slug %}
-  {% comment %} {% gpt_define_tag settings.ads.AdSettings.leaderboard_ad_slot %}
-  {% gpt_define_tag settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
-  {% gpt_define_tag settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
-  {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
-  {% gpt_define_tag settings.ads.AdSettings.article_right_column_boxA_ad_slot %} {% endcomment %}
-  {% comment %}
-    TODO put ad placements on page more elegantly
-  {% endcomment %}
-
-
+  <!-- Register ads for home page -->
+  {% for orderable in settings.ads.AdTagSettings.home_head_tags.all %}
+    {% gpt_define_tag orderable.ad_slot %}
+  {% endfor %}
 {% endblock %}
 
 {% block header %}
@@ -25,8 +17,11 @@
 {% endblock %}
 
 {% block content %}
-  {% gpt_placement_tag  self.home_leaderboard_ad_slot.slug %}
-  {% gpt_placement_tag  self.home_mobile_leaderboard_ad_slot.slug %}
+  <!-- Place header ads for home page -->
+  {% for orderable in settings.ads.AdTagSettings.home_header_placements.all %}
+    {% gpt_define_tag orderable.ad_slot %}
+  {% endfor %}
+
   <main class="u-container u-container--large homepage">
     {% comment %}
       breaking_news_article is passed through from context and it contains all of the breaking articles from each section
@@ -58,19 +53,11 @@
         {% endfor %}
       </div>
 
-      <div class="sidebar-home">
+      <aside class="sidebar-home">
         {% for block in self.sidebar_stream %}
           {% include_block block %}
         {% endfor %}
-        <div class="multi-zone cell right">
-          {% comment %} 
-            This should probably be renamed, because "zones"
-            were a mis-designed feature.
-
-            In all likelihood, it will contain another set of blocks
-          {% endcomment %}
-        </div>
-      </div>
+      </aside>
     </div>
     <div class="loader-container">
       <div class="loader"></div>
