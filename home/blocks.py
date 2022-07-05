@@ -55,16 +55,18 @@ class AboveCutBlock(blocks.StructBlock):
     # As of 2022/05/25, adding ad block selection
     # As of 2022/06/23, selecting from settings orderable instead
 
-    sidebar_placement_orderable = ModelChooserBlock(
-        target_model=HomeSidebarPlacementOrderable,
-        required=False,
-    )
+
+    # NOTE 7/05 - DO NOT WORK AS I HOPED
+    # sidebar_placement_orderable = ModelChooserBlock(
+    #     target_model=HomeSidebarPlacementOrderable,
+    #     required=False,
+    # )
     
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         qs = ArticlePage.objects.live().public().order_by('-explicit_published_at')
         context['articles'] = qs[:6]
-        context['sidebar_placement_orderable'] = value['sidebar_placement_orderable']
+        # context['sidebar_placement_orderable'] = value['sidebar_placement_orderable']
         return context
 
     class Meta:
@@ -73,11 +75,12 @@ class AboveCutBlock(blocks.StructBlock):
 class SidebarAdvertisementBlock(blocks.StructBlock):
     # DRY insertion of the recurring ad pattern for home page side bar
 
-    ad_slot = ModelChooserBlock(target_model=HomeSidebarPlacementOrderable)
+    # NOTE 7/05 - DO NOT WORK AS I HOPED
+    # ad_slot = ModelChooserBlock(target_model=HomeSidebarPlacementOrderable)
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['sidebar_placement_orderable'] = value['sidebar_placement_orderable']
+        # context['ad_slot'] = value['ad_slot']
         return context
 
     class Meta:
