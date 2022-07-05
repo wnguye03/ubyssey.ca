@@ -20,7 +20,7 @@
 
 {% block content %}
   <main class="section">
-    <!-- Place header ads for section pages -->
+    <!-- Place header ads for section page -->
     {% for orderable in settings.ads.AdTagSettings.section_header_placements.all %}
       {% gpt_define_tag orderable.ad_slot %}
     {% endfor %}
