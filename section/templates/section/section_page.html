@@ -7,7 +7,7 @@
 {% load ubyssey_ad_tags %}
 
 {% block head_scripts %}
-  <!-- Register ads for home page -->
+  <!-- Register ads for section page -->
   {% for orderable in settings.ads.AdTagSettings.section_head_tags.all %}
     {% gpt_define_tag orderable.ad_slot %}
   {% endfor %}
