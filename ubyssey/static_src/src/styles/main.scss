@@ -22,7 +22,6 @@
 @import 'modules/article/comments_bar';
 @import 'modules/article/gallery';
 @import 'modules/article/full_width';
-@import 'modules/article/special_page';
 @import 'modules/social';
 @import 'modules/search';
 
@@ -70,13 +69,7 @@
 @import 'modules/widgets/weekly-events';
 @import 'modules/widgets/twitter';
 
-div.o-advertisement--ad-tag-error {
-  border: 2px solid green;
-  min-height: 100px;    
-  min-width: 25px;
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
+
 
 body, html, #page-wrapper {
   max-height: 100%;

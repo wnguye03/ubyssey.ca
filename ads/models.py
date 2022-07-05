@@ -7,7 +7,7 @@ from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 @register_model_chooser
 class AdSlot(models.Model):
     """
-About:
+    About:
         Corresponds to the data needed for frontend scripts that will render ads.
         Works clsoely with ubyssey/js/dfp.js
 
