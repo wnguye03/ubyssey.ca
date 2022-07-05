@@ -1,13 +1,17 @@
+// Special article-like page
+@import 'modules/variables';
+
 .page > .u-container > .row {
 
+  // Left column (content)
   .seven.columns {
     display: table-cell;
     vertical-align: top;
     box-sizing: border-box;
     height: auto;
     padding: 0 20px 0 0;
-
   }
+
   // Right column (sidebar)
   aside.five {
     display: table-cell;
