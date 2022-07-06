@@ -448,7 +448,6 @@ class ArticlePage(SectionablePage):
         null=True,
         blank=True,
     )
-
     explicit_published_at = models.DateTimeField(
         null=True,
         blank=True,
