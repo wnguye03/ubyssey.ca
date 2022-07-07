@@ -1,5 +1,8 @@
 from django.db import models
-from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel, InlinePanel
+from wagtail.core.models import Orderable
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtailmodelchooser import register_model_chooser
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
