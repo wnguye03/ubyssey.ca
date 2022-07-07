@@ -1,13 +1,8 @@
 from django.db import models
-from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, InlinePanel, MultiFieldPanel, HelpPanel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Orderable
-
 from wagtailmodelchooser import register_model_chooser
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
-
-from modelcluster.fields import ParentalKey
-from modelcluster.models import ClusterableModel
 
 @register_model_chooser
 class AdSlot(models.Model):
