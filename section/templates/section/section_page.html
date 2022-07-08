@@ -22,7 +22,7 @@
   <main class="section">
     <!-- Place header ads for section page -->
     {% for orderable in settings.ads.AdTagSettings.section_header_placements.all %}
-      {% gpt_define_tag orderable.ad_slot %}
+      {% gpt_placement_tag orderable.ad_slot %}
     {% endfor %}
     <div class="u-container u-container--padded">
       <div class="c-page__header">
