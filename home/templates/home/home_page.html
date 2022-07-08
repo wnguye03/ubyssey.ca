@@ -19,7 +19,7 @@
 {% block content %}
   <!-- Place header ads for home page -->
   {% for orderable in settings.ads.AdTagSettings.home_header_placements.all %}
-    {% gpt_define_tag orderable.ad_slot %}
+    {% gpt_placement_tag orderable.ad_slot %}
   {% endfor %}
 
   <main class="u-container u-container--large homepage">
