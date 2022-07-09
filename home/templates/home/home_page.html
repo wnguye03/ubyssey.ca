@@ -35,17 +35,12 @@
       Additional fields/blocks will go here to alert students to some special events
     {% endcomment %}
 
-    {% comment %}
-      Display user-selected bocks that will be the first thing the user sees when going to the site, before scrolling down
-      (hence, "above the cut")
-    {% endcomment %}
+    <!-- Above the cut content. Likely the first things the user sees when going to the site, before scrolling down -->
     {% for block in self.above_cut_stream %}
       {% include_block block %}
     {% endfor %}
 
-    {% comment %}
-      Below-cut content
-    {% endcomment%}
+    <!-- Below cut content. The content below this point is likely to require scrolling etc. for a user to read in a browser. -->
     <div class="homepage-section row">
       <div class="sections" >  
         {% for block in self.sections_stream %}
