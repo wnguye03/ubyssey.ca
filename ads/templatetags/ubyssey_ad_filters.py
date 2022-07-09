@@ -1,3 +1,5 @@
+from requests import request
+from ads.models import AdTagSettings
 from bs4 import BeautifulSoup
 from django import template
 from django.template.defaultfilters import stringfilter
@@ -54,4 +56,26 @@ def add_slug_to_ad_divs(value, slug):
     adslot_divs = soup.find_all("div", {"class": "adslot"})
     for div in adslot_divs:
         div['id'] = div['id'] + '-' + slug
+    return soup
+
+@register.filter(name='specify_homepage_sidebar_ads')
+@stringfilter
+def specify_homepage_sidebar_ads(value, request):
+    ad_settings = AdTagSettings.for_request(request)
+    sidebar_ads_enum = enumerate(ad_settings.home_sidebar_placements.all())
+    next_ad = 1
+    total_ads_to_place = len(ad_settings.home_sidebar_placements.all())
+
+    soup = BeautifulSoup(value, 'html5lib')
+    adslot_divs = soup.find_all("div", {"class": "sidebar-block--advertisement"})
+
+    print(len(list(sidebar_ads_enum)))
+
+    for div in adslot_divs:
+        print("Next Ad #" + str(next_ad))
+        if next_ad < total_ads_to_place:
+            div.string = sidebar_ads_enum[next_ad]
+        else:
+            div.string = "We have run out of ads to display!"
+        next_ad = next_ad + 1
     return soup

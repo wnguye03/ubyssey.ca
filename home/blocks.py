@@ -73,16 +73,8 @@ class AboveCutBlock(blocks.StructBlock):
         template = "home/stream_blocks/above_cut_block.html"
 
 class SidebarAdvertisementBlock(blocks.StructBlock):
-    # DRY insertion of the recurring ad pattern for home page side bar
-
-    # NOTE 7/05 - DO NOT WORK AS I HOPED
-    # ad_slot = ModelChooserBlock(target_model=HomeSidebarPlacementOrderable)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        # context['ad_slot'] = value['ad_slot']
-        return context
-
+    # Inserts of the recurring ad pattern for home page side bar
+    # Use in conjunction with specify_homepage_sidebar_ads to cause a specific ad to be placed in the divs provided by this block
     class Meta:
         template = "home/stream_blocks/sidebar_advertisement_block.html"
 

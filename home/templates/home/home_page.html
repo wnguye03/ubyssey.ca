@@ -3,6 +3,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load ubyssey_ad_tags %}
+{% load ubyssey_ad_filters %}
 
 {% block head_scripts %}
   <!-- Register ads for home page -->
@@ -49,9 +50,11 @@
       </div>
 
       <aside class="sidebar-home">
-        {% for block in self.sidebar_stream %}
-          {% include_block block %}
-        {% endfor %}
+        {% filter specify_homepage_sidebar_ads:request %}
+          {% for block in self.sidebar_stream %}
+            {% include_block block %}
+          {% endfor %}
+        {% endfilter %}
       </aside>
     </div>
     <div class="loader-container">
