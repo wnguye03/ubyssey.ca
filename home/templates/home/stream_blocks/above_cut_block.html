@@ -116,15 +116,11 @@
             {% endwith %}
         </div>
         <div class="multi-zone cell right">
-          <div class="c-widget-advertisement">
-            {% with settings.ads.AdTagSettings.section_sidebar_placements.all.0 as orderable %}
-              {% if orderable %}
-                {% gpt_placement_tag orderable.ad_slot.slug %}
-              {% endif %}
-            {% endwith %}
-            {% comment %} {% include 'objects/advertisement.html' with size='box' name='Widget' id=3 %} {% endcomment %}
+          {% comment %}
+            TODO make editable through interface with structblock
+          {% endcomment %}
+          <div class="sidebar-block sidebar-block--advertisement">            
           </div>
-          
           {{ sidebar.render }}
           {% if sidebar2 %} <br> {{ sidebar2.render }} {% endif %}
         </div>
