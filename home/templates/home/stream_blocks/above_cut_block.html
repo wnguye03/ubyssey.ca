@@ -117,9 +117,11 @@
         </div>
         <div class="multi-zone cell right">
           <div class="c-widget-advertisement">
-            {% if above_cut_ad_slot %}
-              {% gpt_placement_tag sidebar_placement_orderable.ad_slot.slug %}
-            {% endif %}
+            {% with settings.ads.AdTagSettings.section_sidebar_placements.all.0 as orderable %}
+              {% if orderable %}
+                {% gpt_placement_tag orderable.ad_slot.slug %}
+              {% endif %}
+            {% endwith %}
             {% comment %} {% include 'objects/advertisement.html' with size='box' name='Widget' id=3 %} {% endcomment %}
           </div>
           
