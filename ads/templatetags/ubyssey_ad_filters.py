@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.template.loader import render_to_string
+from itertools import zip_longest
 from random import randint
 
 register = template.Library()
@@ -61,21 +62,36 @@ def add_slug_to_ad_divs(value, slug):
 @register.filter(name='specify_homepage_sidebar_ads')
 @stringfilter
 def specify_homepage_sidebar_ads(value, request):
-    ad_settings = AdTagSettings.for_request(request)
-    sidebar_ads_enum = enumerate(ad_settings.home_sidebar_placements.all())
-    next_ad = 1
-    total_ads_to_place = len(ad_settings.home_sidebar_placements.all())
 
+    # Find all the divs that will contain sidebar ads on the page
     soup = BeautifulSoup(value, 'html5lib')
     adslot_divs = soup.find_all("div", {"class": "sidebar-block--advertisement"})
 
-    print(len(list(sidebar_ads_enum)))
+    # Get all the ads to place in the aforementioned divs
+    ad_settings = AdTagSettings.for_request(request)
+    sidebar_ads = list(ad_settings.home_sidebar_placements.all())
 
-    for div in adslot_divs:
-        print("Next Ad #" + str(next_ad))
-        if next_ad < total_ads_to_place:
-            div.string = sidebar_ads_enum[next_ad]
+    # Zip the divs together with their corresponding ad
+    zipped_placements_and_contents = zip_longest(adslot_divs, sidebar_ads)
+
+    # Insert the ad into the divs using Beautiful Soup
+    for (div, orderable) in list(zipped_placements_and_contents):
+        if orderable:
+            ad_context = {
+                'div_id' : orderable.ad_slot.div_id,
+                'dfp' : orderable.ad_slot.dfp,
+                'size' : orderable.ad_slot.size,
+                'div_class' : orderable.ad_slot.div_class,
+            }
         else:
-            div.string = "We have run out of ads to display!"
-        next_ad = next_ad + 1
+            ad_context = {
+                'div_id' : 'ad-tag-error',
+                'dfp' : 'ad-tag-error',
+                'size' : 'ad-tag-error',
+                'div_class' : '',
+            }
+        if div:
+            new_tag_soup = BeautifulSoup(render_to_string('ads/gpt_placement_tag.html',context=ad_context), 'html5lib')
+            div.clear()
+            div.append(new_tag_soup.div)
     return soup
