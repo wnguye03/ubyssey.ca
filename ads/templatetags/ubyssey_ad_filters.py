@@ -62,6 +62,11 @@ def add_slug_to_ad_divs(value, slug):
 @register.filter(name='specify_homepage_sidebar_ads')
 @stringfilter
 def specify_homepage_sidebar_ads(value, request):
+    """
+        Searches the homepage for ads with class 'sidebar-block--advertisement' and inserts necessary code for google ad manager to place an ad there
+
+        (NTS 2022/07/08: Magic string is unfortunate and maybe should be fixed)
+    """
 
     # Find all the divs that will contain sidebar ads on the page
     soup = BeautifulSoup(value, 'html5lib')
