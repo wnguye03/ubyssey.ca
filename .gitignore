@@ -38,6 +38,3 @@ ubyssey/settings*.py
 client-secret.json
 # Keyfile for accessing gcs bucket
 gcs-local.json
-todo aug 25.txt
-dispatch_article_73315_no_code_embed.txt
-dispatch_article_70886_code_embed.txt
