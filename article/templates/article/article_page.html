@@ -6,6 +6,12 @@
 {% load ubyssey_ad_filters %}
 {% load ubyssey_ad_tags %}
 
+{% block head_scripts %}
+    <!-- Register ads for article page -->
+    {% for orderable in settings.ads.AdTagSettings.article_head_tags.all %}
+        {% gpt_define_tag orderable.ad_slot %}
+    {% endfor %}
+{% endblock %}
 
 {% block header %}
     {% include 'navigation/headers/topbar.html' %}
@@ -15,25 +21,15 @@
 {% block content %}
     <main id="article-{{ self.slug }}" class="article">
         {% block banner_ad %}
+        <!-- Article Page header ads go here -->
             {% filter add_slug_to_ad_divs:self.slug %}
-                {% if self.is_explicit is not True %}
-                    {% adslot settings.ads.AdSettings.leaderboard_ad_slot %}
-                    {% adslot settings.ads.AdSettings.mobile_leaderboard_ad_slot %}
-                {% endif %}
+                {% for orderable in settings.ads.AdTagSettings.article_header_placements.all %}
+                    {% gpt_placement_tag orderable.ad_slot %}
+                {% endfor %}
             {% endfilter %}
         {% endblock %}
 
-        <article class="c-article
-            {% if timeline %}c-article--timeline{% endif %}
-            js-article
-            {% block specific_article_class %}
-                {% comment %} 
-                    This block is used to override styling for the main article body (as in e.g. a full width banner article)
-                {% endcomment %}
-                c-article--default
-            {% endblock %}
-            "
-        > <!--article-->
+        <article class="c-article {% if timeline %}c-article--timeline {% endif %}js-article {% block specific_article_class %}{% comment %} This block is used to override styling for the main article body (as in e.g. a full width banner article) {% endcomment %}c-article--default {% endblock %}"> <!--article-->
             {% block banner %}
                 <div class="u-container">
                     {% comment %} {% if breaking %}
@@ -71,15 +67,8 @@
                         </div>
                     </div>
             {% endblock %}
-            <div class="u-container
-                clearfix
-                {% block right_column_class %}
-                    {% comment %} 
-                        This block is used to override the styling of the right column (as in e.g. a full width banner article)
-                    {% endcomment %}
-                {% endblock %}
-                "
-            >
+            {% comment %} NOTE 2022/07/05: Where the hell does this element close? {% endcomment %}
+            <div class="u-container clearfix {% block right_column_class %}{% comment %} This block is used to override the styling of the right column (as in e.g. a full width banner article){% endcomment %}{% endblock %}">
                 {% block right-column %}
                     <div class="right-column">
                         {% if self.featured_media.first.image %}
@@ -137,14 +126,12 @@
                             {% endwith %}
                         {% endif %}
                         <div class="sidebar{% if self.featured_media.first.image or self.featured_media.first.video %} offset{% endif %}">
+                            <!-- Article Page sidebar ads go here -->
                             {% filter add_slug_to_ad_divs:self.slug %}
                                 {% if self.is_explicit is not True %}
-                                    {% if self.minutes_to_read >= 3 %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_skyscraper_ad_slot %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxB_ad_slot %}
-                                    {% else %}
-                                        {% adslot settings.ads.AdSettings.article_right_column_boxA_ad_slot %}
-                                    {% endif %}
+                                    {% for orderable in settings.ads.AdTagSettings.article_sidebar_placements.all %}
+                                        {% gpt_placement_tag orderable.ad_slot %}
+                                    {% endfor %}            
                                 {% else %}
                                     {% comment %} {% include 'objects/replacement.html' with size='box' %} {% endcomment %}
                                 {% endif %}
@@ -158,15 +145,19 @@
                     {% if not self.is_explicit %}
                         {% filter add_slug_to_ad_divs:self.slug %}
                             {% filter inject_ads:is_mobile %}
+                                <!-- Content unique to the article starts here -->
                                 {% for block in self.content %}
                                     {% include_block block %}
                                 {% endfor %}
+                                <!-- Content unique to the article ends here -->
                             {% endfilter %}
                         {% endfilter %}
                     {% else %}
+                        <!-- Content unique to the article starts here -->
                         {% for block in self.content %}
                             {% include_block block %}
-                        {% endfor %}                        
+                        {% endfor %}
+                        <!-- Content unique to the article ends here -->
                     {% endif %}
                     {% block post-content %}
                     {% endblock %}
