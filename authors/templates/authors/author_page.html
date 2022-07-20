@@ -1,9 +1,9 @@
 {% extends 'ubyssey/base.html' %}
 {% load static %}
-{% block content %}
-{% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+
+{% block content %}
 
 {% block header %}
 {% include 'navigation/headers/topbar.html' %}
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 
-		{% include 'ubyssey/archive.html' with paginated_articles=paginated_articles %}
+		{% include 'archive/objects/archive.html' with paginated_articles=paginated_articles %}
 
 	</div>
 </main>
