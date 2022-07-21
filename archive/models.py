@@ -50,7 +50,7 @@ class ArchivePage(Page):
             # Then return the last page
             paginated_articles = paginator.page(paginator.num_pages)
 
-        context["paginated_articles"] = paginated_articles #this object is often called page_obj in Django docs, but Page means something else in Wagtail
+        context["page_obj"] = paginated_articles #this object is often called page_obj in Django docs. Careful, because but Page means something else in Wagtail
 
 
         return context
