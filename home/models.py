@@ -25,6 +25,7 @@ class HomePage(Page):
         'section.SectionPage',
         'authors.AllAuthorsPage',
         'videos.VideosPage',
+        'archive.ArchivePage',
     ]
 
     above_cut_stream = StreamField(
