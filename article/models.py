@@ -380,9 +380,10 @@ class ArticlePageManager(PageManager):
     
     def from_section(self, section_slug='', section_root=None) -> QuerySet:
         from .models import ArticlePage
+        from section.models import SectionPage
         if section_slug:
             try:
-                new_section_root = Page.objects.get(slug=section_slug)
+                new_section_root = SectionPage.objects.get(slug=section_slug)
             except Page.DoesNotExist:
                 new_section_root = None
             if new_section_root:

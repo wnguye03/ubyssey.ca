@@ -1,0 +1,10 @@
+Masthead and editors note block
+
+Panelist Cards Bio - _Cards_
+
+div IDs that are used by my checking by hand:
+
+
+
+Inline ads divs:
+div-gpt-ad-1443288719995-[number starting from 10]-[article id (from Dispatch???)]
