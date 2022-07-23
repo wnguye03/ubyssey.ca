@@ -843,6 +843,7 @@ class ArticlePage(SectionablePage):
         index.FilterField('current_section'),
         index.FilterField('author_id'),
         index.FilterField('slug'),
+        index.FilterField('explicit_published_at'),
 
         index.RelatedFields('category', [
             index.FilterField('slug'),
