@@ -60,7 +60,7 @@ class ArchivePage(Page):
         else:
             articles = ArticlePage.objects.live().public().order_by(article_order)
         if self.year:
-            articles = articles.filter(explicit_published_at__icontains=str(self.year))
+            articles = articles.filter(explicit_published_at__year=str(self.year))
 
         # If there's a search query, then we run the search on the articles LAST.
         # Once we hit thes earch then we can't run .filter(...) on the results as if it were a queryset
