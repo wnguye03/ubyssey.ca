@@ -84,22 +84,6 @@ class ArchivePage(Page):
 
         context["page_obj"] = paginated_articles #this object is often called page_obj in Django docs. Careful, because but Page means something else in Wagtail
 
-        # Create a "query string", for navigation purposes
-        filters = []
-        if order == 'oldest':
-            filters.append('order=%s' % order)
-        if self.year is not None:
-            filters.append('year=%s' % self.year)
-        if search_query:
-            filters.append('q=%s' % search_query)
-        if section_slug:
-            filters.append('section_slug=%s' % section_slug)
-        if filters:
-            query_string = '?' + '&'.join(filters)
-        else:
-            query_string = ''
-        context['query_string'] = query_string
-
         # set context
         context['sections'] = SectionPage.objects.live()
         context['section_slug'] = section_slug
