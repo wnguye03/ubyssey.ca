@@ -197,7 +197,7 @@
 				</div>
 				{% endif %}
 
-				{% if forloop.counter0 == people_start_idx and page_obj.number == people_start_page %}
+				{% comment %} {% if forloop.counter0 == people_start_idx and page_obj.number == people_start_page %}
 				<div class="o-archive__divider">
 					<div class="o-archive__line"></div>
 					<div class="o-archive__line_text">People</div>
@@ -235,11 +235,10 @@
 					<div class="o-archive__line_text">Episodes</div>
 					<div class="o-archive__line"></div>
 				</div>
-				{% endif %}
+				{% endif %} {% endcomment %}
 
-				{% if object.headline %}
-				{% include 'objects/articles/list.html' with article=object %}
-				{% elif object.full_name %}
+				{% include 'archive/objects/article_list.html' with article=object %}
+				{% comment %} {% elif object.full_name %}
 				{% include 'objects/author_list.html' with person=object %}
 				{% elif object.img %}
 				{% include 'objects/image_list.html' with image=object %}
@@ -249,7 +248,7 @@
 				{% include 'objects/podcasts/podcast_list.html' with podcast=object %}
 				{% else %}
 				{% include 'objects/videos/list.html' with video=object %}
-				{% endif %}
+				{% endcomment %}
 				{% endfor %}
 			</div>
 
