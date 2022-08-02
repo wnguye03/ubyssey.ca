@@ -38,9 +38,9 @@ class QuoteBlock(blocks.StructBlock):
         # Rather than the "normal" template logic, we look at our self.template variable
         block_template = value.get('template')
         if block_template == 'guide-2020':
-            template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html'
+            template = 'specialfeaturelanding/blocks/guide-2020-panel-quote.html'
         else:
-            template = 'specialfeatureslanding/blocks/guide-2020-panel-quote.html' #TODO better default
+            template = 'specialfeaturelanding/blocks/guide-2020-panel-quote.html' #TODO better default
 
         # Below this point, this render() is identical to its original counterpart
         if context is None:
@@ -96,9 +96,9 @@ class CustomStylingCTABlock(blocks.StructBlock):
         # Rather than the "normal" template logic, we look at our self.template variable
         block_template = value.get('template')
         if block_template == 'guide-2020':
-            template = 'specialfeatureslanding/blocks/guide-2020-cta.html'
+            template = 'specialfeaturelanding/blocks/guide-2020-cta.html'
         else:
-            template = 'specialfeatureslanding/blocks/guide-2020-cta.html' #TODO better default
+            template = 'specialfeaturelanding/blocks/guide-2020-cta.html' #TODO better default
 
         # Below this point, this render() is identical to its original counterpart
         if context is None:
