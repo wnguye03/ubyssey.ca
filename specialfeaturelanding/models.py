@@ -11,11 +11,14 @@ from section.sectionable.models import SectionablePage
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
+    InlinePanel,
     StreamFieldPanel,
     HelpPanel,
 )
 
-from wagtail.core.models import Page
+from modelcluster.fields import ParentalKey
+
+from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import StreamField
 
 from wagtailmenus.models import FlatMenu
@@ -25,8 +28,8 @@ class SpecialLandingPage(SectionablePage):
     """
     This is the general model for "special features" landing pages, such as for the guide, or a magazine.
     """
-    # template = "specialfeatureslanding/base.html"
-    template = "specialfeatureslanding/landing_page_guide2021.html"
+    # template = "specialfeaturelanding/base.html"
+    template = "specialfeaturelanding/landing_page_guide_2020_style.html"
 
     parent_page_types = [
         'section.SectionPage',
@@ -55,6 +58,19 @@ class SpecialLandingPage(SectionablePage):
         default='home-content-container',
         max_length=255,
     )
+
+    # editorial_stream = StreamField(
+    #     [
+    #         ('quote', QuoteBlock(
+    #             label="Quote Block",
+    #         )),
+    #         ('stylecta',CustomStylingCTABlock(
+    #             label="Custom Styling CTA",
+    #         )),
+    #     ],
+    #     null=True,
+    #     blank=True,
+    # )
 
     content = StreamField(
         [
@@ -88,6 +104,16 @@ class SpecialLandingPage(SectionablePage):
             classname="collapsible",
         ),
 
+        MultiFieldPanel(
+            [
+                InlinePanel(
+                    "feature_credits",
+                    label="Credits",                    
+                )
+            ],
+            heading="Feature Credits",
+            classname="collapsible",
+        )
     ]
 
 
@@ -97,3 +123,33 @@ class SpecialLandingPage(SectionablePage):
         #     print('hello world ' + i)
         #     context['article' + i] = Article.objects.get(is_published=1, slug=block)
         return context
+
+
+class CreditsOrderable(Orderable):
+    special_landing_page = ParentalKey(
+        "specialfeaturelanding.SpecialLandingPage",
+        related_name="feature_credits",
+    )
+
+    role = models.CharField(
+        max_length=100,
+        blank=True,
+        null=False,
+    )
+
+    author = models.ForeignKey(
+        "authors.AuthorPage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="If null or blank, will use the name entered in \"Author Name\" field",
+    )
+
+    author_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=False,
+    )
+
+    
