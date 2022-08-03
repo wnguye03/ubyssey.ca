@@ -19,86 +19,12 @@
 </div>
 
 <main class="{{ self.main_class_name }}">
+	{% if page.editorial_stream %}
 	<div class="editorial-container">
-		<div class="editorial__credits-container">
-			<div class="editorial__credits-content">
-				<div class="ubyseey_title">The Ubyssey </div>
-				</br>
-				<h1>Coordinating Editor</h1>
-				<h2>Lua Presidio</h2>
-				<h1>Visuals Editor</h1>
-				<h2>Mahin E Alam</h2>
-				<h1>News Editors</h1>
-				<h2>Charlotte Alden and Nathan Bawaan</h2>
-				<h1>Culture Editor</h1>
-				<h2>Tianne Jensen-DesJardins</h2>
-				<h1>Sports + Rec Editor</h1>
-				<h2>Diana Hong</h2>
-				<h1>Video Editor</h1>
-				<h2>Josh Mckenna</h2>
-				<h1>Opinion + Blog Editor</h1>
-				<h2>Thomas McLeod</h2>
-				<h1>Science Editor</h1>
-				<h2>Sophia Russo</h2>
-				<h1>Photo Editor</h1>
-				<h2>Isabella Falsetti</h2>
-				<h1>Features Editor</h1>
-				<h2>Paloma Green</h2>
-				<br>
-				<h1>Web Developer</h1>
-				<h2>Keegan Landrigan</h2>
-				<h1>Web Developer</h1>
-				<h2>Samuel Lin</h2>
-				<br>
-				<h1>Contributors</h1>
-				<h2 style="font-size: 0.95rem;">
-					Kevin Nan, Angela Villavicencio, Z.Aazadeh Raja, Zohrah Khalili, Iman Janmohamed , Jasmine Arora,
-					Winnie Ha, Maheep Chawla, Jackson Dagger, Tina Yong , Farzzen Ather,
-					Benjamin Morrison, Sophia Collins, Jane Diokpo, Jasmine Hathway, Alicia Kuo, Kelly Lu, Shanzeh
-					Chaudhry, Polina Petlitsyna, Riya Gupta, Darcy Bandeen, Caylie Warkentin, Lalaine Alindogan, Peyton
-					Murphy
-					, Vik Sangar, Kathleen Jeanne Haryanto, Daniel Peres, Manya Malhotra, Ariadne Meriweather, Teagan
-					Pettit, Melissa Li, Victoria Lee and Raina Cao
-				</h2>
-			</div>
-		</div>
-
-		<div class="editorial__note-container">
-			<div class="editorial__ home-content">
-				<div class="title">Editor's Note</div>
-				<div class='content-wrapper'>
-					<p>Welcome, welcome , welcome! </p>
-					<p>Whether you are a first year or a second year coming to campus for the first time, I truly hope
-						you will find a place to call your own here at UBC. Courses can be difficult, but the hardest
-						part of transitioning to unicersity is negotiating the incredible freedom you
-						have just gained all at once and without precedent. There are a bajilion choices to make, a
-						million places to go and hunderds of people to meet. It's overwhelming to say the least. But
-						know you aren't doing it alone. There are literally thousands of students in the same position
-						as you, looking for a community, like you. All you have to do is find the.
-					</p>
-					<br>
-					<p>So take that freedom and go out there. Explore who you are. Find out who you want to be. I know
-						it's scary, but I promise you that no matter what mistakes you think you might make, someone has
-						already made them. They turned out just fine and so will you.</p>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="land_mark_image-container"> <img src="{% static 'ubyssey/images/guide/guide-2020-cover-1.jpg' %}"
-				alt="cover"> </div>
-
-
-		<div class="land_mark_note-container">
-			<h1> LAND ACKNOWLEDGEMENT </h1>
-			<div> We wish to acknowledge that the Guide to UBC was published upon the occupied, traditional, ancestral
-				and unceded territory of the Coast Salish peoples, including the xwməθkwəyə̓m (Musqueam), Sḵwxw̱ú7mesh
-				(Squamish), Stó:lō and səli̓ lwətaɁɬ/Selilwitulh (Tsleil-Waututh). </div>
-		</div>
-
-		<main class="p-title"> <b>THE PANELISTS </b>
+		{% include_block page.editorial_stream %}
 	</div>
-	<div class="panelist-container">
+	{% endif %}
+	{% comment %} <div class="panelist-container">
 
 		<div class="p-one">
 			<div class="p-img">
@@ -183,7 +109,7 @@
 					Vancouver Senate. </div>
 
 			</div>
-		</div>
+		</div> {% endcomment %}
 
 </main>
 
