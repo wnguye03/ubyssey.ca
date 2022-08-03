@@ -18,8 +18,10 @@ from wagtail.admin.edit_handlers import (
 
 from modelcluster.fields import ParentalKey
 
+from wagtail.core import blocks
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import StreamField
+from wagtail.images.blocks import ImageChooserBlock
 
 from wagtailmenus.models import FlatMenu
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
@@ -59,18 +61,25 @@ class SpecialLandingPage(SectionablePage):
         max_length=255,
     )
 
-    # editorial_stream = StreamField(
-    #     [
-    #         ('quote', QuoteBlock(
-    #             label="Quote Block",
-    #         )),
-    #         ('stylecta',CustomStylingCTABlock(
-    #             label="Custom Styling CTA",
-    #         )),
-    #     ],
-    #     null=True,
-    #     blank=True,
-    # )
+    editorial_stream = StreamField(
+        [
+            ('credits',blocks.StreamBlock([
+                ('title',blocks.CharBlock()),
+                ('rich_text',blocks.RichTextBlock()),
+                ('editor_credit',blocks.StructBlock([
+                    ('role',blocks.CharBlock()),
+                    ('name',blocks.CharBlock()),
+                ])),
+            ])),
+            ('image', ImageChooserBlock()),
+            ('note_with_header', blocks.StructBlock([
+                ('title',blocks.CharBlock()),
+                ('rich_text',blocks.RichTextBlock()),
+            ])),
+        ],
+        null=True,
+        blank=True,
+    )
 
     content = StreamField(
         [
@@ -93,15 +102,21 @@ class SpecialLandingPage(SectionablePage):
             ],
             heading="Styling",
         ),
+        # MultiFieldPanel(
+        #     [
+        #         HelpPanel(
+        #             content='<h1>TODO</h1><p>Write something here</p>'
+        #         ),
+        #         StreamFieldPanel("content"),
+        #     ],
+        #     heading="Article Content",
+        #     classname="collapsible",
+        # ),
         MultiFieldPanel(
             [
-                HelpPanel(
-                    content='<h1>TODO</h1><p>Write something here</p>'
-                ),
-                StreamFieldPanel("content"),
+                StreamFieldPanel("editorial_stream"),
             ],
-            heading="Article Content",
-            classname="collapsible",
+            heading="Editorial Content"
         ),
 
         MultiFieldPanel(
@@ -151,5 +166,3 @@ class CreditsOrderable(Orderable):
         blank=True,
         null=False,
     )
-
-    
