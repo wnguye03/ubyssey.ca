@@ -82,10 +82,12 @@ class SidebarAdvertisementBlock(blocks.StructBlock):
 class SinglePrintIssueBlock(blocks.StructBlock):
     date = blocks.DateBlock(required=True)
     image = ImageChooserBlock(required=False)
-    show_image = blocks.BooleanBlock(required=True)
+    show_image = blocks.BooleanBlock(required=False)
     link = blocks.URLBlock(required=True)
     class Meta:
         template = "home/stream_blocks/sidebar_single_issue_block.html"
+        verbose_name = "Print Issue"
+        verbose_name_plural = "Print Issues"
 
 class SidebarIssuesStream(blocks.StreamBlock):
     """
@@ -103,7 +105,8 @@ class SidebarIssuesBlock(blocks.StructBlock):
     issues = SidebarIssuesStream()
     class Meta:
         template = "home/stream_blocks/sidebar_issues_block.html"
-
+        verbose_name = "Sidebar Print Issues Block"
+        verbose_name_plural = "Sidebar Print Issues Blocks"
 
 class SidebarSectionBlock(blocks.StructBlock):
     title = blocks.CharBlock(
