@@ -1,0 +1,2 @@
+{% load wagtailimages_tags %}
+<h5 class="headline"{% if block.image %} id='issue-photo'{% endif %}><a class='issue' id ='issue{{ iteration }}' href={{ block.link }}>{{ block.date }}{% if block.image %}{% image block.image %}{% endif %}</a></h5>

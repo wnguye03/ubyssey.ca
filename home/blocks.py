@@ -10,6 +10,7 @@ from dispatch.models import Section
 from wagtail.core import blocks
 from wagtail.core.blocks import field_block
 
+from wagtail.images.blocks import ImageChooserBlock
 from wagtailmodelchooser.blocks import ModelChooserBlock
 
 class SectionChooserBlock(blocks.ChooserBlock):
@@ -78,17 +79,30 @@ class SidebarAdvertisementBlock(blocks.StructBlock):
     class Meta:
         template = "home/stream_blocks/sidebar_advertisement_block.html"
 
-class SidebarIssuuBlock(blocks.StructBlock):
-    title = blocks.CharBlock(
-        required=True,
-        max_length=255,
-    )
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        context['title'] = value['title']
-        return context
+class SinglePrintIssueBlock(blocks.StructBlock):
+    date = blocks.DateBlock(required=True)
+    image = ImageChooserBlock(required=False)
+    show_image = blocks.BooleanBlock(required=True)
+    link = blocks.URLBlock(required=True)
     class Meta:
-        template = "home/stream_blocks/sidebar_issuu_block.html"
+        template = "home/stream_blocks/sidebar_single_issue_block.html"
+
+class SidebarIssuesStream(blocks.StreamBlock):
+    """
+    Stream to be used by the SidebarIssueBlock. Each entity in the stream represents a single print issue.
+    """
+    issue = SinglePrintIssueBlock()
+
+class SidebarIssuesBlock(blocks.StructBlock):
+    """
+    Place this on the home page to create a place for print issues to be displayed on the homepage.
+
+    Consists of a title block (self explanatory) and a stream block (which contains the issues to be displayed)
+    """
+    title = blocks.CharBlock(required=True, max_length=255)
+    issues = SidebarIssuesStream()
+    class Meta:
+        template = "home/stream_blocks/sidebar_issues_block.html"
 
 
 class SidebarSectionBlock(blocks.StructBlock):

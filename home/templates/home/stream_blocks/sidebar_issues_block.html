@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+
+<div class=" sidebar-block">
+    <h2 class="block-title">{{ block.title }}</h2>
+    <div class='sidebar-issue'>
+        {% for issue in block.issues %}
+        {% include_block issue with iteration=forloop.counter %}
+        {% endfor %}
+    </div>
+</div>
