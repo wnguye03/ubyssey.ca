@@ -1,6 +1,5 @@
 {% load static %}
 {% load menu_tags %}
-{% load dispatch_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -93,7 +92,13 @@
 
 	{% endblock %}
 	<div class="o-site-wrapper">
+		{% block pre_main_content %}
+		{% endblock %}
+		
 		{% block content %}
+		{% endblock %}
+
+		{% block post_main_content %}
 		{% endblock %}
 	</div>
 	{% with self.slug as section %}
