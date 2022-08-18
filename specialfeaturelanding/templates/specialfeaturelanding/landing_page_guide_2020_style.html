@@ -113,31 +113,16 @@
 
 </main>
 
-
-
-
 <div class="section-grid-container">
-	<div class="section-title"> Guide to UBC 2021 </div>
-	<div class="academics-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Academics-cover.jpg' %}"> </div>
-	<div class="ubc-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/UBC-cover.jpg' %}"> </div>
-	<div class="student_life-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Student-life-cover.jpg' %}"> </div>
-	<div class="student_resources-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Student-resources-cover.jpg' %}"> </div>
-	<div class="parties_sex_anddrugs-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Parties-cover.jpg' %}"> </div>
-	<div class="the_ubyssey-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Ubyssey-cover.jpg' %}"> </div>
-	<div class="vancouver-box"> <img class="photo_cover"
-			src="{% static 'ubyssey/images/guide/2021/section-covers/Vancouver-cover.jpg' %}"> </div>
-	<div class="section-quote"> The ultimate guide to life at UBC </div>
+	{% if page.graphical_menu %}
+	<div class="editorial-container">
+		{% include_block page.graphical_menu %}
+	</div>
+	{% endif %}
 </div>
 
 {% for block in self.content %}
 {% include_block block %}
 {% endfor %}
 {% wagtailuserbar %}
-</main>
 {% endblock %}

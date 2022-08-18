@@ -107,3 +107,51 @@ class CustomStylingCTABlock(blocks.StructBlock):
             new_context = self.get_context(value, parent_context=dict(context))
 
         return mark_safe(render_to_string(template, new_context))
+
+class GraphicalMenuItemBlock(blocks.StructBlock):
+    
+    template = 'specialfeaturelanding/blocks/graphical-menu-item.html'
+    
+    div_class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='box'
+    )
+
+    img_class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='photo_cover'
+    )
+
+    link = blocks.URLBlock(
+        required=True,
+    )
+
+    image = ImageChooserBlock(
+        required=True,
+    )
+
+    width = blocks.IntegerBlock(
+        required = False
+    )
+
+    height = blocks.IntegerBlock(
+        required = False
+    )
+
+class TextDivBlock(blocks.StructBlock):
+
+    template = 'specialfeaturelanding/blocks/graphical-menu-item.html'
+
+    class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='class'
+    )
+
+    text = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='text'
+    )

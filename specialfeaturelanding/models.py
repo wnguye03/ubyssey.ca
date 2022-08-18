@@ -1,7 +1,4 @@
-from .blocks import (
-    QuoteBlock, 
-    CustomStylingCTABlock,
-)
+import specialfeaturelanding.blocks as special_blocks
 
 from django.db import models
 from django.db.models.fields.related import ForeignKey
@@ -83,16 +80,30 @@ class SpecialLandingPage(SectionablePage):
 
     content = StreamField(
         [
-            ('quote', QuoteBlock(
+            ('quote', special_blocks.QuoteBlock(
                 label="Quote Block",
             )),
-            ('stylecta',CustomStylingCTABlock(
+            ('stylecta',special_blocks.CustomStylingCTABlock(
                 label="Custom Styling CTA",
             )),
         ],
         null=True,
         blank=True,
     )
+
+    graphical_menu = StreamField(
+        [
+            ('menu_item', special_blocks.GraphicalMenuItemBlock(
+                label="Graphical (Cover) Link"
+            )), 
+            ('menu_item', special_blocks.TextDivBlock(
+                label="Text"
+            )), 
+        ],
+        null=True,
+        blank=True,
+    )
+
     content_panels = Page.content_panels + [
         ModelChooserPanel('menu'),
         MultiFieldPanel(
@@ -138,7 +149,6 @@ class SpecialLandingPage(SectionablePage):
         #     print('hello world ' + i)
         #     context['article' + i] = Article.objects.get(is_published=1, slug=block)
         return context
-
 
 class CreditsOrderable(Orderable):
     special_landing_page = ParentalKey(
