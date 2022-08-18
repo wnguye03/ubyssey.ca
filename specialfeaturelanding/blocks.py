@@ -50,6 +50,28 @@ class QuoteBlock(blocks.StructBlock):
 
         return mark_safe(render_to_string(template, new_context))
 
+class GuideBannerBlock(blocks.StructBlock):
+    template = 'specialfeaturelanding/blocks/guide_banner_block.html'
+
+    image = ImageChooserBlock(
+        required=True,
+    )
+    title_intro = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='The Ubyssey presents'
+    )
+    title = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='Guide To UBC'
+    )
+    credit = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='Author Name Goes Here'
+    )
+
 class CustomStylingCTABlock(blocks.StructBlock):
 
     title = blocks.CharBlock(

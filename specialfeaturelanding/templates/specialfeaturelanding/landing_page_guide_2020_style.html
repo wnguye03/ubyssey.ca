@@ -3,20 +3,13 @@
 {% load wagtailcore_tags %}
 {% load wagtailuserbar %}
 
-{% block content %}
+{% block pre_main_content %}
+{% if page.editorial_stream %}
+	{% include_block page.pre_main_stream %}
+{% endif %}
+{% endblock %}
 
-<div class="c-banner c-banner--welcome"
-	style="background-image: url({% static 'ubyssey/images/guide/2021/section-covers/cover1.jpg' %})">
-	<div class="c-banner__container">
-		<div class="c-banner--welcome__inner">
-			<h2 class="c-banner--welcome__intro">The Ubyssey presents</h2>
-			<p class="c-banner--welcome__snippet">Guide To UBC</p>
-		</div>
-		<div class="c-banner-credits">
-			Zubair Hirji
-		</div>
-	</div>
-</div>
+{% block content %}
 
 <main class="{{ self.main_class_name }}">
 	{% if page.editorial_stream %}
@@ -112,6 +105,10 @@
 		</div> {% endcomment %}
 
 </main>
+
+{% endblock %}
+
+{% block post_main_content %}
 
 <div class="section-grid-container">
 	{% if page.graphical_menu %}
