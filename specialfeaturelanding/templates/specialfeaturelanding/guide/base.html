@@ -1,7 +1,7 @@
 {% load static %}
 {% load menu_tags %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	{% if title %}
@@ -80,6 +80,9 @@
 			node.parentNode.insertBefore(gads, node);
 		})();
 	</script>
+
+	{% block head_scripts %}
+	{% endblock %}
 </head>
 
 <body>
@@ -91,7 +94,8 @@
 	{% endwith %}
 
 	{% endblock %}
-	<div class="o-site-wrapper">
+	<!-- .container-fluid is necessary for Bootstrap-->
+	<div class="container o-site-wrapper">
 		{% block pre_main_content %}
 		{% endblock %}
 
