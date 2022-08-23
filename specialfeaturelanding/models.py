@@ -1,5 +1,7 @@
 import specialfeaturelanding.blocks as special_blocks
 
+from article.models import UbysseyMenuMixin
+
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 
@@ -23,9 +25,11 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmenus.models import FlatMenu
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 
-class SpecialLandingPage(SectionablePage):
+class SpecialLandingPage(SectionablePage, UbysseyMenuMixin):
     """
     This is the general model for "special features" landing pages, such as for the guide, or a magazine.
+
+    Pages can select them to automatically create
     """
     # template = "specialfeaturelanding/base.html"
     template = "specialfeaturelanding/landing_page_guide_2020_style.html"
@@ -43,14 +47,6 @@ class SpecialLandingPage(SectionablePage):
     show_in_menus_default = True
 
     #-----Fields-----
-    menu = ForeignKey(
-        FlatMenu,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
     main_class_name = models.CharField(
         null=False,
         blank=True,
@@ -104,8 +100,7 @@ class SpecialLandingPage(SectionablePage):
         blank=True,
     )
 
-    content_panels = Page.content_panels + [
-        ModelChooserPanel('menu'),
+    content_panels = Page.content_panels + UbysseyMenuMixin.menu_content_panels + [
         MultiFieldPanel(
             [
                 HelpPanel(content='Used for targetting <main> by the css'),
