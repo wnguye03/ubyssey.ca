@@ -55,11 +55,47 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from wagtailmenus.models import FlatMenu
+
 from wagtailmodelchooser.edit_handlers import ModelChooserPanel
 
 
 UBYSSEY_FOUNDING_DATE = datetime.date(1918,10,17)
 
+#-----Mixins-----
+class UbysseyMenuMixin(models.Model):
+
+    menu = models.ForeignKey(
+        FlatMenu,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    create_menu_from_parent = models.BooleanField(
+        default = False,
+    )
+    parent_page_for_menu_generation = models.ForeignKey(
+        'specialfeaturelanding.SpecialLandingPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',        
+    )
+
+    menu_content_panels = [
+        MultiFieldPanel(
+            [
+                HelpPanel('<p>If the article has a special menu, as when it belongs to a special series of articles, select the relevant menu here</p><p>Alternatively, tick the box and select a page to create a menu from</p>'),
+                ModelChooserPanel('menu'),
+                FieldPanel('create_menu_from_parent'),
+                PageChooserPanel('parent_page_for_menu_generation'),
+            ],
+            heading="Special Menus",
+            classname="collapsible",
+        ),
+    ]
+        
 #-----Snippet Models-----
 
 @register_snippet
@@ -393,7 +429,7 @@ class ArticlePageManager(PageManager):
 
 #-----Page models-----
 
-class ArticlePage(SectionablePage):
+class ArticlePage(SectionablePage, UbysseyMenuMixin):
 
     #-----Django/Wagtail settings etc-----
     objects = ArticlePageManager()
@@ -683,7 +719,8 @@ class ArticlePage(SectionablePage):
             heading="Featured Media",
             classname="collapsible",
         ),
-    ] # content_panels
+    ] + UbysseyMenuMixin.menu_content_panels # content_panels
+    
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
             [
