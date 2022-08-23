@@ -95,7 +95,9 @@ class UbysseyMenuMixin(models.Model):
             classname="collapsible",
         ),
     ]
-        
+    class Meta:
+        abstract = True
+
 #-----Snippet Models-----
 
 @register_snippet
@@ -720,7 +722,7 @@ class ArticlePage(SectionablePage, UbysseyMenuMixin):
             classname="collapsible",
         ),
     ] + UbysseyMenuMixin.menu_content_panels # content_panels
-    
+
     promote_panels = Page.promote_panels + [
         MultiFieldPanel(
             [
