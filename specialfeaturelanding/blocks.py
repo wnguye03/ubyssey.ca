@@ -229,7 +229,7 @@ class NoteWithHeaderBlock(TemplateSelectStructBlock):
 class EditorCreditBlock(TemplateSelectStructBlock):
 
     role = blocks.CharBlock()
-    name = blocks.RichTextBlock()
+    name = blocks.CharBlock()
     template = blocks.ChoiceBlock(
         choices=[
             ('', 'Wagtail default'),
