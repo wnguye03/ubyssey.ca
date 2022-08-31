@@ -244,4 +244,14 @@ class EditorialStreamBlock(blocks.StreamBlock):
     rich_text = blocks.RichTextBlock()
     editor_credit = EditorCreditBlock()
 
-    template = 'specialfeaturelanding/blocks/guide-2021-editorial-stream.html'
+class EditorialBlock(TemplateSelectStructBlock):
+
+    stream = EditorialStreamBlock()
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('guide-2021-editorial-stream.html', 'guide-2021-editorial-stream.html'),
+        ],
+        required=False,
+    )

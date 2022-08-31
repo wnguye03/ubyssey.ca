@@ -2,6 +2,8 @@
 
 <div class="editorial__credits-container">
     <div class="editorial__credits-content">
-        {% include_block self.credits %}
+        {% for block in self.stream %}
+            {% include_block block %}
+        {% endfor %}
     </div>
 </div>

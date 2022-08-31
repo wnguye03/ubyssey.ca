@@ -56,7 +56,7 @@ class SpecialLandingPage(SectionablePage, UbysseyMenuMixin):
 
     editorial_stream = StreamField(
         [
-            ('credits', special_blocks.EditorialStreamBlock()),
+            ('credits', special_blocks.EditorialBlock()),
             ('image', ImageChooserBlock()),
             ('note_with_header', special_blocks.NoteWithHeaderBlock()),
         ],

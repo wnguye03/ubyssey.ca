@@ -20,7 +20,9 @@
 
 {% block pre_main_content %}
 {% if page.pre_main_stream %}
-	{% include_block page.pre_main_stream %}
+	{% for block in page.pre_main_stream %}
+		{% include_block block %}
+	{% endfor %}
 {% endif %}
 {% endblock %}
 
@@ -29,7 +31,9 @@
 <main class="{{ self.main_class_name }}">
 	{% if page.editorial_stream %}
 	<div class="editorial-container">
-		{% include_block page.editorial_stream %}
+		{% for block in page.editorial_stream %}
+			{% include_block block %}
+		{% endfor %}
 	</div>
 	{% endif %}
 	{% comment %} <div class="panelist-container">
@@ -128,7 +132,9 @@
 <div class="section-grid-container">
 	{% if page.graphical_menu %}
 	<div class="editorial-container">
-		{% include_block page.graphical_menu %}
+		{% for block in page.graphical_menu %}
+			{% include_block block %}
+		{% endfor %}
 	</div>
 	{% endif %}
 </div>
