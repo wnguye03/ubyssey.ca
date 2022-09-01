@@ -53,13 +53,8 @@ class SectionablePage(models.Page):
 
     def save(self, *args, **kwargs):
         """
-        Several out-the-norm features:
-
-        1. Ensures the page's current section is synced with its parents/ancestors. Or else, if this is a section page, its section is itself.
-        2. Can apply colour to all items in subtree
+        Ensures the page's current section is synced with its parents/ancestors. Or else, if this is a section page, its section is itself.
         """
-
-
         if self.current_section != self.slug:
             # saves ourselves some queries - the above situation should only ever obtain if we're in a section named after our current page, i.e. at the "Section Root".
             # All the special operations required by a save 
@@ -79,16 +74,6 @@ class SectionablePage(models.Page):
                     # This shouldn't ever be hit, but worst case scenario the current_section field's use with caching etc. can still work with "ERROR_SECTION"
                     self.current_section = 'ERROR_SECTION'
 
-        if self.apply_colour_to_subtree_when_saved:
-            children_qs = self.get_children()
-
-            for child in children_qs:
-                if hasattr(child, "lock_colour") and not child.lock_colour:
-                    child.apply_colour_to_subtree_when_saved = True
-                    child.save()
-
-            self.apply_colour_to_subtree_when_saved = False
-            return super().save(*args, **kwargs)    
         return super().save(*args, **kwargs)
 
     class Meta:
