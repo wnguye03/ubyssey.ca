@@ -165,38 +165,6 @@ class CustomStylingCTABlock(blocks.StructBlock):
 
         return mark_safe(render_to_string(template, new_context))
 
-class GraphicalMenuItemBlock(blocks.StructBlock):
-    
-    template = 'specialfeaturelanding/blocks/graphical-menu-item.html'
-    
-    div_class_name = blocks.CharBlock(
-        max_length=255,
-        required=True,
-        default='box'
-    )
-
-    img_class_name = blocks.CharBlock(
-        max_length=255,
-        required=True,
-        default='photo_cover'
-    )
-
-    link = blocks.URLBlock(
-        required=True,
-    )
-
-    image = ImageChooserBlock(
-        required=True,
-    )
-
-    width = blocks.IntegerBlock(
-        required = False
-    )
-
-    height = blocks.IntegerBlock(
-        required = False
-    )
-
 class TextDivBlock(blocks.StructBlock):
 
     template = 'specialfeaturelanding/blocks/graphical-menu-item.html'
@@ -269,6 +237,60 @@ class BannerBlock(TemplateSelectStructBlock):
         choices=[
             ('', 'Wagtail default'),
             ('guide-2021-banner.html', 'guide-2021-banner.html'),
+        ],
+        required=False,
+    )
+
+class GraphicalMenuItemBlock(TemplateSelectStructBlock):
+    
+    div_class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='box'
+    )
+
+    img_class_name = blocks.CharBlock(
+        max_length=255,
+        required=True,
+        default='photo_cover'
+    )
+
+    link = blocks.URLBlock(
+        required=True,
+    )
+
+    image = ImageChooserBlock(
+        required=True,
+    )
+
+    width = blocks.IntegerBlock(
+        required = False
+    )
+
+    height = blocks.IntegerBlock(
+        required = False
+    )
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('guide-2021-graphical-menu-item.html', 'guide-2021-graphical-menu-item.html'),
+        ],
+        required=False,
+    )
+
+class GraphicalMenuStreamBlock(blocks.StreamBlock):
+    raw_html = blocks.RawHTMLBlock()
+    rich_text = blocks.RichTextBlock()
+    graphical_menu_item = GraphicalMenuItemBlock()
+
+class GraphicalMenuBlock(TemplateSelectStructBlock):
+    stream = GraphicalMenuStreamBlock()
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('guide-2021-graphical-menu.html', 'guide-2021-graphical-menu.html'),
         ],
         required=False,
     )

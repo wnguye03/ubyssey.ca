@@ -135,7 +135,8 @@
 
 {% block post_main_content %}
 
-<div class="section-grid-container">
+
+{% comment %} <div class="section-grid-container">
 	{% if page.graphical_menu %}
 	<div class="editorial-container">
 		{% for block in page.graphical_menu %}
@@ -143,7 +144,7 @@
 		{% endfor %}
 	</div>
 	{% endif %}
-</div>
+</div> {% endcomment %}
 
 {% for block in self.content %}
 {% include_block block %}
