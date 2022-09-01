@@ -255,3 +255,20 @@ class EditorialBlock(TemplateSelectStructBlock):
         ],
         required=False,
     )
+
+class BannerBlock(TemplateSelectStructBlock):
+
+    image = ImageChooserBlock(
+        required=True,
+    )
+    title1 = blocks.CharBlock()
+    title2 = blocks.CharBlock()
+    credit = blocks.CharBlock()
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('guide-2021-banner.html', 'guide-2021-banner.html'),
+        ],
+        required=False,
+    )
