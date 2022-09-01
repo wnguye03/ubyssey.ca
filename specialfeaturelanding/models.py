@@ -60,7 +60,8 @@ class SpecialLandingPage(SectionablePage, UbysseyMenuMixin):
             ('credits', special_blocks.EditorialBlock()),
             ('image', ImageChooserBlock()),
             ('note_with_header', special_blocks.NoteWithHeaderBlock()),
-            ('graphical_menu', special_blocks.GraphicalMenuBlock())
+            ('graphical_menu', special_blocks.GraphicalMenuBlock()),
+            ('child_articles', special_blocks.ChildArticlesBlock())
         ],
         null=True,
         blank=True,
