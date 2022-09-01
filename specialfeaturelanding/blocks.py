@@ -294,3 +294,8 @@ class GraphicalMenuBlock(TemplateSelectStructBlock):
         ],
         required=False,
     )
+
+class ChildArticlesBlock(blocks.StructBlock):
+
+    class Meta:
+        template = TEMPLATE_DIRECTORY + 'guide-2021-child-articles.html'
