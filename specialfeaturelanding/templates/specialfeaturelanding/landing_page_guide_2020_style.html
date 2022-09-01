@@ -15,7 +15,13 @@
 
 {% block header %}
 	{% comment %} {% flat_menu 'guide2021' template="navigation/headers/guide/2021/header.html"  show_menu_heading=False  fall_back_to_default_site_menus=True %} {% endcomment %}
-	{% flat_menu 'guide2021' template="navigation/bootstrap/topbar_with_dropdowns.html" show_menu_heading=False  fall_back_to_default_site_menus=True %}
+	{% if page.menu %}
+		<!-- Manually selected menu: {{ page.menu.handle }} -->
+		{% flat_menu page.menu.handle template="navigation/bootstrap/topbar_with_dropdowns.html" show_menu_heading=False fall_back_to_default_site_menus=True %}
+	{% elif create_menu_from_parent %}
+		<!-- Menu created from parent page -->	 
+		{% children_menu parent_page_for_menu_generation template="navigation/bootstrap/topbar_with_dropdowns.html" show_menu_heading=False fall_back_to_default_site_menus=True %}
+	{% endif %}
 {% endblock %}
 
 {% block pre_main_content %}
@@ -142,5 +148,31 @@
 {% for block in self.content %}
 {% include_block block %}
 {% endfor %}
+
 {% wagtailuserbar %}
+{% endblock %}
+
+
+{% block footer %}
+<footer class="c-footer{% if subsection %} __{{ subsection }}{% else %} __home{% endif %} {{section}}">
+	<div class="o-container">
+		<div class="o-wrapper">
+			<a class='ubyssey-dingbat' href="https://www.ubyssey.ca"><img
+					src="{% static 'ubyssey/images/ubyssey-dingbat-white.png' %}" /></a>
+
+			{% flat_menu page.menu.handle template="navigation/guide_footer.html" show_menu_heading=False fall_back_to_default_site_menus=True %}
+			<div class="c-footer__social">
+				<ul>
+					<li><a class="facebook-icon" href="https://www.facebook.com/ubyssey" target="_blank"><i
+								class="fa fa-facebook-square"></i></a></li>
+					<li><a class="instagram-icon" href="https://www.instagram.com/ubyssey/" target="_blank"><i
+								class="fa fa-instagram"></i></a></li>
+					<li><a class="twitter-icon" href="https://twitter.com/Ubyssey" target="_blank"><i
+								class="fa fa-twitter"></i></a></li>
+				</ul>
+			</div>
+			<div class="c-footer__copyright">© The Ubyssey</div>
+		</div>
+	</div>
+</footer>
 {% endblock %}
