@@ -4,7 +4,7 @@
 {% comment %} {% image self.image original as cover_image %} {% endcomment %}
 
 <div class="{{ self.div_class_name }}">
-        <a src="{{ self.link }}">
+        <a href="{{ self.link }}">
                 {% comment %} <img class="{{ self.img_class_name }}" src="{{ cover_image.url }}"
                         width={% if self.width %}"{{ self.width }}"{% else %}"{{ cover_image.width }}"{% endif %}
                         height={% if self.height %}"{{ self.height }}"{% else %}"{{ cover_image.height }}"{% endif %}
