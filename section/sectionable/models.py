@@ -8,7 +8,7 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
 )
 
-from wagtail_color_panel import ColorField
+from wagtail_color_panel.fields import ColorField
 from wagtail_color_panel.edit_handlers import NativeColorPanel
 
 #-----Page models-----
