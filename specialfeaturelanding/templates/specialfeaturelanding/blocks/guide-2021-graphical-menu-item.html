@@ -9,6 +9,6 @@
                         width={% if self.width %}"{{ self.width }}"{% else %}"{{ cover_image.width }}"{% endif %}
                         height={% if self.height %}"{{ self.height }}"{% else %}"{{ cover_image.height }}"{% endif %}
                         alt="{{ cover_image.alt }}"> {% endcomment %}
-                {% image image fill-298x477 %}
+                {% image self.image fill-298x477 %}
         </a>
 </div>
