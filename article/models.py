@@ -741,7 +741,7 @@ class ArticlePage(SectionablePage, UbysseyMenuMixin):
             help_text="In Dispatch, \"SEO Keyword\" was referred to as \"Focus Keywords\", and  \"SEO Description\" was referred to as \"Meta Description\""
         )
     ] # promote_panels
-    settings_panels = Page.settings_panels + [
+    settings_panels = SectionablePage.settings_panels + [
         MultiFieldPanel(
             [
                 FieldPanel(
