@@ -14,7 +14,7 @@ from wagtail_color_panel.edit_handlers import NativeColorPanel
 #-----Page models-----
 class SectionablePage(models.Page):
     """
-    Abstract class for pages. Allows a page to be aware of which section it belongs to, based on the structure of the site hierarchy. Also contains fields common to any subtree of the site, such as subtree_colour
+    Abstract class for pages. Allows a page to be aware of which section it belongs to, based on the structure of the site hierarchy. Also contains fields common to any subtree of the site, such as colour
 
     Pages in the site heirarchy tend to belong to a section.
     Sections correspond to child nodes of the HomePage that themselves have many children.
@@ -28,6 +28,7 @@ class SectionablePage(models.Page):
         default='',
     )
 
+    use_parent_colour = fields.BooleanField(default=True)
     colour = ColorField(default="#3490d6")
     apply_colour_to_subtree_when_saved = fields.BooleanField(default=False)
     lock_colour = fields.BooleanField(default=False)
@@ -35,12 +36,13 @@ class SectionablePage(models.Page):
     settings_panels = models.Page.settings_panels + [
         MultiFieldPanel(
             [
-                HelpPanel(
-                    content='<p>Colour is intended to be applied to EVERY page that is descendent of a single page at once. This could be <b>extremely</b> slow.</p><p>The application of colours to the descendent pages therefore <b>ONLY</b> occurs when \"Apply colour to subtree when saved\" is checked, and this field will uncheck itself after the save is done.</p><p>"Lock Colour will prevent" any page higher in the hierarchy from modifying colour properties of either this page OR the descendents of this page. If you tried to change the colour of some ancestor node and did not see the change propagate to the descendents, double-check this field.</p>',
-                ),
+                # HelpPanel(
+                #     content='<p>Colour is intended to be applied to EVERY page that is descendent of a single page at once. This could be <b>extremely</b> slow.</p><p>The application of colours to the descendent pages therefore <b>ONLY</b> occurs when \"Apply colour to subtree when saved\" is checked, and this field will uncheck itself after the save is done.</p><p>"Lock Colour will prevent" any page higher in the hierarchy from modifying colour properties of either this page OR the descendents of this page. If you tried to change the colour of some ancestor node and did not see the change propagate to the descendents, double-check this field.</p>',
+                # ),
+                use_parent_colour('use_parent_colour'),
                 NativeColorPanel('colour'),
-                FieldPanel('apply_colour_to_subtree_when_saved'),
-                FieldPanel('lock_colour'),
+                # FieldPanel('apply_colour_to_subtree_when_saved'),
+                # FieldPanel('lock_colour'),
             ],
             heading="Advertising-Releated",
         ),
@@ -73,7 +75,7 @@ class SectionablePage(models.Page):
                 except Exception as e:
                     # This shouldn't ever be hit, but worst case scenario the current_section field's use with caching etc. can still work with "ERROR_SECTION"
                     self.current_section = 'ERROR_SECTION'
-
+        # self.apply_colour_to_subtree_when_saved = False
         return super().save(*args, **kwargs)
 
     class Meta:
