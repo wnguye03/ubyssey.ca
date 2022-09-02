@@ -39,7 +39,7 @@ class SectionablePage(models.Page):
                 # HelpPanel(
                 #     content='<p>Colour is intended to be applied to EVERY page that is descendent of a single page at once. This could be <b>extremely</b> slow.</p><p>The application of colours to the descendent pages therefore <b>ONLY</b> occurs when \"Apply colour to subtree when saved\" is checked, and this field will uncheck itself after the save is done.</p><p>"Lock Colour will prevent" any page higher in the hierarchy from modifying colour properties of either this page OR the descendents of this page. If you tried to change the colour of some ancestor node and did not see the change propagate to the descendents, double-check this field.</p>',
                 # ),
-                use_parent_colour('use_parent_colour'),
+                FieldPanel('use_parent_colour'),
                 NativeColorPanel('colour'),
                 # FieldPanel('apply_colour_to_subtree_when_saved'),
                 # FieldPanel('lock_colour'),
