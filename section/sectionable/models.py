@@ -44,7 +44,7 @@ class SectionablePage(models.Page):
                 # FieldPanel('apply_colour_to_subtree_when_saved'),
                 # FieldPanel('lock_colour'),
             ],
-            heading="Advertising-Releated",
+            heading="Colour",
         ),
     ]
 
