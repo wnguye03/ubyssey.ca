@@ -55,9 +55,10 @@ class SectionablePage(models.Page):
 
     def clean(self):
         if self.use_parent_colour:
-            parent_page = self.get_parent().specific
-            if hasattr(parent_page,'colour'):
-                self.colour = parent_page.colour
+            if self.get_parent() is not None:
+                parent_page = self.get_parent().specific
+                if hasattr(parent_page,'colour'):
+                    self.colour = parent_page.colour
 
     def save(self, *args, **kwargs):
         """
