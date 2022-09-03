@@ -36,10 +36,10 @@ class SectionablePage(models.Page):
     settings_panels = models.Page.settings_panels + [
         MultiFieldPanel(
             [
-                # HelpPanel(
-                #     content='<p>Colour is intended to be applied to EVERY page that is descendent of a single page at once. This could be <b>extremely</b> slow.</p><p>The application of colours to the descendent pages therefore <b>ONLY</b> occurs when \"Apply colour to subtree when saved\" is checked, and this field will uncheck itself after the save is done.</p><p>"Lock Colour will prevent" any page higher in the hierarchy from modifying colour properties of either this page OR the descendents of this page. If you tried to change the colour of some ancestor node and did not see the change propagate to the descendents, double-check this field.</p>',
-                # ),
-                FieldPanel('use_parent_colour'),
+                HelpPanel(
+                    content='<p>Colour will be propagated from a <b>published</b> parent page to its children when the child page is saved, automatically overriding anything entered in the colour field.</p><p> Uncheck the below if you intend to manually set a colour</p><p>Since the value is set upon save, try re-saving if you see a colour value you did not expect. The parent page may have changed since the last time this page was saved.</p>',
+                ),
+                FieldPanel('use_parent_colour', heading="Change colour of article to most recent non-draft version of parent's colour?"),
                 NativeColorPanel('colour'),
                 # FieldPanel('apply_colour_to_subtree_when_saved'),
                 # FieldPanel('lock_colour'),
@@ -54,6 +54,9 @@ class SectionablePage(models.Page):
         return context
 
     def clean(self):
+        """
+        Looks at the most recently published version of the parent article for colours.
+        """
         if self.use_parent_colour:
             if self.get_parent() is not None:
                 parent_page = self.get_parent().specific
