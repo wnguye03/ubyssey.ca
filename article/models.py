@@ -668,6 +668,8 @@ class ArticlePage(SectionablePage, UbysseyMenuMixin):
             return "article/article_page_fw_story.html"
         elif self.layout == 'guide-2020':
             return "article/article_page_guide_2020.html"
+        elif self.layout == 'guide-2022':
+            return "article/article_page_guide_2022.html"
                         
         return "article/article_page.html"
 
