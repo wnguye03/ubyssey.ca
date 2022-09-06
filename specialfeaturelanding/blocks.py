@@ -299,3 +299,20 @@ class ChildArticlesBlock(blocks.StructBlock):
 
     class Meta:
         template = TEMPLATE_DIRECTORY + 'guide-2021-child-articles.html'
+
+class FlexStream(blocks.StreamBlock):
+    raw_html = blocks.RawHTMLBlock()
+    rich_text = blocks.RichTextBlock()
+    image = ImageChooserBlock()
+
+class DivStreamBlock(TemplateSelectStructBlock):
+    class_selector = blocks.CharBlock()    
+    stream = FlexStream()
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('2022-div-stream-block.html', '2022-div-stream-block.html'),
+        ],
+        required=False,
+    )

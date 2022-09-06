@@ -61,7 +61,8 @@ class SpecialLandingPage(SectionablePage, UbysseyMenuMixin):
             ('image', ImageChooserBlock()),
             ('note_with_header', special_blocks.NoteWithHeaderBlock()),
             ('graphical_menu', special_blocks.GraphicalMenuBlock()),
-            ('child_articles', special_blocks.ChildArticlesBlock())
+            ('child_articles', special_blocks.ChildArticlesBlock()),
+            ('flex_stream', special_blocks.DivStreamBlock()),
         ],
         null=True,
         blank=True,
