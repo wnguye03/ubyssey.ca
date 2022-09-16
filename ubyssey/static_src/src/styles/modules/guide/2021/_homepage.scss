@@ -199,17 +199,24 @@
     margin: auto;
 }
 
+.box > a > img {
+    width: 100%;
+    height: auto;
+    
+}
+
 .photo_cover {
     object-fit: cover;
     max-width: 100%; 
 }
 
-@media($bp-smaller-than-desktop) {
+@media($bp-smaller-than-tablet) {
+
     .section-grid-container {
-        display: grid;
-        grid-template-columns: auto;
-        margin: 0 auto;
-        grid-gap: 1.5em;
+        display: block;
+        // grid-template-columns: auto;
+        margin: 0;
     }
+
 }
 
