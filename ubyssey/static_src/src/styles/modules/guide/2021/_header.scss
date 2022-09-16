@@ -1,3 +1,20 @@
+
+// logo on top left, originally in _objects.scss
+// now here with additions
+.o-logo--small {
+    display: block;
+    height: 40px;
+    width: 166px;
+    background-image: url('../images/guide/guide-logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat; 
+    transition: background-image 0.15s;
+    flex-shrink: 0; // logo does not shrink with screen size changes (used in conjunction with backg-size 100%)
+    &:hover {
+      background-image: url('../images/guide/guide-logo-hover.png');
+    }
+}
+
 .c-header .c-nav-right .c-nav-section{
    
     font-size: 0.8em;
@@ -21,93 +38,4 @@
 
 .c-header-tablet .c-nav-current{
     margin-top: 0.7em;
-}
-
-.student-resources{
-    background-color: #C27BA0 ;
-}
-
-.student-life{
-    background-color: #93C47D;
-}
-
-.the-ubyssey{
-    background-color: #76A5Af;
-
-}
-
-.parties-sex-and-drugs{
-background-color: #8E7CC3;
-}
-
-.vancouver{
-background-color: #F6B26B;
-}
-
-.ubc{
-    background-color: #6FA8DC;
-
-}
-
-.academics{
-    background-color: #E06666;
-}
-
-.__ubc{
-    background-color: #6FA8DC;
-
-}
-
-.__academics{
-    background-color: #E06666;
-}
-
-.__student-life{
-    background-color: #93C47D;
-}
-
-.__student-resources{
-    background-color: #C27BA0 ;
-}
-
-.__psd{
-    background-color: #8E7CC3;
-
-}
-
-.__the-ubyssey{
-    background-color: #76A5Af;
-}
-
-.__vancouver{
-    background-color: #F6B26B;
-}
-
-
-.c-section-more__academics{
-    background-color: #E06666;
-}
-
-.c-section-more__ubc{
-    background-color: #6FA8DC;
-}
-
-.c-section-more__student-life{
-    background-color: #93C47D;
-}
-
-.c-section-more__student-resources{
-    background-color: #C27BA0 ;
-}
-
-.c-section-more__parties-sex-and-drugs{
-    background-color: #8E7CC3;
-}
-
-.c-section-more__the-ubyssey{
-    background-color: #76A5Af;
-}
-
-.c-section-more__vancouver{
-    background-color: #F6B26B;
 }

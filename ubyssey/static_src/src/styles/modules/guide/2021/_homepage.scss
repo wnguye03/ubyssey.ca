@@ -1,3 +1,15 @@
+.o-site-wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.c-banner {
+    margin-top: 0;
+}
+
 .editorial__credits-content h1{
     font-weight: bold;
     font-size: 0.75em;
@@ -21,12 +33,19 @@
 
 .home-content-container .home-content .content-wrapper {
     line-height: 2em;
-    font-family: Lora, serif;
+    font-family: 'Noto Sans', serif;
     font-size: 1rem;
 }
 
+
+
 .home-content-container .home-content .title {
-    color: #6F8FAF;
+    text-align: left;
+    padding-top: 5%;
+    @media($bp-larger-than-mobile) {
+        padding-left: 5%;
+    }
+    color: #0471a7;
 }
 
 
@@ -51,10 +70,11 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    align-items: left;
+    // align-items: left;
     justify-content: center;
     background-color: lightblue;
-    font-family: Montserrat, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    
     font-size: 1.3rem;
     font-weight: 300;
     line-height: 1.6rem;
@@ -139,160 +159,16 @@
     
 }
 
-.p-one{
-  grid-column: 1 / 5;
-}
-
-.p-two{
-    grid-column: 1 / 5;
-    
-}
-
-.p-three{
-    grid-column: 1 / 5;
-    
-}
-
-.p-four{  
-    grid-column: 1 / 5;
-    
-}
-
-.p-five{  
-    grid-column: 1 / 5;
-    
-}
-
-.p-six{
-    grid-column: 1 / 5;
-}
-
-.panelist-container{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(60px, auto);
-    grid-gap: 2em;
-    margin-left: 4em;
-    margin-right: 4em;
-}
-
-@media (min-width: 1000px) {
-    .home-content-container .home-content .title{
-        padding-left: 10%;
-        text-align: left;
-    }
-
-    .home-content-container .editorial__.home-content .content-wrapper{
-        padding: 10%
-    }
-
-    .land_mark_image-container{
-        width: 35%;
-        height: 50%;
-    }
-
-    .land_mark_note-container{
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        align-items: left;
-        justify-content: center;
-        width: 65%;
-        background-color: lightblue;
-        font-family: Montserrat, sans-serif;
-        font-size: 1.3rem;
-        font-weight: 300;
-        line-height: 1.6rem;
-    
-    }
-
-
-    .p-bio{
-        text-align: left;
-        padding: 2em;
-        line-height: 2em;
-        margin: 0%;
-    }
-
-    .panelist-container{
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-auto-rows: minmax(60px, auto);
-        grid-gap: 2em;
-        margin-left: 8em;
-        margin-right: 8em;
-    }
-
-
-    .p-one{
-  
-        grid-row-start: 2;
-        grid-row-end: 8;
-        grid-column-start: 1;
-        grid-column-end: 5;
-    }
-    
-    .p-two{
-        
-        grid-row-start: 2;
-        grid-row-end: 8;
-        grid-column-start: 5;
-        grid-column-end: 9;
-        
-    }
-    
-    .p-three{
-        
-        grid-row-start: 2;
-        grid-row-end: 8;
-        grid-column-start: 9;
-        grid-column-end: 13;
-        
-    }
-    
-    .p-four{  
-        
-        grid-row-start:8;
-        grid-row-end: 14;
-        grid-column-start: 1;
-        grid-column-end: 5;
-        
-    }
-    
-    .p-five{  
-        
-        grid-row-start: 8;
-        grid-row-end: 14;
-        grid-column-start: 5;
-        grid-column-end: 9;
-        
-    }
-    
-    .p-six{
-        
-        grid-row-start:8;
-        grid-row-end: 14;
-        grid-column-start: 9;
-        grid-column-end: 13;
-        
-    }
-
-
-
-}
-
-
 
 .section-grid-container{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(60px, auto);
+    grid-template-columns: auto auto;
+    margin: 4em auto;
     grid-gap: 1.5em;
-    margin: 4em;
-  }
+}
 
 .section-grid-container .section-title{
-    grid-column: 1 / 5;
+    grid-column: 1 / 2;
 }
 
 
@@ -303,46 +179,6 @@
     text-align: center;
     justify-content: center;
     background-color: lightblue;
-}
-
-.academics-box{
-   
-    grid-column: 1 / 5;
-}
-
-.ubc-box{
-  
-    grid-column: 1 / 5;
-
-}
-
-.student_life-box{
-  
-    grid-column: 1 / 5;
-    
-
-}
-
-.student_resources-box{
-  
-    grid-column: 1 / 5;
-}
-
-.parties_sex_anddrugs-box{
-
-    grid-column: 1 / 5;
-
-}
-
-.the_ubyssey-box{
-    grid-column: 1 / 5;
-
-}
-
-.vancouver-box{
-  
-    grid-column: 1 / 5;
-
 }
 
 .section-quote{
@@ -368,107 +204,12 @@
     max-width: 100%; 
 }
 
-@media (min-width: 1000px) {
-
-
-
-    .section-grid-container{
+@media($bp-smaller-than-desktop) {
+    .section-grid-container {
         display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-auto-rows: minmax(60px, auto);
+        grid-template-columns: auto;
+        margin: 0 auto;
         grid-gap: 1.5em;
-        margin-left: 10em;
-        margin-right: 10em;
-        margin-bottom: 10em;
-      }
+    }
+}
 
-      .section-grid-container .section-title{
-        grid-column: 7 / 12;
-        grid-row: 2 / 5;
-
-    }
- 
-
-    .academics-box{
-   
-        grid-row-start: 2;
-        grid-row-end: 7;
-        grid-column-start: 2;
-        grid-column-end: 7;
-    }
-    
-    .ubc-box{
-      
-        grid-column-start: 7;
-        grid-column-end: 12;
-        grid-row-start: 5;
-        grid-row-end: 9;
-    
-    }
-    
-    .student_life-box{
-      
-        grid-column-start: 2;
-        grid-column-end: 7;
-        grid-row-start: 7;
-        grid-row-end: 11;
-        
-    
-    }
-    
-    .student_resources-box{
-      
-        grid-column-start: 7;
-        grid-column-end: 12;
-        grid-row-start: 9;
-        grid-row-end: 14;
-    
-    }
-    
-    .parties_sex_anddrugs-box{
-    
-        grid-column-start: 2;
-        grid-column-end: 7;
-        grid-row-start: 11;
-        grid-row-end: 16;
-    
-    }
-    
-    .the_ubyssey-box{
-      
-        grid-column-start: 7;
-        grid-column-end: 12;
-        grid-row-start: 14;
-        grid-row-end: 18;
-    
-    }
-    
-    .vancouver-box{
-      
-        grid-column-start: 2;
-        grid-column-end: 7;
-        grid-row-start: 16;
-        grid-row-end: 21;
-    
-    }
-
-    .section-quote{
-        color: #6FA8DC;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-        font-size: 4vw;
-        font-weight: bold;
-        line-height: 5vw;
-        background-color: lightblue;
-        grid-column-start: 7;
-        grid-column-end: 12;
-        grid-row-start: 18;
-        grid-row-end: 21;
-    
-    }
-
-
-
-  }
