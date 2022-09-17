@@ -159,6 +159,27 @@
     
 }
 
+@media (min-width: 1000px) {
+    .land_mark_image-container{
+        width: 35%;
+        height: 50%;
+    }
+
+    .land_mark_note-container{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        align-items: left;
+        justify-content: center;
+        width: 65%;
+        background-color: lightblue;
+        font-family: Montserrat, sans-serif;
+        font-size: 1.3rem;
+        font-weight: 300;
+        line-height: 1.6rem;
+
+    }
+}
 
 .section-grid-container{
     display: grid;
