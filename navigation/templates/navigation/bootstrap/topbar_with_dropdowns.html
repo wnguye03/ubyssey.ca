@@ -25,12 +25,12 @@ background_color - hex color
                 {% for item in menu_items %}
                     {% if item.has_children_in_menu %} 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ item.href }}" role="button" data-bs-toggle="dropdown">{{ item.text }}</a>
+                        <a class="nav-link dropdown-toggle" style="color:white" href="{{ item.href }}" role="button" data-bs-toggle="dropdown">{{ item.text }}</a>
                         {% sub_menu item template="navigation/bootstrap/topbar_with_dropdowns_submenu.html"%}
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ item.href}}">{{ item.text }}</a>
+                        <a class="nav-link" style="color:white" href="{{ item.href}}">{{ item.text }}</a>
                     </li>
                     {% endif %}
                 {% endfor %}
