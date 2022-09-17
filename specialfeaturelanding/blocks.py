@@ -300,10 +300,22 @@ class ChildArticlesBlock(blocks.StructBlock):
     class Meta:
         template = TEMPLATE_DIRECTORY + 'guide-2021-child-articles.html'
 
+class RenditionBlock(TemplateSelectStructBlock):
+    image = ImageChooserBlock()
+
+    template = blocks.ChoiceBlock(
+        choices=[
+            ('', 'Wagtail default'),
+            ('rendition-fill-1200x400.html', 'rendition-fill-1200x1000.html'),
+        ],
+        required=False,
+    )
+
 class FlexStream(blocks.StreamBlock):
     raw_html = blocks.RawHTMLBlock()
     rich_text = blocks.RichTextBlock()
     image = ImageChooserBlock()
+    rendition = RenditionBlock()
 
 class DivStreamBlock(TemplateSelectStructBlock):
     class_selector = blocks.CharBlock()    
