@@ -306,7 +306,7 @@ class RenditionBlock(TemplateSelectStructBlock):
     template = blocks.ChoiceBlock(
         choices=[
             ('', 'Wagtail default'),
-            ('rendition-fill-1200x400.html', 'rendition-fill-1200x1000.html'),
+            ('rendition-fill-1200x1000.html', 'rendition-fill-1200x1000.html'),
         ],
         required=False,
     )
