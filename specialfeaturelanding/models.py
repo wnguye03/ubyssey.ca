@@ -32,7 +32,7 @@ class SpecialLandingPage(SectionablePage, UbysseyMenuMixin):
     Pages can select them to automatically create
     """
     # template = "specialfeaturelanding/base.html"
-    template = "specialfeaturelanding/landing_page_guide_2020_style.html"
+    template = "specialfeaturelanding/landing_page_guide_2022_style.html"
 
     parent_page_types = [
         'section.SectionPage',
