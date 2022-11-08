@@ -1,4 +1,3 @@
-@import 'full_width';
 @import 'modules/variables';
 
 .featured-media {
@@ -154,7 +153,32 @@ div.indicator {
   }
 }
 
+@media($bp-larger-than-mobile) {
+  div.headline-container {
+    padding: 0;
+  }
+}
+
+
+// Article content
 div.article-content {
+
+  float: left;
+  border-right: none;
+
+  @media($bp-larger-than-tablet) {
+    border-right: 1px solid #e6e6e6;
+    display: table-cell;
+    padding-right: 15px;
+    padding-left: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+    width: 65%;
+    :last-child {
+      margin-bottom: 1.4rem;
+    }
+  }
+
   > p,
   div.caption,
   > h1,
@@ -175,9 +199,7 @@ div.article-content {
   > h3,
   > div.c-widget-event,
   > .attachment.pull-quote {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: $article-content-div-child-padding;
+    padding: 0 $article-content-div-child-padding;
     @media($bp-larger-than-phablet){
       padding: 0;
       max-width: 585px;
@@ -193,9 +215,8 @@ div.article-content {
       padding-right: 0;
     }
   }
+
 }
-
-
 
 div.caption {
   margin-top: 6px;
@@ -212,9 +233,7 @@ div.caption {
 }
 
 div.article-content {
-  @media($bp-smaller-than-mobile) {
-    padding: 0 3%;
-  }
+
   > p, > ul {
     font-family: $font-body !important;
     font-weight: $font-weight-normal !important;
@@ -241,65 +260,31 @@ div.article-content {
     margin: 30px 0 0 0;
   }
 
+  // @media($bp-smaller-than-mobile) {
+  //   padding: 0 3%;
+  // }
 }
-
 @media($bp-larger-than-mobile) {
   div.headline-container {
     padding: 0;
   }
 }
 
-// Right column
 
-div.right-column {
-
-  img {
-    width: 100%;
-  }
-
-  div.sidebar {
-    display: none;
-  }
-
-  div.featured-media {
-    margin-bottom: 20px;
-  }
-
-  @media($bp-larger-than-tablet) {
-
-    position: relative;
-    float: right;
-    padding: 0 0 40px 40px;
-
-    div.featured-media {
-      display: block;
-      width: 500px;
-      margin-bottom: 0;
-    }
-
-    div.sidebar {
-      display: block;
-      position: absolute;
-      right: 0;
-      width: 300px;
-      &.offset {
-        margin-top: 3em;
-      }
-    }
-  }
-}
-
-div.side {
-    float: right;
-}
 
 .fw-story, .timeline {
-  div.right-column {
+
+  div.media-column {
     display: none;
-    right: -150px;
-    @media($bp-larger-than-desktophd){
-      display: block;
-    }
+  }
+  div.article-content {
+    width: 100%;
+
+    border-right: none;
+    display: block;
+    padding-right: 0;
+    vertical-align: top;
+    box-sizing: border-box;
   }
 }
 
